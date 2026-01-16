@@ -34,6 +34,9 @@ dependencyResolutionManagement {
         includeGroupByRegex("org\\.signal.*")
       }
     }
+    maven {
+      url = uri("https://mvn.breez.technology/releases")
+    }
   }
   versionCatalogs {
     // libs.versions.toml is automatically registered.

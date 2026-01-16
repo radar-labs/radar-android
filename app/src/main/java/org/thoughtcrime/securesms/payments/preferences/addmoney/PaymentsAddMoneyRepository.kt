@@ -15,10 +15,8 @@ internal class PaymentsAddMoneyRepository {
     }
 
     return Single.fromCallable<SignalResult<AddressAndUri, Error>> {
-      val publicAddress = AppDependencies.payments.wallet.mobileCoinPublicAddress
-      val paymentAddressBase58 = publicAddress.paymentAddressBase58
-      val paymentAddressUri = publicAddress.paymentAddressUri
-      SignalResult.success(AddressAndUri(paymentAddressBase58, paymentAddressUri))
+      val paymentAddress = AppDependencies.payments.wallet.lightningAddress
+      SignalResult.success(AddressAndUri(paymentAddress.paymentAddress, paymentAddress.paymentAddressUri))
     }
       .subscribeOn(Schedulers.io())
       .observeOn(Schedulers.io())

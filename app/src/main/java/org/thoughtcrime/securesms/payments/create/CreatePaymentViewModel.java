@@ -37,8 +37,8 @@ public class CreatePaymentViewModel extends ViewModel {
 
   private static final String TAG = Log.tag(CreatePaymentViewModel.class);
 
-  private static final Money.MobileCoin AMOUNT_LOWER_BOUND_EXCLUSIVE = Money.MobileCoin.ZERO;
-  private static final Money.MobileCoin AMOUNT_UPPER_BOUND_EXCLUSIVE = Money.MobileCoin.MAX_VALUE;
+  private static final Money.Satoshi AMOUNT_LOWER_BOUND_EXCLUSIVE = Money.Satoshi.ZERO;
+  private static final Money.Satoshi AMOUNT_UPPER_BOUND_EXCLUSIVE = Money.Satoshi.MAX_VALUE;
 
   private final LiveData<Money>   spendableBalance;
   private final LiveData<Boolean> isValidAmount;
@@ -54,7 +54,7 @@ public class CreatePaymentViewModel extends ViewModel {
     this.spendableBalance = Transformations.map(SignalStore.payments().liveMobileCoinBalance(), Balance::getTransferableAmount);
     this.note             = new MutableLiveData<>(note);
     this.inputState       = new Store<>(new InputState());
-    this.isValidAmount    = LiveDataUtil.combineLatest(spendableBalance, inputState.getStateLiveData(), (b, s) -> validateAmount(b.requireMobileCoin(), s.getMoney().requireMobileCoin()));
+    this.isValidAmount    = LiveDataUtil.combineLatest(spendableBalance, inputState.getStateLiveData(), (b, s) -> validateAmount(b.requireBitcoin(), s.getMoney().requireBitcoin()));
     this.enclaveFailure   = LiveDataUtil.mapDistinct(SignalStore.payments().enclaveFailure(), isFailure -> isFailure);
 
     if (payee.getPayee().hasRecipientId()) {
@@ -123,10 +123,10 @@ public class CreatePaymentViewModel extends ViewModel {
 
   void clearAmount() {
     inputState.update(s -> {
-      final Money               money = Money.MobileCoin.ZERO;
+      final Money               money = Money.Satoshi.ZERO;
       final Optional<FiatMoney> fiat  = s.getExchangeRate().flatMap(r -> r.exchange(money));
 
-      return s.updateAmount("0", "0", Money.MobileCoin.ZERO, fiat);
+      return s.updateAmount("0", "0", Money.Satoshi.ZERO, fiat);
     });
   }
 
@@ -169,7 +169,7 @@ public class CreatePaymentViewModel extends ViewModel {
       newMoneyAmount = newMoney.toString(FormatterOptions.builder().withoutUnit().build());
     }
 
-    if (!withinMobileCoinBounds(newMoney.requireMobileCoin())) {
+    if (!withinMobileCoinBounds(newMoney.requireBitcoin())) {
       return inputState;
     }
 
@@ -181,7 +181,7 @@ public class CreatePaymentViewModel extends ViewModel {
                                                 @NonNull AmountKeyboardGlyph glyph)
   {
     String              newMoneyAmount = updateAmountString(context, inputState.getMoneyAmount(), glyph, inputState.getMoney().getCurrency().getDecimalPrecision());
-    Money.MobileCoin    newMoney       = stringToMobileCoinValueOrZero(newMoneyAmount);
+    Money.Satoshi    newMoney       = stringToMobileCoinValueOrZero(newMoneyAmount);
     Optional<FiatMoney> newFiat        = inputState.getExchangeRate().flatMap(e -> e.exchange(newMoney));
     String              newFiatAmount;
 
@@ -198,7 +198,7 @@ public class CreatePaymentViewModel extends ViewModel {
     return inputState.updateAmount(newMoneyAmount, newFiatAmount, newMoney, newFiat);
   }
 
-  private boolean validateAmount(@NonNull Money.MobileCoin spendableBalance, @NonNull Money.MobileCoin amount) {
+  private boolean validateAmount(@NonNull Money.Satoshi spendableBalance, @NonNull Money.Satoshi amount) {
     try {
       return amount.greaterThan(AMOUNT_LOWER_BOUND_EXCLUSIVE) &&
              !amount.greaterThan(spendableBalance);
@@ -207,7 +207,7 @@ public class CreatePaymentViewModel extends ViewModel {
     }
   }
 
-  private static boolean withinMobileCoinBounds(@NonNull Money.MobileCoin amount) {
+  private static boolean withinMobileCoinBounds(@NonNull Money.Satoshi amount) {
     return !amount.lessThan(AMOUNT_LOWER_BOUND_EXCLUSIVE) &&
            !amount.greaterThan(AMOUNT_UPPER_BOUND_EXCLUSIVE);
   }
@@ -220,12 +220,12 @@ public class CreatePaymentViewModel extends ViewModel {
     return new FiatMoney(BigDecimal.ZERO, currency);
   }
 
-  private @NonNull Money.MobileCoin stringToMobileCoinValueOrZero(@Nullable String string) {
+  private @NonNull Money.Satoshi stringToMobileCoinValueOrZero(@Nullable String string) {
     try {
-      if (string != null) return Money.mobileCoin(new BigDecimal(string));
+      if (string != null) return Money.bitcoin(new BigDecimal(string));
     } catch (NumberFormatException ignored) { }
 
-    return Money.MobileCoin.ZERO;
+    return Money.Satoshi.ZERO;
   }
 
   public @NonNull CreatePaymentDetails getCreatePaymentDetails() {

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.thoughtcrime.securesms.payments.LightningAddress;
 import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
 import org.thoughtcrime.securesms.payments.Payee;
 import org.thoughtcrime.securesms.recipients.RecipientId;
@@ -25,7 +26,7 @@ public final class PayeeParcelable implements Parcelable {
     this(Payee.fromRecipientAndAddress(recipientId, address));
   }
 
-  public PayeeParcelable(@NonNull MobileCoinPublicAddress publicAddress) {
+  public PayeeParcelable(@NonNull LightningAddress publicAddress) {
     this(new Payee(publicAddress));
   }
 
@@ -58,14 +59,14 @@ public final class PayeeParcelable implements Parcelable {
       if (payee.hasPublicAddress()) {
         dest.writeInt(CONTAINS_RECIPIENT_ID_AND_ADDRESS);
         dest.writeParcelable(payee.requireRecipientId(), flags);
-        dest.writeString(payee.requirePublicAddress().getPaymentAddressBase58());
+        dest.writeString(payee.requireLightningAddress().getPaymentAddress());
       } else {
         dest.writeInt(CONTAINS_RECIPIENT_ID);
         dest.writeParcelable(payee.requireRecipientId(), flags);
       }
     } else if (payee.hasPublicAddress()) {
       dest.writeInt(CONTAINS_ADDRESS);
-      dest.writeString(payee.requirePublicAddress().getPaymentAddressBase58());
+      dest.writeString(payee.requireLightningAddress().getPaymentAddress());
     } else {
       dest.writeInt(UNKNOWN);
     }

@@ -1,93 +1,56 @@
-package org.thoughtcrime.securesms.payments;
+package org.thoughtcrime.securesms.payments
 
-import androidx.annotation.NonNull;
+import breez_sdk_spark.Payment
+import breez_sdk_spark.PaymentType
+import okio.ByteString
+import org.whispersystems.signalservice.api.payments.Money
+import java.math.BigInteger
 
-import org.thoughtcrime.securesms.payments.proto.MobileCoinLedger;
-import org.whispersystems.signalservice.api.payments.Money;
+class MobileCoinLedgerWrapper(private val lnWrapper: BreezSdkWrapper) {
+  val balance: Balance = lnWrapper.getBalance()
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import okio.ByteString;
-
-public final class MobileCoinLedgerWrapper {
-
-  private final MobileCoinLedger ledger;
-  private final Balance          balance;
-
-  public MobileCoinLedgerWrapper(@NonNull MobileCoinLedger ledger) {
-    Money.MobileCoin fullAmount         = ledger.balance.size() > 0 ? Money.picoMobileCoin(new BigInteger(ledger.balance.toByteArray())) : Money.picoMobileCoin(ledger.deprecatedBalance);
-    Money.MobileCoin transferableAmount = ledger.transferableBalance.size() > 0 ? Money.picoMobileCoin(new BigInteger(ledger.transferableBalance.toByteArray())) : Money.picoMobileCoin(ledger.deprecatedTransferableBalance);
-
-    this.ledger  = ledger;
-    this.balance = new Balance(fullAmount, transferableAmount, ledger.asOfTimeStamp);
+  fun serialize(): ByteArray {
+    return ByteArray(0)
   }
 
-  public @NonNull Balance getBalance() {
-    return balance;
-  }
+  val allTxos: List<OwnedTxo?>
+    get() = lnWrapper.getTransactions()
 
-  public byte[] serialize() {
-    return ledger.encode();
-  }
+  class OwnedTxo internal constructor(private val payment: Payment) {
+    val value: Money
+      get() {
+        if (payment.paymentType == PaymentType.SEND) {
+          return Money.satoshi(BigInteger.valueOf(-1L) * payment.amount)
+        }
+        return Money.satoshi(payment.amount)
+      }
 
-  public @NonNull List<OwnedTxo> getAllTxos() {
-    List<OwnedTxo> txoList = new ArrayList<>(ledger.spentTxos.size() + ledger.unspentTxos.size());
-    addAllMapped(txoList, ledger.spentTxos);
-    addAllMapped(txoList, ledger.unspentTxos);
-    return txoList;
-  }
-
-  private static void addAllMapped(@NonNull List<OwnedTxo> output, @NonNull List<MobileCoinLedger.OwnedTXO> txosList) {
-    for (MobileCoinLedger.OwnedTXO ownedTxo : txosList) {
-      output.add(new OwnedTxo(ownedTxo));
-    }
-  }
-
-  public static class OwnedTxo {
-    private final MobileCoinLedger.OwnedTXO ownedTXO;
-
-    OwnedTxo(MobileCoinLedger.OwnedTXO ownedTXO) {
-      this.ownedTXO = ownedTXO;
+    val direction: Direction
+    get() {
+      if (payment.paymentType == PaymentType.SEND)
+        return Direction.SENT
+      return Direction.RECEIVED
     }
 
-    public @NonNull Money.MobileCoin getValue() {
-      return ownedTXO.amount.size() > 0 ? Money.picoMobileCoin(new BigInteger(ownedTXO.amount.toByteArray())) : Money.picoMobileCoin(ownedTXO.deprecatedAmount);
-    }
+    val keyImage: ByteString
+      get() = ByteString.EMPTY
 
-    public @NonNull ByteString getKeyImage() {
-      return ownedTXO.keyImage;
-    }
+    val publicKey: ByteString
+      get() = ByteString.EMPTY
 
-    public @NonNull ByteString getPublicKey() {
-      return ownedTXO.publicKey;
-    }
+    val receivedInBlock: Long
+      get() = 0
 
-    public long getReceivedInBlock() {
-      return ownedTXO.receivedInBlock != null ? ownedTXO.receivedInBlock.blockNumber : 0;
-    }
+    val spentInBlock: Long?
+      get() = null
 
-    public @Nullable Long getSpentInBlock() {
-      return ownedTXO.spentInBlock != null ? nullIfZero(ownedTXO.spentInBlock.blockNumber) : null;
-    }
+    val isSpent: Boolean
+      get() = this.spentInBlock != null && this.spentInBlock != 0L
 
-    public boolean isSpent() {
-      return ownedTXO.spentInBlock != null && ownedTXO.spentInBlock.blockNumber != 0;
-    }
+    val receivedInBlockTimestamp: Long
+      get() = payment.timestamp.toLong() * 1000
 
-    public @Nullable Long getReceivedInBlockTimestamp() {
-      return ownedTXO.receivedInBlock != null ? nullIfZero(ownedTXO.receivedInBlock.timestamp) : null;
-    }
-
-    public @Nullable Long getSpentInBlockTimestamp() {
-      return ownedTXO.spentInBlock != null ? nullIfZero(ownedTXO.spentInBlock.timestamp) : null;
-    }
-
-    private @Nullable Long nullIfZero(long value) {
-      return value == 0 ? null : value;
-    }
+    val spentInBlockTimestamp: Long?
+      get() = null
   }
 }

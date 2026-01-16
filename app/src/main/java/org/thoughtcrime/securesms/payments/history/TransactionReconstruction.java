@@ -21,19 +21,19 @@ public final class TransactionReconstruction {
    * Given some unaccounted for TXO values within the same block separated into {@param spent} and {@param unspent}, estimates a sensible grouping for display
    * to the user.
    */
-  public static TransactionReconstruction estimateBlockLevelActivity(@NonNull List<Money.MobileCoin> spent,
-                                                                     @NonNull List<Money.MobileCoin> unspent)
+  public static TransactionReconstruction estimateBlockLevelActivity(@NonNull List<Money.Satoshi> spent,
+                                                                     @NonNull List<Money.Satoshi> unspent)
   {
-    Money.MobileCoin totalSpent = Money.MobileCoin.sum(spent);
+    Money.Satoshi totalSpent = Money.Satoshi.sum(spent);
 
-    List<Money.MobileCoin> unspentDescending = new ArrayList<>(unspent);
-    Collections.sort(unspentDescending, Money.MobileCoin.DESCENDING);
+    List<Money.Satoshi> unspentDescending = new ArrayList<>(unspent);
+    Collections.sort(unspentDescending, Money.Satoshi.DESCENDING);
 
     List<Transaction> received = new ArrayList<>(unspent.size());
 
-    for (Money.MobileCoin unspentValue : unspentDescending) {
+    for (Money.Satoshi unspentValue : unspentDescending) {
       if (unspentValue.lessThan(totalSpent)) {
-        totalSpent = totalSpent.subtract(unspentValue).requireMobileCoin();
+        totalSpent = totalSpent.subtract(unspentValue).requireBitcoin();
       } else if (unspentValue.isPositive()) {
         received.add(new Transaction(unspentValue, Direction.RECEIVED));
       }
@@ -75,7 +75,7 @@ public final class TransactionReconstruction {
 
   public static final class Transaction {
     private static final Comparator<Transaction> RECEIVED_FIRST = (a, b) -> b.getDirection().compareTo(a.direction);
-    private static final Comparator<Transaction> ABSOLUTE_SIZE  = (a, b) -> Money.MobileCoin.ASCENDING.compare(a.value, b.value);
+    private static final Comparator<Transaction> ABSOLUTE_SIZE  = (a, b) -> Money.Satoshi.ASCENDING.compare(a.value, b.value);
 
     /**
      * Received first so that if going through a list and keeping a running balance, the order of transactions will not cause that balance to go into negative.
@@ -85,17 +85,17 @@ public final class TransactionReconstruction {
     public static final Comparator<Transaction> ORDER = ComparatorCompat.chain(RECEIVED_FIRST)
                                                                         .thenComparing(ABSOLUTE_SIZE);
 
-    private final Money.MobileCoin value;
-    private final Direction        direction;
+    private final Money.Satoshi value;
+    private final Direction     direction;
 
-    private Transaction(@NonNull Money.MobileCoin value,
+    private Transaction(@NonNull Money.Satoshi value,
                         @NonNull Direction direction)
     {
       this.value     = value;
       this.direction = direction;
     }
 
-    public @NonNull Money.MobileCoin getValue() {
+    public @NonNull Money.Satoshi getValue() {
       return value;
     }
 
@@ -103,7 +103,7 @@ public final class TransactionReconstruction {
       return direction;
     }
 
-    public @NonNull Money.MobileCoin getValueWithDirection() {
+    public @NonNull Money.Satoshi getValueWithDirection() {
       return direction == Direction.SENT ? value.negate() : value;
     }
 

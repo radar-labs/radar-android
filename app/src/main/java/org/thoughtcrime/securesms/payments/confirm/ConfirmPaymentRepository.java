@@ -9,14 +9,8 @@ import androidx.core.util.Consumer;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.jobs.PaymentSendJob;
-import org.thoughtcrime.securesms.payments.Balance;
-import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
-import org.thoughtcrime.securesms.payments.Payee;
-import org.thoughtcrime.securesms.payments.PaymentsAddressException;
-import org.thoughtcrime.securesms.payments.Wallet;
-import org.thoughtcrime.securesms.recipients.Recipient;
+import org.thoughtcrime.securesms.payments.*;
 import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.util.ProfileUtil;
 import org.thoughtcrime.securesms.util.Util;
 import org.whispersystems.signalservice.api.payments.Money;
 
@@ -39,39 +33,39 @@ final class ConfirmPaymentRepository {
     SignalExecutors.BOUNDED.execute(() -> {
       Balance balance = wallet.getCachedBalance();
 
-      if (state.getTotal().requireMobileCoin().greaterThan(balance.getFullAmount().requireMobileCoin())) {
+      if (state.getTotal().requireBitcoin().greaterThan(balance.getFullAmount().requireBitcoin())) {
         Log.w(TAG, "The total was greater than the wallet's balance");
         consumer.accept(new ConfirmPaymentResult.Error());
         return;
       }
 
       Payee                   payee = state.getPayee();
-      RecipientId             recipientId;
-      MobileCoinPublicAddress mobileCoinPublicAddress;
+      RecipientId      recipientId = null;
+      LightningAddress paymentAddress;
 
-      if (payee.hasRecipientId()) {
-        recipientId = payee.requireRecipientId();
-        try {
-          mobileCoinPublicAddress = ProfileUtil.getAddressForRecipient(Recipient.resolved(recipientId));
-        } catch (IOException e) {
-          Log.w(TAG, "Failed to get address for recipient " + recipientId);
-          consumer.accept(new ConfirmPaymentResult.Error());
-          return;
-        } catch (PaymentsAddressException e) {
-          Log.w(TAG, "Failed to get address for recipient " + recipientId);
-          consumer.accept(new ConfirmPaymentResult.Error(e.getCode()));
-          return;
-        }
-      } else if (payee.hasPublicAddress()) {
-        recipientId             = null;
-        mobileCoinPublicAddress = payee.requirePublicAddress();
-      } else throw new AssertionError();
+//      if (payee.hasRecipientId()) {
+//        recipientId = payee.requireRecipientId();
+//        try {
+//          mobileCoinPublicAddress = ProfileUtil.getAddressForRecipient(Recipient.resolved(recipientId));
+//        } catch (IOException e) {
+//          Log.w(TAG, "Failed to get address for recipient " + recipientId);
+//          consumer.accept(new ConfirmPaymentResult.Error());
+//          return;
+//        } catch (PaymentsAddressException e) {
+//          Log.w(TAG, "Failed to get address for recipient " + recipientId);
+//          consumer.accept(new ConfirmPaymentResult.Error(e.getCode()));
+//          return;
+//        }
+//      } else if (payee.hasPublicAddress()) {
+//        recipientId             = null;
+        paymentAddress = payee.requireLightningAddress();
+//      } else throw new AssertionError();
 
       UUID paymentUuid = PaymentSendJob.enqueuePayment(recipientId,
-                                                       mobileCoinPublicAddress,
+                                                       paymentAddress,
                                                        Util.emptyIfNull(state.getNote()),
-                                                       state.getAmount().requireMobileCoin(),
-                                                       state.getFee().requireMobileCoin());
+                                                       state.getAmount().requireBitcoin(),
+                                                       state.getFee().requireBitcoin());
 
       Log.i(TAG, "confirmPayment: PaymentSendJob enqueued");
       consumer.accept(new ConfirmPaymentResult.Success(paymentUuid));
@@ -81,7 +75,7 @@ final class ConfirmPaymentRepository {
   @WorkerThread
   @NonNull GetFeeResult getFee(@NonNull Money amount) {
     try {
-      return new GetFeeResult.Success(wallet.getFee(amount.requireMobileCoin()));
+      return new GetFeeResult.Success(wallet.getFee(amount));
     } catch (IOException e) {
       return new GetFeeResult.Error();
     }

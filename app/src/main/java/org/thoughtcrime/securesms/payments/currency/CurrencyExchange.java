@@ -63,7 +63,7 @@ public final class CurrencyExchange {
     }
 
     public @NonNull Optional<FiatMoney> exchange(@NonNull Money money) {
-      BigDecimal amount = money.requireMobileCoin().toBigDecimal();
+      BigDecimal amount = money.requireBitcoin().toBigDecimal();
 
       if (rate != null) {
         return Optional.of(new FiatMoney(amount.multiply(rate).setScale(currency.getDefaultFractionDigits(), RoundingMode.HALF_EVEN), currency, timestamp));

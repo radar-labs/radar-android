@@ -15,7 +15,7 @@ class FiatMoneyTest {
     val result = fiatMoney.defaultPrecisionString
 
     // THEN
-    assertEquals("100.00", result)
+    assertEquals("100,00", result)
   }
 
   @Test
