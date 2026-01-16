@@ -10,12 +10,12 @@ import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.lock.v2.PinKeyboardType
 import org.thoughtcrime.securesms.payments.Balance
+import org.thoughtcrime.securesms.payments.BreezSdkWrapper
 import org.thoughtcrime.securesms.payments.Entropy
 import org.thoughtcrime.securesms.payments.GeographicalRestrictions
 import org.thoughtcrime.securesms.payments.Mnemonic
 import org.thoughtcrime.securesms.payments.MobileCoinLedgerWrapper
 import org.thoughtcrime.securesms.payments.currency.CurrencyUtil
-import org.thoughtcrime.securesms.payments.proto.MobileCoinLedger
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.thoughtcrime.securesms.util.RemoteConfig
@@ -49,7 +49,7 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     private const val PAYMENT_LOCK_SKIP_COUNT = "mob_payments_payment_lock_skip_count"
     private const val SHOW_SAVE_RECOVERY_PHRASE = "mob_show_save_recovery_phrase"
 
-    private val LARGE_BALANCE_THRESHOLD = Money.mobileCoin(BigDecimal.valueOf(500))
+    private val LARGE_BALANCE_THRESHOLD = Money.bitcoin(BigDecimal.valueOf(500))
   }
 
   @get:JvmName("isPaymentLockEnabled")
@@ -290,12 +290,16 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
   }
 
   fun mobileCoinLatestFullLedger(): MobileCoinLedgerWrapper {
-    val blob = store.getBlob(MOB_LEDGER, null) ?: return MobileCoinLedgerWrapper(MobileCoinLedger())
+    val bsdk = breezSdkWrapperLatest()
+    return MobileCoinLedgerWrapper(bsdk)
+  }
+
+  fun breezSdkWrapperLatest(): BreezSdkWrapper {
+    val entropy = paymentsEntropy ?: return BreezSdkWrapper(null)
     return try {
-      MobileCoinLedgerWrapper(MobileCoinLedger.ADAPTER.decode(blob))
+      BreezSdkWrapper.connectWrapper(entropy.bytes)
     } catch (e: IOException) {
       Log.w(TAG, "Bad cached ledger, clearing", e)
-      setMobileCoinFullLedger(MobileCoinLedgerWrapper(MobileCoinLedger()))
       throw AssertionError(e)
     }
   }
@@ -349,7 +353,7 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
       .putBoolean(USER_CONFIRMED_MNEMONIC, true)
       .commit()
 
-    liveMobileCoinLedger.postValue(MobileCoinLedgerWrapper(MobileCoinLedger()))
+    liveMobileCoinLedger.postValue(MobileCoinLedgerWrapper(breezSdkWrapperLatest()))
     StorageSyncHelper.scheduleSyncForDataChange()
 
     return WalletRestoreResult.ENTROPY_CHANGED
@@ -362,6 +366,6 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
   }
 
   private fun userHasLargeBalance(): Boolean {
-    return mobileCoinLatestBalance().fullAmount.requireMobileCoin().greaterThan(LARGE_BALANCE_THRESHOLD)
+    return mobileCoinLatestBalance().fullAmount.requireBitcoin().greaterThan(LARGE_BALANCE_THRESHOLD)
   }
 }

@@ -41,7 +41,7 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
 
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-    viewModel.getSelfAddressAbbreviated().observe(getViewLifecycleOwner(), walletAddressAbbreviated::setText);
+    viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), walletAddressAbbreviated::setText);
 
     viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), base58 -> copyAddress.setOnClickListener(v -> copyAddressToClipboard(base58)));
 

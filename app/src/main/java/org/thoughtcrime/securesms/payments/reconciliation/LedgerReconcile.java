@@ -9,25 +9,12 @@ import com.annimon.stream.Stream;
 
 import org.signal.core.util.MapUtil;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.payments.MobileCoinLedgerWrapper;
-import org.thoughtcrime.securesms.payments.Payment;
-import org.thoughtcrime.securesms.payments.PaymentDecorator;
-import org.thoughtcrime.securesms.payments.ReconstructedPayment;
-import org.thoughtcrime.securesms.payments.State;
+import org.thoughtcrime.securesms.payments.*;
 import org.thoughtcrime.securesms.payments.history.TransactionReconstruction;
 import org.thoughtcrime.securesms.payments.proto.PaymentMetaData;
 import org.whispersystems.signalservice.api.payments.Money;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Nullable;
 
@@ -43,7 +30,13 @@ public final class LedgerReconcile {
   {
     long start = System.currentTimeMillis();
     try {
-      return reconcile(localPaymentTransactions, ledgerWrapper.getAllTxos());
+      List<MobileCoinLedgerWrapper.OwnedTxo> allTxOuts = ledgerWrapper.getAllTxos();
+      List<Payment> result = new ArrayList<>(allTxOuts.size());
+      for(MobileCoinLedgerWrapper.OwnedTxo txo : allTxOuts) {
+        result.add(new ReconstructedPayment(0L, txo.getReceivedInBlockTimestamp(), txo.getDirection(), txo.getValue()));
+      }
+
+      return result;
     } finally {
       Log.d(TAG, String.format(Locale.US, "Took %d ms - Ledger %d, Local %d", System.currentTimeMillis() - start, ledgerWrapper.getAllTxos().size(), localPaymentTransactions.size()));
     }
@@ -113,9 +106,9 @@ public final class LedgerReconcile {
       blockDetailMap.put(txo.getKeyImage(), txo);
     }
 
-    for (Payment local : localPaymentTransactions) {
-      result.add(findBlock(local, blockDetailMap));
-    }
+//    for (Payment local : localPaymentTransactions) {
+//      result.add(findBlock(local, blockDetailMap));
+//    }
     return result;
   }
 
@@ -126,7 +119,7 @@ public final class LedgerReconcile {
 
         if (ownedTxo != null) {
           long receivedInBlock          = ownedTxo.getReceivedInBlock();
-          long receivedInBlockTimestamp = ownedTxo.getReceivedInBlockTimestamp() != null ? ownedTxo.getReceivedInBlockTimestamp() : 0L;
+          long receivedInBlockTimestamp = ownedTxo.getReceivedInBlockTimestamp();
 
           return BlockOverridePayment.override(local, receivedInBlock, receivedInBlockTimestamp);
         }
@@ -191,9 +184,9 @@ public final class LedgerReconcile {
                                             .collect(Collectors.toSet());
 
     allBlocksWithActivity
-            .addAll(Stream.of(unknownSpent)
-                          .map(MobileCoinLedgerWrapper.OwnedTxo::getSpentInBlock)
-                          .collect(Collectors.toSet()));
+        .addAll(Stream.of(unknownSpent)
+                      .map(MobileCoinLedgerWrapper.OwnedTxo::getSpentInBlock)
+                      .collect(Collectors.toSet()));
 
     Map<Long, List<MobileCoinLedgerWrapper.OwnedTxo>> receivedInBlock = Stream.of(unknownReceived)
                                                                               .collect(Collectors.groupingBy(MobileCoinLedgerWrapper.OwnedTxo::getReceivedInBlock));
@@ -230,9 +223,10 @@ public final class LedgerReconcile {
                  .toList();
   }
 
-  private static @NonNull List<Money.MobileCoin> toMobileCoinList(@NonNull List<MobileCoinLedgerWrapper.OwnedTxo> spent) {
+  private static @NonNull List<Money.Satoshi> toMobileCoinList(@NonNull List<MobileCoinLedgerWrapper.OwnedTxo> spent) {
     return Stream.of(spent)
                  .map(MobileCoinLedgerWrapper.OwnedTxo::getValue)
+                 .map(Money::requireBitcoin)
                  .toList();
   }
 

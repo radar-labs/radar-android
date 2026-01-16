@@ -184,7 +184,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
     if (payee.hasRecipientId()) {
       return recipient.getDisplayName(requireContext());
     } else if (payee.hasPublicAddress()) {
-      return mono(requireContext(), Objects.requireNonNull(StringUtil.abbreviateInMiddle(payee.requirePublicAddress().getPaymentAddressBase58(), 17)));
+      return mono(requireContext(), Objects.requireNonNull(payee.requireLightningAddress().getPaymentAddress()));
     } else {
       throw new AssertionError();
     }

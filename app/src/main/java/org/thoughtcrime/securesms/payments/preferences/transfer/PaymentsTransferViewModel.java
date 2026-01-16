@@ -8,22 +8,22 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
-import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
+import org.thoughtcrime.securesms.payments.LightningAddress;
 
 final class PaymentsTransferViewModel extends ViewModel {
 
   private final MutableLiveData<String> address = new MutableLiveData<>();
-  private final MobileCoinPublicAddress ownAddress;
+  private final LightningAddress ownAddress;
 
   PaymentsTransferViewModel() {
-    ownAddress = AppDependencies.getPayments().getWallet().getMobileCoinPublicAddress();
+    ownAddress = AppDependencies.getPayments().getWallet().getLightningAddress();
   }
 
   LiveData<String> getAddress() {
     return address;
   }
 
-  MobileCoinPublicAddress getOwnAddress() {
+  LightningAddress getOwnAddress() {
     return ownAddress;
   }
 

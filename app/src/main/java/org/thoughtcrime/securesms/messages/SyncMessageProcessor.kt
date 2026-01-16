@@ -94,6 +94,7 @@ import org.thoughtcrime.securesms.mms.MmsException
 import org.thoughtcrime.securesms.mms.OutgoingMessage
 import org.thoughtcrime.securesms.mms.QuoteModel
 import org.thoughtcrime.securesms.notifications.MarkReadReceiver
+import org.thoughtcrime.securesms.payments.LightningAddress
 import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress
 import org.thoughtcrime.securesms.polls.Poll
 import org.thoughtcrime.securesms.ratelimit.RateLimitUtil
@@ -1258,7 +1259,7 @@ object SyncMessageProcessor {
         .createSuccessfulPayment(
           uuid,
           recipientId,
-          address!!,
+          LightningAddress.fromLightningAddress("not@found.com"), // Todo
           timestamp,
           mobileCoin.ledgerBlockIndex!!,
           outgoingPayment.note ?: "",

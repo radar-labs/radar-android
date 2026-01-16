@@ -19,7 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
+import org.thoughtcrime.securesms.payments.LightningAddress;
 import org.thoughtcrime.securesms.payments.preferences.model.PayeeParcelable;
 import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.util.ViewUtil;
@@ -62,10 +62,10 @@ public final class PaymentsTransferFragment extends LoggingFragment {
     });
   }
 
-  private boolean next(@NonNull MobileCoinPublicAddress ownAddress) {
+  private boolean next(@NonNull LightningAddress ownAddress) {
     try {
       String                  base58Address = address.getText().toString();
-      MobileCoinPublicAddress publicAddress = MobileCoinPublicAddress.fromBase58(base58Address);
+      LightningAddress publicAddress = LightningAddress.Companion.fromLightningAddress(base58Address);
 
       if (ownAddress.equals(publicAddress)) {
         new MaterialAlertDialogBuilder(requireContext())
@@ -81,7 +81,7 @@ public final class PaymentsTransferFragment extends LoggingFragment {
 
       SafeNavigation.safeNavigate(Navigation.findNavController(requireView()), action);
       return true;
-    } catch (MobileCoinPublicAddress.AddressException e) {
+    } catch (LightningAddress.AddressException e) {
       Log.w(TAG, "Address is not valid", e);
       new MaterialAlertDialogBuilder(requireContext())
                      .setTitle(R.string.PaymentsTransferFragment__invalid_address)

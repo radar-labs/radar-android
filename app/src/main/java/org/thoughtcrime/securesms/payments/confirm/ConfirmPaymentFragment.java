@@ -28,7 +28,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.signal.core.util.StringUtil;
 import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.BiometricDeviceAuthentication;
@@ -202,7 +201,7 @@ public class ConfirmPaymentFragment extends BottomSheetDialogFragment {
 
   private static CharSequence getPayeeDescription(Context context, @NonNull Payee payee) {
     return payee.hasRecipientId() ? Recipient.resolved(payee.requireRecipientId()).getDisplayName(context)
-                                  : mono(context, StringUtil.abbreviateInMiddle(payee.requirePublicAddress().getPaymentAddressBase58(), 17));
+                                  : mono(context, payee.requireLightningAddress().getPaymentAddress());
   }
 
   private static CharSequence mono(Context context, CharSequence address) {

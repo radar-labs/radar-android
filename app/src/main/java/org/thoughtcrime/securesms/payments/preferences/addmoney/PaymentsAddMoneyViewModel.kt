@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
 import io.reactivex.rxjava3.disposables.Disposable
 import org.signal.core.util.Result
-import org.signal.core.util.StringUtil
 
 internal class PaymentsAddMoneyViewModel(paymentsAddMoneyRepository: PaymentsAddMoneyRepository) : ViewModel() {
   private val selfAddressAndUri = MutableLiveData<AddressAndUri>()
@@ -15,7 +14,6 @@ internal class PaymentsAddMoneyViewModel(paymentsAddMoneyRepository: PaymentsAdd
 
   val errors = MutableLiveData<PaymentsAddMoneyRepository.Error>()
   val selfAddressB58: LiveData<String> = selfAddressAndUri.map { it!!.addressB58 }
-  val selfAddressAbbreviated: LiveData<CharSequence?> = selfAddressB58.map { StringUtil.abbreviateInMiddle(it, 17) }
 
   init {
     walletDisposable = paymentsAddMoneyRepository

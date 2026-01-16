@@ -23,13 +23,7 @@ import org.thoughtcrime.securesms.database.model.MessageId;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.databaseprotos.CryptoValue;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
-import org.thoughtcrime.securesms.payments.CryptoValueUtil;
-import org.thoughtcrime.securesms.payments.Direction;
-import org.thoughtcrime.securesms.payments.FailureReason;
-import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
-import org.thoughtcrime.securesms.payments.Payee;
-import org.thoughtcrime.securesms.payments.Payment;
-import org.thoughtcrime.securesms.payments.State;
+import org.thoughtcrime.securesms.payments.*;
 import org.thoughtcrime.securesms.payments.proto.PaymentMetaData;
 import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.signal.core.util.Base64;
@@ -122,7 +116,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
   @WorkerThread
   public void createOutgoingPayment(@NonNull UUID uuid,
                                     @Nullable RecipientId toRecipient,
-                                    @NonNull MobileCoinPublicAddress publicAddress,
+                                    @NonNull LightningAddress publicAddress,
                                     long timestamp,
                                     @NonNull String note,
                                     @NonNull Money amount)
@@ -145,7 +139,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
   @WorkerThread
   public void createSuccessfulPayment(@NonNull UUID uuid,
                                       @Nullable RecipientId toRecipient,
-                                      @NonNull MobileCoinPublicAddress publicAddress,
+                                      @NonNull LightningAddress publicAddress,
                                       long timestamp,
                                       long blockIndex,
                                       @NonNull String note,
@@ -166,7 +160,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
   @WorkerThread
   public void createDefrag(@NonNull UUID uuid,
                            @Nullable RecipientId self,
-                           @NonNull MobileCoinPublicAddress selfPublicAddress,
+                           @NonNull LightningAddress selfPublicAddress,
                            long timestamp,
                            @NonNull Money fee,
                            @NonNull byte[] transaction,
@@ -214,7 +208,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
   @WorkerThread
   private void create(@NonNull UUID uuid,
                       @Nullable RecipientId recipientId,
-                      @Nullable MobileCoinPublicAddress publicAddress,
+                      @Nullable LightningAddress publicAddress,
                       long timestamp,
                       long blockIndex,
                       @NonNull String note,
@@ -252,7 +246,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
     if (publicAddress == null) {
       values.putNull(ADDRESS);
     } else {
-      values.put(ADDRESS, publicAddress.getPaymentAddressBase58());
+      values.put(ADDRESS, publicAddress.getPaymentAddress());
     }
     values.put(TIMESTAMP, timestamp);
     values.put(BLOCK_INDEX, blockIndex);
@@ -637,7 +631,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
 
     return new PaymentTransaction(UUID.fromString(CursorUtil.requireString(cursor, PAYMENT_UUID)),
                                   getRecipientId(cursor),
-                                  MobileCoinPublicAddress.fromBase58NullableOrThrow(CursorUtil.requireString(cursor, ADDRESS)),
+                                  LightningAddress.Companion.fromLightningAddressNullableOrThrow(CursorUtil.requireString(cursor, ADDRESS)),
                                   CursorUtil.requireLong(cursor, TIMESTAMP),
                                   Direction.deserialize(CursorUtil.requireInt(cursor, DIRECTION)),
                                   state,
@@ -722,7 +716,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
 
     PaymentTransaction(@NonNull UUID uuid,
                        @Nullable RecipientId recipientId,
-                       @Nullable MobileCoinPublicAddress publicAddress,
+                       @Nullable LightningAddress publicAddress,
                        long timestamp,
                        @NonNull Direction direction,
                        @NonNull State state,
@@ -866,13 +860,13 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
     }
   }
 
-  private static @NonNull Payee fromPaymentTransaction(@Nullable RecipientId recipientId, @Nullable MobileCoinPublicAddress publicAddress) {
+  private static @NonNull Payee fromPaymentTransaction(@Nullable RecipientId recipientId, @Nullable LightningAddress publicAddress) {
     if (recipientId == null && publicAddress == null) {
       throw new AssertionError();
     }
 
     if (recipientId != null) {
-      return Payee.fromRecipientAndAddress(recipientId, publicAddress);
+      return new Payee(recipientId, publicAddress);
     } else {
       return new Payee(publicAddress);
     }

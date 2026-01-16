@@ -21,7 +21,6 @@ import org.thoughtcrime.securesms.util.SpanUtil;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModelList;
 import org.whispersystems.signalservice.api.payments.FormatterOptions;
-import org.whispersystems.signalservice.api.payments.PaymentsConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -95,7 +94,7 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
     return payment.getAmountPlusFeeWithDirection()
                   .toString(FormatterOptions.builder(Locale.getDefault())
                                             .alwaysPrefixWithSign()
-                                            .withMaximumFractionDigits(PaymentsConstants.SHORT_FRACTION_LENGTH)
+//                                            .withMaximumFractionDigits(PaymentsConstants.SHORT_FRACTION_LENGTH)
                                             .build());
   }
 
@@ -128,7 +127,7 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
   }
 
   public @DrawableRes int getTransactionAvatar() {
-    return R.drawable.ic_mobilecoin_avatar_24;
+    return R.drawable.ic_bitcoin_lightning_24;
   }
 
   public @NonNull RecipientIdMappingModel getRecipientIdModel() {
