@@ -26,7 +26,6 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.payments.*;
 import org.thoughtcrime.securesms.payments.proto.PaymentMetaData;
 import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.signal.core.util.Base64;
 import org.thoughtcrime.securesms.util.livedata.LiveDataUtil;
 import org.whispersystems.signalservice.api.payments.Money;
 import org.signal.core.util.UuidUtil;
@@ -262,16 +261,12 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
     }
     if (receipt != null) {
       values.put(RECEIPT, receipt);
-      values.put(PUBLIC_KEY, Base64.encodeWithPadding(PaymentMetaDataUtil.receiptPublic(PaymentMetaDataUtil.fromReceipt(receipt))));
+      values.putNull(PUBLIC_KEY);
     } else {
       values.putNull(RECEIPT);
       values.putNull(PUBLIC_KEY);
     }
-    if (metaData != null) {
-      values.put(META_DATA, metaData.encode());
-    } else {
-      values.put(META_DATA, PaymentMetaDataUtil.fromReceiptAndTransaction(receipt, transaction).encode());
-    }
+    values.put(META_DATA, PaymentMetaDataUtil.fromReceiptAndTransaction(new byte[0], new byte[0]).encode());
     values.put(SEEN, seen ? 1 : 0);
 
     long inserted = database.insert(TABLE_NAME, null, values);
@@ -492,12 +487,12 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
     values.put(STATE, State.SUBMITTED.serialize());
     values.put(TRANSACTION, transaction);
     values.put(RECEIPT, receipt);
-    try {
-      values.put(PUBLIC_KEY, Base64.encodeWithPadding(PaymentMetaDataUtil.receiptPublic(PaymentMetaDataUtil.fromReceipt(receipt))));
-      values.put(META_DATA, PaymentMetaDataUtil.fromReceiptAndTransaction(receipt, transaction).encode());
-    } catch (SerializationException e) {
-      throw new IllegalArgumentException(e);
-    }
+//    try {
+//      values.put(PUBLIC_KEY, Base64.encodeWithPadding(PaymentMetaDataUtil.receiptPublic(PaymentMetaDataUtil.fromReceipt(receipt))));
+//      values.put(META_DATA, PaymentMetaDataUtil.fromReceiptAndTransaction(receipt, transaction).encode());
+//    } catch (SerializationException e) {
+//      throw new IllegalArgumentException(e);
+//    }
     values.put(FEE, CryptoValueUtil.moneyToCryptoValue(fee).encode());
 
     database.beginTransaction();
@@ -641,7 +636,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
                                   getMoneyValue(CursorUtil.requireBlob(cursor, FEE)),
                                   CursorUtil.requireBlob(cursor, TRANSACTION),
                                   CursorUtil.requireBlob(cursor, RECEIPT),
-                                  PaymentMetaDataUtil.parseOrThrow(CursorUtil.requireBlob(cursor, META_DATA)),
+                                  new PaymentMetaData(),
                                   CursorUtil.requireLong(cursor, BLOCK_INDEX),
                                   CursorUtil.requireLong(cursor, BLOCK_TIME),
                                   CursorUtil.requireBoolean(cursor, SEEN));
@@ -821,6 +816,7 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
       return transaction;
     }
 
+    @Override
     public @Nullable byte[] getReceipt() {
       return receipt;
     }

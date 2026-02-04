@@ -21,7 +21,7 @@ android {
 
   defaultConfig {
     applicationId = "org.thoughtcrime.video.app"
-    minSdk = 23
+    minSdk = 24
     targetSdk = signalTargetSdkVersion
     versionCode = 1
     versionName = "1.0"

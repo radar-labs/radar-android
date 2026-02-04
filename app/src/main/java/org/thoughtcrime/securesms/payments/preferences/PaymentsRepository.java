@@ -40,8 +40,7 @@ public class PaymentsRepository {
     LiveData<List<PaymentTable.PaymentTransaction>> localPayments = paymentDatabase.getAllLive();
     LiveData<MobileCoinLedgerWrapper>               ledger        = SignalStore.payments().liveMobileCoinLedger();
 
-    //noinspection NullableProblems
-    this.recentPayments         = LiveDataUtil.mapAsync(LiveDataUtil.combineLatest(localPayments, ledger, (a, b) -> new Pair<>(a, b)), p -> reconcile(p.getFirst(), p.getSecond()));
+    this.recentPayments         = LiveDataUtil.mapAsync(LiveDataUtil.combineLatest(localPayments, ledger, Pair::new), p -> reconcile(p.getFirst(), p.getSecond()));
     this.recentSentPayments     = LiveDataUtil.mapAsync(this.recentPayments, p -> filterPayments(p, Direction.SENT));
     this.recentReceivedPayments = LiveDataUtil.mapAsync(this.recentPayments, p -> filterPayments(p, Direction.RECEIVED));
   }

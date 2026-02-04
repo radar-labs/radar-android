@@ -67,7 +67,7 @@ public final class PaymentTransactionCheckJob extends BaseJob {
     switch (payment.getDirection()) {
       case SENT: {
         Log.i(TAG, "Checking sent status of " + uuid);
-        PaymentTransactionId           paymentTransactionId = new PaymentTransactionId.MobileCoin(Objects.requireNonNull(payment.getTransaction()), Objects.requireNonNull(payment.getReceipt()), payment.getFee().requireMobileCoin());
+        PaymentTransactionId           paymentTransactionId = new PaymentTransactionId.MobileCoin(Objects.requireNonNull(payment.getTransaction()), Objects.requireNonNull(payment.getReceipt()), payment.getFee().requireBitcoin());
         Wallet.TransactionStatusResult status               = payments.getWallet().getSentTransactionStatus(paymentTransactionId);
 
         switch (status.getTransactionStatus()) {

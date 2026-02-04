@@ -8,14 +8,18 @@ package org.thoughtcrime.securesms.payments
 import android.annotation.SuppressLint
 import breez_sdk_spark.*
 import kotlinx.coroutines.runBlocking
+import org.signal.core.util.CryptoUtil
+import org.signal.core.util.Hex
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.payments.MobileCoinLedgerWrapper.OwnedTxo
+import org.thoughtcrime.securesms.util.ProfileUtil
 import org.whispersystems.signalservice.api.payments.Money
 import java.math.BigInteger
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.util.*
 
 class BreezSdkWrapper(ledger: BreezSdk?) {
   private val sdk: BreezSdk? = ledger
@@ -60,46 +64,57 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
 
     try {
       val lnAddress = runBlocking { sdk.getLightningAddress() }
+      if (lnAddress != null) return LightningAddress(lnAddress.lightningAddress, lnAddress.lnurl)
 
-      if (lnAddress == null) {
-        runBlocking { sdk.registerLightningAddress(RegisterLightningAddressRequest(SignalStore.account.username!!)) }
-      }
+      val username = Hex.toStringCondensed(CryptoUtil.sha256(SignalStore.account.getServiceIds().aci.toString().uppercase(Locale.getDefault()).toByteArray())).substring(0, 10)
 
-      return runBlocking {
+      runBlocking { sdk.registerLightningAddress(RegisterLightningAddressRequest(username)) }
+
+      val lightningAddress = runBlocking {
         val lnAddress = sdk.getLightningAddress()
-        if (lnAddress == null) LightningAddress("\\*.*/ No Address Found", "") else LightningAddress(lnAddress.lightningAddress, lnAddress.lnurl)
+        if (lnAddress == null) null else LightningAddress(lnAddress.lightningAddress, lnAddress.lnurl)
       }
+
+      if (lightningAddress != null) ProfileUtil.uploadLightingProfile(AppDependencies.application, lightningAddress)
+
+      return lightningAddress ?: LightningAddress("\\*.*/ No Address Found", "")
     } catch (e: SdkException) {
       Log.e("BreezSdk", "Error getting lightning address", e)
       return LightningAddress("\\*.*/ Error getting lightning address", "")
     }
   }
 
-  fun sendPayment(address: String, amount: BigInteger) {
+  fun sendPayment(address: String, amount: BigInteger): ByteArray {
+    val inputType = runBlocking { sdk!!.parse(address) }
 
-    try {
-      val inputType = runBlocking { sdk!!.parse(address) }
-      if (inputType is InputType.LightningAddress) {
-        val amountSats = amount.toLong().toULong()
-        val payRequest = inputType.v1.payRequest
-        val optionalValidateSuccessActionUrl = true
-
-        val req = PrepareLnurlPayRequest(
-          amountSats = amountSats,
-          payRequest = payRequest,
-          comment = null,
-          optionalValidateSuccessActionUrl
-        )
-        val prepareResponse = runBlocking { sdk!!.prepareLnurlPay(req) }
-
-        val feeSats = prepareResponse.feeSats
-
-        val response = runBlocking { sdk!!.lnurlPay(LnurlPayRequest(prepareResponse)) }
-
-      }
-    } catch (e: Exception) {
-      // handle error
+    if (inputType !is InputType.LightningAddress && inputType !is InputType.LnurlPay) {
+      throw UnsupportedOperationException()
     }
+
+    val amountSats = amount.toLong().toULong()
+    val optionalValidateSuccessActionUrl = true
+    var payRequest: LnurlPayRequestDetails? = null
+
+    if (inputType is InputType.LightningAddress) {
+      payRequest = inputType.v1.payRequest
+    } else if (inputType is InputType.LnurlPay) {
+      payRequest = inputType.v1
+    }
+    val req = PrepareLnurlPayRequest(
+      amountSats = amountSats,
+      payRequest = payRequest!!,
+      comment = null,
+      optionalValidateSuccessActionUrl
+    )
+    val prepareResponse = runBlocking { sdk!!.prepareLnurlPay(req) }
+
+    val response = runBlocking { sdk!!.lnurlPay(LnurlPayRequest(prepareResponse)) }
+
+    val allocationSize = FfiConverterTypeLnurlPayResponse.allocationSize(response)
+    val buffer = ByteBuffer(java.nio.ByteBuffer.allocate(allocationSize.toInt()))
+    FfiConverterTypeLnurlPayResponse.write(response, buffer)
+
+    return buffer.internal().array()
   }
 
 
@@ -134,7 +149,25 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       return BreezSdkWrapper(connect(entropy))
     }
 
+    fun deserializeLnurlPayResponse(serialized: ByteArray): LnurlPayResponse {
+      val buffer = ByteBuffer(java.nio.ByteBuffer.wrap(serialized))
+      return FfiConverterTypeLnurlPayResponse.read(buffer)
+    }
 
+    fun getIdentifierFromReceipt(receipt: ByteArray): String? {
+      val response = deserializeLnurlPayResponse(receipt)
+      return getIdentifierFromReceipt(response)
+    }
+
+    fun getIdentifierFromReceipt(response: LnurlPayResponse): String? = when (response.payment.details) {
+      is PaymentDetails.Lightning -> (response.payment.details as PaymentDetails.Lightning).paymentHash
+      is PaymentDetails.Deposit -> (response.payment.details as PaymentDetails.Deposit).txId
+      is PaymentDetails.Withdraw -> (response.payment.details as PaymentDetails.Withdraw).txId
+
+      is PaymentDetails.Spark -> null
+      is PaymentDetails.Token -> null
+      null -> null
+    }
   }
 }
 

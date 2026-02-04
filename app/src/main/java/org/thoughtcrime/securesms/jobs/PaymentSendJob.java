@@ -146,28 +146,6 @@ public final class PaymentSendJob extends BaseJob {
       PaymentSubmissionResult paymentSubmissionResult = wallet.sendPayment(publicAddress, amount, totalFee);
       stopwatch.split("Payment submitted");
 
-      if (paymentSubmissionResult.containsDefrags()) {
-        Log.i(TAG, "Payment contains " + paymentSubmissionResult.defrags().size() + " defrags, main payment" + uuid);
-        RecipientId             self        = Recipient.self().getId();
-        LightningAddress selfAddress = wallet.getLightningAddress();
-        for (TransactionSubmissionResult defrag : paymentSubmissionResult.defrags()) {
-          UUID                            defragUuid            = UUID.randomUUID();
-          PaymentTransactionId.MobileCoin mobileCoinTransaction = (PaymentTransactionId.MobileCoin) defrag.getTransactionId();
-          paymentDatabase.createDefrag(defragUuid,
-                                       self,
-                                       selfAddress,
-                                       timestamp - 1,
-                                       mobileCoinTransaction.getFee(),
-                                       mobileCoinTransaction.getTransaction(), mobileCoinTransaction.getReceipt());
-          Log.i(TAG, "Defrag entered with id " + defragUuid);
-          AppDependencies.getJobManager()
-                         .startChain(new PaymentTransactionCheckJob(defragUuid, QUEUE))
-                         .then(new MultiDeviceOutgoingPaymentSyncJob(defragUuid))
-                         .enqueue();
-        }
-        stopwatch.split("Defrag");
-      }
-
       TransactionSubmissionResult.ErrorCode errorCode = paymentSubmissionResult.getErrorCode();
 
       switch (errorCode) {

@@ -682,8 +682,8 @@ object DataMessageProcessor {
         senderRecipientId,
         message.timestamp!!,
         paymentNotification.note ?: "",
-        Money.MobileCoin.ZERO,
-        Money.MobileCoin.ZERO,
+        Money.Satoshi.ZERO,
+        Money.Satoshi.ZERO,
         paymentNotification.mobileCoin!!.receipt!!.toByteArray(),
         true
       )
