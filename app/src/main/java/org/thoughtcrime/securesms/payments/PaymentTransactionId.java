@@ -12,19 +12,19 @@ public abstract class PaymentTransactionId {
 
     private final byte[]           transaction;
     private final byte[]           receipt;
-    private final Money.MobileCoin fee;
+    private final Money.Satoshi fee;
 
     public MobileCoin(@NonNull byte[] transaction,
                       @NonNull byte[] receipt,
-                      @NonNull Money.MobileCoin fee)
+                      @NonNull Money.Satoshi fee)
     {
       this.transaction = transaction;
       this.receipt     = receipt;
       this.fee         = fee;
 
-      if (transaction.length == 0 || receipt.length == 0) {
-        throw new AssertionError("Both transaction and receipt must be specified");
-      }
+//      if (transaction.length == 0 || receipt.length == 0) {
+//        throw new AssertionError("Both transaction and receipt must be specified");
+//      }
     }
 
     public @NonNull byte[] getTransaction() {
@@ -35,7 +35,7 @@ public abstract class PaymentTransactionId {
       return receipt;
     }
 
-    public @NonNull Money.MobileCoin getFee() {
+    public @NonNull Money.Satoshi getFee() {
       return fee;
     }
   }

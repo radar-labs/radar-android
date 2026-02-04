@@ -65,12 +65,13 @@ class ProfileApi(
     paymentsAddress: PaymentAddress?,
     avatar: AvatarUploadParams,
     visibleBadgeIds: List<String>,
-    phoneNumberSharing: Boolean
+    phoneNumberSharing: Boolean,
+    version: String?,
   ): NetworkResult<String?> {
     val profileCipher = ProfileCipher(profileKey)
 
     val profileWrite = SignalServiceProfileWrite(
-      version = profileKey.getProfileKeyVersion(aci.libSignalAci).serialize(),
+      version = version ?: profileKey.getProfileKeyVersion(aci.libSignalAci).serialize(),
       name = profileCipher.encryptString(name ?: "", ProfileCipher.getTargetNameLength(name)),
       about = profileCipher.encryptString(about ?: "", ProfileCipher.getTargetAboutLength(about)),
       aboutEmoji = profileCipher.encryptString(aboutEmoji ?: "", ProfileCipher.EMOJI_PADDED_LENGTH),
@@ -115,8 +116,9 @@ class ProfileApi(
    * - 404: Recipient is not a registered Signal user
    * - 429: Rate-limited
    */
-  fun getVersionedProfileAndCredential(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?): NetworkResult<Pair<SignalServiceProfile, ExpiringProfileKeyCredential>> {
-    val profileVersion = profileKey.getProfileKeyVersion(aci.libSignalAci).serialize()
+  fun getVersionedProfileAndCredential(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?): NetworkResult<Pair<SignalServiceProfile, ExpiringProfileKeyCredential>> = getVersionedProfileAndCredential(aci, profileKey, sealedSenderAccess, null)
+  fun getVersionedProfileAndCredential(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?, version: String?): NetworkResult<Pair<SignalServiceProfile, ExpiringProfileKeyCredential>> {
+    val profileVersion = version ?: profileKey.getProfileKeyVersion(aci.libSignalAci).serialize()
     val profileRequestContext = clientZkProfileOperations.createProfileKeyCredentialRequestContext(SecureRandom(), aci.libSignalAci, profileKey)
     val serializedProfileRequest = Hex.toStringCondensed(profileRequestContext.request.serialize())
 
@@ -142,9 +144,10 @@ class ProfileApi(
    * - 404: Recipient is not a registered Signal user
    * - 429: Rate-limited
    */
-  fun getVersionedProfile(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?): NetworkResult<SignalServiceProfile> {
-    val profileKeyIdentifier = profileKey.getProfileKeyVersion(aci.libSignalAci)
-    val profileVersion = profileKeyIdentifier.serialize()
+
+  fun getVersionedProfile(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?): NetworkResult<SignalServiceProfile> = getVersionedProfile(aci, profileKey, sealedSenderAccess, null)
+  fun getVersionedProfile(aci: ServiceId.ACI, profileKey: ProfileKey?, sealedSenderAccess: SealedSenderAccess?, version: String?): NetworkResult<SignalServiceProfile> {
+    val profileVersion = version ?: profileKey!!.getProfileKeyVersion(aci.libSignalAci).serialize()
 
     val request = WebSocketRequestMessage.get("/v1/profile/$aci/$profileVersion")
     val converter = NetworkResult.DefaultWebSocketConverter(SignalServiceProfile::class)

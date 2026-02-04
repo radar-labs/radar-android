@@ -9,12 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.util.ByteUtil;
-import org.thoughtcrime.securesms.payments.Direction;
-import org.thoughtcrime.securesms.payments.FailureReason;
-import org.thoughtcrime.securesms.payments.MobileCoinLedgerWrapper;
-import org.thoughtcrime.securesms.payments.Payee;
-import org.thoughtcrime.securesms.payments.Payment;
-import org.thoughtcrime.securesms.payments.State;
+import org.thoughtcrime.securesms.payments.*;
 import org.thoughtcrime.securesms.payments.proto.MobileCoinLedger;
 import org.thoughtcrime.securesms.payments.proto.PaymentMetaData;
 import org.thoughtcrime.securesms.recipients.RecipientId;
@@ -45,7 +40,7 @@ public final class LedgerReconcileTest {
 
   @Test
   public void empty_lists() {
-    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(new MobileCoinLedger()));
+    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(null));
 
     assertEquals(Collections.emptyList(), payments);
   }
@@ -54,7 +49,7 @@ public final class LedgerReconcileTest {
   public void single_unspent_transaction_on_ledger_only() {
     MobileCoinLedger ledger = ledger(unspentTxo(mob(2.5), keyImage(2), publicKey(3), block(2)));
 
-    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(null));
 
     assertEquals(1, payments.size());
 
@@ -74,7 +69,7 @@ public final class LedgerReconcileTest {
   public void single_spent_transaction_on_ledger() {
     MobileCoinLedger ledger = ledger(spentTxo(mob(10), keyImage(1), publicKey(2), block(1), block(2)));
 
-    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(null));
 
     assertEquals(2, payments.size());
 
@@ -105,7 +100,7 @@ public final class LedgerReconcileTest {
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(1), publicKey(2), block(1), block(2)),
                                      unspentTxo(mob(1), keyImage(3), publicKey(4), block(3)));
 
-    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(null));
 
     assertEquals(3, payments.size());
 
@@ -119,7 +114,7 @@ public final class LedgerReconcileTest {
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(1), publicKey(2), block(1), block(2)),
                                      unspentTxo(mob(1), keyImage(3), publicKey(4), block(2)));
 
-    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(Collections.emptyList(), new MobileCoinLedgerWrapper(null));
 
     assertEquals(2, payments.size());
 
@@ -134,7 +129,7 @@ public final class LedgerReconcileTest {
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(5), publicKey(2), block(1), block(2)),
                                      unspentTxo(mob(1), keyImage(3), publicKey(4), block(2)));
 
-    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
     assertEquals(2, payments.size());
 
@@ -148,7 +143,7 @@ public final class LedgerReconcileTest {
 
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(5), publicKey(2), block(1), block(2)));
 
-    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
     assertEquals(2, payments.size());
 
@@ -166,7 +161,7 @@ public final class LedgerReconcileTest {
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(5), publicKey(2), block(1), block(2)),
                                      unspentTxo(mob(1.5), keyImage(7), publicKey(8), block(2)));
 
-    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
     assertEquals(Arrays.asList(mob(-1), mob(2.5)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
     assertEquals("received", payments.get(1).getNote());
@@ -179,7 +174,7 @@ public final class LedgerReconcileTest {
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(5), publicKey(2), block(1), block(2)),
                                      unspentTxo(mob(1.5), keyImage(7), publicKey(8), block(3)));
 
-    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
     assertEquals(Arrays.asList(mob(1.5), mob(-2.5), mob(2.5)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
     assertEquals("received", payments.get(2).getNote());
@@ -192,7 +187,7 @@ public final class LedgerReconcileTest {
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(5), publicKey(2), block(1), block(2)),
                                      unspentTxo(mob(1.5), keyImage(7), publicKey(8), block(3)));
 
-    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
     assertEquals(Arrays.asList(mob(2.5), mob(1.5), mob(-2.5), mob(2.5)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
     assertEquals("received", payments.get(0).getNote());
@@ -206,7 +201,7 @@ public final class LedgerReconcileTest {
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(5), publicKey(2), block(1), block(2)),
                                      unspentTxo(mob(1.5), keyImage(7), publicKey(8), block(3)));
 
-    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
     assertEquals(Arrays.asList(mob(1.5), mob(-2.5), mob(10), mob(20)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
   }
@@ -219,7 +214,7 @@ public final class LedgerReconcileTest {
     MobileCoinLedger ledger = ledger(spentTxo(mob(2.5), keyImage(5), publicKey(2), block(10), block(20)),
                                      unspentTxo(mob(10), keyImage(9), publicKey(7), block(15)));
 
-    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(ledger));
+    List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
     assertEquals(Arrays.asList(20L, 15L, 0L, 10L), Stream.of(payments).map(Payment::getBlockIndex).toList());
     assertEquals(Arrays.asList(mob(-2.5), mob(10), mob(20), mob(2.5)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());

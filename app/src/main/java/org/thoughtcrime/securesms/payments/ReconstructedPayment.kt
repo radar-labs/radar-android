@@ -1,94 +1,40 @@
-package org.thoughtcrime.securesms.payments;
+package org.thoughtcrime.securesms.payments
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import org.signal.core.util.UuidUtil
+import org.thoughtcrime.securesms.payments.proto.PaymentMetaData
+import org.whispersystems.signalservice.api.payments.Money
+import java.util.*
 
-import org.thoughtcrime.securesms.payments.proto.PaymentMetaData;
-import org.whispersystems.signalservice.api.payments.Money;
-import org.signal.core.util.UuidUtil;
+class ReconstructedPayment(
+  private val blockIndex: Long,
+  private val blockTimestamp: Long,
+  private val direction: Direction,
+  private val amount: Money,
+  private val fee: Money
+) : Payment {
+  override fun getUuid(): UUID = UuidUtil.UNKNOWN_UUID
 
-import java.util.UUID;
+  override fun getPayee(): Payee = Payee.UNKNOWN
 
-public final class ReconstructedPayment implements Payment {
+  override fun getBlockIndex(): Long = blockIndex
 
-  private final long      blockIndex;
-  private final long      blockTimestamp;
-  private final Direction direction;
-  private final Money     amount;
+  override fun getTimestamp(): Long = blockTimestamp
 
-  public ReconstructedPayment(long blockIndex,
-                              long blockTimestamp,
-                              @NonNull Direction direction,
-                              @NonNull Money amount)
-  {
-    this.blockIndex     = blockIndex;
-    this.blockTimestamp = blockTimestamp;
-    this.direction      = direction;
-    this.amount         = amount;
-  }
+  override fun getBlockTimestamp(): Long = blockTimestamp
 
-  @NonNull
-  public @Override UUID getUuid() {
-    return UuidUtil.UNKNOWN_UUID;
-  }
+  override fun getDirection(): Direction = direction
 
-  @Override
-  public @NonNull Payee getPayee() {
-    return Payee.UNKNOWN;
-  }
+  override fun getState(): State = State.SUCCESSFUL
 
-  @Override
-  public long getBlockIndex() {
-    return blockIndex;
-  }
+  override fun getFailureReason(): FailureReason? = null
 
-  @Override
-  public long getTimestamp() {
-    return blockTimestamp;
-  }
+  override fun getNote(): String = ""
 
-  @Override
-  public long getBlockTimestamp() {
-    return blockTimestamp;
-  }
+  override fun getAmount(): Money = amount
 
-  @Override
-  public @NonNull Direction getDirection() {
-    return direction;
-  }
+  override fun getFee(): Money = fee
 
-  @Override
-  public @NonNull State getState() {
-    return State.SUCCESSFUL;
-  }
+  override fun getPaymentMetaData(): PaymentMetaData = PaymentMetaData()
 
-  @Override
-  public @Nullable FailureReason getFailureReason() {
-    return null;
-  }
-
-  @Override
-  public @NonNull String getNote() {
-    return "";
-  }
-
-  @Override
-  public @NonNull Money getAmount() {
-    return amount;
-  }
-
-  @Override
-  public @NonNull Money getFee() {
-    return amount.toZero();
-  }
-
-  @Override
-  public @NonNull PaymentMetaData getPaymentMetaData() {
-    return new PaymentMetaData();
-  }
-
-  @Override
-  public boolean isSeen() {
-    return true;
-  }
+  override fun isSeen(): Boolean = true
 }

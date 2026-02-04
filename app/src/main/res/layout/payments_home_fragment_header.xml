@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:money="MOB:7500000000000" />
+        tools:money="BTC:7500000000000" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/payments_home_fragment_header_refresh"

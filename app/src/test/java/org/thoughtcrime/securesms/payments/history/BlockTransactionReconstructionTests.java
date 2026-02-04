@@ -89,8 +89,8 @@ public final class BlockTransactionReconstructionTests {
 
     TransactionReconstruction estimate = TransactionReconstruction.estimateBlockLevelActivity(spentTransactionOutputs.getMoney(), unspentTransactionOutputs.getMoney());
 
-    Money transactionIn   = Money.MobileCoin.sum(toValueList(estimate.received()));
-    Money transactionOut  = Money.MobileCoin.sum(toValueList(estimate.sent()));
+    Money transactionIn   = Money.Satoshi.sum(toValueList(estimate.received()));
+    Money transactionOut  = Money.Satoshi.sum(toValueList(estimate.sent()));
     Money netTransactions = transactionIn.subtract(transactionOut);
 
     assertEquals(net, netTransactions);
@@ -102,7 +102,7 @@ public final class BlockTransactionReconstructionTests {
 
     TransactionReconstruction estimate = TransactionReconstruction.estimateBlockLevelActivity(spentTransactionOutputs.getMoney(), unspentTransactionOutputs.getMoney());
 
-    Money netValueWithDirections = Money.MobileCoin.sum(toValueListWithDirection(estimate.getAllTransactions()));
+    Money netValueWithDirections = Money.Satoshi.sum(toValueListWithDirection(estimate.getAllTransactions()));
 
     assertEquals(net, netValueWithDirections);
   }
@@ -124,18 +124,18 @@ public final class BlockTransactionReconstructionTests {
                        return 1;
                      }
                    }
-                   return o1.getValue().toPicoMobBigInteger().compareTo(o2.getValue().toPicoMobBigInteger());
+                   return o1.getValue().toSatoshiBigInteger().compareTo(o2.getValue().toSatoshiBigInteger());
                  })
                  .toList();
   }
 
-  private static List<Money.MobileCoin> toValueList(List<TransactionReconstruction.Transaction> received) {
+  private static List<Money.Satoshi> toValueList(List<TransactionReconstruction.Transaction> received) {
     return Stream.of(received)
                  .map(TransactionReconstruction.Transaction::getValue)
                  .toList();
   }
 
-  private static List<Money.MobileCoin> toValueListWithDirection(List<TransactionReconstruction.Transaction> received) {
+  private static List<Money.Satoshi> toValueListWithDirection(List<TransactionReconstruction.Transaction> received) {
     return Stream.of(received)
                  .map(TransactionReconstruction.Transaction::getValueWithDirection)
                  .toList();
@@ -143,18 +143,18 @@ public final class BlockTransactionReconstructionTests {
 
   abstract static class MoneyList {
 
-    private final List<Money.MobileCoin> money;
+    private final List<Money.Satoshi> money;
 
-    MoneyList(List<Money.MobileCoin> money) {
+    MoneyList(List<Money.Satoshi> money) {
       this.money = money;
     }
 
-    List<Money.MobileCoin> getMoney() {
+    List<Money.Satoshi> getMoney() {
       return money;
     }
 
-    Money.MobileCoin sum() {
-      return Money.MobileCoin.sum(money);
+    Money.Satoshi sum() {
+      return Money.Satoshi.sum(money);
     }
 
     @Override
@@ -167,25 +167,25 @@ public final class BlockTransactionReconstructionTests {
   }
 
   static class SpentList extends MoneyList {
-    SpentList(List<Money.MobileCoin> money) {
+    SpentList(List<Money.Satoshi> money) {
       super(money);
     }
   }
 
   static class UnspentList extends MoneyList {
-    UnspentList(List<Money.MobileCoin> money) {
+    UnspentList(List<Money.Satoshi> money) {
       super(money);
     }
   }
 
   static class SentList extends MoneyList {
-    SentList(List<Money.MobileCoin> money) {
+    SentList(List<Money.Satoshi> money) {
       super(money);
     }
   }
 
   static class ReceivedList extends MoneyList {
-    ReceivedList(List<Money.MobileCoin> money) {
+    ReceivedList(List<Money.Satoshi> money) {
       super(money);
     }
   }
@@ -206,9 +206,9 @@ public final class BlockTransactionReconstructionTests {
     return new ReceivedList(toMobileCoinList(mob));
   }
 
-  private static List<Money.MobileCoin> toMobileCoinList(Object[] mob) {
+  private static List<Money.Satoshi> toMobileCoinList(Object[] mob) {
     return Stream.of(mob)
-                 .map(value -> Money.mobileCoin(BigDecimal.valueOf(Double.parseDouble(value.toString()))))
+                 .map(value -> Money.bitcoin(BigDecimal.valueOf(Double.parseDouble(value.toString()))))
                  .toList();
   }
 }

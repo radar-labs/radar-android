@@ -18,11 +18,8 @@ import java.util.UUID;
  * It could be from a sent or received Signal payment message or reconstructed.
  */
 public interface Payment {
-  Comparator<Payment> UNKNOWN_BLOCK_INDEX_FIRST            = (a, b) -> Boolean.compare(b.getBlockIndex() == 0, a.getBlockIndex() == 0);
-  Comparator<Payment> ASCENDING_BLOCK_INDEX                = (a, b) -> Long.compare(a.getBlockIndex(), b.getBlockIndex());
-  Comparator<Payment> DESCENDING_BLOCK_INDEX               = ComparatorCompat.reversed(ASCENDING_BLOCK_INDEX);
-  Comparator<Payment> DESCENDING_BLOCK_INDEX_UNKNOWN_FIRST = ComparatorCompat.chain(UNKNOWN_BLOCK_INDEX_FIRST)
-                                                                             .thenComparing(DESCENDING_BLOCK_INDEX);
+  Comparator<Payment> ASCENDING_TIMESTAMP  = Comparator.comparingLong(Payment::getTimestamp);
+  Comparator<Payment> DESCENDING_TIMESTAMP = ComparatorCompat.reversed(ASCENDING_TIMESTAMP);
 
   @NonNull UUID getUuid();
 
@@ -63,28 +60,30 @@ public interface Payment {
 
   @NonNull PaymentMetaData getPaymentMetaData();
 
+  default byte[] getReceipt() {
+    return null;
+  }
+
   boolean isSeen();
 
   /**
    * Negative if sent, positive if received.
    */
   default @NonNull Money getAmountWithDirection() {
-    switch (getDirection()) {
-      case SENT    : return getAmount().negate();
-      case RECEIVED: return getAmount();
-      default      : throw new AssertionError();
-    }
+    return switch (getDirection()) {
+      case SENT -> getAmount().negate();
+      case RECEIVED -> getAmount();
+    };
   }
 
   /**
    * Negative if sent including fee, positive if received.
    */
   default @NonNull Money getAmountPlusFeeWithDirection() {
-    switch (getDirection()) {
-      case SENT    : return getAmount().add(getFee()).negate();
-      case RECEIVED: return getAmount();
-      default      : throw new AssertionError();
-    }
+    return switch (getDirection()) {
+      case SENT -> getAmount().add(getFee()).negate();
+      case RECEIVED -> getAmount();
+    };
   }
 
   default boolean isDefrag() {

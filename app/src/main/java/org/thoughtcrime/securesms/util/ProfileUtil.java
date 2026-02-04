@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
+import org.signal.core.models.ServiceId;
 import org.signal.core.util.Base64;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.IdentityKey;
@@ -21,13 +22,10 @@ import org.thoughtcrime.securesms.database.RecipientTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.Job;
-import org.thoughtcrime.securesms.jobs.GroupV2UpdateSelfProfileKeyJob;
-import org.thoughtcrime.securesms.jobs.MultiDeviceProfileKeyUpdateJob;
-import org.thoughtcrime.securesms.jobs.ProfileUploadJob;
-import org.thoughtcrime.securesms.jobs.RefreshAttributesJob;
-import org.thoughtcrime.securesms.jobs.RefreshOwnProfileJob;
+import org.thoughtcrime.securesms.jobs.*;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.net.SignalNetwork;
+import org.thoughtcrime.securesms.payments.LightningAddress;
 import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
 import org.thoughtcrime.securesms.payments.MobileCoinPublicAddressProfileUtil;
 import org.thoughtcrime.securesms.payments.PaymentsAddressException;
@@ -43,7 +41,6 @@ import org.whispersystems.signalservice.api.crypto.SealedSenderAccess;
 import org.whispersystems.signalservice.api.profiles.AvatarUploadParams;
 import org.whispersystems.signalservice.api.profiles.ProfileAndCredential;
 import org.whispersystems.signalservice.api.profiles.SignalServiceProfile;
-import org.signal.core.models.ServiceId;
 import org.whispersystems.signalservice.api.push.SignalServiceAddress;
 import org.whispersystems.signalservice.api.services.ProfileService;
 import org.whispersystems.signalservice.api.util.StreamDetails;
@@ -56,9 +53,9 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import kotlin.Pair;
-
 import io.reactivex.rxjava3.core.Single;
+import kotlin.Pair;
+import kotlin.text.Charsets;
 
 /**
  * Aids in the retrieval and decryption of profiles.
@@ -66,6 +63,9 @@ import io.reactivex.rxjava3.core.Single;
 public final class ProfileUtil {
 
   private static final String TAG = Log.tag(ProfileUtil.class);
+
+  // Hex.toStringCondensed(CryptoUtil.sha256("LIGHTNINGBTCADDRESS".getBytes(StandardCharsets.UTF_8)
+  private static final String LIGHTNING_PROFILE_VERSION = "2f289e8cf0f8382f08d4e4eed361206b72599b91ed190a753355e47e8b11d31d";
 
   private ProfileUtil() {
   }
@@ -186,7 +186,7 @@ public final class ProfileUtil {
   }
 
   @WorkerThread
-  public static @NonNull MobileCoinPublicAddress getAddressForRecipient(@NonNull Recipient recipient)
+  public static @NonNull LightningAddress getAddressForRecipient(@NonNull Recipient recipient)
       throws IOException, PaymentsAddressException
   {
     ProfileKey profileKey;
@@ -196,7 +196,20 @@ public final class ProfileUtil {
       Log.w(TAG, "Profile key not available for " + recipient.getId());
       throw new PaymentsAddressException(PaymentsAddressException.Code.NO_PROFILE_KEY);
     }
-    ProfileAndCredential profileAndCredential     = ProfileUtil.retrieveProfileSync(AppDependencies.getApplication(), recipient, SignalServiceProfile.RequestType.PROFILE);
+    SignalServiceAddress address                 = toSignalServiceAddress(AppDependencies.getApplication(), recipient);
+    SealedSenderAccess   sealedSenderAccess      = SealedSenderAccessUtil.getSealedSenderAccessFor(recipient, false);
+    ServiceId.ACI        recipientACI            = ServiceId.ACI.Companion.from(address.getServiceId().getRawUuid());
+
+    ProfileAndCredential profileAndCredential = SignalNetwork.profile()
+                                                             .getVersionedProfileAndCredential(recipientACI, profileKey, sealedSenderAccess, LIGHTNING_PROFILE_VERSION)
+                                                             .map(p -> new ProfileAndCredential(p.component1(), SignalServiceProfile.RequestType.PROFILE, Optional.of(p.component2())))
+                                                             .successOrNull();
+
+    if (profileAndCredential == null) {
+      Log.w(TAG, "No profile found for " + recipient.getId());
+      throw new PaymentsAddressException(PaymentsAddressException.Code.NOT_ENABLED);
+    }
+
     SignalServiceProfile profile                  = profileAndCredential.getProfile();
     byte[]               encryptedPaymentsAddress = profile.getPaymentAddress();
 
@@ -206,24 +219,23 @@ public final class ProfileUtil {
     }
 
     try {
-      IdentityKey             identityKey             = new IdentityKey(Base64.decode(profileAndCredential.getProfile().getIdentityKey()), 0);
-      ProfileCipher           profileCipher           = new ProfileCipher(profileKey);
-      byte[]                  decrypted               = profileCipher.decryptWithLength(encryptedPaymentsAddress);
-      PaymentAddress          paymentAddress          = PaymentAddress.ADAPTER.decode(decrypted);
-      byte[]                  bytes                   = MobileCoinPublicAddressProfileUtil.verifyPaymentsAddress(paymentAddress, identityKey);
-      MobileCoinPublicAddress mobileCoinPublicAddress = MobileCoinPublicAddress.fromBytes(bytes);
+      IdentityKey    identityKey    = new IdentityKey(Base64.decode(profileAndCredential.getProfile().getIdentityKey()), 0);
+      ProfileCipher  profileCipher  = new ProfileCipher(profileKey);
+      byte[]         decrypted      = profileCipher.decryptWithLength(encryptedPaymentsAddress);
+      PaymentAddress paymentAddress = PaymentAddress.ADAPTER.decode(decrypted);
+      byte[]         bytes          = MobileCoinPublicAddressProfileUtil.verifyPaymentsAddress(paymentAddress, identityKey);
+      String         addr           = new String(bytes, Charsets.UTF_8);
 
-      if (mobileCoinPublicAddress == null) {
-        throw new PaymentsAddressException(PaymentsAddressException.Code.INVALID_ADDRESS);
-      }
-
-      return mobileCoinPublicAddress;
+      return LightningAddress.Companion.fromLNURL(addr);
     } catch (InvalidCiphertextException | IOException e) {
       Log.w(TAG, "Could not decrypt payments address, ProfileKey may be outdated for " + recipient.getId(), e);
       throw new PaymentsAddressException(PaymentsAddressException.Code.COULD_NOT_DECRYPT);
     } catch (InvalidKeyException e) {
       Log.w(TAG, "Could not verify payments address due to bad identity key " + recipient.getId(), e);
       throw new PaymentsAddressException(PaymentsAddressException.Code.INVALID_ADDRESS_SIGNATURE);
+    } catch (LightningAddress.AddressException e) {
+      Log.w(TAG, "Not a lightning address " + recipient.getId(), e);
+      throw new PaymentsAddressException(PaymentsAddressException.Code.INVALID_ADDRESS);
     }
   }
 
@@ -258,6 +270,22 @@ public final class ProfileUtil {
                   getSelfPaymentsAddressProtobuf(),
                   AvatarUploadParams.unchanged(AvatarHelper.hasAvatar(context, Recipient.self().getId())),
                   badges);
+  }
+
+  /**
+   * Uploads the profile based on all states that are written to disk, except we'll use the provided
+   * LightningAddress as paymentAddress. This is useful when you want to ensure that the profile has been uploaded
+   * successfully before persisting the change to disk.
+   */
+  public static void uploadLightingProfile(@NonNull Context context, @NonNull LightningAddress address) throws IOException {
+    Log.d(TAG, "uploadProfileWithBadges()");
+    uploadProfile(ProfileName.asGiven("Cake dude"),
+                  Optional.ofNullable(Recipient.self().getAbout()).orElse(""),
+                  Optional.ofNullable(Recipient.self().getAboutEmoji()).orElse(""),
+                  getLightningAddressProtobuf(address.serialize()),
+                  AvatarUploadParams.unchanged(AvatarHelper.hasAvatar(context, Recipient.self().getId())),
+                  Recipient.self().getBadges(),
+                  LIGHTNING_PROFILE_VERSION);
   }
 
   /**
@@ -359,6 +387,18 @@ public final class ProfileUtil {
                                     @NonNull List<Badge> badges)
       throws IOException
   {
+    uploadProfile(profileName, about, aboutEmoji, paymentsAddress, avatar, badges, null);
+  }
+
+  private static void uploadProfile(@NonNull ProfileName profileName,
+                                    @Nullable String about,
+                                    @Nullable String aboutEmoji,
+                                    @Nullable PaymentAddress paymentsAddress,
+                                    @NonNull AvatarUploadParams avatar,
+                                    @NonNull List<Badge> badges,
+                                    String version)
+      throws IOException
+  {
     List<String> badgeIds = badges.stream()
                                   .filter(Badge::getVisible)
                                   .map(Badge::getId)
@@ -376,16 +416,17 @@ public final class ProfileUtil {
       Log.d(TAG, "Uploading " + (avatar.stream != null && avatar.stream.getLength() != 0 ? "non-" : "") + "empty avatar.");
     }
 
-    ProfileKey            profileKey = ProfileKeyUtil.getSelfProfileKey();
-    NetworkResult<String> result     = SignalNetwork.profile().setVersionedProfile(SignalStore.account().requireAci(),
-                                                                                   profileKey,
-                                                                                   profileName.serialize(),
-                                                                                   about,
-                                                                                   aboutEmoji,
-                                                                                   paymentsAddress,
-                                                                                   avatar,
-                                                                                   badgeIds,
-                                                                                   SignalStore.phoneNumberPrivacy().isPhoneNumberSharingEnabled());
+    ProfileKey profileKey = ProfileKeyUtil.getSelfProfileKey();
+    NetworkResult<String> result = SignalNetwork.profile().setVersionedProfile(SignalStore.account().requireAci(),
+                                                                               profileKey,
+                                                                               profileName.serialize(),
+                                                                               about,
+                                                                               aboutEmoji,
+                                                                               paymentsAddress,
+                                                                               avatar,
+                                                                               badgeIds,
+                                                                               SignalStore.phoneNumberPrivacy().isPhoneNumberSharingEnabled(),
+                                                                               version);
 
     String avatarPath = NetworkResultUtil.toSetProfileLegacy(result);
 
@@ -406,6 +447,16 @@ public final class ProfileUtil {
                                                                .getMobileCoinPublicAddress();
 
       return MobileCoinPublicAddressProfileUtil.signPaymentsAddress(publicAddress.serialize(), identityKeyPair);
+    }
+  }
+
+  private static @Nullable PaymentAddress getLightningAddressProtobuf(byte[] publicAddress) {
+    if (!SignalStore.payments().mobileCoinPaymentsEnabled()) {
+      return null;
+    } else {
+      IdentityKeyPair identityKeyPair = SignalStore.account().getAciIdentityKey();
+
+      return MobileCoinPublicAddressProfileUtil.signPaymentsAddress(publicAddress, identityKeyPair);
     }
   }
 

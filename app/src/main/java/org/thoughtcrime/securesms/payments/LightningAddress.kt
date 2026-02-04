@@ -43,27 +43,6 @@ class LightningAddress internal constructor(val paymentAddress: String, val lnur
   companion object {
     private val TAG = tag(LightningAddress::class.java)
 
-//    @Throws(AddressException::class)
-//    fun fromPublicAddress(publicAddress: PublicAddress?): LightningAddress {
-//      if (publicAddress == null) {
-//        throw AddressException("Does not contain a public address")
-//      }
-//      return LightningAddress(publicAddress)
-//    }
-
-//    fun fromBytes(bytes: ByteArray?): LightningAddress? {
-//      if (bytes == null) {
-//        return null
-//      }
-//
-//      try {
-//        return LightningAddress(PublicAddress.fromBytes(bytes))
-//      } catch (e: SerializationException) {
-//        w(TAG, e)
-//        return null
-//      }
-//    }
-
     fun fromLightningAddressNullableOrThrow(lightningAddress: String?): LightningAddress? {
       return if (lightningAddress != null) fromLightningAddressOrThrow(lightningAddress) else null
     }
@@ -91,16 +70,19 @@ class LightningAddress internal constructor(val paymentAddress: String, val lnur
       }
     }
 
-//    @Throws(AddressException::class)
-//    fun fromQr(data: String): LightningAddress {
-//      try {
-//        val printableWrapper = PrintableWrapper.fromUri(Uri.parse(data))
-//        return fromPublicAddress(printableWrapper.getPublicAddress())
-//      } catch (e: SerializationException) {
-//        return fromBase58(data)
-//      } catch (e: InvalidUriException) {
-//        return fromBase58(data)
-//      }
-//    }
+    @Throws(AddressException::class)
+    fun fromLNURL(lnurl: String): LightningAddress {
+      try {
+        val url = Uri.parse(lnurl)
+        val lightningAddress = "${url.pathSegments.last()}@${url.host}"
+        val lnurl = Bech32.encode(Bech32.Bech32Data("lnurl",
+          Bech32.convert(lnurl.toByteArray(Charsets.UTF_8), 8, 5, true)
+        ))
+
+        return LightningAddress(lightningAddress, lnurl)
+      } catch (e: SerializationException) {
+        throw AddressException(e)
+      }
+    }
   }
 }

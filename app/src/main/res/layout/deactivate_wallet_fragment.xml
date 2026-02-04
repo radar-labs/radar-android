@@ -41,7 +41,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:money="MOB:7500000000000" />
+                tools:money="BTC:10000000" />
 
             <TextView
                 android:id="@+id/deactivate_wallet_fragment_your_balance"

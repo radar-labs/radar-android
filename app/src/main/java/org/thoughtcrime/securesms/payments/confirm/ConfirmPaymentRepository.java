@@ -10,7 +10,9 @@ import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.jobs.PaymentSendJob;
 import org.thoughtcrime.securesms.payments.*;
+import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
+import org.thoughtcrime.securesms.util.ProfileUtil;
 import org.thoughtcrime.securesms.util.Util;
 import org.whispersystems.signalservice.api.payments.Money;
 
@@ -43,23 +45,22 @@ final class ConfirmPaymentRepository {
       RecipientId      recipientId = null;
       LightningAddress paymentAddress;
 
-//      if (payee.hasRecipientId()) {
-//        recipientId = payee.requireRecipientId();
-//        try {
-//          mobileCoinPublicAddress = ProfileUtil.getAddressForRecipient(Recipient.resolved(recipientId));
-//        } catch (IOException e) {
-//          Log.w(TAG, "Failed to get address for recipient " + recipientId);
-//          consumer.accept(new ConfirmPaymentResult.Error());
-//          return;
-//        } catch (PaymentsAddressException e) {
-//          Log.w(TAG, "Failed to get address for recipient " + recipientId);
-//          consumer.accept(new ConfirmPaymentResult.Error(e.getCode()));
-//          return;
-//        }
-//      } else if (payee.hasPublicAddress()) {
-//        recipientId             = null;
+      if (payee.hasRecipientId()) {
+        recipientId = payee.requireRecipientId();
+        try {
+          paymentAddress = ProfileUtil.getAddressForRecipient(Recipient.resolved(recipientId));
+        } catch (IOException e) {
+          Log.w(TAG, "Failed to get address for recipient " + recipientId);
+          consumer.accept(new ConfirmPaymentResult.Error());
+          return;
+        } catch (PaymentsAddressException e) {
+          Log.w(TAG, "Failed to get address for recipient " + recipientId);
+          consumer.accept(new ConfirmPaymentResult.Error(e.getCode()));
+          return;
+        }
+      } else if (payee.hasPublicAddress()) {
         paymentAddress = payee.requireLightningAddress();
-//      } else throw new AssertionError();
+      } else throw new AssertionError();
 
       UUID paymentUuid = PaymentSendJob.enqueuePayment(recipientId,
                                                        paymentAddress,

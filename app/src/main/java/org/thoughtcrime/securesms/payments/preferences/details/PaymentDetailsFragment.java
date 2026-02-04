@@ -20,7 +20,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import org.signal.core.util.StringUtil;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.R;
@@ -71,13 +70,11 @@ public final class PaymentDetailsFragment extends LoggingFragment {
     View              sentFeeHeader   = view.findViewById(R.id.payments_details_sent_fee_header);
     MoneyView         sentFeeAmount   = view.findViewById(R.id.payments_details_sent_fee_amount);
     Group             sentViews       = view.findViewById(R.id.payments_details_sent_views);
-    View              blockHeader     = view.findViewById(R.id.payments_details_block_header);
-    TextView          blockNumber     = view.findViewById(R.id.payments_details_block);
 
     if (details.hasPayment()) {
       Payment payment = details.requirePayment();
       avatar.disableQuickContact();
-      avatar.setImageResource(R.drawable.ic_mobilecoin_avatar_24);
+      avatar.setImageResource(R.drawable.ic_bitcoin_lightning_24);
       contactFromTo.setText(getContactFromToTextFromDirection(payment.getDirection()));
       amount.setMoney(payment.getAmountPlusFeeWithDirection());
       note.setVisibility(View.GONE);
@@ -89,9 +86,6 @@ public final class PaymentDetailsFragment extends LoggingFragment {
       transactionInfo.setLink(getString(R.string.PaymentsDetailsFragment__learn_more__information));
       sentTo.setVisibility(View.GONE);
       sentToAmount.setVisibility(View.GONE);
-      blockHeader.setVisibility(View.VISIBLE);
-      blockNumber.setVisibility(View.VISIBLE);
-      blockNumber.setText(String.valueOf(payment.getBlockIndex()));
 
       if (payment.getDirection() == Direction.SENT) {
         sentFeeAmount.setMoney(payment.getFee());
