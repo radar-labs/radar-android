@@ -4095,7 +4095,7 @@
         <item>Бракує функції</item>
         <item>Питання</item>
         <item>Відгук</item>
-        <item>Платежі (MobileCoin)</item>
+        <item>Платежі (Bitcoin over Lightning)</item>
         <item>Донати і значки</item>
         <item>Резервне копіювання від Signal</item>
         <item>Інше</item>
@@ -4423,7 +4423,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Новинка: платежі</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Використовуйте Signal, щоб надсилати й отримувати MobileCoin — нову цифрову валюту підвищеної конфіденційності. Активуйте, щоб почати.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Використовуйте Signal, щоб надсилати й отримувати Bitcoin over Lightning — нову цифрову валюту підвищеної конфіденційності. Активуйте, щоб почати.</string>
     <string name="PaymentsHomeFragment__activate_payments">Увімкнути платежі</string>
     <string name="PaymentsHomeFragment__activating_payments">Вмикаємо платежі…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Відновити платіжний профіль</string>
@@ -4449,7 +4449,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">У вашому регіоні платежі недоступні.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Не вдалось увімкнути платежі. Спробуйте пізніше.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Вимкнути платежі?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Ви не зможете ні надсилати, ні отримувати MobileCoin у Signal, якщо деактивуєте платежі.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Ви не зможете ні надсилати, ні отримувати Bitcoin over Lightning у Signal, якщо деактивуєте платежі.</string>
     <string name="PaymentsHomeFragment__deactivate">Вимкнути</string>
     <string name="PaymentsHomeFragment__continue">Продовжити</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Поки що баланс недоступний.</string>
@@ -4458,12 +4458,12 @@
     <string name="PaymentsHomeFragment__details">Докладніше</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signal можна використовувати, щоб надсилати й отримувати валюту MobileCoin. Усі платежі здійснюються відповідно до Умов використання MobileCoin і гаманця MobileCoin. Можуть виникнути певні проблеми, і в разі втрати платежів чи залишку на рахунку кошти буде неможливо відновити. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signal можна використовувати, щоб надсилати й отримувати валюту Bitcoin over Lightning. Усі платежі здійснюються відповідно до Умов використання Bitcoin over Lightning і гаманця Bitcoin over Lightning. Можуть виникнути певні проблеми, і в разі втрати платежів чи залишку на рахунку кошти буде неможливо відновити. </string>
     <string name="PaymentsHomeFragment__activate">Активувати</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Ознайомитися з умовами використання MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Ознайомитися з умовами використання Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">Платежі у Signal більше не доступні. Ви й досі можете переказувати кошти для обміну, але більше не можете надсилати та отримувати платежі та поповнювати рахунок.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Увімкнути захист платежів для надсилання коштів у майбутньому?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4544,7 +4544,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Адреса вашого гаманця</string>
     <string name="PaymentsAddMoneyFragment__copy">Копіювати</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Скопійовано в буфер обміну</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Щоб додати кошти, надішліть MobileCoin на адресу свого гаманця. Почніть операцію у своєму обліковому записі на біржі, що підтримує MobileCoin, і зіскануйте QR-код або скопіюйте адресу свого гаманця.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Щоб додати кошти, надішліть Bitcoin over Lightning на адресу свого гаманця. Почніть операцію у своєму обліковому записі на біржі, що підтримує Bitcoin over Lightning, і зіскануйте QR-код або скопіюйте адресу свого гаманця.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4562,7 +4562,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Кому:</string>
     <string name="PaymentsDetailsFragment__from">Відправник</string>
-    <string name="PaymentsDetailsFragment__information">Інформацію про операцію, зокрема суму платежу й час операції, включено до журналу MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">Інформацію про операцію, зокрема суму платежу й час операції, включено до журналу Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Комісія за округлення койнів</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">«Плата за округлення койнів» стягується, коли ваші койни неможливо згрупувати для здійснення трансакції. Округлення дасть вам змогу продовжити надсилати платежі.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Інша інформація про цю операцію відсутня</string>
@@ -4577,7 +4577,7 @@
     <string name="PaymentsTransferFragment__transfer">Переказ</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Зіскануйте QR-код</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Кому: зіскануйте або введіть адресу гаманця</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Переказ MobileCoin можна здійснити як переказ на адресу гаманця, надану біржею. Адреса гаманця складається з цифр і літер і зазвичай зазначається під QR-кодом.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Переказ Bitcoin over Lightning можна здійснити як переказ на адресу гаманця, надану біржею. Адреса гаманця складається з цифр і літер і зазвичай зазначається під QR-кодом.</string>
     <string name="PaymentsTransferFragment__next">Далі</string>
     <string name="PaymentsTransferFragment__invalid_address">Неправильна адреса</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Перевірте адресу гаманця, на який ви переказуєте кошти, і повторіть переказ.</string>
@@ -5563,12 +5563,12 @@
     <string name="WallpaperCropActivity__blur_photo">Розмити фото</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Про MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin — нова цифрова валюта підвищеної конфіденційності.</string>
+    <string name="payment_info_card_about_mobilecoin">Про Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning — нова цифрова валюта підвищеної конфіденційності.</string>
     <string name="payment_info_card_adding_funds">Як додавати кошти</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Ви можете додавати кошти для використання в Signal, надсилаючи MobileCoin на адресу свого гаманця.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Ви можете додавати кошти для використання в Radar, надсилаючи Bitcoin over Lightning на адресу свого гаманця.</string>
     <string name="payment_info_card_cashing_out">Як виводити кошти</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Вивести MobileCoin можна на біржі, яка підтримує MobileCoin. Просто здійсніть переказ на свій рахунок на такій біржі.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Вивести Bitcoin over Lightning можна на біржі, яка підтримує Bitcoin over Lightning. Просто здійсніть переказ на свій рахунок на такій біржі.</string>
     <string name="payment_info_card_hide_this_card">Сховати цю картку?</string>
     <string name="payment_info_card_hide">Сховати</string>
     <!-- Title of save recovery phrase card -->

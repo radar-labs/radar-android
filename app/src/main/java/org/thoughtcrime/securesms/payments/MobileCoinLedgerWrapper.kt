@@ -36,7 +36,7 @@ class MobileCoinLedgerWrapper(private val lnWrapper: BreezSdkWrapper) {
 
     val identifier: String?
       get() = when (payment.details) {
-        is PaymentDetails.Lightning -> (payment.details as PaymentDetails.Lightning).paymentHash
+        is PaymentDetails.Lightning -> (payment.details as PaymentDetails.Lightning).htlcDetails.paymentHash
         is PaymentDetails.Deposit -> (payment.details as PaymentDetails.Deposit).txId
         is PaymentDetails.Withdraw -> (payment.details as PaymentDetails.Withdraw).txId
         else -> null

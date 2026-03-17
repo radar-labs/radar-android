@@ -3873,7 +3873,7 @@
         <item>Verzoek nieuwe functie</item>
         <item>Vraag</item>
         <item>Feedback</item>
-        <item>Betalingen (MobileCoin)</item>
+        <item>Betalingen (Bitcoin over Lightning)</item>
         <item>Donaties &amp; badges</item>
         <item>Signal Android back-up</item>
         <item>Anders</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Betalingen via Signal</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Je kunt Signal ook gebruiken om een privacygerichte valuta genaamd MobileCoin te versturen en ontvangen. Activeer om te beginnen.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Je kunt Signal ook gebruiken om een privacygerichte valuta genaamd Bitcoin over Lightning te versturen en ontvangen. Activeer om te beginnen.</string>
     <string name="PaymentsHomeFragment__activate_payments">Betalingen inschakelen</string>
     <string name="PaymentsHomeFragment__activating_payments">Betalingen inschakelen…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Betalingsaccount herstellen</string>
@@ -4221,7 +4221,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Betalingen zijn niet beschikbaar in jouw regio.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Kan betalingen niet inschakelen. Probeer het later opnieuw.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Betalingen uitschakelen?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Je kunt niet langer MobileCoin ontvangen of verzenden als je betalingen uitschakelt.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Je kunt niet langer Bitcoin over Lightning ontvangen of verzenden als je betalingen uitschakelt.</string>
     <string name="PaymentsHomeFragment__deactivate">Uitschakelen</string>
     <string name="PaymentsHomeFragment__continue">Doorgaan</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Je krediet is op dit moment niet beschikbaar.</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Details</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Je kunt Signal gebruiken om MobileCoin te verzenden en te ontvangen. Op alle betalingen zijn de gebruiksvoorwaarden voor MobileCoins en de MobileCoin Wallet van toepassing. Er kunnen zich problemen voordoen. Verloren betalingen en krediet kun je dan niet terugvorderen. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Je kunt Signal gebruiken om Bitcoin over Lightning te verzenden en te ontvangen. Op alle betalingen zijn de gebruiksvoorwaarden voor MobileCoins en de Bitcoin over Lightning Wallet van toepassing. Er kunnen zich problemen voordoen. Verloren betalingen en krediet kun je dan niet terugvorderen. </string>
     <string name="PaymentsHomeFragment__activate">Inschakelen</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Gebruiksvoorwaarden van MobileCoin weergeven</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Gebruiksvoorwaarden van Bitcoin over Lightning weergeven</string>
     <string name="PaymentsHomeFragment__payments_not_available">Betalingen via Signal zijn niet langer mogelijk. Je kunt nog wel je krediet overschrijven naar een andere beurs maar je kunt niet langer betalingen verzenden of ontvangen of krediet toevoegen.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Wil je Betalingsvergrendeling aanzetten voor toekomstige betalingen?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Het adres van je portemonnee</string>
     <string name="PaymentsAddMoneyFragment__copy">Kopiëren</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Gekopieerd naar klembord</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Maak een account bij een beurs die MobileCoin ondersteunt. Stuur vervolgens vanaf je beursaccount MobileCoin naar je Signal portemonnee-adres door de QR-code te scannen of door het adres te kopiëren om op Signal krediet toe te voegen.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Maak een account bij een beurs die Bitcoin over Lightning ondersteunt. Stuur vervolgens vanaf je beursaccount Bitcoin over Lightning naar je Signal portemonnee-adres door de QR-code te scannen of door het adres te kopiëren om op Signal krediet toe te voegen.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Naar</string>
     <string name="PaymentsDetailsFragment__from">Van</string>
-    <string name="PaymentsDetailsFragment__information">Transactiegegevens, waaronder het bedrag en het tijdstip van de transactie, zijn onderdeel van het grootboek van MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">Transactiegegevens, waaronder het bedrag en het tijdstip van de transactie, zijn onderdeel van het grootboek van Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Samenvoegingskosten</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">Er worden ‘samenvoegingskosten’ in rekening gebracht wanneer de munten die je bezit niet kunnen worden samengevoegd tot de nieuwe gewenste betaling. Door deze samenvoeging kun je toch betalingen blijven verzenden.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Er is geen verdere informatie beschikbaar over deze transactie</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">Overschrijven</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR-code scannen</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Naar: Scan de QR-code of voer het portemonnee-adres in</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Je kunt MobileCoin overschrijven door een deel van je krediet te sturen naar het adres van de portemonnee die je via de beurs hebt gekregen. Dat adres bestaat uit nummers en letters en je vindt het meestal onder de QR-code.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Je kunt Bitcoin over Lightning overschrijven door een deel van je krediet te sturen naar het adres van de portemonnee die je via de beurs hebt gekregen. Dat adres bestaat uit nummers en letters en je vindt het meestal onder de QR-code.</string>
     <string name="PaymentsTransferFragment__next">Volgende</string>
     <string name="PaymentsTransferFragment__invalid_address">Adres ongeldig</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Controleer of het portemonnee-adres waarnaar je probeert over te schrijven juist is en probeer het opnieuw.</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">Afbeelding vervagen</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Over MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin is een privacygericht digitaal betaalmiddel.</string>
+    <string name="payment_info_card_about_mobilecoin">Over Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning is een privacygericht digitaal betaalmiddel.</string>
     <string name="payment_info_card_adding_funds">Krediet toevoegen</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Je kunt krediet aan Signal toevoegen door MobileCoin naar je portemonnee-adres te sturen.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Je kunt krediet aan Radar toevoegen door Bitcoin over Lightning naar je portemonnee-adres te sturen.</string>
     <string name="payment_info_card_cashing_out">Uitbetalen</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Je kunt op elk moment je MobileCoin laten uitbetalen via een beurs die MobileCoin ondersteunt. Je hoeft slechts over te schrijven naar jouw account bij die beurs.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Je kunt op elk moment je Bitcoin over Lightning laten uitbetalen via een beurs die Bitcoin over Lightning ondersteunt. Je hoeft slechts over te schrijven naar jouw account bij die beurs.</string>
     <string name="payment_info_card_hide_this_card">Deze informatie verbergen?</string>
     <string name="payment_info_card_hide">Verbergen</string>
     <!-- Title of save recovery phrase card -->

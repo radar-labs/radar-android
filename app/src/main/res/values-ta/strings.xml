@@ -3873,7 +3873,7 @@
         <item>சிறப்பு விண்ணப்பம்</item>
         <item>கேள்வி</item>
         <item>பின்னூட்டம்</item>
-        <item>கட்டணங்கள் (MobileCoin)</item>
+        <item>கட்டணங்கள் (Bitcoin over Lightning)</item>
         <item>நன்கொடைகள் மற்றும் பேட்ஜ்கள்</item>
         <item>சிக்னல் ஆண்ட்ராய்டு காப்புப்பிரதி</item>
         <item>மற்றவை</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">பேமெண்ட்கள் வசதியை அறிமுகப்படுத்துகிறோம்</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Signal ஐ பயன்படுத்தி MobileCoin அனுப்பலாம் மற்றும் பெறலாம். இது ஒரு புதிய தனியுரிமை சார்ந்த டிஜிட்டல் நாணயம். தொடங்குவதற்கு செயல்படுத்தவும்.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Signal ஐ பயன்படுத்தி Bitcoin over Lightning அனுப்பலாம் மற்றும் பெறலாம். இது ஒரு புதிய தனியுரிமை சார்ந்த டிஜிட்டல் நாணயம். தொடங்குவதற்கு செயல்படுத்தவும்.</string>
     <string name="PaymentsHomeFragment__activate_payments">கொடுப்பனவுகளைச் செயல்படுத்தவும்</string>
     <string name="PaymentsHomeFragment__activating_payments">கொடுப்பனவுகளை செயல்படுத்துகிறது…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">பணம் செலுத்தல் கணக்கை மீட்டமை</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">விவரங்கள்</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">MobileCoinஐ அனுப்பவும் பெறவும் நீங்கள் Signalஐப் பயன்படுத்தலாம். அனைத்து பேமெண்ட்களும் MobileCoins மற்றும் MobileCoin Wallet செயலியின் விதிமுறைகளுக்கு உட்பட்டது. நீங்கள் சில சிக்கல்களைச் சந்திக்க நேரிடலாம் மற்றும் நீங்கள் இழக்கக்கூடிய கட்டணங்களை அல்லது நிலுவைகளை மீட்டெடுக்க முடியாது. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">MobileCoinஐ அனுப்பவும் பெறவும் நீங்கள் Signalஐப் பயன்படுத்தலாம். அனைத்து பேமெண்ட்களும் MobileCoins மற்றும் Bitcoin over Lightning Wallet செயலியின் விதிமுறைகளுக்கு உட்பட்டது. நீங்கள் சில சிக்கல்களைச் சந்திக்க நேரிடலாம் மற்றும் நீங்கள் இழக்கக்கூடிய கட்டணங்களை அல்லது நிலுவைகளை மீட்டெடுக்க முடியாது. </string>
     <string name="PaymentsHomeFragment__activate">செயல்படுத்த</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin விதிமுறைகளைக் காண்க</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning விதிமுறைகளைக் காண்க</string>
     <string name="PaymentsHomeFragment__payments_not_available">கொடுப்பனவுகள் Signal இருக்கிறது இல்லைநீண்ட நேரம் கிடைக்கும். நீங்கள் இன்னும் முடியும்பரிமாற்றம் நிதி ஒரு பரிமாற்றம் ஆனால் உன்னால் முடியும் இல்லை நீண்டது அனுப்பு மற்றும் பணம் பெறுதல் அல்லது கூட்டு நிதி.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">எதிர்காலத்தில் அனுப்பப்படும் கட்டண பூட்டை இயக்குவதா?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">உங்கள் Wallet முகவரி</string>
     <string name="PaymentsAddMoneyFragment__copy">நகல்</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">க்கு கூட்டு நிதி, அனுப்பு உங்களிடம் MobileCoin பணப்பை முகவரி. உங்களிடமிருந்து ஒரு பரிவர்த்தனையைத் தொடங்கவும்கணக்கு ஒரு பரிமாற்றம் இது MobileCoin ஐ ஆதரிக்கிறது ஊடுகதிர் தி க்யு ஆர் குறியீடு அல்லது நகல் உங்கள் பணப்பை முகவரி.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">க்கு கூட்டு நிதி, அனுப்பு உங்களிடம் Bitcoin over Lightning பணப்பை முகவரி. உங்களிடமிருந்து ஒரு பரிவர்த்தனையைத் தொடங்கவும்கணக்கு ஒரு பரிமாற்றம் இது Bitcoin over Lightning ஐ ஆதரிக்கிறது ஊடுகதிர் தி க்யு ஆர் குறியீடு அல்லது நகல் உங்கள் பணப்பை முகவரி.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">செய்ய</string>
     <string name="PaymentsDetailsFragment__from">இருந்து</string>
-    <string name="PaymentsDetailsFragment__information">கட்டணத் தொகை மற்றும் பரிவர்த்தனை நேரம் உள்ளிட்ட பரிவர்த்தனை விவரங்கள் MobileCoin லெட்ஜரின் பகுதியாகும்.</string>
+    <string name="PaymentsDetailsFragment__information">கட்டணத் தொகை மற்றும் பரிவர்த்தனை நேரம் உள்ளிட்ட பரிவர்த்தனை விவரங்கள் Bitcoin over Lightning லெட்ஜரின் பகுதியாகும்.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">நாணயம் தூய்மைப்படுத்தும் கட்டணம்</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">உங்களிடம் உள்ள நாணயங்களை இணைக்க முடியாதபோது “நாணயம் தூய்மைப்படுத்தும் கட்டணம்” வசூலிக்கப்படுகிறது முழுமைஒரு பரிவர்த்தனை. தூய்மைப்படுத்தும்அனுமதி நீங்கள் தொடர்ந்து பணம் அனுப்ப வேண்டும்.</string>
     <string name="PaymentsDetailsFragment__no_details_available">இல்லை மேலும் விவரங்கள் இந்த பரிவர்த்தனைக்கு கிடைக்கிறது</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">இடமாற்றம்</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR குறியீட்டை ஸ்கேன் செய்யுங்கள்</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">க்கு: ஊடுகதிர் அல்லது உள்ளிடவும் பணப்பை முகவரி</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">உன்னால் முடியும் பரிமாற்றம் ஒரு முடிப்பதன் மூலம் MobileCoin பரிமாற்றம் க்கு பணப்பை முகவரி வழங்கியது பரிமாற்றம். திபணப்பை முகவரி எண்கள் மற்றும் கடிதங்களின் சரம் பொதுவாக கீழே க்யு ஆர் குறியீடு.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">உன்னால் முடியும் பரிமாற்றம் ஒரு முடிப்பதன் மூலம் Bitcoin over Lightning பரிமாற்றம் க்கு பணப்பை முகவரி வழங்கியது பரிமாற்றம். திபணப்பை முகவரி எண்கள் மற்றும் கடிதங்களின் சரம் பொதுவாக கீழே க்யு ஆர் குறியீடு.</string>
     <string name="PaymentsTransferFragment__next">அடுத்தது</string>
     <string name="PaymentsTransferFragment__invalid_address">தவறானது முகவரி</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">சரிபார்க்கவும் பணப்பை முகவரி நீங்கள் முயற்சிக்கிறீர்கள் பரிமாற்றம் மீண்டும் முயற்சிக்கவும்.</string>
@@ -5303,8 +5303,8 @@
     <string name="WallpaperCropActivity__blur_photo">புகைப்படத்தை மங்கச் செய்ய</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin பற்றி</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin என்பது புதிய தனியுரிமைக்கான டிஜிட்டல் நாணயம் ஆகும்.</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning பற்றி</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning என்பது புதிய தனியுரிமைக்கான டிஜிட்டல் நாணயம் ஆகும்.</string>
     <string name="payment_info_card_adding_funds">சேர்த்து நிதி</string>
     <string name="payment_info_card_you_can_add_funds_for_use_in">உங்கள் பணப்பை முகவரிக்கு மொபைல் காயினை அனுப்புவதன் மூலம் சிக்னலில் பயன்படுத்துவதற்கு நிதியைச் சேர்க்கலாம்.</string>
     <string name="payment_info_card_cashing_out">வெளியே பணம்</string>

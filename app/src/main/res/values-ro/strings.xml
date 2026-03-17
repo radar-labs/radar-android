@@ -3984,7 +3984,7 @@
         <item>Cerere privind funcția</item>
         <item>Întrebare</item>
         <item>Feedback</item>
-        <item>Plăți (MobileCoin)</item>
+        <item>Plăți (Bitcoin over Lightning)</item>
         <item>Donații și Insigne</item>
         <item>Backup Signal Android</item>
         <item>Altul</item>
@@ -4309,7 +4309,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Îți prezentăm plăți</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Folosește Signal și trimite și primește MobileCoin, o nouă monedă digitală axată pe confidențialitate. Activează pentru a începe.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Folosește Signal și trimite și primește Bitcoin over Lightning, o nouă monedă digitală axată pe confidențialitate. Activează pentru a începe.</string>
     <string name="PaymentsHomeFragment__activate_payments">Activare Plăți</string>
     <string name="PaymentsHomeFragment__activating_payments">Se activează plățile…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Restaurează contul de plăți</string>
@@ -4335,7 +4335,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Plățile nu sunt disponibile in regiunea ta.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Nu s-au putut activa plățile. Încearcă din nou mai târziu.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Dezactivează Plățile?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Nu vei putea trimite sau primi MobileCoin în Signal, dacă dezactivezi plățile.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Nu vei putea trimite sau primi Bitcoin over Lightning în Signal, dacă dezactivezi plățile.</string>
     <string name="PaymentsHomeFragment__deactivate">Dezactivare</string>
     <string name="PaymentsHomeFragment__continue">Continuă</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Soldul nu este disponibil momentan.</string>
@@ -4344,12 +4344,12 @@
     <string name="PaymentsHomeFragment__details">Detalii</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Poți folosi Signal pentru a trimite și a primi MobileCoin. Toate plățile sunt supuse Termenilor de utilizare pentru MobileCoins și MobileCoin Wallet. Este posibil să întâmpini probleme, iar soldul sau plățile pierdute nu pot fi recuperate. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Poți folosi Signal pentru a trimite și a primi Bitcoin over Lightning. Toate plățile sunt supuse Termenilor de utilizare pentru MobileCoins și Bitcoin over Lightning Wallet. Este posibil să întâmpini probleme, iar soldul sau plățile pierdute nu pot fi recuperate. </string>
     <string name="PaymentsHomeFragment__activate">Activare</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Vezi termenii MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Vezi termenii Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">Plățile în Signal nu mai sunt disponibile. Poți transfera în continuare fonduri către un exchange, dar nu mai poți trimite sau primi plăți ori adăuga fonduri.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Activezi Deblocarea în caz de plată pentru viitoare transferuri?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4430,7 +4430,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Adresa Portofelului Tău</string>
     <string name="PaymentsAddMoneyFragment__copy">Copiere</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">S-a copiat în clipboard</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Pentru a adăuga fonduri, trimite MobileCoin către adresa portofelului tău. Inițiază o tranzacție din contul tău de la un exchange care acceptă MobileCoin, după care scanează codul QR sau copiază adresa portofelului.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Pentru a adăuga fonduri, trimite Bitcoin over Lightning către adresa portofelului tău. Inițiază o tranzacție din contul tău de la un exchange care acceptă Bitcoin over Lightning, după care scanează codul QR sau copiază adresa portofelului.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4448,7 +4448,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Către</string>
     <string name="PaymentsDetailsFragment__from">De la</string>
-    <string name="PaymentsDetailsFragment__information">Detaliile tranzacției inclusiv valoarea și data acesteia, fac parte din registrul MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">Detaliile tranzacției inclusiv valoarea și data acesteia, fac parte din registrul Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Comision consolidare monedă</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">Un „comision de consolidare monedă” este perceput atunci când monedele pe care le deții nu pot fi combinate pentru a finaliza o tranzacție. Consolidarea îți permite să continui efectuarea de plăți.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Nu mai sunt detalii disponibile pentru această tranzacție</string>
@@ -4463,7 +4463,7 @@
     <string name="PaymentsTransferFragment__transfer">Transfer</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Scanează codul QR</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Către: Scanează sau introdu adresa portofelului</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Poți vira MobileCoin efectuând un transfer către adresa portofelului furnizat de exchange. Adresa portofelului este șirul de cifre și litere situat în mod obișnuit sub codul QR.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Poți vira Bitcoin over Lightning efectuând un transfer către adresa portofelului furnizat de exchange. Adresa portofelului este șirul de cifre și litere situat în mod obișnuit sub codul QR.</string>
     <string name="PaymentsTransferFragment__next">Următorul</string>
     <string name="PaymentsTransferFragment__invalid_address">Adresă invalidă</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Verifică adresa portofelului către care dorești să transferi și încearcă din nou.</string>
@@ -5433,12 +5433,12 @@
     <string name="WallpaperCropActivity__blur_photo">Estompare poză</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Despre MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin este o nouă monedă digitală axată pe confidențialitate.</string>
+    <string name="payment_info_card_about_mobilecoin">Despre Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning este o nouă monedă digitală axată pe confidențialitate.</string>
     <string name="payment_info_card_adding_funds">Adăugarea fondurilor</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Poți adăuga fonduri pentru a le folosi în Signal transferând MobileCoin către adresa portofelului tău.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Poți adăuga fonduri pentru a le folosi în Radar transferând Bitcoin over Lightning către adresa portofelului tău.</string>
     <string name="payment_info_card_cashing_out">Schimbul în numerar</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Poți schimba oricând MobileCoin în numerar la un exchange care acceptă MobileCoin. Nu trebuie decât să faci un transfer către contul tău de la acel exchange.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Poți schimba oricând Bitcoin over Lightning în numerar la un exchange care acceptă Bitcoin over Lightning. Nu trebuie decât să faci un transfer către contul tău de la acel exchange.</string>
     <string name="payment_info_card_hide_this_card">Ascunzi această fișă?</string>
     <string name="payment_info_card_hide">Ascunde</string>
     <!-- Title of save recovery phrase card -->

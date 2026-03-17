@@ -3873,7 +3873,7 @@
         <item>Funkciókérés</item>
         <item>Kérdés</item>
         <item>Visszajelzés</item>
-        <item>Fizetések (MobileCoin)</item>
+        <item>Fizetések (Bitcoin over Lightning)</item>
         <item>Adományok és jelvények</item>
         <item>Signal Android biztonsági mentés</item>
         <item>Egyéb</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Bemutatjuk a Fizetések szolgáltatást</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Küldj és fogadj MobileCoint a Signallal. A MobileCoin egy új, adatvédelemre fókuszáló digitális pénznem. Aktiváld, hogy kipróbálhasd!</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Küldj és fogadj MobileCoint a Signallal. A Bitcoin over Lightning egy új, adatvédelemre fókuszáló digitális pénznem. Aktiváld, hogy kipróbálhasd!</string>
     <string name="PaymentsHomeFragment__activate_payments">Fizetések aktiválása</string>
     <string name="PaymentsHomeFragment__activating_payments">Fizetések aktiválása…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Fizetési fiók helyreállítása</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Részletek</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">A Signal segítségével küldhetsz és fogadhatsz MobileCoint. Minden fizetésre a MobileCoins és a MobileCoin Wallet felhasználási feltételei vonatkoznak. Előfordulhat, hogy hibákba futsz bele, és az elveszett fizetéseket és egyenlegeket nem lehet helyreállítani. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">A Signal segítségével küldhetsz és fogadhatsz MobileCoint. Minden fizetésre a MobileCoins és a Bitcoin over Lightning Wallet felhasználási feltételei vonatkoznak. Előfordulhat, hogy hibákba futsz bele, és az elveszett fizetéseket és egyenlegeket nem lehet helyreállítani. </string>
     <string name="PaymentsHomeFragment__activate">Bekapcsolás</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin feltételek megtekintése</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning feltételek megtekintése</string>
     <string name="PaymentsHomeFragment__payments_not_available">A továbbiakban nem érhető el a Fizetések a Signalban. Az egyenlegedet továbbra is átutalhatod egy tőzsdére, de a továbbiakban már nem fogsz tudni pénzt küldeni vagy fogadni, sem pedig feltölteni az egyenlegedet.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Fizetési zár bekapcsolása a jövőbeli küldésekhez?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Címzett</string>
     <string name="PaymentsDetailsFragment__from">Feladó</string>
-    <string name="PaymentsDetailsFragment__information">A tranzakció részletei, beleértve a fizetési összeget és a tranzakció idejét, a MobileCoin Ledger részét képezik.</string>
+    <string name="PaymentsDetailsFragment__information">A tranzakció részletei, beleértve a fizetési összeget és a tranzakció idejét, a Bitcoin over Lightning Ledger részét képezik.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Coin rendberakás díj</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">A “coin rendberakás díja” akkor kerül felszámolásra, ha a birtokodban lévő coinok nem kombinálhatók egy tranzakció teljesítéséhez. A rendbetétel lehetővé teszi, hogy folytasd a fizetések beküldését.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Nem érhetőek el további részletek ehhez a tranzakcióhoz</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">Átutalás</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR kód beolvasása</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Címzett: Olvass le, vagy adj meg egy tárca címet</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">MobileCoin átutalásához hajts végre egy tranzakciót a tőzsde által megadott tárca-cím használatával. A tárca címe egy számokat és betűket tartalmazó szöveg, amely többnyire a QR kód alatt helyezkedik el.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Bitcoin over Lightning átutalásához hajts végre egy tranzakciót a tőzsde által megadott tárca-cím használatával. A tárca címe egy számokat és betűket tartalmazó szöveg, amely többnyire a QR kód alatt helyezkedik el.</string>
     <string name="PaymentsTransferFragment__next">Tovább</string>
     <string name="PaymentsTransferFragment__invalid_address">Érvénytelen cím</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Ellenőrizd a címzett tárcájának címét, majd próbáld újra!</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">Fotó elhomályosítása</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">A MobileCoin-ról</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">A MobileCoin egy új, adatvédelemre fókuszáló digitális pénznem.</string>
+    <string name="payment_info_card_about_mobilecoin">A Bitcoin over Lightning-ról</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">A Bitcoin over Lightning egy új, adatvédelemre fókuszáló digitális pénznem.</string>
     <string name="payment_info_card_adding_funds">Feltöltés</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">A Signalban történő költekezéshez küldj MobileCoin-t a pénztárcád címére!</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">A Signalban történő költekezéshez küldj Bitcoin over Lightning-t a pénztárcád címére!</string>
     <string name="payment_info_card_cashing_out">Pénzkivét</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bármikor hozzájuthatsz MobileCoin egyenlegedhez egy olyan tőzsde használatával, amely támogatja a MobileCoint. Egyszerűen indíts egy utalást a tőzsdéhez tartozó tárcád címére.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bármikor hozzájuthatsz Bitcoin over Lightning egyenlegedhez egy olyan tőzsde használatával, amely támogatja a MobileCoint. Egyszerűen indíts egy utalást a tőzsdéhez tartozó tárcád címére.</string>
     <string name="payment_info_card_hide_this_card">Elrejtsük ezt a kártyát?</string>
     <string name="payment_info_card_hide">Elrejtés</string>
     <!-- Title of save recovery phrase card -->

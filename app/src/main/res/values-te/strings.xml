@@ -3873,7 +3873,7 @@
         <item>ఫీచర్ అభ్యర్ధన</item>
         <item>ప్రశ్న</item>
         <item>ఫీడ్‌బ్యాక్</item>
-        <item>చెల్లింపులు (MobileCoin)</item>
+        <item>చెల్లింపులు (Bitcoin over Lightning)</item>
         <item>విరాళాలు &amp; బ్యాడ్జీలు</item>
         <item>Signal ఆండ్రాయిడ్ బ్యాకప్</item>
         <item>ఇతర</item>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">వివరాలు</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">MobileCoin ను పంపడానికి మరియు అందుకోవడానికి మీరు Signal ను ఉపయోగించవచ్చు. MobileCoins మరియు MobileCoin వాలెట్ కోసం అన్ని చెల్లింపులు వినియోగ నిబంధనలకు లోబడి ఉంటాయి. మీరు కొన్ని సమస్యలను ఎదుర్కోవచ్చు మరియు మీరు కోల్పోయే చెల్లింపులు లేదా బ్యాలెన్స్‌లను తిరిగి పొందలేరు. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Bitcoin over Lightning ను పంపడానికి మరియు అందుకోవడానికి మీరు Signal ను ఉపయోగించవచ్చు. MobileCoins మరియు Bitcoin over Lightning వాలెట్ కోసం అన్ని చెల్లింపులు వినియోగ నిబంధనలకు లోబడి ఉంటాయి. మీరు కొన్ని సమస్యలను ఎదుర్కోవచ్చు మరియు మీరు కోల్పోయే చెల్లింపులు లేదా బ్యాలెన్స్‌లను తిరిగి పొందలేరు. </string>
     <string name="PaymentsHomeFragment__activate">సక్రియం చేయండి</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin నిబంధనలను చూడండి.</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning నిబంధనలను చూడండి.</string>
     <string name="PaymentsHomeFragment__payments_not_available">Signal లో చెల్లింపులు ఇకపై అందుబాటులో లేవు. మీరు ఇప్పటికీ నిధులను ఎక్స్ఛేంజికి బదిలీ చేయవచ్చు, కానీ మీరు ఇకపై చెల్లింపులను పంపలేరు మరియు స్వీకరించలేరు లేదా నిధులను జోడించలేరు.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">భవిష్యత్తులో పంపడానికి చెల్లింపు లాక్‌ని ఆన్ చేయాలా?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">మీ వాలెట్ చిరునామా</string>
     <string name="PaymentsAddMoneyFragment__copy">నకలు</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">క్లిప్బోర్డ్కు కాపీ చేయబడింది</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">నిధులను జోడించడానికి, మీ వాలెట్ చిరునామాకు MobileCoin పంపండి. MobileCoin కి మద్దతిచ్చే మార్పిడిలో మీ ఖాతా నుండి లావాదేవీని ప్రారంభించండి, ఆపై QR కోడ్‌ను స్కాన్ చేయండి లేదా మీ వాలెట్ చిరునామాను కాపీ చేయండి.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">నిధులను జోడించడానికి, మీ వాలెట్ చిరునామాకు Bitcoin over Lightning పంపండి. Bitcoin over Lightning కి మద్దతిచ్చే మార్పిడిలో మీ ఖాతా నుండి లావాదేవీని ప్రారంభించండి, ఆపై QR కోడ్‌ను స్కాన్ చేయండి లేదా మీ వాలెట్ చిరునామాను కాపీ చేయండి.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">ఎవరికి</string>
     <string name="PaymentsDetailsFragment__from">ఎవరి నుండి</string>
-    <string name="PaymentsDetailsFragment__information">చెల్లింపు మొత్తం మరియు లావాదేవీ సమయంతో సహా లావాదేవీ వివరాలు MobileCoin లెడ్జర్‌లో భాగం.</string>
+    <string name="PaymentsDetailsFragment__information">చెల్లింపు మొత్తం మరియు లావాదేవీ సమయంతో సహా లావాదేవీ వివరాలు Bitcoin over Lightning లెడ్జర్‌లో భాగం.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">కాయిన్ క్లీన్‌అప్ ఫీజు</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">లావాదేవీని పూర్తి చేయడానికి మీ వద్ద ఉన్న నాణేలను కలపలేనప్పుడు “కాయిన్ క్లీనప్ ఫీజు” వసూలు చేయబడుతుంది. చెల్లింపులు పంపడం కొనసాగించడానికి క్లీనప్ మిమ్మల్ని అనుమతిస్తుంది.</string>
     <string name="PaymentsDetailsFragment__no_details_available">ఈ లావాదేవీల కొరకు తదుపరి వివరాలు లభ్యం కావడం లేదు</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">బదిలీ చేయి</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR కోడ్‌ను స్కాన్ చేయండి</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">వీరికి: వాలెట్ చిరునామాను స్కాన్ చేయండి లేదా నమోదు చేయండి</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">ఎక్స్ఛేంజ్ అందించిన వాలెట్ చిరునామాకు బదిలీని పూర్తి చేయడం ద్వారా మీరు MobileCoin న్ను బదిలీ చేయవచ్చు. వాలెట్ చిరునామా అనేది QR కోడ్ క్రింద సాధారణంగా సంఖ్యలు మరియు అక్షరాల స్ట్రింగ్.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">ఎక్స్ఛేంజ్ అందించిన వాలెట్ చిరునామాకు బదిలీని పూర్తి చేయడం ద్వారా మీరు Bitcoin over Lightning న్ను బదిలీ చేయవచ్చు. వాలెట్ చిరునామా అనేది QR కోడ్ క్రింద సాధారణంగా సంఖ్యలు మరియు అక్షరాల స్ట్రింగ్.</string>
     <string name="PaymentsTransferFragment__next">తరువాత</string>
     <string name="PaymentsTransferFragment__invalid_address">చెల్లని చిరునామా</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">మీరు బదిలీ చేయడానికి ప్రయత్నిస్తున్న వ్యాలెట్ చిరునామాని తనిఖీ చేసి, మళ్లీ ప్రయత్నించండి.</string>
@@ -5303,10 +5303,10 @@
     <string name="WallpaperCropActivity__blur_photo">అస్పష్టమైన ఛాయాచిత్రం</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin గురించి</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin కొత్త గోప్యతా దృష్టి గల డిజిటల్ కరెన్సీ.</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning గురించి</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning కొత్త గోప్యతా దృష్టి గల డిజిటల్ కరెన్సీ.</string>
     <string name="payment_info_card_adding_funds">ఫండ్స్‌ని జోడించడం</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">మీ వాలెట్ చిరునామాకు MobileCoin పంపడం ద్వారా మీరు Signalలో ఉపయోగం కోసం నిధులను జోడించవచ్చు.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">మీ వాలెట్ చిరునామాకు Bitcoin over Lightning పంపడం ద్వారా మీరు Signalలో ఉపయోగం కోసం నిధులను జోడించవచ్చు.</string>
     <string name="payment_info_card_cashing_out">క్యాష్ అవుట్</string>
     <string name="payment_info_card_you_can_cash_out_mobilecoin">మీరు MobileCoinకు మద్దతిచ్చే మారకంలో ఎప్పుడైనా MobileCoinను క్యాష్ అవుట్ చేయవచ్చు. ఆ మారకంలో మీ ఖాతాకు బదిలీ చేయండి.</string>
     <string name="payment_info_card_hide_this_card">ఈ కార్డును దాచిపెట్టాలా?</string>

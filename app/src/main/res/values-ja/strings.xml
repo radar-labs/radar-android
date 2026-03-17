@@ -3762,7 +3762,7 @@
         <item>機能のリクエスト</item>
         <item>質問</item>
         <item>フィードバック</item>
-        <item>決済機能 (MobileCoin)</item>
+        <item>決済機能 (Bitcoin over Lightning)</item>
         <item>寄付 &amp; バッジ</item>
         <item>Signal Androidバックアップ</item>
         <item>その他</item>
@@ -4121,7 +4121,7 @@
     <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoinの利用規約</string>
     <string name="PaymentsHomeFragment__payments_not_available">Signalの決済機能は、利用できなくなりました。取引所への振替は可能ですが、送金や受け取り、入金はできません。</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">今後の送信のために支払いのロックを有効にしますか？</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->

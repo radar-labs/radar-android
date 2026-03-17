@@ -3984,7 +3984,7 @@
         <item>Jaunas funkcijas pieprasījums</item>
         <item>Jautājums</item>
         <item>Atsauksme</item>
-        <item>Maksājumi (MobileCoin)</item>
+        <item>Maksājumi (Bitcoin over Lightning)</item>
         <item>Ziedojumi un nozīmītes</item>
         <item>Signal Android rezerves kopija</item>
         <item>Cits</item>
@@ -4309,7 +4309,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Jauna funkcija: maksājumi</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Izmantojiet lietotni Signal, lai nosūtītu un saņemtu MobileCoin — jaunu, uz privātumu vērstu digitālo valūtu. Aktivizējiet, lai sāktu.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Izmantojiet lietotni Signal, lai nosūtītu un saņemtu Bitcoin over Lightning — jaunu, uz privātumu vērstu digitālo valūtu. Aktivizējiet, lai sāktu.</string>
     <string name="PaymentsHomeFragment__activate_payments">Aktivizēt maksājumus</string>
     <string name="PaymentsHomeFragment__activating_payments">Tiek aktivizēti maksājumi…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Atjaunot maksājumu kontu</string>
@@ -4335,7 +4335,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Maksājumi jūsu reģionā nav pieejami.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Nevarējām iespējot maksājumus. Mēģiniet vēlāk.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Deaktivēt maksājumus?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Deaktivizējot maksājumus, jūs nevarēsiet nosūtīt vai saņemt MobileCoin lietotnē Signal.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Deaktivizējot maksājumus, jūs nevarēsiet nosūtīt vai saņemt Bitcoin over Lightning lietotnē Signal.</string>
     <string name="PaymentsHomeFragment__deactivate">Deaktivēt</string>
     <string name="PaymentsHomeFragment__continue">Turpināt</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Atlikums pašlaik nav pieejams.</string>
@@ -4344,12 +4344,12 @@
     <string name="PaymentsHomeFragment__details">Rekvizīti</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Lietotni Signal var izmantot, lai nosūtītu un saņemtu MobileCoin. Uz visiem maksājumiem attiecas MobileCoin un MobileCoin Wallet lietošanas noteikumi. Var rasties dažas problēmas, un maksājumus vai atlikumus, kurus iespējams zaudēt, nevar atgūt. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Lietotni Signal var izmantot, lai nosūtītu un saņemtu Bitcoin over Lightning. Uz visiem maksājumiem attiecas Bitcoin over Lightning un Bitcoin over Lightning Wallet lietošanas noteikumi. Var rasties dažas problēmas, un maksājumus vai atlikumus, kurus iespējams zaudēt, nevar atgūt. </string>
     <string name="PaymentsHomeFragment__activate">Aktivēt</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Skatīt MobileCoin lietošanas noteikumus</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Skatīt Bitcoin over Lightning lietošanas noteikumus</string>
     <string name="PaymentsHomeFragment__payments_not_available">Maksājumu opcija lietotnē Signal vairs nav pieejama. Jūs joprojām varat pārskaitīt līdzekļus uz biržu, bet vairs nevarat nosūtīt un saņemt maksājumus vai pievienot līdzekļus.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Vai ieslēgt maksājumu bloķēšanu turpmākajiem sūtījumiem?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4430,7 +4430,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Jūsu maciņa adrese</string>
     <string name="PaymentsAddMoneyFragment__copy">Kopēt</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Iekopēts starpliktuvē</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Lai pievienotu naudas kapitālu, nosūtiet MobileCoin uz sava naudas maka adresi. Sāciet transakciju no sava konta biržā, kas atbalsta MobileCoin, pēc tam skenējiet kvadrātkodu vai kopējiet naudas maka adresi.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Lai pievienotu naudas kapitālu, nosūtiet Bitcoin over Lightning uz sava naudas maka adresi. Sāciet transakciju no sava konta biržā, kas atbalsta Bitcoin over Lightning, pēc tam skenējiet kvadrātkodu vai kopējiet naudas maka adresi.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4448,7 +4448,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Kam</string>
     <string name="PaymentsDetailsFragment__from">No</string>
-    <string name="PaymentsDetailsFragment__information">Transakcijas informācija, tostarp maksājuma summa un transakcijas laiks, ir norādīta MobileCoin virsgrāmatā.</string>
+    <string name="PaymentsDetailsFragment__information">Transakcijas informācija, tostarp maksājuma summa un transakcijas laiks, ir norādīta Bitcoin over Lightning virsgrāmatā.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Monētu uztīrīšanas likme</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">Naudas līdzekļu tīrīšanas jeb defragmentēšanas maksa tiek ieturēta, ja jūsu rīcībā esošos naudas līdzekļus nevar apvienot, lai pabeigtu transakciju. Veicot tīrīšanu, varēsiet turpināt maksājumu sūtīšanu.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Vairāk datu par šo transakciju nav pieejami</string>
@@ -4463,7 +4463,7 @@
     <string name="PaymentsTransferFragment__transfer">Pārsūtīt</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Skenēt kvadrātkodu</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Kam: Ieskenēt vai ievadīt maka adresi</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">MobileCoin var pārskaitīt, veicot pārskaitījumu uz biržas norādīto naudas maka adresi. Naudas maka adrese ir ciparu un burtu virkne, kas parasti atrodas zem kvadrātkoda.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Bitcoin over Lightning var pārskaitīt, veicot pārskaitījumu uz biržas norādīto naudas maka adresi. Naudas maka adrese ir ciparu un burtu virkne, kas parasti atrodas zem kvadrātkoda.</string>
     <string name="PaymentsTransferFragment__next">Tālāk</string>
     <string name="PaymentsTransferFragment__invalid_address">Nederīga adrese</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Pārbaudiet naudas maka adresi, uz kuru mēģināt pārsūtīt, un mēģiniet vēlreiz.</string>
@@ -5433,12 +5433,12 @@
     <string name="WallpaperCropActivity__blur_photo">Aizmiglot fotoattēlu</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Par MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin ir jauna uz privātumu vērsta digitālā valūta.</string>
+    <string name="payment_info_card_about_mobilecoin">Par Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning ir jauna uz privātumu vērsta digitālā valūta.</string>
     <string name="payment_info_card_adding_funds">Līdzekļu papildināšana</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Naudas līdzekļus izmantošanai lietotnē Signal varat pievienot, nosūtot MobileCoin uz sava naudas maka adresi.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Naudas līdzekļus izmantošanai lietotnē Signal varat pievienot, nosūtot Bitcoin over Lightning uz sava naudas maka adresi.</string>
     <string name="payment_info_card_cashing_out">Naudas izmaksa</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Jūs varat izņemt MobileCoin jebkurā laikā biržā, kas atbalsta MobileCoin. Vienkārši veiciet pārskaitījumu uz savu kontu attiecīgajā biržā.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Jūs varat izņemt Bitcoin over Lightning jebkurā laikā biržā, kas atbalsta Bitcoin over Lightning. Vienkārši veiciet pārskaitījumu uz savu kontu attiecīgajā biržā.</string>
     <string name="payment_info_card_hide_this_card">Vai paslēpt šo karti?</string>
     <string name="payment_info_card_hide">Slēpt</string>
     <!-- Title of save recovery phrase card -->

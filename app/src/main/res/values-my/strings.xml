@@ -3762,7 +3762,7 @@
         <item>လုပ်ဆောင်ချက် အင်္ဂါရပ် တောင်းဆိုချက်</item>
         <item>မေးခွန်း</item>
         <item>တုံ့ပြန်ချက်</item>
-        <item>ငွေပေးချေမှုများ (MobileCoin)</item>
+        <item>ငွေပေးချေမှုများ (Bitcoin over Lightning)</item>
         <item>လှူဒါန်းမှုများနှင့် ဘဲ့ဂျ်များ</item>
         <item>Signal Android ဘက်ခ်အပ်</item>
         <item>အခြား</item>
@@ -4081,7 +4081,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">ငွေပေးချေမှုများကို မိတ်ဆက်ခြင်း</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Signal သုံး၍ လုံခြုံရေးအလေးပေး ဒစ်ဂျစ်တယ်ငွေကြေးအသစ် MobileCoin ကို ပေးပို့လက်ခံလိုက်ပါ။ စတင်သုံးရန် ဖွင့်ပါ။</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Signal သုံး၍ လုံခြုံရေးအလေးပေး ဒစ်ဂျစ်တယ်ငွေကြေးအသစ် Bitcoin over Lightning ကို ပေးပို့လက်ခံလိုက်ပါ။ စတင်သုံးရန် ဖွင့်ပါ။</string>
     <string name="PaymentsHomeFragment__activate_payments">ငွေပေးချေမှုများ ဖွင့်မယ်</string>
     <string name="PaymentsHomeFragment__activating_payments">ငွေပေးချေမှုများ ဖွင့်နေသည်…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">ငွေပေးချမှုလုပ်သည့် အကောင့် ပြန်ရယူမယ်</string>
@@ -4107,7 +4107,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">သင့်ဒေသတွင်း ငွေပေးချေမှုများ မရရှိနိုင်ပါ။</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">ငွေပေးချေမှုများ မလုပ်ဆောင်နိုင်ပါ။ နောက်မှ ပြန်စမ်းကြည့်ပေးပါ။</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">ငွေပေးချေမှုများကို ပိတ်မည်လား?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">သင်မှ ငွေပေးချေမှုများ ပိတ်ထားလျှင် Signal ထဲတွင် သင်မှ MobileCoin ပေးပို့လက်ခံရန် မရနိုင်ပါ။</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">သင်မှ ငွေပေးချေမှုများ ပိတ်ထားလျှင် Signal ထဲတွင် သင်မှ Bitcoin over Lightning ပေးပို့လက်ခံရန် မရနိုင်ပါ။</string>
     <string name="PaymentsHomeFragment__deactivate">ပိတ်မယ်</string>
     <string name="PaymentsHomeFragment__continue">ဆက်လုပ်ရန်</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">လက်ကျန်ငွေ လက်ရှိမရနိုင်ပါ။</string>
@@ -4116,12 +4116,12 @@
     <string name="PaymentsHomeFragment__details">အသေးစိတ်အချက်အလက်များ</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">MobileCoin ပေးပို့ရန်နှင့် လက်ခံရန် Signal ကို သင် သုံးနိုင်ပါသည်။ ငွေပေးချေမှုများအားလုံးသည် MobileCoins နှင့် MobileCoin Wallet အတွက် အသုံးပြုမှုစည်းကမ်းချက်များကို လိုက်နာရပါမည်။ ပြဿနာအချို့ကို သင် ကြုံတွေ့ရနိုင်ပြီး သင် ဆုံးရှုံးသွားသော ငွေပေးချေမှုများ သို့မဟုတ် လက်ကျန်ငွေများကို ပြန်လည်ရယူ၍မရနိုင်ပါ။ </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Bitcoin over Lightning ပေးပို့ရန်နှင့် လက်ခံရန် Signal ကို သင် သုံးနိုင်ပါသည်။ ငွေပေးချေမှုများအားလုံးသည် MobileCoins နှင့် Bitcoin over Lightning Wallet အတွက် အသုံးပြုမှုစည်းကမ်းချက်များကို လိုက်နာရပါမည်။ ပြဿနာအချို့ကို သင် ကြုံတွေ့ရနိုင်ပြီး သင် ဆုံးရှုံးသွားသော ငွေပေးချေမှုများ သို့မဟုတ် လက်ကျန်ငွေများကို ပြန်လည်ရယူ၍မရနိုင်ပါ။ </string>
     <string name="PaymentsHomeFragment__activate">ဖွင့်မယ်</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin ၏သတ်မှတ်ချက်များ ကြည့်ရှုမယ်</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning ၏သတ်မှတ်ချက်များ ကြည့်ရှုမယ်</string>
     <string name="PaymentsHomeFragment__payments_not_available">Signal ထဲတွင် ငွေပေးချေမှုများ မလုပ်ဆောင်နိုင်တော့ပါ။ ငွေလဲလှယ်မှုတစ်ခုသို့ ငွေများလွှဲနိုင်ပါသည်၊ သို့သော် သင်မှ ငွေပေးချေမှုများ ပေးပို့လက်ခံလို့မရတော့ပါ၊​ ငွေလည်း ထည့်ပေါင်းလို့မရတော့ပါ။</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">နောင်လာမည့် ပေးပို့မှုများအတွက် ငွေပေးချေမှုလော့ခ်ကို ဖွင့်မည်လား။</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4202,7 +4202,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">သင့် ပိုက်ဆံအိတ် Wallet လိပ်စာ</string>
     <string name="PaymentsAddMoneyFragment__copy">ကူးမည်</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">ကလစ်ဘုတ်သို့ကူးယူပြီး</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">ငွေဖြည့်ရန် သင့် ပိုက်ဆံအိတ် Wallet လိပ်စာသို့ MobileCoin ပို့ပါ။ သင့် အကောင့်မှ MobileCoin ပံ့ပိုးသော လွှဲပြောင်းမှုနှင့် ငွေပေးငွေယူမှုတစ်ကြောင်းလုပ်ဆောင်ပါ၊ ပြီးလျှင် QR ကုဒ်စကင်ဖတ်ပါ သို့မဟုတ် သင့် ပိုက်ဆံအိတ် Wallet လိပ်စာ ကော်ပီကူးပါ။</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">ငွေဖြည့်ရန် သင့် ပိုက်ဆံအိတ် Wallet လိပ်စာသို့ Bitcoin over Lightning ပို့ပါ။ သင့် အကောင့်မှ Bitcoin over Lightning ပံ့ပိုးသော လွှဲပြောင်းမှုနှင့် ငွေပေးငွေယူမှုတစ်ကြောင်းလုပ်ဆောင်ပါ၊ ပြီးလျှင် QR ကုဒ်စကင်ဖတ်ပါ သို့မဟုတ် သင့် ပိုက်ဆံအိတ် Wallet လိပ်စာ ကော်ပီကူးပါ။</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4220,7 +4220,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">သို့</string>
     <string name="PaymentsDetailsFragment__from">မှ</string>
-    <string name="PaymentsDetailsFragment__information">ငွေပေးချေမှု ငွေပမာဏနှင့် လုပ်ဆောင်သည့်အချိန် အပါအဝင် ငွေပေးငွေယူသည့် အသေးစိတ်အချက်အလက်များသည် MobileCoin စာအုပ်စာရင်း၏ အစိတ်အပိုင်းတစ်ခု ဖြစ်ပါသည်။</string>
+    <string name="PaymentsDetailsFragment__information">ငွေပေးချေမှု ငွေပမာဏနှင့် လုပ်ဆောင်သည့်အချိန် အပါအဝင် ငွေပေးငွေယူသည့် အသေးစိတ်အချက်အလက်များသည် Bitcoin over Lightning စာအုပ်စာရင်း၏ အစိတ်အပိုင်းတစ်ခု ဖြစ်ပါသည်။</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">အကြွေစေ့ရှင်းရေးအခကြေး</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">ငွေပေးချေမှု လုပ်ဆောင်ရန် သင့်လက်ထဲတွင်ရှိသော အကြွေစေ့များကိုပေါင်းစပ်သော်လည်း မလုံလောက်မှုဖြစ်ခဲ့လျှင် \"အကြွေစေ့ရှင်းရေးအခကြေး\" ကို ကောက်ခံယူပါမည်။ ရှင်းခြင်းဖြင့် ငွေပေးချေမှုများ ဆက်လက် ပေးပို့နိုင်ပါမည်။</string>
     <string name="PaymentsDetailsFragment__no_details_available">၎င်းငွေပေးချေမှုအတွက် အခြားအချက်အလက်များ မရရှိနိုင်ပါ</string>
@@ -4235,7 +4235,7 @@
     <string name="PaymentsTransferFragment__transfer">လွှဲပြောင်းမယ်</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR ကုဒ်ကို စကင်ဖတ်မယ်</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">သို့ - စကင်ဖတ်ပါ သို့မဟုတ် ပိုက်ဆံအိတ် wallet လိပ်စာ ရိုက်ထည့်ပါ</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">သင်မှ MobileCoin လွှဲရန် ငွေလဲလှယ်မှုတစ်ခုမှ ပေးသော ပိုက်ဆံအိတ် wallet လိပ်စာသို့ လွှဲပြောင်းမှုတစ်ခု ပြီးစီးစေလိုပါသည်။ ပိုက်ဆံအိတ် wallet လိပ်စာသည် QR ကုဒ်အောက်တွင် ပုံမှန်အားဖြင့်တွေ့နိုင်သော နံပါတ်များနှင့် အက္ခရာများဖြစ်ပါသည်။</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">သင်မှ Bitcoin over Lightning လွှဲရန် ငွေလဲလှယ်မှုတစ်ခုမှ ပေးသော ပိုက်ဆံအိတ် wallet လိပ်စာသို့ လွှဲပြောင်းမှုတစ်ခု ပြီးစီးစေလိုပါသည်။ ပိုက်ဆံအိတ် wallet လိပ်စာသည် QR ကုဒ်အောက်တွင် ပုံမှန်အားဖြင့်တွေ့နိုင်သော နံပါတ်များနှင့် အက္ခရာများဖြစ်ပါသည်။</string>
     <string name="PaymentsTransferFragment__next">နောက်ထက်</string>
     <string name="PaymentsTransferFragment__invalid_address">အကြုံးမဝင်သော လိပ်စာ</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">သင်လွှဲပြောင်းရန် ကြိုးစားနေသည့် ပိုက်ဆံအိတ် wallet လိပ်စာ ကိုစစ်ပြီး ပြန်စမ်းကြည့်ပေးပါ။</string>
@@ -5173,12 +5173,12 @@
     <string name="WallpaperCropActivity__blur_photo">ဓာတ်ပုံမှုန်ထားမည်</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin အကြောင်း</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin သည် လုံခြုံရေးအလေးပေး ဒစ်ဂျစ်တယ်ငွေကြေးအသစ် ဖြစ်ပါသည်။</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning အကြောင်း</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning သည် လုံခြုံရေးအလေးပေး ဒစ်ဂျစ်တယ်ငွေကြေးအသစ် ဖြစ်ပါသည်။</string>
     <string name="payment_info_card_adding_funds">ငွေဖြည့်နေသည်</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">သင့် ပိုက်ဆံအိတ် wallet လိပ်စာသို့ MobileCoin ပို့၍ Signal တွင် သုံးရန် ငွေဖြည့်နိုင်ပါသည်။</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">သင့် ပိုက်ဆံအိတ် wallet လိပ်စာသို့ Bitcoin over Lightning ပို့၍ Signal တွင် သုံးရန် ငွေဖြည့်နိုင်ပါသည်။</string>
     <string name="payment_info_card_cashing_out">ငွေထုတ်ယူခြင်း</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">မည်သည့်အချိတ်မဆို MobileCoin ပံ့ပိုးသော ငွေလဲလှယ်သည့်နေရာတွင် MobileCoin ငွေထုတ်ယူလို့ရပါသည်။ ၎င်းငွေလဲလှယ်သည့်နေရာတွင် သင့်အကောင့်သို့ လွှဲလိုက်ပါ။</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">မည်သည့်အချိတ်မဆို Bitcoin over Lightning ပံ့ပိုးသော ငွေလဲလှယ်သည့်နေရာတွင် Bitcoin over Lightning ငွေထုတ်ယူလို့ရပါသည်။ ၎င်းငွေလဲလှယ်သည့်နေရာတွင် သင့်အကောင့်သို့ လွှဲလိုက်ပါ။</string>
     <string name="payment_info_card_hide_this_card">၎င်းကဒ်ကို ပုန်းမည်လား?</string>
     <string name="payment_info_card_hide">ဝှက်ပါ</string>
     <!-- Title of save recovery phrase card -->

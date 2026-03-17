@@ -3873,7 +3873,7 @@
         <item>Xüsusiyyətlə əlaqəli sorğu</item>
         <item>Sual</item>
         <item>Rəy</item>
-        <item>Ödənişlər (MobileCoin)</item>
+        <item>Ödənişlər (Bitcoin over Lightning)</item>
         <item>İanələr və Nişanlar</item>
         <item>Signal Android Ehtiyat nüsxəsi</item>
         <item>Digər</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Ödənişlər səhifəsi</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Məxfiliyə əsaslanan yeni rəqəmsal pul vahidi olan MobileCoin göndərmək və almaq üçün Signal-dan istifadə edin. Başlatmaq üçün aktivləşdirin.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Məxfiliyə əsaslanan yeni rəqəmsal pul vahidi olan Bitcoin over Lightning göndərmək və almaq üçün Signal-dan istifadə edin. Başlatmaq üçün aktivləşdirin.</string>
     <string name="PaymentsHomeFragment__activate_payments">Ödənişləri aktivləşdir</string>
     <string name="PaymentsHomeFragment__activating_payments">Ödənişlər aktivləşdirilir…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Ödəniş hesabını geri yüklə</string>
@@ -4221,7 +4221,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Ödənişlər bölgənizdə əlçatmazdır.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Ödənişlər fəallaşdırıla bilmir. Daha sonra yenidən sınayın.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Ödənişlər deaktiv edilsin?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Ödənişləri deaktiv etsəniz, Signal-da MobileCoin göndərə və ya ala bilməyəcəksiniz.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Ödənişləri deaktiv etsəniz, Signal-da Bitcoin over Lightning göndərə və ya ala bilməyəcəksiniz.</string>
     <string name="PaymentsHomeFragment__deactivate">Deaktiv et</string>
     <string name="PaymentsHomeFragment__continue">Davam et</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Balans hal-hazırda əlçatmazdır.</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Təfsilatlar</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">MobileCoin göndərmək və almaq üçün Signal-dan istifadə edə bilərsiniz. Bütün ödənişlər MobileCoins və MobileCoin Pulqabının İstifadə Şərtləri ilə tənzimlənir. Bəzi problemlərlə üzləşə bilərsiniz, yaxud da itirə biləcəyiniz ödəniş və balansları yenidən bərpa etməyiniz mümkün olmaya bilər. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Bitcoin over Lightning göndərmək və almaq üçün Signal-dan istifadə edə bilərsiniz. Bütün ödənişlər MobileCoins və Bitcoin over Lightning Pulqabının İstifadə Şərtləri ilə tənzimlənir. Bəzi problemlərlə üzləşə bilərsiniz, yaxud da itirə biləcəyiniz ödəniş və balansları yenidən bərpa etməyiniz mümkün olmaya bilər. </string>
     <string name="PaymentsHomeFragment__activate">Aktivləşdir</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin şərtlərinə bax</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning şərtlərinə bax</string>
     <string name="PaymentsHomeFragment__payments_not_available">Ödənişlər, Signal-da artıq əlçatmazdır. Yenə də bir birjaya pul köçürə bilərsiniz, ancaq ödəniş göndərə və ala və ya pul əlavə edə bilməzsiniz.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Gələcəkdəki göndərişlər üçün Ödəniş kilidi aktivləşdirilsin?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Pulqabı ünvanınız</string>
     <string name="PaymentsAddMoneyFragment__copy">Kopyala</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Lövhəyə kopyalandı</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Pul əlavə etmək üçün pulqabı ünvanınıza MobileCoin göndərin. MobileCoin dəstəkləyən bir birjada hesabınızdan bir əməliyyat başladın, daha sonra QR kodu skan edin və ya pulqabı ünvanınızı kopyalayın.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Pul əlavə etmək üçün pulqabı ünvanınıza Bitcoin over Lightning göndərin. Bitcoin over Lightning dəstəkləyən bir birjada hesabınızdan bir əməliyyat başladın, daha sonra QR kodu skan edin və ya pulqabı ünvanınızı kopyalayın.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Alıcı</string>
     <string name="PaymentsDetailsFragment__from">Göndərən</string>
-    <string name="PaymentsDetailsFragment__information">Ödəniş miqdarı və əməliyyat vaxtını əhatə edən əməliyyat təfərrüatları MobileCoin Ledger-in bir hissəsidir.</string>
+    <string name="PaymentsDetailsFragment__information">Ödəniş miqdarı və əməliyyat vaxtını əhatə edən əməliyyat təfərrüatları Bitcoin over Lightning Ledger-in bir hissəsidir.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Xırda pul təmizləmə haqqı</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">Sahib olduğunuz xırda pullar, bir əməliyyatı tamamlamaq üçün birləşdirilə bilməyəndə \"Xırda pul təmizləmə haqqı\" tutulur. Təmizləmə, ödəniş göndərməyə davam etməyinizi təmin edir.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Bu əməliyyatla bağlı əlavə məlumat yoxdur</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">Köçürmə</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR kodu skan edin</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Kimə: Pulqabı ünvanını skan edin və ya daxil edin</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Birja tərəfindən təmin edilən pulqabı ünvanına bir köçürmə edərək MobileCoin köçürməsi edə bilərsiniz. Pulqabı ünvanı, əksər hallarda QR kodun altındakı hərf və rəqəmlər sırasıdır.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Birja tərəfindən təmin edilən pulqabı ünvanına bir köçürmə edərək Bitcoin over Lightning köçürməsi edə bilərsiniz. Pulqabı ünvanı, əksər hallarda QR kodun altındakı hərf və rəqəmlər sırasıdır.</string>
     <string name="PaymentsTransferFragment__next">Növbəti</string>
     <string name="PaymentsTransferFragment__invalid_address">Etibarsız ünvan</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Köçürmə etməyə cəhd etdiyiniz pulqabı ünvanını yoxlayıb yenidən sınayın.</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">Bulanıq foto</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin haqqında</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin məxfiliyə əsaslanan yeni rəqəmsal pul vahididir.</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning haqqında</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning məxfiliyə əsaslanan yeni rəqəmsal pul vahididir.</string>
     <string name="payment_info_card_adding_funds">Pul əlavə etmə</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">MobileCoin-i pulqabı ünvanınıza göndərərək Signal-da istifadə etmək üçün pul əlavə edə bilərsiniz.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Bitcoin over Lightning-i pulqabı ünvanınıza göndərərək Radar-da istifadə etmək üçün pul əlavə edə bilərsiniz.</string>
     <string name="payment_info_card_cashing_out">Nağdlaşdırma</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">MobileCoin dəstəkləyən bir birjada istənilən vaxt MobileCoin-i nağdlaşdıra bilərsiniz. Sadəcə həmin birjadakı hesabınıza bir köçürmə edin.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bitcoin over Lightning dəstəkləyən bir birjada istənilən vaxt Bitcoin over Lightning-i nağdlaşdıra bilərsiniz. Sadəcə həmin birjadakı hesabınıza bir köçürmə edin.</string>
     <string name="payment_info_card_hide_this_card">Bu kart gizlədilsin?</string>
     <string name="payment_info_card_hide">Gizlət</string>
     <!-- Title of save recovery phrase card -->

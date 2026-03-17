@@ -178,6 +178,7 @@ android {
   }
 
   defaultConfig {
+//    applicationId = "com.cakewallet.radar"
     versionCode = (canonicalVersionCode * maxHotfixVersions) + currentHotfixVersion
     versionName = canonicalVersionName
 

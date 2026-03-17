@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">भुगतान का परिचय</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">MobileCoin भेजने और पाने के लिए Signal का इस्तेमाल करें। यह एक डिजिटल करंसी है, जिसमें प्राइवेसी का खास ध्यान रखा जाता है। शुरू करने के लिए ऐक्टिवेट करें।</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Bitcoin over Lightning भेजने और पाने के लिए Signal का इस्तेमाल करें। यह एक डिजिटल करंसी है, जिसमें प्राइवेसी का खास ध्यान रखा जाता है। शुरू करने के लिए ऐक्टिवेट करें।</string>
     <string name="PaymentsHomeFragment__activate_payments">पेमेंट की सुविधा ऐक्टिवेट करें</string>
     <string name="PaymentsHomeFragment__activating_payments">पेमेंट की सुविधा ऐक्टिवेट हो रही है…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">पेमेंट खाता रीस्टोर करें</string>
@@ -4221,7 +4221,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">पेमेंट की सुविधा आपके इलाके में मौजूद नहीं है।</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">पेमेंट की सुविधा चालू नहीं हो सकी। बाद में फिर से कोशिश करें।</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">पेमेंट की सुविधा बंद करनी है?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">पेमेंट की सुविधा बंद करने पर, Signal पर MobileCoin भेजने या पाने की सुविधा भी बंद हो जाएगी।</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">पेमेंट की सुविधा बंद करने पर, Signal पर Bitcoin over Lightning भेजने या पाने की सुविधा भी बंद हो जाएगी।</string>
     <string name="PaymentsHomeFragment__deactivate">बंद करें</string>
     <string name="PaymentsHomeFragment__continue">जारी रखें</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">फ़िलहाल बैलेंस उपलब्ध नहीं है।</string>
@@ -4232,10 +4232,10 @@
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
     <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">आप मोबाइलकॉइन भेजने और प्राप्त करने के लिए Signal इस्तेमाल कर सकते हैं। सभी भुगतान मोबाइलकॉइन्स और मोबाइलकॉइन वॉलेट के उपयोग की शर्तों के अधीन हैं। आपको कुछ समस्याएँ आ सकती हैं और जो भुगतान या बैलेंस आप खोते हैं उन्हें रिकवर नहीं किया जा सकता। </string>
     <string name="PaymentsHomeFragment__activate">चालू करें</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin की शर्तें देखें</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning की शर्तें देखें</string>
     <string name="PaymentsHomeFragment__payments_not_available">Signal में पेमेंट की सुविधा अब उपलब्ध नहीं है। हालांकि, एक्सचेंज में अभी भी फ़ंड ट्रांसफ़र किए जा सकते हैं, लेकिन सीधे तौर पर फ़ंड भेजने या पाने या फिर फ़ंड जोड़ने की सुविधा अब मौजूद नहीं है।</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">भविष्य में फ़ंड भेजने के लिए पेमेंट लॉक की सुविधा चालू करनी है?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">आपका वॉलेट पता</string>
     <string name="PaymentsAddMoneyFragment__copy">कॉपी करें</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">क्लिपबोर्ड पर कॉपी किया गया</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">फ़ंड जोड़ने के लिए, अपने वॉलेट पते पर MobileCoin भेजें। जिस एक्सचेंज पर MobileCoin काम करता है, वहां अपने खाते से लेन-देन शुरू करें, फिर QR कोड स्कैन करें या अपना वॉलेट पता कॉपी करें।</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">फ़ंड जोड़ने के लिए, अपने वॉलेट पते पर Bitcoin over Lightning भेजें। जिस एक्सचेंज पर Bitcoin over Lightning काम करता है, वहां अपने खाते से लेन-देन शुरू करें, फिर QR कोड स्कैन करें या अपना वॉलेट पता कॉपी करें।</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">इनको</string>
     <string name="PaymentsDetailsFragment__from">इनकी ओर से</string>
-    <string name="PaymentsDetailsFragment__information">भुगतान राशि और लेन-देन के समय सहित लेन-देन विवरण, MobileCoin लेजर का हिस्सा हैं।</string>
+    <string name="PaymentsDetailsFragment__information">भुगतान राशि और लेन-देन के समय सहित लेन-देन विवरण, Bitcoin over Lightning लेजर का हिस्सा हैं।</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">कॉइन क्लीनअप शुल्क</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">जब आपके पास उतने कॉइन मौजूद न हों कि उन्हें जोड़कर कोई लेन-देन पूरा किया जा सके, तब आपसे \'कॉइन क्लीनअप शुल्क\' लिया जाता है। क्लीनअप करने के बाद पेमेंट भेजने की सुविधा जारी रहेगी।</string>
     <string name="PaymentsDetailsFragment__no_details_available">इस लेन-देन के बारे में और कोई जानकारी उपलब्ध नहीं है</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">ट्रांसफ़र करें</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR कोड स्कैन करें</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">इन्हें: वॉलेट पता स्कैन करें या डालें</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">एक्चेंज की ओर से दिए गए वॉलेट पते पर ट्रांसफ़र करके, MobileCoin ट्रांसफ़र किया जा सकता है। वॉलेट पता आम तौर पर नंबर और अक्षरों की स्ट्रिंग होता है और अमूमन यह QR कोड के नीचे दिखाई देता है।</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">एक्चेंज की ओर से दिए गए वॉलेट पते पर ट्रांसफ़र करके, Bitcoin over Lightning ट्रांसफ़र किया जा सकता है। वॉलेट पता आम तौर पर नंबर और अक्षरों की स्ट्रिंग होता है और अमूमन यह QR कोड के नीचे दिखाई देता है।</string>
     <string name="PaymentsTransferFragment__next">आगे जाएं</string>
     <string name="PaymentsTransferFragment__invalid_address">पता सही नहीं है</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">जिस वॉलेट पते पर आपने ट्रांसफ़र करने की कोशिश की है, उसकी जांच करें और बाद में फिर से कोशिश करें।</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">फ़ोटो ब्लर करें</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin के बारे में</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin एक डिजिटल करंसी है, जिसमें प्राइवेसी का खास ध्यान रखा जाता है।</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning के बारे में</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning एक डिजिटल करंसी है, जिसमें प्राइवेसी का खास ध्यान रखा जाता है।</string>
     <string name="payment_info_card_adding_funds">फ़ंड जोड़ना</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Signal में इस्तेमाल करने के लिए, अपने वॉलेट पते पर MobileCoin भेजकर फ़ंड जोड़े जा सकते हैं।</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Signal में इस्तेमाल करने के लिए, अपने वॉलेट पते पर Bitcoin over Lightning भेजकर फ़ंड जोड़े जा सकते हैं।</string>
     <string name="payment_info_card_cashing_out">कैश भुनाना</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">MobileCoin की सुविधा वाले किसी एक्सचेंज पर किसी भी समय MobileCoin को भुनाया जा सकता है। आपको बस एक्सचेंज में अपने अकाउंट में ट्रांसफ़र करना होगा।</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bitcoin over Lightning की सुविधा वाले किसी एक्सचेंज पर किसी भी समय Bitcoin over Lightning को भुनाया जा सकता है। आपको बस एक्सचेंज में अपने अकाउंट में ट्रांसफ़र करना होगा।</string>
     <string name="payment_info_card_hide_this_card">इस कार्ड को छिपाना है?</string>
     <string name="payment_info_card_hide">छिपाएं</string>
     <!-- Title of save recovery phrase card -->

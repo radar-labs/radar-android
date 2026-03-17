@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">पेमेंट्स सादर करत आहोत</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">नवीन गोपनीयता केंद्रित डिजिटल चलन, MobileCoin पाठवण्यासाठी आणि प्राप्त करण्यासाठी Signal वापरा. सुरू करण्यासाठी सक्रिय करा.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">नवीन गोपनीयता केंद्रित डिजिटल चलन, Bitcoin over Lightning पाठवण्यासाठी आणि प्राप्त करण्यासाठी Signal वापरा. सुरू करण्यासाठी सक्रिय करा.</string>
     <string name="PaymentsHomeFragment__activate_payments">पेमेंट सक्रिय करा</string>
     <string name="PaymentsHomeFragment__activating_payments">पेमेंट सक्रिय करत आहे…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">पेमेंट खाते पुनर्स्थापित करा</string>
@@ -4221,7 +4221,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">आपल्या क्षेत्रात पेमेंट उपलब्ध नाही.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">पेमेंट सक्षम करण्यात अयशस्वी. नंतर पुन्हा प्रयत्न करा.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">पेमेंट निष्क्रिय करायचे?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">आपण पेमेंट निष्क्रिय केल्यास आपल्याला Signal मध्ये MobileCoin पाठवता किंवा प्राप्त करता येणार नाही.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">आपण पेमेंट निष्क्रिय केल्यास आपल्याला Signal मध्ये Bitcoin over Lightning पाठवता किंवा प्राप्त करता येणार नाही.</string>
     <string name="PaymentsHomeFragment__deactivate">निष्क्रिय करा</string>
     <string name="PaymentsHomeFragment__continue">सुरू ठेवा</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">सध्या बॅलंस उपलब्ध नाही.</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">तपशील</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">आपण MobileCoin पाठवण्यास आणि प्राप्त करण्यास Signal वापरू शकता. सर्व पेमेंट्स ही MobileCoins आणि MobileCoin वॉलेट यांच्या वापराच्या अटींना अधीन आहेत. आपणाला काही समस्यांचा सामना करावा लागू शकतो आणि आपण गमावू शकता अशी पेमेंट्स किंवा शिल्लकी पुर्नप्राप्त केल्या जाऊ शकणार नाहीत. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">आपण Bitcoin over Lightning पाठवण्यास आणि प्राप्त करण्यास Signal वापरू शकता. सर्व पेमेंट्स ही MobileCoins आणि Bitcoin over Lightning वॉलेट यांच्या वापराच्या अटींना अधीन आहेत. आपणाला काही समस्यांचा सामना करावा लागू शकतो आणि आपण गमावू शकता अशी पेमेंट्स किंवा शिल्लकी पुर्नप्राप्त केल्या जाऊ शकणार नाहीत. </string>
     <string name="PaymentsHomeFragment__activate">सक्रिय करा</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin च्या अटी पहा</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning च्या अटी पहा</string>
     <string name="PaymentsHomeFragment__payments_not_available">Signal मध्ये पेमेंट यापुढे उपलब्ध नाही. तरीही आपण फंड एक्सचेंजवर स्थानांतरित करू शकता पण आपण यापुढे पेमेंट पाठवू किंवा प्राप्त करू शकत नाही किंवा फंड जोडू शकत नाही.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">भविष्यात पाठवण्यासाठी पेमेंट लॉक चालू करायचे?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">आपला वॉलेट पत्ता</string>
     <string name="PaymentsAddMoneyFragment__copy">कॉपी करा</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">क्लिपबोर्ड वर कॉपी केले</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">फंड जोडण्यासाठी, MobileCoin आपल्या वॉलेट पत्त्यावर पाठवा. MobileCoin चे समर्थन करत असलेल्या ऐक्सचेंजवर आपल्या खात्यावरून व्यवहार चालू करा, नंतर QR कोड स्कॅन करा किंवा वॉलेट पत्ता कॉपी करा.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">फंड जोडण्यासाठी, Bitcoin over Lightning आपल्या वॉलेट पत्त्यावर पाठवा. Bitcoin over Lightning चे समर्थन करत असलेल्या ऐक्सचेंजवर आपल्या खात्यावरून व्यवहार चालू करा, नंतर QR कोड स्कॅन करा किंवा वॉलेट पत्ता कॉपी करा.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">यांना</string>
     <string name="PaymentsDetailsFragment__from">याकडून</string>
-    <string name="PaymentsDetailsFragment__information">पेमेंट रक्कम आणि व्यवहाराची वेळ समाविष्ट असलेला व्यवहाराचा तपशील, हे MobileCoin लेजरचा एक भाग आहेत.</string>
+    <string name="PaymentsDetailsFragment__information">पेमेंट रक्कम आणि व्यवहाराची वेळ समाविष्ट असलेला व्यवहाराचा तपशील, हे Bitcoin over Lightning लेजरचा एक भाग आहेत.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">कॉइन सफाई फी</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">आपल्याकडील कॉइन व्यव्हार पूर्ण करण्यासाठी वापरले जाऊ शकत नसल्यास \"कॉइन सफाई फी\" चार्ज केली जाते. सफाई आपल्याला पेमेंट पाठवण्यासाठी अनुमती देते.</string>
     <string name="PaymentsDetailsFragment__no_details_available">या व्यवहारासाठी कुठलाही पुढचा तपशील उपलब्ध नाही</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">स्थानांतरित करा</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR कोड स्कॅन करा</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">हे करण्यासाठी: स्कॅन करा किंवा वॉलेट पत्ता प्रविष्ट करा</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">ऐक्सचेंजने पुरवलेल्या वॉलेट पत्त्यावर स्थानांतरण पूर्ण करून आपण MobileCoin स्थानांतरित करू शकता. वॉलेट पत्ता हे अंक आणि अक्षरांची स्ट्रिंग आहे, जो साधारणपणे QR कोडच्या खाली असेल.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">ऐक्सचेंजने पुरवलेल्या वॉलेट पत्त्यावर स्थानांतरण पूर्ण करून आपण Bitcoin over Lightning स्थानांतरित करू शकता. वॉलेट पत्ता हे अंक आणि अक्षरांची स्ट्रिंग आहे, जो साधारणपणे QR कोडच्या खाली असेल.</string>
     <string name="PaymentsTransferFragment__next">पुढे</string>
     <string name="PaymentsTransferFragment__invalid_address">अवैध पत्ता</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">आपण स्थानांतरित करत असलेला वॉलेट पत्ता तपासा आणि पुन्हा प्रयत्न करा.</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">फोटो अस्पष्ट करा</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin बद्दल</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin हे एक नवीन गोपनीयता केंद्रित डिजिटल चलन आहे.</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning बद्दल</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning हे एक नवीन गोपनीयता केंद्रित डिजिटल चलन आहे.</string>
     <string name="payment_info_card_adding_funds">फंड जोडत आहे</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">तुम्ही तुमच्या वॉलेट पत्त्यावर MobileCoin पाठवून Signal मध्ये वापरासाठी निधी जोडू शकता.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">तुम्ही तुमच्या वॉलेट पत्त्यावर Bitcoin over Lightning पाठवून Signal मध्ये वापरासाठी निधी जोडू शकता.</string>
     <string name="payment_info_card_cashing_out">फंड काढत आहे</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">MobileCoin चे समर्थन करत असलेल्या ऐक्सचेंजवर आपण कधीही MobileCoin फंड काढू शकता. फक्त त्या ऐक्सचेंजवर आपल्या खात्यावर स्थानांतरण करा.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bitcoin over Lightning चे समर्थन करत असलेल्या ऐक्सचेंजवर आपण कधीही Bitcoin over Lightning फंड काढू शकता. फक्त त्या ऐक्सचेंजवर आपल्या खात्यावर स्थानांतरण करा.</string>
     <string name="payment_info_card_hide_this_card">हे कार्ड लपवायचे?</string>
     <string name="payment_info_card_hide">लपवा</string>
     <!-- Title of save recovery phrase card -->

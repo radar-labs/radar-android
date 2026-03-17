@@ -3873,7 +3873,7 @@
         <item>Funktionsbegäran</item>
         <item>Fråga</item>
         <item>Återkoppling</item>
-        <item>Betalningar (MobileCoin)</item>
+        <item>Betalningar (Bitcoin over Lightning)</item>
         <item>Donationer och märken</item>
         <item>Säkerhetskopiering av Signal Android</item>
         <item>Övrigt</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Vi introducerar betalningar</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Använd Signal för att skicka och ta emot MobileCoin, en ny digital valuta med integritetsfokus. Aktivera integreringen för att komma igång.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Använd Signal för att skicka och ta emot Bitcoin over Lightning, en ny digital valuta med integritetsfokus. Aktivera integreringen för att komma igång.</string>
     <string name="PaymentsHomeFragment__activate_payments">Aktivera betalningar</string>
     <string name="PaymentsHomeFragment__activating_payments">Aktiverar betalningar…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Återställ betalningskontot</string>
@@ -4221,7 +4221,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Betalningar är inte tillgängliga i din region.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Det gick inte att aktivera betalningar. Försök igen senare.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Inaktivera betalningar?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Du kommer inte att kunna skicka eller ta emot MobileCoin i Signal om du inaktiverar betalningar.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Du kommer inte att kunna skicka eller ta emot Bitcoin over Lightning i Signal om du inaktiverar betalningar.</string>
     <string name="PaymentsHomeFragment__deactivate">Inaktivera</string>
     <string name="PaymentsHomeFragment__continue">Fortsätt</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Saldo är för närvarande inte tillgängligt.</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Detaljer</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Du kan använda Signal för att skicka och ta emot MobileCoin. Alla betalningar omfattas av användarvillkoren för MobileCoins och MobileCoin Wallet. Du kan stöta på vissa problem och betalningar eller saldon du kan förlora kan inte återställas. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Du kan använda Signal för att skicka och ta emot Bitcoin over Lightning. Alla betalningar omfattas av användarvillkoren för MobileCoins och Bitcoin over Lightning Wallet. Du kan stöta på vissa problem och betalningar eller saldon du kan förlora kan inte återställas. </string>
     <string name="PaymentsHomeFragment__activate">Aktivera</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Visa MobileCoin-villkor</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Visa Bitcoin over Lightning-villkor</string>
     <string name="PaymentsHomeFragment__payments_not_available">Betalningar i Signal är inte längre tillgängliga. Du kan fortfarande överföra pengar till en börs men du kan inte längre skicka och ta emot betalningar eller lägga till pengar.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Aktivera betalningssäkerhet för framtida överföringar?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Din plånboksadress</string>
     <string name="PaymentsAddMoneyFragment__copy">Kopiera</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Kopierad till urklipp</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">För att lägga till pengar, skicka MobileCoin till din plånboksadress. Starta en transaktion från ditt konto på en börs som stöder MobileCoin, skanna sedan QR-koden eller kopiera din plånboksadress.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">För att lägga till pengar, skicka Bitcoin over Lightning till din plånboksadress. Starta en transaktion från ditt konto på en börs som stöder Bitcoin over Lightning, skanna sedan QR-koden eller kopiera din plånboksadress.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Till</string>
     <string name="PaymentsDetailsFragment__from">Från</string>
-    <string name="PaymentsDetailsFragment__information">Transaktionsdetaljer inklusive betalningsbelopp och transaktionstid är en del av MobileCoin Ledger.</string>
+    <string name="PaymentsDetailsFragment__information">Transaktionsdetaljer inklusive betalningsbelopp och transaktionstid är en del av Bitcoin over Lightning Ledger.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Avgift för myntsanering</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">En ”myntsaneringsavgift” debiteras när mynten i ditt innehav inte kan kombineras för att slutföra en transaktion. Sanering gör att du kan fortsätta skicka betalningar.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Inga ytterligare detaljer tillgängliga för denna transaktion</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">Överför</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Skanna QR-kod</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Till: Skanna eller ange plånboksadress</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Du kan överföra MobileCoin genom att genomföra en överföring till plånboksadressen som tillhandahålls av börsen. Plånboksadressen är den sträng med siffror och bokstäver som oftast ligger under QR-koden.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Du kan överföra Bitcoin over Lightning genom att genomföra en överföring till plånboksadressen som tillhandahålls av börsen. Plånboksadressen är den sträng med siffror och bokstäver som oftast ligger under QR-koden.</string>
     <string name="PaymentsTransferFragment__next">Nästa</string>
     <string name="PaymentsTransferFragment__invalid_address">Ogiltig adress</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Kontrollera plånboksadressen du försöker överföra till och försök igen.</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">Sudda foto</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Om MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin är en ny integritetsfokuserad digital valuta.</string>
+    <string name="payment_info_card_about_mobilecoin">Om Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning är en ny integritetsfokuserad digital valuta.</string>
     <string name="payment_info_card_adding_funds">Lägga till pengar</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Du kan lägga till pengar för användning i Signal genom att skicka MobileCoin till din plånboksadress.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Du kan lägga till pengar för användning i Radar genom att skicka Bitcoin over Lightning till din plånboksadress.</string>
     <string name="payment_info_card_cashing_out">Utbetalning</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Du kan betala ut MobileCoin när som helst på ett börs som stöder MobileCoin. Gör bara en överföring till ditt konto vid växlingen.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Du kan betala ut Bitcoin over Lightning när som helst på ett börs som stöder Bitcoin over Lightning. Gör bara en överföring till ditt konto vid växlingen.</string>
     <string name="payment_info_card_hide_this_card">Dölj detta kort?</string>
     <string name="payment_info_card_hide">Dölj</string>
     <!-- Title of save recovery phrase card -->

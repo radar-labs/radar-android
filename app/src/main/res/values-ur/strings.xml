@@ -3873,7 +3873,7 @@
         <item>فیچر کی درخواست</item>
         <item>سوال</item>
         <item>فیڈبیک</item>
-        <item>ادائیگیاں (MobileCoin)</item>
+        <item>ادائیگیاں (Bitcoin over Lightning)</item>
         <item>عطیات اور بیجز</item>
         <item>Signal Android کا بیک اپ</item>
         <item>دوسرے</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">پیش خدمت ہے پیمنٹس</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">MobileCoin بھیجنے اور وصول کرنے کے لیے Signal کا استعمال کریں، جو کہ پرائیویسی پر مرتکز نئی ڈیجیٹل کرنسی ہے۔ شروع کرنے کے لیے فعال کریں۔</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Bitcoin over Lightning بھیجنے اور وصول کرنے کے لیے Signal کا استعمال کریں، جو کہ پرائیویسی پر مرتکز نئی ڈیجیٹل کرنسی ہے۔ شروع کرنے کے لیے فعال کریں۔</string>
     <string name="PaymentsHomeFragment__activate_payments">ادائیگی چالو کریں</string>
     <string name="PaymentsHomeFragment__activating_payments">فعال ادائیگی…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">ادائیگیوں کا اکاؤنٹ بحال کریں</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">تفصیلات</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">آپ MobileCoin بھیجنے اور وصول کرنے کے لیے Signal استعمال کر سکتے ہیں۔ تمام پیمنٹس MobileCoins اور MobileCoin والیٹ کی استعمال کی شرائط سے مشروط ہیں۔ آپ کو کچھ مسائل کا سامنا ہو سکتا ہے اور آپ جن پیمنٹس یا بیلنسز سے محروم ہو سکتے ہیں انہیں بحال نہیں کیا جا سکتا۔ </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">آپ Bitcoin over Lightning بھیجنے اور وصول کرنے کے لیے Signal استعمال کر سکتے ہیں۔ تمام پیمنٹس MobileCoins اور Bitcoin over Lightning والیٹ کی استعمال کی شرائط سے مشروط ہیں۔ آپ کو کچھ مسائل کا سامنا ہو سکتا ہے اور آپ جن پیمنٹس یا بیلنسز سے محروم ہو سکتے ہیں انہیں بحال نہیں کیا جا سکتا۔ </string>
     <string name="PaymentsHomeFragment__activate">فعال</string>
     <string name="PaymentsHomeFragment__view_mobile_coin_terms">موبائل کوائن کی شرائط دیکھیں</string>
     <string name="PaymentsHomeFragment__payments_not_available">Signal میں ادائیگی اب دستیاب نہیں ہے۔ آپ اب بھی ایکسچینج میں فنڈز کی منتقلی کرسکتے ہیں لیکن آپ اب ادائیگی بھیجنے اور وصول کرنے یا فنڈز شامل نہیں کرسکتے ہیں۔</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">مستقبل میں بھیجنے کے لیے پیمنٹ لاک آن کریں؟</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -5304,9 +5304,9 @@
 
     <!-- InfoCard -->
     <string name="payment_info_card_about_mobilecoin">موبائل کوائن کے بارے میں</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin پرائیویسی پر مرتکز نئی ڈیجیٹل کرنسی ہے۔</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning پرائیویسی پر مرتکز نئی ڈیجیٹل کرنسی ہے۔</string>
     <string name="payment_info_card_adding_funds">فنڈز کا اضافہ</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">آپ اپنے Wallet کے پتے پر موبائل کوائن بھیج کر Signal میں استعمال کے لئے فنڈز شامل کرسکتے ہیں۔</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">آپ اپنے Wallet کے پتے پر موبائل کوائن بھیج کر Radar میں استعمال کے لئے فنڈز شامل کرسکتے ہیں۔</string>
     <string name="payment_info_card_cashing_out">کیش آؤٹ</string>
     <string name="payment_info_card_you_can_cash_out_mobilecoin">آپ کبھی بھی ایسے تبادلے پر موبائل کوائن کیش کر سکتے ہیں جو موبائل کوائن کو سپورٹ کرتا ہے۔ اس تبادلے میں صرف اپنے اکاؤنٹ میں ٹرانسفر کریں۔</string>
     <string name="payment_info_card_hide_this_card">یہ کارڈ چھپائیں؟</string>

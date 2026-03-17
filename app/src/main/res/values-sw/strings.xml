@@ -3873,7 +3873,7 @@
         <item>Ombi la Kipengele</item>
         <item>Swali</item>
         <item>Mrejesho</item>
-        <item>Malipo (MobileCoin)</item>
+        <item>Malipo (Bitcoin over Lightning)</item>
         <item>Michango &amp; Beji</item>
         <item>Hifadhi ya Signal Androidid</item>
         <item>ingine</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Kuanzisha malipo</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Tumia Signal kutuma na kupokea MobileCoin, sarafu mpya ya kidijitali inayozingatia faragha. Wezesha ili uanze.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Tumia Signal kutuma na kupokea Bitcoin over Lightning, sarafu mpya ya kidijitali inayozingatia faragha. Wezesha ili uanze.</string>
     <string name="PaymentsHomeFragment__activate_payments">Wezesha Malipo</string>
     <string name="PaymentsHomeFragment__activating_payments">Unawezesha malipo…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Rejesha akaunti ya malipo</string>
@@ -4221,7 +4221,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Malipo hayapatikani katika eneo lako.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Hukuwezesha malipo. Jaribu tena baadaye.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Ungependa Kuzima Malipo?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Hutaweza kutuma au kupokea MobileCoin katika Signal ukizima malipo.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Hutaweza kutuma au kupokea Bitcoin over Lightning katika Signal ukizima malipo.</string>
     <string name="PaymentsHomeFragment__deactivate">Zima</string>
     <string name="PaymentsHomeFragment__continue">Endelea</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Salio halipatikani kwa sasa.</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Maelezo</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Unaweza kutumia Signal kutuma na kupokea MobileCoin. Malipo yote yako chini ya Masharti ya Matumizi kwa MobileCoins na MobileCoin Wallet. Unaweza kukumbana na hitilafu na malipo au salio ambazo huenda ukapoteza zisirejeshwe. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Unaweza kutumia Signal kutuma na kupokea Bitcoin over Lightning. Malipo yote yako chini ya Masharti ya Matumizi kwa MobileCoins na Bitcoin over Lightning Wallet. Unaweza kukumbana na hitilafu na malipo au salio ambazo huenda ukapoteza zisirejeshwe. </string>
     <string name="PaymentsHomeFragment__activate">Wezesha</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Angalia masharti ya MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Angalia masharti ya Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">Malipo katika Signal hayapatikani tena. Bado unaweza kuhamishia fedha kwenye ubadilishanaji lakini huwezi kutuma na kupokea malipo au kuongeza pesa.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Washa Payment Lock ili kutuma kwa baadae?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Anwani ya Mkoba Wako</string>
     <string name="PaymentsAddMoneyFragment__copy">Nakili</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Imenakiliwa kwenye bodi ya kunakili</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Ili kuongeza pesa, tuma MobileCoin kwenye anwani yako ya mkoba. Anzisha muamala shughuli kutoka kwenye akaunti yako kwa ubadilishaji unatumia MobileCoin, kisha changanua msimbo wa QR au unakili anwani yako ya mkoba.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Ili kuongeza pesa, tuma Bitcoin over Lightning kwenye anwani yako ya mkoba. Anzisha muamala shughuli kutoka kwenye akaunti yako kwa ubadilishaji unatumia Bitcoin over Lightning, kisha changanua msimbo wa QR au unakili anwani yako ya mkoba.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Kwa</string>
     <string name="PaymentsDetailsFragment__from">Kutoka kwa</string>
-    <string name="PaymentsDetailsFragment__information">Maelezo ya muamala, ikiwa ni pamoja na kiwango cha malipo na wakati wa muamala ni sehemu ya Leja ya MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">Maelezo ya muamala, ikiwa ni pamoja na kiwango cha malipo na wakati wa muamala ni sehemu ya Leja ya Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Ada ya kusafisha sarafu</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">“Ada ya kusafisha sarafu” inatozwa wakati sarafu ulizonazo haziwezi kuunganishwa ili kukamilisha muamala. Usafishaji utakuwezesha kuendelea kutuma malipo.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Hakuna maelezo zaidi yanayopatikana kwa muamal huu</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">Uhamisho</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Skani msimbo wa QR</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Kwa: Changanua au ingiza anwani ya mkoba</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Unaweza kuhamisha MobileCoin kwa kukamilisha uhamishaji kwenda anwani ya mkoba iliyotolewa na ubadilishaji. Anwani ya mkoba ni safu ya nambari na herufi ambayo kawaida huwa chini ya msimbo wa QR.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Unaweza kuhamisha Bitcoin over Lightning kwa kukamilisha uhamishaji kwenda anwani ya mkoba iliyotolewa na ubadilishaji. Anwani ya mkoba ni safu ya nambari na herufi ambayo kawaida huwa chini ya msimbo wa QR.</string>
     <string name="PaymentsTransferFragment__next">Ifuatayo</string>
     <string name="PaymentsTransferFragment__invalid_address">Anwani si sahihi</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Angalia anwani ya mkoba unayojaribu kuhamishia pesa kisha ujaribu tena.</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">Weka ukungu kwenye picha</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Kuhusu MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin ni sarafu mpya ya kidijitali inayozingatia faragha.</string>
+    <string name="payment_info_card_about_mobilecoin">Kuhusu Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning ni sarafu mpya ya kidijitali inayozingatia faragha.</string>
     <string name="payment_info_card_adding_funds">Kuongeza fedha</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Unaweza kuongeza pesa za matumizi katika Signal kwa kutuma MobileCoin kwenye anwani yako ya mkoba.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Unaweza kuongeza pesa za matumizi katika Radar kwa kutuma Bitcoin over Lightning kwenye anwani yako ya mkoba.</string>
     <string name="payment_info_card_cashing_out">Kutoa pesa</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Unaweza kutoa MobileCoin wakati wowote kwenye ubadilishaji unaotumia MobileCoin. Hamishia tu kwenye akaunti yako katika ubadilishaji huo.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Unaweza kutoa Bitcoin over Lightning wakati wowote kwenye ubadilishaji unaotumia Bitcoin over Lightning. Hamishia tu kwenye akaunti yako katika ubadilishaji huo.</string>
     <string name="payment_info_card_hide_this_card">Ungependa kuficha kadi hii?</string>
     <string name="payment_info_card_hide">Ficha</string>
     <!-- Title of save recovery phrase card -->

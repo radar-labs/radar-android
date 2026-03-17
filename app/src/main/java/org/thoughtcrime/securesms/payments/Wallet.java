@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
 import com.mobilecoin.lib.AccountKey;
-import com.mobilecoin.lib.AccountSnapshot;
 import com.mobilecoin.lib.Amount;
 import com.mobilecoin.lib.DefragmentationDelegate;
 import com.mobilecoin.lib.MobileCoinClient;
@@ -23,6 +22,7 @@ import com.mobilecoin.lib.exceptions.NetworkException;
 import com.mobilecoin.lib.exceptions.TransactionBuilderException;
 import com.mobilecoin.lib.network.TransportProtocol;
 
+import org.jetbrains.annotations.NotNull;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.keyvalue.PaymentsValues;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 
@@ -42,7 +43,6 @@ import breez_sdk_spark.PaymentStatus;
 public final class Wallet {
 
   private static final String TAG         = Log.tag(Wallet.class);
-  private static final Object LEDGER_LOCK = new Object();
 
   private final MobileCoinConfig        mobileCoinConfig;
   private final MobileCoinClient        mobileCoinClient;
@@ -72,6 +72,10 @@ public final class Wallet {
     } catch (IOException e) {
       Log.w(TAG, "Failed to authorize client", e);
     }
+  }
+
+  public @NotNull Map<String, Double> getExchangeRate() {
+    return breezSdkWrapper.getConversions();
   }
 
   public @NonNull MobileCoinPublicAddress getMobileCoinPublicAddress() {
