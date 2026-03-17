@@ -1,70 +1,64 @@
-package org.thoughtcrime.securesms.payments;
+package org.thoughtcrime.securesms.payments
 
-import androidx.annotation.NonNull;
-import androidx.annotation.WorkerThread;
+import androidx.annotation.WorkerThread
+import org.signal.core.util.logging.Log
+import org.signal.core.util.logging.Log.tag
+import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.payments.currency.CurrencyExchange
+import java.io.IOException
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.concurrent.TimeUnit
 
-import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.net.SignalNetwork;
-import org.thoughtcrime.securesms.payments.currency.CurrencyExchange;
-import org.whispersystems.signalservice.api.NetworkResultUtil;
-import org.whispersystems.signalservice.api.payments.CurrencyConversion;
-import org.whispersystems.signalservice.api.payments.CurrencyConversions;
+class Payments(private val mobileCoinConfig: MobileCoinConfig) {
+  private var _wallet: Wallet? = null
+  private var currencyConversions: BreezCurrencyConversions? = null
 
-import java.io.IOException;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+  val wallet: Wallet
+    @Synchronized
+    get() {
+      if (_wallet != null) return _wallet!!
 
-public final class Payments {
-
-  private static final String TAG = Log.tag(Payments.class);
-
-  private static final long MINIMUM_ELAPSED_TIME_BETWEEN_REFRESH = TimeUnit.MINUTES.toMillis(1);
-
-  private final MobileCoinConfig mobileCoinConfig;
-
-  private Wallet              wallet;
-  private CurrencyConversions currencyConversions;
-
-  public Payments(@NonNull MobileCoinConfig mobileCoinConfig) {
-    this.mobileCoinConfig = mobileCoinConfig;
-  }
-
-  public synchronized Wallet getWallet() {
-    if (wallet != null) {
-      return wallet;
+      val paymentsEntropy = SignalStore.payments.paymentsEntropy
+      _wallet = Wallet(mobileCoinConfig, paymentsEntropy!!)
+      return _wallet!!
     }
-    Entropy paymentsEntropy = SignalStore.payments().getPaymentsEntropy();
-    wallet = new Wallet(mobileCoinConfig, Objects.requireNonNull(paymentsEntropy));
-    return wallet;
-  }
 
-  public synchronized void closeWallet() {
-    wallet = null;
+  @Synchronized
+  fun closeWallet() {
+    _wallet = null
   }
 
   @WorkerThread
-  public synchronized @NonNull CurrencyExchange getCurrencyExchange(boolean refreshIfAble) throws IOException {
-    if (currencyConversions == null || shouldRefresh(refreshIfAble, currencyConversions.getTimestamp())) {
-      Log.i(TAG, "Currency conversion data is unavailable or a refresh was requested and available");
-      CurrencyConversions newCurrencyConversions = NetworkResultUtil.toBasicLegacy(SignalNetwork.payments().getCurrencyConversions());
-      if (currencyConversions == null || (newCurrencyConversions != null && newCurrencyConversions.getTimestamp() > currencyConversions.getTimestamp())) {
-        currencyConversions = newCurrencyConversions;
+  @Synchronized
+  @Throws(IOException::class)
+  fun getCurrencyExchange(refreshIfAble: Boolean): CurrencyExchange {
+    if (currencyConversions == null || shouldRefresh(refreshIfAble, currencyConversions!!.timestamp)) {
+      val currencyConversionsMap = wallet.exchangeRate
+      val newCurrencyConversions = BreezCurrencyConversions(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC), currencyConversionsMap)
+
+      Log.i(TAG, "Currency conversion data is unavailable or a refresh was requested and available")
+      if (currencyConversions == null || (newCurrencyConversions.timestamp > currencyConversions!!.timestamp)) {
+        currencyConversions = newCurrencyConversions
       }
     }
 
     if (currencyConversions != null) {
-      for (CurrencyConversion currencyConversion : currencyConversions.getCurrencies()) {
-        if ("MOB".equals(currencyConversion.getBase())) {
-          return new CurrencyExchange(currencyConversion.getConversions(), currencyConversions.getTimestamp());
-        }
-      }
+      return CurrencyExchange(currencyConversions!!.currencies, currencyConversions!!.timestamp)
     }
 
-    throw new IOException("Unable to retrieve currency conversions");
+    throw IOException("Unable to retrieve currency conversions")
   }
 
-  private boolean shouldRefresh(boolean refreshIfAble, long lastRefreshTime) {
-    return refreshIfAble && System.currentTimeMillis() - lastRefreshTime >= MINIMUM_ELAPSED_TIME_BETWEEN_REFRESH;
+  private fun shouldRefresh(refreshIfAble: Boolean, lastRefreshTime: Long): Boolean {
+    return refreshIfAble && System.currentTimeMillis() - lastRefreshTime >= MINIMUM_ELAPSED_TIME_BETWEEN_REFRESH
+  }
+
+  class BreezCurrencyConversions(val timestamp: Long, val currencies: Map<String, Double>)
+
+  companion object {
+    private val TAG = tag(Payments::class.java)
+
+    private val MINIMUM_ELAPSED_TIME_BETWEEN_REFRESH = TimeUnit.MINUTES.toMillis(1)
   }
 }
