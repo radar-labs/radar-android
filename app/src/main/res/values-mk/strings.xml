@@ -3873,7 +3873,7 @@
         <item>Барање за функција</item>
         <item>Прашање</item>
         <item>Повратна информација</item>
-        <item>Плаќања (MobileCoin)</item>
+        <item>Плаќања (Bitcoin over Lightning)</item>
         <item>Донации и беџови</item>
         <item>Резервна копија на Signal Android</item>
         <item>Друго</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Воведуваме плаќања</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Користете го Signal за испраќање и примање на MobileCoin, нова дигитална валута фокусирана на приватност. Активирајте за да започнете.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Користете го Signal за испраќање и примање на Bitcoin over Lightning, нова дигитална валута фокусирана на приватност. Активирајте за да започнете.</string>
     <string name="PaymentsHomeFragment__activate_payments">Активираj плаќања</string>
     <string name="PaymentsHomeFragment__activating_payments">Активирање на плаќања…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Врати ја сметката за плаќања</string>
@@ -4221,7 +4221,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Плаќањата не се достапни во Вашиот регион.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Не може да се овозможат плаќања. Обидете се повторно подоцна.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Да деактивирам плаќања?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Нема да можете да испраќате или примате MobileCoin во Signal ако ги деактивирате плаќањата.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Нема да можете да испраќате или примате Bitcoin over Lightning во Signal ако ги деактивирате плаќањата.</string>
     <string name="PaymentsHomeFragment__deactivate">Деактивирај</string>
     <string name="PaymentsHomeFragment__continue">Продолжи</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Балансот моментално не е достапен.</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Детали</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Можете да го користите Signal за испраќање и примање MobileCoin. Сите плаќања се предмет на Условите за користење на MobileCoins и MobileCoin паричник. Може да наидете на некои проблеми и плаќањата или достапните средства што може да ги изгубите не може да се вратат. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Можете да го користите Signal за испраќање и примање Bitcoin over Lightning. Сите плаќања се предмет на Условите за користење на MobileCoins и Bitcoin over Lightning паричник. Може да наидете на некои проблеми и плаќањата или достапните средства што може да ги изгубите не може да се вратат. </string>
     <string name="PaymentsHomeFragment__activate">Активирај</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Погледни ги условите за употреба на MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Погледни ги условите за употреба на Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">Плаќањата во Signal не се повеќе достапни. Сѐ уште можете да префрлате средства за менување но не можете да испраќате и примате или пак додавате средства.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Дали сакате да вклучите заклучување за плаќање за следните плаќања?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Адреса на Вашиот паричник</string>
     <string name="PaymentsAddMoneyFragment__copy">Копирај</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Копирано на таблата со исечоци</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">За да додадете средства, испратете MobileCoin на адресата на Вашиот паричник. Започнете трансакција од Вашата сметка на берза која што поддржува MobileCoin, потоа скенирајте го QR кодот или копирајте ја адресата на Вашиот паричник.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">За да додадете средства, испратете Bitcoin over Lightning на адресата на Вашиот паричник. Започнете трансакција од Вашата сметка на берза која што поддржува Bitcoin over Lightning, потоа скенирајте го QR кодот или копирајте ја адресата на Вашиот паричник.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">До</string>
     <string name="PaymentsDetailsFragment__from">Од</string>
-    <string name="PaymentsDetailsFragment__information">Деталите за трансакцијата, вклучувајќи го износот на плаќање и времето на трансакцијата, се дел од MobileCoin регистарот.</string>
+    <string name="PaymentsDetailsFragment__information">Деталите за трансакцијата, вклучувајќи го износот на плаќање и времето на трансакцијата, се дел од Bitcoin over Lightning регистарот.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Надоместок за чистење на монети</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">„Сума за чистење на монети“ се наплаќа кога монетите кои што ги поседувате не можат да се искомбинираат за да се направи трансакција. Чистењето ќе Ви овозможи да продолжите да испраќате плаќања.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Нема дополнителни детали за оваа трансакција</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">Трансфер</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Скенирајте го QR кодот</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">До: Скенирајте или внесете ја адресата на паричникот</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Можете да префрлате MobileCoin трансакција на адресата на паричникот што Ви е даден од берзата. Адресата на паричникот е низа од броеви и букви кои најчесто се наоѓаат под QR кодот.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Можете да префрлате Bitcoin over Lightning трансакција на адресата на паричникот што Ви е даден од берзата. Адресата на паричникот е низа од броеви и букви кои најчесто се наоѓаат под QR кодот.</string>
     <string name="PaymentsTransferFragment__next">Следно</string>
     <string name="PaymentsTransferFragment__invalid_address">Невалидна адреса</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Проверете ја адресата на паричникот на која се обидувате да префрлите и обидете се повторно.</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">Замагли слика</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">За MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin е нова дигитална валута фокусирана на приватност.</string>
+    <string name="payment_info_card_about_mobilecoin">За Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning е нова дигитална валута фокусирана на приватност.</string>
     <string name="payment_info_card_adding_funds">Додавање на средства</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Можете да додадете средства за користење во Signal со испраќање MobileCoin на адресата на Вашиот паричник.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Можете да додадете средства за користење во Signal со испраќање Bitcoin over Lightning на адресата на Вашиот паричник.</string>
     <string name="payment_info_card_cashing_out">Исплата</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Можете да си ги исплатите MobileCoin било кога на берза што поддржува MobileCoin. Само направете трансакциска сметка на таа берза.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Можете да си ги исплатите Bitcoin over Lightning било кога на берза што поддржува Bitcoin over Lightning. Само направете трансакциска сметка на таа берза.</string>
     <string name="payment_info_card_hide_this_card">Да ја сокријам оваа картичка?</string>
     <string name="payment_info_card_hide">Сокриј</string>
     <!-- Title of save recovery phrase card -->

@@ -4095,7 +4095,7 @@
         <item>Zahtjev za funkciju</item>
         <item>Pitanje</item>
         <item>Povratne informacije</item>
-        <item>Plaćanja (MobileCoin)</item>
+        <item>Plaćanja (Bitcoin over Lightning)</item>
         <item>Donacije i značke</item>
         <item>Sigurnosna kopija za Signal Android</item>
         <item>Ostalo</item>
@@ -4449,7 +4449,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Plaćanja nisu dostupna u Vašem regionu.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Neuspjelo aktiviranje plaćanja. Pokušajte ponovo kasnije.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Deaktivirati plaćanja?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Nećete moći slati ni primati MobileCoin preko Signala ako deaktivirate plaćanja.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Nećete moći slati ni primati Bitcoin over Lightning preko Signala ako deaktivirate plaćanja.</string>
     <string name="PaymentsHomeFragment__deactivate">Deaktiviraj</string>
     <string name="PaymentsHomeFragment__continue">Nastavi</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Stanje na računu trenutno nije dostupno.</string>
@@ -4458,12 +4458,12 @@
     <string name="PaymentsHomeFragment__details">Detalji</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signal možete koristiti za slanje i primanje MobileCoina. Sva plaćanja podliježu Uslovima korištenja za MobileCoins i MobileCoin Wallet. Možda ćete naići na neke probleme i uplate ili stanja koja možete izgubiti se ne mogu vratiti. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signal možete koristiti za slanje i primanje MobileCoina. Sva plaćanja podliježu Uslovima korištenja za MobileCoins i Bitcoin over Lightning Wallet. Možda ćete naići na neke probleme i uplate ili stanja koja možete izgubiti se ne mogu vratiti. </string>
     <string name="PaymentsHomeFragment__activate">Aktiviraj</string>
     <string name="PaymentsHomeFragment__view_mobile_coin_terms">Pregledaj uslove korištenja MobileCoina</string>
     <string name="PaymentsHomeFragment__payments_not_available">Plaćanja preko Signala više nisu dostupna. Još uvijek možete prenijeti sredstva na berzu, ali više ne možete vršiti isplate i uplate niti dodavati sredstva.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Uključiti Osiguranje plaćanje za buduća slanja?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4544,7 +4544,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Adresa Vašeg novčanika</string>
     <string name="PaymentsAddMoneyFragment__copy">Kopiraj</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Kopirano u međuspremnik</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Da dodate sredstva, pošaljite MobileCoin na adresu svoga novčanika. Započnite transakciju sa svoga računa na berzi koja podržava MobileCoin, potom skenirajte QR kōd ili kopirajte adresu svoga novčanika.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Da dodate sredstva, pošaljite Bitcoin over Lightning na adresu svoga novčanika. Započnite transakciju sa svoga računa na berzi koja podržava Bitcoin over Lightning, potom skenirajte QR kōd ili kopirajte adresu svoga novčanika.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4562,7 +4562,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Za</string>
     <string name="PaymentsDetailsFragment__from">Od</string>
-    <string name="PaymentsDetailsFragment__information">Detalji o transakciji, uključujući iznos i vrijeme transakcije, dio su MobileCoin registra.</string>
+    <string name="PaymentsDetailsFragment__information">Detalji o transakciji, uključujući iznos i vrijeme transakcije, dio su Bitcoin over Lightning registra.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Naknada za čišćenje novčića</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">“Naknada za čišćenje novčića” plaća se kad novčiće u Vašem vlasništvu nije moguće kombinovati da bi se izvršila transakcija. Čišćenje će Vam omogućiti da nastavite vršiti isplate.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Nema dodatnih detalja o ovoj transakciji</string>
@@ -4577,7 +4577,7 @@
     <string name="PaymentsTransferFragment__transfer">Prenos</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Skeniraj QR kôd</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Za: skenirajte ili unesite adresu novčanika</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">MobileCoin možete prenijeti tako što ćete izvršiti prenos na adresu novčanika koju ste dobili sa berze. Adresa novčanika sastoji se od niza brojeva i slova koji su obično navedeni ispod QR kōda.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Bitcoin over Lightning možete prenijeti tako što ćete izvršiti prenos na adresu novčanika koju ste dobili sa berze. Adresa novčanika sastoji se od niza brojeva i slova koji su obično navedeni ispod QR kōda.</string>
     <string name="PaymentsTransferFragment__next">Dalje</string>
     <string name="PaymentsTransferFragment__invalid_address">Adresa nije valjana</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Provjerite adresu novčanika na koju pokušavate prenijeti sredstva i pokušajte ponovo.</string>
@@ -5564,11 +5564,11 @@
 
     <!-- InfoCard -->
     <string name="payment_info_card_about_mobilecoin">O MobileCoinu</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin je nova digitalna valuta s fokusom na privatnost.</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning je nova digitalna valuta s fokusom na privatnost.</string>
     <string name="payment_info_card_adding_funds">Uplata sredstava</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Možete dodati sredstva za korištenje putem Signala tako što ćete poslati MobileCoin na adresu svoga novčanika.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Možete dodati sredstva za korištenje putem Radar tako što ćete poslati Bitcoin over Lightning na adresu svoga novčanika.</string>
     <string name="payment_info_card_cashing_out">Unovčavanje</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">U svakom trenutku možete unovčiti MobileCoin na nekoj od berzi koje ga podržavaju. Jednostavno izvršite prenos na svoj račun koji imate otvoren na toj berzi.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">U svakom trenutku možete unovčiti Bitcoin over Lightning na nekoj od berzi koje ga podržavaju. Jednostavno izvršite prenos na svoj račun koji imate otvoren na toj berzi.</string>
     <string name="payment_info_card_hide_this_card">Sakriti ovu karticu?</string>
     <string name="payment_info_card_hide">Sakrij</string>
     <!-- Title of save recovery phrase card -->

@@ -3762,7 +3762,7 @@
         <item>Yêu cầu Tính năng</item>
         <item>Câu hỏi</item>
         <item>Góp ý</item>
-        <item>Lựa chọn Thanh toán (MobileCoin)</item>
+        <item>Lựa chọn Thanh toán (Bitcoin over Lightning)</item>
         <item>Khoản ủng hộ &amp; Huy hiệu</item>
         <item>Bản sao lưu Signal Android</item>
         <item>Khác</item>
@@ -4081,7 +4081,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Giới thiệu tính năng thanh toán</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Sử dụng Signal để nhận và gửi MobileCoin, một loại tiền điện tử mới tập trung vào sự riêng tư. Kích hoạt để bắt đầu.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Sử dụng Signal để nhận và gửi Bitcoin over Lightning, một loại tiền điện tử mới tập trung vào sự riêng tư. Kích hoạt để bắt đầu.</string>
     <string name="PaymentsHomeFragment__activate_payments">Kích hoạt Thanh toán</string>
     <string name="PaymentsHomeFragment__activating_payments">Đang kích hoạt thanh toán…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Khôi phục tài khoản thanh toán</string>
@@ -4107,7 +4107,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Thanh toán không có sẵn trong khu vực của bạn.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Không thể bật thanh toán. Thử lại sau.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Huỷ kích hoạt Thanh toán?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Bạn sẽ không thể gửi hoặc nhận MobileCoin trong Signal nếu bạn huỷ kích hoạt thanh toán.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Bạn sẽ không thể gửi hoặc nhận Bitcoin over Lightning trong Signal nếu bạn huỷ kích hoạt thanh toán.</string>
     <string name="PaymentsHomeFragment__deactivate">Huỷ kích hoạt</string>
     <string name="PaymentsHomeFragment__continue">Tiếp tục</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Số dư hiện không có.</string>
@@ -4116,12 +4116,12 @@
     <string name="PaymentsHomeFragment__details">Chi tiết</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Bạn có thể dùng Signal để gửi và nhận MobileCoin. Tất cả các khoản thanh toán đều nằm trong phạm vi điều chỉnh của Điều khoản Sử dụng cho MobileCoin và Ví MobileCoin. Bạn có thể gặp một số vấn đề và các thanh toán hoặc số dư bạn có thể mất sẽ không thể được khôi phục. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Bạn có thể dùng Signal để gửi và nhận Bitcoin over Lightning. Tất cả các khoản thanh toán đều nằm trong phạm vi điều chỉnh của Điều khoản Sử dụng cho Bitcoin over Lightning và Ví Bitcoin over Lightning. Bạn có thể gặp một số vấn đề và các thanh toán hoặc số dư bạn có thể mất sẽ không thể được khôi phục. </string>
     <string name="PaymentsHomeFragment__activate">Kích hoạt</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Xem điều khoản MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Xem điều khoản Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">Thanh toán trong Signal không còn nữa. Bạn vẫn có thể chuyển quỹ vào một sàn trao đổi nhưng bạn không thể gửi và nhận thanh toán hoặc thêm quỹ.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Bật tính năng Khóa Thanh toán cho các lần gửi sau?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4202,7 +4202,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Địa chỉ Ví của bạn</string>
     <string name="PaymentsAddMoneyFragment__copy">Sao chép</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Đã sao chép vào clipboard</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Để thêm quỹ, gửi MobileCoin vào địa chỉ ví của bạn. Bắt đầu một giao dịch từ tài khoản của bạn trên một sàn trao đổi có hỗ trợ MobileCoin, sau đó quét mã QR hoặc sao chép địa chỉ ví của bạn.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Để thêm quỹ, gửi Bitcoin over Lightning vào địa chỉ ví của bạn. Bắt đầu một giao dịch từ tài khoản của bạn trên một sàn trao đổi có hỗ trợ Bitcoin over Lightning, sau đó quét mã QR hoặc sao chép địa chỉ ví của bạn.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4220,7 +4220,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Đến</string>
     <string name="PaymentsDetailsFragment__from">Từ</string>
-    <string name="PaymentsDetailsFragment__information">Chi tiết giao dịch bao gồm số tiền thanh toán và thời gian giao dịch là một phần của Sổ cái MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">Chi tiết giao dịch bao gồm số tiền thanh toán và thời gian giao dịch là một phần của Sổ cái Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Phí dọn dẹp đồng xu</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">\"Phí dọn dẹp đồng xu\" được tính khi những đồng xu bạn sở hữu không thể được gộp để hoàn tất một giao dịch. Việc dọn dẹp sẽ cho phép bạn tiếp tục gửi thanh toán.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Không có chi tiết thêm cho giao dịch này</string>
@@ -4235,7 +4235,7 @@
     <string name="PaymentsTransferFragment__transfer">Chuyển</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Quét Mã QR</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Đến: Quét hoặc nhập địa chỉ ví</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Bạn có thể chuyển MobileCoin bằng cách hoàn tất một lần chuyển từ địa chỉ ví được cung cấp bởi sàn trao đổi. Địa chỉ ví là chuỗi số và kí tự thường hay nằm dưới mã QR.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Bạn có thể chuyển Bitcoin over Lightning bằng cách hoàn tất một lần chuyển từ địa chỉ ví được cung cấp bởi sàn trao đổi. Địa chỉ ví là chuỗi số và kí tự thường hay nằm dưới mã QR.</string>
     <string name="PaymentsTransferFragment__next">Tiếp</string>
     <string name="PaymentsTransferFragment__invalid_address">Địa chỉ không hợp lệ</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Kiểm tra địa chỉ ví bạn đang thử chuyển đến và thử lại.</string>
@@ -5173,12 +5173,12 @@
     <string name="WallpaperCropActivity__blur_photo">Mờ ảnh</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Về MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin là một tiền tệ điện tử mới tập trung vào sự riêng tư.</string>
+    <string name="payment_info_card_about_mobilecoin">Về Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning là một tiền tệ điện tử mới tập trung vào sự riêng tư.</string>
     <string name="payment_info_card_adding_funds">Thêm quỹ</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Bạn có thể thêm quỹ để sử dụng trong Signal bằng cách gửi MobileCoin vào địa chỉ ví của mình.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Bạn có thể thêm quỹ để sử dụng trong Radar bằng cách gửi Bitcoin over Lightning vào địa chỉ ví của mình.</string>
     <string name="payment_info_card_cashing_out">Rút tiền</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bạn có thể rút tiền mặt MobileCoin bất kì lúc nào trên một sàn trao đổi có hỗ trợ MobileCoin. Chỉ cần thực hiện một chuyển khoản vào tài khoản của bạn ở sàn trao đổi đó.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bạn có thể rút tiền mặt Bitcoin over Lightning bất kì lúc nào trên một sàn trao đổi có hỗ trợ Bitcoin over Lightning. Chỉ cần thực hiện một chuyển khoản vào tài khoản của bạn ở sàn trao đổi đó.</string>
     <string name="payment_info_card_hide_this_card">Ẩn thẻ này?</string>
     <string name="payment_info_card_hide">Ẩn</string>
     <!-- Title of save recovery phrase card -->

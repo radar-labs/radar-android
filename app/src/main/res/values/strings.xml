@@ -3878,7 +3878,7 @@
         <item>Feature Request</item>
         <item>Question</item>
         <item>Feedback</item>
-        <item>Payments (MobileCoin)</item>
+        <item>Payments (Bitcoin over Lightning)</item>
         <item>Donations &amp; Badges</item>
         <item>Signal Android Backup</item>
         <item>Other</item>
@@ -4200,7 +4200,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Introducing payments</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Use Signal to send and receive MobileCoin, a new privacy focused digital currency. Activate to get started.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Use Signal to send and receive Bitcoin over Lightning, a new privacy focused digital currency. Activate to get started.</string>
     <string name="PaymentsHomeFragment__activate_payments">Activate Payments</string>
     <string name="PaymentsHomeFragment__activating_payments">Activating payments…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Restore payments account</string>
@@ -4212,6 +4212,8 @@
     <string name="PaymentsHomeFragment__sent_s">Sent %1$s</string>
     <string name="PaymentsHomeFragment__received_s">Received %1$s</string>
     <string name="PaymentsHomeFragment__transfer_to_exchange">Transfer to exchange</string>
+    <string name="PaymentsHomeFragment__send_to_contact">Send to Contact</string>
+    <string name="PaymentsHomeFragment__send_to_address">Send to Address</string>
     <string name="PaymentsHomeFragment__currency_conversion">Currency conversion</string>
     <string name="PaymentsHomeFragment__deactivate_payments">Deactivate payments</string>
     <string name="PaymentsHomeFragment__recovery_phrase">Recovery phrase</string>
@@ -4226,7 +4228,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Payments is not available in your region.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Could not enable payments. Try again later.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Deactivate Payments?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">You will not be able to send or receive MobileCoin in Signal if you deactivate payments.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">You will not be able to send or receive Bitcoin over Lightning in Signal if you deactivate payments.</string>
     <string name="PaymentsHomeFragment__deactivate">Deactivate</string>
     <string name="PaymentsHomeFragment__continue">Continue</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Balance is not currently available.</string>
@@ -4235,12 +4237,12 @@
     <string name="PaymentsHomeFragment__details">Details</string>
     <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string>
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">You can use Signal to send and receive MobileCoin. All payments are subject to the Terms of Use for MobileCoins and the MobileCoin Wallet. You may encounter some issues and payments or balances you may lose can\'t be recovered. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">You can use Signal to send and receive Bitcoin over Lightning. All payments are subject to the Terms of Use for MobileCoins and the Bitcoin over Lightning Wallet. You may encounter some issues and payments or balances you may lose can\'t be recovered. </string>
     <string name="PaymentsHomeFragment__activate">Activate</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">View MobileCoin terms</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">View Bitcoin over Lightning terms</string>
     <string name="PaymentsHomeFragment__payments_not_available">Payments in Signal is no longer available. You can still transfer funds to an exchange but you can no longer send and receive payments or add funds.</string>
 
-    <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string>
+    <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string>
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Turn on Payment Lock for future sends?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4321,7 +4323,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Your Wallet Address</string>
     <string name="PaymentsAddMoneyFragment__copy">Copy</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Copied to clipboard</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">To add funds, send MobileCoin to your wallet address. Start a transaction from your account on an exchange that supports MobileCoin, then scan the QR code or copy your wallet address.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">To add funds, send Bitcoin over Lightning to your wallet address. Start a transaction from your account on an exchange that supports Bitcoin over Lightning, then scan the QR code or copy your wallet address.</string>
     <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string>
 
     <!-- PaymentsDetailsFragment -->
@@ -4339,7 +4341,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">To</string>
     <string name="PaymentsDetailsFragment__from">From</string>
-    <string name="PaymentsDetailsFragment__information">Transaction details including the payment amount and time of transaction are part of the MobileCoin Ledger.</string>
+    <string name="PaymentsDetailsFragment__information">Transaction details including the payment amount and time of transaction are part of the Bitcoin over Lightning Ledger.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Coin cleanup fee</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">A “coin cleanup fee” is charged when the coins in your possession can not be combined to complete a transaction. Cleanup will allow you to continue sending payments.</string>
     <string name="PaymentsDetailsFragment__no_details_available">No further details available for this transaction</string>
@@ -4354,7 +4356,7 @@
     <string name="PaymentsTransferFragment__transfer">Transfer</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Scan QR Code</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">To: Scan or enter wallet address</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">You can transfer MobileCoin by completing a transfer to the wallet address provided by the exchange. The wallet address is the string of numbers and letters most commonly below the QR code.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">You can transfer Bitcoin over Lightning by completing a transfer to the wallet address provided by the exchange. The wallet address is the string of numbers and letters most commonly below the QR code.</string>
     <string name="PaymentsTransferFragment__next">Next</string>
     <string name="PaymentsTransferFragment__invalid_address">Invalid address</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Check the wallet address you\'re attempting to transfer to and try again.</string>
@@ -5308,12 +5310,12 @@
     <string name="WallpaperCropActivity__blur_photo">Blur photo</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">About MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin is a new privacy focused digital currency.</string>
+    <string name="payment_info_card_about_mobilecoin">About Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning is a new privacy focused digital currency.</string>
     <string name="payment_info_card_adding_funds">Adding funds</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">You can add funds for use in Signal by sending MobileCoin to your wallet address.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">You can add funds for use in Radar by sending Bitcoin over Lightning to your wallet address.</string>
     <string name="payment_info_card_cashing_out">Cashing out</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">You can cash out MobileCoin anytime on an exchange that supports MobileCoin. Just make a transfer to your account at that exchange.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">You can cash out Bitcoin over Lightning anytime on an exchange that supports Bitcoin over Lightning. Just make a transfer to your account at that exchange.</string>
     <string name="payment_info_card_hide_this_card">Hide this card?</string>
     <string name="payment_info_card_hide">Hide</string>
     <!-- Title of save recovery phrase card -->

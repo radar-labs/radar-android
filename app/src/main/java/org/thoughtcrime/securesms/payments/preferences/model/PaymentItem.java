@@ -127,7 +127,7 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
   }
 
   public @DrawableRes int getTransactionAvatar() {
-    return R.drawable.ic_bitcoin_lightning_24;
+    return R.drawable.ic_ln_black;
   }
 
   public @NonNull RecipientIdMappingModel getRecipientIdModel() {

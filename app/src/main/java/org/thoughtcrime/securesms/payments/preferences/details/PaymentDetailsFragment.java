@@ -74,7 +74,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
     if (details.hasPayment()) {
       Payment payment = details.requirePayment();
       avatar.disableQuickContact();
-      avatar.setImageResource(R.drawable.ic_bitcoin_lightning_24);
+      avatar.setImageResource(R.drawable.ic_ln_black);
       contactFromTo.setText(getContactFromToTextFromDirection(payment.getDirection()));
       amount.setMoney(payment.getAmountPlusFeeWithDirection());
       note.setVisibility(View.GONE);

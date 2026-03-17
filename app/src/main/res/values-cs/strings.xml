@@ -4095,7 +4095,7 @@
         <item>Požadavek na funkci</item>
         <item>Dotaz</item>
         <item>Zpětná vazba</item>
-        <item>Platby (MobileCoin)</item>
+        <item>Platby (Bitcoin over Lightning)</item>
         <item>Příspěvky a odznaky</item>
         <item>Signal Android zálohování</item>
         <item>Jiné</item>
@@ -4423,7 +4423,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Představujeme Platby</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Pomocí Signalu můžete odesílat a přijímat MobileCoin, novou digitální měnu zaměřenou na soukromí. Stačí aktivovat a můžete začít.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Pomocí Signalu můžete odesílat a přijímat Bitcoin over Lightning, novou digitální měnu zaměřenou na soukromí. Stačí aktivovat a můžete začít.</string>
     <string name="PaymentsHomeFragment__activate_payments">Aktivovat platby</string>
     <string name="PaymentsHomeFragment__activating_payments">Aktivuji platby…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Obnovit platební účet</string>
@@ -4449,7 +4449,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Platby nejsou ve vašem regionu dostupné.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Nepodařilo se povolit platby. Zkuste to znovu.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Deaktivovat platby?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Nebudete moci posílat ani přijímat MobileCoin v Signalu, pokud deaktivujete platby.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Nebudete moci posílat ani přijímat Bitcoin over Lightning v Signalu, pokud deaktivujete platby.</string>
     <string name="PaymentsHomeFragment__deactivate">Deaktivovat</string>
     <string name="PaymentsHomeFragment__continue">Pokračovat</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Zůstatek není aktuálně k dispozici.</string>
@@ -4458,12 +4458,12 @@
     <string name="PaymentsHomeFragment__details">Podrobnosti</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Pomocí služby Signal můžete odesílat a přijímat měnu MobileCoin. Na všechny platby se vztahují Podmínky používání služby MobileCoin a peněženky MobileCoin. Můžete se setkat s problémy a platby i zůstatky, o které přijdete, není možné obnovit. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Pomocí služby Signal můžete odesílat a přijímat měnu Bitcoin over Lightning. Na všechny platby se vztahují Podmínky používání služby Bitcoin over Lightning a peněženky Bitcoin over Lightning. Můžete se setkat s problémy a platby i zůstatky, o které přijdete, není možné obnovit. </string>
     <string name="PaymentsHomeFragment__activate">Aktivovat</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Zobrazit MobileCoin podmínky</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Zobrazit Bitcoin over Lightning podmínky</string>
     <string name="PaymentsHomeFragment__payments_not_available">Platby v Signal již nejsou k dispozici. Stále můžete převádět prostředky na burzu, ale již nemůžete posílat a přijímat platby ani přidávat prostředky.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Aktivovat pro budoucí odeslané platby zámek plateb?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4544,7 +4544,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Adresa vaší peněženky</string>
     <string name="PaymentsAddMoneyFragment__copy">Kopírovat</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Zkopírováno do schránky</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Chcete-li přidat prostředky, zašlete MobileCoin na adresu vaší peněženky. Zahajte transakci ze svého účtu na burze, která podporuje MobileCoin, poté naskenujte QR kód nebo zkopírujte adresu peněženky.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Chcete-li přidat prostředky, zašlete Bitcoin over Lightning na adresu vaší peněženky. Zahajte transakci ze svého účtu na burze, která podporuje Bitcoin over Lightning, poté naskenujte QR kód nebo zkopírujte adresu peněženky.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4562,7 +4562,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Komu</string>
     <string name="PaymentsDetailsFragment__from">Od</string>
-    <string name="PaymentsDetailsFragment__information">Podrobnosti transakce, včetně částky platby a času transakce, jsou součástí knihy MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">Podrobnosti transakce, včetně částky platby a času transakce, jsou součástí knihy Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Poplatek za vyčištění měny</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">„Poplatek za vyčištění mincí“ je účtován, když mince ve vašem držení nelze kombinovat k dokončení transakce. Vyčištění vám umožní pokračovat v odesílání plateb.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Pro tuto transakci nejsou k dispozici žádné další podrobnosti</string>
@@ -4577,7 +4577,7 @@
     <string name="PaymentsTransferFragment__transfer">Převést</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Naskenování QR kódu</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Pro: Naskenujte nebo zadejte adresu peněženky</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">MobileCoin můžete převést dokončením převodu na adresu peněženky uvedenou burzou. Adresa peněženky je řetězec čísel a písmen nejčastěji pod QR kódem.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Bitcoin over Lightning můžete převést dokončením převodu na adresu peněženky uvedenou burzou. Adresa peněženky je řetězec čísel a písmen nejčastěji pod QR kódem.</string>
     <string name="PaymentsTransferFragment__next">Další</string>
     <string name="PaymentsTransferFragment__invalid_address">Neplatná adresa</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Zkontrolujte adresu peněženky, na kterou se pokoušíte převést, a zkuste to znovu.</string>
@@ -5563,12 +5563,12 @@
     <string name="WallpaperCropActivity__blur_photo">Rozostřit fotografii</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">O MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin je nová digitální měna zaměřená na soukromí.</string>
+    <string name="payment_info_card_about_mobilecoin">O Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning je nová digitální měna zaměřená na soukromí.</string>
     <string name="payment_info_card_adding_funds">Přidávám prostředky</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Prostředky pro použití v Signal můžete přidat zasláním MobileCoin na adresu vaší peněženky.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Prostředky pro použití v Radar můžete přidat zasláním Bitcoin over Lightning na adresu vaší peněženky.</string>
     <string name="payment_info_card_cashing_out">Vyplacení</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">MobileCoin můžete kdykoli vyplatit na burze, která podporuje MobileCoin. Stačí provést převod na svůj účet na této burze.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bitcoin over Lightning můžete kdykoli vyplatit na burze, která podporuje Bitcoin over Lightning. Stačí provést převod na svůj účet na této burze.</string>
     <string name="payment_info_card_hide_this_card">Schovat tuto kartu?</string>
     <string name="payment_info_card_hide">Skrýt</string>
     <!-- Title of save recovery phrase card -->

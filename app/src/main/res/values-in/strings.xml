@@ -3762,7 +3762,7 @@
         <item>Permintaan Fitur</item>
         <item>Pertanyaan</item>
         <item>Masukan</item>
-        <item>Pembayaran (MobileCoin)</item>
+        <item>Pembayaran (Bitcoin over Lightning)</item>
         <item>Donasi dan Lencana</item>
         <item>Pencadangan Signal Android</item>
         <item>Lainnya</item>
@@ -4081,7 +4081,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Memperkenalkan Pembayaran</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Gunakan Signal untuk mengirim dan menerima MobileCoin, mata uang digital yang berfokus pada privasi. Aktifkan integrasi untuk memulainya.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Gunakan Signal untuk mengirim dan menerima Bitcoin over Lightning, mata uang digital yang berfokus pada privasi. Aktifkan integrasi untuk memulainya.</string>
     <string name="PaymentsHomeFragment__activate_payments">Aktifkan Pembayaran</string>
     <string name="PaymentsHomeFragment__activating_payments">Mengaktifkan pembayaran…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Pulihkan akun pembayaran</string>
@@ -4107,7 +4107,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Pembauaran tidak tersedia di wilayah Anda.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Tidak dapat mengaktifkan pembayaran. Coba lagi nanti.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Nonaktifkan Pembayaran?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Anda tidak akan dapat mengirim dan menerima MobileCoin di Signal jika Anda menonaktifkan pembayaran.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Anda tidak akan dapat mengirim dan menerima Bitcoin over Lightning di Signal jika Anda menonaktifkan pembayaran.</string>
     <string name="PaymentsHomeFragment__deactivate">Nonaktifkan</string>
     <string name="PaymentsHomeFragment__continue">Lanjut</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Saldo sementara tidak tersedia.</string>
@@ -4116,12 +4116,12 @@
     <string name="PaymentsHomeFragment__details">Detail</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Anda dapat menggunakan Signal untuk mengirim dan menerima MobileCoin. Semua pembayaran tunduk pada Ketentuan Layanan untuk MobileCoins dan MobileCoin Wallet. Anda bisa saja mengalami beberapa masalah, dan pembayaran atau saldo yang mungkin hilang tidak dapat dipulihkan. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Anda dapat menggunakan Signal untuk mengirim dan menerima Bitcoin over Lightning. Semua pembayaran tunduk pada Ketentuan Layanan untuk MobileCoins dan Bitcoin over Lightning Wallet. Anda bisa saja mengalami beberapa masalah, dan pembayaran atau saldo yang mungkin hilang tidak dapat dipulihkan. </string>
     <string name="PaymentsHomeFragment__activate">Aktifkan</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Lihat persyaratan MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Lihat persyaratan Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">Pembayaran di Signal tidak lagi tersedia. Anda dapat memindahkan dana ke sebuah exchange namun Anda tidak lagi dapat mengirim dan menerima pembayaran atau menambahkan dana.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Aktifkan Kunci Pembayaran untuk pengiriman dana di waktu mendatang?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4202,7 +4202,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Alamat Dompet Anda</string>
     <string name="PaymentsAddMoneyFragment__copy">Salin</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Disalin ke papan klip</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Untuk menambah dana, kirimkan MobileCoin ke alamat wallet Anda. Mulai transaksi dari akun Anda pada sebuah exchange yang mendukung MobileCoin, kemudian pindai kode QR atau salin alamat wallet Anda.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Untuk menambah dana, kirimkan Bitcoin over Lightning ke alamat wallet Anda. Mulai transaksi dari akun Anda pada sebuah exchange yang mendukung Bitcoin over Lightning, kemudian pindai kode QR atau salin alamat wallet Anda.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4220,7 +4220,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Kepada</string>
     <string name="PaymentsDetailsFragment__from">Dari</string>
-    <string name="PaymentsDetailsFragment__information">Detail transaksi termasuk jumlah pembayaran dan waktu dari transaksi adalah bagian dari Ledger MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">Detail transaksi termasuk jumlah pembayaran dan waktu dari transaksi adalah bagian dari Ledger Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Biaya coin cleanup</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">\"Biaya coin cleanup\" dibebankan saat koin dalam kepemilikan Anda tidak dapat digabungkan untuk menyelesaikan sebuah transaksi. Cleanup memungkinkan Anda untuk melanjutkan pembayaran.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Tidak ada detail lebih untuk transaksi ini</string>
@@ -4235,7 +4235,7 @@
     <string name="PaymentsTransferFragment__transfer">Transfer</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Pindai kode QR</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Kepada: Pindai atau masukkan alamat wallet</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Anda dapat mentransfer MobileCoin dengan menyelesaikan transfer ke alamat wallet yang disediakan oleh exchange. Alamat wallet berupa susunan nomor dan huruf yang biasanya berada di bawah kode QR.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Anda dapat mentransfer Bitcoin over Lightning dengan menyelesaikan transfer ke alamat wallet yang disediakan oleh exchange. Alamat wallet berupa susunan nomor dan huruf yang biasanya berada di bawah kode QR.</string>
     <string name="PaymentsTransferFragment__next">Berikutnya</string>
     <string name="PaymentsTransferFragment__invalid_address">Alamat salah</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Periksa alamat wallet yang coba Anda kirimkan dan coba lagi.</string>
@@ -5173,12 +5173,12 @@
     <string name="WallpaperCropActivity__blur_photo">Buramkan foto</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Tentang MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin adalah mata uang digital yang berfokus pada privasi.</string>
+    <string name="payment_info_card_about_mobilecoin">Tentang Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning adalah mata uang digital yang berfokus pada privasi.</string>
     <string name="payment_info_card_adding_funds">Menambahkan dana</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Anda dapat menambahkan dana untuk digunakan di Signal dengan mengirimkan MobileCoin ke alamat wallet Anda.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Anda dapat menambahkan dana untuk digunakan di Signal dengan mengirimkan Bitcoin over Lightning ke alamat wallet Anda.</string>
     <string name="payment_info_card_cashing_out">Menarik saldo</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Anda dapat menarik saldo MobileCoin kapan saja pada layanan exchange yang mendukung MobileCoin. Hanya dengan melakukan transfer ke akun Anda di exchange tersebut.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Anda dapat menarik saldo Bitcoin over Lightning kapan saja pada layanan exchange yang mendukung Bitcoin over Lightning. Hanya dengan melakukan transfer ke akun Anda di exchange tersebut.</string>
     <string name="payment_info_card_hide_this_card">Sembunyikan kartu ini?</string>
     <string name="payment_info_card_hide">Sembunyikan</string>
     <!-- Title of save recovery phrase card -->

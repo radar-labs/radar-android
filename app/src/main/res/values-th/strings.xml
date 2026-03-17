@@ -3762,7 +3762,7 @@
         <item>คำขอฟีเจอร์</item>
         <item>คำถาม</item>
         <item>ข้อเสนอแนะ</item>
-        <item>การชำระเงิน (MobileCoin)</item>
+        <item>การชำระเงิน (Bitcoin over Lightning)</item>
         <item>การบริจาคและโล่</item>
         <item>การสำรองข้อมูลของ Signal Android</item>
         <item>อื่นๆ</item>
@@ -4081,7 +4081,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">ขอแนะนำการชำระเงิน</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">ใช้ Signal เพื่อส่งและรับ MobileCoin ซึ่งเป็นสกุลเงินดิจิทัลใหม่ที่เน้นความเป็นส่วนตัว เปิดใช้งานเพื่อเริ่มต้น</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">ใช้ Signal เพื่อส่งและรับ Bitcoin over Lightning ซึ่งเป็นสกุลเงินดิจิทัลใหม่ที่เน้นความเป็นส่วนตัว เปิดใช้งานเพื่อเริ่มต้น</string>
     <string name="PaymentsHomeFragment__activate_payments">ใช้การชำระเงิน</string>
     <string name="PaymentsHomeFragment__activating_payments">กำลังเปิดใช้การชำระเงิน…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">เรียกคืนบัญชีชำระเงิน</string>
@@ -4107,7 +4107,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">การชำระเงินไม่มีให้ใช้ในภูมิภาคของคุณ</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">ไม่สามารถเปิดใช้งานการชำระเงินได้ ลองอีกครั้งภายหลัง</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">หยุดใช้การจ่ายเงินหรือไม่?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">คุณจะไม่สามารถส่งหรือรับ Mobilecoin ใน Signal ได้ ถ้าคุณปิดใช้งานการชำระเงิน</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">คุณจะไม่สามารถส่งหรือรับ Bitcoin over Lightning ใน Signal ได้ ถ้าคุณปิดใช้งานการชำระเงิน</string>
     <string name="PaymentsHomeFragment__deactivate">หยุดใช้</string>
     <string name="PaymentsHomeFragment__continue">ทำต่อ</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">ไม่มียอดคงเหลือในขณะนี้</string>
@@ -4116,12 +4116,12 @@
     <string name="PaymentsHomeFragment__details">รายละเอียด</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">คุณสามารถใช้ Signal เพื่อส่งและรับ MobileCoin การชำระเงินทั้งหมดอยู่ภายใต้เงื่อนไขการใช้งานสำหรับ MobileCoin และ MobileCoin Wallet คุณอาจพบปัญหาบางประการ และการชำระเงินหรือยอดคงเหลืออาจสูญหายไปโดยกู้คืนมาไม่ได้ </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">คุณสามารถใช้ Signal เพื่อส่งและรับ Bitcoin over Lightning การชำระเงินทั้งหมดอยู่ภายใต้เงื่อนไขการใช้งานสำหรับ Bitcoin over Lightning และ Bitcoin over Lightning Wallet คุณอาจพบปัญหาบางประการ และการชำระเงินหรือยอดคงเหลืออาจสูญหายไปโดยกู้คืนมาไม่ได้ </string>
     <string name="PaymentsHomeFragment__activate">เปิดใช้</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">ดูเงื่อนไข MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">ดูเงื่อนไข Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">ไม่สามารถชำระเงินใน Signal ได้อีกต่อไป คุณยังสามารถโอนเงินไปยังตลาดหลักทรัพย์ได้ แต่คุณจะไม่สามารถส่งและรับการชำระเงินหรือเพิ่มเงินได้อีก</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">เปิดใช้ฟีเจอร์ล็อกการชำระเงินสำหรับการชำระในครั้งต่อไปหรือไม่</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4202,7 +4202,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">ที่อยู่กระเป๋าเงินของคุณ</string>
     <string name="PaymentsAddMoneyFragment__copy">คัดลอก</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">คัดลอกไปคลิปบอร์ดแล้ว</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">เพื่อเพิ่มเงิน ส่ง MobileCoin ไปยังที่อยู่กระเป๋าเงินของคุณ เริ่มต้นธุรกรรมจากบัญชีของคุณในตลาดแลกเปลี่ยนที่รองรับ MobileCoin จากนั้นสแกนรหัส QR หรือคัดลอกที่อยู่กระเป๋าเงินของคุณ</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">เพื่อเพิ่มเงิน ส่ง Bitcoin over Lightning ไปยังที่อยู่กระเป๋าเงินของคุณ เริ่มต้นธุรกรรมจากบัญชีของคุณในตลาดแลกเปลี่ยนที่รองรับ Bitcoin over Lightning จากนั้นสแกนรหัส QR หรือคัดลอกที่อยู่กระเป๋าเงินของคุณ</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4220,7 +4220,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">ถึง</string>
     <string name="PaymentsDetailsFragment__from">จาก</string>
-    <string name="PaymentsDetailsFragment__information">รายละเอียดธุรกรรม รวมถึงจำนวนเงินและเวลาของธุรกรรมเป็นส่วนหนึ่งของ MobileCoin Ledger</string>
+    <string name="PaymentsDetailsFragment__information">รายละเอียดธุรกรรม รวมถึงจำนวนเงินและเวลาของธุรกรรมเป็นส่วนหนึ่งของ Bitcoin over Lightning Ledger</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">ค่าธรรมเนียมจัดระเบียบเหรียญ</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">\"ค่าธรรมเนียมจัดระเบียบเหรียญ\" มีการเรียกเก็บเมื่อเหรียญที่คุณครอบครองไม่สามารถนำไปรวมเพื่อให้ธุรกรรมเสร็จสมบูรณ์ได้ การจัดระเบียบช่วยให้คุณส่งเงินต่อไปได้</string>
     <string name="PaymentsDetailsFragment__no_details_available">ไม่มีรายละเอียดเพิ่มเติมอีกสำหรับธุรกรรมนี้</string>
@@ -4235,7 +4235,7 @@
     <string name="PaymentsTransferFragment__transfer">โอน</string>
     <string name="PaymentsTransferFragment__scan_qr_code">สแกนรหัส QR</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">ถึง: สแกนหรือใส่ที่อยู่กระเป๋าเงิน</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">คุณสามารถโอน MobileCoin ได้โดยการโอนเงินไปยังที่อยู่กระเป๋าเงินที่ได้รับจากตลาดหลักทรัพย์ให้เสร็จสมบูรณ์ ที่อยู่กระเป๋าเงินคือชุดตัวเลขและตัวอักษรส่วนใหญ่อยู่ใต้รหัส QR</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">คุณสามารถโอน Bitcoin over Lightning ได้โดยการโอนเงินไปยังที่อยู่กระเป๋าเงินที่ได้รับจากตลาดหลักทรัพย์ให้เสร็จสมบูรณ์ ที่อยู่กระเป๋าเงินคือชุดตัวเลขและตัวอักษรส่วนใหญ่อยู่ใต้รหัส QR</string>
     <string name="PaymentsTransferFragment__next">ถัดไป</string>
     <string name="PaymentsTransferFragment__invalid_address">ที่อยู่ไม่ถูกต้อง</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">ตรวจสอบที่อยู่กระเป๋าเงินที่คุณพยายามจะโอนเงินไปและลองอีกครั้ง</string>
@@ -5173,12 +5173,12 @@
     <string name="WallpaperCropActivity__blur_photo">เบลอภาพ</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">เกี่ยวกับ MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin เป็นเงินดิจิทัลสกุลใหม่ที่เน้นเรื่องความเป็นส่วนตัว</string>
+    <string name="payment_info_card_about_mobilecoin">เกี่ยวกับ Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning เป็นเงินดิจิทัลสกุลใหม่ที่เน้นเรื่องความเป็นส่วนตัว</string>
     <string name="payment_info_card_adding_funds">การเติมเงิน</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">คุณสามารถเพิ่มเงินสำหรับใช้ใน Signal ได้โดยการส่ง MobileCoin ไปยังที่อยู่กระเป๋าเงินของคุณ</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">คุณสามารถเพิ่มเงินสำหรับใช้ใน Radar ได้โดยการส่ง Bitcoin over Lightning ไปยังที่อยู่กระเป๋าเงินของคุณ</string>
     <string name="payment_info_card_cashing_out">การถอนออกเป็นเงินสด</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">คุณสามารถถอน MobileCoin เป็นเงินสดได้ตลอดเวลาในตลาดหลักทรัพย์ที่รองรับ MobileCoin เพียงแค่โอนเงินไปยังบัญชีในตลาดหลักทรัพย์นั้น</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">คุณสามารถถอน Bitcoin over Lightning เป็นเงินสดได้ตลอดเวลาในตลาดหลักทรัพย์ที่รองรับ Bitcoin over Lightning เพียงแค่โอนเงินไปยังบัญชีในตลาดหลักทรัพย์นั้น</string>
     <string name="payment_info_card_hide_this_card">ซ่อนบัตรนี้หรือไม่?</string>
     <string name="payment_info_card_hide">ซ่อน</string>
     <!-- Title of save recovery phrase card -->

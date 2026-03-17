@@ -3762,7 +3762,7 @@
         <item>기능 요청</item>
         <item>질문</item>
         <item>피드백</item>
-        <item>결제(MobileCoin)</item>
+        <item>결제(Bitcoin over Lightning)</item>
         <item>기부 및 배지</item>
         <item>Signal Android 백업</item>
         <item>기타</item>
@@ -4116,12 +4116,12 @@
     <string name="PaymentsHomeFragment__details">세부 정보</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signal을 사용하여 MobileCoin을 주고받으세요. 모든 결제에는 MobileCoins와 MobileCoin Wallet의 사용 약관이 적용됩니다. 일부 문제가 발생할 수 있으며, 손실된 결제나 잔액은 복구할 수 없습니다. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signal을 사용하여 MobileCoin을 주고받으세요. 모든 결제에는 MobileCoins와 Bitcoin over Lightning Wallet의 사용 약관이 적용됩니다. 일부 문제가 발생할 수 있으며, 손실된 결제나 잔액은 복구할 수 없습니다. </string>
     <string name="PaymentsHomeFragment__activate">활성화</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin 용어 보기</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning 용어 보기</string>
     <string name="PaymentsHomeFragment__payments_not_available">Signal 결제는 더 이상 사용할 수 없습니다. 여전히 거래소로 자금을 이체할 수 있지만 더 이상 지불을 주고받거나 자금을 추가할 수 없습니다.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">지금부터 결제 잠금을 켤까요?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4220,7 +4220,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">받는이:</string>
     <string name="PaymentsDetailsFragment__from">보낸이:</string>
-    <string name="PaymentsDetailsFragment__information">지불 금액 및 거래 시간을 비롯한 거래 세부 정보는 MobileCoin Ledger의 일부입니다.</string>
+    <string name="PaymentsDetailsFragment__information">지불 금액 및 거래 시간을 비롯한 거래 세부 정보는 Bitcoin over Lightning Ledger의 일부입니다.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">코인 정리 수수료</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">보유하고 있는 코인을 합산하여 거래를 완료할 수 없는 경우 \'코인 정리 수수료\'가 부과됩니다. 정리를 통해 계속 지불할 수 있습니다.</string>
     <string name="PaymentsDetailsFragment__no_details_available">이 거래에 대해 사용할 수 있는 추가 세부정보가 없습니다.</string>

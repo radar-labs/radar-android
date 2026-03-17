@@ -3,6 +3,7 @@ package org.thoughtcrime.securesms.payments.preferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -121,7 +122,12 @@ public class PaymentsHomeFragment extends LoggingFragment {
       if (viewModel.isEnclaveFailurePresent()) {
         showUpdateIsRequiredDialog();
       } else if (SignalStore.payments().getPaymentsAvailability().isSendAllowed()) {
-        SafeNavigation.safeNavigate(Navigation.findNavController(v), PaymentsHomeFragmentDirections.actionPaymentsHomeToPaymentRecipientSelectionFragment());
+        PopupMenu popup = new PopupMenu(getContext(), v);
+
+        popup.setOnMenuItemClickListener(this::onMenuItemSelected);
+        popup.getMenuInflater().inflate(R.menu.payments_home_fragment_send_options_menu, popup.getMenu());
+        popup.show();
+//        SafeNavigation.safeNavigate(Navigation.findNavController(v), PaymentsHomeFragmentDirections.actionPaymentsHomeToPaymentRecipientSelectionFragment());
       } else {
         showPaymentsDisabledDialog();
       }
@@ -284,7 +290,14 @@ public class PaymentsHomeFragment extends LoggingFragment {
   }
 
   private boolean onMenuItemSelected(@NonNull MenuItem item) {
-    if (item.getItemId() == R.id.payments_home_fragment_menu_transfer_to_exchange) {
+    if (item.getItemId() == R.id.payments_home_fragment_send_options_menu_transfer_to_contact) {
+        if (viewModel.isEnclaveFailurePresent()) {
+          showUpdateIsRequiredDialog();
+        } else {
+          SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), PaymentsHomeFragmentDirections.actionPaymentsHomeToPaymentRecipientSelectionFragment());
+        }
+        return true;
+    } else if (item.getItemId() == R.id.payments_home_fragment_send_options_menu_transfer_to_address) {
       if (viewModel.isEnclaveFailurePresent()) {
         showUpdateIsRequiredDialog();
       } else {

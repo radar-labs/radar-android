@@ -310,6 +310,7 @@ public class ApplicationDependencyProvider implements AppDependencies.Provider {
     else if (BuildConfig.MOBILE_COIN_ENVIRONMENT.equals("testnet")) network = MobileCoinConfig.getTestNet(paymentsApi);
     else throw new AssertionError("Unknown network " + BuildConfig.MOBILE_COIN_ENVIRONMENT);
 
+
     return new Payments(network);
   }
 

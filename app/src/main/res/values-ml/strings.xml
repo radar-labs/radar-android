@@ -3873,7 +3873,7 @@
         <item>ഫീച്ചര്‍ അഭ്യർത്ഥന</item>
         <item>ചോദ്യം</item>
         <item>ഫീഡ്‌ബാക്ക്</item>
-        <item>പേയ്‌മെന്റുകൾ (MobileCoin)</item>
+        <item>പേയ്‌മെന്റുകൾ (Bitcoin over Lightning)</item>
         <item>സംഭാവനകളും ബാഡ്‌ജുകളും</item>
         <item>Signal Android ബാക്കപ്പ്</item>
         <item>മറ്റുള്ളവ</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">പേയ്മെന്റുകൾ അവതരിപ്പിക്കുന്നു</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">സ്വകാര്യതയ്ക്ക് പ്രാധാന്യം നൽകുന്ന പുതിയ ഡിജിറ്റൽ കറൻസിയായ MobileCoin അയയ്ക്കാനും സ്വീകരിക്കാനും Signal ഉപയോഗിക്കൂ. ആരംഭിക്കാൻ സജീവമാക്കൂ.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">സ്വകാര്യതയ്ക്ക് പ്രാധാന്യം നൽകുന്ന പുതിയ ഡിജിറ്റൽ കറൻസിയായ Bitcoin over Lightning അയയ്ക്കാനും സ്വീകരിക്കാനും Signal ഉപയോഗിക്കൂ. ആരംഭിക്കാൻ സജീവമാക്കൂ.</string>
     <string name="PaymentsHomeFragment__activate_payments">പേയ്മെന്റുകൾ സജീവമാക്കുക</string>
     <string name="PaymentsHomeFragment__activating_payments">പേയ്‌മെന്റുകൾ സജീവമാക്കുന്നു…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">പേയ്മെന്റ് അക്കൗണ്ട് പുനഃസ്ഥാപിക്കുക</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">വിശദാംശങ്ങൾ</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">MobileCoin അയയ്ക്കാനും സ്വീകരിക്കാനും നിങ്ങൾക്ക് Signal ഉപയോഗിക്കാനാകും. എല്ലാ പേയ്മെന്റുകളും MobileCoins, MobileCoin വാലറ്റ് എന്നിവയുടെ ഉപയോഗ നയങ്ങൾക്ക് വിധേയമായിരിക്കും. നിങ്ങൾക്ക് ചില പ്രശ്‍നങ്ങൾ നേരിട്ടേക്കാം, നിങ്ങൾക്ക് നഷ്ടപ്പെട്ടേക്കാവുന്ന പേയ്മെന്റുകളോ ബാലൻസുകളോ വീണ്ടെടുക്കാനാകില്ല. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Bitcoin over Lightning അയയ്ക്കാനും സ്വീകരിക്കാനും നിങ്ങൾക്ക് Signal ഉപയോഗിക്കാനാകും. എല്ലാ പേയ്മെന്റുകളും MobileCoins, Bitcoin over Lightning വാലറ്റ് എന്നിവയുടെ ഉപയോഗ നയങ്ങൾക്ക് വിധേയമായിരിക്കും. നിങ്ങൾക്ക് ചില പ്രശ്‍നങ്ങൾ നേരിട്ടേക്കാം, നിങ്ങൾക്ക് നഷ്ടപ്പെട്ടേക്കാവുന്ന പേയ്മെന്റുകളോ ബാലൻസുകളോ വീണ്ടെടുക്കാനാകില്ല. </string>
     <string name="PaymentsHomeFragment__activate">സജീവമാക്കുക</string>
     <string name="PaymentsHomeFragment__view_mobile_coin_terms">മൊബൈൽ കോയിൻ നിബന്ധനകൾ കാണുക</string>
     <string name="PaymentsHomeFragment__payments_not_available">Signal-ലെ പേയ്‌മെന്റുകൾ ഇനി ലഭ്യമല്ല. നിങ്ങൾക്ക് ഇപ്പോഴും ഒരു എക്സ്ചേഞ്ചിലേക്ക് ഫണ്ടുകൾ ട്രാൻസ്ഫർ ചെയ്യാൻ കഴിയും, എന്നാൽ നിങ്ങൾക്ക് ഇനി പേയ്മെന്റുകൾ അയയ്ക്കാനും കൂടാതെ സ്വീകരിക്കാനും അല്ലെങ്കിൽ ഫണ്ടുകൾ ചേർക്കാനോ കഴിയില്ല.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">ഭാവി പേയ്‌മെന്റുകൾക്ക് പേയ്‌മെന്റ് ലോക്ക് ഓണാക്കണോ?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">സ്വീകർത്താവ്:</string>
     <string name="PaymentsDetailsFragment__from">പ്രേഷിതാവ്:</string>
-    <string name="PaymentsDetailsFragment__information">പേയ്മെന്റ് തുകയും ഇടപാടിന്റെ സമയവും ഉൾപ്പെടെയുള്ള ട്രാൻസാക്ഷൻ വിശദാംശങ്ങൾ MobileCoin ലെഡ്‌ജറിന്റെ ഭാഗമാണ്.</string>
+    <string name="PaymentsDetailsFragment__information">പേയ്മെന്റ് തുകയും ഇടപാടിന്റെ സമയവും ഉൾപ്പെടെയുള്ള ട്രാൻസാക്ഷൻ വിശദാംശങ്ങൾ Bitcoin over Lightning ലെഡ്‌ജറിന്റെ ഭാഗമാണ്.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">നാണയം വൃത്തിയാക്കൽ ഫീസ്</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">നിങ്ങളുടെ കൈവശമുള്ള നാണയങ്ങൾ ഒരു ഇടപാട് പൂർത്തിയാക്കാൻ സംയോജിപ്പിക്കാൻ കഴിയാത്തപ്പോൾ ഒരു \"നാണയം വൃത്തിയാക്കൽ ഫീസ്\" ഈടാക്കുന്നു. പേയ്മെന്റുകൾ അയയ്ക്കുന്നത് തുടരാൻ ക്ലീനപ്പ് നിങ്ങളെ അനുവദിക്കും.</string>
     <string name="PaymentsDetailsFragment__no_details_available">ഈ ഇടപാടിന് കൂടുതൽ വിശദാംശങ്ങൾ ലഭ്യമല്ല</string>
@@ -5303,8 +5303,8 @@
     <string name="WallpaperCropActivity__blur_photo">ചിത്രം അവ്യക്തമാക്കുക</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin-നെ കുറിച്ച്</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin ഒരു പുതിയ സ്വകാര്യതാ കേന്ദ്രീകൃതമായ ഡിജിറ്റൽ കറൻസിയാണ്.</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning-നെ കുറിച്ച്</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning ഒരു പുതിയ സ്വകാര്യതാ കേന്ദ്രീകൃതമായ ഡിജിറ്റൽ കറൻസിയാണ്.</string>
     <string name="payment_info_card_adding_funds">ഫണ്ടുകൾ ചേർക്കുന്നു</string>
     <string name="payment_info_card_you_can_add_funds_for_use_in">നിങ്ങളുടെ വാലറ്റ് വിലാസത്തിലേക്ക് മൊബൈൽകോയിൻ അയച്ചുകൊണ്ട് Signal-ൽ ഉപയോഗിക്കുന്നതിനുള്ള ഫണ്ടുകൾ നിങ്ങൾക്ക് ചേർക്കാം.</string>
     <string name="payment_info_card_cashing_out">പണമാക്കുക</string>

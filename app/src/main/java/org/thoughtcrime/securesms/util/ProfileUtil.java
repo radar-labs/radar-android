@@ -279,7 +279,7 @@ public final class ProfileUtil {
    */
   public static void uploadLightingProfile(@NonNull Context context, @NonNull LightningAddress address) throws IOException {
     Log.d(TAG, "uploadProfileWithBadges()");
-    uploadProfile(ProfileName.asGiven("Cake dude"),
+    uploadProfile(ProfileName.asGiven("Radar User"),
                   Optional.ofNullable(Recipient.self().getAbout()).orElse(""),
                   Optional.ofNullable(Recipient.self().getAboutEmoji()).orElse(""),
                   getLightningAddressProtobuf(address.serialize()),

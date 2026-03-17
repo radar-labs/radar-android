@@ -4317,7 +4317,7 @@
         <item>طلب ميّزة</item>
         <item>سؤال</item>
         <item>الملاحظات</item>
-        <item>عمليات الدفع (MobileCoin)</item>
+        <item>عمليات الدفع (Bitcoin over Lightning)</item>
         <item>تبرُّعات وشارات</item>
         <item>النسخة الاحتياطية على سيجنال أندرويد</item>
         <item>أخرى</item>
@@ -4651,7 +4651,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">نُقدِّم لكم عمليات الدفع</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">استخدِم سيجنال لإرسال واستلام MobileCoin، عُملة رقمية جديدة ترتكز على الخصوصية. يُرجى تفعيلها للبدء بالاستخدام.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">استخدِم سيجنال لإرسال واستلام Bitcoin over Lightning، عُملة رقمية جديدة ترتكز على الخصوصية. يُرجى تفعيلها للبدء بالاستخدام.</string>
     <string name="PaymentsHomeFragment__activate_payments">تفعيل المدفوعات</string>
     <string name="PaymentsHomeFragment__activating_payments">يجري تفعيل المدفوعات…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">استعادة حساب المدفوعات</string>
@@ -4677,7 +4677,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">المدفوعات غير متاحة في منطقتك.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">لا يمكن تفعيل المدفوعات.حاوِل مرّة أخرى لاحقًا.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">هل ترغبُ بتعطيل المدفوعات؟</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">لن يصبح بإمكانك إرسال أو تلقي MobileCoin في سيجنال إذا قمتَ بتعطيل المدفوعات.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">لن يصبح بإمكانك إرسال أو تلقي Bitcoin over Lightning في سيجنال إذا قمتَ بتعطيل المدفوعات.</string>
     <string name="PaymentsHomeFragment__deactivate">تعطيل</string>
     <string name="PaymentsHomeFragment__continue">متابعة</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">الرصيد غير متاح حاليًا.</string>
@@ -4686,12 +4686,12 @@
     <string name="PaymentsHomeFragment__details">التفاصيل</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">يُمكنك استخدام سيجنال لإرسال وتلقي عملة MobileCoin. تخضع كل عمليات الدفع لشروط استخدام MobileCoin ومحفظة MobileCoin. قد تواجه بعض المشاكل وقد لا يكون بالإمكان استعادة المدفوعات أو الأرصدة التي قد تخسرها. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">يُمكنك استخدام سيجنال لإرسال وتلقي عملة Bitcoin over Lightning. تخضع كل عمليات الدفع لشروط استخدام Bitcoin over Lightning ومحفظة Bitcoin over Lightning. قد تواجه بعض المشاكل وقد لا يكون بالإمكان استعادة المدفوعات أو الأرصدة التي قد تخسرها. </string>
     <string name="PaymentsHomeFragment__activate">تفعيل</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">إظهار شروط التعامل بـ MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">إظهار شروط التعامل بـ Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">لم تعد المدفوعات متاحة في سيجنال. يمكنك دومًا إرسال المبالغ إلى منصة للتداول، لكن لم يعد بإمكانك إرسال أو استلام المبالغ أو إضافة الأموال.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">هل تريد تفعيل قفل عملية الدفع للعمليات المُستقبلية؟</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4772,7 +4772,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">عنوان محفظتك</string>
     <string name="PaymentsAddMoneyFragment__copy">نسخ</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">تمَّ النسخ إلى الحافظة</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">لإضافة مبالغ، أرسِل عملات MobileCoin إلى عنوان محفظتك. ابدأ بالمعاملة انطلاقًا من حسابك في منصة تداول تدعم MobileCoin، بعدها امسح كود الـ QR أو انسخ عنوان محفظتك.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">لإضافة مبالغ، أرسِل عملات Bitcoin over Lightning إلى عنوان محفظتك. ابدأ بالمعاملة انطلاقًا من حسابك في منصة تداول تدعم Bitcoin over Lightning، بعدها امسح كود الـ QR أو انسخ عنوان محفظتك.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4790,7 +4790,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">إلى</string>
     <string name="PaymentsDetailsFragment__from">مِن</string>
-    <string name="PaymentsDetailsFragment__information">ستجد تفاصيل المعاملة بما في ذلك مبلغ الدفع وتاريخ المعاملة متضمنة في دفتر حسابات MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">ستجد تفاصيل المعاملة بما في ذلك مبلغ الدفع وتاريخ المعاملة متضمنة في دفتر حسابات Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">رسوم تنظيف العملة</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">يتم فرض \"رسوم تنظيف العملة\" عندما يتعذَّر دمج العملات التي بحوزتك لإتمام معاملة. سيسمح لك التنظيف بمتابعة إرسال المدفوعات.</string>
     <string name="PaymentsDetailsFragment__no_details_available">لا تتوفَّر أي تفاصيل أخرى حول هذه المعاملة.</string>
@@ -4805,7 +4805,7 @@
     <string name="PaymentsTransferFragment__transfer">إرسال</string>
     <string name="PaymentsTransferFragment__scan_qr_code">امسح ضوئيًا كود الـ QR</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">إلى : يُرجى مسح كود الـ QR ضوئيًا أو إدخال عنوان المحفظة</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">يمكنك نقل Mobilecoin من خلال إكمال عملية نقل إلى عنوان المحفظة التي تقدِّمها منصة التداول. عنوان المحفظة عبارة عن سلسلة من الحروف والأرقام، والتي غالبًا ما تكون ظاهرة تحت كود الـ QR.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">يمكنك نقل Bitcoin over Lightning من خلال إكمال عملية نقل إلى عنوان المحفظة التي تقدِّمها منصة التداول. عنوان المحفظة عبارة عن سلسلة من الحروف والأرقام، والتي غالبًا ما تكون ظاهرة تحت كود الـ QR.</string>
     <string name="PaymentsTransferFragment__next">التالي</string>
     <string name="PaymentsTransferFragment__invalid_address">عنوان غير صالح</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">يُرجى التحقُّق من عنوان المحفظة عند محاولة إرسال مبالغ إلى أحد ما، ثم حاوِل مرّة أخرى.</string>
@@ -5823,12 +5823,12 @@
     <string name="WallpaperCropActivity__blur_photo">تمويه الصورة</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">حول MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin هي عملة رقمية جديدة ترتكز على الخصوصية.</string>
+    <string name="payment_info_card_about_mobilecoin">حول Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning هي عملة رقمية جديدة ترتكز على الخصوصية.</string>
     <string name="payment_info_card_adding_funds">إضافة مبالغ</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">يمكنك إضافة المبالغ لاستخدامها في سيجنال عبر إرسال عملات MobileCoin إلى عنوان محفظتك.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">يمكنك إضافة المبالغ لاستخدامها في سيجنال عبر إرسال عملات Bitcoin over Lightning إلى عنوان محفظتك.</string>
     <string name="payment_info_card_cashing_out">صرف المبالغ</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">يمكنك صرف عملات Mobilecoin في أي وقت على أي منصة تداول تدعم عملات Mobilecoin. يكفي فقط إرسال مبلغ إلى حسابك في تلك المنصة.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">يمكنك صرف عملات Bitcoin over Lightning في أي وقت على أي منصة تداول تدعم عملات Bitcoin over Lightning. يكفي فقط إرسال مبلغ إلى حسابك في تلك المنصة.</string>
     <string name="payment_info_card_hide_this_card">هل ترغب بإخفاء هذه البطاقة؟</string>
     <string name="payment_info_card_hide">إخفاء</string>
     <!-- Title of save recovery phrase card -->

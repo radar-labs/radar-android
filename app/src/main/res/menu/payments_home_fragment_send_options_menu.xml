@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/payments_home_fragment_send_options_menu_transfer_to_contact"
+        android:title="@string/PaymentsHomeFragment__send_to_contact" />
+
+    <item android:id="@+id/payments_home_fragment_send_options_menu_transfer_to_address"
+        android:title="@string/PaymentsHomeFragment__send_to_address" />
+
+</menu>

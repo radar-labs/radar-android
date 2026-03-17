@@ -3873,7 +3873,7 @@
         <item>Funktsiooni taotlus</item>
         <item>Küsimus</item>
         <item>Tagasiside</item>
-        <item>Maksed (MobileCoin)</item>
+        <item>Maksed (Bitcoin over Lightning)</item>
         <item>Annetused &amp; märgid</item>
         <item>Signal Androidi varukoopia</item>
         <item>Muu</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Tutvustame makseid</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Kasuta Signalit uue privaatsusele keskendunud digitaalse valuuta MobileCoin saatmiseks ja vastuvõtmiseks. Aktiveeri, et proovida.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Kasuta Signalit uue privaatsusele keskendunud digitaalse valuuta Bitcoin over Lightning saatmiseks ja vastuvõtmiseks. Aktiveeri, et proovida.</string>
     <string name="PaymentsHomeFragment__activate_payments">Aktiivsed maksed</string>
     <string name="PaymentsHomeFragment__activating_payments">Maksete aktiveerimine…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Taasta maksete konto</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Üksikasjad</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signali kaudu on võimalik saata ja vastu võtta MobileCoine. Kõik maksed toimuvad kooskõlas MobileCoinsi ja MobileCoin Walleti kasutustingimustega. Siin võib ilmneda teatavaid probleeme ning kaotatud makseid või saldosid ei pruugi olla võimalik taastada. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signali kaudu on võimalik saata ja vastu võtta MobileCoine. Kõik maksed toimuvad kooskõlas MobileCoinsi ja Bitcoin over Lightning Walleti kasutustingimustega. Siin võib ilmneda teatavaid probleeme ning kaotatud makseid või saldosid ei pruugi olla võimalik taastada. </string>
     <string name="PaymentsHomeFragment__activate">Aktiveeri</string>
     <string name="PaymentsHomeFragment__view_mobile_coin_terms">Näita MobileCoini kasutustingimusi</string>
     <string name="PaymentsHomeFragment__payments_not_available">Maksed pole enam Signalis saadaval. Sul on võimalik kanda vahendid valuutavahetusse, aga sul pole enam võimalik saata või saada makseid ega lisada vahendeid.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Kas lülitada järgmiste maksete puhul sisse makse kinnitus?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -5304,7 +5304,7 @@
 
     <!-- InfoCard -->
     <string name="payment_info_card_about_mobilecoin">Teave MobileCoini kohta</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin on uus privaatsusele suunatud digitaalne valuuta.</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning on uus privaatsusele suunatud digitaalne valuuta.</string>
     <string name="payment_info_card_adding_funds">Vahendite lisamine</string>
     <string name="payment_info_card_you_can_add_funds_for_use_in">Sul on võimalik lisada Signalis kasutamiseks vahendeid, saates MobileCoinid sinu rahakoti aadressile.</string>
     <string name="payment_info_card_cashing_out">Raha välja võtmine</string>

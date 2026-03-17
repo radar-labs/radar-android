@@ -4095,7 +4095,7 @@
         <item>Prašymas pridėti naują funkciją</item>
         <item>Klausimas</item>
         <item>Atsiliepimas</item>
-        <item>Mokėjimai („MobileCoin“)</item>
+        <item>Mokėjimai („Bitcoin over Lightning“)</item>
         <item>Parama ir ženkleliai</item>
         <item>„Signal Android“ atsarginė kopija</item>
         <item>Kitas</item>
@@ -4423,7 +4423,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">Pristatome: mokėjimai</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Su „Signal“ siųsk ir gauk „MobileCoin“ – naują į privatumą orientuotą skaitmeninę valiutą. Įjunk ir pradėk.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">Su „Signal“ siųsk ir gauk „Bitcoin over Lightning“ – naują į privatumą orientuotą skaitmeninę valiutą. Įjunk ir pradėk.</string>
     <string name="PaymentsHomeFragment__activate_payments">Aktyvuoti mokėjimus</string>
     <string name="PaymentsHomeFragment__activating_payments">Aktyvuojami mokėjimai…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">Atkurti mokėjimų paskyrą</string>
@@ -4449,7 +4449,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">Mokėjimai yra neprieinami jūsų regione.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">Nepavyko įjungti mokėjimų. Vėliau bandykite dar kartą.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">Pasyvinti mokėjimus?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Pasyvinę mokėjimus, negalėsite Signal programėlėje siųsti ar gauti „MobileCoin“ valiutą.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">Pasyvinę mokėjimus, negalėsite Signal programėlėje siųsti ar gauti „Bitcoin over Lightning“ valiutą.</string>
     <string name="PaymentsHomeFragment__deactivate">Pasyvinti</string>
     <string name="PaymentsHomeFragment__continue">Tęsti</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">Šiuo metu likutis neprieinamas.</string>
@@ -4460,10 +4460,10 @@
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
     <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Naudojant „Signal“ galima siųsti ir gauti „Mobile Coin“. Visiems mokėjimams taikomos „Mobile Coin“ ir „Mobile Coin Wallet“ naudojimo sąlygos. Gali būti, kad susidursi su tam tikromis problemomis, ir mokėjimai ar likučiai, kuriuos galbūt prarasi, nebus atkurti. </string>
     <string name="PaymentsHomeFragment__activate">Aktyvuoti</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Rodyti „MobileCoin“ sąlygas</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Rodyti „Bitcoin over Lightning“ sąlygas</string>
     <string name="PaymentsHomeFragment__payments_not_available">Mokėjimai Signal programėlėje daugiau nebeprieinami. Jūs vis dar galite pervesti lėšas į valiutos keitimo punktą, bet nebegalite siųsti ir gauti mokėjimų ar pridėti lėšų.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Įjungti Mokėjimo užraktą būsimiems siuntimams?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4544,7 +4544,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Jūsų piniginės adresas</string>
     <string name="PaymentsAddMoneyFragment__copy">Kopijuoti</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Nukopijuota į iškarpinę</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Norėdami pridėti lėšas, siųskite „MobileCoin“ valiutą į savo piniginės adresą. Pradėkite operaciją savo paskyroje, „MobileCoin“ palaikančiame valiutos keitimo punkte, o tuomet nuskenuokite QR kodą arba nukopijuokite savo piniginės adresą.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Norėdami pridėti lėšas, siųskite „Bitcoin over Lightning“ valiutą į savo piniginės adresą. Pradėkite operaciją savo paskyroje, „Bitcoin over Lightning“ palaikančiame valiutos keitimo punkte, o tuomet nuskenuokite QR kodą arba nukopijuokite savo piniginės adresą.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4562,7 +4562,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">Skirta</string>
     <string name="PaymentsDetailsFragment__from">Nuo</string>
-    <string name="PaymentsDetailsFragment__information">Išsami operacijos informacija, įskaitant mokėjimo sumą ir operacijos laiką, yra „MobileCoin Ledger“ dalis.</string>
+    <string name="PaymentsDetailsFragment__information">Išsami operacijos informacija, įskaitant mokėjimo sumą ir operacijos laiką, yra „Bitcoin over Lightning Ledger“ dalis.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Monetų išvalymo mokestis</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">„Monetų išvalymo mokesčiu“ yra apmokestinama tuomet, kai jūsų turimos monetos negali būti sujungtos operacijos užbaigimui. Išvalymas leis jums ir toliau siųsti mokėjimus.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Nėra išsamesnės informacijos apie šią operaciją</string>
@@ -4577,7 +4577,7 @@
     <string name="PaymentsTransferFragment__transfer">Pervesti</string>
     <string name="PaymentsTransferFragment__scan_qr_code">Skenuoti QR kodą</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">Kam: Nuskenuokite ar įveskite piniginės adresą</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">Galite pervesti „MobileCoin“ valiutą, užbaigdami pervedimą į valiutos keitimo punkto pateiktą piniginės adresą. Piniginės adresas yra skaitmenų ir raidžių eilutė, kuri, įprastai, būna po QR kodu.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">Galite pervesti „Bitcoin over Lightning“ valiutą, užbaigdami pervedimą į valiutos keitimo punkto pateiktą piniginės adresą. Piniginės adresas yra skaitmenų ir raidžių eilutė, kuri, įprastai, būna po QR kodu.</string>
     <string name="PaymentsTransferFragment__next">Kitas</string>
     <string name="PaymentsTransferFragment__invalid_address">Neteisingas adresas</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">Patikrinkite piniginės, į kurią bandote pervesti, adresą ir bandykite dar kartą.</string>
@@ -5563,12 +5563,12 @@
     <string name="WallpaperCropActivity__blur_photo">Sulieti nuotrauką</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">Apie „MobileCoin“</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">„MobileCoin“ yra nauja į privatumą orientuota skaitmeninė valiuta.</string>
+    <string name="payment_info_card_about_mobilecoin">Apie „Bitcoin over Lightning“</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">„Bitcoin over Lightning“ yra nauja į privatumą orientuota skaitmeninė valiuta.</string>
     <string name="payment_info_card_adding_funds">Lėšų pridėjimas</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">Galite pridėti lėšas, skirtas naudoti Signal programėlėje, išsiųsdami „MobileCoin“ valiutą į savo piniginės adresą.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">Galite pridėti lėšas, skirtas naudoti Signal programėlėje, išsiųsdami „Bitcoin over Lightning“ valiutą į savo piniginės adresą.</string>
     <string name="payment_info_card_cashing_out">Pinigų išgryninimas</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">„MobileCoin“ valiutą bet kuriuo metu galite išgryninti valiutos keitimo punktuose, kurie palaiko „MobileCoin“. Tiesiog, atlikite pervedimą į savo sąskaitą tame valiutos keitimo punkte.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">„Bitcoin over Lightning“ valiutą bet kuriuo metu galite išgryninti valiutos keitimo punktuose, kurie palaiko „Bitcoin over Lightning“. Tiesiog, atlikite pervedimą į savo sąskaitą tame valiutos keitimo punkte.</string>
     <string name="payment_info_card_hide_this_card">Slėpti šią kortelę?</string>
     <string name="payment_info_card_hide">Slėpti</string>
     <!-- Title of save recovery phrase card -->

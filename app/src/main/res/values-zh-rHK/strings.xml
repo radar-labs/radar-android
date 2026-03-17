@@ -3762,7 +3762,7 @@
         <item>功能請求</item>
         <item>問題</item>
         <item>回饋</item>
-        <item>付款 (MobileCoin)</item>
+        <item>付款 (Bitcoin over Lightning)</item>
         <item>捐款及徽章</item>
         <item>Signal Android 備份</item>
         <item>其他</item>
@@ -4081,7 +4081,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">付款功能登場</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">使用 Signal 傳送和接收 MobileCoin：一種注重私隱的全新電子貨幣。立即啟動便可以開始使用。</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">使用 Signal 傳送和接收 Bitcoin over Lightning：一種注重私隱的全新電子貨幣。立即啟動便可以開始使用。</string>
     <string name="PaymentsHomeFragment__activate_payments">啟用付款</string>
     <string name="PaymentsHomeFragment__activating_payments">正在啟用付款…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">還原付款帳戶</string>
@@ -4107,7 +4107,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">付款不適用於您的地區。</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">無法啟用付款。請稍後再試。</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">要停用付款嗎？</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">若您停用付款，您將無法在 Signal 中發送或接收 MobileCoin。</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">若您停用付款，您將無法在 Signal 中發送或接收 Bitcoin over Lightning。</string>
     <string name="PaymentsHomeFragment__deactivate">停用</string>
     <string name="PaymentsHomeFragment__continue">繼續</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">餘額目前未能提供。</string>
@@ -4116,12 +4116,12 @@
     <string name="PaymentsHomeFragment__details">詳細資料</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">你可使用 Signal 收發 MobileCoin。所有付款均受 MobileCoin 和 MobileCoin Wallet 的使用條款約束。你或許會遇到一些問題，以及你可能遺失付款或餘額而無法還原。 </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">你可使用 Signal 收發 Bitcoin over Lightning。所有付款均受 Bitcoin over Lightning 和 Bitcoin over Lightning Wallet 的使用條款約束。你或許會遇到一些問題，以及你可能遺失付款或餘額而無法還原。 </string>
     <string name="PaymentsHomeFragment__activate">啟用</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">檢視 MobileCoin 條款</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">檢視 Bitcoin over Lightning 條款</string>
     <string name="PaymentsHomeFragment__payments_not_available">付款已不再在 Signal 上可用。您仍可轉移款項至交易平台，惟您不再能發送和接收付款或增加款項。</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">要為日後的付款開啟付款鎖定嗎？</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4202,7 +4202,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">您的錢包位址</string>
     <string name="PaymentsAddMoneyFragment__copy">複製</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">已複製至剪貼簿</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">若要增加款項，請發送 MobileCoin 到您的錢包位址。請在支援 MobileCoin 的交易平台上以您所屬的帳戶開始一筆交易，然後掃描二維碼或複製您的錢包位址。</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">若要增加款項，請發送 Bitcoin over Lightning 到您的錢包位址。請在支援 Bitcoin over Lightning 的交易平台上以您所屬的帳戶開始一筆交易，然後掃描二維碼或複製您的錢包位址。</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4220,7 +4220,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">收款人：</string>
     <string name="PaymentsDetailsFragment__from">付款人：</string>
-    <string name="PaymentsDetailsFragment__information">付款金額及交易時間等交易詳情屬於 MobileCoin 帳目的一部分。</string>
+    <string name="PaymentsDetailsFragment__information">付款金額及交易時間等交易詳情屬於 Bitcoin over Lightning 帳目的一部分。</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">金幣清理費用</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">當您擁有的金幣無法合併以完成一筆交易時，將會徵收一項「金幣清理費用」。清理將會允許您繼續發送付款。</string>
     <string name="PaymentsDetailsFragment__no_details_available">此交易無進一步詳情提供</string>
@@ -4235,7 +4235,7 @@
     <string name="PaymentsTransferFragment__transfer">轉移</string>
     <string name="PaymentsTransferFragment__scan_qr_code">掃描二維碼</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">收款人：掃描或輸入錢包位址</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">您可完成一筆轉移至由交易平台提供的錢包位址，藉以轉移 MobileCoin。錢包位址為數字與字母組成的字串，通常載於二維碼下方。</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">您可完成一筆轉移至由交易平台提供的錢包位址，藉以轉移 Bitcoin over Lightning。錢包位址為數字與字母組成的字串，通常載於二維碼下方。</string>
     <string name="PaymentsTransferFragment__next">下一步</string>
     <string name="PaymentsTransferFragment__invalid_address">位址無效</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">請檢查您嘗試轉移至該處的錢包位址，然後再試一次。</string>
@@ -5173,12 +5173,12 @@
     <string name="WallpaperCropActivity__blur_photo">模糊照片</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">關於 MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin 是一種注重隱私的全新數位貨幣。</string>
+    <string name="payment_info_card_about_mobilecoin">關於 Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning 是一種注重隱私的全新數位貨幣。</string>
     <string name="payment_info_card_adding_funds">增加款項</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">您可傳送 MobileCoin 到您的錢包位址，以增加款項在 Signal 中使用。</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">您可傳送 Bitcoin over Lightning 到您的錢包位址，以增加款項在 Radar 中使用。</string>
     <string name="payment_info_card_cashing_out">提取款項</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">您可隨時在支援 MobileCoin 的交易平台上提取 MobileCoin，只需進行一筆轉移至您在該交易平台上的帳戶即可。</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">您可隨時在支援 Bitcoin over Lightning 的交易平台上提取 Bitcoin over Lightning，只需進行一筆轉移至您在該交易平台上的帳戶即可。</string>
     <string name="payment_info_card_hide_this_card">要隱藏此卡片嗎？</string>
     <string name="payment_info_card_hide">隱藏</string>
     <!-- Title of save recovery phrase card -->

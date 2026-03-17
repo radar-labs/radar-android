@@ -3873,7 +3873,7 @@
         <item>J\'ai une fonctionnalité à suggérer</item>
         <item>J\'ai une question</item>
         <item>J\'ai des commentaires sur l\'appli</item>
-        <item>Paiements (MobileCoin)</item>
+        <item>Paiements (Bitcoin over Lightning)</item>
         <item>Dons et macarons</item>
         <item>Sauvegarde Signal pour Android</item>
         <item>Autre</item>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Détails</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Vous pouvez utiliser Signal pour envoyer et recevoir des MobileCoins. Tous les paiements sont soumis aux conditions d\'utilisation de MobileCoin et de MobileCoin Wallet. Avertissement : des problèmes peuvent se produire et entraîner la perte de paiements et de soldes. De telles pertes sont irrécupérables. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Vous pouvez utiliser Signal pour envoyer et recevoir des MobileCoins. Tous les paiements sont soumis aux conditions d\'utilisation de Bitcoin over Lightning et de Bitcoin over Lightning Wallet. Avertissement : des problèmes peuvent se produire et entraîner la perte de paiements et de soldes. De telles pertes sont irrécupérables. </string>
     <string name="PaymentsHomeFragment__activate">Activer</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Afficher les conditions d\'utilisation de MobileCoin</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Afficher les conditions d\'utilisation de Bitcoin over Lightning</string>
     <string name="PaymentsHomeFragment__payments_not_available">Il n\'est plus possible d\'effectuer des paiements via Signal. Vous pouvez encore virer des fonds vers une plateforme d\'échange, mais vous ne pouvez plus ni envoyer, ni recevoir de paiements, ni ajouter de fonds dans l\'appli.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">Activer le verrouillage des paiements pour les prochains envois ?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Adresse de votre portefeuille</string>
     <string name="PaymentsAddMoneyFragment__copy">Copier</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Copié dans le presse-papiers</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">Pour ajouter des fonds, envoyez des MobileCoins à l\'adresse de votre portefeuille. Sur une plateforme d\'échange compatible MobileCoin, démarrez une transaction depuis votre compte, puis scannez le code QR ou copiez l\'adresse de votre portefeuille.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Pour ajouter des fonds, envoyez des MobileCoins à l\'adresse de votre portefeuille. Sur une plateforme d\'échange compatible Bitcoin over Lightning, démarrez une transaction depuis votre compte, puis scannez le code QR ou copiez l\'adresse de votre portefeuille.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">À</string>
     <string name="PaymentsDetailsFragment__from">De</string>
-    <string name="PaymentsDetailsFragment__information">Les informations relatives aux transactions, telles que le montant du paiement et l\'heure de la transaction, sont enregistrées dans le registre MobileCoin.</string>
+    <string name="PaymentsDetailsFragment__information">Les informations relatives aux transactions, telles que le montant du paiement et l\'heure de la transaction, sont enregistrées dans le registre Bitcoin over Lightning.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Frais d\'agrégation des pièces</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">Lorsque les pièces en votre possession ne peuvent pas être combinées pour finaliser une transaction, elles doivent être agrégées et des frais vous sont facturés. Cette agrégation vous permet de continuer à effectuer des paiements.</string>
     <string name="PaymentsDetailsFragment__no_details_available">Aucune autre information n\'est disponible pour cette transaction</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">Flouter la photo</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">À propos de MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin est une monnaie numérique axée sur la protection des données personnelles.</string>
+    <string name="payment_info_card_about_mobilecoin">À propos de Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning est une monnaie numérique axée sur la protection des données personnelles.</string>
     <string name="payment_info_card_adding_funds">Ajouter des fonds</string>
     <string name="payment_info_card_you_can_add_funds_for_use_in">Pour virer des fonds à utiliser dans Signal, envoyez des MobileCoins à l\'adresse de votre portefeuille.</string>
     <string name="payment_info_card_cashing_out">Encaisser</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">Vous pouvez encaisser des MobileCoins à tout moment sur une plateforme d\'échange compatible MobileCoin. Il suffit d\'effectuer un virement vers le compte dont vous disposez sur cette plateforme d\'échange.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Vous pouvez encaisser des MobileCoins à tout moment sur une plateforme d\'échange compatible Bitcoin over Lightning. Il suffit d\'effectuer un virement vers le compte dont vous disposez sur cette plateforme d\'échange.</string>
     <string name="payment_info_card_hide_this_card">Masquer cette carte ?</string>
     <string name="payment_info_card_hide">Masquer</string>
     <!-- Title of save recovery phrase card -->

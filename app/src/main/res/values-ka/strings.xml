@@ -3873,7 +3873,7 @@
         <item>ფუნქციის მოთხოვნა</item>
         <item>კითხვა</item>
         <item>უკუკავშირი</item>
-        <item>ტრანზაქციები (MobileCoin)</item>
+        <item>ტრანზაქციები (Bitcoin over Lightning)</item>
         <item>დონაციები &amp; ემბლემები</item>
         <item>Signal Android-ის სათადარიგო ასლები</item>
         <item>სხვა</item>
@@ -4195,7 +4195,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">წარმოგიდგენთ გადახდებს</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">გამოიყენე Signal-ი ახალი, კონფიდენციალურობაზე ორიენტირებული, ციფრული ვალუტის MobileCoin-ის გასაგზავნად და მისაღებად. დასაწყებად გააქტიურე.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">გამოიყენე Signal-ი ახალი, კონფიდენციალურობაზე ორიენტირებული, ციფრული ვალუტის Bitcoin over Lightning-ის გასაგზავნად და მისაღებად. დასაწყებად გააქტიურე.</string>
     <string name="PaymentsHomeFragment__activate_payments">ტრანზაქციების აქტივაცია</string>
     <string name="PaymentsHomeFragment__activating_payments">ვააქტიურებთ ტრანზაქციებს…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">ტრანზაქციების მონაცემების აღდგენა</string>
@@ -4221,7 +4221,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">ტრანზაქციები შენს რეგიონში ხელმისაწვდომი არაა.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">ტრანზაქციების ჩართვა ვერ მოხერხდა. მოგვიანებით კიდევ სცადე.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">გსურს ტრანზაქციების დეაქტივაცია?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">შენ ვერ შეძლებ MobileCoin-ის Signal-ში გაგზავანას ან მიღებას , თუ ტრანზაქციებს გამორთავ.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">შენ ვერ შეძლებ Bitcoin over Lightning-ის Signal-ში გაგზავანას ან მიღებას , თუ ტრანზაქციებს გამორთავ.</string>
     <string name="PaymentsHomeFragment__deactivate">დეაქტივაცია</string>
     <string name="PaymentsHomeFragment__continue">გაგრძელება</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">ბალანსი ამჟამად ხელმისაწვდომი არაა.</string>
@@ -4230,12 +4230,12 @@
     <string name="PaymentsHomeFragment__details">Details</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">შეგიძლია Signal-ი MobileCoin-ის გასაგზავნად და მისაღებად გამოიყენო. ყველა გადახდა ექვემდებარება MobileCoins-ისა და MobileCoin Wallet-ის გამოყენების პირობებს. შეიძლება პრობლემები შეგექმნას და გადახდები ან ნაშთები, რომლებიც შეიძლება დაკარგო, ვერ აღდგება. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">შეგიძლია Signal-ი Bitcoin over Lightning-ის გასაგზავნად და მისაღებად გამოიყენო. ყველა გადახდა ექვემდებარება MobileCoins-ისა და Bitcoin over Lightning Wallet-ის გამოყენების პირობებს. შეიძლება პრობლემები შეგექმნას და გადახდები ან ნაშთები, რომლებიც შეიძლება დაკარგო, ვერ აღდგება. </string>
     <string name="PaymentsHomeFragment__activate">გააქტიურება</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin-ის პირობების ნახვა</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning-ის პირობების ნახვა</string>
     <string name="PaymentsHomeFragment__payments_not_available">ტრანზაქციები Signal-ში აღარ არის ხელმისაწვდომი. ისევ შეგიძლია თანხების გადარიცხვა ბირჟაზე, მაგრამ აღარ შეგიძლია ტრანზაქციების გაგზავნა და მიღება, ან თანხის დამატება.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">ჩავრთოთ ტრანზაქციის უზრუნველყოფა სამომავლო გზავნილებისთვის?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4316,7 +4316,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">შენი საფულის მისამართი</string>
     <string name="PaymentsAddMoneyFragment__copy">დაკოპირება</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">დაკოპირებულია ბუფერში</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">თანხების დასამატებლად გააგზავნე MobileCoin-ი შენი საფულის მისამართზე. დაიწყე ტრანზაქცია შენი ანგარიშიდან ბირჟაზე, რომელიც მხარს უჭერს MobileCoin-ს, შემდეგ დაასკანირეთ QR კოდი ან დააკოპირე შენი საფულის მისამართი.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">თანხების დასამატებლად გააგზავნე Bitcoin over Lightning-ი შენი საფულის მისამართზე. დაიწყე ტრანზაქცია შენი ანგარიშიდან ბირჟაზე, რომელიც მხარს უჭერს Bitcoin over Lightning-ს, შემდეგ დაასკანირეთ QR კოდი ან დააკოპირე შენი საფულის მისამართი.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4334,7 +4334,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">To</string>
     <string name="PaymentsDetailsFragment__from">From</string>
-    <string name="PaymentsDetailsFragment__information">ტრანზაქციის დეტალები, მათ შორის გადახდის თანხა და ტრანზაქციის დრო, არის MobileCoin Ledger-ის ნაწილი.</string>
+    <string name="PaymentsDetailsFragment__information">ტრანზაქციის დეტალები, მათ შორის გადახდის თანხა და ტრანზაქციის დრო, არის Bitcoin over Lightning Ledger-ის ნაწილი.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Coin cleanup-ის საფასური</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">\"coin cleanup-ის საფასური\" ირიცხება, როდესაც შენს მფლობელობაში არსებული მონეტები არ შეიძლება გაერთიანდეს ტრანზაქციის დასასრულებლად. cleanup-ი საშუალებას მოგცემს გააგრძელო გადახდების გაგზავნა.</string>
     <string name="PaymentsDetailsFragment__no_details_available">დამატებითი დეტალები ამ ტრანზაქციის შესახებ არ არის ხელმისაწვდომი</string>
@@ -4349,7 +4349,7 @@
     <string name="PaymentsTransferFragment__transfer">გადარიცხვა</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR კოდის დასკანირება</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">დაასკანირე ან შეიყვანე საფულის მისამართი</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">შეგიძლია გადარიცხო MobileCoin თანხის გადატანისთ ბირჟის მიერ მითითებული საფულის მისამართზე. საფულის მისამართი არის რიცხვებისა და ასოების სტრიქონი, რომელიც ყველაზე ხშირად არის QR კოდის ქვემოთ.</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">შეგიძლია გადარიცხო Bitcoin over Lightning თანხის გადატანისთ ბირჟის მიერ მითითებული საფულის მისამართზე. საფულის მისამართი არის რიცხვებისა და ასოების სტრიქონი, რომელიც ყველაზე ხშირად არის QR კოდის ქვემოთ.</string>
     <string name="PaymentsTransferFragment__next">შემდეგი</string>
     <string name="PaymentsTransferFragment__invalid_address">არასწორი მისამართი</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">შეამოწმე საფულის მისამართი, რომელზეც ცდილობ გადარიცხვას და სცადე ხელახლა.</string>
@@ -5303,12 +5303,12 @@
     <string name="WallpaperCropActivity__blur_photo">ფოტოს გაბუნდოვანება</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin-ის შესახებ</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin-ი არის კონფიდენციალურობაზე ორიენტირებული ახალი ციფრული ვალუტა.</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning-ის შესახებ</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning-ი არის კონფიდენციალურობაზე ორიენტირებული ახალი ციფრული ვალუტა.</string>
     <string name="payment_info_card_adding_funds">თანხის დამატება</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">შეგიძლია Signal-ში გამოსაყენებლად თანხა დაამატო MobileCoin-ის შენი საფულის მისამართზე გაგზავნით.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">შეგიძლია Signal-ში გამოსაყენებლად თანხა დაამატო Bitcoin over Lightning-ის შენი საფულის მისამართზე გაგზავნით.</string>
     <string name="payment_info_card_cashing_out">განაღდება</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">შეგიძლია გაანაღდო MobileCoin ნებისმიერ დროს იმ ბირჟაზე, რომელიც ემსახურება MobileCoin-ს. უბრალოდ გადარიცხე მაგ ბირჟის შენს ანგარიშზე.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">შეგიძლია გაანაღდო Bitcoin over Lightning ნებისმიერ დროს იმ ბირჟაზე, რომელიც ემსახურება Bitcoin over Lightning-ს. უბრალოდ გადარიცხე მაგ ბირჟის შენს ანგარიშზე.</string>
     <string name="payment_info_card_hide_this_card">დავმალოთ ეს ბარათი?</string>
     <string name="payment_info_card_hide">დამალვა</string>
     <!-- Title of save recovery phrase card -->

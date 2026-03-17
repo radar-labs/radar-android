@@ -188,7 +188,7 @@ dnsjava = "dnsjava:dnsjava:2.1.9"
 nanohttpd-webserver = { module = "org.nanohttpd:nanohttpd-webserver", version.ref = "nanohttpd" }
 nanohttpd-websocket = { module = "org.nanohttpd:nanohttpd-websocket", version.ref = "nanohttpd" }
 kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
-breezsdk = "breez_sdk_spark:bindings-android:0.6.1"
+breezsdk = "breez_sdk_spark:bindings-android:0.9.1"
 
 # Can't use the newest version because it hits some weird NoClassDefFoundException
 jknack-handlebars = "com.github.jknack:handlebars:4.0.7"

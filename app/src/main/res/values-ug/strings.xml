@@ -3762,7 +3762,7 @@
         <item>ئىقتىدار ئىلتىماسى</item>
         <item>سوئال</item>
         <item>تەكلىپ-پىكىر</item>
-        <item>چىقىم (MobileCoin)</item>
+        <item>چىقىم (Bitcoin over Lightning)</item>
         <item>ئىئانە ۋە ئىزنەك</item>
         <item>Signal Android زاپاسلانمىسى</item>
         <item>باشقىلار</item>
@@ -4081,7 +4081,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">تۆلەمنى تونۇشتۇرۇش</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">سىز Signal دا MobileCoin يوللاپ ۋە قوبۇللىيالايسىز، ئۇ شەخسىيەت گەۋدىلەندۈرۈلگەن يېڭى رەقەملىك پۇل. باشلاش ئۈچۈن ئاكتىپلاڭ.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">سىز Signal دا Bitcoin over Lightning يوللاپ ۋە قوبۇللىيالايسىز، ئۇ شەخسىيەت گەۋدىلەندۈرۈلگەن يېڭى رەقەملىك پۇل. باشلاش ئۈچۈن ئاكتىپلاڭ.</string>
     <string name="PaymentsHomeFragment__activate_payments">چىقىم قىلىشنى ئاكتىپلا</string>
     <string name="PaymentsHomeFragment__activating_payments">چىقىم قىلىشنى ئاكتىپلاۋاتىدۇ…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">چىقىم ھېساباتىنى ئەسلىگە قايتۇر</string>
@@ -4107,7 +4107,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">چىقىم ئىقتىدارىنى سىز تۇرۇشلۇق جايدا ئىشلەتكىلى بولمايدۇ.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">چىقىمنى قوزغىتالمىدى. سەل تۇرۇپ قايتا سىناڭ.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">چىقىملارنى چەكلەمدۇ؟</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">ئەگەر چىقىم قىلىشنى چەكلىسىڭىز Signal دا MobileCoin ئەۋەتىپ ياكى قوبۇللىيالمايسىز.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">ئەگەر چىقىم قىلىشنى چەكلىسىڭىز Signal دا Bitcoin over Lightning ئەۋەتىپ ياكى قوبۇللىيالمايسىز.</string>
     <string name="PaymentsHomeFragment__deactivate">چەكلە</string>
     <string name="PaymentsHomeFragment__continue">داۋاملاشتۇر</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">نۆۋەتتە قالدۇقنى ئىشلەتكىلى بولمايدۇ.</string>
@@ -4116,12 +4116,12 @@
     <string name="PaymentsHomeFragment__details">تەپسىلاتى</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">‫Signal نى ئىشلىتىپ MobileCoin ئەۋەتەلەيسىز ۋە تاپشۇرىۋالالايسىز. بارلىق تۆلەم ۋە چىقىملار MobileCoin ۋە MobileCoin ھەميانىنىڭ ئىشلىتىش شەرتلىرىگە بويسۇنىدۇ. بەزى مەسىلىلەرگە دۇچ كېلىشىڭز، يوقىتىش ئىھتىمالىڭىز بولغان تۆلەملەر ۋە قالدۇقلارنى ئەسلىگە كەلتۈرەلمەسلىكىڭىز مۇمكىن. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">‫Signal نى ئىشلىتىپ Bitcoin over Lightning ئەۋەتەلەيسىز ۋە تاپشۇرىۋالالايسىز. بارلىق تۆلەم ۋە چىقىملار Bitcoin over Lightning ۋە Bitcoin over Lightning ھەميانىنىڭ ئىشلىتىش شەرتلىرىگە بويسۇنىدۇ. بەزى مەسىلىلەرگە دۇچ كېلىشىڭز، يوقىتىش ئىھتىمالىڭىز بولغان تۆلەملەر ۋە قالدۇقلارنى ئەسلىگە كەلتۈرەلمەسلىكىڭىز مۇمكىن. </string>
     <string name="PaymentsHomeFragment__activate">ئاكتىپلا</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin ماددىلىرىنى كۆرسەت</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning ماددىلىرىنى كۆرسەت</string>
     <string name="PaymentsHomeFragment__payments_not_available">‫Signal دا چىقىم ئەمدى ئىشلىمەيدۇ. سىز مەبلەغلىرىڭىزنى ئالماشتۇرۇش ئورنىغا داۋاملىق يۆتكىيەلەيسىز. ئەمما ئەمدى چىقىمنى يوللاپ ۋە تاپشۇرىۋالالمايسىز ياكى مەبلەغ قوشالمايسىز.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">كەلگۈسىدىكى پۇل تۆلەش ئۈچۈن پۇل تۆلەش قۇلۇپىنى ئاچامسىز؟</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -4202,7 +4202,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">ھەميان ئادرېسىڭىز</string>
     <string name="PaymentsAddMoneyFragment__copy">كۆچۈر</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">چاپلاش تاختىسىغا كۆچۈردى</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">مەبلەغ قوشۇش ئۈچۈن MobileCoin نى ھەميان ئادرېسىڭىزغا ئەۋەتىڭ. مۇئامىلىنى MobileCoin نى قوللايدىغان بىر ئالماستۇرغۇچىدىكى ھېساباتىڭىزدىن باشلاڭ، ئاندىن QR كودىنى سايىلەڭ ياكى ھەميان ئادرېسىڭىزنى كۆچۈرۈڭ.</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">مەبلەغ قوشۇش ئۈچۈن Bitcoin over Lightning نى ھەميان ئادرېسىڭىزغا ئەۋەتىڭ. مۇئامىلىنى Bitcoin over Lightning نى قوللايدىغان بىر ئالماستۇرغۇچىدىكى ھېساباتىڭىزدىن باشلاڭ، ئاندىن QR كودىنى سايىلەڭ ياكى ھەميان ئادرېسىڭىزنى كۆچۈرۈڭ.</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -4220,7 +4220,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">كىمگە</string>
     <string name="PaymentsDetailsFragment__from">كىمدىن</string>
-    <string name="PaymentsDetailsFragment__information">چىقىم سوممىسى ۋە مۇئامىلە ۋاقتىنى ئۆز ئىچىگە ئالغان مۇئامىلە تەپسىلاتلىرى MobileCoin  ھېسابات دەپتىرىنىڭ بىر قىسمى.</string>
+    <string name="PaymentsDetailsFragment__information">چىقىم سوممىسى ۋە مۇئامىلە ۋاقتىنى ئۆز ئىچىگە ئالغان مۇئامىلە تەپسىلاتلىرى Bitcoin over Lightning  ھېسابات دەپتىرىنىڭ بىر قىسمى.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">تەڭگە تازىلاش ھەققى</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">قولىڭىزدىكى تەڭگىلەرنى بىرلەشتۈرۈپ مۇئامىلىنى تاماملىغىلى بولمىغاندا ، «تەڭگە تازىلاش ھەققى» ئېلىنىدۇ. تازىلاش ئارقىلىق داۋاملىق چىقىم يوللاشقا يول قويىدۇ.</string>
     <string name="PaymentsDetailsFragment__no_details_available">بۇ مۇئامىلىدە باشقا تەپسىلاتلار يوق</string>
@@ -4235,7 +4235,7 @@
     <string name="PaymentsTransferFragment__transfer">يۆتكە</string>
     <string name="PaymentsTransferFragment__scan_qr_code">QR كودى تارا</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">كىمگە: ھەميان ئادرېسىنى سايىلە ياكى كىرگۈز </string>
-    <string name="PaymentsTransferFragment__you_can_transfer">ئالماشتۇرغۇچى تەمىنلىگەن ھەميان ئادرېسىغا يۆتكەشنى تاماملاش ئارقىلىق MobileCoin نى يۆتكىيەلەيسىز. ھەميان ئادرېسى سان ۋە ھەرپلەرنىڭ تىزمىسى بولۇپ، كۆپىنچە QR كودىنىڭ ئاستىدا بولىدۇ. </string>
+    <string name="PaymentsTransferFragment__you_can_transfer">ئالماشتۇرغۇچى تەمىنلىگەن ھەميان ئادرېسىغا يۆتكەشنى تاماملاش ئارقىلىق Bitcoin over Lightning نى يۆتكىيەلەيسىز. ھەميان ئادرېسى سان ۋە ھەرپلەرنىڭ تىزمىسى بولۇپ، كۆپىنچە QR كودىنىڭ ئاستىدا بولىدۇ. </string>
     <string name="PaymentsTransferFragment__next">كېيىنكى</string>
     <string name="PaymentsTransferFragment__invalid_address">ئىناۋەتسىز ئادرېس</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">سىز يۆتكىمەكچى بولغان ھەميان ئادرېسىنى تەكشۈرۈڭ ۋە قايتا سىناڭ.</string>
@@ -5173,12 +5173,12 @@
     <string name="WallpaperCropActivity__blur_photo">رەسىمنى غۇۋالاشتۇرۇش</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">MobileCoin ھەققىدە</string>
+    <string name="payment_info_card_about_mobilecoin">Bitcoin over Lightning ھەققىدە</string>
     <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">‫MobileCoin شەخسىيەت گەۋدىلەندۈرۈلگەن يېڭى رەقەملىك پۇل.</string>
     <string name="payment_info_card_adding_funds"> قوشۇلغان مەبلەغ</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">ھەميان ئادرېسىڭىزغا MobileCoin ئەۋەتىش ئارقىلىق Signal دا ئىشلىتىشكە مەبلەغ قوشالايسىز.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">ھەميان ئادرېسىڭىزغا Bitcoin over Lightning ئەۋەتىش ئارقىلىق Radar دا ئىشلىتىشكە مەبلەغ قوشالايسىز.</string>
     <string name="payment_info_card_cashing_out">نەق پۇلغا ئايلاندۇر</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">MobileCoin نى قوللايدىغان ئالماشتۇرغۇچىدا خالىغان ۋاقىتتا MobileCoin نى نەقلەشتۈرەلەيسىز. پەقەت بۇ ئالماشتۇرغۇچىدىكى ھېساباتىڭىزغا يۆتكىسىڭىزلا بولىدۇ.</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">Bitcoin over Lightning نى قوللايدىغان ئالماشتۇرغۇچىدا خالىغان ۋاقىتتا Bitcoin over Lightning نى نەقلەشتۈرەلەيسىز. پەقەت بۇ ئالماشتۇرغۇچىدىكى ھېساباتىڭىزغا يۆتكىسىڭىزلا بولىدۇ.</string>
     <string name="payment_info_card_hide_this_card">بۇ كارت كۆرۈنمىسۇنمۇ؟</string>
     <string name="payment_info_card_hide">يوشۇر</string>
     <!-- Title of save recovery phrase card -->
