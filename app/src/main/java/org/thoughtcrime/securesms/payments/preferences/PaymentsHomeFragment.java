@@ -3,6 +3,7 @@ package org.thoughtcrime.securesms.payments.preferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,12 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
   private PaymentsHomeViewModel viewModel;
 
+  /** Tracks whether the balance is currently visible to the user. */
+  private boolean balanceVisible = true;
+
+  /** Holds the most recently received balance so we can redisplay it on toggle. */
+  private org.whispersystems.signalservice.api.payments.Money lastBalanceAmount = null;
+
   public PaymentsHomeFragment() {
     super(R.layout.payments_home_fragment);
   }
@@ -91,16 +98,17 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    Toolbar             toolbar          = view.findViewById(R.id.payments_home_fragment_toolbar);
-    RecyclerView        recycler         = view.findViewById(R.id.payments_home_fragment_recycler);
-    View                header           = view.findViewById(R.id.payments_home_fragment_header);
-    MoneyView           balance          = view.findViewById(R.id.payments_home_fragment_header_balance);
-    TextView            exchange         = view.findViewById(R.id.payments_home_fragment_header_exchange);
-    View                addMoney         = view.findViewById(R.id.button_start_frame);
-    View                sendMoney        = view.findViewById(R.id.button_end_frame);
-    View                refresh          = view.findViewById(R.id.payments_home_fragment_header_refresh);
-    LottieAnimationView refreshAnimation = view.findViewById(R.id.payments_home_fragment_header_refresh_animation);
-    Stub<ComposeView>   bannerView       = ViewUtil.findStubById(view, R.id.banner_compose_view);
+    Toolbar             toolbar             = view.findViewById(R.id.payments_home_fragment_toolbar);
+    RecyclerView        recycler            = view.findViewById(R.id.payments_home_fragment_recycler);
+    View                header              = view.findViewById(R.id.payments_home_fragment_header);
+    MoneyView           balance             = view.findViewById(R.id.payments_home_fragment_header_balance);
+    TextView            exchange            = view.findViewById(R.id.payments_home_fragment_header_exchange);
+    View                addMoney            = view.findViewById(R.id.button_start_frame);
+    View                sendMoney           = view.findViewById(R.id.button_end_frame);
+    View                refresh             = view.findViewById(R.id.payments_home_fragment_header_refresh);
+    LottieAnimationView refreshAnimation    = view.findViewById(R.id.payments_home_fragment_header_refresh_animation);
+    ImageButton         balanceToggle       = view.findViewById(R.id.payments_home_fragment_header_balance_visibility_toggle);
+    Stub<ComposeView>   bannerView          = ViewUtil.findStubById(view, R.id.banner_compose_view);
 
     toolbar.setNavigationOnClickListener(v -> {
       viewModel.markAllPaymentsSeen();
@@ -163,8 +171,25 @@ public class PaymentsHomeFragment extends LoggingFragment {
       header.setVisibility(enabled ? View.VISIBLE : View.GONE);
     });
 
+    // Eye-icon toggle: show or hide the balance
+    balanceToggle.setOnClickListener(v -> {
+      balanceVisible = !balanceVisible;
+      balanceToggle.setImageResource(balanceVisible ? R.drawable.ic_visibility_24dp
+                                                    : R.drawable.ic_visibility_off_24dp);
+      if (balanceVisible) {
+        if (lastBalanceAmount != null) {
+          balance.setMoney(lastBalanceAmount);
+        }
+      } else {
+        balance.setText("\u2022\u2022\u2022\u2022\u2022\u2022"); // ••••••
+      }
+    });
+
     viewModel.getBalance().observe(getViewLifecycleOwner(), balanceAmount -> {
-      balance.setMoney(balanceAmount);
+      lastBalanceAmount = balanceAmount;
+      if (balanceVisible) {
+        balance.setMoney(balanceAmount);
+      }
       if (SignalStore.payments().getShowSaveRecoveryPhrase() &&
           !SignalStore.payments().getUserConfirmedMnemonic() &&
           !balanceAmount.isEqualOrLessThanZero()) {
