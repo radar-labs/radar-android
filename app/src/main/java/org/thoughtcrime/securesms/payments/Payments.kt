@@ -33,6 +33,8 @@ class Payments(private val mobileCoinConfig: MobileCoinConfig) {
   @Synchronized
   @Throws(IOException::class)
   fun getCurrencyExchange(refreshIfAble: Boolean): CurrencyExchange {
+    if (_wallet == null) return CurrencyExchange(emptyMap(),0L)
+
     if (currencyConversions == null || shouldRefresh(refreshIfAble, currencyConversions!!.timestamp)) {
       val currencyConversionsMap = wallet.exchangeRate
       val newCurrencyConversions = BreezCurrencyConversions(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC), currencyConversionsMap)

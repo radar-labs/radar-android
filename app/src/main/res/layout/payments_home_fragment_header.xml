@@ -8,18 +8,40 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
-    <org.thoughtcrime.securesms.payments.MoneyView
-        android:id="@+id/payments_home_fragment_header_balance"
-        android:layout_width="match_parent"
+    <!-- Balance row: money view + eye toggle -->
+    <LinearLayout
+        android:id="@+id/payments_home_fragment_balance_row"
+        android:layout_width="0dp"
         android:layout_height="48sp"
+        android:orientation="horizontal"
         android:gravity="center"
-        app:autoSizeMaxTextSize="48sp"
-        app:autoSizeMinTextSize="14sp"
-        app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:money="BTC:7500000000000" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <org.thoughtcrime.securesms.payments.MoneyView
+            android:id="@+id/payments_home_fragment_header_balance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:autoSizeMaxTextSize="48sp"
+            app:autoSizeMinTextSize="14sp"
+            app:autoSizeTextType="uniform"
+            tools:money="BTC:7500000000000" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/payments_home_fragment_header_balance_visibility_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:contentDescription="@string/PaymentsHomeFragment__toggle_balance_visibility"
+            app:srcCompat="@drawable/ic_visibility_24dp"
+            app:tint="@color/signal_icon_tint_primary" />
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/payments_home_fragment_header_refresh"
@@ -59,7 +81,7 @@
         android:textColor="@color/signal_icon_tint_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/payments_home_fragment_header_refresh"
-        app:layout_constraintTop_toBottomOf="@+id/payments_home_fragment_header_balance"
+        app:layout_constraintTop_toBottomOf="@+id/payments_home_fragment_balance_row"
         tools:text="$55 USD at 11:00am" />
 
     <org.thoughtcrime.securesms.components.PaymentPillStrip

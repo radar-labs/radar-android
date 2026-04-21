@@ -4259,6 +4259,7 @@
     <string name="PaymentsHomeFragment__cancel">Cancel</string>
     <!-- Alert dialog button to update now -->
     <string name="PaymentsHomeFragment__update_now">Update now</string>
+    <string name="PaymentsHomeFragment__toggle_balance_visibility">Toggle balance visibility</string>
 
     <!-- GrantPermissionsFragment -->
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
