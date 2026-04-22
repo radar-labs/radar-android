@@ -5347,9 +5347,9 @@
         <item quantity="other">Az egyenleged automatikusan helyreáll, amikor újratelepíted a Signalt, amennyiben megadod a Signal PIN kódodat. Továbbá helyreállíthatod egyenlegedet a helyreállítási mondat használatával is, ami egy %1$d szóból álló, számodra egyedi mondat. Jegyezd fel, és tárold biztonságos helyen!</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Van egyenleged! Itt az ideje, hogy elmentsd a helyreállítási mondatod—egy 24 szavas kulcsszót, amellyel helyreállíthatod az egyenleged.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Van egyenleged! Itt az ideje, hogy elmentsd a helyreállítási mondatod—egy 12 szavas kulcsszót, amellyel helyreállíthatod az egyenleged.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Itt az ideje, hogy elmentsd a helyreállítási mondatod – egy 24 szavas kulcsszót, amellyel helyreállíthatod az egyenlegedet.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Itt az ideje, hogy elmentsd a helyreállítási mondatod – egy 12 szavas kulcsszót, amellyel helyreállíthatod az egyenlegedet.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">A helyreállítási mondatod egy %1$d szóból álló mondat, amely számodra egyedi. Használd arra, hogy helyreállítsd fizetési fiókodat!</string>
     <string name="PaymentsRecoveryStartFragment__start">Kezdés</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Kézi megadás</string>

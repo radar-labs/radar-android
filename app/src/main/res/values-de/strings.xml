@@ -5347,9 +5347,9 @@
         <item quantity="other">Dein Kontostand wird beim erneuten Installieren von Signal automatisch wiederhergestellt, falls du deine Signal-PIN bestätigst. Du kannst dein Guthaben auch mit einer Wiederherstellungsphrase wiederherstellen. Das ist eine %1$d-Wort-Phrase, die nur du kennst. Schreibe sie auf und bewahre sie an einem sicheren Ort auf.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Du hast ein Guthaben! Zeit, deine Wiederherstellungsphrase zu speichern – ein Schlüssel mit 24 Wörtern, mit dem du dein Guthaben wiederherstellen kannst.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Du hast ein Guthaben! Zeit, deine Wiederherstellungsphrase zu speichern – ein Schlüssel mit 12 Wörtern, mit dem du dein Guthaben wiederherstellen kannst.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Zeit, deine Wiederherstellungsphrase zu speichern – ein Schlüssel mit 24 Wörtern, mit dem du dein Guthaben wiederherstellen kannst.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Zeit, deine Wiederherstellungsphrase zu speichern – ein Schlüssel mit 12 Wörtern, mit dem du dein Guthaben wiederherstellen kannst.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Deine Wiederherstellungsphrase ist ein einzigartiger Satz mit %1$d Wörtern. Verwende sie, um deinen Kontostand wiederherzustellen.</string>
     <string name="PaymentsRecoveryStartFragment__start">Starten</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Manuell eingeben</string>

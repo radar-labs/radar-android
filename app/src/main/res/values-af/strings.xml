@@ -5347,9 +5347,9 @@
         <item quantity="other">Jou saldo sal outomaties teruggestel word wanneer jy Signal herinstalleer as jy jou Signal-PIN bevestig. Jy kan ook jou saldo terugstel deur ’n herwinfrase te gebruik, ’n %1$d-woordfrase wat uniek is aan jou. Skryf dit neer en bewaar dit op \'n veilige plek.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Jy het \'n beskikbare saldo! Dis tyd om jou herwinfrase te stoor—\'n sleutel van 24 woorde wat jy kan gebruik om jou saldo te herwin.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Jy het \'n beskikbare saldo! Dis tyd om jou herwinfrase te stoor—\'n sleutel van 12 woorde wat jy kan gebruik om jou saldo te herwin.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Dis tyd om jou herwinfrase te stoor—\'n sleutel van 24 woorde wat jy kan gebruik om jou saldo te herwin.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Dis tyd om jou herwinfrase te stoor—\'n sleutel van 12 woorde wat jy kan gebruik om jou saldo te herwin.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Jou herwinfrase is ’n %1$d-woordfrase wat uniek is vir jou. Gebruik dit om jou balans terug te stel.</string>
     <string name="PaymentsRecoveryStartFragment__start">Begin</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Voer handmatig in</string>

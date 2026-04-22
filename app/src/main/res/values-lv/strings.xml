@@ -5478,9 +5478,9 @@
         <item quantity="other">Jūsu bilance tiks automātiski atjaunota, atkārtoti instalējot Signal, ja apstiprināsiet savu lietotnes Signal PIN. Bilanci var arī atjaunot, izmantojot atkopšanas frāzi, kas ir tikai jums raksturīgs %1$d vārdu savienojums. Pierakstiet to un glabājiet drošā vietā.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Jums ir atlikums! Laiks saglabāt atgūšanas frāzi — 24 vārdu atslēgu, ar kuru varat atjaunot savu atlikumu.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Jums ir atlikums! Laiks saglabāt atgūšanas frāzi — 12 vārdu atslēgu, ar kuru varat atjaunot savu atlikumu.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Laiks saglabāt atgūšanas frāzi — 24 vārdu atslēgu, ar kuru varat atjaunot savu atlikumu.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Laiks saglabāt atgūšanas frāzi — 12 vārdu atslēgu, ar kuru varat atjaunot savu atlikumu.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Jūsu atkopšanas frāze ir tikai jums raksturīga %1$d vārdu frāze. Izmantojiet šo frāzi, lai atjaunotu atlikumu.</string>
     <string name="PaymentsRecoveryStartFragment__start">Sākt</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Ievadīt manuāli</string>

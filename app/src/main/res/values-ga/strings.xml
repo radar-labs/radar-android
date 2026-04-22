@@ -5740,9 +5740,9 @@
         <item quantity="other">Aischuirfear d\'iarmhéid go huathoibríoch nuair a athshuiteálann tú Signal má dheimhníonn tú d\'UAP Signal. Is féidir leat d\'iarmhéid a aischur le frasa aisghabhála, frása %1$d focal atá uathúil duitse. Scríobh síos é agus stóráil in áit shábháilte é.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Tá iarmhéid agat! Tá sé in am duit do fhrása athshlánaithe a shábháil – eochair 24 focal is féidir leat a úsáid chun d\'iarmhéid a aischur.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Tá iarmhéid agat! Tá sé in am duit do fhrása athshlánaithe a shábháil – eochair 12 focal is féidir leat a úsáid chun d\'iarmhéid a aischur.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Tá sé in am duit do fhrása a shábháil, ar eochair 24 focal é is féidir leat a úsáid chun d\'iarmhéid a fháil ar ais.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Tá sé in am duit do fhrása a shábháil, ar eochair 12 focal é is féidir leat a úsáid chun d\'iarmhéid a fháil ar ais.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Frása %1$d focal atá uathúil duitse is é d\'fhrása aisghabhála. Úsáid an frása seo chun d\'iarmhéid a aischur.</string>
     <string name="PaymentsRecoveryStartFragment__start">Tosaigh</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Enter Manually</string>

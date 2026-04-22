@@ -5347,9 +5347,9 @@
         <item quantity="other">Kui Signali uuesti alla laadid, taastatakse sinu saldo automaatselt, kui oma Signali PIN-koodi kinnitad. Samuti saad taastada oma saldo kontroll-lause abil, mis on sinu isiklik %1$d-sõnaline lause. Kirjuta see üles ja hoia seda kindlas kohas.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Sul on arvel raha! Nüüd on aeg salvestada oma kontroll-lause – 24-sõnaline kinnituslause, mille abil saad oma arve saldo taastada.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Sul on arvel raha! Nüüd on aeg salvestada oma kontroll-lause – 12-sõnaline kinnituslause, mille abil saad oma arve saldo taastada.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Nüüd on aeg salvestada oma kontroll-lause – 24-sõnaline kinnituslause, mille abil saad oma arve saldo taastada.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Nüüd on aeg salvestada oma kontroll-lause – 12-sõnaline kinnituslause, mille abil saad oma arve saldo taastada.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Sinu kontroll-lause on sinu isiklik %1$d-sõnaline lause. Kasuta seda lauset oma saldo taastamiseks.</string>
     <string name="PaymentsRecoveryStartFragment__start">Alusta</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Sisesta käsitsi</string>

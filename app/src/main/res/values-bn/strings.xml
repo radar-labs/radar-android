@@ -5347,9 +5347,9 @@
         <item quantity="other">আপনি Signal-এর পিন নিশ্চিত করে যদি পুনরায় Signal ইনস্টল করেন তবে আপনার ব্যালেন্স স্বয়ংক্রিয়ভাবে পুনর্বহাল করা হবে। এছাড়াও আপনি পুনর্বহাল করার বাক্যাংশ ব্যবহার করেও আপনার ব্যালেন্স পুনর্বহাল করতে পারবেন, যা %1$d-শব্দ বিশিষ্ট এবং যা কেবল আপনি জানেন। এটি লিখে একটি নিরাপদ স্থানে সংরক্ষণ করুন।</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">আপনার একটি ব্যালেন্স পেয়েছেন! আপনার পুনরুদ্ধার করার বাক্যটি সেভ করার সময় হয়েছে—একটি 24-শব্দের কী আপনি আপনার ব্যালেন্স পুনরুদ্ধার করতে ব্যবহার করতে পারেন।</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">আপনার একটি ব্যালেন্স পেয়েছেন! আপনার পুনরুদ্ধার করার বাক্যটি সেভ করার সময় হয়েছে—একটি 12-শব্দের কী আপনি আপনার ব্যালেন্স পুনরুদ্ধার করতে ব্যবহার করতে পারেন।</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">আপনার পুনর্বহাল করার বাক্যটি সেভ করার সময় হয়েছে—একটি 24-শব্দের চাবি, যা আপনি আপনার ব্যালেন্স পুনরুদ্ধার করতে ব্যবহার করতে পারেন।</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">আপনার পুনর্বহাল করার বাক্যটি সেভ করার সময় হয়েছে—একটি 12-শব্দের চাবি, যা আপনি আপনার ব্যালেন্স পুনরুদ্ধার করতে ব্যবহার করতে পারেন।</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">আপনার রিকভার করার বাক্যাংশটি %1$d-শব্দ বিশিষ্ট যা কেবল আপনি জানেন। আপনার ব্যালেন্স পুনরুদ্ধার করতে এই বাক্যাংশটি ব্যবহার করুন।</string>
     <string name="PaymentsRecoveryStartFragment__start">শুরু করুন</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">ম্যানুয়ালি লিখুন</string>

@@ -5216,9 +5216,9 @@
         <item quantity="other">សមតុល្យរបស់អ្នកនឹងស្ដារឡើងវិញដោយស្វ័យប្រវត្តិនៅពេលអ្នកដំឡើង Signal ឡើងវិញ ប្រសិនបើអ្នកបញ្ជាក់លេខកូដសម្ងាត់ Signal របស់អ្នក។ អ្នកក៏អាចស្ដារសមតុល្យរបស់អ្នកបានដែរ ដោយប្រើឃ្លាសម្រាប់ស្តារ ដែលជាឃ្លាមួយមាន %1$d ពាក្យដែលប្រើសម្រាប់តែអ្នក។ សូមសរសេរ និងទុកវានៅកន្លែងដែលមានសុវត្ថិភាព។</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">អ្នកមានសមតុល្យ! ដល់ពេលដែលត្រូវរក្សាទុកឃ្លាសម្រាប់ស្តាររបស់អ្នកហើយ—គន្លឹះដែលមាន 24 ពាក្យដែលអ្នកអាចប្រើដើម្បីស្ដារសមតុល្យរបស់អ្នក។</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">អ្នកមានសមតុល្យ! ដល់ពេលដែលត្រូវរក្សាទុកឃ្លាសម្រាប់ស្តាររបស់អ្នកហើយ—គន្លឹះដែលមាន 12 ពាក្យដែលអ្នកអាចប្រើដើម្បីស្ដារសមតុល្យរបស់អ្នក។</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">ដល់ពេលដែលត្រូវរក្សាទុកឃ្លាសម្រាប់ស្តាររបស់អ្នកហើយ—គន្លឹះដែលមាន 24 ពាក្យដែលអ្នកអាចប្រើដើម្បីស្ដារសមតុល្យរបស់អ្នក។</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">ដល់ពេលដែលត្រូវរក្សាទុកឃ្លាសម្រាប់ស្តាររបស់អ្នកហើយ—គន្លឹះដែលមាន 12 ពាក្យដែលអ្នកអាចប្រើដើម្បីស្ដារសមតុល្យរបស់អ្នក។</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">ឃ្លាសង្គ្រោះរបស់អ្នក គឺជា%1$dពាក្យដែលប្លែកសម្រាប់អ្នក។ សូមប្រើឃ្លានេះសម្រាប់ទាញយកសមតុលអ្នកមកវិញ។</string>
     <string name="PaymentsRecoveryStartFragment__start">ចាប់ផ្ដើម</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">បញ្ជូលដោយខ្លួនឯង</string>

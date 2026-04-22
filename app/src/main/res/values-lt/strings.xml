@@ -5609,9 +5609,9 @@
         <item quantity="other">Įdiegus „Signal“ iš naujo, likutis bus automatiškai atkurtas tau patvirtinus savo „Signal“ PIN kodą. Taip pat galima atkurti savo likutį naudojant atkūrimo frazę – unikalią %1$d žodžių frazę. Užsirašyk ją ir laikyk saugioje vietoje.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Turi likutį! Laikas išsaugoti atkūrimo frazę – 24 žodžių raktą, kurį galėsi panaudoti savo likučiui atkurti.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Turi likutį! Laikas išsaugoti atkūrimo frazę – 12 žodžių raktą, kurį galėsi panaudoti savo likučiui atkurti.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Laikas išsaugoti atkūrimo frazę – 24 žodžių raktą, kurį galėsi panaudoti savo likučiui atkurti.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Laikas išsaugoti atkūrimo frazę – 12 žodžių raktą, kurį galėsi panaudoti savo likučiui atkurti.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Atkūrimo frazė yra jūsų unikali %1$d žodžių frazė. Naudokite šią frazę, norėdami atkurti savo likutį.</string>
     <string name="PaymentsRecoveryStartFragment__start">Pradėti</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Įvesti rankiniu būdu</string>

@@ -5347,9 +5347,9 @@
         <item quantity="other">Signal\'i yeniden kurduğunda Signal PIN\'ini doğruladığında bakiyen otomatik olarak kurtarılacaktır. Bakiyeni ayrıca bir kurtarma parolası ile de geri alabilirsin. Kurtarma parolası %1$d kelimelik ve sana özgü bir ifadedir. Bir yere yaz ve güvenli bir şekilde sakla.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Bir bakiyen var! Kurtarma ifadeni kaydetme zamanı—bakiyeni geri yüklemek için kullanabileceğin 24 kelimelik bir anahtar.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Bir bakiyen var! Kurtarma ifadeni kaydetme zamanı—bakiyeni geri yüklemek için kullanabileceğin 12 kelimelik bir anahtar.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Kurtarma ifadeni kaydetme zamanı—bakiyeni geri yüklemek için kullanabileceğin 24 kelimelik bir anahtar.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Kurtarma ifadeni kaydetme zamanı—bakiyeni geri yüklemek için kullanabileceğin 12 kelimelik bir anahtar.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Kurtarma parolası %1$d kelimelik ve size özgü bir ifadedir. Bakiyenizi kurtarmak için bu parolayı kullanın.</string>
     <string name="PaymentsRecoveryStartFragment__start">Başlat</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Elle Girin</string>

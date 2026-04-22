@@ -5347,9 +5347,9 @@
         <item quantity="other">Ditt saldo återställs automatiskt när du ominstallerar Signal om du bekräftar din Signal-pinkod. Du kan också återställa ditt saldo med en återställningsfras, som är en fras på %1$d ord som är unik för dig. Skriv ner den och förvara den på ett säkert ställe.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Du har ett saldo. Det är dags att spara din återställningsfras – en nyckel på 24 ord som du kan använda för att återställa saldot.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Du har ett saldo. Det är dags att spara din återställningsfras – en nyckel på 12 ord som du kan använda för att återställa saldot.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Det är dags att spara din återställningsfras – en nyckel på 24 ord som du kan använda för att återställa saldot.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Det är dags att spara din återställningsfras – en nyckel på 12 ord som du kan använda för att återställa saldot.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Din återställningsfras är en fras på %1$d ord som är unik för dig. Använd denna fras för att återställa ditt saldo.</string>
     <string name="PaymentsRecoveryStartFragment__start">Starta</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Ange manuellt</string>

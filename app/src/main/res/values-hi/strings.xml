@@ -5347,9 +5347,9 @@
         <item quantity="other">आपके द्वारा Signal फिर से इंस्टॉल करते समय यदि आप अपने Signal PIN की पुष्टि करते हैं तो आपका बैलेंस अपने आप रीस्टोर हो जाएगा। आप रिकवरी फ़्रेज़ का उपयोग करके भी अपना बैलेंस रीस्टोर कर सकते हैं, जो आपके लिए एक अनोखा %1$d शब्दों का वाक्यांश होता है। इसे लिख लें और किसी सुरक्षित स्थान पर रखें।</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">आपने संतुलन बना लिया है! समय है अपने रिकवरी वाक्य को सहेजने का—24 शब्दों की एक कुंजी जिसके इस्तेमाल से आप अपना संतुलन वापस पा सकते हैं।</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">आपने संतुलन बना लिया है! समय है अपने रिकवरी वाक्य को सहेजने का—12 शब्दों की एक कुंजी जिसके इस्तेमाल से आप अपना संतुलन वापस पा सकते हैं।</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">समय है अपने रिकवरी वाक्य को सहेजने का—24 शब्दों की एक कुंजी जिसके इस्तेमाल से आप अपना संतुलन वापस पा सकते हैं।</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">समय है अपने रिकवरी वाक्य को सहेजने का—12 शब्दों की एक कुंजी जिसके इस्तेमाल से आप अपना संतुलन वापस पा सकते हैं।</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">आपका रिकवरी फ़्रेज़ आपके लिए %1$d शब्दों का एक यूनीक फ़्रेज़ होता है। अपना बैलेंस रीस्टोर करने के लिए इस फ़्रेज़ का इस्तेमाल करें।</string>
     <string name="PaymentsRecoveryStartFragment__start">शुरू करें</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">मैन्युअल तरीक़े से डालें</string>

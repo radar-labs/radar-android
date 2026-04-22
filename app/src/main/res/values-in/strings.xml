@@ -5216,9 +5216,9 @@
         <item quantity="other">Saldo Anda akan dipulihkan secara otomatis saat Anda menginstal ulang Signal jika Anda mengonfirmasi PIN Signal. Anda juga dapat memulihkan saldo menggunakan frasa pemulihan, yang berupa frasa %1$d kata unik. Catat dan simpan di tempat yang aman.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Anda memiliki saldo! Waktunya menyimpan frasa pemulihan—ini adalah kunci 24 kata yang bisa digunakan untuk memulihkan saldo.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Anda memiliki saldo! Waktunya menyimpan frasa pemulihan—ini adalah kunci 12 kata yang bisa digunakan untuk memulihkan saldo.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Waktunya menyimpan frasa pemulihan—ini adalah kunci 24 kata yang bisa digunakan untuk memulihkan saldo.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Waktunya menyimpan frasa pemulihan—ini adalah kunci 12 kata yang bisa digunakan untuk memulihkan saldo.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Frasa pemulihan Anda berupa%1$d-frasa kata unik untuk Anda. Gunakan frasa ini untuk memulihkan saldo Anda.</string>
     <string name="PaymentsRecoveryStartFragment__start">Mulai</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Masukkan secara manual</string>

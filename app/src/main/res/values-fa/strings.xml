@@ -5347,7 +5347,7 @@
         <item quantity="other">اگر پین سیگنال خود را تأیید کنید موجودی شما هنگام نصب دوباره سیگنال به‌طور خودکار بازیابی خواهد شد. همچنین می‌توانید موجودی خود را با استفاده از عبارت بازیابی، که یک عبارت %1$d کلمه‌ای منحصر به شما است، بازیابی کنید. آن را یادداشت و در یک مکان امن نگهداری کنید.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">شما موجودی دارید! زمان ذخیره‌سازی عبارت بازیابی است—یک رمز 24 کلمه‌ای که می‌توانید برای بازیابی موجودی خود از آن استفاده کنید.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">شما موجودی دارید! زمان ذخیره‌سازی عبارت بازیابی است—یک رمز 12 کلمه‌ای که می‌توانید برای بازیابی موجودی خود از آن استفاده کنید.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
     <string name="PaymentsRecoveryStartFragment__time_to_save">وقت ذخیره‌سازی عبارت بازیابی است—یک رمز ۲۴ کلمه‌ای که می‌توانید برای بازیابی موجودی خود از آن استفاده کنید.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">عبارت بازیابی شما یک عبارت %1$d-کلمه‌ای مختص شماست. از این عبارت برای بازیابی موجودی خود استفاده کنید.</string>

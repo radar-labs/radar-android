@@ -5609,9 +5609,9 @@
         <item quantity="other">היתרה שלך תשוחזר באופן אוטומטי בעת התקנה מחדש של Signal לאחר אישור קוד PIN של Signal שלך. אפשר גם לשחזר את היתרה שלך באמצעות שימוש במשפט שחזור, שהוא משפט בן %1$d מילים ייחודי לך. כדאי לכתוב אותו ולאחסן אותו במקום בטוח.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">יש לך מאזן! הגיע הזמן לשמור את משפט שחזור הסיסמה שלך—סיסמה בעלת 24 מילים שאפשר להשתמש בה כדי לשחזר את המאזן הכספי שלך.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">יש לך מאזן! הגיע הזמן לשמור את משפט שחזור הסיסמה שלך—סיסמה בעלת 12 מילים שאפשר להשתמש בה כדי לשחזר את המאזן הכספי שלך.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">הגיע הזמן לשמור את משפט שחזור הסיסמה שלך—סיסמה בעלת 24 מילים שאפשר להשתמש בה כדי לשחזר את היתרה שלך.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">הגיע הזמן לשמור את משפט שחזור הסיסמה שלך—סיסמה בעלת 12 מילים שאפשר להשתמש בה כדי לשחזר את היתרה שלך.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">משפט ההשבה שלך הוא משפט בן %1$d מילים ייחודי לך. השתמש במשפט הזה כדי לשחזר את המאזן שלך.</string>
     <string name="PaymentsRecoveryStartFragment__start">התחל</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">הכנס באופן ידני</string>

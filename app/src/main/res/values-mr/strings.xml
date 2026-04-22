@@ -5347,9 +5347,9 @@
         <item quantity="other">आपल्या Signal PIN ची आपण पुष्टी केल्यास, आपली शिल्लक स्वयंचलितपणे पुनर्स्थापित होईल. आपण रिकव्हरी संकल्पना वापरून देखील आपली शिल्लक पुनर्स्थापित करू शकता, जी आपल्यासाठी एक %1$d-शब्द अद्वितीय संकल्पना असेल. ती लिहून एका सुरक्षित ठिकाणी ठेवा.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">आपण संतुलन साधले आहे! आपला पुनर्प्राप्त वाक्यांश जतन करण्यासाठी वेळ—एक 24-शब्दांची की संतुलन पुर्नस्थित करण्यासाठी वापरू शकता.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">आपण संतुलन साधले आहे! आपला पुनर्प्राप्त वाक्यांश जतन करण्यासाठी वेळ—एक 12-शब्दांची की संतुलन पुर्नस्थित करण्यासाठी वापरू शकता.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">आपला पुनर्प्राप्त वाक्यांश जतन करण्यासाठी वेळ—एक 24-शब्दांची की जिचा वापर तुम्ही तुमची शिल्लक पुर्नस्थित करण्यासाठी वापरू शकता.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">आपला पुनर्प्राप्त वाक्यांश जतन करण्यासाठी वेळ—एक 12-शब्दांची की जिचा वापर तुम्ही तुमची शिल्लक पुर्नस्थित करण्यासाठी वापरू शकता.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">आपली रिकव्हरी फ्रेझ %1$d-शब्दांची फ्रेझ आपल्यासाठी ऐकमेव आहे. आपला बॅलंस पुनर्स्थापित करण्यासाठी ही फ्रेझ वापरा.</string>
     <string name="PaymentsRecoveryStartFragment__start">चालू करा</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">स्वहस्ते प्रविष्ट करा</string>

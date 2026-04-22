@@ -5216,9 +5216,9 @@
         <item quantity="other">ยอดคงเหลือของคุณจะกู้คืนมาโดยอัตโนมัติเมื่อติดตั้ง Signal อีกครั้งและยืนยันรหัส Signal PIN ของคุณ นอกจากนี้ คุณยังสามารถกู้คืนยอดคงเหลือได้โดยใช้วลีกู้คืน ซึ่งเป็นวลี %1$d คำเฉพาะสำหรับคุณเท่านั้น จดบันทึกวลีนี้และเก็บไว้ในที่ปลอดภัย</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">คุณมียอดเงินคงเหลือ! ได้เวลาบันทึกวลีกู้คืนของคุณ ซึ่งคือรหัส 24 คำที่สามารถใช้เพื่อกู้คืนยอดเงินคงเหลือของคุณได้</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">คุณมียอดเงินคงเหลือ! ได้เวลาบันทึกวลีกู้คืนของคุณ ซึ่งคือรหัส 12 คำที่สามารถใช้เพื่อกู้คืนยอดเงินคงเหลือของคุณได้</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">ได้เวลาบันทึกวลีกู้คืนแล้ว นี่คือรหัส 24 คำที่สามารถใช้เพื่อกู้คืนยอดเงินคงเหลือของคุณ</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">ได้เวลาบันทึกวลีกู้คืนแล้ว นี่คือรหัส 12 คำที่สามารถใช้เพื่อกู้คืนยอดเงินคงเหลือของคุณ</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">วลีกู้คืนของคุณคือวลี %1$d คำที่เฉพาะเจาะจงกับคุณและไม่ซ้ำใคร ใช้วลีนี้เพื่อกู้คืนยอดคงเหลือของคุณ</string>
     <string name="PaymentsRecoveryStartFragment__start">เริ่ม</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">ใส่ด้วยมือ</string>

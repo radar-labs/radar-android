@@ -5609,9 +5609,9 @@
         <item quantity="other">Váš zostatok sa automaticky obnoví, keď si Signal preinštalujete, ak potvrdíte váš Signal PIN. Svoj zostatok môžete taktiež obnoviť pomocou frázy na obnovenie, čo je %1$d-slovná fráza, ktorou disponujete iba vy. Zapíšte si ju a uložte na bezpečné miesto.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Máte zostatok! Je čas uložiť si frázu na obnovenie—24-slovný kľúč, ktorý môžete použiť na obnovenie zostatku.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Máte zostatok! Je čas uložiť si frázu na obnovenie—12-slovný kľúč, ktorý môžete použiť na obnovenie zostatku.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Je čas uložiť si frázu na obnovenie—24-slovný kľúč, ktorý môžete použiť na obnovenie zostatku.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Je čas uložiť si frázu na obnovenie—12-slovný kľúč, ktorý môžete použiť na obnovenie zostatku.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Vaša fráza na obnovenie je jedinečná s %1$d-slovami. Pomocou tejto frázy obnovíte zostatok.</string>
     <string name="PaymentsRecoveryStartFragment__start">Štart</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Zadať manuálne</string>

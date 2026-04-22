@@ -5347,9 +5347,9 @@
         <item quantity="other">Вашата состојба на сметка автоматски ќе се поврати кога ќе го реинсталирате Signal и го потврдите вашиот Signal PIN. Исто така можете да ја вратите вашата состојба со употреба на резервната фраза која што е составена од %1$d зборови и уникатна за вас. Запишете ја и чувајте ја на сигурно место.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Имате пари на сметката! Време е да ја зачувате вашата резервна фраза— клуч од 24 збора со којшто можете да ја повратите состојбата на вашата сметка.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Имате пари на сметката! Време е да ја зачувате вашата резервна фраза— клуч од 12 збора со којшто можете да ја повратите состојбата на вашата сметка.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Време е да ја зачувате вашата резервна фраза—клуч од 24 збора со којшто можете да ја повратите состојбата на вашата сметка.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Време е да ја зачувате вашата резервна фраза—клуч од 12 збора со којшто можете да ја повратите состојбата на вашата сметка.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Вашата резервна фраза е фраза со %1$d зборови уникатна за Вас. Употребете ја оваа фраза за да си ја повратите состојбата на сметката.</string>
     <string name="PaymentsRecoveryStartFragment__start">Започни</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Внеси рачно</string>

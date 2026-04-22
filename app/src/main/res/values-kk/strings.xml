@@ -5347,9 +5347,9 @@
         <item quantity="other">Signal-дағы PIN-кодыңызды растасаңыз, Signal-ды қайта орнатқанда, балансыңыз автоматты түрде қалпына келеді. Қалпына келтіру сөйлемін пайдаланып та, балансыңызды қалпына келтіре аласыз. Қалпына келтіру сөйлемі – сізге ғана мәлім %1$d сөздік сөйлем. Оны жазып алып, қауіпсіз бір жерге сақтап қойыңыз.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Сізде баланс бар! Қалпына келтіру сөйлемін сақтайтын уақыт. Ол – балансыңызды қалпына келтіру үшін пайдаланылатын 24 сөздік кілт.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Сізде баланс бар! Қалпына келтіру сөйлемін сақтайтын уақыт. Ол – балансыңызды қалпына келтіру үшін пайдаланылатын 12 сөздік кілт.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Қалпына келтіру сөйлемін сақтап қойыңыз. Ол – балансыңызды қалпына келтіру үшін пайдаланылатын 24 сөздік кілт.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Қалпына келтіру сөйлемін сақтап қойыңыз. Ол – балансыңызды қалпына келтіру үшін пайдаланылатын 12 сөздік кілт.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Қалпына келтіру сөйлемі – сізге ғана мәлім %1$d сөздік сөйлем. Балансыңызды қалпына келтіру үшін осы сөйлемді қолданыңыз.</string>
     <string name="PaymentsRecoveryStartFragment__start">Бастау</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Қолмен енгізу</string>

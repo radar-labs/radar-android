@@ -5347,9 +5347,9 @@
         <item quantity="other">Signal-eko PINa berresten baduzu, saldoa automatikoki berrezarriko da Signal berriro instalatzen duzunean. Halaber, saldoa berrezartzeko berreskuratze-esaldi bat erabil dezakezu (hau da, zuk bakarrik darabilzun %1$d hitzeko esaldi bat). Idatzi eta gorde ezazu leku seguru batean.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Saldoa duzu! Gorde berreskuratze-esaldi bat; hots, saldoa berrezartzeko erabil daitekeen 24 hitzeko gako bat.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Saldoa duzu! Gorde berreskuratze-esaldi bat; hots, saldoa berrezartzeko erabil daitekeen 12 hitzeko gako bat.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Berreskuratze-esaldia gordetzeko garaia da; alegia, saldoa berrezartzeko erabil dezakezun 24 hitzeko gakoa.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Berreskuratze-esaldia gordetzeko garaia da; alegia, saldoa berrezartzeko erabil dezakezun 12 hitzeko gakoa.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Zure berreskurapen-esaldia %1$d-hitz esaldi bat da zuretzat esklusiboki. Erabili esaldi hau oreka berrezartzeko.</string>
     <string name="PaymentsRecoveryStartFragment__start">Hasi</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Eskuz sartu</string>

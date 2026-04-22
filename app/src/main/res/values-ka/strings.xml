@@ -5347,9 +5347,9 @@
         <item quantity="other">შენი ბალანსი ავტომატურად აღდგება Signal-ის ხელახლა ინსტალაციისას, თუ დაადასტურებ Signal-ის შენს პინ-კოდს. ასევე შეგიძლია აღადგინო შენი ბალანსი აღდგენის ფრაზის გამოყენებით, რომელიც შენთვის უნიკალური %1$d-სიტყვიანი ფრაზაა. ჩაიწერე და შეინახე ის უსაფრთხო ადგილას.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">ბალანსი გაქვს! დროა შენი აღდგენის ფრაზა შეინახო—24-სიტყვიანი პაროლი, რომლის გამოყენებაც ბალანსის აღსადგენად შეგიძლია.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">ბალანსი გაქვს! დროა შენი აღდგენის ფრაზა შეინახო—12-სიტყვიანი პაროლი, რომლის გამოყენებაც ბალანსის აღსადგენად შეგიძლია.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">დროა შენი აღდგენის ფრაზა შეინახო—24-სიტყვიანი პაროლი, რომლის გამოყენებაც ბალანსის აღსადგენად შეგიძლია.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">დროა შენი აღდგენის ფრაზა შეინახო—12-სიტყვიანი პაროლი, რომლის გამოყენებაც ბალანსის აღსადგენად შეგიძლია.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">შენი აღდგენის ფრაზა შენთვის უნიკალური %1$d-სიტყვიანი ფრაზაა. გამოიყენე ეს ფრაზა შენი ბალანსის აღსადგენად.</string>
     <string name="PaymentsRecoveryStartFragment__start">დაწყება</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">ხელით შეყვანა</string>

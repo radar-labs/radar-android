@@ -5609,9 +5609,9 @@
         <item quantity="other">Če boste ponovno namestili Signal in potrdili svoj PIN, bo vaše stanje na računu samodejno obnovljeno. Lahko pa ga obnovite tudi z vnosom obnovitvene fraze, fraze z %1$d besedami, ki je zgolj vaša. Zapišite si jo in jo hranite na varnem mestu.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Imate ravnotežje! Čas je, da shranite obnovitveno frazo — 24-besedni ključ, s katerim lahko obnovite ravnovesje.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Imate ravnotežje! Čas je, da shranite obnovitveno frazo — 12-besedni ključ, s katerim lahko obnovite ravnovesje.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Čas je, da shranite obnovitveno frazo—24-besedni ključ, s katerim lahko obnovite ravnovesje.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Čas je, da shranite obnovitveno frazo—12-besedni ključ, s katerim lahko obnovite ravnovesje.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Vaša obnovitvena fraza je %1$d-besedna fraza, ki je zgolj vaša. Uporabite jo za obnovitev stanja na računu.</string>
     <string name="PaymentsRecoveryStartFragment__start">Začni</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Ročen vnos</string>

@@ -5609,9 +5609,9 @@
         <item quantity="other">Račun će se automatski vratiti kada ponovo instalirate Signal ako potvrdite svoj Signal PIN. Stanje možete vratiti i pomoću fraze za oporavak koja je za vas jedinstvena fraza od %1$d riječi. Zapišite je i spremite na sigurno mjesto.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Imate nešto na stanju! Vrijeme je da spremite svoju frazu za oporavak—lozinku od 24 riječi koju možete koristiti za oporavak vašeg stanja.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Imate nešto na stanju! Vrijeme je da spremite svoju frazu za oporavak—lozinku od 12 riječi koju možete koristiti za oporavak vašeg stanja.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Vrijeme je da spremite svoju frazu za oporavak—lozinku od 24 riječi koju možete koristiti za oporavak vašeg salda.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Vrijeme je da spremite svoju frazu za oporavak—lozinku od 12 riječi koju možete koristiti za oporavak vašeg salda.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Vaša fraza za oporavak je jedinstvena fraza od %1$d riječi. Koristite ovu frazu za oporavak vašeg stanja.</string>
     <string name="PaymentsRecoveryStartFragment__start">Započni</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Unesi ručno</string>

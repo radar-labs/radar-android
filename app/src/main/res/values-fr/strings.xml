@@ -5347,9 +5347,9 @@
         <item quantity="other">Votre solde est automatiquement restauré lorsque vous réinstallez Signal et confirmez votre code PIN Signal. Vous pouvez aussi le restaurer grâce à une phrase de récupération unique comportant %1$d mots. Notez-la et conservez-la en lieu sûr.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Un solde est disponible sur votre compte ! Il est temps d\'enregistrer votre phrase de récupération, une clé de 24 mots que vous pouvez utiliser pour récupérer votre solde.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Un solde est disponible sur votre compte ! Il est temps d\'enregistrer votre phrase de récupération, une clé de 12 mots que vous pouvez utiliser pour récupérer votre solde.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Il est temps d\'enregistrer votre phrase de récupération, une clé de 24 mots que vous pouvez utiliser pour récupérer votre solde.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Il est temps d\'enregistrer votre phrase de récupération, une clé de 12 mots que vous pouvez utiliser pour récupérer votre solde.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Votre phrase de récupération est une phrase unique et personnelle de %1$d mots. Elle vous permet de restaurer votre solde.</string>
     <string name="PaymentsRecoveryStartFragment__start">Commencer</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Saisir manuellement</string>
