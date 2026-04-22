@@ -5216,9 +5216,9 @@
         <item quantity="other">Signal PIN을 확인하면 Signal을 다시 설치할 때 잔액이 자동으로 복원됩니다. 사용자별로 고유한 %1$d개 단어로 구성된 복구 문구를 사용하여 잔액을 복원할 수도 있습니다. 안전한 곳에 적어 두고 보관하세요.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">잔액이 있습니다! 24개 단어 키인 복구 문구를 저장하세요. 해당 문구를 사용하여 잔액을 복구할 수 있습니다.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">잔액이 있습니다! 12개 단어 키인 복구 문구를 저장하세요. 해당 문구를 사용하여 잔액을 복구할 수 있습니다.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">24개 단어 키인 복구 문구를 저장하세요. 해당 문구를 사용하여 잔액을 복구할 수 있습니다.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">12개 단어 키인 복구 문구를 저장하세요. 해당 문구를 사용하여 잔액을 복구할 수 있습니다.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">귀하의 복구 문구는 귀하에게 고유한 %1$d개 단어의 문구입니다. 이 문구를 사용하여 균형을 회복하세요.</string>
     <string name="PaymentsRecoveryStartFragment__start">시작</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">수동으로 입력</string>

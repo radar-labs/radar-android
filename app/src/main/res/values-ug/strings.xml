@@ -5216,9 +5216,9 @@
         <item quantity="other">ئەگەر Signal نى قايتا قاچىلىغاندا Signal PIN نى جەزملەشتۈرگەن بولسىڭىزقالدۇقىڭىز ئاپتوماتىك ئەسلىگە كېلىدۇ. ئەسلىگە كەلتۈرۈش ئىبارىسى ئارقىلىقمۇ قالدۇقىڭىزنى ئەسلىگە كەلتۈرەلەيسىز. ئەسلىگە كەلتۈرۈش ئىبارىسى سىزگە خاس بولغان %1$d سۆزلۈك ئىبارە بولۇپ، ئۇنى يېزىۋېلىپ بىر بىخەتەر جايدا ساقلاڭ.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">قالدۇق سوممىڭىز بار! قالدۇق سوممىڭىزنى ئەسلىگە كەلتۈرۈش ئۈچۈن ئەسلىگە كەلتۈرۈش ئىبارىسىنى (24 سۆزدىن تەركىب تاپقان بولىدۇ) ساقلىۋېلىڭ.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">قالدۇق سوممىڭىز بار! قالدۇق سوممىڭىزنى ئەسلىگە كەلتۈرۈش ئۈچۈن ئەسلىگە كەلتۈرۈش ئىبارىسىنى (12 سۆزدىن تەركىب تاپقان بولىدۇ) ساقلىۋېلىڭ.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">ئەسلىگە كەلتۈرۈش ئىبارىسىنى ساقلىۋېلىش ۋاقتى - قالدۇق سوممىڭىزنى ئەسلىگە كەلتۈرۈشتە ئىشلىتەلەيدىغان 24 سۆزدىن تەركىپ تاپقان ئاچقۇچ.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">ئەسلىگە كەلتۈرۈش ئىبارىسىنى ساقلىۋېلىش ۋاقتى - قالدۇق سوممىڭىزنى ئەسلىگە كەلتۈرۈشتە ئىشلىتەلەيدىغان 12 سۆزدىن تەركىپ تاپقان ئاچقۇچ.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">ئەسلىگە كەلتۈرۈش جۈملىڭىز بولسا بىر %1$d- سىزگە خاس بولغان سۆزلۈك جۈملە. قالدۇقىڭىزنى ئەسلىگە كەلتۈرۈش ئۈچۈن بۇ جۈملىنى ئىشلىتىڭ.</string>
     <string name="PaymentsRecoveryStartFragment__start">باشلا</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">قولدا كىرگۈزۈش</string>

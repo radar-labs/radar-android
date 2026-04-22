@@ -5347,9 +5347,9 @@
         <item quantity="other">Je krediet wordt automatisch hersteld als je bij het opnieuw installeren van Signal je Signal-pincode invoert. Je kunt je krediet ook herstellen middels een unieke herstelzin, die bestaat uit %1$d woorden. Schrijf die zin op en bewaar hem op een veilige plaats.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Je hebt krediet! Tijd om je herstelzin op te slaan. Dit is een wachtwoord van 24 woorden dat je kunt gebruiken om je tegoed te herstellen.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Je hebt krediet! Tijd om je herstelzin op te slaan. Dit is een wachtwoord van 12 woorden dat je kunt gebruiken om je tegoed te herstellen.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Tijd om je herstelzin op te slaan. Dit is een wachtwoord van 24 woorden dat je kunt gebruiken om je krediet te herstellen.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Tijd om je herstelzin op te slaan. Dit is een wachtwoord van 12 woorden dat je kunt gebruiken om je krediet te herstellen.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">De herstelzin is voor iedereen uniek en bestaat uit %1$d woorden. Je kunt deze zin gebruiken om je krediet te herstellen.</string>
     <string name="PaymentsRecoveryStartFragment__start">Beginnen</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Handmatig invullen</string>

@@ -5347,9 +5347,9 @@
         <item quantity="other">جب آپ اپنے Signal پن کی تصدیق کرتے ہیں تو آپ Signal کو دوبارہ انسٹال کرتے وقت آپ کا بیلنس خود بخود بحال ہو جائے گا۔ آپ بحالی کی عبارت کا استعمال کرتے ہوئے اپنے بیلنس کو بھی بحال کر سکتے ہیں، جو آپ کے لیے ایک %1$d لفظی جملہ ہے۔ اسے لکھ کر محفوظ جگہ پر اسٹور کریں۔</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">آپ کے پاس بیلنس موجود ہے! اپنی ریکوری کی عبارت محفوظ کرنے کا وقت ہے—24 الفاظ پر مشتمل کیی جو آپ اپنا بیلنس ریکور کرنے کے لیے استعمال کر سکتے ہیں۔</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">آپ کے پاس بیلنس موجود ہے! اپنی ریکوری کی عبارت محفوظ کرنے کا وقت ہے—12 الفاظ پر مشتمل کیی جو آپ اپنا بیلنس ریکور کرنے کے لیے استعمال کر سکتے ہیں۔</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">اپنا بحالی کا فقرہ محفوظ کرنے کرنے کا وقت ہے—24 الفاظ پر مشتمل کلید جو آپ اپنا بیلنس ری اسٹور کرنے کے لیے استعمال کر سکتے ہیں۔</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">اپنا بحالی کا فقرہ محفوظ کرنے کرنے کا وقت ہے—12 الفاظ پر مشتمل کلید جو آپ اپنا بیلنس ری اسٹور کرنے کے لیے استعمال کر سکتے ہیں۔</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">آپ کی بازیابی کا جملہ آپ کے لئے انوکھا %1$dجملہ ہے۔ اپنا بیلنس بحال کرنے کے لئے اس جملے کا استعمال کریں۔</string>
     <string name="PaymentsRecoveryStartFragment__start">شروع کریں</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">دستی طور پر داخل کریں</string>

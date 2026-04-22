@@ -5347,9 +5347,9 @@
         <item quantity="other">Средства ће аутоматски бити враћена када поново инсталирате Signal ако потврдите свој Signal PIN. Такође можете да вратите средства помоћу фразе за опоравак, јединствене фразе од %1$d речи. Запишите је и чувајте је на сигурном месту.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Имате средства на налогу! Време је да сачувате фразу за опоравак – кључ од 24 речи који ћете користити да вратите средства.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Имате средства на налогу! Време је да сачувате фразу за опоравак – кључ од 12 речи који ћете користити да вратите средства.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Време је да сачувате фразу за опоравак – кључ од 24 речи који ћете користити да вратите средства.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Време је да сачувате фразу за опоравак – кључ од 12 речи који ћете користити да вратите средства.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Ваша фраза за опоравак је фраза од %1$d речи јединствена за вас. Користите ову фразу да вратите средства.</string>
     <string name="PaymentsRecoveryStartFragment__start">Започни</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Унесите ручно</string>

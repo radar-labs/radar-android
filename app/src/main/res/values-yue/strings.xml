@@ -5216,9 +5216,9 @@
         <item quantity="other">當你確認 Signal PIN 碼，系統就會喺你重新安裝 Signal 嗰陣自動還原你嘅餘額。你亦可以利用恢復片語還原你嘅餘額。恢復片語係一組獨一無二嘅片語，當中包含 %1$d 個字。請你將佢記低，儲存喺安全嘅地方。</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">你仲有餘額！係時候儲存你嘅恢復片語喇—佢係一組 24 個字嘅密鑰，可以用嚟恢復你嘅餘額。</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">你仲有餘額！係時候儲存你嘅恢復片語喇—佢係一組 12 個字嘅密鑰，可以用嚟恢復你嘅餘額。</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">係時候儲存你嘅恢復片語喇—佢係一組 24 個字嘅密鑰，可以用嚟恢復你嘅餘額。</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">係時候儲存你嘅恢復片語喇—佢係一組 12 個字嘅密鑰，可以用嚟恢復你嘅餘額。</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">您嘅恢復口訣係您專屬嘅 %1$d 組字，獨一無二。呢個口訣係用嚟還原您嘅結餘。</string>
     <string name="PaymentsRecoveryStartFragment__start">開始</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">人手輸入</string>

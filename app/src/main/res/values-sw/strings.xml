@@ -5347,9 +5347,9 @@
         <item quantity="other">Salio lako litarejeshwa kiotomatiki utakaposakinisha tena Signal ikiwa utathibitisha PIN yako ya Signal. Unaweza pia kurejesha salio lako ukitumia maneno ya kurejesha, ambayo ni maneno %1$d maalum kwako. Yaandike na kuyahifadhi mahali salama.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Una salio! Muda wa kuhifadhi kauli yako ya urejesho—neno siri lenye maneno 24 unaloweza kutumia kurejesha salio lako.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Una salio! Muda wa kuhifadhi kauli yako ya urejesho—neno siri lenye maneno 12 unaloweza kutumia kurejesha salio lako.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Muda wa kuhifadhi kauli yako ya urejesho—neno siri lenye maneno 24 unaloweza kutumia kurejesha salio lako.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Muda wa kuhifadhi kauli yako ya urejesho—neno siri lenye maneno 12 unaloweza kutumia kurejesha salio lako.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Maneno yako ya kurejesha ni kifungu cha maneno %1$d maalum kwako. Yatumie kurejesha salio lako.</string>
     <string name="PaymentsRecoveryStartFragment__start">Anza</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Weka mwenyewe</string>

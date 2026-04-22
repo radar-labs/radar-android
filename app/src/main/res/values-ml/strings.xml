@@ -5347,9 +5347,9 @@
         <item quantity="other">നിങ്ങൾ നിങ്ങളുടെ Signal PIN സ്ഥിരീകരിക്കുകയാണെങ്കിൽ, നിങ്ങൾ Signal വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യുമ്പോൾ നിങ്ങളുടെ ബാലൻസ് സ്വയമേവ പുനഃസ്ഥാപിക്കും. അതുല്യമായ %1$d വാക്കുകളുള്ള ഒരു വീണ്ടെടുക്കൽ വാക്യം ഉപയോഗിച്ച് നിങ്ങൾക്ക് നിങ്ങളുടെ ബാലൻസ് പുനഃസ്ഥാപിക്കാനും കഴിയും. അത് എഴുതി സുരക്ഷിതമായ ഒരു സ്ഥലത്ത് സൂക്ഷിക്കുക.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">നിങ്ങളുടെ അക്കൗണ്ടിൽ ബാലൻസ് ഉണ്ട്! നിങ്ങളുടെ വീണ്ടെടുക്കൽ വാക്യം സംരക്ഷിക്കാനുള്ള സമയമായി—നിങ്ങളുടെ ബാലൻസ് പുനഃസ്ഥാപിക്കാൻ നിങ്ങൾക്ക് ഉപയോഗിക്കാൻ കഴിയുന്ന 24 വാക്കുകളുള്ള ഒരു കീ.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">നിങ്ങളുടെ അക്കൗണ്ടിൽ ബാലൻസ് ഉണ്ട്! നിങ്ങളുടെ വീണ്ടെടുക്കൽ വാക്യം സംരക്ഷിക്കാനുള്ള സമയമായി—നിങ്ങളുടെ ബാലൻസ് പുനഃസ്ഥാപിക്കാൻ നിങ്ങൾക്ക് ഉപയോഗിക്കാൻ കഴിയുന്ന 12 വാക്കുകളുള്ള ഒരു കീ.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">നിങ്ങളുടെ വീണ്ടെടുക്കൽ വാക്യം സംരക്ഷിക്കാനുള്ള സമയമായി—നിങ്ങളുടെ ബാലൻസ് പുനഃസ്ഥാപിക്കാൻ നിങ്ങൾക്ക് ഉപയോഗിക്കാൻ കഴിയുന്ന 24 വാക്കുകളുള്ള ഒരു കീ.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">നിങ്ങളുടെ വീണ്ടെടുക്കൽ വാക്യം സംരക്ഷിക്കാനുള്ള സമയമായി—നിങ്ങളുടെ ബാലൻസ് പുനഃസ്ഥാപിക്കാൻ നിങ്ങൾക്ക് ഉപയോഗിക്കാൻ കഴിയുന്ന 12 വാക്കുകളുള്ള ഒരു കീ.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">നിങ്ങളുടെ വീണ്ടെടുക്കൽ വാക്യം നിങ്ങൾക്ക് അതുല്യമായ ഒരു %1$d-വാക്ക് വാക്യമാണ്. നിങ്ങളുടെ ബാലൻസ് പുന:സ്ഥാപിക്കാൻ ഈ വാക്യം ഉപയോഗിക്കുക.</string>
     <string name="PaymentsRecoveryStartFragment__start">ആരംഭിക്കുക</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">സ്വമേധയാ നൽകുക</string>

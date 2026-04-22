@@ -5347,9 +5347,9 @@
         <item quantity="other">Το υπόλοιπό σου θα αποκατασταθεί αυτόματα όταν επανεγκαταστήσεις το Signal, εάν επιβεβαιώσεις το Signal PIN. Μπορείς επίσης να επαναφέρεις το υπόλοιπό σου χρησιμοποιώντας μια φράση ανάκτησης, η οποία είναι μια φράση %1$d λέξεων, μοναδική για εσένα. Σημείωσε και αποθήκευσέ τη σε ασφαλές μέρος.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Έχεις υπόλοιπο! Ώρα να αποθηκεύσεις τη φράση ανάκτησης—μία φράση 24 λέξεων που μπορείς να χρησιμοποιήσεις για να επαναφέρεις το υπόλοιπό σου.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Έχεις υπόλοιπο! Ώρα να αποθηκεύσεις τη φράση ανάκτησης—μία φράση 12 λέξεων που μπορείς να χρησιμοποιήσεις για να επαναφέρεις το υπόλοιπό σου.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Ώρα να αποθηκεύσεις τη φράση ανάκτησης—μια φράση 24 λέξεων που μπορείς να χρησιμοποιήσεις για να επαναφέρεις το υπόλοιπό σου.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Ώρα να αποθηκεύσεις τη φράση ανάκτησης—μια φράση 12 λέξεων που μπορείς να χρησιμοποιήσεις για να επαναφέρεις το υπόλοιπό σου.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Η φράση ανάκτησης είναι μια φράση %1$d λέξεων, μοναδική για εσάς. Χρησιμοποιήστε αυτή τη φράση για να επαναφέρετε το υπόλοιπό σας.</string>
     <string name="PaymentsRecoveryStartFragment__start">Εκκίνηση</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Χειροκίνητη εισαγωγή</string>

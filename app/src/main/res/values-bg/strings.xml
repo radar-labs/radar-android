@@ -5347,9 +5347,9 @@
         <item quantity="other">Балансът ви ще се възстанови автоматично при преинсталиране на Signal, ако потвърдите PIN кода на Signal. Също така можете да възстановите баланса си с помощта на фраза за възстановяване, която представлява уникална за вас фраза от %1$d думи. Запишете я и я съхранявайте на сигурно място.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Имате баланс! Време е да запазите своята фраза за възстановяване. Тя представлява ключ от 24 думи, който можете да използвате, за да възстановите баланса си.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Имате баланс! Време е да запазите своята фраза за възстановяване. Тя представлява ключ от 12 думи, който можете да използвате, за да възстановите баланса си.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Време е да запазите своята фраза за възстановяване. Тя представлява ключ от 24 думи, който можете да използвате, за да възстановите баланса си.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Време е да запазите своята фраза за възстановяване. Тя представлява ключ от 12 думи, който можете да използвате, за да възстановите баланса си.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Вашата фраза за възстановяване е уникална за вас фраза от %1$d думи. Използвайте я, за да възстановите баланса си.</string>
     <string name="PaymentsRecoveryStartFragment__start">Начало</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Въведете ръчно</string>

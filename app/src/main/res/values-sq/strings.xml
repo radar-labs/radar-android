@@ -5347,9 +5347,9 @@
         <item quantity="other">Depozita jote do të rikthehet automatikisht, kur të riinstalosh Signal, nëse ripohon PIN-in tënd Signal. Depozitën tënde mund ta rikthesh edhe duke përdorur një frazë rikthimesh, që është një frazë prej %1$d fjalësh unike për ty. Mbaje shënim diku dhe ruaje në një vend të sigurt.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Ti ke ekuilibër! Koha për të ruajtur frazën tënde të rikuperimit—një çelës 24 fjalësh që mund ta përdorësh për të rivendosur ekuilibrin tënd.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Ti ke ekuilibër! Koha për të ruajtur frazën tënde të rikuperimit—një çelës 12 fjalësh që mund ta përdorësh për të rivendosur ekuilibrin tënd.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Koha për të ruajtur frazën tënde të rikuperimit—një çelës 24 fjalësh që mund ta përdorësh për të rivendosur ekuilibrin tënd.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Koha për të ruajtur frazën tënde të rikuperimit—një çelës 12 fjalësh që mund ta përdorësh për të rivendosur ekuilibrin tënd.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Fraza juaj e rikthimeve është një frazë prej %1$d fjalësh, unike për ju. Përdoreni këtë frazë për të rikthyer depozitën tuaj.</string>
     <string name="PaymentsRecoveryStartFragment__start">Fillojeni</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Jepeni dorazi</string>

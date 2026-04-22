@@ -5347,9 +5347,9 @@
         <item quantity="other">మీరు Signal ను తిరిగి ఇన్‌స్టాల్ చేసినప్పుడు, మీరు మీ Signal PIN ను ధృవీకరిస్తే మీ బ్యాలెన్స్ ఆటోమేటిక్‌గా పునరుద్ధరించబడుతుంది. రికవరీ పదబంధాలను ఉపయోగించి కూడా మీరు మీ బ్యాలెన్స్‌ను పునరుద్ధరించవచ్చు, ఇవి మీకు ప్రత్యేకమైన %1$d- పదబంధములు. వీటిని రాసుకొని, ఒక సురక్షితమైన ప్రదేశంలో భద్రపరచండి.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">మీకు బ్యాలెన్స్ ఉంది! మీ రికవరీ పదబంధాన్ని సేవ్ చేసే సమయం—మీ బ్యాలెన్స్‌ను పునరుద్ధరించడానికి మీరు ఉపయోగించగల 24-పదాల కీ.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">మీకు బ్యాలెన్స్ ఉంది! మీ రికవరీ పదబంధాన్ని సేవ్ చేసే సమయం—మీ బ్యాలెన్స్‌ను పునరుద్ధరించడానికి మీరు ఉపయోగించగల 12-పదాల కీ.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">మీ రికవరీ పదబంధాన్ని భద్రపరచే సమయం—మీ బ్యాలెన్స్‌ను పునరుద్ధరించడానికి మీరు ఉపయోగించగల 24-పదాల కీ.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">మీ రికవరీ పదబంధాన్ని భద్రపరచే సమయం—మీ బ్యాలెన్స్‌ను పునరుద్ధరించడానికి మీరు ఉపయోగించగల 12-పదాల కీ.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">మీ రికవరీ పదబంధం అనేది మీకే ప్రత్యేకమైన %1$d- పదబంధం. మీ బ్యాలెన్స్‌ని పునరుద్ధరించడానికి ఈ పదబంధాన్ని ఉపయోగించండి.</string>
     <string name="PaymentsRecoveryStartFragment__start">ప్రారంభించండి</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">మాన్యువల్‌గా నమోదు చేయండి</string>

@@ -5216,9 +5216,9 @@
         <item quantity="other">Signal PIN кодун ырастасаңыз, Signal\'ды кайра орнотконуңузда балансыңыз автоматтык түрдө калыбына келет. Балансыңызды өзүңүз гана билген %1$d сөздөн турган сөз айкашы менен калыбына келтирсеңиз болот. Аны жазып алып, эч ким билбеген жерге катып коюңуз.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Балансыңыз толук! Калыбына келтирүүчү сүйлөмүңүздү сактоого кез келди—балансыңызды 24 сөздөн турган ачкыч менен калыбына келтире аласыз.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Балансыңыз толук! Калыбына келтирүүчү сүйлөмүңүздү сактоого кез келди—балансыңызды 12 сөздөн турган ачкыч менен калыбына келтире аласыз.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Калыбына келтирүүчү сүйлөмүңүздү сактоого кез келди—балансыңызды 24 сөздөн турган ачкыч менен калыбына келтире аласыз.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Калыбына келтирүүчү сүйлөмүңүздү сактоого кез келди—балансыңызды 12 сөздөн турган ачкыч менен калыбына келтире аласыз.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Калыбына келтирүүчү сөз айкашыңыз сизге гана тиешелүү %1$d сөздүк сөз айкашы. Балансыңызды калыбына келтирүү үчүн бул сөз айкашын колдонуңуз.</string>
     <string name="PaymentsRecoveryStartFragment__start">Баштоо</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Кол менен кирүү</string>

@@ -5216,9 +5216,9 @@
         <item quantity="other">Số dư của bạn sẽ tự động khôi phục khi bạn cài đặt lại Signal nếu như bạn xác minh mã PIN Signal của mình. Bạn cũng có thể khôi phục số dư của bạn qua sử dụng một cụm từ khôi phục, và đây là một cụm từ gồm %1$d từ chỉ riêng cho bạn. Ghi nó lại và lưu giữ nó ở một nơi an toàn.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Bạn đã nhận được số dư! Đã đến lúc lưu cụm từ khôi phục—cụm 24 từ này giống như chìa khóa giúp bạn khôi phục số dư của mình.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Bạn đã nhận được số dư! Đã đến lúc lưu cụm từ khôi phục—cụm 12 từ này giống như chìa khóa giúp bạn khôi phục số dư của mình.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Đã đến lúc lưu cụm từ khôi phục—cụm 24 từ này giống như chìa khóa giúp bạn khôi phục số dư của mình.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Đã đến lúc lưu cụm từ khôi phục—cụm 12 từ này giống như chìa khóa giúp bạn khôi phục số dư của mình.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Cụm từ khôi phục của bạn là một cụm từ gồm %1$d-từ chỉ riêng cho bạn. Sử dụng cụm từ này để khôi phục số dư của bạn.</string>
     <string name="PaymentsRecoveryStartFragment__start">Bắt đầu</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Nhập vào bằng tay</string>

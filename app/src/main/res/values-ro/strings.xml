@@ -5478,9 +5478,9 @@
         <item quantity="other">Soldul tău va fi restituit automat când reinstalezi Signal dacă confirmi PIN-ul Signal. De asemenea îți poți recupera soldul utilizând o frază de recuperare, aceasta este formată din %1$d de cuvinte și este unică pentru tine. Ar trebui să o scrii pe hârtie și să o păstrezi într-un loc sigur.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Ai sold! E timpul să salvezi fraza de recuperare—o cheie de 24 de cuvinte pe care le poți folosi ca să restaurezi echilibrul.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Ai sold! E timpul să salvezi fraza de recuperare—o cheie de 12 de cuvinte pe care le poți folosi ca să restaurezi echilibrul.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">E timpul să salvezi fraza de recuperare—o cheie de 24 de cuvinte pe care le poți folosi ca să restaurezi echilibrul.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">E timpul să salvezi fraza de recuperare—o cheie de 12 de cuvinte pe care le poți folosi ca să restaurezi echilibrul.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Fraza de recuperare este formată din %1$d de cuvinte și este unică pentru tine. Utilizează această frază pentru a-ți recupera soldul.</string>
     <string name="PaymentsRecoveryStartFragment__start">Start</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Introdu manual</string>

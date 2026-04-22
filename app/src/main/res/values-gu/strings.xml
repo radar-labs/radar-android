@@ -5347,9 +5347,9 @@
         <item quantity="other">જો તમે તમારા Signal પિનની પુષ્ટિ કરો છો તો તમે Signal ને ફરીથી ઇન્સ્ટોલ કરો ત્યારે તમારું બેલેન્સ આપોઆપ રિસ્ટોર થશે. તમે રિકવરી ફ્રેઝનો ઉપયોગ કરીને તમારું બેલેન્સ પણ રિસ્ટોર કરી શકો છો, જે તમારા માટે અનન્ય %1$d શબ્દોનો ફ્રેઝ છે. તેને લખીને સલામત સ્થળે સંગ્રહ કરો.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">તમને બેલેન્સ મળ્યું છે! સમય છે તમારા રિકવરી ફ્રેઝને સેવ કરવાનો — જે એક 24-શબ્દની કી છે અને તેનો ઉપયોગ તમે તમારું બેલેન્સ પુનઃસ્થાપિત કરવા માટે કરી શકો છો.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">તમને બેલેન્સ મળ્યું છે! સમય છે તમારા રિકવરી ફ્રેઝને સેવ કરવાનો — જે એક 12-શબ્દની કી છે અને તેનો ઉપયોગ તમે તમારું બેલેન્સ પુનઃસ્થાપિત કરવા માટે કરી શકો છો.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">સમય છે તમારા રિકવરી ફ્રેઝને સેવ કરવાનો — જે એક 24-શબ્દની કી છે અને તેનો ઉપયોગ તમે તમારું બેલેન્સ રિસ્ટોર કરવા માટે કરી શકો છો.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">સમય છે તમારા રિકવરી ફ્રેઝને સેવ કરવાનો — જે એક 12-શબ્દની કી છે અને તેનો ઉપયોગ તમે તમારું બેલેન્સ રિસ્ટોર કરવા માટે કરી શકો છો.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">તમારો રિકવરી ફ્રેઝ તમારા માટે અનન્ય %1$d શબ્દોનો ફ્રેઝ છે. તમારા પેમેન્ટ એકાઉન્ટને રિસ્ટોર કરવા માટે તેનો ઉપયોગ કરો.</string>
     <string name="PaymentsRecoveryStartFragment__start">શરૂ કરો</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">મેન્યુઅલી દાખલ કરો</string>

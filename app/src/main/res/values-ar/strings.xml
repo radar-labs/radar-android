@@ -5871,9 +5871,9 @@
         <item quantity="other">سَتستعيد رصيدك تلقائيًا فور الانتهاء من إعادة تثبيت سيجنال، وذلك إذا قمت بتأكيد رقم التعريف الشخصي‬ على سيجنال. يمكنك أيضًا استعادة حسابك باستخدام عبارة الاستعادة، والتي تتكون من %1$d كلمة فريدة خاصك بك فقط. يُرجى كتابتها ثم حفظها في مكانٍ آمن.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">لديك رصيد! حان وقت حفظ عبارة الاستعادة الخاصة بك—مفتاح من 24 كلمة يُمكنك استخدامه لاستعادة رصيدك.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">لديك رصيد! حان وقت حفظ عبارة الاستعادة الخاصة بك—مفتاح من 12 كلمة يُمكنك استخدامه لاستعادة رصيدك.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">حان وقت حفظ عبارة الاستعادة الخاصة بك—مفتاح من 24 كلمة يُمكنك استخدامه لاستعادة رصيدك.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">حان وقت حفظ عبارة الاستعادة الخاصة بك—مفتاح من 12 كلمة يُمكنك استخدامه لاستعادة رصيدك.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">عبارة الاستعادة هي عبارة مُكوَّنة من %1$d كلمة فريدة خاصة بك فقط. يُرجى استخدامها لاستعادة رصيدك.</string>
     <string name="PaymentsRecoveryStartFragment__start">ابدأ</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">إدخال يدويًا</string>

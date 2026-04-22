@@ -5216,9 +5216,9 @@
         <item quantity="other">重新安装 Signal 并确认 Signal PIN 码后，您的余额将自动恢复。另外您也可以使用恢复短语来恢复您的余额。恢复短语是一个对您具有唯一性的 %1$d 词短语。请将其记下并妥善保存。</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">您还有一部分余额！是时候保存您的恢复短语了——这是一个 24 字/词的密钥，可以用来恢复您的余额。</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">您还有一部分余额！是时候保存您的恢复短语了——这是一个 12 字/词的密钥，可以用来恢复您的余额。</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">是时候保存您的恢复短语了——这是一个 24 字/词的密钥，可以用来恢复您的余额。</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">是时候保存您的恢复短语了——这是一个 12 字/词的密钥，可以用来恢复您的余额。</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">恢复短语包含 %1$d 个单词，并且对您是唯一的，可用于还原您的余额。</string>
     <string name="PaymentsRecoveryStartFragment__start">开始</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">手动输入</string>

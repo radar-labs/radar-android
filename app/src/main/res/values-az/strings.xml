@@ -5347,9 +5347,9 @@
         <item quantity="other">Signal PIN kodunuzu təsdiqləmisinizsə, Signal-ı yenidən quraşdıranda balansınız avtomatik bərpa olunacaq. Həmçinin sizə məxsus %1$d sözdən ibarət bir bərpa parolundan istifadə edərək balansınızı yenidən bərpa edə bilərsiniz. Bunu bir yerə qeyd edərək etibarlı şəkildə saxlayın.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Balans əldə etdiniz! Bərpa parolunu yaddaşda saxlamaq vaxtıdır— balansınızı bərpa etmək üçün 24 sözdən ibarət bir şifrə.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Balans əldə etdiniz! Bərpa parolunu yaddaşda saxlamaq vaxtıdır— balansınızı bərpa etmək üçün 12 sözdən ibarət bir şifrə.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Bərpa parolunu yaddasaxlamaq vaxtıdır— bu balansınızı bərpa etmək üçün 24 sözdən ibarət bir şifrədir.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Bərpa parolunu yaddasaxlamaq vaxtıdır— bu balansınızı bərpa etmək üçün 12 sözdən ibarət bir şifrədir.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Bərpa parolunuz, sizə xas %1$d sözdən ibarət bir paroldur. Balansınızı geri yükləmək üçün bu parolu istifadə edin.</string>
     <string name="PaymentsRecoveryStartFragment__start">Başla</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Əllə daxil edin</string>

@@ -5609,9 +5609,9 @@
         <item quantity="other">Ваши средства будут автоматически восстановлены, когда вы переустановите Signal, если вы введёте верный PIN-код. Вы также можете восстановить свои средства с помощью своей уникальной фразы восстановления, которая состоит из %1$d слова. Запишите её и храните в безопасном месте.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Всё получилось! Теперь сохраните свою фразу для восстановления — ключ из 24 слов, который вы сможете использовать для восстановления информации.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Всё получилось! Теперь сохраните свою фразу для восстановления — ключ из 12 слов, который вы сможете использовать для восстановления информации.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Теперь сохраните свою фразу для восстановления — ключ из 24 слов, который вы сможете использовать для восстановления информации.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Теперь сохраните свою фразу для восстановления — ключ из 12 слов, который вы сможете использовать для восстановления информации.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Ваша фраза восстановления — это уникальная фраза, состоящая из %1$d слов. Она понадобится вам, чтобы восстановить свой баланс.</string>
     <string name="PaymentsRecoveryStartFragment__start">Начать</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Ввести вручную</string>

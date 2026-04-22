@@ -5609,9 +5609,9 @@
         <item quantity="other">Twoje konto zostanie automatycznie przywrócone przy ponownej instalacji Signal, jeśli potwierdzisz swój PIN Signal. Możesz też przywrócić swoje środki, używając hasła odzyskiwania, które jest Twoim, złożonym z %1$d słów, unikalnym hasłem. Zapisz je i przechowuj w bezpiecznym miejscu.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Masz równowagę! Czas zapisać frazę odzyskiwania — 24-wyrazowy klucz, którego możesz użyć do przywrócenia równowagi.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Masz równowagę! Czas zapisać frazę odzyskiwania — 12-wyrazowy klucz, którego możesz użyć do przywrócenia równowagi.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Czas zapisać frazę odzyskiwania – 24-wyrazowy klucz, którego możesz użyć do przywrócenia równowagi.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Czas zapisać frazę odzyskiwania – 12-wyrazowy klucz, którego możesz użyć do przywrócenia równowagi.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Fraza odzyskiwania to Twoje unikalne hasło składające się z %1$d wyrazów. Użyj go, aby przywrócić konto płatności.</string>
     <string name="PaymentsRecoveryStartFragment__start">Rozpocznij</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Wpisz ręcznie</string>

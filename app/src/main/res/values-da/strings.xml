@@ -5347,9 +5347,9 @@
         <item quantity="other">Din saldo gendannes automatisk, når du geninstallerer Signal, hvis du bekræfter din Signal-pinkode. Du kan også gendanne din saldo ved hjælp af en gendannelsessætning, som er en unik sætning på %1$d ord. Skriv den ned, og opbevar den et sikkert sted.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Du har en saldo! Det er tid til at gemme din gendannelsessætning – en kode på 24 ord, som kan bruges til at genoprette din saldo.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Du har en saldo! Det er tid til at gemme din gendannelsessætning – en kode på 12 ord, som kan bruges til at genoprette din saldo.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Det er tid til at gemme din gendannelsessætning – en kode på 24 ord, som kan bruges til at genoprette din saldo.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Det er tid til at gemme din gendannelsessætning – en kode på 12 ord, som kan bruges til at genoprette din saldo.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Din gendannelsessætning er en %1$d-ords sætning, der er unik for dig. Brug den til at gendanne din saldo.</string>
     <string name="PaymentsRecoveryStartFragment__start">Start</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Indtast manuelt</string>

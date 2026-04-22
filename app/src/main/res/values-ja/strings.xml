@@ -5216,9 +5216,9 @@
         <item quantity="other">Signalの再インストール時にSignal PINを確認すると、残高は自動で復元されます。また、あなた固有の%1$d語のリカバリーフレーズを使って、残高を復元することもできます。リカバリーフレーズは、書きとめて安全な場所に保管してください。</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">残高があります！残高を復元するためのキーとなる、24単語のリカバリーフレーズを保存しましょう。</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">残高があります！残高を復元するためのキーとなる、12単語のリカバリーフレーズを保存しましょう。</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">24単語のリカバリーフレーズ（残高を復元するためのキー）を保存しましょう。</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">12単語のリカバリーフレーズ（残高を復元するためのキー）を保存しましょう。</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">あなたのリカバリーフレーズは%1$d語で、あなた固有のものです。口座の復元に使用してください。</string>
     <string name="PaymentsRecoveryStartFragment__start">開始する</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">マニュアル入力</string>

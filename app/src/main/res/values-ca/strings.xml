@@ -5347,9 +5347,9 @@
         <item quantity="other">El saldo es restaurarà automàticament quan tornis a instal·lar Signal si confirmes el PIN del Signal. També pots restaurar el saldo mitjançant una frase de recuperació, que és una frase de %1$d paraules exclusiva. Anota-la i guarda-la en un lloc segur.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Tens saldo! És hora de desar la teva frase de recuperació: una clau de 24 paraules que podràs utilitzar per restaurar el teu saldo.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Tens saldo! És hora de desar la teva frase de recuperació: una clau de 12 paraules que podràs utilitzar per restaurar el teu saldo.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">És hora de desar la teva frase de recuperació: una clau de 24 paraules que podràs utilitzar per restaurar el teu saldo.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">És hora de desar la teva frase de recuperació: una clau de 12 paraules que podràs utilitzar per restaurar el teu saldo.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">La vostra frase de recuperació és una frase de %1$d paraules exclusiva. Useu aquesta frase per restablir el saldo.</string>
     <string name="PaymentsRecoveryStartFragment__start">Inicia</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Introducció manual</string>

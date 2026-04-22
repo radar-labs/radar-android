@@ -5349,7 +5349,7 @@
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
     <string name="PaymentsRecoveryStartFragment__got_balance">Du har penger på kontoen din! Det er på tide å lage en gjenopprettingsfrase som du kan bruke til å få tilgang til kontoen din.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Det er på tide å lagre en gjenopprettingsfrase på 24 ord som du kan bruke til å gjenopprette saldoen din.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Det er på tide å lagre en gjenopprettingsfrase på 12 ord som du kan bruke til å gjenopprette saldoen din.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Gjenopprettingspassordet ditt er en setning på %1$d ord som du velger selv. Det kan brukes til å gjenopprette saldoen din.</string>
     <string name="PaymentsRecoveryStartFragment__start">Start</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Skriv inn manuelt</string>

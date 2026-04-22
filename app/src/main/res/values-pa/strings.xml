@@ -5347,9 +5347,9 @@
         <item quantity="other">ਜੇ ਤੁਸੀਂ ਆਪਣੇ Signal PIN ਦੀ ਪੁਸ਼ਟੀ ਕਰਦੇ ਹੋ ਤਾਂ Signal ਨੂੰ ਦੁਬਾਰਾ ਇੰਸਟਾਲ ਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਹਾਡਾ ਬੈਲੈਂਸ ਆਪਣੇ-ਆਪ ਬਹਾਲ ਹੋ ਜਾਵੇਗਾ। ਤੁਸੀਂ ਆਪਣੇ %1$d-ਸ਼ਬਦ ਵਾਲੇ ਵਿਲੱਖਣ ਰਿਕਵਰੀ ਵਾਕ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਵੀ ਆਪਣਾ ਬੈਲੈਂਸ ਬਹਾਲ ਕਰ ਸਕਦੇ ਹੋ। ਇਸ ਵਾਕ ਨੂੰ ਕਿਸੇ ਸੁਰੱਖਿਅਤ ਥਾਂ \'ਤੇ ਲਿਖ ਲਓ ਅਤੇ ਸਟੋਰ ਕਰ ਲਓ।</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">ਤੁਹਾਡੇ ਕੋਲ ਬੈਲੈਂਸ ਹੈ! ਹੁਣ ਤੁਹਾਡੇ ਰਿਕਵਰੀ ਵਾਕ ਨੂੰ ਸੇਵ ਕਰਨ ਦਾ ਸਮਾਂ ਹੈ—24-ਸ਼ਬਦਾਂ ਦੀ ਇੱਕ ਕੁੰਜੀ ਹੈ ਜਿਸਦੀ ਵਰਤੋਂ ਤੁਸੀਂ ਆਪਣਾ ਬੈਲੈਂਸ ਰੀਸਟੋਰ ਕਰਨ ਲਈ ਕਰ ਸਕਦੇ ਹੋ।</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">ਤੁਹਾਡੇ ਕੋਲ ਬੈਲੈਂਸ ਹੈ! ਹੁਣ ਤੁਹਾਡੇ ਰਿਕਵਰੀ ਵਾਕ ਨੂੰ ਸੇਵ ਕਰਨ ਦਾ ਸਮਾਂ ਹੈ—12-ਸ਼ਬਦਾਂ ਦੀ ਇੱਕ ਕੁੰਜੀ ਹੈ ਜਿਸਦੀ ਵਰਤੋਂ ਤੁਸੀਂ ਆਪਣਾ ਬੈਲੈਂਸ ਰੀਸਟੋਰ ਕਰਨ ਲਈ ਕਰ ਸਕਦੇ ਹੋ।</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">ਹੁਣ ਤੁਹਾਡੇ ਰਿਕਵਰੀ ਵਾਕ ਨੂੰ ਸੇਵ ਕਰਨ ਦਾ ਸਮਾਂ ਹੈ—24-ਸ਼ਬਦਾਂ ਦੀ ਇੱਕ ਕੁੰਜੀ ਜਿਸਦੀ ਵਰਤੋਂ ਤੁਸੀਂ ਆਪਣਾ ਬੈਲੈਂਸ ਰੀਸਟੋਰ ਕਰਨ ਲਈ ਕਰ ਸਕਦੇ ਹੋ।</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">ਹੁਣ ਤੁਹਾਡੇ ਰਿਕਵਰੀ ਵਾਕ ਨੂੰ ਸੇਵ ਕਰਨ ਦਾ ਸਮਾਂ ਹੈ—12-ਸ਼ਬਦਾਂ ਦੀ ਇੱਕ ਕੁੰਜੀ ਜਿਸਦੀ ਵਰਤੋਂ ਤੁਸੀਂ ਆਪਣਾ ਬੈਲੈਂਸ ਰੀਸਟੋਰ ਕਰਨ ਲਈ ਕਰ ਸਕਦੇ ਹੋ।</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">ਤੁਹਾਡਾ ਰਿਕਵਰੀ ਸ਼ਬਦ-ਸਮੂਹ ਤੁਹਾਡੇ ਲਈ ਵਿਲੱਖਣ ਇੱਕ %1$d-ਸ਼ਬਦਾਂ ਵਾਲਾ ਸ਼ਬਦ-ਸਮੂਹ ਹੁੰਦਾ ਹੈ। ਆਪਣੇ ਬਕਾਏ ਨੂੰ ਬਹਾਲ ਕਰਨ ਲਈ ਇਸ ਸ਼ਬਦ-ਸਮੂਹ ਦੀ ਵਰਤੋਂ ਕਰੋ।</string>
     <string name="PaymentsRecoveryStartFragment__start">ਸ਼ੁਰੂ</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">ਖੁਦ ਦਿਓ</string>

@@ -5347,9 +5347,9 @@
         <item quantity="other">ನಿಮ್ಮ Signal PIN ಅನ್ನು ನೀವು ದೃಢೀಕರಿಸಿದರೆ Signal ಅನ್ನು ನೀವು ಪುನಃ ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಿದಾಗ ನಿಮ್ಮ ಬ್ಯಾಲೆನ್ಸ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ರಿಸ್ಟೋರ್ ಆಗುತ್ತದೆ. ರಿಕವರಿ ಪದಗುಚ್ಛವನ್ನು ಬಳಸಿ ನಿಮ್ಮ ಬ್ಯಾಲೆನ್ಸ್ ಅನ್ನು ಕೂಡಾ ನೀವು ರಿಸ್ಟೋರ್ ಮಾಡಬಹುದು. ಇದು %1$d-ಶಬ್ದದ ಪದಗುಚ್ಛವಾಗಿದ್ದು ನಿಮಗೆ ವಿಶಿಷ್ಟವಾಗಿದೆ. ಇದನ್ನು ಬರೆದಿಟ್ಟುಕೊಳ್ಳಿ ಮತ್ತು ಸುರಕ್ಷಿತ ಸ್ಥಳದಲ್ಲಿ ಶೇಖರಿಸಿಡಿ.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">ನೀವು ಬ್ಯಾಲೆನ್ಸ್ ಒಂದನ್ನು ಪಡೆದಿದ್ದೀರಿ! ನಿಮ್ಮ ರಿಕವರಿ ಪದಗುಚ್ಛ ಸೇವ್ ಮಾಡಲು ಸಮಯ—ನಿಮ್ಮ ಬ್ಯಾಲೆನ್ಸ್ ರೀಸ್ಟೋರ್ ಮಾಡಲು 24-ಪದದ ಒಂದು ಕೀಯನ್ನು ನೀವು ಬಳಸಬಹುದು.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">ನೀವು ಬ್ಯಾಲೆನ್ಸ್ ಒಂದನ್ನು ಪಡೆದಿದ್ದೀರಿ! ನಿಮ್ಮ ರಿಕವರಿ ಪದಗುಚ್ಛ ಸೇವ್ ಮಾಡಲು ಸಮಯ—ನಿಮ್ಮ ಬ್ಯಾಲೆನ್ಸ್ ರೀಸ್ಟೋರ್ ಮಾಡಲು 12-ಪದದ ಒಂದು ಕೀಯನ್ನು ನೀವು ಬಳಸಬಹುದು.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">ನಿಮ್ಮ ರಿಕವರಿ ಪದಗುಚ್ಛ ಸೇವ್ ಮಾಡಲು ಸಮಯ—ನಿಮ್ಮ ಬ್ಯಾಲೆನ್ಸ್ ರೀಸ್ಟೋರ್ ಮಾಡಲು 24-ಪದದ ಒಂದು ಕೀಯನ್ನು ನೀವು ಬಳಸಬಹುದು.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">ನಿಮ್ಮ ರಿಕವರಿ ಪದಗುಚ್ಛ ಸೇವ್ ಮಾಡಲು ಸಮಯ—ನಿಮ್ಮ ಬ್ಯಾಲೆನ್ಸ್ ರೀಸ್ಟೋರ್ ಮಾಡಲು 12-ಪದದ ಒಂದು ಕೀಯನ್ನು ನೀವು ಬಳಸಬಹುದು.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">ನಿಮ್ಮ ರಿಕವರಿ ಪದಗುಚ್ಛವು %1$d- ಶಬ್ದದ ಪದಗುಚ್ಛವಾಗಿದ್ದು, ನಿಮಗೆ ವಿಶಿಷ್ಟವಾಗಿದೆ. ನಿಮ್ಮ ಬ್ಯಾಲೆನ್ಸ್ ಅನ್ನು ರಿಸ್ಟೋರ್ ಮಾಡಲು ಈ ಪದಗುಚ್ಛವನ್ನು ಬಳಸಿ.</string>
     <string name="PaymentsRecoveryStartFragment__start">ಆರಂಭಿಸಿ</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">ಹಸ್ತಚಾಲಿತವಾಗಿ ನಮೂದಿಸಿ</string>

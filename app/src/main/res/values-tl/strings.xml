@@ -5347,9 +5347,9 @@
         <item quantity="other">Kapag ni-reinstall mo ang Signal, automatic na mare-restore ang balance mo pagkatapos mong i-confirm mo ang Signal PIN mo. Pwede mo ring i-restore ang iyong balance gamit ang recovery phrase, isang %1$d-word phrase na unique sa \'yo. Isulat ito at itago sa isang ligtas na lugar.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">May balance ka! Oras na para i-save ang iyong recovery phrase—isang 24-word key na magagamit mo para ma-restore ang iyong balance.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">May balance ka! Oras na para i-save ang iyong recovery phrase—isang 12-word key na magagamit mo para ma-restore ang iyong balance.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Oras na para i-save ang iyong recovery phrase—isang 24-word key na magagamit mo para ma-restore ang iyong balance.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Oras na para i-save ang iyong recovery phrase—isang 12-word key na magagamit mo para ma-restore ang iyong balance.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Ang iyong recovery phrase ay isang %1$d-word phrase na unique sa\'yo. Gamitin ang phrase na ito para ma-restore ang balance mo.</string>
     <string name="PaymentsRecoveryStartFragment__start">Start</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Enter manually</string>

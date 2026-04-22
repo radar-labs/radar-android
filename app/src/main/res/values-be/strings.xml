@@ -5609,9 +5609,9 @@
         <item quantity="other">Ваш баланс будзе аўтаматычна адноўлены падчас паўторнага ўсталявання Signal, калі вы пацвердзіце свой PIN-код Signal. Вы таксама можаце аднавіць свой баланс з дапамогай фразы для аднаўлення, якая складаецца з %1$d унікальных слоў. Запішыце і захавайце яе ў надзейным месцы.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Вы маеце баланс! Час захаваць вашу фразу для аднаўлення — ключ з 24 слоў, які вы можаце выкарыстаць, каб аднавіць баланс.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Вы маеце баланс! Час захаваць вашу фразу для аднаўлення — ключ з 12 слоў, які вы можаце выкарыстаць, каб аднавіць баланс.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Час захаваць вашу фразу для аднаўлення — ключ з 24 слоў, які вы можаце выкарыстаць, каб аднавіць баланс.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Час захаваць вашу фразу для аднаўлення — ключ з 12 слоў, які вы можаце выкарыстаць, каб аднавіць баланс.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Ваша фраза для аднаўлення – гэта ўнікальная фраза з %1$d слоў. Выкарыстоўвайце гэтую фразу, каб аднавіць свой баланс.</string>
     <string name="PaymentsRecoveryStartFragment__start">Пачаць</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Увесці ўручную</string>

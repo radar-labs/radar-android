@@ -5216,9 +5216,9 @@
         <item quantity="other">Baki anda akan dipulihkan secara automatik apabila anda memasang semula Signal dan mengesahkan PIN Signal anda. Anda juga dapat memulihkan baki anda menggunakan frasa pemulihan, yang merupakan frasa %1$d perkataan yang unik untuk anda. Catatkannya dan simpan di tempat yang selamat.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Anda mempunyai baki! Masa untuk menyimpan frasa pemulihan anda—kunci 24 perkataan yang anda boleh gunakan untuk menyimpan baki anda.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Anda mempunyai baki! Masa untuk menyimpan frasa pemulihan anda—kunci 12 perkataan yang anda boleh gunakan untuk menyimpan baki anda.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Masa untuk menyimpan frasa pemulihan anda—kunci 24 perkataan yang boleh digunakan untuk menyimpan baki anda.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Masa untuk menyimpan frasa pemulihan anda—kunci 12 perkataan yang boleh digunakan untuk menyimpan baki anda.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Frasa pemulihan anda merupakan frasa %1$d perkataan yang unik untuk anda. Gunakan frasa ini untuk memulihkan baki anda.</string>
     <string name="PaymentsRecoveryStartFragment__start">Mulakan</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Masukkan secara manual</string>

@@ -5347,9 +5347,9 @@
         <item quantity="other">Tilin saldo palautetaan automaattisesti, kun asennat Signalin uudelleen ja vahvistat Signalin PIN-koodin. Voit palauttaa saldon myös henkilökohtaisella %1$d-sanaisella palautuslauseella. Kirjoita se ylös ja säilytä turvallisessa paikassa.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">Sinulla on saldoa! On aika tallentaa palautuslause – 24 sanan mittainen avain, jonka avulla voit palauttaa saldosi.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">Sinulla on saldoa! On aika tallentaa palautuslause – 12 sanan mittainen avain, jonka avulla voit palauttaa saldosi.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">On aika tallentaa palautuslause – 24 sanan mittainen avain, jonka avulla voit palauttaa saldosi.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">On aika tallentaa palautuslause – 12 sanan mittainen avain, jonka avulla voit palauttaa saldosi.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Palautuslause on henkilökohtainen %1$d-sanainen lause, joka vaaditaan saldon palauttamiseen.</string>
     <string name="PaymentsRecoveryStartFragment__start">Aloita</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Syötä käsin</string>

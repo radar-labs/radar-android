@@ -5609,9 +5609,9 @@
         <item quantity="other">Ваш залишок автоматично відновиться, коли ви знову встановите Signal і підтвердите свій PIN-код. Залишок можна також відновити за допомогою унікальної кодової фрази, яка складається з %1$d слова. Запишіть її та зберігайте в надійному місці.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">У вас є залишок! Збережіть кодову фразу — пароль з 24 слів, за допомогою якого ви зможете відновити свій залишок.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">У вас є залишок! Збережіть кодову фразу — пароль з 12 слів, за допомогою якого ви зможете відновити свій залишок.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">Збережіть кодову фразу — пароль з 24 слів, за допомогою якого ви зможете відновити свій залишок.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">Збережіть кодову фразу — пароль з 12 слів, за допомогою якого ви зможете відновити свій залишок.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">Ваша кодова фраза — це унікальна фраза з %1$d слів. Вона необхідна для відновлення балансу.</string>
     <string name="PaymentsRecoveryStartFragment__start">Почати</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">Ввести вручну</string>
