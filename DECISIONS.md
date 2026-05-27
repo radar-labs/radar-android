@@ -182,3 +182,9 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Blanket app-wide Signal→Radar — rejected (would corrupt legitimate references).
 **Confidence:** high (XML-validated; payment-scoped).
 **Revisit if:** product wants a full app-wide rename (a separate, careful pass).
+
+## 2026-05-27 — iOS 10317857ad — Skipped (no get-started-cards analog; cosmetic welcome text)
+**Context:** iOS changes the onboarding-splash button text ("Continue" → "I'm new to Signal/Radar", "Restore or Transfer Account" → "Restore my Signal/Radar") and removes the post-onboarding "Get Started" cards (newGroup, inviteFriends, appearance, avatarBuilder).
+**Decision:** Skipped. (1) The "Get Started" cards have no Android analog — Android surfaces new-user prompts via the Megaphone system (`Megaphones.java`), not a get-started cards view, so there's nothing equivalent to remove. (2) The welcome button-text change is cosmetic, uses a placeholder-style "Signal/Radar" value, and Android's registration welcome (`WelcomeFragment`) is a structurally different flow with its own strings; it's general-app onboarding, not payment-related.
+**Alternatives considered:** Rebrand the Android welcome buttons + disable onboarding megaphones — deferred as optional non-payment polish.
+**Confidence:** medium-high. **Revisit if:** product wants Radar-branded welcome buttons or fewer onboarding megaphones on Android.
