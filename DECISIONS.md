@@ -150,3 +150,9 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Decision:** Reverted the Android change — restored `RetrieveRemoteAnnouncementsJob.enqueue(true)` + its import in `VersionTracker`. Net effect of the disable+revert pair is zero (VersionTracker back to baseline), matching iOS HEAD where promotional megaphones are NOT disabled. Mirrored both commits separately (non-adjacent) rather than squashing.
 **Confidence:** high (restores known-good baseline code).
 **Revisit if:** Radar later re-disables megaphones in a different way.
+
+## 2026-05-27 — iOS UI-refresh series (37007fe8e8, 6c85cf772d, 3b4634c7f7, 81edb47849) — Skipped (bundled)
+**Context:** Four iOS UIKit payment-screen polish commits: payment-bubble direction arrows + colors (CVComponent), currency-picker flag emojis + layout, an `isOnboarding` layout mode on the receive VC, a username settings-menu entry, branding strings, and spacing/padding.
+**Decision:** Skipped as a cluster — predominantly iOS-rendering-specific visual polish with no clean Android mapping: (a) bubble arrows/colors are iOS CVComponent; Android renders via `PaymentMessageView`. (b) The receive `isOnboarding` mode is already handled differently on Android (a dedicated `PaymentsOnboardingAddFundsFragment`). (c) Padding/spacing are iOS-stack-specific; Android's receive layout was redesigned separately (#3). (d) The username settings-menu entry is redundant — Android edits the Lightning username from the receive screen (commit #1). (e) Branding strings are covered by the dedicated rebrand `5b4b9f52f0` (#44).
+**Not ported (cosmetic nicety):** currency-picker **flag emojis** (regional-indicator glyph from the currency code) — a self-contained enhancement a reviewer could add to `SetCurrencyFragment`'s adapter; left out to keep momentum.
+**Confidence:** medium-high. **Revisit if:** product specifically wants the bubble arrows or currency flags on Android.
