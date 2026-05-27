@@ -10,8 +10,22 @@
         android:name="org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingIntroFragment"
         tools:layout="@layout/fragment_payments_onboarding_intro">
         <action
-            android:id="@+id/action_intro_to_addFunds"
+            android:id="@+id/action_intro_to_addFundsIntro"
+            app:destination="@id/paymentsOnboardingAddFundsIntro" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentsOnboardingAddFundsIntro"
+        android:name="org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingAddFundsIntroFragment"
+        tools:layout="@layout/fragment_payments_onboarding_add_funds_intro">
+        <action
+            android:id="@+id/action_addFundsIntro_to_addFunds"
             app:destination="@id/paymentsOnboardingAddFunds" />
+        <action
+            android:id="@+id/action_addFundsIntro_to_setupComplete"
+            app:destination="@id/paymentsOnboardingSetupComplete"
+            app:popUpTo="@id/paymentsOnboardingIntro"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

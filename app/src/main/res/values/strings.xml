@@ -4372,6 +4372,10 @@
     <string name="PaymentsOnboarding__setup_complete_subtitle">You can now start using Radar</string>
     <!-- Add funds onboarding step title -->
     <string name="PaymentsOnboarding__add_funds_title">Add funds to get started</string>
+    <!-- Add funds intro step title -->
+    <string name="PaymentsOnboarding__add_funds_intro_title">Add Funds</string>
+    <!-- Add funds intro step subtitle -->
+    <string name="PaymentsOnboarding__add_funds_intro_subtitle">To start sending payments, deposit funds from your existing account or exchange</string>
     <!-- Instruction shown above the QR code on the receive screen -->
     <string name="PaymentsAddMoneyFragment__send_bitcoin_over_lightning">Send Bitcoin over the Lightning Network to the following address:</string>
     <string name="PaymentsAddMoneyFragment__to_add_funds">Start a transaction from your account or an exchange that supports Bitcoin over Lightning, then scan the QR code or copy your wallet address.</string>

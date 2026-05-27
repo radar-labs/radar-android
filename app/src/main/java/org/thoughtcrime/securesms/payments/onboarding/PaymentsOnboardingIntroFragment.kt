@@ -17,7 +17,7 @@ import org.thoughtcrime.securesms.R
 class PaymentsOnboardingIntroFragment : LoggingFragment(R.layout.fragment_payments_onboarding_intro) {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     view.findViewById<MaterialButton>(R.id.onboarding_intro_continue).setOnClickListener {
-      NavHostFragment.findNavController(this).navigate(R.id.action_intro_to_addFunds)
+      NavHostFragment.findNavController(this).navigate(R.id.action_intro_to_addFundsIntro)
     }
     view.findViewById<TextView>(R.id.onboarding_intro_skip).setOnClickListener {
       (requireActivity() as PaymentsOnboardingActivity).finishToMain()
