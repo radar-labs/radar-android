@@ -34,7 +34,7 @@
 - [s] `6bb5e64b4a` | 05-11 | merge | Merge PR #15 chat-interface → SKIP (captured via constituents).
 - [s] `d03c5c5f94` | 05-11 | bugfix | Correctly check and set username from onboarding flow → **SKIPPED** — refines the iOS onboarding's **Signal profile-username** step (`localUsernameManager.confirmUsername`), which the Android onboarding omits (see `07343eab15`). Android already has Signal username management in profile settings. See DECISIONS.md.
 - [s] `1a21f2f46a` | 05-11 | feature | use existing username if available and update the screen → **SKIPPED** — same omitted onboarding Signal-username step (prefill/edit existing). The Android Lightning-username editor (`EditLightningUsernameFragment`) already prefills the existing name. See DECISIONS.md.
-- [ ] `69784aaa79` | 05-12 | revert | revert commenting out signal's promotions → re-enable megaphone fetch (revert of `0700d00c3a`).
+- [x] `69784aaa79` | 05-12 | revert | revert commenting out signal's promotions → **DONE.** Restored `RetrieveRemoteAnnouncementsJob.enqueue(true)` + import in `VersionTracker` (reverts `0700d00c3a`). Net effect with `0700d00c3a` = no change, matching iOS HEAD.
 - [s] `68a5b76c2d` | 05-12 | merge | Merge main into set-username-from-onboarding → SKIP.
 - [s] `cd62ac850e` | 05-12 | merge | Merge PR #16 set-username-from-onboarding → SKIP.
 - [ ] `f21e3145bc` | 05-12 | ui | update splash screen → Radar splash assets.

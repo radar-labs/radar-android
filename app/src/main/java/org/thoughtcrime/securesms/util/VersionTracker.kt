@@ -7,6 +7,7 @@ import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobs.RefreshAttributesJob
 import org.thoughtcrime.securesms.jobs.RemoteConfigRefreshJob
+import org.thoughtcrime.securesms.jobs.RetrieveRemoteAnnouncementsJob
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import java.time.Duration
 
@@ -29,10 +30,7 @@ object VersionTracker {
       SignalStore.remoteConfig.eTag = ""
       val jobChain = listOf(RemoteConfigRefreshJob(), RefreshAttributesJob())
       AppDependencies.jobManager.startChain(jobChain).enqueue()
-      // Radar: disabled to prevent Signal's promotional remote megaphones (e.g. "Donate Today")
-      // from being fetched and shown over the chat list. Mirrors iOS commenting out
-      // RemoteMegaphoneFetcher.syncRemoteMegaphonesIfNecessary().
-      // RetrieveRemoteAnnouncementsJob.enqueue(true)
+      RetrieveRemoteAnnouncementsJob.enqueue(true)
       LocalMetrics.getInstance().clear()
     }
 
