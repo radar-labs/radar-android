@@ -137,3 +137,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Decision:** Skipped — the onboarding flow is already implemented on Android (commit for `07343eab15` + the add-funds-intro from `bc4dd06d2b`), and the QR perf tweak is the same iOS-specific change already skipped under `bc4dd06d2b`. No remaining Android delta.
 **Confidence:** high (file lists overlap; both onboarding screens + QR perf already handled).
 **Revisit if:** a later onboarding commit reveals a behavioral diff between the two iOS landings.
+
+## 2026-05-27 — iOS d03c5c5f94 + 1a21f2f46a — Skipped (onboarding Signal-username step omitted)
+**Context:** Both commits refine the iOS `UsernameOnboardingViewController`/`UsernameOnboardingViewModel` — the step that sets the user's **Signal profile username** (the @handle, via `localUsernameManager.confirmUsername` / `Usernames.HashedUsername`). `d03c5c5f94` wires the confirm callback + confirm logic; `1a21f2f46a` adds "use existing username" prefill/edit.
+**Decision:** Skipped both (bundled — same omitted feature). The Android payments onboarding omits a username step (decided under `07343eab15`). Note: this iOS step is the **Signal profile username**, not the Radar Lightning-address username — Android already has full Signal username management under profile settings (`components/settings/app/usernamelinks/`), and the Lightning-address editor (`EditLightningUsernameFragment`, commit #1) already prefills the existing name (covering 1a21f2f46a's intent for the standalone editor).
+**Alternatives considered:** Add a Signal-username step to the Android onboarding — deferred; it's available in profile settings and wasn't part of the bounded onboarding port.
+**Confidence:** high
+**Revisit if:** product wants a Signal-username-setup step inside the Android payments onboarding.
