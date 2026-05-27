@@ -188,3 +188,8 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Decision:** Skipped. (1) The "Get Started" cards have no Android analog — Android surfaces new-user prompts via the Megaphone system (`Megaphones.java`), not a get-started cards view, so there's nothing equivalent to remove. (2) The welcome button-text change is cosmetic, uses a placeholder-style "Signal/Radar" value, and Android's registration welcome (`WelcomeFragment`) is a structurally different flow with its own strings; it's general-app onboarding, not payment-related.
 **Alternatives considered:** Rebrand the Android welcome buttons + disable onboarding megaphones — deferred as optional non-payment polish.
 **Confidence:** medium-high. **Revisit if:** product wants Radar-branded welcome buttons or fewer onboarding megaphones on Android.
+
+## 2026-05-27 — iOS b8fee2bde8 — Skipped (signup choice already on Android welcome)
+**Context:** iOS adds `RegistrationSignUpViewController` after the splash — a screen with "Create account" and "Use Signal account" buttons.
+**Decision:** Skipped — Android's `WelcomeFragment` already presents the same new-vs-existing-account choice ("Continue" to register a new account, "Restore or transfer" for an existing one). The iOS screen is an additional onboarding step for a choice Android already offers; adding it would mean injecting a new destination into Android's RegistrationV3 nav (risky, non-payment).
+**Confidence:** medium-high. **Revisit if:** product wants the dedicated signup-choice screen styled like iOS.
