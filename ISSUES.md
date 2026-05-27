@@ -31,6 +31,7 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Suggested next step:** Locate Breez dep in `gradle/libs.versions.toml`; bump only if the version exists for Android and doesn't break the build.
 **Severity:** low
 **Android files involved:** `gradle/libs.versions.toml`, payments module `build.gradle.kts`.
+**Update (2026-05-27):** iOS bumped to Breez **0.14.0** (vendored podspec); Android is on **0.9.1**. Bumping is a major jump: confirm `breez_sdk_spark:bindings-android:0.14.0` exists, migrate the API usage in `BreezSdkWrapper` (getLightningAddress/registerLightningAddress/checkLightningAddressAvailable/receivePayment/initLogging were wired against 0.9.1), and full-build. **Severity raised to medium.**
 
 ## 2026-05-27 — Phase 0 — Onboarding change appears twice
 **Type:** risk
