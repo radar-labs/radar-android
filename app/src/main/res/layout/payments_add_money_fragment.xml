@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Add Funds (receive) screen — mirrors iOS PaymentsTransferInViewController (buildLayout). -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -34,78 +35,148 @@
             android:textAppearance="@style/TextAppearance.Signal.Body1.Bold"
             android:textColor="@color/signal_text_primary" />
 
+        <!-- Segmented Lightning / Onchain switcher -->
         <LinearLayout
-            android:id="@+id/payments_add_money_qr_border"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/payments_add_money_qr_border"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_marginTop="48dp"
+            android:background="@drawable/bg_radar_segmented_track"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/payments_add_money_tab_lightning"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/PaymentsAddMoneyFragment__lightning"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                app:cornerRadius="20dp"
+                app:elevation="0dp"
+                app:icon="@drawable/symbol_flash_24"
+                app:iconGravity="textStart"
+                app:iconPadding="6dp"
+                app:iconSize="18dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/payments_add_money_tab_onchain"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/PaymentsAddMoneyFragment__onchain"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                app:cornerRadius="20dp"
+                app:elevation="0dp"
+                app:icon="@drawable/ic_coin_24"
+                app:iconGravity="textStart"
+                app:iconPadding="6dp"
+                app:iconSize="18dp" />
+
+        </LinearLayout>
+
+        <!-- QR with accent-blue border + centered radar logo + spinner -->
+        <FrameLayout
+            android:id="@+id/payments_add_money_qr_container"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_add_funds_qr"
+            android:padding="14dp">
 
             <org.thoughtcrime.securesms.components.qr.QrView
                 android:id="@+id/payments_add_money_qr_image"
-                android:layout_width="240dp"
-                android:layout_height="240dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 app:qr_background_color="@color/white"
                 app:qr_foreground_color="@color/black" />
 
+            <FrameLayout
+                android:id="@+id/payments_add_money_logo_box"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_add_funds_logo_box">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/radar_logo" />
+
+            </FrameLayout>
+
+            <ProgressBar
+                android:id="@+id/payments_add_money_qr_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/radar_accent_blue"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <!-- Address + pencil edit -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/payments_add_money_abbreviated_wallet_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/Signal.Text.TitleLarge"
+                android:textColor="@color/signal_text_primary"
+                tools:text="alice@radar.cash" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/payments_add_money_edit_pencil"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="6dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/EditLightningUsernameFragment__edit_username"
+                android:padding="6dp"
+                android:src="@drawable/ic_compose_24"
+                app:tint="@color/signal_text_secondary" />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/payments_add_money_abbreviated_wallet_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:gravity="center"
-            android:textAppearance="@style/Signal.Text.TitleLarge"
-            android:textColor="@color/signal_text_primary"
-            tools:text="alice@radar.cash" />
-
+        <!-- Copy pill -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/payments_add_money_copy_address_button"
-            style="@style/Signal.Widget.Button.Small.Primary"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="@string/PaymentsAddMoneyFragment__copy" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/payments_add_money_edit_username_button"
-            style="@style/Signal.Widget.Button.Small.Primary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:text="@string/EditLightningUsernameFragment__edit_username" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/payments_add_money_network_toggle"
-            style="@style/Signal.Widget.Button.Small.Primary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:text="@string/PaymentsAddMoneyFragment__show_onchain_address" />
-
-        <org.thoughtcrime.securesms.util.views.LearnMoreTextView
-            android:id="@+id/payments_add_money_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="24dp"
-            android:lineSpacingExtra="4sp"
-            android:text="@string/PaymentsAddMoneyFragment__to_add_funds"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Signal.Body2"
-            android:textColor="@color/signal_text_secondary" />
+            android:layout_marginTop="56dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/PaymentsAddMoneyFragment__copy"
+            android:textAllCaps="false"
+            android:textColor="@color/signal_text_primary"
+            app:backgroundTint="@color/radar_gray_fill"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/symbol_copy_android_24"
+            app:iconGravity="textEnd"
+            app:iconTint="@color/signal_text_primary" />
 
     </LinearLayout>
 </ScrollView>

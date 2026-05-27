@@ -110,6 +110,8 @@ class EditLightningUsernameFragment : LoggingFragment(R.layout.fragment_edit_lig
           .isSuccess
       }
       if (success) {
+        // Tell the Add Funds screen to refresh its address/QR (mirrors iOS walletAddressDidLoad).
+        parentFragmentManager.setFragmentResult(PaymentsAddMoneyFragment.REQUEST_KEY_USERNAME_CHANGED, Bundle())
         NavHostFragment.findNavController(this@EditLightningUsernameFragment).popBackStack()
       } else {
         confirm.isEnabled = true
