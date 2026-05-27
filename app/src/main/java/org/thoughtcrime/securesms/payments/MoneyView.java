@@ -52,7 +52,10 @@ public final class MoneyView extends AppCompatTextView {
       builder.alwaysPrefixWithSign();
     }
 
-    formatterOptions = builder.withoutSpaceBeforeUnit().build();
+    // Radar: show a space between the amount and the currency unit (mirrors iOS "add a space
+    // between balance and currency"). iOS applied it to the balance specifically; on Android
+    // MoneyView is the single money formatter, so the space applies consistently.
+    formatterOptions = builder.build();
 
     String value = styledAttributes.getString(R.styleable.MoneyView_money);
     if (value != null) {
