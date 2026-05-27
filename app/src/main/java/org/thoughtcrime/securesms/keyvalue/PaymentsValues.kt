@@ -48,9 +48,17 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     private const val PAYMENT_LOCK_TIMESTAMP = "mob_payments_payment_lock_timestamp"
     private const val PAYMENT_LOCK_SKIP_COUNT = "mob_payments_payment_lock_skip_count"
     private const val SHOW_SAVE_RECOVERY_PHRASE = "mob_show_save_recovery_phrase"
+    private const val SHOW_IN_SATS = "payments_show_in_sats"
+    private const val BALANCE_HIDDEN = "payments_balance_hidden"
 
     private val LARGE_BALANCE_THRESHOLD = Money.bitcoin(BigDecimal.valueOf(500))
   }
+
+  /** Display amounts in satoshis rather than BTC. Mirrors iOS PaymentsDisplayPreferences. */
+  var showInSats: Boolean by booleanValue(SHOW_IN_SATS, false)
+
+  /** Whether the wallet balance is hidden behind a mask. Mirrors iOS PaymentsDisplayPreferences. */
+  var balanceHidden: Boolean by booleanValue(BALANCE_HIDDEN, false)
 
   @get:JvmName("isPaymentLockEnabled")
   var paymentLock: Boolean by booleanValue(PAYMENT_LOCK_ENABLED, false)

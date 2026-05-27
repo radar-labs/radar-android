@@ -134,6 +134,27 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     return buffer.internal().array()
   }
 
+  /** The currently-registered lightning-address username, or null if none/unavailable. */
+  fun getUsername(): String? {
+    if (sdk == null) return null
+    return runBlocking { sdk.getLightningAddress()?.username }
+  }
+
+  /** Whether [username] can be registered as a lightning address. */
+  fun isUsernameAvailable(username: String): Boolean {
+    if (sdk == null) return false
+    return runBlocking { sdk.checkLightningAddressAvailable(CheckLightningAddressRequest(username)) }
+  }
+
+  /** Registers [username] as the wallet's lightning address and re-uploads the profile address. */
+  fun registerUsername(username: String) {
+    val sdk = this.sdk ?: throw IllegalStateException("Breez SDK is not available")
+    runBlocking { sdk.registerLightningAddress(RegisterLightningAddressRequest(username)) }
+    val info = runBlocking { sdk.getLightningAddress() }
+    if (info != null) {
+      ProfileUtil.uploadLightingProfile(AppDependencies.application, LightningAddress(info.lightningAddress, info.lnurl.bech32))
+    }
+  }
 
   companion object {
     var sdkSingelton: BreezSdk? = null

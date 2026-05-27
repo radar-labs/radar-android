@@ -96,6 +96,22 @@ public class PaymentsHomeFragment extends LoggingFragment {
       SignalStore.payments().setPaymentLockSkipCount(++skipCount);
   }
 
+  /** Renders the balance respecting the hide/show and sats/BTC display preferences. */
+  private void renderBalance(@NonNull MoneyView balance) {
+    if (!balanceVisible) {
+      balance.setText("••••••");
+      return;
+    }
+    if (lastBalanceAmount == null) {
+      return;
+    }
+    if (SignalStore.payments().getShowInSats() && lastBalanceAmount instanceof org.whispersystems.signalservice.api.payments.Money.Satoshi) {
+      balance.setText(lastBalanceAmount.serializeAmountString() + " sats");
+    } else {
+      balance.setMoney(lastBalanceAmount);
+    }
+  }
+
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     Toolbar             toolbar             = view.findViewById(R.id.payments_home_fragment_toolbar);
@@ -171,25 +187,29 @@ public class PaymentsHomeFragment extends LoggingFragment {
       header.setVisibility(enabled ? View.VISIBLE : View.GONE);
     });
 
-    // Eye-icon toggle: show or hide the balance
+    // Initialize visibility from the persisted preference (mirrors iOS PaymentsDisplayPreferences).
+    balanceVisible = !SignalStore.payments().getBalanceHidden();
+    balanceToggle.setImageResource(balanceVisible ? R.drawable.ic_visibility_24dp
+                                                  : R.drawable.ic_visibility_off_24dp);
+
+    // Eye-icon toggle: persist + show/hide the balance.
     balanceToggle.setOnClickListener(v -> {
       balanceVisible = !balanceVisible;
+      SignalStore.payments().setBalanceHidden(!balanceVisible);
       balanceToggle.setImageResource(balanceVisible ? R.drawable.ic_visibility_24dp
                                                     : R.drawable.ic_visibility_off_24dp);
-      if (balanceVisible) {
-        if (lastBalanceAmount != null) {
-          balance.setMoney(lastBalanceAmount);
-        }
-      } else {
-        balance.setText("\u2022\u2022\u2022\u2022\u2022\u2022"); // ••••••
-      }
+      renderBalance(balance);
+    });
+
+    // Tap the balance to toggle between sats and BTC display.
+    balance.setOnClickListener(v -> {
+      SignalStore.payments().setShowInSats(!SignalStore.payments().getShowInSats());
+      renderBalance(balance);
     });
 
     viewModel.getBalance().observe(getViewLifecycleOwner(), balanceAmount -> {
       lastBalanceAmount = balanceAmount;
-      if (balanceVisible) {
-        balance.setMoney(balanceAmount);
-      }
+      renderBalance(balance);
       if (SignalStore.payments().getShowSaveRecoveryPhrase() &&
           !SignalStore.payments().getUserConfirmedMnemonic() &&
           !balanceAmount.isEqualOrLessThanZero()) {

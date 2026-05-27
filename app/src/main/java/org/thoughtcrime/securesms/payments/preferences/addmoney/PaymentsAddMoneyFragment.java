@@ -35,6 +35,9 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     TextView          walletAddressAbbreviated = view.findViewById(R.id.payments_add_money_abbreviated_wallet_address);
     View              copyAddress              = view.findViewById(R.id.payments_add_money_copy_address_button);
     LearnMoreTextView info                     = view.findViewById(R.id.payments_add_money_info);
+    View              editUsername             = view.findViewById(R.id.payments_add_money_edit_username_button);
+
+    editUsername.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_paymentsAddMoney_to_editLightningUsername));
 
     info.setLearnMoreVisible(true);
     info.setLink(getString(R.string.PaymentsAddMoneyFragment__learn_more__information));
