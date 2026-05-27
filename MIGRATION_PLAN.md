@@ -13,7 +13,7 @@
 ## Commits (chronological)
 
 - [x] `aba8376294` | 04-30 | feature | Add the new edit username screen (#2) → **DONE.** New `EditLightningUsernameFragment` (receive screen entry) backed by Breez `registerLightningAddress`/`checkLightningAddressAvailable`; display-pref store (`showInSats`/`balanceHidden`) in `PaymentsValues`; home balance: persist hide/show + tap to toggle sats/BTC. (skip: iOS test jpg; balance hide/show pre-existed via `42fde6304c`)
-- [ ] `496108d18f` | 04-30 | feature | new receive screen design (#3) → redesign receive/add-funds screen; use `BreezSdkWrapper`. (skip Podfile)
+- [x] `496108d18f` | 04-30 | feature | new receive screen design (#3) → **DONE.** Restructured `payments_add_money_fragment` (instruction text → bordered QR → `username@radar.cash` with domain tinted → copy/edit buttons → reworded description). (skip: Podfile; on-chain taproot fetch — commented out on iOS too, see ISSUES)
 - [ ] `1560256bb9` | 04-30 | bugfix | Do not show payments settings after payment confirmation from conversation (#6) → suppress auto-nav after in-chat payment.
 - [ ] `6315c2fd19` | 05-01 | ui | More UI changes (#4) → archived-payment bubble, input toolbar, payment-28 icon, deactivate/settings/history tweaks + string.
 - [ ] `d674a1a072` | 05-01 | bugfix | Fixes for crashing while filtering chat list by unread (#7) → conversation-list unread filter crash.

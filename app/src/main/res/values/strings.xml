@@ -4344,7 +4344,9 @@
     <string name="EditLightningUsernameFragment__could_not_register">Could not register username. Please try again.</string>
     <!-- Button on the receive screen to edit the lightning-address username -->
     <string name="EditLightningUsernameFragment__edit_username">Edit username</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">To add funds, send Bitcoin over Lightning to your wallet address. Start a transaction from your account on an exchange that supports Bitcoin over Lightning, then scan the QR code or copy your wallet address.</string>
+    <!-- Instruction shown above the QR code on the receive screen -->
+    <string name="PaymentsAddMoneyFragment__send_bitcoin_over_lightning">Send Bitcoin over the Lightning Network to the following address:</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">Start a transaction from your account or an exchange that supports Bitcoin over Lightning, then scan the QR code or copy your wallet address.</string>
     <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string>
 
     <!-- PaymentsDetailsFragment -->
