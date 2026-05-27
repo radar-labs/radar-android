@@ -112,3 +112,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Fold the add-funds-intro copy into the existing add-funds screen — rejected; a discrete step matches the iOS flow and the skip affordance.
 **Confidence:** high (step compiles; skips are clearly non-applicable iOS internals).
 **Revisit if:** Android QR rendering shows main-thread jank during onboarding (then add background rendering).
+
+## 2026-05-27 — iOS c90dd2d790 — Skipped (iOS-rendering rewrite + already-present)
+**Context:** iOS #14 rewrites the in-chat payment bubbles (`CVComponentArchivedPayment`, `CVComponentPaymentAttachment` — ~1200 lines), adds a chat-list payment snippet, and adds `SendPaymentConfirmViewController`.
+**Decision:** Skipped on Android. (1) The bubble rewrite is iOS CVComponent architecture; Android renders payment messages via a different component, `conversation/ui/payment/PaymentMessageView.kt`, which already works. (2) The send-confirm step already exists on Android as the full `payments/confirm/ConfirmPaymentFragment` flow. (3) The behavioral deltas worth carrying — showing the bubble amount in sats/BTC and masking it when `balanceHidden`, plus a richer chat-list snippet (Android currently shows the generic `ThreadRecord_payment` = "Payment") — are deferred to the sats-default commit `e694108c22` (#58), where sats display is generalized across surfaces (avoids doing the broad formatting change twice).
+**Alternatives considered:** Port the bubble visual redesign into `PaymentMessageView` blind — rejected; not verifiable without UI, and Android's bubble already functions.
+**Confidence:** medium — payment rendering + confirm flow demonstrably exist; the cosmetic redesign is intentionally not replicated.
+**Revisit if:** #58 doesn't generalize sats/hidden into `PaymentMessageView`, or product wants the specific iOS bubble look.
