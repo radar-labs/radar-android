@@ -170,3 +170,8 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Caveat (important):** this changes how the wallet is derived from the stored entropy — the derived address/keys differ from the old `Seed.Entropy` path. This matches the iOS change (deliberate, pre-GA), but any wallet created on the old Android seeding would derive differently. Acceptable for parity; flag for device verification that existing/new wallets behave as expected and the phrase restores in Cake.
 **Confidence:** medium — compiles; seed-derivation behavior needs device verification.
 **Revisit if:** existing test wallets need migration, or the entropy/mnemonic round-trip differs from iOS's `MnemonicSwift`.
+
+## 2026-05-27 — iOS 18c479ada0 — Skipped (iOS-UIKit send-screen crash)
+**Context:** iOS fixed a crash in `SendPaymentViewController` caused by calling `UIView.matchWidthsOfViews([...])` before the spacer views were added to their `UIStackView`, plus added a paste icon to the note field.
+**Decision:** Skipped — iOS-platform-specific. The crash is a UIKit Auto Layout ordering issue with no Android analog (Android's send flow is `payments/create/CreatePaymentFragment`, different rendering). The note paste icon is minor iOS UI.
+**Confidence:** high. **Revisit if:** an analogous crash is seen in Android's create-payment screen.
