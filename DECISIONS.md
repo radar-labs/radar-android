@@ -119,3 +119,8 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Port the bubble visual redesign into `PaymentMessageView` blind — rejected; not verifiable without UI, and Android's bubble already functions.
 **Confidence:** medium — payment rendering + confirm flow demonstrably exist; the cosmetic redesign is intentionally not replicated.
 **Revisit if:** #58 doesn't generalize sats/hidden into `PaymentMessageView`, or product wants the specific iOS bubble look.
+
+## 2026-05-27 — iOS 8f92be19fb — Skipped (iOS CVComponent refinement)
+**Context:** Further refinement of the in-chat payment bubbles (`CVComponentArchivedPayment`, `CVComponentPaymentAttachment`, `CVComponentMessage`) + a payment-notification tweak.
+**Decision:** Skipped for the same reason as `c90dd2d790` — iOS CVComponent rendering; Android uses `PaymentMessageView.kt`. The bubble sats/hidden formatting carries with #58.
+**Confidence:** medium. **Revisit if:** #58 doesn't cover `PaymentMessageView`.
