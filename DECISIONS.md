@@ -90,3 +90,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Build a unified Android "send to" screen — rejected as a large rework of working, idiomatic Android flows.
 **Confidence:** medium-high — the flows exist and are wired; I did not exhaustively re-test contact filtering UX.
 **Revisit if:** the product specifically wants the unified single-screen send experience on Android.
+
+## 2026-05-27 — iOS b0bd09c807 — Branding (#12): name/sats already done, icon deferred
+**Context:** iOS #12 set the app name to Radar, swapped the app icon to the Radar mark (removing alternate Signal icons), and changed the satoshi identifier "sat"→"sats".
+**Decision:** No code change needed for name/sats — Android's `app_name` is already "Radar", and Android already renders satoshis as "sats" everywhere (the `renderBalance` helper and Bitcoin Unit picker from commits #1/#7; there is no singular "sat" identifier). The **launcher icon is deferred** (see ISSUES) — it's still Signal's and needs proper Android adaptive + legacy-density assets that can't be produced/verified reliably here, and it's re-changed in #24.
+**Alternatives considered:** Hand-convert `radar-logo.svg` to an adaptive foreground only — rejected; legacy PNGs would remain Signal and masking is unverifiable. Better done once with Image Asset Studio covering #12+#24.
+**Confidence:** high (name/sats); the icon is explicitly deferred.
+**Revisit if:** handling iOS #24 (the icon is re-changed there) — do both at once.

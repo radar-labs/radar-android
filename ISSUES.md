@@ -75,3 +75,11 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Suggested next step:** Wire on-chain receive when Breez taproot support is finalized; reconcile QR encoding during the Cake-compat commits.
 **Severity:** low
 **Android files involved:** `PaymentsAddMoneyFragment.java`, `PaymentsAddMoneyViewModel.kt`, `BreezSdkWrapper.kt`.
+
+## 2026-05-27 — iOS b0bd09c807 / 1ce180c53e — Launcher icon still Signal's
+**Type:** deferred
+**What happened:** iOS #12 (and again #24) replaced the app icon with the Radar mark and removed the alternate Signal icons. On Android the launcher icon is still Signal's: adaptive `drawable/ic_launcher_foreground` + `ic_launcher_background` + `ic_launcher_monochrome`, legacy `mipmap-*/ic_launcher.png` across 5 densities, plus a set of alternate icons (`ic_launcher_alt_*`). The Radar source art exists in the iOS repo (`radar-logo.svg`, `AppIcons/AppIcon.icon/Assets/radar-icon-*.png`).
+**What I tried:** Inspected the SVG (single-color #0069FE radar mark) — convertible to a vector, but a correct adaptive icon needs safe-zone scaling + regenerated legacy PNGs (5 densities) that can't be visually verified here, and the icon is re-changed in #24.
+**Suggested next step:** Generate the Android launcher icon from the Radar logo via Android Studio's Image Asset Studio (adaptive foreground/background + monochrome + legacy PNGs); decide whether to drop the alternate-icon feature (`ic_launcher_alt_*`) as iOS did. Apply once, covering both #12 and #24.
+**Severity:** medium
+**Android files involved:** `res/mipmap-*/ic_launcher*.png`, `res/mipmap-anydpi-v26/ic_launcher*.xml`, `res/drawable/ic_launcher_*`.
