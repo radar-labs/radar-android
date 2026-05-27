@@ -4324,6 +4324,26 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">Your Wallet Address</string>
     <string name="PaymentsAddMoneyFragment__copy">Copy</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">Copied to clipboard</string>
+
+    <!-- EditLightningUsernameFragment: edit your Radar lightning-address username -->
+    <!-- Title of the edit-username screen -->
+    <string name="EditLightningUsernameFragment__title">Your Radar Username</string>
+    <!-- Subtitle explaining what the username is for -->
+    <string name="EditLightningUsernameFragment__subtitle">Set your custom identifier for receiving payments on Radar</string>
+    <!-- Hint text shown in the username input field -->
+    <string name="EditLightningUsernameFragment__username_hint">username</string>
+    <!-- Button to confirm the chosen username -->
+    <string name="EditLightningUsernameFragment__confirm">Confirm</string>
+    <!-- Button to skip choosing a username -->
+    <string name="EditLightningUsernameFragment__skip">Skip this step</string>
+    <!-- Status shown when the entered username is available -->
+    <string name="EditLightningUsernameFragment__username_available">Username available</string>
+    <!-- Status shown when the entered username is already taken -->
+    <string name="EditLightningUsernameFragment__username_unavailable">Username unavailable</string>
+    <!-- Toast shown when registering the username fails -->
+    <string name="EditLightningUsernameFragment__could_not_register">Could not register username. Please try again.</string>
+    <!-- Button on the receive screen to edit the lightning-address username -->
+    <string name="EditLightningUsernameFragment__edit_username">Edit username</string>
     <string name="PaymentsAddMoneyFragment__to_add_funds">To add funds, send Bitcoin over Lightning to your wallet address. Start a transaction from your account on an exchange that supports Bitcoin over Lightning, then scan the QR code or copy your wallet address.</string>
     <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string>
 

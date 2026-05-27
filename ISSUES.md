@@ -59,3 +59,11 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Suggested next step:** Not in scope to remove wholesale; touch only where a mirrored commit requires it.
 **Severity:** low
 **Android files involved:** `payments/`, `backup/`, config.
+
+## 2026-05-27 — iOS aba8376294 — Username change & localized sats display
+**Type:** risk / tech-debt
+**What happened:** Mirroring the edit-username screen, two things need a human eye: (1) `registerUsername()` calls Breez `registerLightningAddress` with the new name — it is unverified whether the SDK allows *changing* an already-registered lightning address (it may error if one exists); iOS calls the same API from its edit screen, so presumably it's supported. (2) The sats/BTC toggle currently re-renders only the **home-screen balance** (`renderBalance()`); other amount displays (chat bubbles, history, send) still show BTC. iOS threaded `isSatoshiEnabled` through all formatters.
+**What I tried:** Confirmed the Breez Android binding exposes `checkLightningAddressAvailable`/`registerLightningAddress` (sources jar). Localized sats rendering to avoid a broad `MoneyView` change this early.
+**Suggested next step:** Verify username-change semantics against a live wallet. Generalize sats display when mirroring iOS #58 ("Sats by default") — likely centralize in `MoneyView`/`Money` formatting.
+**Severity:** medium
+**Android files involved:** `BreezSdkWrapper.kt`, `EditLightningUsernameFragment.kt`, `PaymentsHomeFragment.java`, `MoneyView.java` (future).
