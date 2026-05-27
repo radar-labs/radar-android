@@ -3,6 +3,9 @@
     <item android:id="@+id/payments_home_fragment_menu_set_currency"
         android:title="@string/PaymentsHomeFragment__currency_conversion" />
 
+    <item android:id="@+id/payments_home_fragment_menu_bitcoin_unit"
+        android:title="@string/PaymentsHomeFragment__bitcoin_unit" />
+
     <item android:id="@+id/payments_home_fragment_menu_deactivate_wallet"
         android:title="@string/PaymentsHomeFragment__deactivate_payments" />
 

@@ -70,3 +70,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Add a hidden-balance insufficient-funds string anyway — rejected, there's no UI surface that shows it.
 **Confidence:** high
 **Revisit if:** Android adds an insufficient-balance dialog that reveals the balance.
+
+## 2026-05-27 — iOS d0ae4ae661 — New payment settings (#8): added Bitcoin Unit picker
+**Context:** iOS extracted a dedicated `PaymentSettingsMenuViewController` listing: Set Currency, Bitcoin Unit (sats/BTC picker), View Recovery Passphrase, Help, Deactivate. Also added the iOS `CLAUDE.md` and an `ci_scripts/test_apns_push.py`.
+**Decision:** On Android the payment-settings menu already exists as the `PaymentsHomeFragment` toolbar overflow (Set currency, Recovery phrase, Help, Deactivate) — so only the **net-new "Bitcoin Unit" item** was added: a menu entry opening a single-choice dialog (BTC/sats) that sets `showInSats` and re-renders the balance. Did not create a separate menu screen (Android's toolbar menu is the idiomatic equivalent). Skipped the iOS `CLAUDE.md` (iOS localization rules, not applicable) and `ci_scripts/test_apns_push.py` (iOS APNs tooling).
+**Alternatives considered:** Build a dedicated payments-settings Fragment to mirror the iOS screen 1:1 — rejected as redundant with the existing toolbar menu.
+**Confidence:** high
+**Revisit if:** the product wants a full dedicated payments-settings screen rather than the toolbar menu.
