@@ -124,3 +124,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Context:** Further refinement of the in-chat payment bubbles (`CVComponentArchivedPayment`, `CVComponentPaymentAttachment`, `CVComponentMessage`) + a payment-notification tweak.
 **Decision:** Skipped for the same reason as `c90dd2d790` — iOS CVComponent rendering; Android uses `PaymentMessageView.kt`. The bubble sats/hidden formatting carries with #58.
 **Confidence:** medium. **Revisit if:** #58 doesn't cover `PaymentMessageView`.
+
+## 2026-05-27 — iOS 0700d00c3a — Disable promotional megaphone fetching (#13)
+**Context:** iOS commented out `RemoteMegaphoneFetcher.syncRemoteMegaphonesIfNecessary()` in `AppDelegate` to stop Signal's promotional megaphones (e.g. "Donate Today") from being fetched/shown.
+**Decision:** Android's analog is `RetrieveRemoteAnnouncementsJob` (fetches release-notes + remote megaphones from S3). Disabled its routine launch trigger by commenting out `RetrieveRemoteAnnouncementsJob.enqueue(true)` in `VersionTracker.updateLastSeenVersion()` (called on app version change) and removing the now-unused import. Gated at the call site (not inside `enqueue`) to avoid unreachable-code warnings and to mirror iOS's call-site disable. Left the internal/debug force-fetch in `InternalSettingsFragment` untouched (debug-only).
+**Note:** This is reverted by `69784aaa79` (#16) — Android will restore the call there, matching the iOS net state (megaphones NOT disabled at HEAD). Applied both separately (non-adjacent, so not squashed).
+**Confidence:** high
+**Revisit if:** there's another routine enqueue path for remote announcements beyond `VersionTracker`.
