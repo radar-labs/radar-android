@@ -83,3 +83,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Decision:** Skipped — no Android analog (same reasoning as `d674a1a072`). Android filtering is RecyclerView-based with no `performBatchUpdates`.
 **Confidence:** high
 **Revisit if:** an analogous Android conversation-list filtering crash is reported.
+
+## 2026-05-27 — iOS f1a85d3fbe — Skipped (Android send flow already exists)
+**Context:** iOS "finished" its send-payment flow by merging contact-pick and address-entry into one unified "send to" screen (search field + paste + scan-QR + contact list).
+**Decision:** Skipped — Android already implements the send-payment recipient selection as two existing, wired screens: `PaymentRecipientSelectionFragment` (pick a contact) and `PaymentsTransferFragment` + `PaymentsTransferQrScanFragment` (enter/scan an address), both launched from the PaymentsHome send popup menu. The iOS change is an iOS-specific UI unification; replicating it would be a UI rework with no behavioral gain (Android's separate-screen flow is the Signal-Android idiom and already complete).
+**Alternatives considered:** Build a unified Android "send to" screen — rejected as a large rework of working, idiomatic Android flows.
+**Confidence:** medium-high — the flows exist and are wired; I did not exhaustively re-test contact filtering UX.
+**Revisit if:** the product specifically wants the unified single-screen send experience on Android.
