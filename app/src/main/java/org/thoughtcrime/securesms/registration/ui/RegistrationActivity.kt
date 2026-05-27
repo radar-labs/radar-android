@@ -17,6 +17,7 @@ import org.thoughtcrime.securesms.BaseActivity
 import org.thoughtcrime.securesms.MainActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingActivity
 import org.thoughtcrime.securesms.registration.sms.SmsRetrieverReceiver
 import org.thoughtcrime.securesms.registration.util.RegistrationUtil
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme
@@ -63,7 +64,14 @@ class RegistrationActivity : BaseActivity() {
       SignalStore.misc.shouldShowLinkedDevicesReminder = sharedViewModel.isReregister
     }
 
-    startActivity(MainActivity.clearTop(this))
+    // New registrations enter the payments onboarding flow once (mirrors iOS PaymentsOnboardingCoordinator);
+    // it always routes on to MainActivity. Re-registration goes straight to the app.
+    if (!sharedViewModel.isReregister && !SignalStore.payments.paymentsOnboardingShown) {
+      SignalStore.payments.paymentsOnboardingShown = true
+      startActivity(PaymentsOnboardingActivity.createIntent(this))
+    } else {
+      startActivity(MainActivity.clearTop(this))
+    }
     finish()
     ActivityNavigator.applyPopAnimationsToPendingTransition(this)
   }

@@ -83,3 +83,10 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Suggested next step:** Generate the Android launcher icon from the Radar logo via Android Studio's Image Asset Studio (adaptive foreground/background + monochrome + legacy PNGs); decide whether to drop the alternate-icon feature (`ic_launcher_alt_*`) as iOS did. Apply once, covering both #12 and #24.
 **Severity:** medium
 **Android files involved:** `res/mipmap-*/ic_launcher*.png`, `res/mipmap-anydpi-v26/ic_launcher*.xml`, `res/drawable/ic_launcher_*`.
+
+## 2026-05-27 — iOS 07343eab15 — Payments onboarding: verify on device
+**Type:** risk
+**What happened:** The onboarding flow was ported as a self-contained `PaymentsOnboardingActivity` launched after a new registration. It compiles but was not UI-run. Points to verify on a device: (1) the post-registration launch + one-time gating (`paymentsOnboardingShown`) — ensure no double-show and no getting stranded (every exit calls `finishToMain()`); (2) the deposit-received transition (observes `liveMobileCoinBalance()` 0→positive — confirm it fires on a real incoming deposit and not spuriously); (3) the QR/address render in the add-funds step; (4) whether the username step should be added to onboarding (currently omitted).
+**Suggested next step:** Run a fresh-registration flow on a device/emulator and walk all four screens incl. a real deposit; decide on the username step.
+**Severity:** medium
+**Android files involved:** `payments/onboarding/*`, `registration/ui/RegistrationActivity.kt`, `res/navigation/payments_onboarding.xml`.

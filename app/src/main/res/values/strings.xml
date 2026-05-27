@@ -4346,6 +4346,32 @@
     <string name="EditLightningUsernameFragment__could_not_register">Could not register username. Please try again.</string>
     <!-- Button on the receive screen to edit the lightning-address username -->
     <string name="EditLightningUsernameFragment__edit_username">Edit username</string>
+
+    <!-- Payments onboarding flow -->
+    <!-- Intro screen title -->
+    <string name="PaymentsOnboarding__intro_title">Introducing Payments</string>
+    <!-- Intro screen subtitle -->
+    <string name="PaymentsOnboarding__intro_subtitle">With Radar, you can send and receive money in your chats.</string>
+    <!-- Intro screen body -->
+    <string name="PaymentsOnboarding__intro_body">Thanks to the Bitcoin Lightning Network, it\'s easy, fast and private.</string>
+    <!-- Generic continue button -->
+    <string name="PaymentsOnboarding__continue">Continue</string>
+    <!-- Generic skip button -->
+    <string name="PaymentsOnboarding__skip">Skip</string>
+    <!-- Deposit received screen title -->
+    <string name="PaymentsOnboarding__deposit_received_title">Deposit Received</string>
+    <!-- Deposit received screen subtitle -->
+    <string name="PaymentsOnboarding__deposit_received_subtitle">You can now start sending payments on Radar</string>
+    <!-- Deposit received: button to add more funds -->
+    <string name="PaymentsOnboarding__deposit_more">Deposit more Funds</string>
+    <!-- Unit label shown after the deposited amount -->
+    <string name="PaymentsOnboarding__sats">sats</string>
+    <!-- Setup complete screen title -->
+    <string name="PaymentsOnboarding__setup_complete_title">Setup Complete</string>
+    <!-- Setup complete screen subtitle -->
+    <string name="PaymentsOnboarding__setup_complete_subtitle">You can now start using Radar</string>
+    <!-- Add funds onboarding step title -->
+    <string name="PaymentsOnboarding__add_funds_title">Add funds to get started</string>
     <!-- Instruction shown above the QR code on the receive screen -->
     <string name="PaymentsAddMoneyFragment__send_bitcoin_over_lightning">Send Bitcoin over the Lightning Network to the following address:</string>
     <string name="PaymentsAddMoneyFragment__to_add_funds">Start a transaction from your account or an exchange that supports Bitcoin over Lightning, then scan the QR code or copy your wallet address.</string>

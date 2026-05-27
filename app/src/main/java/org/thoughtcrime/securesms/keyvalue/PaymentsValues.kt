@@ -50,6 +50,7 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     private const val SHOW_SAVE_RECOVERY_PHRASE = "mob_show_save_recovery_phrase"
     private const val SHOW_IN_SATS = "payments_show_in_sats"
     private const val BALANCE_HIDDEN = "payments_balance_hidden"
+    private const val PAYMENTS_ONBOARDING_SHOWN = "payments_onboarding_shown"
 
     private val LARGE_BALANCE_THRESHOLD = Money.bitcoin(BigDecimal.valueOf(500))
   }
@@ -59,6 +60,9 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
 
   /** Whether the wallet balance is hidden behind a mask. Mirrors iOS PaymentsDisplayPreferences. */
   var balanceHidden: Boolean by booleanValue(BALANCE_HIDDEN, false)
+
+  /** Whether the post-registration payments onboarding flow has already been shown. */
+  var paymentsOnboardingShown: Boolean by booleanValue(PAYMENTS_ONBOARDING_SHOWN, false)
 
   @get:JvmName("isPaymentLockEnabled")
   var paymentLock: Boolean by booleanValue(PAYMENT_LOCK_ENABLED, false)

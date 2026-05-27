@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payments_onboarding"
+    app:startDestination="@id/paymentsOnboardingIntro">
+
+    <fragment
+        android:id="@+id/paymentsOnboardingIntro"
+        android:name="org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingIntroFragment"
+        tools:layout="@layout/fragment_payments_onboarding_intro">
+        <action
+            android:id="@+id/action_intro_to_addFunds"
+            app:destination="@id/paymentsOnboardingAddFunds" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentsOnboardingAddFunds"
+        android:name="org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingAddFundsFragment"
+        tools:layout="@layout/fragment_payments_onboarding_add_funds">
+        <action
+            android:id="@+id/action_addFunds_to_setupComplete"
+            app:destination="@id/paymentsOnboardingSetupComplete"
+            app:popUpTo="@id/paymentsOnboardingIntro"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addFunds_to_depositReceived"
+            app:destination="@id/paymentsOnboardingDepositReceived" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentsOnboardingDepositReceived"
+        android:name="org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingDepositReceivedFragment"
+        tools:layout="@layout/fragment_payments_onboarding_deposit_received">
+        <action
+            android:id="@+id/action_depositReceived_to_setupComplete"
+            app:destination="@id/paymentsOnboardingSetupComplete"
+            app:popUpTo="@id/paymentsOnboardingIntro"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentsOnboardingSetupComplete"
+        android:name="org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingSetupCompleteFragment"
+        tools:layout="@layout/fragment_payments_onboarding_setup_complete" />
+
+</navigation>
