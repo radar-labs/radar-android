@@ -4217,6 +4217,18 @@
     <string name="PaymentsHomeFragment__currency_conversion">Currency conversion</string>
     <!-- Payments settings menu item to choose the bitcoin display unit (BTC or sats) -->
     <string name="PaymentsHomeFragment__bitcoin_unit">Bitcoin unit</string>
+    <!-- Payments settings menu item to view Lightning/Breez SDK logs -->
+    <string name="PaymentsHomeFragment__lightning_logs">Lightning logs</string>
+
+    <!-- LightningLogs: Breez/Lightning SDK log viewer -->
+    <!-- Title of the Lightning logs screen -->
+    <string name="LightningLogs__title">Lightning logs</string>
+    <!-- Button to copy the logs to the clipboard -->
+    <string name="LightningLogs__copy">Copy</string>
+    <!-- Toast shown after copying the logs -->
+    <string name="LightningLogs__copied">Logs copied to clipboard</string>
+    <!-- Placeholder when no logs have been captured yet -->
+    <string name="LightningLogs__no_logs">No logs yet</string>
     <string name="PaymentsHomeFragment__deactivate_payments">Deactivate payments</string>
     <string name="PaymentsHomeFragment__recovery_phrase">Recovery phrase</string>
     <string name="PaymentsHomeFragment__help">Help</string>

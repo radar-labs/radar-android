@@ -32,6 +32,14 @@
             app:popExitAnim="@anim/fragment_close_exit" />
 
         <action
+            android:id="@+id/action_paymentsHome_to_lightningLogs"
+            app:destination="@id/lightningLogs"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
             android:id="@+id/action_paymentsHome_to_paymentRecipientSelectionFragment"
             app:destination="@id/paymentRecipientSelectionFragment"
             app:enterAnim="@anim/fragment_open_enter"
@@ -192,6 +200,11 @@
         android:id="@+id/editLightningUsername"
         android:name="org.thoughtcrime.securesms.payments.preferences.addmoney.EditLightningUsernameFragment"
         tools:layout="@layout/fragment_edit_lightning_username" />
+
+    <fragment
+        android:id="@+id/lightningLogs"
+        android:name="org.thoughtcrime.securesms.payments.preferences.LightningLogsFragment"
+        tools:layout="@layout/fragment_lightning_logs" />
 
     <fragment
         android:id="@+id/setCurrency"

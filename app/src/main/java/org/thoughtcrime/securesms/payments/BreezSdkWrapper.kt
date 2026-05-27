@@ -168,6 +168,7 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     var sdkSingelton: BreezSdk? = null
 
     fun connect(entropy: ByteArray): BreezSdk {
+      LightningLogger.installIfNeeded()
       if (sdkSingelton == null) {
         val config = defaultConfig(Network.MAINNET)
         config.apiKey =
