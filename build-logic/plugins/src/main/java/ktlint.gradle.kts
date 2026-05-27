@@ -2,6 +2,6 @@ plugins {
   id("org.jlleitschuh.gradle.ktlint")
 }
 
-ktlint {
+configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
   version.set("1.5.0")
 }

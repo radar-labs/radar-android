@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Bitcoin ₿ symbol — the classic bold B with two short vertical strokes
+  protruding above and below, drawn at 24×24 dp viewport.
+  Fully tintable via app:tint / ImageButton.setColorFilter().
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!--
+      Two vertical serif strokes (the "₿" bars through the B):
+        - Top bar: x=7.5..9.5, y=2..4.5
+        - Bottom bar: x=7.5..9.5, y=19.5..22
+    -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="
+          M8,2 L9.5,2 L9.5,4.5 L8,4.5 Z
+          M8,19.5 L9.5,19.5 L9.5,22 L8,22 Z
+        " />
+
+    <!--
+      The main ₿ body — a bold B letterform with two bumps.
+      Stem runs from y=4.5 to y=19.5 at x=8..9.5.
+      Upper bump: rounded right protrusion from y=4.5 to y=12.
+      Lower bump: slightly wider rounded protrusion from y=12 to y=19.5.
+    -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="
+          M8,4.5
+          L13,4.5
+          C15.5,4.5 17,5.9 17,8
+          C17,9.6 16.1,10.7 14.8,11.25
+          C16.5,11.8 17.5,13.1 17.5,15
+          C17.5,17.4 15.7,19.5 13,19.5
+          L8,19.5
+          Z
+
+          M9.5,10.5 L12.8,10.5
+          C14.2,10.5 15.3,9.6 15.3,8.1
+          C15.3,6.7 14.3,6 12.8,6
+          L9.5,6
+          Z
+
+          M9.5,18 L13.1,18
+          C14.7,18 15.8,16.9 15.8,15.2
+          C15.8,13.6 14.6,12.2 13,12.2
+          L9.5,12.2
+          Z
+        "
+        android:fillType="evenOdd" />
+
+</vector>
