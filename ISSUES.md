@@ -80,9 +80,9 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Type:** deferred
 **What happened:** iOS #12 (and again #24) replaced the app icon with the Radar mark and removed the alternate Signal icons. On Android the launcher icon is still Signal's: adaptive `drawable/ic_launcher_foreground` + `ic_launcher_background` + `ic_launcher_monochrome`, legacy `mipmap-*/ic_launcher.png` across 5 densities, plus a set of alternate icons (`ic_launcher_alt_*`). The Radar source art exists in the iOS repo (`radar-logo.svg`, `AppIcons/AppIcon.icon/Assets/radar-icon-*.png`).
 **What I tried:** Inspected the SVG (single-color #0069FE radar mark) — convertible to a vector, but a correct adaptive icon needs safe-zone scaling + regenerated legacy PNGs (5 densities) that can't be visually verified here, and the icon is re-changed in #24.
-**Suggested next step:** Generate the Android launcher icon from the Radar logo via Android Studio's Image Asset Studio (adaptive foreground/background + monochrome + legacy PNGs); decide whether to drop the alternate-icon feature (`ic_launcher_alt_*`) as iOS did. Apply once, covering both #12 and #24.
+**Suggested next step:** Generate the Android launcher icon from the Radar logo via Android Studio's Image Asset Studio (adaptive foreground/background + monochrome + legacy PNGs); decide whether to drop the alternate-icon feature (`ic_launcher_alt_*`) as iOS did. Apply once, covering both #12 and #24. **Also covers the splash (`f21e3145bc`):** the splash logo `res/drawable*/ic_splash*.xml` (+ `drawable-night`) is still Signal's — repoint it at a Radar logo vector. Converting `radar-logo.svg` (single-color #0069FE, viewBox 82×82) into a reusable Android vector `drawable/radar_logo.xml` would unblock the splash, the adaptive-icon foreground, and replace the `ic_coin_24` stand-ins used in the onboarding/username screens.
 **Severity:** medium
-**Android files involved:** `res/mipmap-*/ic_launcher*.png`, `res/mipmap-anydpi-v26/ic_launcher*.xml`, `res/drawable/ic_launcher_*`.
+**Android files involved:** `res/mipmap-*/ic_launcher*.png`, `res/mipmap-anydpi-v26/ic_launcher*.xml`, `res/drawable/ic_launcher_*`, `res/drawable*/ic_splash*.xml`.
 
 ## 2026-05-27 — iOS 07343eab15 — Payments onboarding: verify on device
 **Type:** risk

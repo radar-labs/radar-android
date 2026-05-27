@@ -37,7 +37,7 @@
 - [x] `69784aaa79` | 05-12 | revert | revert commenting out signal's promotions → **DONE.** Restored `RetrieveRemoteAnnouncementsJob.enqueue(true)` + import in `VersionTracker` (reverts `0700d00c3a`). Net effect with `0700d00c3a` = no change, matching iOS HEAD.
 - [s] `68a5b76c2d` | 05-12 | merge | Merge main into set-username-from-onboarding → SKIP.
 - [s] `cd62ac850e` | 05-12 | merge | Merge PR #16 set-username-from-onboarding → SKIP.
-- [ ] `f21e3145bc` | 05-12 | ui | update splash screen → Radar splash assets.
+- [d] `f21e3145bc` | 05-12 | ui | update splash screen → **DEFERRED (asset).** Pure splash-logo asset swap (signal-logo → radar-splash). Android splash logo is `ic_splash*.xml` vectors (still Signal's); needs the Radar logo as an Android vector. Bundled with the launcher-icon asset task. See ISSUES.md.
 - [s] `ee9a028190` | 05-13 | merge | Merge PR #17 update-splash-screen → SKIP.
 - [ ] `ef746878d2` | 05-13 | style | add a space between balance and currency → format tweak.
 - [ ] `37007fe8e8` | 05-13 | ui | update UI from review comments → currency picker, payment cell/menu, chat-list cell, tab bar.
