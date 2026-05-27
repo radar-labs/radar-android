@@ -4215,6 +4215,8 @@
     <string name="PaymentsHomeFragment__send_to_contact">Send to Contact</string>
     <string name="PaymentsHomeFragment__send_to_address">Send to Address</string>
     <string name="PaymentsHomeFragment__currency_conversion">Currency conversion</string>
+    <!-- Payments settings menu item to choose the bitcoin display unit (BTC or sats) -->
+    <string name="PaymentsHomeFragment__bitcoin_unit">Bitcoin unit</string>
     <string name="PaymentsHomeFragment__deactivate_payments">Deactivate payments</string>
     <string name="PaymentsHomeFragment__recovery_phrase">Recovery phrase</string>
     <string name="PaymentsHomeFragment__help">Help</string>

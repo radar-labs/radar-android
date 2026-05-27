@@ -324,6 +324,24 @@ public class PaymentsHomeFragment extends LoggingFragment {
     viewModel.checkPaymentActivationState();
   }
 
+  /** Lets the user choose the bitcoin display unit (BTC or sats); mirrors iOS BitcoinUnitPicker. */
+  private void showBitcoinUnitPicker() {
+    final String[] options = { "BTC", "sats" };
+    int checked = SignalStore.payments().getShowInSats() ? 1 : 0;
+    new MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.PaymentsHomeFragment__bitcoin_unit)
+        .setSingleChoiceItems(options, checked, (dialog, which) -> {
+          SignalStore.payments().setShowInSats(which == 1);
+          MoneyView balance = requireView().findViewById(R.id.payments_home_fragment_header_balance);
+          if (balance != null) {
+            renderBalance(balance);
+          }
+          dialog.dismiss();
+        })
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
+
   private void showUpdateIsRequiredDialog() {
     new MaterialAlertDialogBuilder(requireContext())
         .setTitle(getString(R.string.PaymentsHomeFragment__update_required))
@@ -351,6 +369,9 @@ public class PaymentsHomeFragment extends LoggingFragment {
       return true;
     } else if (item.getItemId() == R.id.payments_home_fragment_menu_set_currency) {
       SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_setCurrency);
+      return true;
+    } else if (item.getItemId() == R.id.payments_home_fragment_menu_bitcoin_unit) {
+      showBitcoinUnitPicker();
       return true;
     } else if (item.getItemId() == R.id.payments_home_fragment_menu_deactivate_wallet) {
       viewModel.deactivatePayments();
