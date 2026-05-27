@@ -47,9 +47,9 @@
 - [d] `0e11af806c` | 05-15 | feature | Add support for radar push relay (#19) → FCM push-relay equivalent. **Higher risk** — likely DEFER, see ISSUES.
 - [s] `6dfdedcd5c` | 05-15 | merge | Merge PR #18 ui-fixes → SKIP (captured via constituents).
 - [x] `c349ec12a9` | 05-16 | style | Move payments tab up a bit in the settings page → **DONE.** Moved "Data & Storage" below Payments in `AppSettingsFragment` so Payments sits higher (mirrors iOS reorder).
-- [ ] `e5f586cbd3` | 05-16 | feature | Finalize the UI for onchain Add Funds → onchain add-funds UI + strings.
+- [x] `e5f586cbd3` | 05-16 | feature | Finalize the UI for onchain Add Funds → **DONE.** Added a Lightning/on-chain toggle on the receive screen (`PaymentsAddMoneyFragment`); on-chain address fetched via new `BreezSdkWrapper.getOnchainAddress()` (`receivePayment(BitcoinAddress)`). See DECISIONS.md.
 - [s] `192f5fdd5d` | 05-16 | merge | Merge PR #21 add-funds-onchain → SKIP.
-- [ ] `58e9dc6118` | 05-17 | ui | Update the UI of onchain address → onchain address layout.
+- [x] `58e9dc6118` | 05-17 | ui | Update the UI of onchain address → **DONE (covered).** Refinement of the same on-chain receive UI; covered by the toggle implemented for `e5f586cbd3` (on-chain address shown plain, Lightning address domain-tinted).
 - [d] `ae56882371` | 05-18 | bugfix | Fix backup restore issue (#20) → registration + payments-helper restore. **Backup path differs** — verify/defer.
 - [ ] `951716f333` | 05-18 | feature | Add breez logs (#22) → Lightning logs viewer settings screen + logger util.
 - [ ] `85485a8b7d` | 05-18 | bugfix | Fix compatability with cake (#23) → `BreezSdkWrapper` invoice/address compat.

@@ -4378,6 +4378,10 @@
     <string name="PaymentsOnboarding__add_funds_intro_subtitle">To start sending payments, deposit funds from your existing account or exchange</string>
     <!-- Instruction shown above the QR code on the receive screen -->
     <string name="PaymentsAddMoneyFragment__send_bitcoin_over_lightning">Send Bitcoin over the Lightning Network to the following address:</string>
+    <!-- Button to switch the receive screen to an on-chain Bitcoin address -->
+    <string name="PaymentsAddMoneyFragment__show_onchain_address">Show on-chain address</string>
+    <!-- Button to switch the receive screen back to the Lightning address -->
+    <string name="PaymentsAddMoneyFragment__show_lightning_address">Show Lightning address</string>
     <string name="PaymentsAddMoneyFragment__to_add_funds">Start a transaction from your account or an exchange that supports Bitcoin over Lightning, then scan the QR code or copy your wallet address.</string>
     <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string>
 
