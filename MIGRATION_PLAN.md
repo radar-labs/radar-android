@@ -46,7 +46,7 @@
 - [s] `81edb47849` | 05-14 | style | add padding → **SKIPPED — iOS layout** (single `setCustomSpacing` on the iOS receive stack; Android receive layout differs).
 - [d] `0e11af806c` | 05-15 | feature | Add support for radar push relay (#19) → FCM push-relay equivalent. **Higher risk** — likely DEFER, see ISSUES.
 - [s] `6dfdedcd5c` | 05-15 | merge | Merge PR #18 ui-fixes → SKIP (captured via constituents).
-- [ ] `c349ec12a9` | 05-16 | style | Move payments tab up a bit in the settings page → settings ordering.
+- [x] `c349ec12a9` | 05-16 | style | Move payments tab up a bit in the settings page → **DONE.** Moved "Data & Storage" below Payments in `AppSettingsFragment` so Payments sits higher (mirrors iOS reorder).
 - [ ] `e5f586cbd3` | 05-16 | feature | Finalize the UI for onchain Add Funds → onchain add-funds UI + strings.
 - [s] `192f5fdd5d` | 05-16 | merge | Merge PR #21 add-funds-onchain → SKIP.
 - [ ] `58e9dc6118` | 05-17 | ui | Update the UI of onchain address → onchain address layout.

@@ -440,16 +440,6 @@ private fun AppSettingsContent(
           }
         }
 
-        item {
-          Rows.TextRow(
-            text = stringResource(R.string.preferences__data_and_storage),
-            icon = painterResource(R.drawable.symbol_data_24),
-            onClick = {
-              callbacks.navigate(AppSettingsRoute.DataAndStorageRoute.DataAndStorage)
-            }
-          )
-        }
-
         if (state.showAppUpdates) {
           item {
             Rows.TextRow(
@@ -503,6 +493,18 @@ private fun AppSettingsContent(
               }
             )
           }
+        }
+
+        // Radar: Data & Storage moved below Payments so Payments sits higher in settings
+        // (mirrors iOS "Move payments tab up a bit").
+        item {
+          Rows.TextRow(
+            text = stringResource(R.string.preferences__data_and_storage),
+            icon = painterResource(R.drawable.symbol_data_24),
+            onClick = {
+              callbacks.navigate(AppSettingsRoute.DataAndStorageRoute.DataAndStorage)
+            }
+          )
         }
 
         item {
