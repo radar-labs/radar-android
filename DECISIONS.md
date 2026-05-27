@@ -131,3 +131,9 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Note:** This is reverted by `69784aaa79` (#16) — Android will restore the call there, matching the iOS net state (megaphones NOT disabled at HEAD). Applied both separately (non-adjacent, so not squashed).
 **Confidence:** high
 **Revisit if:** there's another routine enqueue path for remote announcements beyond `VersionTracker`.
+
+## 2026-05-27 — iOS 043b28c555 — Skipped (duplicate onboarding re-land)
+**Context:** `043b28c555` ("Onboarding flow #14") is a near-identical re-land of `07343eab15` (the payment onboarding flow) on main, plus a `QRCodeGenerator` CIContext perf tweak.
+**Decision:** Skipped — the onboarding flow is already implemented on Android (commit for `07343eab15` + the add-funds-intro from `bc4dd06d2b`), and the QR perf tweak is the same iOS-specific change already skipped under `bc4dd06d2b`. No remaining Android delta.
+**Confidence:** high (file lists overlap; both onboarding screens + QR perf already handled).
+**Revisit if:** a later onboarding commit reveals a behavioral diff between the two iOS landings.

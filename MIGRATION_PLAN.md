@@ -29,7 +29,7 @@
 - [s] `2544b3c13f` | 05-10 | chore | Remove accidentally added screenshot → SKIP (cancels previous).
 - [s] `8f92be19fb` | 05-11 | ui | Update chat interface UI → **SKIPPED — iOS-rendering-specific** (same class as `c90dd2d790`). More `CVComponentArchivedPayment`/`PaymentAttachment`/`Message` bubble refinement. Android renders via `PaymentMessageView.kt`; sats/hidden bubble formatting deferred to #58. See DECISIONS.md.
 - [x] `0700d00c3a` | 05-11 | config | Disable Signal promotional megaphone fetching (#13) → **DONE.** Disabled the routine `RetrieveRemoteAnnouncementsJob.enqueue(true)` at its launch trigger (`VersionTracker.updateLastSeenVersion`) + removed the now-unused import. Mirrors iOS commenting out `RemoteMegaphoneFetcher`. (paired with revert `69784aaa79` below)
-- [d] `043b28c555` | 05-11 | feature | Onboarding flow (#14) → DEDUP of `07343eab15`; apply only delta vs current tree (verify at execution).
+- [s] `043b28c555` | 05-11 | feature | Onboarding flow (#14) → **SKIPPED — duplicate.** Near-identical re-land of `07343eab15` (the onboarding flow, already implemented on Android) plus a QR-generator CIContext tweak already covered by the `bc4dd06d2b` skip. No remaining Android delta. See DECISIONS.md.
 - [s] `ab1ee03ebc` | 05-11 | merge | Merge main into chat-interface → SKIP (captured via constituents).
 - [s] `6bb5e64b4a` | 05-11 | merge | Merge PR #15 chat-interface → SKIP (captured via constituents).
 - [ ] `d03c5c5f94` | 05-11 | bugfix | Correctly check and set username from onboarding flow → onboarding username logic.
