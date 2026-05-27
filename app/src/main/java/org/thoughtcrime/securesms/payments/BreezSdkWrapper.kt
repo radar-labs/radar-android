@@ -7,6 +7,7 @@ package org.thoughtcrime.securesms.payments
 
 import android.annotation.SuppressLint
 import breez_sdk_spark.*
+import com.mobilecoin.lib.Mnemonics
 import kotlinx.coroutines.runBlocking
 import org.signal.core.util.CryptoUtil
 import org.signal.core.util.Hex
@@ -183,7 +184,10 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
           connect(
             ConnectRequest(
               config = config,
-              seed = Seed.Entropy(entropy),
+              // Cake/BIP-39 compatibility: seed the SDK from the BIP-39 mnemonic of the entropy
+              // (Spark runs standard BIP-39 PBKDF2 internally) so the backup phrase interoperates
+              // with other BIP-39 wallets. Mirrors iOS 85485a8b7d.
+              seed = Seed.Mnemonic(Mnemonics.bip39EntropyToMnemonic(entropy), null),
               storageDir = "$dataDir/.lndata"
             )
           )
