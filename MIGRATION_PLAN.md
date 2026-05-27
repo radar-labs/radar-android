@@ -39,7 +39,7 @@
 - [s] `cd62ac850e` | 05-12 | merge | Merge PR #16 set-username-from-onboarding → SKIP.
 - [d] `f21e3145bc` | 05-12 | ui | update splash screen → **DEFERRED (asset).** Pure splash-logo asset swap (signal-logo → radar-splash). Android splash logo is `ic_splash*.xml` vectors (still Signal's); needs the Radar logo as an Android vector. Bundled with the launcher-icon asset task. See ISSUES.md.
 - [s] `ee9a028190` | 05-13 | merge | Merge PR #17 update-splash-screen → SKIP.
-- [ ] `ef746878d2` | 05-13 | style | add a space between balance and currency → format tweak.
+- [x] `ef746878d2` | 05-13 | style | add a space between balance and currency → **DONE.** Removed `withoutSpaceBeforeUnit()` in `MoneyView` so money displays show "100 BTC" not "100BTC". (iOS applied it to the balance only; on Android MoneyView is the single formatter so it's consistent.)
 - [ ] `37007fe8e8` | 05-13 | ui | update UI from review comments → currency picker, payment cell/menu, chat-list cell, tab bar.
 - [ ] `6c85cf772d` | 05-14 | ui | payments UI refresh and branding updates → bubbles, currency picker, settings/detail/history + strings.
 - [ ] `3b4634c7f7` | 05-14 | ui | update the UI of the "Add Funds" screen → add-funds layout.
