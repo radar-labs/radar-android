@@ -146,6 +146,14 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     return runBlocking { sdk.checkLightningAddressAvailable(CheckLightningAddressRequest(username)) }
   }
 
+  /** Fetches an on-chain (Bitcoin) receive address, or null if unavailable. */
+  fun getOnchainAddress(): String? {
+    val sdk = this.sdk ?: return null
+    return runCatching {
+      runBlocking { sdk.receivePayment(ReceivePaymentRequest(ReceivePaymentMethod.BitcoinAddress)).paymentRequest }
+    }.getOrNull()
+  }
+
   /** Registers [username] as the wallet's lightning address and re-uploads the profile address. */
   fun registerUsername(username: String) {
     val sdk = this.sdk ?: throw IllegalStateException("Breez SDK is not available")

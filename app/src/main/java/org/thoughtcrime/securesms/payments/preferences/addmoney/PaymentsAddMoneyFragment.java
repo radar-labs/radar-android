@@ -17,12 +17,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.button.MaterialButton;
+
+import org.signal.core.util.concurrent.SimpleTask;
 import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.qr.QrView;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.util.views.LearnMoreTextView;
 
 public final class PaymentsAddMoneyFragment extends LoggingFragment {
+
+  private String  lightningAddress;
+  private String  onchainAddress;
+  private boolean showingOnchain;
 
   public PaymentsAddMoneyFragment() {
     super(R.layout.payments_add_money_fragment);
@@ -33,12 +41,13 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
 
     PaymentsAddMoneyViewModel viewModel = new ViewModelProvider(this, new PaymentsAddMoneyViewModel.Factory()).get(PaymentsAddMoneyViewModel.class);
 
-    Toolbar           toolbar                  = view.findViewById(R.id.payments_add_money_toolbar);
-    QrView            qrImageView              = view.findViewById(R.id.payments_add_money_qr_image);
-    TextView          walletAddressAbbreviated = view.findViewById(R.id.payments_add_money_abbreviated_wallet_address);
-    View              copyAddress              = view.findViewById(R.id.payments_add_money_copy_address_button);
-    LearnMoreTextView info                     = view.findViewById(R.id.payments_add_money_info);
-    View              editUsername             = view.findViewById(R.id.payments_add_money_edit_username_button);
+    Toolbar           toolbar       = view.findViewById(R.id.payments_add_money_toolbar);
+    QrView            qrImageView   = view.findViewById(R.id.payments_add_money_qr_image);
+    TextView          addressView   = view.findViewById(R.id.payments_add_money_abbreviated_wallet_address);
+    View              copyAddress   = view.findViewById(R.id.payments_add_money_copy_address_button);
+    LearnMoreTextView info          = view.findViewById(R.id.payments_add_money_info);
+    View              editUsername  = view.findViewById(R.id.payments_add_money_edit_username_button);
+    MaterialButton    networkToggle = view.findViewById(R.id.payments_add_money_network_toggle);
 
     editUsername.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_paymentsAddMoney_to_editLightningUsername));
 
@@ -47,12 +56,31 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
 
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-    viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), address -> setAddress(walletAddressAbbreviated, address));
+    viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), address -> {
+      lightningAddress = address;
+      if (!showingOnchain) {
+        render(qrImageView, addressView);
+      }
+    });
 
-    viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), base58 -> copyAddress.setOnClickListener(v -> copyAddressToClipboard(base58)));
+    copyAddress.setOnClickListener(v -> {
+      String address = currentAddress();
+      if (address != null) {
+        copyAddressToClipboard(address);
+      }
+    });
 
-    // Note we are choosing to put Base58 directly into QR here
-    viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), qrImageView::setQrText);
+    // Toggle between the Lightning address and an on-chain Bitcoin address (mirrors iOS onchain Add Funds).
+    networkToggle.setOnClickListener(v -> {
+      showingOnchain = !showingOnchain;
+      networkToggle.setText(showingOnchain ? R.string.PaymentsAddMoneyFragment__show_lightning_address
+                                           : R.string.PaymentsAddMoneyFragment__show_onchain_address);
+      if (showingOnchain && onchainAddress == null) {
+        fetchOnchainAddress(qrImageView, addressView);
+      } else {
+        render(qrImageView, addressView);
+      }
+    });
 
     viewModel.getErrors().observe(getViewLifecycleOwner(), error -> {
       switch (error) {
@@ -62,7 +90,31 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     });
   }
 
-  /** Shows the lightning address with the {@code @domain} portion tinted (mirrors iOS receive screen). */
+  private @Nullable String currentAddress() {
+    return showingOnchain ? onchainAddress : lightningAddress;
+  }
+
+  private void render(@NonNull QrView qr, @NonNull TextView addressView) {
+    String address = currentAddress();
+    if (address == null) {
+      return;
+    }
+    setAddress(addressView, address);
+    qr.setQrText(address);
+  }
+
+  private void fetchOnchainAddress(@NonNull QrView qr, @NonNull TextView addressView) {
+    SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
+                   () -> SignalStore.payments().breezSdkWrapperLatest().getOnchainAddress(),
+                   address -> {
+                     onchainAddress = address;
+                     if (showingOnchain) {
+                       render(qr, addressView);
+                     }
+                   });
+  }
+
+  /** Shows the address with the {@code @domain} portion tinted for Lightning addresses (mirrors iOS receive screen). */
   private void setAddress(@NonNull TextView view, @NonNull String address) {
     int atIndex = address.indexOf('@');
     if (atIndex < 0) {
@@ -74,11 +126,11 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     view.setText(span);
   }
 
-  private void copyAddressToClipboard(@NonNull String base58) {
+  private void copyAddressToClipboard(@NonNull String address) {
     Context          context   = requireContext();
     ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 
-    clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.app_name), base58));
+    clipboard.setPrimaryClip(ClipData.newPlainText(context.getString(R.string.app_name), address));
 
     Toast.makeText(context, R.string.PaymentsAddMoneyFragment__copied_to_clipboard, Toast.LENGTH_SHORT).show();
   }

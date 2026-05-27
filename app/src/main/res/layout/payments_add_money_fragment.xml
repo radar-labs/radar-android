@@ -85,6 +85,15 @@
             android:layout_marginTop="8dp"
             android:text="@string/EditLightningUsernameFragment__edit_username" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/payments_add_money_network_toggle"
+            style="@style/Signal.Widget.Button.Small.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:text="@string/PaymentsAddMoneyFragment__show_onchain_address" />
+
         <org.thoughtcrime.securesms.util.views.LearnMoreTextView
             android:id="@+id/payments_add_money_info"
             android:layout_width="match_parent"
