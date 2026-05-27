@@ -67,3 +67,11 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Suggested next step:** Verify username-change semantics against a live wallet. Generalize sats display when mirroring iOS #58 ("Sats by default") — likely centralize in `MoneyView`/`Money` formatting.
 **Severity:** medium
 **Android files involved:** `BreezSdkWrapper.kt`, `EditLightningUsernameFragment.kt`, `PaymentsHomeFragment.java`, `MoneyView.java` (future).
+
+## 2026-05-27 — iOS 496108d18f — Receive screen: on-chain address & QR encoding
+**Type:** deferred / risk
+**What happened:** (1) iOS added `fetchBitcoinTaprootAddress()` but it is **commented out** ("until breez clarifies"), so no on-chain receive address is wired — I skipped it to match. (2) iOS encodes the QR with the LNURL; Android currently encodes the plain `user@domain` lightning address string (existing behavior, kept). Both are scannable by LN wallets; the exact QR encoding for exchange/Cake compatibility is revisited in iOS #23/#4f069a.
+**What I tried:** Mirrored the visual redesign + domain-tinted address; left QR source and on-chain fetch unchanged.
+**Suggested next step:** Wire on-chain receive when Breez taproot support is finalized; reconcile QR encoding during the Cake-compat commits.
+**Severity:** low
+**Android files involved:** `PaymentsAddMoneyFragment.java`, `PaymentsAddMoneyViewModel.kt`, `BreezSdkWrapper.kt`.

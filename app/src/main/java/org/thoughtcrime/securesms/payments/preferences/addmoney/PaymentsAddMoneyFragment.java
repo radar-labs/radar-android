@@ -4,6 +4,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +47,7 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
 
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-    viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), walletAddressAbbreviated::setText);
+    viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), address -> setAddress(walletAddressAbbreviated, address));
 
     viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), base58 -> copyAddress.setOnClickListener(v -> copyAddressToClipboard(base58)));
 
@@ -57,6 +60,18 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
         default                  : throw new AssertionError();
       }
     });
+  }
+
+  /** Shows the lightning address with the {@code @domain} portion tinted (mirrors iOS receive screen). */
+  private void setAddress(@NonNull TextView view, @NonNull String address) {
+    int atIndex = address.indexOf('@');
+    if (atIndex < 0) {
+      view.setText(address);
+      return;
+    }
+    SpannableString span = new SpannableString(address);
+    span.setSpan(new ForegroundColorSpan(0xFF0069FE), atIndex, address.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    view.setText(span);
   }
 
   private void copyAddressToClipboard(@NonNull String base58) {
