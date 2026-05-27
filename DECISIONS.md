@@ -77,3 +77,9 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Build a dedicated payments-settings Fragment to mirror the iOS screen 1:1 — rejected as redundant with the existing toolbar menu.
 **Confidence:** high
 **Revisit if:** the product wants a full dedicated payments-settings screen rather than the toolbar menu.
+
+## 2026-05-27 — iOS 7ac08be7bf — Skipped (iOS-platform-specific crash, gesture)
+**Context:** Companion to `d674a1a072`: removes a `tableView.performBatchUpdates { loadCoordinator.loadIfNecessary() }` wrapper inside `ChatListFilterControlDelegate` (the interactive gesture-driven filter), fixing a UIKit crash.
+**Decision:** Skipped — no Android analog (same reasoning as `d674a1a072`). Android filtering is RecyclerView-based with no `performBatchUpdates`.
+**Confidence:** high
+**Revisit if:** an analogous Android conversation-list filtering crash is reported.
