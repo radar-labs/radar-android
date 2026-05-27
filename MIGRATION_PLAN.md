@@ -27,7 +27,7 @@
 - [s] `c90dd2d790` | 05-10 | feature | Add chat interface payment UI updates (#14) → **SKIPPED — iOS-rendering-specific / already-present.** iOS rewrites the `CVComponentArchivedPayment`/`PaymentAttachment` bubbles (CVComponent architecture) + adds a send-confirm VC. Android already renders payment messages via `PaymentMessageView.kt` and already has the full send-confirm flow (`ConfirmPaymentFragment`). The sats-unit/balance-hidden-in-bubble + richer chat-list snippet are deferred to the sats-default commit (`e694108c22` #58). See DECISIONS.md.
 - [s] `4f48dca6a9` | 05-10 | chore | Add screenshot for PR #13 → SKIP (iOS doc asset; cancels with next).
 - [s] `2544b3c13f` | 05-10 | chore | Remove accidentally added screenshot → SKIP (cancels previous).
-- [ ] `8f92be19fb` | 05-11 | ui | Update chat interface UI → chat bubble refinements.
+- [s] `8f92be19fb` | 05-11 | ui | Update chat interface UI → **SKIPPED — iOS-rendering-specific** (same class as `c90dd2d790`). More `CVComponentArchivedPayment`/`PaymentAttachment`/`Message` bubble refinement. Android renders via `PaymentMessageView.kt`; sats/hidden bubble formatting deferred to #58. See DECISIONS.md.
 - [ ] `0700d00c3a` | 05-11 | config | Disable Signal promotional megaphone fetching (#13) → gate `RetrieveRemoteAnnouncementsJob`. (paired with revert below)
 - [d] `043b28c555` | 05-11 | feature | Onboarding flow (#14) → DEDUP of `07343eab15`; apply only delta vs current tree (verify at execution).
 - [s] `ab1ee03ebc` | 05-11 | merge | Merge main into chat-interface → SKIP (captured via constituents).
