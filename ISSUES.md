@@ -17,6 +17,7 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Suggested next step:** Review the iOS relay design and decide the Android FCM equivalent before implementing. `8353e6b3c9` (relay disclaimer, #31) partly depends on this.
 **Severity:** medium
 **Android files involved:** push/FCM registration (`gcm/`/`notifications/`), notification settings.
+**Detail (2026-05-27):** iOS `RadarPushRelay` (enum) talks to `https://push.radar.chat`: it provisions a "phantom linked device", keeps the relay's APNs token up to date (`ensure(apnsHexToken:)`), exposes a user toggle (`isEnabled`/`setEnabled`), and tears down on logout (`unregister`). Goal: deliver pushes even when the app is force-quit. The Android equivalent must be FCM-based (FirebaseMessagingService token instead of APNs) with the same relay registration/provisioning/teardown and the user toggle + onboarding disclaimer (`8353e6b3c9`: `ONBOARDING_PERMISSIONS_RELAY_*`, `RADAR_PUSH_RELAY_*`). This is a from-scratch feature + product decision (external relay service); both `0e11af806c` and `8353e6b3c9` are deferred together.
 
 ## 2026-05-27 — Phase 0 — Backup payment fixes (iOS #20 `ae56882371`, #29 `8ab30cb69e`)
 **Type:** deferred
