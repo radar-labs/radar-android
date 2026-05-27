@@ -105,3 +105,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Inject into `RegistrationV3` nav graph (risky); reuse the preferences fragments cross-graph (fiddly Safe-Args/action-id issues).
 **Confidence:** medium — compiles and is self-contained, but not UI-run; the deposit-observation trigger and the new-registration gating need real-device verification.
 **Revisit if:** product wants the username step inside onboarding, or wants onboarding shown on upgrade (not just new registration).
+
+## 2026-05-27 — iOS bc4dd06d2b — Onboarding fix + AddFundsIntro (#13): step added, perf fixes skipped
+**Context:** iOS added an `AddFundsIntroViewController` step between the payments intro and the QR/address screen, plus several iOS-internal fixes (move `enablePayments()` to a background `Task.detached`; cache a shared `CIContext` and render QR off the main thread; `loadWalletAddress` warn-instead-of-throw; `_updateConversionRates` silent-return guard; return/store `LightningAddressInfo`).
+**Decision:** Added the **AddFundsIntro step** on Android (`PaymentsOnboardingAddFundsIntroFragment` + layout, wired intro → addFundsIntro → addFunds in `payments_onboarding.xml`). Skipped the iOS-internal perf/threading fixes — they target iOS specifics with no Android analog: Android's `QrView`/`QrCodeUtil` is a different renderer (no `CIContext`/Metal), payments enablement and address loading run on Android's own threading via `PaymentsAddMoneyViewModel`/Rx, and there are no equivalent assert/throw sites.
+**Alternatives considered:** Fold the add-funds-intro copy into the existing add-funds screen — rejected; a discrete step matches the iOS flow and the skip affordance.
+**Confidence:** high (step compiles; skips are clearly non-applicable iOS internals).
+**Revisit if:** Android QR rendering shows main-thread jank during onboarding (then add background rendering).
