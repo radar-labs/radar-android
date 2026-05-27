@@ -193,3 +193,8 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Context:** iOS adds `RegistrationSignUpViewController` after the splash — a screen with "Create account" and "Use Signal account" buttons.
 **Decision:** Skipped — Android's `WelcomeFragment` already presents the same new-vs-existing-account choice ("Continue" to register a new account, "Restore or transfer" for an existing one). The iOS screen is an additional onboarding step for a choice Android already offers; adding it would mean injecting a new destination into Android's RegistrationV3 nav (risky, non-payment).
 **Confidence:** medium-high. **Revisit if:** product wants the dedicated signup-choice screen styled like iOS.
+
+## 2026-05-27 — iOS b847a18d86 + aecba8efde — Skipped (already handled / no analog)
+**Context:** iOS adds a `walletAddressDidLoad` notification to re-upload the payment profile after the wallet address loads (`b847a18d86`), and guards a force-cast of `SUIEnvironment.shared.paymentsRef` to avoid a crash (`aecba8efde`).
+**Decision:** Skipped both. (1) Android already uploads the Lightning address to the user profile **eagerly** inside `BreezSdkWrapper.getLightningAddress()` via `ProfileUtil.uploadLightingProfile` (3 call sites — on fetch, after register, and in `registerUsername`), so the address is published right when it loads; no notification-driven re-upload is needed. (2) Android's `AppDependencies.payments` is a non-null `Payments` val initialized by the DI provider — there is no optional/force-unwrap of a payments ref to crash, so the iOS guard has no analog.
+**Confidence:** high. **Revisit if:** Android moves profile upload off the eager `getLightningAddress` path (then a load-completion hook may be needed).
