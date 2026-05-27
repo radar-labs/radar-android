@@ -63,3 +63,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Audit Android's filter for any unrelated crash — out of scope for this commit; Android filtering is stable in the baseline build.
 **Confidence:** high
 **Revisit if:** a crash report shows an analogous issue in Android's conversation-list filtering.
+
+## 2026-05-27 — iOS b35e77bc82 — Hide amounts when balance hidden (#9): partial
+**Context:** iOS masks the amount (••••••) in two places when the balance is hidden: the chat-list payment notification banner, and the insufficient-balance alert (generic message instead of embedding the balance).
+**Decision:** Applied the **banner masking** — `UnreadPayments.SingleRecipient.getDescription` now shows •••••• instead of the amount when `SignalStore.payments().balanceHidden` (the pref added in commit #1). The **insufficient-balance alert** part does not map: Android's create-payment flow validates inline via `InputState` (disables send when amount > balance); there is no alert that embeds the balance to mask. No new string needed.
+**Alternatives considered:** Add a hidden-balance insufficient-funds string anyway — rejected, there's no UI surface that shows it.
+**Confidence:** high
+**Revisit if:** Android adds an insufficient-balance dialog that reveals the balance.
