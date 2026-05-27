@@ -69,7 +69,7 @@
 - [s] `577cf1a63f` | 05-22 | docs | Fix syntax in README → **SKIPPED** — a syntax fix to the iOS README change (`9316ae4516`), which is itself skipped (Android README is a separate repo doc).
 - [s] `aecba8efde` | 05-22 | bugfix | Fixes for crash on unwrapping of paymentsRef (#32) → **SKIPPED — no analog.** iOS guards a force-cast `SUIEnvironment.shared.paymentsRef as? PaymentsImpl`. Android's `AppDependencies.payments` is a non-null `Payments` val (DI-initialized) — there's no optional/force-unwrap of a payments ref to crash. See DECISIONS.md.
 - [d] `8353e6b3c9` | 05-22 | feature | Add relay disclaimer (#31) → **DEFERRED.** Adds the push-relay permission disclaimer (onboarding permission screen) + a settings toggle for the relay. Depends on the push relay (`0e11af806c`, deferred) — no relay on Android yet, so nothing to disclaim/toggle. Ships with the push-relay work. See ISSUES.md.
-- [ ] `e694108c22` | 05-22 | feature | Sats by default → default display unit = sats.
+- [x] `e694108c22` | 05-22 | feature | Sats by default → **DONE.** `PaymentsValues.showInSats` now defaults to `true` (was `false`), so amounts display in sats unless the user switches to BTC. Mirrors iOS defaulting `isSatoshiEnabled` to true.
 
 ## Milestones (✦ full build + review checkpoint)
 - ✦ After `b0bd09c807` (#12, branding) — first ~10 applied.

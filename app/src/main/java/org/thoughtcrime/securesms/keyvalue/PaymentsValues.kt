@@ -55,8 +55,8 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     private val LARGE_BALANCE_THRESHOLD = Money.bitcoin(BigDecimal.valueOf(500))
   }
 
-  /** Display amounts in satoshis rather than BTC. Mirrors iOS PaymentsDisplayPreferences. */
-  var showInSats: Boolean by booleanValue(SHOW_IN_SATS, false)
+  /** Display amounts in satoshis rather than BTC. Defaults to sats (mirrors iOS "Sats by default"). */
+  var showInSats: Boolean by booleanValue(SHOW_IN_SATS, true)
 
   /** Whether the wallet balance is hidden behind a mask. Mirrors iOS PaymentsDisplayPreferences. */
   var balanceHidden: Boolean by booleanValue(BALANCE_HIDDEN, false)
