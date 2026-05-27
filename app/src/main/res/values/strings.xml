@@ -4219,6 +4219,16 @@
     <string name="PaymentsHomeFragment__bitcoin_unit">Bitcoin unit</string>
     <!-- Payments settings menu item to view Lightning/Breez SDK logs -->
     <string name="PaymentsHomeFragment__lightning_logs">Lightning logs</string>
+    <!-- Payments settings menu item to permanently delete the payment wallet -->
+    <string name="PaymentsHomeFragment__delete_wallet">Delete payment wallet</string>
+    <!-- Title of the delete-wallet confirmation dialog -->
+    <string name="PaymentsHomeFragment__delete_wallet_title">Delete payment wallet?</string>
+    <!-- Description of the delete-wallet confirmation dialog -->
+    <string name="PaymentsHomeFragment__delete_wallet_description">This will permanently delete your current payment wallet from this device and unregister its Lightning username. You will lose access to your old wallet unless you have saved your recovery phrase.</string>
+    <!-- Error shown when the balance must be zero before deleting the wallet -->
+    <string name="PaymentsHomeFragment__delete_wallet_requires_zero_balance">You must transfer out your entire wallet balance before deleting the wallet.</string>
+    <!-- Error shown when the balance isn't available yet -->
+    <string name="PaymentsHomeFragment__delete_wallet_balance_unavailable">Your wallet balance is not yet available. Please try again.</string>
 
     <!-- LightningLogs: Breez/Lightning SDK log viewer -->
     <!-- Title of the Lightning logs screen -->

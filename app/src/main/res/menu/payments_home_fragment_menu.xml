@@ -9,6 +9,9 @@
     <item android:id="@+id/payments_home_fragment_menu_lightning_logs"
         android:title="@string/PaymentsHomeFragment__lightning_logs" />
 
+    <item android:id="@+id/payments_home_fragment_menu_delete_wallet"
+        android:title="@string/PaymentsHomeFragment__delete_wallet" />
+
     <item android:id="@+id/payments_home_fragment_menu_deactivate_wallet"
         android:title="@string/PaymentsHomeFragment__deactivate_payments" />
 

@@ -165,8 +165,20 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     }
   }
 
+  /** Unregisters the wallet's lightning address (best-effort). Used when deleting the wallet. */
+  fun deleteLightningAddress() {
+    val sdk = this.sdk ?: return
+    runCatching { runBlocking { sdk.deleteLightningAddress() } }
+      .onFailure { Log.w("BreezSdk", "deleteLightningAddress failed", it) }
+  }
+
   companion object {
     var sdkSingelton: BreezSdk? = null
+
+    /** Drops the cached SDK so the next connect starts fresh (e.g. after wallet deletion). */
+    fun reset() {
+      sdkSingelton = null
+    }
 
     fun connect(entropy: ByteArray): BreezSdk {
       LightningLogger.installIfNeeded()
