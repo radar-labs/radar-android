@@ -175,3 +175,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Context:** iOS fixed a crash in `SendPaymentViewController` caused by calling `UIView.matchWidthsOfViews([...])` before the spacer views were added to their `UIStackView`, plus added a paste icon to the note field.
 **Decision:** Skipped — iOS-platform-specific. The crash is a UIKit Auto Layout ordering issue with no Android analog (Android's send flow is `payments/create/CreatePaymentFragment`, different rendering). The note paste icon is minor iOS UI.
 **Confidence:** high. **Revisit if:** an analogous crash is seen in Android's create-payment screen.
+
+## 2026-05-27 — iOS 5b4b9f52f0 — Replace Signal/MobileCoin with Radar/Lightning (payment-scoped)
+**Context:** iOS's "rebrand" commit touches all 45 `.strings` files but the **English** change is a single string (deactivate-payments description: "MobileCoin in Signal" → "Lightning in Radar") — the rest of the EN rebrand had already landed in earlier commits.
+**Decision:** On Android, the MobileCoin residual was already cleared (commit #4); 9 **payment-context** strings still named the app "Signal" (PaymentsHomeFragment / PaymentsTransferFragment / DeactivateWalletFragment). Replaced "Signal"→"Radar" in just those (the values capitalize "Signal"; the keys use lowercase `signal_`, so the replace is value-only). Left broader, non-payment "Signal" references untouched — many are legitimate (protocol name, "Signal PIN", legal text, support URLs), and iOS's EN change was payment-scoped. Edited only `values/strings.xml` (translations come from the platform).
+**Alternatives considered:** Blanket app-wide Signal→Radar — rejected (would corrupt legitimate references).
+**Confidence:** high (XML-validated; payment-scoped).
+**Revisit if:** product wants a full app-wide rename (a separate, careful pass).
