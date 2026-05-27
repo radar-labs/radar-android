@@ -8,7 +8,7 @@
 - **Verify:** compile-check affected module(s) per commit; full `:app:assemblePlayProdDebug` at milestones (✦) and at end.
 
 ## Pre-migration
-- [ ] **Setup commit** — commit working-tree `ktlint.gradle.kts` fix + untracked `ic_coin_24.xml` as `chore: pre-migration setup`. Resolve JDK 17/21 and confirm a clean baseline build.
+- [x] **Setup commit** — DONE. Committed ktlint fix + `ic_coin_24.xml` (`3a4d02f4a5`) and migration docs (`5ecc42ca63`). JDK 17 pinned via `JAVA_HOME`; baseline `:Signal-Android:assemblePlayProdDebug` green (4m12s).
 
 ## Commits (chronological)
 
