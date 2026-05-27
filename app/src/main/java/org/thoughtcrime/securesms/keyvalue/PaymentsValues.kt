@@ -377,6 +377,25 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     MNEMONIC_ERROR
   }
 
+  /**
+   * Permanently deletes the local payment wallet: clears the entropy + cached ledger and disables
+   * payments. Mirrors iOS resetPaymentsState. Callers should unregister the lightning address first
+   * via [BreezSdkWrapper.deleteLightningAddress].
+   */
+  @WorkerThread
+  fun deleteWallet() {
+    store.beginWrite()
+      .remove(PAYMENTS_ENTROPY)
+      .remove(MOB_LEDGER)
+      .putBoolean(MOB_PAYMENTS_ENABLED, false)
+      .putBoolean(USER_CONFIRMED_MNEMONIC, false)
+      .commit()
+    BreezSdkWrapper.reset()
+    liveMobileCoinLedger.postValue(MobileCoinLedgerWrapper(BreezSdkWrapper(null)))
+    SignalDatabase.recipients.markNeedsSync(Recipient.self().id)
+    StorageSyncHelper.scheduleSyncForDataChange()
+  }
+
   private fun userHasLargeBalance(): Boolean {
     return mobileCoinLatestBalance().fullAmount.requireBitcoin().greaterThan(LARGE_BALANCE_THRESHOLD)
   }

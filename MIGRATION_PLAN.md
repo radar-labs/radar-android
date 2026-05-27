@@ -59,7 +59,7 @@
 - [s] `da5db7290c` | 05-18 | merge | Merge PR #26 replace-signal-mobcoin-reference → SKIP.
 - [d] `42e070db35` | 05-19 | dependency | Update breez SDK (#25) → **DEFERRED.** iOS bumped Breez to **0.14.0**; Android is on **0.9.1** (`breez_sdk_spark:bindings-android`). Major jump — needs the Android artifact to exist for 0.14.0, API-compat migration (the SDK calls I wired target 0.9.1), and a full build. See ISSUES.md.
 - [s] `fb97d0a9b4` | 05-19 | feature | Switch to 12 words seed (#27) → **SKIPPED — already done (verified).** Android `PaymentsConstants.PAYMENTS_ENTROPY_LENGTH = 16` → `MNEMONIC_LENGTH = 12` (set by `97f461b44e`); 16-byte entropy yields a 12-word BIP-39 mnemonic, consistent with the seed change in `85485a8b7d`. No delta.
-- [ ] `16f8ccc4a9` | 05-19 | feature | Add delete wallet option (#28) → delete-wallet menu + helper logic.
+- [x] `16f8ccc4a9` | 05-19 | feature | Add delete wallet option (#28) → **DONE.** "Delete payment wallet" item in the payments overflow menu (zero-balance-gated + confirm dialog); on confirm unregisters via `BreezSdkWrapper.deleteLightningAddress()` then wipes entropy/ledger + disables via `PaymentsValues.deleteWallet()`. Mirrors iOS resetPaymentsState/deletePaymentWallet.
 - [ ] `10317857ad` | 05-19 | ui | Change button text and remove onboarding banners → splash button + remove GetStarted banner.
 - [ ] `b8fee2bde8` | 05-19 | feature | Add signup screen to the onboarding → registration sign-up screen.
 - [ ] `4f069a4e30` | 05-20 | bugfix | Fix QR code not compatible with Cake → payment QR encoding.

@@ -24,6 +24,7 @@ import com.annimon.stream.Stream;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.PaymentPreferencesDirections;
@@ -324,6 +325,40 @@ public class PaymentsHomeFragment extends LoggingFragment {
     viewModel.checkPaymentActivationState();
   }
 
+  /** Confirms and deletes the payment wallet (requires a zero balance). Mirrors iOS delete-wallet. */
+  private void confirmDeleteWallet() {
+    if (lastBalanceAmount == null) {
+      new MaterialAlertDialogBuilder(requireContext())
+          .setMessage(R.string.PaymentsHomeFragment__delete_wallet_balance_unavailable)
+          .setPositiveButton(android.R.string.ok, null)
+          .show();
+      return;
+    }
+    if (lastBalanceAmount.isPositive()) {
+      new MaterialAlertDialogBuilder(requireContext())
+          .setMessage(R.string.PaymentsHomeFragment__delete_wallet_requires_zero_balance)
+          .setPositiveButton(android.R.string.ok, null)
+          .show();
+      return;
+    }
+    new MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.PaymentsHomeFragment__delete_wallet_title)
+        .setMessage(R.string.PaymentsHomeFragment__delete_wallet_description)
+        .setPositiveButton(R.string.PaymentsHomeFragment__delete_wallet, (d, w) -> doDeleteWallet())
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
+
+  private void doDeleteWallet() {
+    SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
+                   () -> {
+                     SignalStore.payments().breezSdkWrapperLatest().deleteLightningAddress();
+                     SignalStore.payments().deleteWallet();
+                     return true;
+                   },
+                   success -> requireActivity().finish());
+  }
+
   /** Lets the user choose the bitcoin display unit (BTC or sats); mirrors iOS BitcoinUnitPicker. */
   private void showBitcoinUnitPicker() {
     final String[] options = { "BTC", "sats" };
@@ -375,6 +410,9 @@ public class PaymentsHomeFragment extends LoggingFragment {
       return true;
     } else if (item.getItemId() == R.id.payments_home_fragment_menu_lightning_logs) {
       SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_lightningLogs);
+      return true;
+    } else if (item.getItemId() == R.id.payments_home_fragment_menu_delete_wallet) {
+      confirmDeleteWallet();
       return true;
     } else if (item.getItemId() == R.id.payments_home_fragment_menu_deactivate_wallet) {
       viewModel.deactivatePayments();
