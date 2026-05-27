@@ -56,3 +56,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Hide Android's emoji/media-keyboard toggle to mimic "hide sticker" — rejected; it would remove emoji access, not equivalent. Re-thread sats/format through Android amount displays — deferred to #58.
 **Confidence:** high (residual string change is trivial and XML-validated).
 **Revisit if:** #44 needs the remaining payment-copy/seed rebrand (expected).
+
+## 2026-05-27 — iOS d674a1a072 — Skipped (iOS-platform-specific crash)
+**Context:** iOS fixed a crash when filtering the chat list by unread — caused by wrapping `filterControl?.startFiltering(animated:)` / `stopFiltering` inside `tableView.performBatchUpdates { … }`. The fix removes the batch-update wrapping. It also deleted two stray `print()` debug statements in `SendPaymentCompletionActionSheet`.
+**Decision:** Skipped — no Android analog. Android's chat list is a `RecyclerView` driven by `ConversationListFragment` + `ConversationFilterRequest` (pull-to-filter), not a `UITableView` with a `filterControl` and `performBatchUpdates`. The specific UIKit crash cannot occur. The `print()` removals are iOS-only debug cleanup.
+**Alternatives considered:** Audit Android's filter for any unrelated crash — out of scope for this commit; Android filtering is stable in the baseline build.
+**Confidence:** high
+**Revisit if:** a crash report shows an analogous issue in Android's conversation-list filtering.
