@@ -100,7 +100,10 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
       return;
     }
     setAddress(addressView, address);
-    qr.setQrText(address);
+    // Cake/wallet compatibility: encode the Lightning QR as a "lightning:" URI (mirrors iOS
+    // 4f069a4e30, which prefers a BOLT11 invoice and falls back to "lightning:<address>").
+    // The on-chain QR stays the raw Bitcoin address.
+    qr.setQrText(showingOnchain ? address : "lightning:" + address);
   }
 
   private void fetchOnchainAddress(@NonNull QrView qr, @NonNull TextView addressView) {
