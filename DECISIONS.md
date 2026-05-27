@@ -49,3 +49,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Force-add a no-op change to keep a code commit — rejected as noise.
 **Confidence:** high
 **Revisit if:** the in-chat send flow is ever changed to navigate into the payments dashboard after confirmation.
+
+## 2026-05-27 — iOS 6315c2fd19 — More UI changes (#4): applied residual only
+**Context:** iOS #4 bundled: amount-format unification (`formattedBalance`), payment-icon swaps, hiding the chat-input sticker button, balance-hidden in chat bubbles, and a payment-copy rebrand (MobileCoin/Signal → Radar/Bitcoin-over-Lightning + Cake/Spark seed messaging).
+**Decision:** Applied only the **residual rebrand** on Android — one string (`PaymentsHomeFragment__you_can_use_signal_to_send_and`) still said "MobileCoins"; updated it to the Radar/Lightning wording. Everything else was already satisfied or doesn't map: (a) amount formatting is already centralized in `MoneyView` (no per-call-site threading needed); (b) payment copy was already Lightning-rebranded on `add-breez` (only the one string remained); (c) iOS icon swaps (`send-mob-24`→`payment-28`, `about-mobilecoin`→`activate-payments`) are iOS asset names — Android payment UI uses its own icons; (d) "hide sticker button" has no Android analog — Android has no standalone sticker toggle in the input (stickers live in the emoji keyboard + a suggestion strip); (e) the broader Signal→Radar copy + Cake/Spark seed messaging is handled by the dedicated rebrand commit `5b4b9f52f0` (#44).
+**Alternatives considered:** Hide Android's emoji/media-keyboard toggle to mimic "hide sticker" — rejected; it would remove emoji access, not equivalent. Re-thread sats/format through Android amount displays — deferred to #58.
+**Confidence:** high (residual string change is trivial and XML-validated).
+**Revisit if:** #44 needs the remaining payment-copy/seed rebrand (expected).
