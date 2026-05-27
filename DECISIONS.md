@@ -42,3 +42,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** (a) Defer the username screen — rejected, it's backable (`registerLightningAddress` already used in `BreezSdkWrapper`). (b) Thread sats through `MoneyView` globally — deferred; that breadth belongs with iOS #58 "Sats by default". (c) Notifications/observers like iOS — used persisted prefs + existing LiveData instead (Android idiom).
 **Confidence:** medium — compile-checked, not UI-run; the balance-toggle persistence and sats display are localized.
 **Revisit if:** Breez `registerLightningAddress` cannot *change* an already-registered username at runtime (see ISSUES), or when #58 generalizes sats display.
+
+## 2026-05-27 — iOS 1560256bb9 — Skipped (Android already equivalent)
+**Context:** iOS removed presenting the payments-settings form sheet over the conversation after `didSendPayment` — an artifact of iOS presenting the send flow modally over the chat.
+**Decision:** Skipped — no Android change needed. Android sends in-chat payments via a dedicated `PaymentsActivity` launched with `CreatePaymentFragmentArgs.setFinishOnConfirm(true)` (`AttachmentManager.selectPayment`). `ConfirmPaymentFragment` (line ~64) checks `finishOnConfirm` and calls `requireActivity().finish()`, returning to the conversation without ever showing payments settings. The behavior the iOS commit introduces is already the Android behavior.
+**Alternatives considered:** Force-add a no-op change to keep a code commit — rejected as noise.
+**Confidence:** high
+**Revisit if:** the in-chat send flow is ever changed to navigate into the payments dashboard after confirmation.
