@@ -144,3 +144,9 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Add a Signal-username step to the Android onboarding — deferred; it's available in profile settings and wasn't part of the bounded onboarding port.
 **Confidence:** high
 **Revisit if:** product wants a Signal-username-setup step inside the Android payments onboarding.
+
+## 2026-05-27 — iOS 69784aaa79 — Revert megaphone disable
+**Context:** iOS reverted `0700d00c3a`, re-enabling the remote-megaphone fetch.
+**Decision:** Reverted the Android change — restored `RetrieveRemoteAnnouncementsJob.enqueue(true)` + its import in `VersionTracker`. Net effect of the disable+revert pair is zero (VersionTracker back to baseline), matching iOS HEAD where promotional megaphones are NOT disabled. Mirrored both commits separately (non-adjacent) rather than squashing.
+**Confidence:** high (restores known-good baseline code).
+**Revisit if:** Radar later re-disables megaphones in a different way.
