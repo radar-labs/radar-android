@@ -163,3 +163,10 @@ _Append-only. Non-obvious choices made during the iOS→Android mirror._
 **Alternatives considered:** Tab UI like iOS — a single toggle is simpler and compile-safe; behavior is equivalent (switch Lightning ⇄ on-chain).
 **Confidence:** medium — compiles; the on-chain fetch + QR/address switching weren't UI-run. The on-chain QR encodes the raw address string.
 **Revisit if:** the on-chain QR should use a `bitcoin:` URI, or the toggle should be a segmented tab control.
+
+## 2026-05-27 — iOS 85485a8b7d — Cake/BIP-39 seed compatibility (#23)
+**Context:** iOS changed the Breez seed from `Seed.entropy(entropy)` to `Seed.mnemonic(BIP-39 mnemonic of the entropy)` so the displayed backup phrase is interoperable with any BIP-39 wallet (e.g. Cake).
+**Decision:** Mirrored in `BreezSdkWrapper.connect`: `Seed.Mnemonic(Mnemonics.bip39EntropyToMnemonic(entropy), null)` (both APIs confirmed in the Breez Android binding + `com.mobilecoin.lib.Mnemonics`).
+**Caveat (important):** this changes how the wallet is derived from the stored entropy — the derived address/keys differ from the old `Seed.Entropy` path. This matches the iOS change (deliberate, pre-GA), but any wallet created on the old Android seeding would derive differently. Acceptable for parity; flag for device verification that existing/new wallets behave as expected and the phrase restores in Cake.
+**Confidence:** medium — compiles; seed-derivation behavior needs device verification.
+**Revisit if:** existing test wallets need migration, or the entropy/mnemonic round-trip differs from iOS's `MnemonicSwift`.
