@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/signal_background_primary">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/lightning_logs_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/signal_m3_toolbar_height"
+        android:minHeight="@dimen/signal_m3_toolbar_height"
+        app:navigationIcon="@drawable/symbol_arrow_start_24"
+        app:title="@string/LightningLogs__title"
+        app:titleTextAppearance="@style/Signal.Text.TitleLarge" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/lightning_logs_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Signal.Mono"
+            android:textColor="@color/signal_text_primary"
+            android:textIsSelectable="true" />
+
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/lightning_logs_copy"
+        style="@style/Signal.Widget.Button.Small.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/LightningLogs__copy" />
+
+</LinearLayout>

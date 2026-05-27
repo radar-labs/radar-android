@@ -373,6 +373,9 @@ public class PaymentsHomeFragment extends LoggingFragment {
     } else if (item.getItemId() == R.id.payments_home_fragment_menu_bitcoin_unit) {
       showBitcoinUnitPicker();
       return true;
+    } else if (item.getItemId() == R.id.payments_home_fragment_menu_lightning_logs) {
+      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_lightningLogs);
+      return true;
     } else if (item.getItemId() == R.id.payments_home_fragment_menu_deactivate_wallet) {
       viewModel.deactivatePayments();
       return true;

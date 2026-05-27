@@ -6,6 +6,9 @@
     <item android:id="@+id/payments_home_fragment_menu_bitcoin_unit"
         android:title="@string/PaymentsHomeFragment__bitcoin_unit" />
 
+    <item android:id="@+id/payments_home_fragment_menu_lightning_logs"
+        android:title="@string/PaymentsHomeFragment__lightning_logs" />
+
     <item android:id="@+id/payments_home_fragment_menu_deactivate_wallet"
         android:title="@string/PaymentsHomeFragment__deactivate_payments" />
 
