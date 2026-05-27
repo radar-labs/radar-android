@@ -40,10 +40,10 @@
 - [d] `f21e3145bc` | 05-12 | ui | update splash screen → **DEFERRED (asset).** Pure splash-logo asset swap (signal-logo → radar-splash). Android splash logo is `ic_splash*.xml` vectors (still Signal's); needs the Radar logo as an Android vector. Bundled with the launcher-icon asset task. See ISSUES.md.
 - [s] `ee9a028190` | 05-13 | merge | Merge PR #17 update-splash-screen → SKIP.
 - [x] `ef746878d2` | 05-13 | style | add a space between balance and currency → **DONE.** Removed `withoutSpaceBeforeUnit()` in `MoneyView` so money displays show "100 BTC" not "100BTC". (iOS applied it to the balance only; on Android MoneyView is the single formatter so it's consistent.)
-- [ ] `37007fe8e8` | 05-13 | ui | update UI from review comments → currency picker, payment cell/menu, chat-list cell, tab bar.
-- [ ] `6c85cf772d` | 05-14 | ui | payments UI refresh and branding updates → bubbles, currency picker, settings/detail/history + strings.
-- [ ] `3b4634c7f7` | 05-14 | ui | update the UI of the "Add Funds" screen → add-funds layout.
-- [ ] `81edb47849` | 05-14 | style | add padding → add-funds spacing.
+- [s] `37007fe8e8` | 05-13 | ui | update UI from review comments → **SKIPPED — iOS-rendering polish.** Payment-bubble direction arrows (CVComponent) + currency-picker flag emojis. Android bubbles = `PaymentMessageView`; flag emojis noted as an un-ported cosmetic. See DECISIONS.md.
+- [s] `6c85cf772d` | 05-14 | ui | payments UI refresh and branding updates → **SKIPPED — iOS-rendering polish.** Bubble color/layout tweaks + currency-picker flag layout + a username settings-menu entry (Android edits the Lightning username from the receive screen). Branding strings handled by the rebrand `5b4b9f52f0` (#44). See DECISIONS.md.
+- [s] `3b4634c7f7` | 05-14 | ui | update the UI of the "Add Funds" screen → **SKIPPED — handled differently.** Adds an `isOnboarding` layout mode to the iOS receive VC; Android already uses a separate onboarding fragment (`PaymentsOnboardingAddFundsFragment`). See DECISIONS.md.
+- [s] `81edb47849` | 05-14 | style | add padding → **SKIPPED — iOS layout** (single `setCustomSpacing` on the iOS receive stack; Android receive layout differs).
 - [d] `0e11af806c` | 05-15 | feature | Add support for radar push relay (#19) → FCM push-relay equivalent. **Higher risk** — likely DEFER, see ISSUES.
 - [s] `6dfdedcd5c` | 05-15 | merge | Merge PR #18 ui-fixes → SKIP (captured via constituents).
 - [ ] `c349ec12a9` | 05-16 | style | Move payments tab up a bit in the settings page → settings ordering.
