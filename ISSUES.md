@@ -20,6 +20,15 @@ The remaining wrapped APIs (`getInfo`, `listPayments`, `getLightningAddress`, `r
 **Suggested next step:** Apply `07343eab15`; when reaching `043b28c555`, diff against the current tree and apply only genuine deltas (e.g. QR generator), logging the dedup.
 **Severity:** low
 **Android files involved:** onboarding fragments, QR generator.
+**Resolved (2026-05-28):** Verified the unique deltas in `043b28c555` (PR #14) against Android. Of the 7 changes the iOS commit message lists:
+  - (1) `AddFundsIntroViewController` → ✅ Android has `PaymentsOnboardingAddFundsIntroFragment.kt` + `paymentsOnboardingAddFundsIntro` nav destination (applied via `bc4dd06d2b`).
+  - (2) `Task.detached` enablePayments — iOS-specific async dispatch, not applicable to Android's coroutine flow.
+  - (3) `tryToRegisterLightningAddress` returning + caching the info — Android's `BreezSdkWrapper.registerUsername` always re-fetches via `getLightningAddress()`, so there's no equivalent caching gap.
+  - (4) `loadWalletAddress` warn-not-throw — Android's `BreezSdkWrapper.getLightningAddress()` already returns `LightningAddress?` (no throw on missing).
+  - (5) `_updateConversionRates` silent-on-no-handler — n/a (Android uses LoadState.ERROR transition via the repository callback).
+  - (6) Shared `CIContext` QR generator perf — iOS Metal pipeline; Android uses ZXing/`QrCodeUtil`, no equivalent shared-context optimization needed.
+  - (7) AddFundsIntro subtitle theme-aware color — applied via the onboarding port (`fragment_payments_onboarding_add_funds_intro.xml` uses `@color/signal_text_secondary`).
+No new code required.
 
 ## 2026-05-27 — Phase 0 — Brand-string replacement risk (iOS `5b4b9f52f0`)
 **Type:** risk
@@ -27,6 +36,7 @@ The remaining wrapped APIs (`getInfo`, `listPayments`, `getLightningAddress`, `r
 **Suggested next step:** Apply intent-matched substitutions to user-facing strings in `values/strings.xml`; review each rather than blanket find-replace.
 **Severity:** medium
 **Android files involved:** `res/values/strings.xml`.
+**Resolved (2026-05-28, partial):** Audited Android `values/strings.xml` and found ~395 user-facing strings still mentioned "Signal" (vs ~10 internal protocol/legal refs that should stay). Per user direction "just the most-visible surfaces" — rebranded **36 high-impact strings** covering: camera/mic/storage/location/contacts permission prompts, "Signal is updating…" / "Signal is unlocked", outdated/version banners, the in-call "Signal will ring …", the app-icon-change dialog, "Open Signal" / "Use Signal screen lock", and device-transfer/restore "open Signal on your old phone" steps. Preserved on purpose: spam-report descriptions (those describe Signal's spam infrastructure, kept honest), all `Signal Protocol` / `Signal Messenger, LLC` / `Signal Foundation` / `signalfoundation.org` / `signalcaptchas.org` / `Signal Server` references (legal entity + protocol + backend). Remaining ~350 user-facing "Signal" strings left as accepted tech-debt (long-tail screens; revisit if specific UI looks wrong on a device).
 
 ## 2026-05-27 — Phase 0 — Residual MobileCoin references (~18 files)
 **Type:** tech-debt
