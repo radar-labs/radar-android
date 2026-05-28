@@ -2,30 +2,6 @@
 
 _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human review._
 
-## 2026-05-27 — Phase 0 — JDK 17 vs 21 mismatch
-**Type:** risk
-**What happened:** `.tool-versions` pins `openjdk-17.0.2`, but the active JDK is `21.0.9`. Signal's AGP/Gradle build may require JDK 17.
-**What I tried:** Detection only (no build yet).
-**Suggested next step:** Before the first build, point the build at JDK 17 (asdf/`JAVA_HOME` or `org.gradle.java.home`). Confirm a clean baseline build of `mapping-ios-commits` succeeds *before* mirroring.
-**Severity:** medium
-**Android files involved:** build env (`.tool-versions`, Gradle JDK config)
-**Resolution (2026-05-27):** Resolved by pinning `JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.18/...` inline on each Gradle invocation (no repo/env mutation). Baseline `:Signal-Android:assemblePlayProdDebug` is **green (4m12s)**. Also corrected the task path (`:Signal-Android`, not `:app`).
-
-## 2026-05-27 — Phase 0 — Push relay (iOS #19 / `0e11af806c`)
-**Type:** deferred
-**What happened:** iOS adds `RadarPushRelay.swift` + APNs registration changes. Android push is FCM with a different registration path; a faithful equivalent is non-trivial and product-sensitive.
-**Suggested next step:** Review the iOS relay design and decide the Android FCM equivalent before implementing. `8353e6b3c9` (relay disclaimer, #31) partly depends on this.
-**Severity:** medium
-**Android files involved:** push/FCM registration (`gcm/`/`notifications/`), notification settings.
-**Detail (2026-05-27):** iOS `RadarPushRelay` (enum) talks to `https://push.radar.chat`: it provisions a "phantom linked device", keeps the relay's APNs token up to date (`ensure(apnsHexToken:)`), exposes a user toggle (`isEnabled`/`setEnabled`), and tears down on logout (`unregister`). Goal: deliver pushes even when the app is force-quit. The Android equivalent must be FCM-based (FirebaseMessagingService token instead of APNs) with the same relay registration/provisioning/teardown and the user toggle + onboarding disclaimer (`8353e6b3c9`: `ONBOARDING_PERMISSIONS_RELAY_*`, `RADAR_PUSH_RELAY_*`). This is a from-scratch feature + product decision (external relay service); both `0e11af806c` and `8353e6b3c9` are deferred together.
-
-## 2026-05-27 — Phase 0 — Backup payment fixes (iOS #20 `ae56882371`, #29 `8ab30cb69e`)
-**Type:** deferred
-**What happened:** iOS fixes backup restore + "backup using mobcoin". Android backup is the Wire-based `backup/v2` archivers (different shape than iOS `BackupArchive…Archiver`). Residual MobileCoin handling differs.
-**Suggested next step:** Inspect Android `backup/v2` payment archiving vs the iOS fix intent before applying; may be already handled or N/A.
-**Severity:** medium
-**Android files involved:** `backup/`, `backup/v2/.../Archivers/`, payment archiving.
-
 ## 2026-05-27 — Phase 0 — Breez SDK version bump (iOS #25 `42e070db35`)
 **Type:** deferred
 **What happened:** iOS bumps Breez via Podfile + new podspecs. Need to confirm where/whether the Android Breez SDK dependency is declared and whether the same version is available.
@@ -33,6 +9,10 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Severity:** low
 **Android files involved:** `gradle/libs.versions.toml`, payments module `build.gradle.kts`.
 **Update (2026-05-27):** iOS bumped to Breez **0.14.0** (vendored podspec); Android is on **0.9.1**. Bumping is a major jump: confirm `breez_sdk_spark:bindings-android:0.14.0` exists, migrate the API usage in `BreezSdkWrapper` (getLightningAddress/registerLightningAddress/checkLightningAddressAvailable/receivePayment/initLogging were wired against 0.9.1), and full-build. **Severity raised to medium.**
+**Resolved (2026-05-28):** Bumped `libs.versions.toml` to `0.14.0` (available on `mvn.breez.technology/releases`) and regenerated `gradle/verification-metadata.xml`. Only **two API breaks** turned up across the 5-minor jump:
+  1. `PrepareLnurlPayRequest`: `amountSats: ULong` → `amount: BigInteger`; positional `optionalValidateSuccessActionUrl: Boolean` → named `validateSuccessActionUrl: Boolean?`.
+  2. `ReceivePaymentMethod.BitcoinAddress` (was a singleton) → data class `BitcoinAddress(newAddress: Boolean?)`. Passing `null` to preserve "let SDK decide" semantics.
+The remaining wrapped APIs (`getInfo`, `listPayments`, `getLightningAddress`, `registerLightningAddress`, `checkLightningAddressAvailable`, `deleteLightningAddress`, `Seed.Mnemonic`, `initLogging`) were source-compatible. Full `:Signal-Android:assemblePlayProdDebug` green.
 
 ## 2026-05-27 — Phase 0 — Onboarding change appears twice
 **Type:** risk
@@ -40,13 +20,6 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Suggested next step:** Apply `07343eab15`; when reaching `043b28c555`, diff against the current tree and apply only genuine deltas (e.g. QR generator), logging the dedup.
 **Severity:** low
 **Android files involved:** onboarding fragments, QR generator.
-
-## 2026-05-27 — Phase 0 — 12-word seed already implemented
-**Type:** tech-debt
-**What happened:** iOS #27 (`fb97d0a9b4`) switches to a 12-word seed; Android already did this in `97f461b44e`.
-**Suggested next step:** Treat #27 as a dedup-skip; verify string/constant parity and mirror only any residual delta.
-**Severity:** low
-**Android files involved:** `PaymentsConstants.java`, recovery-phrase strings.
 
 ## 2026-05-27 — Phase 0 — Brand-string replacement risk (iOS `5b4b9f52f0`)
 **Type:** risk
