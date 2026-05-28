@@ -97,7 +97,8 @@ public class PaymentsHomeFragment extends LoggingFragment {
       SignalStore.payments().setPaymentLockSkipCount(++skipCount);
   }
 
-  /** Renders the balance respecting the hide/show and sats/BTC display preferences. */
+  /** Renders the balance respecting the hide/show preference. The sats/BTC unit is handled
+   *  centrally by {@link MoneyView#setMoney} so no caller-side toggle check is needed. */
   private void renderBalance(@NonNull MoneyView balance) {
     if (!balanceVisible) {
       balance.setText("••••••");
@@ -106,11 +107,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
     if (lastBalanceAmount == null) {
       return;
     }
-    if (SignalStore.payments().getShowInSats() && lastBalanceAmount instanceof org.whispersystems.signalservice.api.payments.Money.Satoshi) {
-      balance.setText(lastBalanceAmount.serializeAmountString() + " sats");
-    } else {
-      balance.setMoney(lastBalanceAmount);
-    }
+    balance.setMoney(lastBalanceAmount);
   }
 
   @Override

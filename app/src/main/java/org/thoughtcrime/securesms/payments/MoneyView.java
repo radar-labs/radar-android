@@ -14,11 +14,13 @@ import androidx.core.content.ContextCompat;
 
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.util.DateUtils;
 import org.whispersystems.signalservice.api.payments.Currency;
 import org.whispersystems.signalservice.api.payments.FormatterOptions;
 import org.whispersystems.signalservice.api.payments.Money;
 
+import java.math.BigInteger;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -96,8 +98,21 @@ public final class MoneyView extends AppCompatTextView {
   }
 
   public void setMoney(@NonNull Money money, long timestamp, @Nullable Object currencySpan) {
-    String          balance       = money.toString(formatterOptions);
-    int             currencyIndex = balance.indexOf(money.getCurrency().getCurrencyCode());
+    // Radar: when the user has toggled sats display and the amount is a Bitcoin/Lightning value,
+    // render in raw sats with a "sats" unit instead of in BTC. Mirrors iOS PaymentsFormat sats
+    // formatter, centralised here so every caller (home balance, chat bubble, history, send flow,
+    // chat-list snippet, …) picks it up automatically.
+    final String balance;
+    final String unitToHighlight;
+    if (money instanceof Money.Satoshi && SignalStore.payments().getShowInSats()) {
+      balance         = formatSatoshiAmount((Money.Satoshi) money);
+      unitToHighlight = "sats";
+    } else {
+      balance         = money.toString(formatterOptions);
+      unitToHighlight = money.getCurrency().getCurrencyCode();
+    }
+
+    int currencyIndex = balance.indexOf(unitToHighlight);
 
     final SpannableString balanceSpan;
 
@@ -109,11 +124,22 @@ public final class MoneyView extends AppCompatTextView {
       balanceSpan = new SpannableString(balance);
     }
 
-    if (currencySpan != null) {
-      balanceSpan.setSpan(currencySpan, currencyIndex, currencyIndex + money.getCurrency().getCurrencyCode().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    if (currencySpan != null && currencyIndex >= 0) {
+      balanceSpan.setSpan(currencySpan, currencyIndex, currencyIndex + unitToHighlight.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     setText(balanceSpan);
+  }
+
+  /**
+   * Formats a Bitcoin amount in raw satoshis, with grouping and a " sats" suffix
+   * (e.g. {@code "100,000 sats"}). Mirrors iOS `PaymentsFormat` satoshi rendering.
+   */
+  public static @NonNull String formatSatoshiAmount(@NonNull Money.Satoshi sats) {
+    BigInteger    rawSats = new BigInteger(sats.serializeAmountString());
+    NumberFormat  fmt     = NumberFormat.getNumberInstance(Locale.getDefault());
+    fmt.setGroupingUsed(true);
+    return fmt.format(rawSats) + " sats";
   }
 
   private static @NonNull NumberFormat getMoneyFormat(int decimalPrecision) {
