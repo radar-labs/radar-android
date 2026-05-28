@@ -138,8 +138,9 @@ No new code required.
 **Android files involved:** `payments/onboarding/*`, `registration/ui/RegistrationActivity.kt`, `res/navigation/payments_onboarding.xml`.
 
 ## 2026-05-27 — iOS ae56882371 — Backup restore: verify payments-entropy not wiped
-**Type:** deferred / risk
+**Type:** deferred / risk · **Duplicate of "F-A7 — Backup-restore: paymentsEntropy at risk during manifest rotation" (2026-05-28 entry above)** — see that entry for the full audit-driven analysis and recommended fix. This older entry is retained for traceability of the original Phase-0 concern; future work should consolidate against the F-A7 entry.
 **What happened:** iOS fixed a StorageService bug where, on restore-from-backup, manifest rotation wiped server records (incl. `paymentsEntropy`) on conflict-retry — by merging the server manifest before rotating, and by syncing `paymentsEntropy` to StorageService. Android already includes `PAYMENTS_ENTROPY` in `PaymentsValues.getKeysToIncludeInBackup()` and calls `StorageSyncHelper.scheduleSyncForDataChange()`, so the entropy-sync intent is present. The manifest-merge-before-rotate fix is specific to iOS `RegistrationCoordinatorImpl`; Android's storage-service restore (`registration/`, `StorageServiceRestore.kt`) is a parallel implementation.
 **Suggested next step:** Verify on a device that restoring an Android backup preserves the wallet seed (paymentsEntropy) — confirm Android's manifest rotation during restore doesn't wipe it; if it does, apply the analogous merge-before-rotate.
 **Severity:** high (data-loss risk if the analog bug exists — the wallet seed)
 **Android files involved:** `registration/` restore flow, `StorageServiceRestore.kt`, `keyvalue/PaymentsValues.kt`.
+**Status (2026-05-28):** Deferred per user direction during the issue walkthrough — left as-is pending an on-device fresh-restore verification.
