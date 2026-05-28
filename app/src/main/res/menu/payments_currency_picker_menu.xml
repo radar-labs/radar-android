@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Currency-picker toolbar menu. A single collapsing SearchView so the user can filter the
+  preferred / all-currencies lists by name or ISO 4217 code. Mirrors iOS CurrencyPickerViewController
+  which uses a UISearchController over the navigation bar.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/payments_currency_picker_menu_search"
+        android:icon="@drawable/symbol_search_24"
+        android:title="@string/SearchToolbar_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+</menu>
