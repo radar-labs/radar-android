@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 
 import org.thoughtcrime.securesms.PassphraseRequiredActivity;
@@ -25,6 +26,13 @@ public class PaymentsActivity extends PassphraseRequiredActivity {
 
   public static final String EXTRA_PAYMENTS_STARTING_ACTION = "payments_starting_action";
   public static final String EXTRA_STARTING_ARGUMENTS       = "payments_starting_arguments";
+  /**
+   * When set to {@code true}, the activity hosts the {@link PaymentSettingsMenuFragment}
+   * as the graph's start destination (so back exits the activity rather than landing on
+   * the wallet UI). Used by the Settings → Payments entry to mirror iOS
+   * {@code PaymentSettingsMenuViewController}.
+   */
+  public static final String EXTRA_OPEN_SETTINGS_MENU       = "payments_open_settings_menu";
 
   private final DynamicTheme dynamicTheme = new DynamicNoActionBarTheme();
 
@@ -37,14 +45,27 @@ public class PaymentsActivity extends PassphraseRequiredActivity {
     return intent;
   }
 
+  /** Opens the activity with {@link PaymentSettingsMenuFragment} as the start destination. */
+  public static Intent navigateToSettingsMenu(@NonNull Context context) {
+    Intent intent = new Intent(context, PaymentsActivity.class);
+    intent.putExtra(EXTRA_OPEN_SETTINGS_MENU, true);
+    return intent;
+  }
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState, boolean ready) {
     dynamicTheme.onCreate(this);
 
     setContentView(R.layout.payments_activity);
 
-    NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment);
-    controller.setGraph(R.navigation.payments_preferences);
+    NavController controller       = Navigation.findNavController(this, R.id.nav_host_fragment);
+    NavGraph      graph            = controller.getNavInflater().inflate(R.navigation.payments_preferences);
+    boolean       openSettingsMenu = getIntent().getBooleanExtra(EXTRA_OPEN_SETTINGS_MENU, false);
+
+    if (openSettingsMenu) {
+      graph.setStartDestination(R.id.paymentSettingsMenu);
+    }
+    controller.setGraph(graph, null);
 
     int startingAction = getIntent().getIntExtra(EXTRA_PAYMENTS_STARTING_ACTION, R.id.paymentsHome);
     if (startingAction != R.id.paymentsHome) {
