@@ -64,6 +64,10 @@ No new code required.
 **Suggested next step:** Wire on-chain receive when Breez taproot support is finalized; reconcile QR encoding during the Cake-compat commits.
 **Severity:** low
 **Android files involved:** `PaymentsAddMoneyFragment.java`, `PaymentsAddMoneyViewModel.kt`, `BreezSdkWrapper.kt`.
+**Resolved (2026-05-28):**
+  - **On-chain fetch is live.** `BreezSdkWrapper.getOnchainAddress()` calls `sdk.receivePayment(ReceivePaymentRequest(ReceivePaymentMethod.BitcoinAddress(null)))` and returns `paymentRequest`. iOS uncommented `fetchBitcoinTaprootAddress()` (HEAD has it active at lines 199 + 621 of `PaymentsTransferInViewController.swift`); Android matches via Breez 0.14.0.
+  - **QR encoding (Cake compatibility) addressed by commit `4a2cc9a132`** (mirror iOS `4f069a4e30`): Lightning QR now encodes a BOLT11 invoice via LNURL-pay (`LightningInvoiceFetcher`), with `lightning:<address>` as the fallback. On-chain QR encodes the raw address. Both match the iOS QR shape that Cake / exchange wallets expect.
+  - Prefetch + error-toast + revert to Lightning on failure is implemented in `PaymentsAddMoneyFragment.prefetchOnchainAddress`.
 
 ## 2026-05-28 — F-A3 — Chat-list snippet doesn't refresh live when sats/hidden toggle
 **Type:** deferred
@@ -74,6 +78,7 @@ No new code required.
   2. **Render-time snippet for payment threads**: stop caching the payment snippet in `body`; in the chat list adapter (`ConversationListItem`), detect payment threads (via `ThreadRecord.messageExtras?.paymentTombstone` or a flag) and recompute the snippet at bind time using the current pref values. Cleaner but touches the adapter.
 **Mitigation:** F-A2's snippet does respect `balanceHidden` at write time, so as soon as the next payment message arrives, the chat-list row will show "•••••" if hidden is on, or the amount if not.
 **Android files involved:** `ThreadTable.kt`, `ConversationListItem.java`, `PaymentsValues.kt` (would need a change LiveData), `ThreadBodyUtil.java`.
+**Resolved (2026-05-28, DB-invalidation sweep approach):** New `PaymentSnippetRefresher.refreshAsync()` runs on `SignalExecutors.BOUNDED`, queries `SELECT DISTINCT thread_id FROM message WHERE type matches PAYMENTS_NOTIFICATION or PAYMENTS_TOMBSTONE`, and calls `ThreadTable.update(threadId, false)` for each match — which recomputes `body` via `ThreadBodyUtil` and notifies chat-list observers. Wired into all three toggle sites in `PaymentsHomeFragment`: the eye-icon (`setBalanceHidden`), tap-the-balance (`setShowInSats`), and the Bitcoin Unit picker dialog (`setShowInSats`). Cost: O(payment threads), non-blocking. Mirrors iOS's NotificationCenter-driven refresh path.
 
 ## 2026-05-28 — E — Bottom-nav Payments tab (iOS HomeTabBarController parity)
 **Type:** deferred

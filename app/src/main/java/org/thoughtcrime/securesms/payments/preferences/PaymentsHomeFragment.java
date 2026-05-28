@@ -37,6 +37,7 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity;
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil;
 import org.thoughtcrime.securesms.payments.MoneyView;
+import org.thoughtcrime.securesms.payments.PaymentSnippetRefresher;
 import org.thoughtcrime.securesms.payments.backup.RecoveryPhraseStates;
 import org.thoughtcrime.securesms.payments.backup.confirm.PaymentsRecoveryPhraseConfirmFragment;
 import org.thoughtcrime.securesms.payments.preferences.model.InfoCard;
@@ -197,12 +198,15 @@ public class PaymentsHomeFragment extends LoggingFragment {
       balanceToggle.setImageResource(balanceVisible ? R.drawable.ic_visibility_24dp
                                                     : R.drawable.ic_visibility_off_24dp);
       renderBalance(balance);
+      // Refresh chat-list payment snippets so the mask appears immediately on the conversation list.
+      PaymentSnippetRefresher.refreshAsync();
     });
 
     // Tap the balance to toggle between sats and BTC display.
     balance.setOnClickListener(v -> {
       SignalStore.payments().setShowInSats(!SignalStore.payments().getShowInSats());
       renderBalance(balance);
+      PaymentSnippetRefresher.refreshAsync();
     });
 
     viewModel.getBalance().observe(getViewLifecycleOwner(), balanceAmount -> {
@@ -368,6 +372,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
           if (balance != null) {
             renderBalance(balance);
           }
+          PaymentSnippetRefresher.refreshAsync();
           dialog.dismiss();
         })
         .setNegativeButton(android.R.string.cancel, null)
