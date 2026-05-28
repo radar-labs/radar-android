@@ -30,10 +30,14 @@ import androidx.navigation.Navigation;
 import com.google.android.material.button.MaterialButton;
 
 import org.signal.core.util.concurrent.SimpleTask;
+import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.qr.QrView;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
+import org.thoughtcrime.securesms.payments.LightningInvoiceFetcher;
+
+import java.util.Objects;
 
 /**
  * Add Funds (receive) screen. Mirrors iOS PaymentsTransferInViewController: a Lightning/Onchain
@@ -41,6 +45,8 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore;
  * and a Copy pill; Share is in the toolbar.
  */
 public final class PaymentsAddMoneyFragment extends LoggingFragment {
+
+  private static final String TAG = Log.tag(PaymentsAddMoneyFragment.class);
 
   /** FragmentResult key the edit-username screen posts after a successful change, to trigger a refresh. */
   public static final String REQUEST_KEY_USERNAME_CHANGED = "payments_add_money.username_changed";
@@ -50,6 +56,10 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
   private boolean showingOnchain;
   private String  lightningAddress;
   private String  onchainAddress;
+
+  /** Cached BOLT11 invoice for the current {@link #lightningAddress}; cleared when the address changes. */
+  private @Nullable String  bolt11Invoice;
+  private boolean           bolt11FetchInFlight;
 
   private QrView              qrView;
   private View                logoBox;
@@ -99,6 +109,11 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     showSpinner(true);
 
     viewModel.getSelfAddressB58().observe(getViewLifecycleOwner(), address -> {
+      if (!Objects.equals(address, lightningAddress)) {
+        // Invalidate the BOLT11 cache — the previous invoice was tied to the previous address.
+        bolt11Invoice = null;
+        bolt11FetchInFlight = false;
+      }
       lightningAddress = address;
       if (!showingOnchain) {
         renderAll();
@@ -200,8 +215,49 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
       showSpinner(true);
       return;
     }
-    qrView.setQrText(showingOnchain ? address : "lightning:" + address);
+    String payload;
+    if (showingOnchain) {
+      payload = address;
+    } else if (bolt11Invoice != null) {
+      // Preferred: encode the LNURL-pay-resolved BOLT11 invoice (mirrors iOS commit 4f069a4e30).
+      payload = "lightning:" + bolt11Invoice;
+    } else {
+      // Fallback while the invoice is being fetched (or after a fetch error): the address itself.
+      payload = "lightning:" + address;
+      if (!bolt11FetchInFlight) {
+        fetchBolt11Invoice(address);
+      }
+    }
+    qrView.setQrText(payload);
     showSpinner(false);
+  }
+
+  /**
+   * Resolves the current Lightning address to a BOLT11 invoice via LNURL-pay (in the background).
+   * On success, re-renders the QR with `lightning:<bolt11>`. On failure, leaves the
+   * `lightning:<address>` fallback in place. Mirrors iOS `getBolt11FromLightningAddress`.
+   */
+  private void fetchBolt11Invoice(@NonNull String addressAtFetchTime) {
+    bolt11FetchInFlight = true;
+    SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
+                   () -> {
+                     try {
+                       return LightningInvoiceFetcher.fetchBolt11(addressAtFetchTime, 0L);
+                     } catch (Exception e) {
+                       Log.w(TAG, "BOLT11 fetch failed; falling back to lightning:<address>", e);
+                       return null;
+                     }
+                   },
+                   invoice -> {
+                     bolt11FetchInFlight = false;
+                     // Discard a stale response if the user changed username (and thus address) while in flight.
+                     if (invoice != null && addressAtFetchTime.equals(lightningAddress)) {
+                       bolt11Invoice = invoice;
+                       if (!showingOnchain) {
+                         renderQr();
+                       }
+                     }
+                   });
   }
 
   private void showSpinner(boolean show) {
