@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/payments_home_fragment_header_refresh"
         app:layout_constraintTop_toBottomOf="@+id/payments_home_fragment_header_balance"
-        tools:text="$55 USD at 11:00am" />
+        tools:text="$55.00" />
 
     <org.thoughtcrime.securesms.components.PaymentPillStrip
         android:layout_width="match_parent"

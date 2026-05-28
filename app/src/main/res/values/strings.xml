@@ -2777,7 +2777,23 @@
     <string name="RegistrationActivity_cancel">Cancel</string>
     <string name="RegistrationActivity_next">Next</string>
     <string name="RegistrationActivity_continue">Continue</string>
-    <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Take privacy with you.\nBe yourself in every message.</string>
+    <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Message privately,\nSend money securely.</string>
+    <!-- Welcome screen primary button label for a brand new user -->
+    <string name="RegistrationActivity_im_new_to_radar">I\'m new to Radar</string>
+    <!-- Welcome screen secondary button label to restore or transfer an existing account -->
+    <string name="RegistrationActivity_i_already_have_an_account">I already have an account</string>
+    <!-- "Sign up" welcome screen: title -->
+    <string name="RegistrationActivity_sign_up">Sign up</string>
+    <!-- "Sign up" welcome screen: first paragraph of the description -->
+    <string name="RegistrationActivity_create_a_new_account_or_restore">Create a new account or restore an existing Signal account</string>
+    <!-- "Sign up" welcome screen: highlighted phrase within the description (must appear verbatim inside the description body) -->
+    <string name="RegistrationActivity_radar_is_based_on_signal">Radar is based on Signal</string>
+    <!-- "Sign up" welcome screen: remainder of the description that follows the highlighted phrase -->
+    <string name="RegistrationActivity_and_compatible_with_it">%1$s and compatible with it, letting you keep all your existing conversations</string>
+    <!-- "Sign up" welcome screen: primary button to begin creating a brand new account -->
+    <string name="RegistrationActivity_create_new_account">Create New Account</string>
+    <!-- "Sign up" welcome screen: text link to restore/transfer from an existing Signal account -->
+    <string name="RegistrationActivity_use_my_signal_account">Use my Signal account</string>
     <!-- Title of registration screen when asking for the users phone number -->
     <string name="RegistrationActivity_phone_number">Phone number</string>
     <!-- Subtitle of registration screen when asking for the users phone number -->
@@ -4292,6 +4308,8 @@
     <!-- Alert dialog button to update now -->
     <string name="PaymentsHomeFragment__update_now">Update now</string>
     <string name="PaymentsHomeFragment__toggle_balance_visibility">Toggle balance visibility</string>
+    <!-- Content description for the toolbar gear button that opens the payment settings screen -->
+    <string name="PaymentsHomeFragment__payment_settings">Payment settings</string>
 
     <!-- GrantPermissionsFragment -->
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
