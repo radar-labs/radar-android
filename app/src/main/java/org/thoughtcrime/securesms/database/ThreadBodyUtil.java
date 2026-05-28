@@ -15,7 +15,12 @@ import org.thoughtcrime.securesms.contactshare.Contact;
 import org.thoughtcrime.securesms.contactshare.ContactUtil;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
+import org.thoughtcrime.securesms.database.model.databaseprotos.MessageExtras;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.mms.GifSlide;
+import org.thoughtcrime.securesms.payments.CryptoValueUtil;
+import org.whispersystems.signalservice.api.payments.FormatterOptions;
+import org.whispersystems.signalservice.api.payments.Money;
 import org.thoughtcrime.securesms.mms.Slide;
 import org.thoughtcrime.securesms.mms.StickerSlide;
 import org.thoughtcrime.securesms.util.MessageRecordUtil;
@@ -24,6 +29,7 @@ import org.thoughtcrime.securesms.util.Util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class ThreadBodyUtil {
@@ -47,17 +53,48 @@ public final class ThreadBodyUtil {
 
   /**
    * Chat-list snippet for payment messages. Mirrors iOS `ThreadViewModel.paymentSnippet`
-   * (commit c90dd2d790): "You sent payment" / "<Sender> sent you payment".
-   * Including the actual amount (sats/BTC) + balance-hidden masking is a follow-up
-   * (requires a `Money` lookup from the payment table for non-tombstone records).
+   * (commit c90dd2d790):
+   *   - with amount + not hidden: "You sent 100 sats" / "<Sender> sent you 100 sats"
+   *   - balance hidden: amount replaced with `•••••`
+   *   - no amount available (notification missing payment, tombstone missing amount):
+   *     "You sent payment" / "<Sender> sent you payment"
    */
-  private static @NonNull String getPaymentDirectionSnippet(@NonNull Context context, @NonNull MessageRecord record) {
+  private static @NonNull String getPaymentDirectionSnippet(@NonNull Context context, @NonNull MmsMessageRecord record) {
+    String amountText = formatPaymentAmount(record);
     if (record.isOutgoing()) {
-      return context.getString(R.string.ThreadRecord__you_sent_payment);
+      return amountText != null
+          ? context.getString(R.string.PaymentMessageView_you_sent_s, amountText)
+          : context.getString(R.string.ThreadRecord__you_sent_payment);
     } else {
       String sender = record.getFromRecipient().getShortDisplayName(context);
-      return context.getString(R.string.ThreadRecord__s_sent_you_payment, sender);
+      return amountText != null
+          ? context.getString(R.string.UnreadPayments__s_sent_you_s, sender, amountText)
+          : context.getString(R.string.ThreadRecord__s_sent_you_payment, sender);
     }
+  }
+
+  /**
+   * Extracts a formatted amount string for the payment associated with a chat-list message.
+   * Returns `null` if the amount can't be resolved; "•••••" if the balance is hidden
+   * (mirrors iOS `balanceHidden` masking from c90dd2d790).
+   */
+  private static @Nullable String formatPaymentAmount(@NonNull MmsMessageRecord record) {
+    Money amount = null;
+    if (record.isPaymentNotification() && record.getPayment() != null) {
+      amount = record.getPayment().getAmount();
+    } else if (record.isPaymentTombstone()) {
+      MessageExtras extras = record.getMessageExtras();
+      if (extras != null && extras.paymentTombstone != null && extras.paymentTombstone.amount != null) {
+        amount = CryptoValueUtil.cryptoValueToMoney(extras.paymentTombstone.amount);
+      }
+    }
+    if (amount == null) {
+      return null;
+    }
+    if (SignalStore.payments().getBalanceHidden()) {
+      return "•••••";
+    }
+    return amount.toString(FormatterOptions.builder(Locale.getDefault()).build());
   }
 
   private static @NonNull ThreadBody getFormattedBodyForMms(@NonNull Context context, @NonNull MmsMessageRecord record, @Nullable CharSequence bodyOverride) {
