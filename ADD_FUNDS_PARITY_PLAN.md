@@ -48,10 +48,10 @@ toolbar (Done left / Share right) → **instruction** → **segmented network sw
 ## E. Edit Username screen parity (iOS `RadarUsernameViewController` → Android `EditLightningUsernameFragment`)
 
 iOS reference: `Signal/.../Payments/RadarUsernameViewController.swift`.
-- [ ] **E1 — Layout/UI.** iOS: centered logo (`radar-logo`, 82pt) → title "Your Radar Username" (title2, semibold) → subtitle (50% alpha) → input row → status label → flexible spacer → Confirm (filled accent, radius 14, 52pt) → "Skip this step" text button; content sits in the upper third (scroll root, keyboard slides over). Android today: coin stand-in + plain field + two `Small.Primary` buttons. → Rebuild to match (use `radar-logo`).
-- [ ] **E2 — Input field.** iOS: a **pill-shaped** field (`grayFill`, corner 26, height 52) with the username, plus a separate **`@radar.cash` suffix label** in accent blue beside it; clear button while editing; max length = `WalletAddressEditViewController.addressGlyphLimit`. Android today: a bare `EditText` + a plain `@radar.cash` TextView. → Pill container + accent-blue domain suffix + glyph limit + clear button.
-- [ ] **E3 — Button styles.** iOS Confirm = filled accent capsule/14-radius, white bold; Skip = borderless accent text. Android = two `Small.Primary` buttons. → Match iOS (accent confirm + text skip).
-- [ ] **E4 — Availability status.** iOS: "✓ Username Available" (green `#46B827`) / "✗ Username Unavailable" (accent red), debounced 500ms. Android has the debounce + colors but no ✓/✗ glyphs or exact styling. → Align text/glyphs/colors.
+- [x] **E1 — Layout/UI.** iOS: centered logo (`radar-logo`, 82pt) → title "Your Radar Username" (title2, semibold) → subtitle (50% alpha) → input row → status label → flexible spacer → Confirm (filled accent, radius 14, 52pt) → "Skip this step" text button; content sits in the upper third (scroll root, keyboard slides over). Android today: coin stand-in + plain field + two `Small.Primary` buttons. → Rebuild to match (use `radar-logo`).
+- [x] **E2 — Input field.** iOS: a **pill-shaped** field (`grayFill`, corner 26, height 52) with the username, plus a separate **`@radar.cash` suffix label** in accent blue beside it; clear button while editing; max length = `WalletAddressEditViewController.addressGlyphLimit`. Android today: a bare `EditText` + a plain `@radar.cash` TextView. → Pill container + accent-blue domain suffix + glyph limit + clear button.
+- [x] **E3 — Button styles.** iOS Confirm = filled accent capsule/14-radius, white bold; Skip = borderless accent text. Android = two `Small.Primary` buttons. → Match iOS (accent confirm + text skip).
+- [x] **E4 — Availability status.** iOS: "✓ Username Available" (green `#46B827`) / "✗ Username Unavailable" (accent red), debounced 500ms. Android has the debounce + colors but no ✓/✗ glyphs or exact styling. → Align text/glyphs/colors.
 
 ## F. Username refresh after edit — MISSED iOS behavior (functional bug)
 

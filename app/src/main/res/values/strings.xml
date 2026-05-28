@@ -4359,7 +4359,7 @@
     <!-- Button to confirm the chosen username -->
     <string name="EditLightningUsernameFragment__confirm">Confirm</string>
     <!-- Button to skip choosing a username -->
-    <string name="EditLightningUsernameFragment__skip">Skip this step</string>
+    <string name="EditLightningUsernameFragment__skip">Cancel</string>
     <!-- Status shown when the entered username is available -->
     <string name="EditLightningUsernameFragment__username_available">Username available</string>
     <!-- Status shown when the entered username is already taken -->

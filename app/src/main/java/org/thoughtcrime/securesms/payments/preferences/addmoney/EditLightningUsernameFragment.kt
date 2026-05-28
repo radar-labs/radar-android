@@ -5,9 +5,12 @@
 
 package org.thoughtcrime.securesms.payments.preferences.addmoney
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
@@ -28,8 +31,14 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore
 /**
  * Lets the user pick / edit their Radar lightning-address username (e.g. `alice@radar.cash`).
  *
- * Mirrors iOS RadarUsernameViewController (commit aba8376294). The username is checked for
- * availability (debounced) and, on confirm, registered with the Breez SDK.
+ * Mirrors iOS RadarUsernameViewController:
+ *  - Centered radar-logo header + Title2/subtitle copy.
+ *  - Gray-fill pill EditText with a "@radar.cash" accent suffix and a clear (X) button.
+ *  - Debounced (500ms) availability check; ✓/✗ status label in green/accent-red.
+ *  - Accent-blue Confirm capsule + borderless accent-blue Cancel.
+ *  - Auto-focuses the field on appear (keyboard slides over the content).
+ *  - On successful register: posts a FragmentResult so the Add Funds screen refreshes
+ *    (mirrors iOS `walletAddressDidLoad`), then pops back.
  */
 class EditLightningUsernameFragment : LoggingFragment(R.layout.fragment_edit_lightning_username) {
 
@@ -46,6 +55,7 @@ class EditLightningUsernameFragment : LoggingFragment(R.layout.fragment_edit_lig
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     val toolbar = view.findViewById<Toolbar>(R.id.edit_lightning_username_toolbar)
     val field = view.findViewById<EditText>(R.id.edit_lightning_username_field)
+    val clear = view.findViewById<ImageButton>(R.id.edit_lightning_username_clear)
     val status = view.findViewById<TextView>(R.id.edit_lightning_username_status)
     val confirm = view.findViewById<MaterialButton>(R.id.edit_lightning_username_confirm)
     val skip = view.findViewById<TextView>(R.id.edit_lightning_username_skip)
@@ -66,9 +76,23 @@ class EditLightningUsernameFragment : LoggingFragment(R.layout.fragment_edit_lig
       }
     }
 
-    field.doAfterTextChanged { onUsernameChanged(it?.toString().orEmpty().trim(), status, confirm) }
+    field.doAfterTextChanged {
+      val text = it?.toString().orEmpty()
+      clear.visibility = if (text.isEmpty()) View.GONE else View.VISIBLE
+      onUsernameChanged(text.trim(), status, confirm)
+    }
+
+    clear.setOnClickListener { field.setText("") }
+
     confirm.setOnClickListener { onConfirm(field.text.toString().trim(), confirm) }
     skip.setOnClickListener { NavHostFragment.findNavController(this).popBackStack() }
+
+    // Auto-focus the field and present the soft keyboard (parity with iOS `becomeFirstResponder`).
+    field.requestFocus()
+    field.post {
+      val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+      imm.showSoftInput(field, InputMethodManager.SHOW_IMPLICIT)
+    }
   }
 
   private fun onUsernameChanged(username: String, status: TextView, confirm: MaterialButton) {
@@ -88,11 +112,11 @@ class EditLightningUsernameFragment : LoggingFragment(R.layout.fragment_edit_lig
       available = result
       status.visibility = View.VISIBLE
       if (result) {
-        status.setText(R.string.EditLightningUsernameFragment__username_available)
+        status.text = "✓ " + getString(R.string.EditLightningUsernameFragment__username_available)
         status.setTextColor(AVAILABLE_COLOR)
         confirm.isEnabled = true
       } else {
-        status.setText(R.string.EditLightningUsernameFragment__username_unavailable)
+        status.text = "✗ " + getString(R.string.EditLightningUsernameFragment__username_unavailable)
         status.setTextColor(UNAVAILABLE_COLOR)
         confirm.isEnabled = false
       }
