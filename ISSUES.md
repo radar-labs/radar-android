@@ -78,6 +78,13 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Severity:** low
 **Android files involved:** `PaymentsAddMoneyFragment.java`, `PaymentsAddMoneyViewModel.kt`, `BreezSdkWrapper.kt`.
 
+## 2026-05-28 — Add Funds QR center logo on a default-EC QR
+**Type:** risk
+**What happened:** The Add Funds parity rewrite overlays the radar logo (52dp box / 42dp glyph) on a `QrCodeUtil`-generated QR, which uses **error-correction level L** (Signal's `QrCodeUtil.create` takes no EC hint). A center logo on an L-level QR can hurt scannability if it covers too much. iOS overlays its logo on a default-EC QR as well, so this matches the reference, but it was **not verified on a device**.
+**Suggested next step:** Scan-test on a device; if unreliable, render the Add Funds QR with EC level **H** (a dedicated bitmap via ZXing with `ERROR_CORRECTION=H`, set on the view) instead of `QrView.setQrText`.
+**Severity:** low
+**Android files involved:** `PaymentsAddMoneyFragment.java`, `res/layout/payments_add_money_fragment.xml`.
+
 ## 2026-05-27 — iOS b0bd09c807 / 1ce180c53e — Launcher icon still Signal's
 **Type:** deferred
 **What happened:** iOS #12 (and again #24) replaced the app icon with the Radar mark and removed the alternate Signal icons. On Android the launcher icon is still Signal's: adaptive `drawable/ic_launcher_foreground` + `ic_launcher_background` + `ic_launcher_monochrome`, legacy `mipmap-*/ic_launcher.png` across 5 densities, plus a set of alternate icons (`ic_launcher_alt_*`). The Radar source art exists in the iOS repo (`radar-logo.svg`, `AppIcons/AppIcon.icon/Assets/radar-icon-*.png`).
