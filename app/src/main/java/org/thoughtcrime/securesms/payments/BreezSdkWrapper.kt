@@ -109,8 +109,9 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       throw UnsupportedOperationException()
     }
 
-    val amountSats = amount.toLong().toULong()
-    val optionalValidateSuccessActionUrl = true
+    // Breez SDK 0.14.0: `amountSats: ULong` → `amount: BigInteger`;
+    // `optionalValidateSuccessActionUrl` → named `validateSuccessActionUrl: Boolean?`.
+    val amountBig = amount.toLong().toBigInteger()
     var payRequest: LnurlPayRequestDetails? = null
 
     if (inputType is InputType.LightningAddress) {
@@ -119,10 +120,10 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       payRequest = inputType.v1
     }
     val req = PrepareLnurlPayRequest(
-      amountSats = amountSats,
+      amount = amountBig,
       payRequest = payRequest!!,
       comment = null,
-      optionalValidateSuccessActionUrl
+      validateSuccessActionUrl = true
     )
     val prepareResponse = runBlocking { sdk!!.prepareLnurlPay(req) }
 
@@ -151,7 +152,9 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
   fun getOnchainAddress(): String? {
     val sdk = this.sdk ?: return null
     return runCatching {
-      runBlocking { sdk.receivePayment(ReceivePaymentRequest(ReceivePaymentMethod.BitcoinAddress)).paymentRequest }
+      // Breez 0.14.0: BitcoinAddress is a data class with `newAddress: Boolean?`.
+      // `null` defers to the SDK default (matches the implicit 0.9.1 behavior).
+      runBlocking { sdk.receivePayment(ReceivePaymentRequest(ReceivePaymentMethod.BitcoinAddress(null))).paymentRequest }
     }.getOrNull()
   }
 
