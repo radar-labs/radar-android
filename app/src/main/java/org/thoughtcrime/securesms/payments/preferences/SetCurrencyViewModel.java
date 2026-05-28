@@ -88,9 +88,31 @@ public final class SetCurrencyViewModel extends ViewModel {
 
   private @NonNull MappingModelList fromCurrencies(@NonNull Collection<Currency> currencies, @NonNull Currency currentCurrency) {
     return Stream.of(currencies)
-                 .map(c -> new SingleSelectSetting.Item(c, c.getDisplayName(Locale.getDefault()), c.getCurrencyCode(), c.equals(currentCurrency)))
-                 .sortBy(SingleSelectSetting.Item::getText)
+                 .sortBy(c -> c.getDisplayName(Locale.getDefault()))
+                 .map(c -> {
+                   // Prefix the row text with the flag emoji derived from the currency-code prefix
+                   // (mirrors iOS CurrencyPickerViewController.flagEmoji(forCurrencyCode:)).
+                   String name = c.getDisplayName(Locale.getDefault());
+                   String flag = flagEmojiForCurrencyCode(c.getCurrencyCode());
+                   String text = flag.isEmpty() ? name : (flag + "  " + name);
+                   return new SingleSelectSetting.Item(c, text, c.getCurrencyCode(), c.equals(currentCurrency));
+                 })
                  .collect(MappingModelList.toMappingModelList());
+  }
+
+  /**
+   * Converts an ISO 4217 currency code (e.g. "USD") to its corresponding country-flag emoji
+   * by mapping the first two letters to Unicode regional indicator symbols.
+   * Mirrors iOS `CurrencyPickerViewController.flagEmoji(forCurrencyCode:)`.
+   */
+  static @NonNull String flagEmojiForCurrencyCode(@Nullable String currencyCode) {
+    if (currencyCode == null || currencyCode.length() < 2) return "";
+    char c1 = Character.toUpperCase(currencyCode.charAt(0));
+    char c2 = Character.toUpperCase(currencyCode.charAt(1));
+    if (c1 < 'A' || c1 > 'Z' || c2 < 'A' || c2 > 'Z') return "";
+    int base = 0x1F1E6; // REGIONAL INDICATOR SYMBOL LETTER A
+    return new String(Character.toChars(base + (c1 - 'A')))
+         + new String(Character.toChars(base + (c2 - 'A')));
   }
 
   private int findSelectedIndex(MappingModelList items) {
