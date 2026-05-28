@@ -125,10 +125,18 @@ public class PaymentsHomeFragment extends LoggingFragment {
     ImageButton         balanceToggle       = view.findViewById(R.id.payments_home_fragment_header_balance_visibility_toggle);
     Stub<ComposeView>   bannerView          = ViewUtil.findStubById(view, R.id.banner_compose_view);
 
-    toolbar.setNavigationOnClickListener(v -> {
-      viewModel.markAllPaymentsSeen();
-      requireActivity().finish();
-    });
+    // When hosted in MainActivity's bottom-nav tab, this fragment IS the tab root — hide
+    // the toolbar's back-arrow. When launched standalone (via PaymentsActivity from
+    // Settings → Payments), keep the existing finish-on-back behavior.
+    boolean hostedInMainActivity = requireActivity() instanceof org.thoughtcrime.securesms.MainActivity;
+    if (hostedInMainActivity) {
+      toolbar.setNavigationIcon(null);
+    } else {
+      toolbar.setNavigationOnClickListener(v -> {
+        viewModel.markAllPaymentsSeen();
+        requireActivity().finish();
+      });
+    }
 
     toolbar.setOnMenuItemClickListener(this::onMenuItemSelected);
 

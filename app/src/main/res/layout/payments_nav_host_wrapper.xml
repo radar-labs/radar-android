@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Thin Fragment layout that hosts the existing payments_preferences navigation graph inside
+  the bottom-nav Payments tab. The separate PaymentsActivity continues to host the same
+  graph independently for the Settings → Payments entry path (backward compatible).
+-->
+<androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/payments_nav_host"
+    android:name="androidx.navigation.fragment.NavHostFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:defaultNavHost="true"
+    app:navGraph="@navigation/payments_preferences" />

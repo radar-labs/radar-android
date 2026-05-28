@@ -97,6 +97,14 @@ No new code required.
 - Step 6: Gate the tab on `SignalStore.payments.paymentsAvailability` / `paymentsEnabled`.
 **Workaround in the meantime:** Per §A1 of this plan, Payments was moved up in Settings (now appears right after Account/Linked-Devices/Donate), so it's reachable in 2 taps. Acceptable for now.
 **Android files involved:** `app/src/main/java/org/thoughtcrime/securesms/main/MainNavigation.kt`, `app/src/main/java/org/thoughtcrime/securesms/main/MainNavigationViewModel.kt`, `app/src/main/java/org/thoughtcrime/securesms/MainActivity.kt`, `app/src/main/res/raw/payments_28.json` (new), `app/src/main/res/values/strings.xml`, `app/src/main/res/navigation/payments_preferences.xml`.
+**Resolved (2026-05-28):** Bottom-nav Payments tab landed, backward-compatible. Implementation steps:
+  1. **Icon system extended**: `MainNavigationListLocation` now optionally takes `@DrawableRes drawableIcon`; `NavigationDestinationIcon` renders a static drawable when set, otherwise falls back to the existing Lottie path. PAYMENTS uses `R.drawable.symbol_payment_24` — no new Lottie file needed.
+  2. **State + gating**: added `paymentsCount`, `isPaymentsTabEnabled` to `MainNavigationState`. `refreshNavigationBarState` gates the tab on `SignalStore.payments.paymentsAvailability.showPaymentsMenu()`. `UnreadPaymentsLiveData` feeds `setPaymentsCount(...)` so the tab shows the unread badge.
+  3. **Embedding**: new `PaymentsNavHostWrapperFragment` + `payments_nav_host_wrapper.xml` host the existing `payments_preferences` nav graph inside `MainActivity.secondaryContent` via `AndroidFragment(clazz = PaymentsNavHostWrapperFragment::class.java, ...)`. PaymentsActivity is **unchanged** — the Settings → Payments path stays exactly as before.
+  4. **Toolbar coordination**: `MainToolbar` is hidden when `currentListLocation == PAYMENTS` (PaymentsHomeFragment ships its own). When PaymentsHomeFragment detects it's hosted in `MainActivity`, it hides its toolbar's nav back-arrow (tab root has no back). When launched standalone via PaymentsActivity, original behavior is preserved.
+  5. **FAB suppression**: `MainFloatingActionButtons` wraps the primary FAB in an `AnimatedVisibility` that hides it on PAYMENTS.
+  6. **Exhaustive `when` updates** across `MainActivity`, `MainNavigation`, `MainFloatingActionButtons`, `MainToolbar` for the new enum case.
+  Full `:Signal-Android:assemblePlayProdDebug` green. Other tabs (Chats/Calls/Stories/Archive) untouched.
 
 ## 2026-05-28 — F-A7 — Backup-restore: paymentsEntropy at risk during manifest rotation
 **Type:** deferred / data-loss risk **(needs user decision before patching)**
