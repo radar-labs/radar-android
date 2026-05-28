@@ -4214,11 +4214,14 @@
     <string name="PaymentsHomeFragment__transfer_to_exchange">Transfer to exchange</string>
     <string name="PaymentsHomeFragment__send_to_contact">Send to Contact</string>
     <string name="PaymentsHomeFragment__send_to_address">Send to Address</string>
-    <string name="PaymentsHomeFragment__currency_conversion">Currency conversion</string>
+    <!-- Payments settings menu item to choose the fiat conversion currency. Matches iOS SETTINGS_PAYMENTS_SET_CURRENCY. -->
+    <string name="PaymentsHomeFragment__currency_conversion">Set currency</string>
     <!-- Payments settings menu item to choose the bitcoin display unit (BTC or sats) -->
     <string name="PaymentsHomeFragment__bitcoin_unit">Bitcoin unit</string>
-    <!-- Payments settings menu item to view Lightning/Breez SDK logs -->
-    <string name="PaymentsHomeFragment__lightning_logs">Lightning logs</string>
+    <!-- Payments settings menu item that opens the Edit Username screen. Matches iOS PAYMENTS_USERNAME_SETTINGS_TITLE. -->
+    <string name="PaymentsHomeFragment__payments_username">Payments Username</string>
+    <!-- Payments settings menu item to view Lightning/Breez SDK logs. Matches iOS SETTINGS_PAYMENTS_LIGHTNING_LOGS. -->
+    <string name="PaymentsHomeFragment__lightning_logs">Lightning Logs</string>
     <!-- Payments settings menu item to permanently delete the payment wallet -->
     <string name="PaymentsHomeFragment__delete_wallet">Delete payment wallet</string>
     <!-- Title of the delete-wallet confirmation dialog -->
@@ -4232,7 +4235,7 @@
 
     <!-- LightningLogs: Breez/Lightning SDK log viewer -->
     <!-- Title of the Lightning logs screen -->
-    <string name="LightningLogs__title">Lightning logs</string>
+    <string name="LightningLogs__title">Lightning Logs</string>
     <!-- Button to copy the logs to the clipboard -->
     <string name="LightningLogs__copy">Copy</string>
     <!-- Toast shown after copying the logs -->
@@ -4240,7 +4243,8 @@
     <!-- Placeholder when no logs have been captured yet -->
     <string name="LightningLogs__no_logs">No logs yet</string>
     <string name="PaymentsHomeFragment__deactivate_payments">Deactivate payments</string>
-    <string name="PaymentsHomeFragment__recovery_phrase">Recovery phrase</string>
+    <!-- Payments settings menu item to show the recovery passphrase. Matches iOS SETTINGS_PAYMENTS_VIEW_RECOVERY_PASSPHRASE. -->
+    <string name="PaymentsHomeFragment__recovery_phrase">View recovery passphrase</string>
     <string name="PaymentsHomeFragment__help">Help</string>
     <string name="PaymentsHomeFragment__coin_cleanup_fee">Coin cleanup fee</string>
     <string name="PaymentsHomeFragment__sent_payment">Sent payment</string>
