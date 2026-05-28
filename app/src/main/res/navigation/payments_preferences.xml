@@ -128,6 +128,15 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
 
+        <!-- Edit Lightning Username from the Payments-home overflow menu (mirrors iOS PaymentSettingsMenuViewController → RadarUsernameViewController). -->
+        <action
+            android:id="@+id/action_paymentsHome_to_editLightningUsername"
+            app:destination="@id/editLightningUsername"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
     </fragment>
 
     <fragment
