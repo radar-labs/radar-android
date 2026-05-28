@@ -122,15 +122,26 @@ public class PaymentsHomeFragment extends LoggingFragment {
     View                sendMoney           = view.findViewById(R.id.button_end_frame);
     View                refresh             = view.findViewById(R.id.payments_home_fragment_header_refresh);
     LottieAnimationView refreshAnimation    = view.findViewById(R.id.payments_home_fragment_header_refresh_animation);
-    ImageButton         balanceToggle       = view.findViewById(R.id.payments_home_fragment_header_balance_visibility_toggle);
     Stub<ComposeView>   bannerView          = ViewUtil.findStubById(view, R.id.banner_compose_view);
 
-    // When hosted in MainActivity's bottom-nav tab, this fragment IS the tab root — hide
-    // the toolbar's back-arrow. When launched standalone (via PaymentsActivity from
-    // Settings → Payments), keep the existing finish-on-back behavior.
-    boolean hostedInMainActivity = requireActivity() instanceof org.thoughtcrime.securesms.MainActivity;
+    // When hosted in MainActivity's bottom-nav tab, this fragment IS the tab root: there's
+    // no "back to Settings" — instead the LEFT nav-icon slot is repurposed to the hide/show
+    // balance eye (mirrors iOS leftBarButtonItem). When launched standalone (via
+    // PaymentsActivity from Settings → Payments), the existing back-arrow stays put and the
+    // eye lives as a leading menu item on the right.
+    final boolean hostedInMainActivity = requireActivity() instanceof org.thoughtcrime.securesms.MainActivity;
     if (hostedInMainActivity) {
-      toolbar.setNavigationIcon(null);
+      // Status-bar safe-area: MainActivity uses edge-to-edge — pad the toolbar so the title
+      // doesn't slide under the notch / status bar.
+      androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(toolbar, (v, insets) -> {
+        int top = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.statusBars()).top;
+        v.setPadding(v.getPaddingLeft(), top, v.getPaddingRight(), v.getPaddingBottom());
+        return insets;
+      });
+
+      // Replace the back-arrow with the eye toggle on the LEFT; nav click toggles the balance.
+      applyBalanceVisibilityNavIcon(toolbar);
+      toolbar.setNavigationOnClickListener(v -> toggleBalanceVisibility(toolbar, balance));
     } else {
       toolbar.setNavigationOnClickListener(v -> {
         viewModel.markAllPaymentsSeen();
@@ -188,6 +199,13 @@ public class PaymentsHomeFragment extends LoggingFragment {
     viewModel.getPaymentsEnabled().observe(getViewLifecycleOwner(), enabled -> {
       if (enabled) {
         toolbar.inflateMenu(R.menu.payments_home_fragment_menu);
+        // The eye-toggle lives on the LEFT (as the nav icon) in tab mode; suppress the
+        // right-side menu copy. Standalone mode keeps the menu item visible.
+        MenuItem balanceItem = toolbar.getMenu().findItem(R.id.payments_home_fragment_menu_balance_visibility);
+        if (balanceItem != null) {
+          balanceItem.setVisible(!hostedInMainActivity);
+          applyBalanceVisibilityMenuIcon(balanceItem);
+        }
       } else {
         toolbar.getMenu().clear();
       }
@@ -196,19 +214,6 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
     // Initialize visibility from the persisted preference (mirrors iOS PaymentsDisplayPreferences).
     balanceVisible = !SignalStore.payments().getBalanceHidden();
-    balanceToggle.setImageResource(balanceVisible ? R.drawable.ic_visibility_24dp
-                                                  : R.drawable.ic_visibility_off_24dp);
-
-    // Eye-icon toggle: persist + show/hide the balance.
-    balanceToggle.setOnClickListener(v -> {
-      balanceVisible = !balanceVisible;
-      SignalStore.payments().setBalanceHidden(!balanceVisible);
-      balanceToggle.setImageResource(balanceVisible ? R.drawable.ic_visibility_24dp
-                                                    : R.drawable.ic_visibility_off_24dp);
-      renderBalance(balance);
-      // Refresh chat-list payment snippets so the mask appears immediately on the conversation list.
-      PaymentSnippetRefresher.refreshAsync();
-    });
 
     // Tap the balance to toggle between sats and BTC display.
     balance.setOnClickListener(v -> {
@@ -368,6 +373,45 @@ public class PaymentsHomeFragment extends LoggingFragment {
                    success -> requireActivity().finish());
   }
 
+  // MARK: - Balance-visibility helpers (eye toggle)
+  //
+  // The toggle has two presentations driven by the host:
+  //   - Tab mode (MainActivity bottom-nav): eye on the LEFT as the toolbar's navigation icon.
+  //   - Standalone (PaymentsActivity from Settings → Payments): eye as the first menu item on
+  //     the right; the back-arrow stays as the nav icon for the back-to-Settings path.
+  // The single source of truth is `balanceVisible` + `SignalStore.payments.balanceHidden`.
+
+  private void applyBalanceVisibilityNavIcon(@NonNull Toolbar toolbar) {
+    toolbar.setNavigationIcon(balanceVisible ? R.drawable.ic_visibility_24dp
+                                             : R.drawable.ic_visibility_off_24dp);
+    toolbar.setNavigationContentDescription(R.string.PaymentsHomeFragment__toggle_balance_visibility);
+  }
+
+  private void applyBalanceVisibilityMenuIcon(@NonNull MenuItem item) {
+    item.setIcon(balanceVisible ? R.drawable.ic_visibility_24dp : R.drawable.ic_visibility_off_24dp);
+    item.setTitle(R.string.PaymentsHomeFragment__toggle_balance_visibility);
+  }
+
+  /** Flips the persisted preference, refreshes the balance label + chat-list snippets, and
+   *  updates whichever icon presentation (nav vs menu) is currently visible on this toolbar. */
+  private void toggleBalanceVisibility(@NonNull Toolbar toolbar, @NonNull MoneyView balance) {
+    balanceVisible = !balanceVisible;
+    SignalStore.payments().setBalanceHidden(!balanceVisible);
+    renderBalance(balance);
+
+    // Update whichever surface is currently driving the icon.
+    if (toolbar.getNavigationIcon() != null) {
+      applyBalanceVisibilityNavIcon(toolbar);
+    }
+    MenuItem menuItem = toolbar.getMenu().findItem(R.id.payments_home_fragment_menu_balance_visibility);
+    if (menuItem != null && menuItem.isVisible()) {
+      applyBalanceVisibilityMenuIcon(menuItem);
+    }
+
+    // Mirrors iOS — chat-list payment snippets re-render with the new mask state.
+    PaymentSnippetRefresher.refreshAsync();
+  }
+
   /** Lets the user choose the bitcoin display unit (BTC or sats); mirrors iOS BitcoinUnitPicker. */
   private void showBitcoinUnitPicker() {
     final String[] options = { "BTC", "sats" };
@@ -398,7 +442,13 @@ public class PaymentsHomeFragment extends LoggingFragment {
   }
 
   private boolean onMenuItemSelected(@NonNull MenuItem item) {
-    if (item.getItemId() == R.id.payments_home_fragment_send_options_menu_transfer_to_contact) {
+    if (item.getItemId() == R.id.payments_home_fragment_menu_balance_visibility) {
+      Toolbar   toolbar = requireView().findViewById(R.id.payments_home_fragment_toolbar);
+      MoneyView balance = requireView().findViewById(R.id.payments_home_fragment_header_balance);
+      toggleBalanceVisibility(toolbar, balance);
+      applyBalanceVisibilityMenuIcon(item);
+      return true;
+    } else if (item.getItemId() == R.id.payments_home_fragment_send_options_menu_transfer_to_contact) {
         if (viewModel.isEnclaveFailurePresent()) {
           showUpdateIsRequiredDialog();
         } else {

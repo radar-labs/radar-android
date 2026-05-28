@@ -6,7 +6,17 @@
   The destructive trailing pair would be rendered red on iOS; Android Toolbar
   overflow uses default text styling.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Hide/show-balance toggle. Shown as a leading icon button in the toolbar in standalone
+         mode (PaymentsActivity); programmatically hidden in tab mode where the same toggle
+         is placed on the LEFT as the toolbar's navigation icon (mirrors iOS leftBarButtonItem). -->
+    <item android:id="@+id/payments_home_fragment_menu_balance_visibility"
+        android:title="@string/PaymentsHomeFragment__toggle_balance_visibility"
+        android:icon="@drawable/ic_visibility_24dp"
+        app:showAsAction="always" />
+
     <item android:id="@+id/payments_home_fragment_menu_set_currency"
         android:title="@string/PaymentsHomeFragment__currency_conversion" />
 
