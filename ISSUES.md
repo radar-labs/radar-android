@@ -78,6 +78,16 @@ _Append-only. Blockers, deferrals, ambiguities, risks, tech-debt for human revie
 **Severity:** low
 **Android files involved:** `PaymentsAddMoneyFragment.java`, `PaymentsAddMoneyViewModel.kt`, `BreezSdkWrapper.kt`.
 
+## 2026-05-28 — F-A3 — Chat-list snippet doesn't refresh live when sats/hidden toggle
+**Type:** deferred
+**Severity:** low (snippets refresh on the next payment-thread update; toggling is rare).
+**Constraint:** `ThreadTable.kt:1815-1837` computes the payment snippet via `ThreadBodyUtil.getFormattedBodyFor(...)` and **stores the result string into the `body` column** via `updateThread(...)`. The chat-list adapter then reads `body` from the DB row — it is **not** recomputed at render time. So when the user toggles `SignalStore.payments.balanceHidden` or `showInSats`, displayed snippets won't reflect the new pref until the next time `updateThread` runs for each payment thread (typically on a new payment message arrival).
+**Two implementation paths if we ever want live refresh:**
+  1. **DB invalidation sweep**: on pref change, iterate every thread that has at least one payment message and call `ThreadTable.update(threadId)` to recompute `body`. Find all such threads via `MessageTable.payments.getThreadsWithPaymentMessages()` (or equivalent). Cost: O(payment threads) on every toggle.
+  2. **Render-time snippet for payment threads**: stop caching the payment snippet in `body`; in the chat list adapter (`ConversationListItem`), detect payment threads (via `ThreadRecord.messageExtras?.paymentTombstone` or a flag) and recompute the snippet at bind time using the current pref values. Cleaner but touches the adapter.
+**Mitigation:** F-A2's snippet does respect `balanceHidden` at write time, so as soon as the next payment message arrives, the chat-list row will show "•••••" if hidden is on, or the amount if not.
+**Android files involved:** `ThreadTable.kt`, `ConversationListItem.java`, `PaymentsValues.kt` (would need a change LiveData), `ThreadBodyUtil.java`.
+
 ## 2026-05-28 — E — Bottom-nav Payments tab (iOS HomeTabBarController parity)
 **Type:** deferred
 **Severity:** medium (user-explicit ask, but Payments is accessible via Settings — 2 taps).
