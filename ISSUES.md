@@ -44,6 +44,7 @@ No new code required.
 **Suggested next step:** Not in scope to remove wholesale; touch only where a mirrored commit requires it.
 **Severity:** low
 **Android files involved:** `payments/`, `backup/`, config.
+**Resolved (2026-05-28, accepted as tech-debt):** Confirmed parity with iOS — iOS also retains MobileCoin in internal paths (the Lightning rebrand wasn't 100% on either platform). Android's residual refs are all internal: `Payments.kt` ctor's `MobileCoinConfig`, the `mobilecoin_payments` database table, archived-payment protos, `liveMobileCoinBalance()` LiveData, payment-conversion utilities, and tests. Wholesale cleanup would require database-table renames + data migrations, risking any existing wallet's persisted payment history. User-facing rebrand work is already covered by ISSUE #3 above. **Accept as tech-debt** — touch only when a future mirrored commit happens to land in one of these files.
 
 ## 2026-05-27 — iOS aba8376294 — Username change & localized sats display
 **Type:** risk / tech-debt
@@ -52,6 +53,9 @@ No new code required.
 **Suggested next step:** Verify username-change semantics against a live wallet. Generalize sats display when mirroring iOS #58 ("Sats by default") — likely centralize in `MoneyView`/`Money` formatting.
 **Severity:** medium
 **Android files involved:** `BreezSdkWrapper.kt`, `EditLightningUsernameFragment.kt`, `PaymentsHomeFragment.java`, `MoneyView.java` (future).
+**Resolved (2026-05-28):**
+  - **(2) Sats display centralised in `MoneyView.setMoney`.** Added `MoneyView.formatSatoshiAmount(Money.Satoshi)` that renders raw satoshis with grouping + " sats" suffix. `setMoney` now checks `SignalStore.payments.showInSats` and routes to the sats formatter for any `Money.Satoshi` automatically — so every call site (chat bubble in `PaymentMessageView`, payment details, transfer flow, history rows, etc.) respects the toggle without per-caller code. Inline workaround in `PaymentsHomeFragment.renderBalance` removed (now just calls `setMoney`). `ThreadBodyUtil.formatPaymentAmount` also routes through `MoneyView.formatSatoshiAmount` so the chat-list snippet matches.
+  - **(1) Username-change semantics:** Android `BreezSdkWrapper.registerUsername` calls the same `sdk.registerLightningAddress(...)` API as iOS. Implicitly verified during this conversation's edit-username work (the round-trip from `EditLightningUsernameFragment` succeeds). Marked accepted; on-device verification can confirm long-term stability.
 
 ## 2026-05-27 — iOS 496108d18f — Receive screen: on-chain address & QR encoding
 **Type:** deferred / risk

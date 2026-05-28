@@ -19,6 +19,7 @@ import org.thoughtcrime.securesms.database.model.databaseprotos.MessageExtras;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.mms.GifSlide;
 import org.thoughtcrime.securesms.payments.CryptoValueUtil;
+import org.thoughtcrime.securesms.payments.MoneyView;
 import org.whispersystems.signalservice.api.payments.FormatterOptions;
 import org.whispersystems.signalservice.api.payments.Money;
 import org.thoughtcrime.securesms.mms.Slide;
@@ -93,6 +94,10 @@ public final class ThreadBodyUtil {
     }
     if (SignalStore.payments().getBalanceHidden()) {
       return "•••••";
+    }
+    // Respect the sats/BTC display preference centrally (mirrors MoneyView.setMoney).
+    if (amount instanceof Money.Satoshi && SignalStore.payments().getShowInSats()) {
+      return MoneyView.formatSatoshiAmount((Money.Satoshi) amount);
     }
     return amount.toString(FormatterOptions.builder(Locale.getDefault()).build());
   }
