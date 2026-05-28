@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2024 Signal Messenger, LLC
+  ~ SPDX-License-Identifier: AGPL-3.0-only
+  -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Centered hero content: person icon + title + description -->
+    <LinearLayout
+        android:id="@+id/sign_up_hero"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="96dp"
+            android:layout_height="100dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/symbol_person_fill_24"
+            app:tint="@color/radar_accent_blue" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:text="@string/RegistrationActivity_sign_up"
+            android:textColor="@color/signal_colorOnBackground"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:gravity="center"
+            android:lineSpacingExtra="4sp"
+            android:textColor="@color/signal_colorOnSurfaceVariant"
+            android:textSize="17sp"
+            tools:text="Create a new account or restore an existing Signal account\n\nRadar is based on Signal and compatible with it, letting you keep all your existing conversations" />
+
+    </LinearLayout>
+
+    <!-- Bottom call-to-action: primary button + "use my Signal account" text link -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/create_account_button"
+        style="@style/Signal.Widget.Button.Large.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:minHeight="48dp"
+        android:text="@string/RegistrationActivity_create_new_account"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:backgroundTint="@color/radar_accent_blue"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toTopOf="@id/use_signal_account_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/use_signal_account_button"
+        style="@style/Signal.Widget.Button.Large.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/RegistrationActivity_use_my_signal_account"
+        android:textColor="@color/radar_accent_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

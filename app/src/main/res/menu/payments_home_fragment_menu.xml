@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Payments-home overflow menu. Order mirrors iOS PaymentSettingsMenuViewController:
-    Set currency / Bitcoin unit / Payments Username / View recovery passphrase /
-    Help / Lightning logs / Deactivate payments / Delete payment wallet.
-  The destructive trailing pair would be rendered red on iOS; Android Toolbar
-  overflow uses default text styling.
+  Payments-home toolbar menu. The individual settings rows (Set currency, Bitcoin
+  unit, Payments username, Recovery phrase, Help, Lightning logs, Deactivate,
+  Delete wallet) now live behind the trailing gear, which opens
+  PaymentSettingsMenuFragment (mirrors iOS PaymentSettingsMenuViewController).
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -17,27 +16,9 @@
         android:icon="@drawable/ic_visibility_24dp"
         app:showAsAction="always" />
 
-    <item android:id="@+id/payments_home_fragment_menu_set_currency"
-        android:title="@string/PaymentsHomeFragment__currency_conversion" />
-
-    <item android:id="@+id/payments_home_fragment_menu_bitcoin_unit"
-        android:title="@string/PaymentsHomeFragment__bitcoin_unit" />
-
-    <item android:id="@+id/payments_home_fragment_menu_payments_username"
-        android:title="@string/PaymentsHomeFragment__payments_username" />
-
-    <item android:id="@+id/payments_home_fragment_menu_view_recovery_phrase"
-        android:title="@string/PaymentsHomeFragment__recovery_phrase" />
-
-    <item android:id="@+id/payments_home_fragment_menu_help"
-        android:title="@string/PaymentsHomeFragment__help" />
-
-    <item android:id="@+id/payments_home_fragment_menu_lightning_logs"
-        android:title="@string/PaymentsHomeFragment__lightning_logs" />
-
-    <item android:id="@+id/payments_home_fragment_menu_deactivate_wallet"
-        android:title="@string/PaymentsHomeFragment__deactivate_payments" />
-
-    <item android:id="@+id/payments_home_fragment_menu_delete_wallet"
-        android:title="@string/PaymentsHomeFragment__delete_wallet" />
+    <!-- Trailing gear → Payment settings disclosure list. -->
+    <item android:id="@+id/payments_home_fragment_menu_settings"
+        android:title="@string/PaymentsHomeFragment__payment_settings"
+        android:icon="@drawable/symbol_settings_android_24"
+        app:showAsAction="always" />
 </menu>

@@ -6,27 +6,42 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="80dp"
+        android:adjustViewBounds="true"
         android:importantForAccessibility="no"
-        android:src="@drawable/welcome"
-        app:layout_constraintBottom_toTopOf="@+id/title"
+        android:scaleType="fitCenter"
+        android:src="@drawable/radar_logo_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo_wordmark"
+        android:layout_width="132dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
+        android:src="@drawable/radar_logo_wordmark"
+        app:layout_constraintEnd_toEndOf="@+id/image"
+        app:layout_constraintStart_toStartOf="@+id/image"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        app:tint="@color/signal_colorOnBackground" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="48dp"
         android:gravity="center"
         android:text="@string/RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message"
         android:textAppearance="@style/Signal.Text.HeadlineMedium"
-        app:layout_constraintBottom_toTopOf="@+id/welcome_terms_button"
         app:layout_constraintEnd_toEndOf="@+id/welcome_continue_button"
-        app:layout_constraintStart_toStartOf="@+id/welcome_continue_button" />
+        app:layout_constraintStart_toStartOf="@+id/welcome_continue_button"
+        app:layout_constraintTop_toBottomOf="@+id/logo_wordmark" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/welcome_terms_button"
@@ -43,13 +58,17 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/welcome_continue_button"
-        style="@style/Signal.Widget.Button.Large.Tonal"
+        style="@style/Signal.Widget.Button.Large.Primary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="17dp"
-        android:text="@string/RegistrationActivity_continue"
+        android:minHeight="52dp"
+        android:text="@string/RegistrationActivity_im_new_to_radar"
+        android:textColor="@color/radar_accent_blue_on"
+        app:backgroundTint="@color/radar_accent_blue"
+        app:cornerRadius="26dp"
         app:layout_constraintBottom_toTopOf="@id/welcome_transfer_or_restore"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -62,8 +81,10 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="48dp"
+        android:minHeight="52dp"
+        android:text="@string/RegistrationActivity_i_already_have_an_account"
         app:backgroundTint="@color/signal_colorSurface2"
-        android:text="@string/registration_activity__restore_or_transfer"
+        app:cornerRadius="26dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/welcome_continue_button"
         app:layout_constraintStart_toStartOf="@+id/welcome_continue_button" />

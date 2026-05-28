@@ -24,15 +24,12 @@ import com.annimon.stream.Stream;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.PaymentPreferencesDirections;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.banner.BannerManager;
 import org.thoughtcrime.securesms.banner.banners.EnclaveFailureBanner;
-import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity;
-import org.thoughtcrime.securesms.help.HelpFragment;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity;
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil;
@@ -124,6 +121,10 @@ public class PaymentsHomeFragment extends LoggingFragment {
     LottieAnimationView refreshAnimation    = view.findViewById(R.id.payments_home_fragment_header_refresh_animation);
     Stub<ComposeView>   bannerView          = ViewUtil.findStubById(view, R.id.banner_compose_view);
 
+    // Initialize visibility from the persisted preference (mirrors iOS PaymentsDisplayPreferences)
+    // BEFORE applying any eye icon below, so the icon matches the persisted state after a restart.
+    balanceVisible = !SignalStore.payments().getBalanceHidden();
+
     // When hosted in MainActivity's bottom-nav tab, this fragment IS the tab root: there's
     // no "back to Settings" — instead the LEFT nav-icon slot is repurposed to the hide/show
     // balance eye (mirrors iOS leftBarButtonItem). When launched standalone (via
@@ -209,9 +210,6 @@ public class PaymentsHomeFragment extends LoggingFragment {
       header.setVisibility(enabled ? View.VISIBLE : View.GONE);
     });
 
-    // Initialize visibility from the persisted preference (mirrors iOS PaymentsDisplayPreferences).
-    balanceVisible = !SignalStore.payments().getBalanceHidden();
-
     // Tap the balance to toggle between sats and BTC display.
     balance.setOnClickListener(v -> {
       SignalStore.payments().setShowInSats(!SignalStore.payments().getShowInSats());
@@ -232,7 +230,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
     viewModel.getExchange().observe(getViewLifecycleOwner(), amount -> {
       if (amount != null) {
-        exchange.setText(FiatMoneyUtil.format(getResources(), amount));
+        exchange.setText(FiatMoneyUtil.format(getResources(), amount, FiatMoneyUtil.formatOptions().withDisplayTime(false)));
       } else {
         exchange.setText(R.string.PaymentsHomeFragment__unknown_amount);
       }
@@ -336,40 +334,6 @@ public class PaymentsHomeFragment extends LoggingFragment {
     viewModel.checkPaymentActivationState();
   }
 
-  /** Confirms and deletes the payment wallet (requires a zero balance). Mirrors iOS delete-wallet. */
-  private void confirmDeleteWallet() {
-    if (lastBalanceAmount == null) {
-      new MaterialAlertDialogBuilder(requireContext())
-          .setMessage(R.string.PaymentsHomeFragment__delete_wallet_balance_unavailable)
-          .setPositiveButton(android.R.string.ok, null)
-          .show();
-      return;
-    }
-    if (lastBalanceAmount.isPositive()) {
-      new MaterialAlertDialogBuilder(requireContext())
-          .setMessage(R.string.PaymentsHomeFragment__delete_wallet_requires_zero_balance)
-          .setPositiveButton(android.R.string.ok, null)
-          .show();
-      return;
-    }
-    new MaterialAlertDialogBuilder(requireContext())
-        .setTitle(R.string.PaymentsHomeFragment__delete_wallet_title)
-        .setMessage(R.string.PaymentsHomeFragment__delete_wallet_description)
-        .setPositiveButton(R.string.PaymentsHomeFragment__delete_wallet, (d, w) -> doDeleteWallet())
-        .setNegativeButton(android.R.string.cancel, null)
-        .show();
-  }
-
-  private void doDeleteWallet() {
-    SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
-                   () -> {
-                     SignalStore.payments().breezSdkWrapperLatest().deleteLightningAddress();
-                     SignalStore.payments().deleteWallet();
-                     return true;
-                   },
-                   success -> requireActivity().finish());
-  }
-
   // MARK: - Balance-visibility helpers (eye toggle)
   //
   // The toggle has two presentations driven by the host:
@@ -409,25 +373,6 @@ public class PaymentsHomeFragment extends LoggingFragment {
     PaymentSnippetRefresher.refreshAsync();
   }
 
-  /** Lets the user choose the bitcoin display unit (BTC or sats); mirrors iOS BitcoinUnitPicker. */
-  private void showBitcoinUnitPicker() {
-    final String[] options = { "BTC", "sats" };
-    int checked = SignalStore.payments().getShowInSats() ? 1 : 0;
-    new MaterialAlertDialogBuilder(requireContext())
-        .setTitle(R.string.PaymentsHomeFragment__bitcoin_unit)
-        .setSingleChoiceItems(options, checked, (dialog, which) -> {
-          SignalStore.payments().setShowInSats(which == 1);
-          MoneyView balance = requireView().findViewById(R.id.payments_home_fragment_header_balance);
-          if (balance != null) {
-            renderBalance(balance);
-          }
-          PaymentSnippetRefresher.refreshAsync();
-          dialog.dismiss();
-        })
-        .setNegativeButton(android.R.string.cancel, null)
-        .show();
-  }
-
   private void showUpdateIsRequiredDialog() {
     new MaterialAlertDialogBuilder(requireContext())
         .setTitle(getString(R.string.PaymentsHomeFragment__update_required))
@@ -445,6 +390,11 @@ public class PaymentsHomeFragment extends LoggingFragment {
       toggleBalanceVisibility(toolbar, balance);
       applyBalanceVisibilityMenuIcon(item);
       return true;
+    } else if (item.getItemId() == R.id.payments_home_fragment_menu_settings) {
+      // The individual settings rows now live behind this gear, in
+      // PaymentSettingsMenuFragment (mirrors iOS PaymentSettingsMenuViewController).
+      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_paymentSettingsMenu);
+      return true;
     } else if (item.getItemId() == R.id.payments_home_fragment_send_options_menu_transfer_to_contact) {
         if (viewModel.isEnclaveFailurePresent()) {
           showUpdateIsRequiredDialog();
@@ -458,34 +408,6 @@ public class PaymentsHomeFragment extends LoggingFragment {
       } else {
         SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_paymentsTransfer);
       }
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_set_currency) {
-      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_setCurrency);
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_bitcoin_unit) {
-      showBitcoinUnitPicker();
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_payments_username) {
-      // Mirrors iOS PaymentSettingsMenuViewController → didTapPaymentsUsername → RadarUsernameViewController.
-      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_editLightningUsername);
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_lightning_logs) {
-      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_lightningLogs);
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_delete_wallet) {
-      confirmDeleteWallet();
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_deactivate_wallet) {
-      viewModel.deactivatePayments();
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_view_recovery_phrase) {
-      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this),
-                                  PaymentsHomeFragmentDirections.actionPaymentsHomeToPaymentsBackup().setRecoveryPhraseState(SignalStore.payments().isMnemonicConfirmed() ?
-                                                                                        RecoveryPhraseStates.FROM_PAYMENTS_MENU_WITH_MNEMONIC_CONFIRMED :
-                                                                                        RecoveryPhraseStates.FROM_PAYMENTS_MENU_WITH_MNEMONIC_NOT_CONFIRMED));
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_help) {
-      startActivity(AppSettingsActivity.help(requireContext(), HelpFragment.PAYMENT_INDEX));
       return true;
     }
 

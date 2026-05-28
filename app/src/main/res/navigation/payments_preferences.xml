@@ -137,6 +137,15 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
 
+        <!-- Trailing gear in the wallet toolbar → Payment settings disclosure list. -->
+        <action
+            android:id="@+id/action_paymentsHome_to_paymentSettingsMenu"
+            app:destination="@id/paymentSettingsMenu"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
     </fragment>
 
     <!--

@@ -7,62 +7,46 @@ package org.thoughtcrime.securesms.registration.ui.welcome
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.signal.core.util.getSerializableCompat
 import org.signal.core.util.logging.Log
-import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.LoggingFragment
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.ViewBinderDelegate
-import org.thoughtcrime.securesms.databinding.FragmentRegistrationWelcomeV3Binding
-import org.thoughtcrime.securesms.registration.fragments.RegistrationViewDelegate.setDebugLogSubmitMultiTapView
+import org.thoughtcrime.securesms.databinding.FragmentRegistrationSignUpBinding
 import org.thoughtcrime.securesms.registration.fragments.WelcomePermissions
 import org.thoughtcrime.securesms.registration.ui.RegistrationCheckpoint
 import org.thoughtcrime.securesms.registration.ui.RegistrationViewModel
 import org.thoughtcrime.securesms.registration.ui.permissions.GrantPermissionsFragment
 import org.thoughtcrime.securesms.registration.ui.phonenumber.EnterPhoneNumberMode
 import org.thoughtcrime.securesms.util.BackupUtil
-import org.thoughtcrime.securesms.util.CommunicationActions
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
-import org.thoughtcrime.securesms.util.visible
 
 /**
- * First screen that is displayed on the very first app launch.
+ * "Sign up" screen reached from the welcome screen's "I'm new to Radar" button. Lets the user either
+ * create a brand new account or restore/transfer an existing Signal account.
  */
-class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v3) {
+class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
   companion object {
-    private val TAG = Log.tag(WelcomeFragment::class.java)
-    private const val TERMS_AND_CONDITIONS_URL = "https://signal.org/legal"
+    private val TAG = Log.tag(SignUpFragment::class.java)
   }
 
   private val sharedViewModel by activityViewModels<RegistrationViewModel>()
-  private val binding: FragmentRegistrationWelcomeV3Binding by ViewBinderDelegate(FragmentRegistrationWelcomeV3Binding::bind)
+  private val binding: FragmentRegistrationSignUpBinding by ViewBinderDelegate(FragmentRegistrationSignUpBinding::bind)
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    setDebugLogSubmitMultiTapView(binding.image)
-    setDebugLogSubmitMultiTapView(binding.title)
+    binding.description.text = buildDescription()
 
-    binding.welcomeContinueButton.setOnClickListener { onContinueClicked() }
-    binding.welcomeTermsButton.setOnClickListener { onTermsClicked() }
-    binding.welcomeTransferOrRestore.setOnClickListener { onRestoreOrTransferClicked() }
-    binding.welcomeTransferOrRestore.visible = !sharedViewModel.isReregister
-
-    if (BuildConfig.LINK_DEVICE_UX_ENABLED) {
-      binding.image.setOnLongClickListener {
-        MaterialAlertDialogBuilder(requireContext())
-          .setMessage("Link device?")
-          .setPositiveButton("Link", { _, _ -> onLinkDeviceClicked() })
-          .setNegativeButton(android.R.string.cancel, null)
-          .show()
-        true
-      }
-    }
+    binding.createAccountButton.setOnClickListener { onCreateAccountClicked() }
+    binding.useSignalAccountButton.setOnClickListener { onUseSignalAccountClicked() }
 
     childFragmentManager.setFragmentResultListener(RestoreWelcomeBottomSheet.REQUEST_KEY, viewLifecycleOwner) { requestKey, bundle ->
       if (requestKey == RestoreWelcomeBottomSheet.REQUEST_KEY) {
@@ -80,23 +64,11 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
           WelcomeUserSelection.RESTORE_WITH_OLD_PHONE,
           WelcomeUserSelection.RESTORE_WITH_NO_PHONE -> navigateToNextScreenViaRestore(userSelection)
           WelcomeUserSelection.CONTINUE -> navigateToNextScreenViaContinue()
-          WelcomeUserSelection.LINK -> navigateToLinkDevice()
+          WelcomeUserSelection.LINK,
           null -> Unit
         }
       }
     }
-  }
-
-  private fun onLinkDeviceClicked() {
-    if (!hasAllPermissions()) {
-      findNavController().safeNavigate(WelcomeFragmentDirections.actionWelcomeFragmentToGrantPermissionsFragment(WelcomeUserSelection.LINK))
-    } else {
-      navigateToLinkDevice()
-    }
-  }
-
-  private fun navigateToLinkDevice() {
-    findNavController().safeNavigate(WelcomeFragmentDirections.goToLinkViaQr())
   }
 
   override fun onResume() {
@@ -104,26 +76,50 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
     sharedViewModel.resetRestoreDecision()
   }
 
-  private fun onContinueClicked() {
-    findNavController().safeNavigate(WelcomeFragmentDirections.goToSignUp())
+  /** Builds the body copy, highlighting the "Radar is based on Signal" phrase in the brand accent color. */
+  private fun buildDescription(): CharSequence {
+    val accent = getString(R.string.RegistrationActivity_radar_is_based_on_signal)
+    val secondParagraph = getString(R.string.RegistrationActivity_and_compatible_with_it, accent)
+
+    val body = SpannableStringBuilder()
+    body.append(getString(R.string.RegistrationActivity_create_a_new_account_or_restore))
+    body.append("\n\n")
+
+    val accentStart = body.length + secondParagraph.indexOf(accent)
+    body.append(secondParagraph)
+
+    if (accentStart >= body.length - secondParagraph.length) {
+      body.setSpan(
+        ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.radar_accent_blue)),
+        accentStart,
+        accentStart + accent.length,
+        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+      )
+    }
+
+    return body
+  }
+
+  private fun onCreateAccountClicked() {
+    if (!hasAllPermissions()) {
+      findNavController().safeNavigate(SignUpFragmentDirections.actionSignUpFragmentToGrantPermissionsFragment(WelcomeUserSelection.CONTINUE))
+    } else {
+      navigateToNextScreenViaContinue()
+    }
   }
 
   private fun navigateToNextScreenViaContinue() {
     sharedViewModel.maybePrefillE164(requireContext())
-    findNavController().safeNavigate(WelcomeFragmentDirections.goToEnterPhoneNumber(EnterPhoneNumberMode.NORMAL))
+    findNavController().safeNavigate(SignUpFragmentDirections.goToEnterPhoneNumber(EnterPhoneNumberMode.NORMAL))
   }
 
-  private fun onTermsClicked() {
-    CommunicationActions.openBrowserLink(requireContext(), TERMS_AND_CONDITIONS_URL)
-  }
-
-  private fun onRestoreOrTransferClicked() {
+  private fun onUseSignalAccountClicked() {
     RestoreWelcomeBottomSheet().show(childFragmentManager, null)
   }
 
   private fun afterRestoreOrTransferClicked(userSelection: WelcomeUserSelection) {
     if (!hasAllPermissions()) {
-      findNavController().safeNavigate(WelcomeFragmentDirections.actionWelcomeFragmentToGrantPermissionsFragment(userSelection))
+      findNavController().safeNavigate(SignUpFragmentDirections.actionSignUpFragmentToGrantPermissionsFragment(userSelection))
     } else {
       navigateToNextScreenViaRestore(userSelection)
     }
@@ -138,11 +134,11 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
       WelcomeUserSelection.CONTINUE -> throw IllegalArgumentException()
       WelcomeUserSelection.RESTORE_WITH_OLD_PHONE -> {
         sharedViewModel.intendToRestore(hasOldDevice = true, fromRemote = true)
-        findNavController().safeNavigate(WelcomeFragmentDirections.goToRestoreViaQr())
+        findNavController().safeNavigate(SignUpFragmentDirections.goToRestoreViaQr())
       }
       WelcomeUserSelection.RESTORE_WITH_NO_PHONE -> {
         sharedViewModel.intendToRestore(hasOldDevice = false, fromRemote = true)
-        findNavController().safeNavigate(WelcomeFragmentDirections.goToSelectRestoreMethod(userSelection))
+        findNavController().safeNavigate(SignUpFragmentDirections.goToSelectRestoreMethod(userSelection))
       }
     }
   }

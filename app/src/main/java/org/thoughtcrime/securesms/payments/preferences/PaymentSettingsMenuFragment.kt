@@ -61,6 +61,17 @@ class PaymentSettingsMenuFragment : DSLSettingsFragment(R.string.preferences__pa
     // Re-binding the adapter here is cheap and keeps the rows in sync.
   }
 
+  override fun onToolbarNavigationClicked() {
+    // Reached two ways:
+    //   - From the Payments tab gear: pushed onto the payments nav graph, so pop back
+    //     to the wallet (PaymentsHomeFragment).
+    //   - From Settings → Payments: this is the graph's start destination, so there's
+    //     nothing to pop — fall back to finishing the activity (back to Settings).
+    if (!NavHostFragment.findNavController(this).popBackStack()) {
+      super.onToolbarNavigationClicked()
+    }
+  }
+
   override fun onResume() {
     super.onResume()
     if (::viewModel.isInitialized) {
