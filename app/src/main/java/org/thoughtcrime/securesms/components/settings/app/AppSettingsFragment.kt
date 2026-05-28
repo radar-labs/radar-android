@@ -358,6 +358,51 @@ private fun AppSettingsContent(
           }
         }
 
+        // Radar: Payments sits as its own section right after Account/Linked-Devices/Donate
+        // (mirrors iOS AppSettingsViewController `paymentsSection` placement).
+        if (state.isPrimaryDevice && state.showPayments) {
+          item {
+            Rows.TextRow(
+              text = {
+                Text(
+                  text = stringResource(R.string.preferences__payments),
+                  modifier = Modifier.weight(1f)
+                )
+
+                if (state.unreadPaymentsCount > 0) {
+                  Text(
+                    text = state.unreadPaymentsCount.toString(),
+                    color = MaterialTheme.colorScheme.inverseOnSurface,
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                      .background(
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(50)
+                      )
+                      .defaultMinSize(minWidth = 30.dp)
+                      .padding(4.dp)
+                  )
+                }
+              },
+              icon = {
+                Icon(
+                  painter = painterResource(R.drawable.symbol_payment_24),
+                  contentDescription = null,
+                  tint = MaterialTheme.colorScheme.onSurface
+                )
+              },
+              onClick = {
+                callbacks.navigate(AppSettingsRoute.Payments)
+              }
+            )
+          }
+
+          item {
+            Dividers.Default()
+          }
+        }
+
         item {
           Rows.TextRow(
             text = stringResource(R.string.preferences__appearance),
@@ -452,51 +497,6 @@ private fun AppSettingsContent(
           }
         }
 
-        if (state.isPrimaryDevice && state.showPayments) {
-          item {
-            Dividers.Default()
-          }
-
-          item {
-            Rows.TextRow(
-              text = {
-                Text(
-                  text = stringResource(R.string.preferences__payments),
-                  modifier = Modifier.weight(1f)
-                )
-
-                if (state.unreadPaymentsCount > 0) {
-                  Text(
-                    text = state.unreadPaymentsCount.toString(),
-                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                    style = MaterialTheme.typography.bodyMedium,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                      .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = RoundedCornerShape(50)
-                      )
-                      .defaultMinSize(minWidth = 30.dp)
-                      .padding(4.dp)
-                  )
-                }
-              },
-              icon = {
-                Icon(
-                  painter = painterResource(R.drawable.symbol_payment_24),
-                  contentDescription = null,
-                  tint = MaterialTheme.colorScheme.onSurface
-                )
-              },
-              onClick = {
-                callbacks.navigate(AppSettingsRoute.Payments)
-              }
-            )
-          }
-        }
-
-        // Radar: Data & Storage moved below Payments so Payments sits higher in settings
-        // (mirrors iOS "Move payments tab up a bit").
         item {
           Rows.TextRow(
             text = stringResource(R.string.preferences__data_and_storage),
