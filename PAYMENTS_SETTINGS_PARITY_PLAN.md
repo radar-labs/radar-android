@@ -79,7 +79,9 @@ Android today: navigates via `R.id.action_paymentsHome_to_setCurrency` → exist
 - [ ] **D4 — Search bar** in the toolbar (Android `SearchView` or `androidx.appcompat.widget.SearchView` mounted on toolbar).
 - [ ] **D5 — Flag emoji helper:** Kotlin port of the iOS `flagEmoji(forCurrencyCode:)` (first 2 chars → regional-indicator surrogate pair via `Character.toChars(0x1F1E6 + (c - 'A'))`).
 
-## E. Bottom-nav Payments tab (carried from `ADD_FUNDS_PARITY_PLAN.md` §H1)
+## E. Bottom-nav Payments tab (carried from `ADD_FUNDS_PARITY_PLAN.md` §H1) — **DEFERRED**
+
+See `ISSUES.md` (entry **2026-05-28 — E**) for the full rationale and step-by-step implementation plan. Two blocking constraints: (1) the bottom-nav icon system is Lottie-only (need a `payments_28.json` or a `NavigationDestinationIcon` refactor for static drawables); (2) `PaymentsHomeFragment` uses its own `NavHostFragment` graph and can't be cleanly embedded into MainActivity's Compose `secondaryContent` without a payments `NavHostFragment` wrapper. Mitigation: §A1 moved Payments to the top of Settings (2 taps).
 
 iOS bottom nav (`HomeTabBarController`) has a Payments tab.
 
@@ -98,7 +100,7 @@ User concern: some commits I dismissed as "UI polish" actually contained behavio
 - [x] **F-A1 — `6c85cf772d`** — Satoshi grouping separators. **Already done on Android** — `MoneyView.java:122` calls `numberFormat.setGroupingUsed(true)` for all amount rendering. Audit was a false positive. Verified 2026-05-28.
 - [ ] **F-A2 — `c90dd2d790`** — Chat-list **payment snippet**: add `paymentSnippet` case to Android equivalent of `CLVSnippet` (likely in `ThreadRecord` / `ThreadBodyUtil` / `ConversationListItem`) + a `buildPaymentAmountText()` that respects `balanceHidden` + `isSatoshiEnabled`. Was overlapping with §G2 — they're the same fix. **MEDIUM-HIGH**.
 - [ ] **F-A3 — `8f92be19fb`** — Chat-list observes `balanceHiddenDidChange` / `amountTypeDidChange` and reloads the visible snippets. Was overlapping with §G3 — same fix. **MEDIUM**.
-- [ ] **F-A4 — `b847a18d86`** — Add a `walletAddressDidLoad` notification observer to Android profile-upload path so the address is republished when the Breez wallet finishes loading (matches iOS `reuploadPaymentProfileForLoadedWalletAddress`). Also add `initializeComponents(warmCaches: true)` equivalent at app launch if Android currently lazy-loads. **MEDIUM** (Android already uploads eagerly in `getLightningAddress()` — verify whether this is sufficient before doing anything).
+- [d] **F-A4 — `b847a18d86`** — Wallet-address-loaded observer. **Deferred.** Android already calls `getLightningAddress()` eagerly inside `ProfileUtil`'s upload path (see DECISIONS.md 2026-05-27 entry); the iOS observer is a safety net for late-loading. Acceptable risk profile for now — revisit only if profile uploads are observed missing the Lightning address on fresh installs. Tracking in DECISIONS.md ("Revisit if Android moves profile upload off the eager `getLightningAddress` path").
 - [ ] **F-A5 — `aecba8efde`** — Defensive guard: skip profile re-upload if wallet address hasn't loaded yet AND `paymentsEnabled` is true. Add a `PaymentsImpl`-ready check before calling the upload path. **LOW-MEDIUM** (defensive).
 - [x] **F-A6 — `e5f586cbd3`** — On-chain address prefetch on load + error toast + revert to Lightning. **Already done** in commit `763a25d802` (Add Funds rewrite) — audit was missing the rewrite. Mark done.
 - [ ] **F-A7 — `ae56882371`** — **Backup restore: `restoreOrCreateManifestIfNecessary()` before manifest rotation + `recordPendingLocalAccountUpdates()` for `paymentsEntropy` sync.** Android's backup mechanics may differ from iOS Storage Service — investigate before mirroring. **HIGH (data-loss risk).**
