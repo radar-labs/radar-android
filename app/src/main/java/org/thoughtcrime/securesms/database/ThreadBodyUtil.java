@@ -45,6 +45,21 @@ public final class ThreadBodyUtil {
     return getFormattedBodyForMms(context, (MmsMessageRecord) record, bodyOverride).body;
   }
 
+  /**
+   * Chat-list snippet for payment messages. Mirrors iOS `ThreadViewModel.paymentSnippet`
+   * (commit c90dd2d790): "You sent payment" / "<Sender> sent you payment".
+   * Including the actual amount (sats/BTC) + balance-hidden masking is a follow-up
+   * (requires a `Money` lookup from the payment table for non-tombstone records).
+   */
+  private static @NonNull String getPaymentDirectionSnippet(@NonNull Context context, @NonNull MessageRecord record) {
+    if (record.isOutgoing()) {
+      return context.getString(R.string.ThreadRecord__you_sent_payment);
+    } else {
+      String sender = record.getFromRecipient().getShortDisplayName(context);
+      return context.getString(R.string.ThreadRecord__s_sent_you_payment, sender);
+    }
+  }
+
   private static @NonNull ThreadBody getFormattedBodyForMms(@NonNull Context context, @NonNull MmsMessageRecord record, @Nullable CharSequence bodyOverride) {
     if (record.getSharedContacts().size() > 0) {
       Contact contact = record.getSharedContacts().get(0);
@@ -62,7 +77,7 @@ public final class ThreadBodyUtil {
     } else if (MessageRecordUtil.isStoryReaction(record)) {
       return new ThreadBody(getStoryReactionSummary(context, record));
     } else if (record.isPaymentNotification() || record.isPaymentTombstone()) {
-      return format(EmojiStrings.CARD, context.getString(R.string.ThreadRecord_payment), null);
+      return format(EmojiStrings.CARD, getPaymentDirectionSnippet(context, record), null);
     } else if (record.isPaymentsRequestToActivate()) {
       return format(EmojiStrings.CARD, getPaymentActivationRequestSummary(context, record), null);
     } else if (record.isPaymentsActivated()) {

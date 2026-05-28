@@ -3048,6 +3048,10 @@
     <string name="ThreadRecord__reacted_s_to_their_story">Reacted %1$s to their story</string>
     <!-- Displayed in the conversation list when your most recent message is a payment to or from the person the conversation is with -->
     <string name="ThreadRecord_payment">Payment</string>
+    <!-- Chat-list snippet shown for an outgoing payment message. Mirrors iOS "You sent payment". -->
+    <string name="ThreadRecord__you_sent_payment">You sent payment</string>
+    <!-- Chat-list snippet shown for an incoming payment message; %1$s is the sender's short display name. -->
+    <string name="ThreadRecord__s_sent_you_payment">%1$s sent you payment</string>
     <!-- Displayed in the conversation list when your only message in a conversation is a scheduled send. -->
     <string name="ThreadRecord_scheduled_message">Scheduled message</string>
     <!--  Displayed in the conversation list when your message history has been merged -->
