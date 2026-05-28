@@ -96,7 +96,10 @@ fun MainFloatingActionButtons(
       elevation = shadowElevation
     )
 
-    Box(
+    // The Payments tab has its own "Add Money" / "Send" buttons inside PaymentsHomeFragment's
+    // header — suppress the global FAB on this tab so we don't show a no-op button.
+    AnimatedVisibility(
+      visible = destination != MainNavigationListLocation.PAYMENTS,
       modifier = Modifier.align(primaryButtonAlignment)
     ) {
       PrimaryActionButton(
@@ -176,6 +179,10 @@ private fun PrimaryActionButton(
       MainNavigationListLocation.STORIES -> {
         { onCameraClick(destination) }
       }
+      // Payments tab has no FAB action (the in-PaymentsHomeFragment header has its own
+      // Add Money / Send buttons). Provide a no-op so the FAB compiles, then suppress
+      // FAB rendering at the call site by checking for PAYMENTS.
+      MainNavigationListLocation.PAYMENTS -> ({ })
     }
   }
 
@@ -189,6 +196,8 @@ private fun PrimaryActionButton(
           MainNavigationListLocation.CHATS -> R.drawable.symbol_edit_24 to R.string.conversation_list_fragment__fab_content_description
           MainNavigationListLocation.CALLS -> R.drawable.symbol_phone_plus_24 to R.string.CallLogFragment__start_a_new_call
           MainNavigationListLocation.STORIES -> R.drawable.symbol_camera_24 to R.string.conversation_list_fragment__open_camera_description
+          // Payments tab: placeholder icon (FAB is suppressed at the call site for PAYMENTS).
+          MainNavigationListLocation.PAYMENTS -> R.drawable.symbol_payment_24 to R.string.preferences__payments
         }
 
         Icon(

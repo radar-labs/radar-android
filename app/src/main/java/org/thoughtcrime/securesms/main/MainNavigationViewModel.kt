@@ -251,7 +251,15 @@ class MainNavigationViewModel(
   }
 
   fun refreshNavigationBarState() {
-    internalMainNavigationState.update { it.copy(compact = SignalStore.settings.useCompactNavigationBar, isStoriesFeatureEnabled = Stories.isFeatureEnabled()) }
+    internalMainNavigationState.update {
+      it.copy(
+        compact = SignalStore.settings.useCompactNavigationBar,
+        isStoriesFeatureEnabled = Stories.isFeatureEnabled(),
+        // Show the Payments tab whenever the payments feature is enabled for this user.
+        // Mirrors iOS HomeTabBarController gating on `paymentsRef.shouldShowPaymentsUI`.
+        isPaymentsTabEnabled = SignalStore.payments.paymentsAvailability.showPaymentsMenu()
+      )
+    }
   }
 
   fun getNotificationProfiles(): Flow<List<NotificationProfile>> {
@@ -272,6 +280,15 @@ class MainNavigationViewModel(
 
   fun onStoriesSelected() {
     onTabSelected(MainNavigationListLocation.STORIES)
+  }
+
+  fun onPaymentsSelected() {
+    onTabSelected(MainNavigationListLocation.PAYMENTS)
+  }
+
+  /** Updates the unread badge count on the Payments tab. */
+  fun setPaymentsCount(count: Int) {
+    internalMainNavigationState.update { it.copy(paymentsCount = count) }
   }
 
   private fun onTabSelected(destination: MainNavigationListLocation) {

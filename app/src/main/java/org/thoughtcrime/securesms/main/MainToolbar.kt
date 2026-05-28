@@ -433,6 +433,8 @@ private fun PrimaryToolbar(
           MainNavigationListLocation.CHATS -> ChatDropdownItems(state, callback, dismiss)
           MainNavigationListLocation.CALLS -> CallDropdownItems(state.callFilter, callback, dismiss)
           MainNavigationListLocation.STORIES -> StoryDropDownItems(callback, dismiss)
+          // Payments has its own toolbar (in PaymentsHomeFragment) — no MainToolbar dropdown items.
+          MainNavigationListLocation.PAYMENTS -> Unit
         }
       }
     }

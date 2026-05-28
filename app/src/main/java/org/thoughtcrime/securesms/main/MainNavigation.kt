@@ -5,8 +5,11 @@
 
 package org.thoughtcrime.securesms.main
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
+import androidx.compose.material3.Icon
+import androidx.compose.ui.res.painterResource
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -63,7 +66,12 @@ private val LOTTIE_SIZE = 28.dp
 
 enum class MainNavigationListLocation(
   @StringRes val label: Int,
-  @RawRes val icon: Int,
+  @RawRes val icon: Int = 0,
+  /**
+   * Optional static drawable. If non-zero, takes precedence over [icon] (the Lottie raw).
+   * Used by destinations that don't have a Lottie animation file (currently: PAYMENTS).
+   */
+  @DrawableRes val drawableIcon: Int = 0,
   @StringRes val contentDescription: Int = label
 ) {
   CHATS(
@@ -73,6 +81,13 @@ enum class MainNavigationListLocation(
   ARCHIVE(
     label = R.string.ConversationListTabs__chats,
     icon = R.raw.chats_28
+  ),
+  // Radar: bottom-nav Payments tab. Mirrors iOS HomeTabBarController's Tabs.payments slot
+  // (between chats and calls). Uses the Signal payment glyph as a static icon — no Lottie
+  // animation file exists for this destination.
+  PAYMENTS(
+    label = R.string.preferences__payments,
+    drawableIcon = R.drawable.symbol_payment_24
   ),
   CALLS(
     label = R.string.ConversationListTabs__calls,
@@ -88,8 +103,11 @@ data class MainNavigationState(
   val chatsCount: Int = 0,
   val callsCount: Int = 0,
   val storiesCount: Int = 0,
+  val paymentsCount: Int = 0,
   val storyFailure: Boolean = false,
   val isStoriesFeatureEnabled: Boolean = true,
+  /** Whether the bottom-nav Payments tab should be visible (gated on `paymentsAvailability`). */
+  val isPaymentsTabEnabled: Boolean = false,
   val currentListLocation: MainNavigationListLocation = MainNavigationListLocation.CHATS,
   val compact: Boolean = false
 )
@@ -108,11 +126,11 @@ fun MainNavigationBar(
     modifier = Modifier.height(if (state.compact) 48.dp else 80.dp),
     windowInsets = WindowInsets(0, 0, 0, 0)
   ) {
-    val entries = remember(state.isStoriesFeatureEnabled) {
-      if (state.isStoriesFeatureEnabled) {
-        MainNavigationListLocation.entries.filterNot { it == MainNavigationListLocation.ARCHIVE }
-      } else {
-        MainNavigationListLocation.entries.filterNot { it == MainNavigationListLocation.STORIES || it == MainNavigationListLocation.ARCHIVE }
+    val entries = remember(state.isStoriesFeatureEnabled, state.isPaymentsTabEnabled) {
+      MainNavigationListLocation.entries.filterNot {
+        it == MainNavigationListLocation.ARCHIVE ||
+          (!state.isStoriesFeatureEnabled && it == MainNavigationListLocation.STORIES) ||
+          (!state.isPaymentsTabEnabled && it == MainNavigationListLocation.PAYMENTS)
       }
     }
 
@@ -123,6 +141,7 @@ fun MainNavigationBar(
         MainNavigationListLocation.CHATS -> state.chatsCount
         MainNavigationListLocation.CALLS -> state.callsCount
         MainNavigationListLocation.STORIES -> state.storiesCount
+        MainNavigationListLocation.PAYMENTS -> state.paymentsCount
       }
 
       val selected = state.currentListLocation == destination
@@ -282,6 +301,7 @@ private fun BoxScope.NavigationRailCountIndicator(
       MainNavigationListLocation.CHATS -> state.chatsCount
       MainNavigationListLocation.CALLS -> state.callsCount
       MainNavigationListLocation.STORIES -> state.storiesCount
+      MainNavigationListLocation.PAYMENTS -> state.paymentsCount
     }
   }
 
@@ -311,6 +331,19 @@ private fun NavigationDestinationIcon(
   destination: MainNavigationListLocation,
   selected: Boolean
 ) {
+  // Destinations without a Lottie animation render a static drawable instead. Selected vs
+  // unselected differ only by colour (onSurface) — same tint either way for symmetry with
+  // the Lottie-animated icons whose dynamic-color-filter is also onSurface.
+  if (destination.drawableIcon != 0) {
+    Icon(
+      painter = painterResource(destination.drawableIcon),
+      contentDescription = null,
+      tint = MaterialTheme.colorScheme.onSurface,
+      modifier = Modifier.size(LOTTIE_SIZE)
+    )
+    return
+  }
+
   val dynamicProperties = rememberLottieDynamicProperties(
     rememberLottieDynamicProperty(
       property = LottieProperty.COLOR_FILTER,

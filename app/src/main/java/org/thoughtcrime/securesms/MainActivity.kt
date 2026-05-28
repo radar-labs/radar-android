@@ -272,6 +272,8 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
 
     UnreadPaymentsLiveData().observe(this) { unread ->
       toolbarViewModel.setHasUnreadPayments(unread.isPresent)
+      // Drive the bottom-nav Payments-tab badge as well.
+      mainNavigationViewModel.setPaymentsCount(unread.map { it.unreadCount }.orElse(0))
     }
 
     lifecycleScope.launch {
@@ -338,6 +340,8 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
           MainNavigationListLocation.ARCHIVE -> toolbarViewModel.presentToolbarForConversationListArchiveFragment()
           MainNavigationListLocation.CALLS -> toolbarViewModel.presentToolbarForCallLogFragment()
           MainNavigationListLocation.STORIES -> toolbarViewModel.presentToolbarForStoriesLandingFragment()
+          // Payments tab embeds PaymentsHomeFragment with its own Toolbar — no MainToolbar presentation needed.
+          MainNavigationListLocation.PAYMENTS -> Unit
         }
       }
 
@@ -465,10 +469,12 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
           when (mainNavigationDetailLocation) {
             is MainNavigationDetailLocation.Empty -> {
               when (mainNavigationState.currentListLocation) {
-                MainNavigationListLocation.CHATS, MainNavigationListLocation.ARCHIVE -> chatsNavHostController
-                MainNavigationListLocation.CALLS -> callsNavHostController
-                MainNavigationListLocation.STORIES -> storiesNavHostController
-              }.navigateToDetailLocation(mainNavigationDetailLocation)
+                MainNavigationListLocation.CHATS, MainNavigationListLocation.ARCHIVE -> chatsNavHostController.navigateToDetailLocation(mainNavigationDetailLocation)
+                MainNavigationListLocation.CALLS -> callsNavHostController.navigateToDetailLocation(mainNavigationDetailLocation)
+                MainNavigationListLocation.STORIES -> storiesNavHostController.navigateToDetailLocation(mainNavigationDetailLocation)
+                // Payments tab has no list+detail split (PaymentsHomeFragment hosts its own nav graph internally).
+                MainNavigationListLocation.PAYMENTS -> Unit
+              }
             }
 
             is MainNavigationDetailLocation.Chats -> {
@@ -594,10 +600,14 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
                 .background(listContainerColor, contentLayoutData.shape)
                 .clip(contentLayoutData.shape)
             ) {
-              MainToolbar(
-                state = mainToolbarState,
-                callback = toolbarCallback
-              )
+              // PaymentsHomeFragment ships its own Toolbar (with the eye + gear icons);
+              // suppress the shared MainToolbar on the Payments tab so they don't stack.
+              if (mainNavigationState.currentListLocation != MainNavigationListLocation.PAYMENTS) {
+                MainToolbar(
+                  state = mainToolbarState,
+                  callback = toolbarCallback
+                )
+              }
 
               Box(
                 modifier = Modifier.weight(1f)
@@ -638,6 +648,18 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
                       modifier = Modifier.fillMaxSize()
                     )
                   }
+
+                  // Radar: Payments tab. Hosts the existing payments_preferences nav graph via
+                  // a thin Fragment wrapper. PaymentsActivity (Settings → Payments launch path)
+                  // is unchanged — it embeds the same graph in its own host, fully backward compatible.
+                  MainNavigationListLocation.PAYMENTS -> {
+                    val state = key(destination) { rememberFragmentState() }
+                    AndroidFragment(
+                      clazz = org.thoughtcrime.securesms.payments.preferences.PaymentsNavHostWrapperFragment::class.java,
+                      fragmentState = state,
+                      modifier = Modifier.fillMaxSize()
+                    )
+                  }
                 }
 
                 MainBottomChrome(
@@ -671,6 +693,9 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
                   contentLayoutData = contentLayoutData
                 )
               }
+
+              // Payments has no list+detail split; primary pane stays empty in split-pane mode.
+              MainNavigationListLocation.PAYMENTS -> Unit
             }
           },
           paneExpansionDragHandle = if (contentLayoutData.hasDragHandle()) {
@@ -815,6 +840,7 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
           mainNavigationViewModel.onStoriesSelected()
         }
       }
+      MainNavigationListLocation.PAYMENTS -> mainNavigationViewModel.onPaymentsSelected()
 
       null -> Unit
     }
@@ -1251,6 +1277,7 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
         MainNavigationListLocation.CALLS -> mainNavigationViewModel.onCallsSelected()
         MainNavigationListLocation.STORIES -> mainNavigationViewModel.onStoriesSelected()
         MainNavigationListLocation.ARCHIVE -> mainNavigationViewModel.onArchiveSelected()
+        MainNavigationListLocation.PAYMENTS -> mainNavigationViewModel.onPaymentsSelected()
       }
     }
   }
