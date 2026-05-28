@@ -38,6 +38,7 @@ import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -650,14 +651,18 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
                   }
 
                   // Radar: Payments tab. Hosts the existing payments_preferences nav graph via
-                  // a thin Fragment wrapper. PaymentsActivity (Settings → Payments launch path)
-                  // is unchanged — it embeds the same graph in its own host, fully backward compatible.
+                  // a thin Fragment wrapper. `statusBarsPadding()` lifts every destination in
+                  // that graph (PaymentsHome, AddFunds, EditUsername, …) below the status bar
+                  // — Android-recommended pattern when the host activity uses edge-to-edge:
+                  // pad once at the container, no per-toolbar inset listeners. PaymentsActivity
+                  // (Settings → Payments launch path) is unchanged: it's a separate Activity
+                  // with its own action-bar window, so it doesn't go through this path.
                   MainNavigationListLocation.PAYMENTS -> {
                     val state = key(destination) { rememberFragmentState() }
                     AndroidFragment(
                       clazz = org.thoughtcrime.securesms.payments.preferences.PaymentsNavHostWrapperFragment::class.java,
                       fragmentState = state,
-                      modifier = Modifier.fillMaxSize()
+                      modifier = Modifier.fillMaxSize().statusBarsPadding()
                     )
                   }
                 }

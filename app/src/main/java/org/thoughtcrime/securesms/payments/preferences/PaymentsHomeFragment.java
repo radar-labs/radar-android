@@ -131,13 +131,10 @@ public class PaymentsHomeFragment extends LoggingFragment {
     // eye lives as a leading menu item on the right.
     final boolean hostedInMainActivity = requireActivity() instanceof org.thoughtcrime.securesms.MainActivity;
     if (hostedInMainActivity) {
-      // Status-bar safe-area: MainActivity uses edge-to-edge — pad the toolbar so the title
-      // doesn't slide under the notch / status bar.
-      androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(toolbar, (v, insets) -> {
-        int top = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.statusBars()).top;
-        v.setPadding(v.getPaddingLeft(), top, v.getPaddingRight(), v.getPaddingBottom());
-        return insets;
-      });
+      // Status-bar safe-area is applied once at the AndroidFragment wrapper in MainActivity
+      // (`Modifier.fillMaxSize().statusBarsPadding()`), so we don't add per-toolbar inset
+      // padding here — a previous attempt clipped the toolbar content because adding
+      // top-padding to a fixed-height toolbar shrinks the actions area.
 
       // Replace the back-arrow with the eye toggle on the LEFT; nav click toggles the balance.
       applyBalanceVisibilityNavIcon(toolbar);
