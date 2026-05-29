@@ -29,6 +29,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.button.MaterialButton;
 
+import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.LoggingFragment;
@@ -36,6 +37,9 @@ import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.qr.QrView;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.payments.LightningInvoiceFetcher;
+import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingDepositReceivedFragment;
+import org.thoughtcrime.securesms.payments.preferences.PaymentsHomeRepository;
+import org.thoughtcrime.securesms.util.AsynchronousCallback;
 
 import java.util.Objects;
 
@@ -43,6 +47,11 @@ import java.util.Objects;
  * Add Funds (receive) screen. Mirrors iOS PaymentsTransferInViewController: a Lightning/Onchain
  * segmented switcher, a bordered QR with the radar logo centered, the address with a pencil-edit,
  * and a Copy pill; Share is in the toolbar.
+ *
+ * <p>The same screen is reused during payments onboarding. When {@link #ARG_ONBOARDING} is set
+ * (mirroring iOS {@code PaymentsTransferInViewController(isOnboarding:)}) the network toggle is
+ * hidden (Lightning only), the instruction copy changes, a pinned Continue button advances the
+ * onboarding flow, and an incoming deposit pushes the deposit-received screen.
  */
 public final class PaymentsAddMoneyFragment extends LoggingFragment {
 
@@ -51,11 +60,20 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
   /** FragmentResult key the edit-username screen posts after a successful change, to trigger a refresh. */
   public static final String REQUEST_KEY_USERNAME_CHANGED = "payments_add_money.username_changed";
 
+  /** Boolean navigation argument: true when shown as part of the onboarding flow. */
+  public static final String ARG_ONBOARDING = "isOnboarding";
+
   private PaymentsAddMoneyViewModel viewModel;
 
+  private boolean isOnboarding;
   private boolean showingOnchain;
   private String  lightningAddress;
   private String  onchainAddress;
+
+  // Onboarding-only deposit watch: advance once on the 0 -> positive balance transition.
+  private boolean sawInitialBalance;
+  private boolean initialBalancePositive;
+  private boolean navigatedToDeposit;
 
   /** Cached BOLT11 invoice for the current {@link #lightningAddress}; cleared when the address changes. */
   private @Nullable String  bolt11Invoice;
@@ -68,6 +86,8 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
   private AppCompatImageButton pencil;
   private MaterialButton      tabLightning;
   private MaterialButton      tabOnchain;
+  private View                networkToggle;
+  private MaterialButton      continueButton;
 
   public PaymentsAddMoneyFragment() {
     super(R.layout.payments_add_money_fragment);
@@ -78,16 +98,20 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
 
     viewModel = new ViewModelProvider(this, new PaymentsAddMoneyViewModel.Factory()).get(PaymentsAddMoneyViewModel.class);
 
+    isOnboarding = getArguments() != null && getArguments().getBoolean(ARG_ONBOARDING, false);
+
     Toolbar        toolbar = view.findViewById(R.id.payments_add_money_toolbar);
     MaterialButton copyBtn = view.findViewById(R.id.payments_add_money_copy_address_button);
 
-    qrView       = view.findViewById(R.id.payments_add_money_qr_image);
-    logoBox      = view.findViewById(R.id.payments_add_money_logo_box);
-    spinner      = view.findViewById(R.id.payments_add_money_qr_spinner);
-    addressView  = view.findViewById(R.id.payments_add_money_abbreviated_wallet_address);
-    pencil       = view.findViewById(R.id.payments_add_money_edit_pencil);
-    tabLightning = view.findViewById(R.id.payments_add_money_tab_lightning);
-    tabOnchain   = view.findViewById(R.id.payments_add_money_tab_onchain);
+    qrView         = view.findViewById(R.id.payments_add_money_qr_image);
+    logoBox        = view.findViewById(R.id.payments_add_money_logo_box);
+    spinner        = view.findViewById(R.id.payments_add_money_qr_spinner);
+    addressView    = view.findViewById(R.id.payments_add_money_abbreviated_wallet_address);
+    pencil         = view.findViewById(R.id.payments_add_money_edit_pencil);
+    tabLightning   = view.findViewById(R.id.payments_add_money_tab_lightning);
+    tabOnchain     = view.findViewById(R.id.payments_add_money_tab_onchain);
+    networkToggle  = view.findViewById(R.id.payments_add_money_network_toggle);
+    continueButton = view.findViewById(R.id.payments_add_money_continue);
 
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
     toolbar.inflateMenu(R.menu.payments_add_money_menu);
@@ -103,8 +127,18 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     tabOnchain.setOnClickListener(v -> selectOnchain());
     applyTabStyling();
 
-    pencil.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_paymentsAddMoney_to_editLightningUsername));
+    pencil.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.editLightningUsername));
     copyBtn.setOnClickListener(v -> copyAddress());
+
+    if (isOnboarding) {
+      // Onboarding: Lightning only, hardcoded instruction, pinned Continue, watch for a deposit.
+      networkToggle.setVisibility(View.GONE);
+      ((TextView) view.findViewById(R.id.payments_add_money_instruction))
+          .setText(R.string.PaymentsAddMoneyFragment__send_bitcoin_over_lightning_onboarding);
+      continueButton.setVisibility(View.VISIBLE);
+      continueButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_addFunds_to_setupComplete));
+      observeDepositForOnboarding();
+    }
 
     showSpinner(true);
 
@@ -122,8 +156,16 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
 
     viewModel.getErrors().observe(getViewLifecycleOwner(), error -> {
       switch (error) {
-        case PAYMENTS_NOT_ENABLED: throw new AssertionError("Payments are not enabled");
-        default                  : throw new AssertionError();
+        case PAYMENTS_NOT_ENABLED:
+          // During onboarding, payments may still be activating (kicked off on the Add Funds intro
+          // step); treat this as transient rather than crashing — enable and retry.
+          if (isOnboarding) {
+            ensurePaymentsEnabledThenRefresh();
+            return;
+          }
+          throw new AssertionError("Payments are not enabled");
+        default:
+          throw new AssertionError();
       }
     });
 
@@ -131,7 +173,59 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     getParentFragmentManager().setFragmentResultListener(REQUEST_KEY_USERNAME_CHANGED, getViewLifecycleOwner(),
         (key, result) -> viewModel.refresh());
 
-    prefetchOnchainAddress();
+    // Onboarding is Lightning-only, so the on-chain address is never needed there.
+    if (!isOnboarding) {
+      prefetchOnchainAddress();
+    }
+  }
+
+  /**
+   * Onboarding-only recovery: if payments aren't enabled yet, enable them (mirrors iOS
+   * {@code enablePayments}) and re-fetch the wallet address once done. No-ops to a plain refresh
+   * if they're already enabled (the flag may have flipped between error emission and handling).
+   */
+  private void ensurePaymentsEnabledThenRefresh() {
+    if (SignalStore.payments().mobileCoinPaymentsEnabled()) {
+      viewModel.refresh();
+      return;
+    }
+    new PaymentsHomeRepository().activatePayments(new AsynchronousCallback.WorkerThread<Void, PaymentsHomeRepository.Error>() {
+      @Override public void onComplete(@Nullable Void result) {
+        ThreadUtil.runOnMain(() -> {
+          if (isAdded()) {
+            viewModel.refresh();
+          }
+        });
+      }
+
+      @Override public void onError(@Nullable PaymentsHomeRepository.Error error) {
+        Log.w(TAG, "Failed to enable payments on onboarding Add Funds screen: " + error);
+      }
+    });
+  }
+
+  // MARK: - Onboarding deposit watch
+
+  /**
+   * Watches the wallet balance while the onboarding Add Funds screen is visible and, on the first
+   * 0 -> positive transition, advances to the deposit-received screen. Mirrors the iOS onboarding
+   * coordinator's {@code incomingPaymentReceived} observation.
+   */
+  private void observeDepositForOnboarding() {
+    SignalStore.payments().liveMobileCoinBalance().observe(getViewLifecycleOwner(), balance -> {
+      boolean positive = balance != null && balance.getFullAmount().isPositive();
+      if (!sawInitialBalance) {
+        sawInitialBalance      = true;
+        initialBalancePositive = positive;
+        return;
+      }
+      if (!navigatedToDeposit && positive && !initialBalancePositive) {
+        navigatedToDeposit = true;
+        Bundle args = new Bundle();
+        args.putString(PaymentsOnboardingDepositReceivedFragment.ARG_AMOUNT, balance.getFullAmount().serializeAmountString());
+        Navigation.findNavController(requireView()).navigate(R.id.action_addFunds_to_depositReceived, args);
+      }
+    });
   }
 
   // MARK: - Network switcher

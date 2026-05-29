@@ -30,8 +30,12 @@
 
     <fragment
         android:id="@+id/paymentsOnboardingAddFunds"
-        android:name="org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingAddFundsFragment"
-        tools:layout="@layout/fragment_payments_onboarding_add_funds">
+        android:name="org.thoughtcrime.securesms.payments.preferences.addmoney.PaymentsAddMoneyFragment"
+        tools:layout="@layout/payments_add_money_fragment">
+        <argument
+            android:name="isOnboarding"
+            android:defaultValue="true"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_addFunds_to_setupComplete"
             app:destination="@id/paymentsOnboardingSetupComplete"
@@ -41,6 +45,12 @@
             android:id="@+id/action_addFunds_to_depositReceived"
             app:destination="@id/paymentsOnboardingDepositReceived" />
     </fragment>
+
+    <!-- Reachable from the Add Funds pencil-edit during onboarding (mirrors the Payments-settings flow). -->
+    <fragment
+        android:id="@+id/editLightningUsername"
+        android:name="org.thoughtcrime.securesms.payments.preferences.addmoney.EditLightningUsernameFragment"
+        tools:layout="@layout/fragment_edit_lightning_username" />
 
     <fragment
         android:id="@+id/paymentsOnboardingDepositReceived"

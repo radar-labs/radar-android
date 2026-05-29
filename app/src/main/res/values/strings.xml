@@ -4426,6 +4426,8 @@
     <string name="PaymentsOnboarding__add_funds_intro_subtitle">To start sending payments, deposit funds from your existing account or exchange</string>
     <!-- Instruction shown above the QR code on the receive screen -->
     <string name="PaymentsAddMoneyFragment__send_bitcoin_over_lightning">Send Bitcoin to the following Address and Network:</string>
+    <!-- Instruction shown on the Add Funds screen during onboarding, where only Lightning is available. -->
+    <string name="PaymentsAddMoneyFragment__send_bitcoin_over_lightning_onboarding">Send Bitcoin over the Lightning Network to the following address:</string>
     <!-- Lightning tab label on the receive screen network switcher -->
     <string name="PaymentsAddMoneyFragment__lightning">Lightning</string>
     <!-- On-chain tab label on the receive screen network switcher -->
