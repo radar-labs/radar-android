@@ -88,7 +88,7 @@ public final class SetCurrencyViewModel extends ViewModel {
 
   private @NonNull MappingModelList fromCurrencies(@NonNull Collection<Currency> currencies, @NonNull Currency currentCurrency) {
     return Stream.of(currencies)
-                 .sortBy(c -> c.getDisplayName(Locale.getDefault()))
+                 .sortBy(c -> ("USD".equals(c.getCurrencyCode()) ? "0" : "1") + c.getDisplayName(Locale.getDefault()))
                  .map(c -> {
                    // Prefix the row text with the flag emoji derived from the currency-code prefix
                    // (mirrors iOS CurrencyPickerViewController.flagEmoji(forCurrencyCode:)).
