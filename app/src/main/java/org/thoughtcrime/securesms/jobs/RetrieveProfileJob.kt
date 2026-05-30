@@ -45,7 +45,6 @@ import org.whispersystems.signalservice.api.profiles.ProfileRepository.ProfileFe
 import org.whispersystems.signalservice.api.profiles.ProfileRepository.ProfileFetchResult
 import org.whispersystems.signalservice.api.profiles.ProfileRepository.SignalServiceProfileWithCredential
 import org.whispersystems.signalservice.api.profiles.SignalServiceProfile
-import org.whispersystems.signalservice.api.util.ExpiringProfileCredentialUtil
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.minutes
@@ -123,7 +122,14 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
           serviceId = recipient.requireServiceId(),
           profileKey = recipient.profileKey?.let { ProfileKey(it) },
           sealedSenderAccess = SealedSenderAccessUtil.getSealedSenderAccessFor(recipient),
-          fetchExpiringCredential = !ExpiringProfileCredentialUtil.isValid(recipient.expiringProfileKeyCredential)
+          // This payments fork stores the payment address at a fixed profile version (see
+          // ProfileUtil.LIGHTNING_PROFILE_VERSION), which becomes the account's "current" version on the
+          // server. The server only issues an expiring profile key credential for the current version, so a
+          // request at the standard (profile-key-derived) version comes back with no credential. That empty
+          // response is treated as a verification failure below and would clear the recipient's profile key
+          // on every message, breaking outgoing payments. We don't use expiring profile key credentials in
+          // this fork, so never request them here.
+          fetchExpiringCredential = false
         )
       }
 

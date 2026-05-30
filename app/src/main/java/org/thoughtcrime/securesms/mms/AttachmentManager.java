@@ -79,7 +79,6 @@ import org.thoughtcrime.securesms.util.ProfileUtil;
 import org.thoughtcrime.securesms.util.ViewUtil;
 import org.thoughtcrime.securesms.util.concurrent.AssertedSuccessListener;
 import org.thoughtcrime.securesms.util.views.Stub;
-import org.whispersystems.signalservice.api.util.ExpiringProfileCredentialUtil;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -306,7 +305,11 @@ public class AttachmentManager {
   }
 
   public static void selectPayment(@NonNull Fragment fragment, @NonNull Recipient recipient) {
-    if (!ExpiringProfileCredentialUtil.isValid(recipient.getExpiringProfileKeyCredential())) {
+    // We need the recipient's profile key to fetch their payment address. It is delivered in their
+    // messages once they share their profile with us; without it we cannot reach their payment profile.
+    // (We intentionally do not gate on an expiring profile key credential: this fork does not use one
+    // and the server does not issue one for the fixed payment profile version.)
+    if (recipient.getProfileKey() == null) {
       CanNotSendPaymentDialog.show(fragment.requireContext());
       return;
     }
