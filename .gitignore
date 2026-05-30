@@ -3,6 +3,7 @@ captures/
 project.properties
 keystore.debug.properties
 keystore.staging.properties
+keystore.release.properties
 nightly-url.txt
 .project
 .settings
@@ -33,3 +34,4 @@ maps.key
 kls_database.db
 .kotlin
 lefthook-local.yml
+signal-fork-release.jks
