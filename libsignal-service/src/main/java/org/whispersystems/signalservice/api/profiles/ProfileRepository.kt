@@ -84,7 +84,7 @@ class ProfileRepository(private val profileApi: ProfileApi) {
           is NetworkResult.NetworkError -> Unit
           is NetworkResult.ApplicationError -> {
             if (response.throwable is VerificationFailedException) {
-              Log.w(TAG, "Failed to verify ZK profile operation for ${request.id}. Continuing with other lookups.")
+              Log.w(TAG, "Failed to verify ZK profile operation for ${request.id} (fetchExpiringCredential=${request.fetchExpiringCredential}). Continuing with other lookups.", response.throwable)
               mutex.withLock {
                 verificationFailures += request.id
               }

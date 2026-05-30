@@ -204,6 +204,7 @@ class ProfileApi(
             it to credential
           }
       } catch (e: VerificationFailedException) {
+        Log.w(TAG, "Failed to receive/verify expiring profile key credential.", e)
         NetworkResult.ApplicationError(e)
       }
     }

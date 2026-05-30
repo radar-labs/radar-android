@@ -200,18 +200,20 @@ public final class ProfileUtil {
     SealedSenderAccess   sealedSenderAccess      = SealedSenderAccessUtil.getSealedSenderAccessFor(recipient, false);
     ServiceId.ACI        recipientACI            = ServiceId.ACI.Companion.from(address.getServiceId().getRawUuid());
 
-    ProfileAndCredential profileAndCredential = SignalNetwork.profile()
-                                                             .getVersionedProfileAndCredential(recipientACI, profileKey, sealedSenderAccess, LIGHTNING_PROFILE_VERSION)
-                                                             .map(p -> new ProfileAndCredential(p.component1(), SignalServiceProfile.RequestType.PROFILE, Optional.of(p.component2())))
-                                                             .successOrNull();
+    // We only need the recipient's profile (which carries the encrypted payment address) here; the
+    // expiring profile key credential is unused. Requesting it would fail verification, because the
+    // server does not issue a credential for the fixed LIGHTNING_PROFILE_VERSION request, which would
+    // null out the whole response and surface as a spurious NOT_ENABLED error.
+    SignalServiceProfile profile = SignalNetwork.profile()
+                                                .getVersionedProfile(recipientACI, profileKey, sealedSenderAccess, LIGHTNING_PROFILE_VERSION)
+                                                .successOrNull();
 
-    if (profileAndCredential == null) {
+    if (profile == null) {
       Log.w(TAG, "No profile found for " + recipient.getId());
       throw new PaymentsAddressException(PaymentsAddressException.Code.NOT_ENABLED);
     }
 
-    SignalServiceProfile profile                  = profileAndCredential.getProfile();
-    byte[]               encryptedPaymentsAddress = profile.getPaymentAddress();
+    byte[] encryptedPaymentsAddress = profile.getPaymentAddress();
 
     if (encryptedPaymentsAddress == null) {
       Log.w(TAG, "Payments not enabled for " + recipient.getId());
@@ -219,7 +221,7 @@ public final class ProfileUtil {
     }
 
     try {
-      IdentityKey    identityKey    = new IdentityKey(Base64.decode(profileAndCredential.getProfile().getIdentityKey()), 0);
+      IdentityKey    identityKey    = new IdentityKey(Base64.decode(profile.getIdentityKey()), 0);
       ProfileCipher  profileCipher  = new ProfileCipher(profileKey);
       byte[]         decrypted      = profileCipher.decryptWithLength(encryptedPaymentsAddress);
       PaymentAddress paymentAddress = PaymentAddress.ADAPTER.decode(decrypted);
