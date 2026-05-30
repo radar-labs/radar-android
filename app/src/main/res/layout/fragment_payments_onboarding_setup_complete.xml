@@ -51,12 +51,14 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/onboarding_setup_complete_continue"
-        style="@style/Signal.Widget.Button.Small.Primary"
+        style="@style/Signal.Widget.Button.Large.Primary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/PaymentsOnboarding__continue" />
+        android:text="@string/PaymentsOnboarding__continue"
+        android:textAllCaps="false"
+        app:cornerRadius="14dp" />
 
 </LinearLayout>

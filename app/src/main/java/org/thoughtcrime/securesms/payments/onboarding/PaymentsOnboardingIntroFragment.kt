@@ -7,7 +7,6 @@ package org.thoughtcrime.securesms.payments.onboarding
 
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.button.MaterialButton
 import org.thoughtcrime.securesms.LoggingFragment
@@ -18,9 +17,6 @@ class PaymentsOnboardingIntroFragment : LoggingFragment(R.layout.fragment_paymen
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     view.findViewById<MaterialButton>(R.id.onboarding_intro_continue).setOnClickListener {
       NavHostFragment.findNavController(this).navigate(R.id.action_intro_to_addFundsIntro)
-    }
-    view.findViewById<TextView>(R.id.onboarding_intro_skip).setOnClickListener {
-      (requireActivity() as PaymentsOnboardingActivity).finishToMain()
     }
   }
 }
