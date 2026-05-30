@@ -27,7 +27,10 @@ val canonicalVersionName = "7.68.5"
 val currentHotfixVersion = 0
 val maxHotfixVersions = 100
 
-val keystores: Map<String, Properties?> = mapOf("debug" to loadKeystoreProperties("keystore.debug.properties"))
+val keystores: Map<String, Properties?> = mapOf(
+  "debug" to loadKeystoreProperties("keystore.debug.properties"),
+  "release" to loadKeystoreProperties("keystore.release.properties")
+)
 
 val selectableVariants = listOf(
   "nightlyBackupRelease",
@@ -108,6 +111,15 @@ android {
     }
   }
 
+  keystores["release"]?.let { properties ->
+    signingConfigs.create("release").apply {
+      storeFile = file("${project.rootDir}/${properties.getProperty("storeFile")}")
+      storePassword = properties.getProperty("storePassword")
+      keyAlias = properties.getProperty("keyAlias")
+      keyPassword = properties.getProperty("keyPassword")
+    }
+  }
+
   testOptions {
     execution = "ANDROIDX_TEST_ORCHESTRATOR"
 
@@ -178,7 +190,7 @@ android {
   }
 
   defaultConfig {
-//    applicationId = "com.cakewallet.radar"
+    applicationId = "com.radarlabs.radar"
     versionCode = (canonicalVersionCode * maxHotfixVersions) + currentHotfixVersion
     versionName = canonicalVersionName
 
@@ -286,6 +298,7 @@ android {
         "proguard/proguard-retrolambda.pro",
         "proguard/proguard-okhttp.pro",
         "proguard/proguard-ez-vcard.pro",
+        "proguard/proguard-breez-jna.pro",
         "proguard/proguard.cfg"
       )
       testProguardFiles(
@@ -300,6 +313,9 @@ android {
     }
 
     getByName("release") {
+      if (keystores["release"] != null) {
+        signingConfig = signingConfigs["release"]
+      }
       isMinifyEnabled = true
       proguardFiles(*buildTypes["debug"].proguardFiles.toTypedArray())
       buildConfigField("String", "BUILD_VARIANT_TYPE", "\"Release\"")
