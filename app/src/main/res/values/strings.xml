@@ -4448,6 +4448,8 @@
 
     <!-- PaymentsDetailsFragment -->
     <string name="PaymentsDetailsFragment__details">Details</string>
+    <!-- Toolbar action that opens the chat with the person involved in the payment -->
+    <string name="PaymentsDetailsFragment__message">Message</string>
     <string name="PaymentsDetailsFragment__status">Status</string>
     <string name="PaymentsDetailsFragment__submitting_payment">Submitting payment…</string>
     <string name="PaymentsDetailsFragment__processing_payment">Processing payment…</string>
