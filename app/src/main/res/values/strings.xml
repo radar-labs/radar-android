@@ -4407,6 +4407,8 @@
     <string name="PaymentsOnboarding__continue">Continue</string>
     <!-- Generic skip button -->
     <string name="PaymentsOnboarding__skip">Skip</string>
+    <!-- Skip button on the Add Funds onboarding step -->
+    <string name="PaymentsOnboarding__skip_this_step">Skip this step</string>
     <!-- Deposit received screen title -->
     <string name="PaymentsOnboarding__deposit_received_title">Deposit Received</string>
     <!-- Deposit received screen subtitle -->
