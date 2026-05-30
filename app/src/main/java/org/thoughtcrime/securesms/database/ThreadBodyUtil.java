@@ -19,7 +19,7 @@ import org.thoughtcrime.securesms.database.model.databaseprotos.MessageExtras;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.mms.GifSlide;
 import org.thoughtcrime.securesms.payments.CryptoValueUtil;
-import org.thoughtcrime.securesms.payments.MoneyView;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.whispersystems.signalservice.api.payments.FormatterOptions;
 import org.whispersystems.signalservice.api.payments.Money;
 import org.thoughtcrime.securesms.mms.Slide;
@@ -95,11 +95,8 @@ public final class ThreadBodyUtil {
     if (SignalStore.payments().getBalanceHidden()) {
       return "•••••";
     }
-    // Respect the sats/BTC display preference centrally (mirrors MoneyView.setMoney).
-    if (amount instanceof Money.Satoshi && SignalStore.payments().getShowInSats()) {
-      return MoneyView.formatSatoshiAmount((Money.Satoshi) amount);
-    }
-    return amount.toString(FormatterOptions.builder(Locale.getDefault()).build());
+    // Single display layer decides sats vs BTC (mirrors MoneyView / iOS PaymentsFormat).
+    return PaymentAmountFormatter.format(amount, FormatterOptions.builder(Locale.getDefault()).build());
   }
 
   private static @NonNull ThreadBody getFormattedBodyForMms(@NonNull Context context, @NonNull MmsMessageRecord record, @Nullable CharSequence bodyOverride) {

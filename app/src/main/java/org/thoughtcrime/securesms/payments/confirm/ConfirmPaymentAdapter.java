@@ -10,12 +10,12 @@ import androidx.core.content.ContextCompat;
 import com.airbnb.lottie.LottieAnimationView;
 
 import org.thoughtcrime.securesms.R;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.payments.confirm.ConfirmPaymentState.Status;
 import org.thoughtcrime.securesms.util.SpanUtil;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingViewHolder;
-import org.whispersystems.signalservice.api.payments.FormatterOptions;
 import org.whispersystems.signalservice.api.payments.Money;
 
 public class ConfirmPaymentAdapter extends MappingAdapter {
@@ -120,7 +120,7 @@ public class ConfirmPaymentAdapter extends MappingAdapter {
 
     public @NonNull CharSequence getInfoText(@NonNull Context context) {
       switch (status) {
-        case CONFIRM:    return context.getString(R.string.ConfirmPayment__balance_s, balance.toString(FormatterOptions.defaults()));
+        case CONFIRM:    return context.getString(R.string.ConfirmPayment__balance_s, PaymentAmountFormatter.format(balance));
         case SUBMITTING: return context.getString(R.string.ConfirmPayment__submitting_payment);
         case PROCESSING: return context.getString(R.string.ConfirmPayment__processing_payment);
         case DONE:       return context.getString(R.string.ConfirmPayment__payment_complete);

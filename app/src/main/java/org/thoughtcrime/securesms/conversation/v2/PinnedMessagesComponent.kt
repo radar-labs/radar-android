@@ -62,12 +62,12 @@ import org.thoughtcrime.securesms.mms.DocumentSlide
 import org.thoughtcrime.securesms.mms.ImageSlide
 import org.thoughtcrime.securesms.mms.StickerSlide
 import org.thoughtcrime.securesms.mms.VideoSlide
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter
 import org.thoughtcrime.securesms.util.DynamicTheme
 import org.thoughtcrime.securesms.util.hasSharedContact
 import org.thoughtcrime.securesms.util.hasSticker
 import org.thoughtcrime.securesms.util.isPoll
 import org.thoughtcrime.securesms.util.isViewOnceMessage
-import org.whispersystems.signalservice.api.payments.FormatterOptions
 import kotlin.jvm.optionals.getOrDefault
 
 /**
@@ -270,7 +270,7 @@ fun getMessageMetadata(conversationMessage: ConversationMessage): Triple<SignalS
   } else if (message.hasSharedContact()) {
     Triple(SignalSymbols.Glyph.PERSON_CIRCLE, SpannableString(message.sharedContacts.first().name.givenName), false)
   } else if (message.isPaymentNotification && message.payment != null) {
-    Triple(SignalSymbols.Glyph.CREDIT_CARD, SpannableString(message.payment!!.amount.toString(FormatterOptions.defaults())), false)
+    Triple(SignalSymbols.Glyph.CREDIT_CARD, SpannableString(PaymentAmountFormatter.format(message.payment!!.amount)), false)
   } else if (slide?.isVideoGif == true) {
     Triple(SignalSymbols.Glyph.GIF_RECTANGLE, SpannableString(stringResource(R.string.PinnedMessage__gif)), false)
   } else if (slide is ImageSlide && message.body.isEmpty()) {

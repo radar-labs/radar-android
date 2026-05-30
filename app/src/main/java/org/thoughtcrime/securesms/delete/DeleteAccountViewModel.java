@@ -17,10 +17,10 @@ import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.payments.Balance;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.util.DefaultValueLiveData;
 import org.thoughtcrime.securesms.util.SingleLiveEvent;
-import org.whispersystems.signalservice.api.payments.FormatterOptions;
 import org.whispersystems.signalservice.api.payments.Money;
 
 import java.util.List;
@@ -140,7 +140,7 @@ public class DeleteAccountViewModel extends ViewModel {
   private static @NonNull Optional<String> getFormattedWalletBalance(@NonNull Balance balance) {
     Money amount = balance.getFullAmount();
     if (amount.isPositive()) {
-      return Optional.of(amount.toString(FormatterOptions.defaults()));
+      return Optional.of(PaymentAmountFormatter.format(amount));
     } else {
       return Optional.empty();
     }
