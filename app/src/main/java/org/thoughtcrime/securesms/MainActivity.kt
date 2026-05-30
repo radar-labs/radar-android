@@ -78,6 +78,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
@@ -121,6 +122,7 @@ import org.thoughtcrime.securesms.conversationlist.model.UnreadPaymentsLiveData
 import org.thoughtcrime.securesms.devicetransfer.olddevice.OldDeviceExitActivity
 import org.thoughtcrime.securesms.groups.ui.creategroup.CreateGroupActivity
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.isDecisionPending
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity
 import org.thoughtcrime.securesms.main.ChatNavGraphState
 import org.thoughtcrime.securesms.main.DetailsScreenNavHost
@@ -158,6 +160,8 @@ import org.thoughtcrime.securesms.net.DeviceTransferBlockingInterceptor
 import org.thoughtcrime.securesms.notifications.VitalsViewModel
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfile
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfiles
+import org.thoughtcrime.securesms.payments.BreezSdkWrapper
+import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingActivity
 import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.profiles.manage.UsernameEditFragment
 import org.thoughtcrime.securesms.service.BackupMediaRestoreService
@@ -193,6 +197,10 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
 
     private const val KEY_STARTING_TAB = "STARTING_TAB"
     const val RESULT_CONFIG_CHANGED = Activity.RESULT_FIRST_USER + 901
+
+    /** Bounded wait for the restore to deliver the payments seed before launching deferred onboarding. */
+    private const val DEFERRED_ONBOARDING_MAX_WAIT_MS = 8000L
+    private const val DEFERRED_ONBOARDING_POLL_MS = 200L
 
     @JvmStatic
     fun clearTop(context: Context): Intent {
@@ -238,6 +246,7 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
 
   private var onFirstRender = false
   private var previousTopToastPopup: TopToastPopup? = null
+  private var launchingDeferredPaymentsOnboarding = false
 
   private val mainBottomChromeCallback = BottomChromeCallback()
   private val megaphoneActionController = MainMegaphoneActionController()
@@ -883,6 +892,8 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
         .show()
     }
 
+    maybeLaunchDeferredPaymentsOnboarding()
+
     vitalsViewModel.checkSlowNotificationHeuristics()
     mainNavigationViewModel.refreshNavigationBarState()
 
@@ -894,6 +905,53 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
   override fun onStop() {
     super.onStop()
     SplashScreenUtil.setSplashScreenThemeIfNecessary(this, SignalStore.settings.theme)
+  }
+
+  /**
+   * Launches the post-registration payments onboarding that was deferred by a restore (see
+   * [org.thoughtcrime.securesms.registration.ui.RegistrationActivity] and
+   * [org.thoughtcrime.securesms.keyvalue.PaymentsValues.paymentsOnboardingPendingAfterRestore]).
+   *
+   * Waits briefly for the storage-service restore to deliver the payments seed so the Add Funds
+   * screen shows the restored lightning username rather than registering a fresh one against a
+   * not-yet-restored Spark identity. The restore is already awaited during registration, so the
+   * seed is normally present immediately; the bounded wait only covers the storage-sync timeout edge.
+   */
+  private fun maybeLaunchDeferredPaymentsOnboarding() {
+    if (launchingDeferredPaymentsOnboarding || !SignalStore.payments.paymentsOnboardingPendingAfterRestore) {
+      return
+    }
+
+    // Wait until the restore / "Enter your PIN" step has actually finished and we're in the normal
+    // app state. On earlier resumes the PassphraseRequiredActivity router is still sending us off to
+    // the restore/PIN screens — onboarding must come after those.
+    if (isFinishing || SignalStore.storageService.needsAccountRestore || SignalStore.registration.restoreDecisionState.isDecisionPending) {
+      return
+    }
+
+    launchingDeferredPaymentsOnboarding = true
+
+    lifecycleScope.launch {
+      withContext(Dispatchers.IO) {
+        var waitedMs = 0L
+        while (SignalStore.payments.paymentsEntropy == null && waitedMs < DEFERRED_ONBOARDING_MAX_WAIT_MS) {
+          delay(DEFERRED_ONBOARDING_POLL_MS)
+          waitedMs += DEFERRED_ONBOARDING_POLL_MS
+        }
+      }
+
+      if (!SignalStore.payments.paymentsOnboardingPendingAfterRestore) {
+        return@launch
+      }
+
+      // Drop any Breez SDK connection that may have been established before the restored seed
+      // arrived, so onboarding connects with the correct (restored) Spark identity.
+      BreezSdkWrapper.reset()
+
+      SignalStore.payments.paymentsOnboardingPendingAfterRestore = false
+      SignalStore.payments.paymentsOnboardingShown = true
+      startActivity(PaymentsOnboardingActivity.createIntent(this@MainActivity))
+    }
   }
 
   override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray, deviceId: Int) {

@@ -51,6 +51,7 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     private const val SHOW_IN_SATS = "payments_show_in_sats"
     private const val BALANCE_HIDDEN = "payments_balance_hidden"
     private const val PAYMENTS_ONBOARDING_SHOWN = "payments_onboarding_shown"
+    private const val PAYMENTS_ONBOARDING_PENDING_AFTER_RESTORE = "payments_onboarding_pending_after_restore"
 
     private val LARGE_BALANCE_THRESHOLD = Money.bitcoin(BigDecimal.valueOf(500))
   }
@@ -63,6 +64,13 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
 
   /** Whether the post-registration payments onboarding flow has already been shown. */
   var paymentsOnboardingShown: Boolean by booleanValue(PAYMENTS_ONBOARDING_SHOWN, false)
+
+  /**
+   * Set when a restore defers the post-registration payments onboarding so it can be launched once
+   * the restore has delivered the wallet seed, instead of racing it (which would register/display a
+   * username against a not-yet-restored Spark identity). Consumed by [org.thoughtcrime.securesms.MainActivity].
+   */
+  var paymentsOnboardingPendingAfterRestore: Boolean by booleanValue(PAYMENTS_ONBOARDING_PENDING_AFTER_RESTORE, false)
 
   @get:JvmName("isPaymentLockEnabled")
   var paymentLock: Boolean by booleanValue(PAYMENT_LOCK_ENABLED, false)
