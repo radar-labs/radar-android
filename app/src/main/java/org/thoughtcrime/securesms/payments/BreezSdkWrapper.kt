@@ -9,24 +9,22 @@ import android.annotation.SuppressLint
 import breez_sdk_spark.*
 import com.mobilecoin.lib.Mnemonics
 import kotlinx.coroutines.runBlocking
-import org.signal.core.util.CryptoUtil
-import org.signal.core.util.Hex
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.dependencies.AppDependencies
-import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.payments.MobileCoinLedgerWrapper.OwnedTxo
 import org.thoughtcrime.securesms.util.ProfileUtil
 import org.whispersystems.signalservice.api.payments.Money
 import java.math.BigInteger
+import java.security.SecureRandom
 import java.time.LocalDateTime
 import java.time.ZoneOffset
-import java.util.*
 
 class BreezSdkWrapper(ledger: BreezSdk?) {
   private val sdk: BreezSdk? = ledger
 
   fun getConversions(): Map<String, Double> {
-    val rates = runBlocking { sdk!!.listFiatRates() }
+    val sdk = this.sdk ?: return emptyMap()
+    val rates = runBlocking { sdk.listFiatRates() }
 
     val ratesMap = mutableMapOf<String, Double>()
     for (rate in rates.rates) {
@@ -74,58 +72,106 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     }
 
     try {
-      val lnAddress = runBlocking {
-        val lnAddress = sdk.getLightningAddress()
-        if (lnAddress == null) null else LightningAddress(lnAddress.lightningAddress, lnAddress.lnurl.bech32)
+      val existing = runBlocking { sdk.getLightningAddress() }
+
+      // Keep an existing address only if it's on our configured lnurl domain; otherwise (or if no
+      // address is registered yet) register a freshly-generated random username. Mirrors iOS
+      // BreezSdk.validateInitialLightningAddress().
+      val info = if (existing != null && existing.lightningAddress.contains("@$LNURL_DOMAIN")) {
+        existing
+      } else {
+        tryToRegisterLightningAddress(sdk)
       }
 
-      if (lnAddress != null) {
-        ProfileUtil.uploadLightingProfile(AppDependencies.application, lnAddress)
-        return lnAddress
+      if (info != null) {
+        val address = LightningAddress(info.lightningAddress, info.lnurl.bech32)
+        ProfileUtil.uploadLightingProfile(AppDependencies.application, address)
+        return address
       }
 
-      val username = Hex.toStringCondensed(CryptoUtil.sha256(SignalStore.account.getServiceIds().aci.toString().uppercase(Locale.getDefault()).toByteArray())).substring(0, 10)
-
-      runBlocking { sdk.registerLightningAddress(RegisterLightningAddressRequest(username)) }
-
-      val lightningAddress = runBlocking {
-        val lnAddress = sdk.getLightningAddress()
-        if (lnAddress == null) null else LightningAddress(lnAddress.lightningAddress, lnAddress.lnurl.bech32)
-      }
-
-      if (lightningAddress != null) ProfileUtil.uploadLightingProfile(AppDependencies.application, lightningAddress)
-
-      return lightningAddress ?: LightningAddress("\\*.*/ No Address Found", "")
+      return LightningAddress("\\*.*/ No Address Found", "")
     } catch (e: SdkException) {
       Log.e("BreezSdk", "Error getting lightning address", e)
       return LightningAddress("\\*.*/ Error getting lightning address", "")
     }
   }
 
-  fun sendPayment(address: String, amount: BigInteger): ByteArray {
-    val inputType = runBlocking { sdk!!.parse(address) }
-
-    if (inputType !is InputType.LightningAddress && inputType !is InputType.LnurlPay) {
-      throw UnsupportedOperationException()
+  /**
+   * Registers a randomly-generated lightning-address username, retrying until an available one is
+   * found (up to [rateLimit] + 1 attempts). Mirrors iOS `BreezSdk.tryToRegisterLightningAddress`.
+   */
+  private fun tryToRegisterLightningAddress(sdk: BreezSdk, rateLimit: Int = 5): LightningAddressInfo? = runBlocking {
+    for (i in 0..rateLimit) {
+      try {
+        val username = generateUsername()
+        if (sdk.checkLightningAddressAvailable(CheckLightningAddressRequest(username))) {
+          return@runBlocking sdk.registerLightningAddress(RegisterLightningAddressRequest(username))
+        }
+      } catch (e: SdkException) {
+        Log.w("BreezSdk", "Cannot register lightning address; retrying", e)
+      }
     }
+    Log.w("BreezSdk", "Cannot register lightning address. Out of rate limit: $rateLimit")
+    null
+  }
+
+  /**
+   * Builds a random username of the form `<word><word><0000-9999>` (e.g. `forgehaven0427`) from
+   * [USERNAME_WORDS], using secure randomness. Mirrors iOS `BreezSdk.generateUsername()`.
+   */
+  private fun generateUsername(): String {
+    val bytes = ByteArray(6)
+    SecureRandom().nextBytes(bytes)
+    val index1 = ((bytes[0].toInt() and 0xFF) shl 8 or (bytes[1].toInt() and 0xFF)) % USERNAME_WORDS.size
+    val index2 = ((bytes[2].toInt() and 0xFF) shl 8 or (bytes[3].toInt() and 0xFF)) % USERNAME_WORDS.size
+    val number = ((bytes[4].toInt() and 0xFF) shl 8 or (bytes[5].toInt() and 0xFF)) % 10000
+    return "${USERNAME_WORDS[index1]}${USERNAME_WORDS[index2]}${"%04d".format(number)}"
+  }
+
+  /**
+   * Prepares an LNURL/lightning-address payment for [amount] sats, returning the Breez quote
+   * (which carries the real network [PrepareLnurlPayResponse.feeSats]). Throws
+   * [UnsupportedOperationException] for non-LNURL inputs.
+   */
+  private fun prepareLnurl(address: String, amount: BigInteger): PrepareLnurlPayResponse {
+    val inputType = runBlocking { sdk!!.parse(address) }
 
     // Breez SDK 0.14.0: `amountSats: ULong` → `amount: BigInteger`;
     // `optionalValidateSuccessActionUrl` → named `validateSuccessActionUrl: Boolean?`.
-    val amountBig = amount.toLong().toBigInteger()
-    var payRequest: LnurlPayRequestDetails? = null
-
-    if (inputType is InputType.LightningAddress) {
-      payRequest = inputType.v1.payRequest
-    } else if (inputType is InputType.LnurlPay) {
-      payRequest = inputType.v1
+    val payRequest: LnurlPayRequestDetails = when (inputType) {
+      is InputType.LightningAddress -> inputType.v1.payRequest
+      is InputType.LnurlPay         -> inputType.v1
+      else                          -> throw UnsupportedOperationException()
     }
+
     val req = PrepareLnurlPayRequest(
-      amount = amountBig,
-      payRequest = payRequest!!,
+      amount = amount.toLong().toBigInteger(),
+      payRequest = payRequest,
       comment = null,
       validateSuccessActionUrl = true
     )
-    val prepareResponse = runBlocking { sdk!!.prepareLnurlPay(req) }
+    return runBlocking { sdk!!.prepareLnurlPay(req) }
+  }
+
+  /**
+   * The real network fee for sending [amount] sats to [address], obtained from the Breez
+   * prepared-payment quote. Matches the fee that will actually be charged (and later shown in
+   * payment details), unlike the coarser `recommendedFees()` estimate used by iOS's confirm screen.
+   */
+  fun getLnurlFee(address: String, amount: BigInteger): Money.Satoshi {
+    if (sdk == null) return Money.Satoshi.ZERO
+    return Money.satoshi(prepareLnurl(address, amount).feeSats.toLong().toBigInteger())
+  }
+
+  /** Result of sending a payment: the serialized response plus the actual network fee charged. */
+  data class SendPaymentResult(val response: ByteArray, val feeSats: BigInteger)
+
+  fun sendPayment(address: String, amount: BigInteger): SendPaymentResult {
+    val prepareResponse = prepareLnurl(address, amount)
+
+    // Capture the real fee from the prepared payment so it can be persisted on the
+    // transaction. Mirrors iOS, which stores `prepareLnurlPay().feeSats` as the payment fee.
+    val feeSats = prepareResponse.feeSats.toLong().toBigInteger()
 
     val response = runBlocking { sdk!!.lnurlPay(LnurlPayRequest(prepareResponse)) }
 
@@ -133,7 +179,7 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     val buffer = ByteBuffer(java.nio.ByteBuffer.allocate(allocationSize.toInt()))
     FfiConverterTypeLnurlPayResponse.write(response, buffer)
 
-    return buffer.internal().array()
+    return SendPaymentResult(buffer.internal().array(), feeSats)
   }
 
   /** The currently-registered lightning-address username, or null if none/unavailable. */
@@ -178,6 +224,39 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
   companion object {
     var sdkSingelton: BreezSdk? = null
 
+    /** The lnurl domain our lightning addresses are registered under (e.g. `name@radar.cash`). */
+    const val LNURL_DOMAIN = "radar.cash"
+
+    /**
+     * Word list used to build human-friendly random lightning-address usernames. Kept identical to
+     * iOS `BreezSdk.usernameWords` so both platforms draw from the same namespace.
+     */
+    private val USERNAME_WORDS: List<String> = listOf(
+      "amber", "arctic", "azure", "beacon", "birch", "blast", "blaze", "bloom",
+      "bolt", "bravo", "breeze", "bright", "brisk", "bronze", "brook", "burst",
+      "calm", "cedar", "chain", "chase", "chief", "chill", "cipher", "citrus",
+      "clover", "coast", "cobalt", "comet", "coral", "craft", "crest", "crisp",
+      "crown", "crush", "crystal", "cyber", "delta", "dense", "depot", "depth",
+      "drift", "dusk", "echo", "ember", "falcon", "fern", "finch", "flame",
+      "flash", "fleet", "flint", "float", "flux", "forge", "forte", "frost",
+      "gale", "ghost", "glade", "gleam", "glide", "glow", "grand", "grant",
+      "gust", "haven", "hawk", "hazel", "haze", "helix", "helm", "hive",
+      "indie", "inlet", "iris", "ivory", "jade", "jasper", "jetty", "kindle",
+      "kite", "lance", "lark", "laser", "latch", "lava", "layer", "leap",
+      "ledge", "light", "lotus", "lunar", "lynx", "maple", "marble", "marsh",
+      "mist", "mosaic", "moss", "mural", "nova", "oaken", "ocean", "onyx",
+      "orbit", "otter", "oxide", "ozone", "pact", "peak", "pearl", "petal",
+      "pilot", "pine", "pivot", "pixel", "plaza", "plume", "polar", "pulse",
+      "quartz", "quest", "radar", "rapid", "raven", "realm", "relay", "ridge",
+      "ripple", "river", "roam", "rogue", "rover", "ruby", "rush", "sage",
+      "scout", "serene", "shade", "shift", "shore", "signal", "silver", "slate",
+      "solar", "sonic", "spark", "spire", "split", "sprint", "stark", "steel",
+      "storm", "strata", "streak", "stream", "stride", "swift", "talon", "teal",
+      "terra", "thunder", "tide", "timber", "titan", "torch", "trail", "trend",
+      "tropic", "turbo", "ultra", "unity", "vapor", "vault", "vector", "verde",
+      "vibe", "vista", "vital", "vivid", "volt", "wave", "wisp", "zenith"
+    )
+
     /** Drops the cached SDK so the next connect starts fresh (e.g. after wallet deletion). */
     fun reset() {
       sdkSingelton = null
@@ -190,7 +269,7 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
         config.apiKey =
           "MIIBdzCCASmgAwIBAgIHPpJHKP1qXzAFBgMrZXAwEDEOMAwGA1UEAxMFQnJlZXowHhcNMjUxMDIzMTQwNDQ4WhcNMzUxMDIxMTQwNDQ4WjAxMRQwEgYDVQQKEwtDYWtlIFdhbGxldDEZMBcGA1UEAxMQU2V0aCBGb3IgUHJpdmFjeTAqMAUGAytlcAMhANCD9cvfIDwcoiDKKYdT9BunHLS2/OuKzV8NS0SzqV13o4GAMH4wDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFNo5o+5ea0sNMlW/75VgGJCv2AcJMB8GA1UdIwQYMBaAFN6q1pJW843ndJIW/Ey2ILJrKJhrMB4GA1UdEQQXMBWBE3NldGhAY2FrZXdhbGxldC5jb20wBQYDK2VwA0EAl+naPfCBseV7eS4SoP0q0kvo2GHCywXoIbnlBa0y+/wlfu+oILtsGv3jGQ2egCnpgHe87yzR0ygclzz8r/jdAQ=="
 
-        config.lnurlDomain = "radar.cash"
+        config.lnurlDomain = LNURL_DOMAIN
         config.preferSparkOverLightning = true
 
         val dataDir = AppDependencies.application.applicationInfo.dataDir
