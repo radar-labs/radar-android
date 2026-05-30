@@ -1,57 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Bitcoin ₿ symbol — the classic bold B with two short vertical strokes
-  protruding above and below, drawn at 24×24 dp viewport.
-  Fully tintable via app:tint / ImageButton.setColorFilter().
+  Bitcoin ₿ sign inside a circle outline — matches the iOS "Onchain" toggle
+  icon (SF Symbol "bitcoinsign.circle") used in the Add money screen.
+
+  Geometry is taken directly from the iOS design-system asset
+  payments-add-funds-bitcoin.svg, so the viewport keeps that artwork's
+  101.764 × 100 coordinate space while the drawable renders at 24×24 dp.
+  Fully tintable via app:tint / app:iconTint / setColorFilter().
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
+    android:viewportWidth="101.764"
+    android:viewportHeight="100">
 
-    <!--
-      Two vertical serif strokes (the "₿" bars through the B):
-        - Top bar: x=7.5..9.5, y=2..4.5
-        - Bottom bar: x=7.5..9.5, y=19.5..22
-    -->
+    <!-- Circular outline (filled ring: outer circle minus inner circle) -->
     <path
         android:fillColor="#FF000000"
-        android:pathData="
-          M8,2 L9.5,2 L9.5,4.5 L8,4.5 Z
-          M8,19.5 L9.5,19.5 L9.5,22 L8,22 Z
-        " />
+        android:fillType="evenOdd"
+        android:pathData="M49.9756,99.9513C77.5603,99.9513 99.9513,77.5603 99.9513,49.9756C99.9513,22.391 77.5603,0 49.9756,0C22.391,0 0,22.391 0,49.9756C0,77.5603 22.391,99.9513 49.9756,99.9513ZM49.9756,91.6218C26.9476,91.6218 8.32929,73.0037 8.32929,49.9756C8.32929,26.9476 26.9476,8.32929 49.9756,8.32929C73.0037,8.32929 91.6218,26.9476 91.6218,49.9756C91.6218,73.0037 73.0037,91.6218 49.9756,91.6218Z" />
 
-    <!--
-      The main ₿ body — a bold B letterform with two bumps.
-      Stem runs from y=4.5 to y=19.5 at x=8..9.5.
-      Upper bump: rounded right protrusion from y=4.5 to y=12.
-      Lower bump: slightly wider rounded protrusion from y=12 to y=19.5.
-    -->
+    <!-- ₿ glyph with the protruding vertical bars -->
     <path
         android:fillColor="#FF000000"
-        android:pathData="
-          M8,4.5
-          L13,4.5
-          C15.5,4.5 17,5.9 17,8
-          C17,9.6 16.1,10.7 14.8,11.25
-          C16.5,11.8 17.5,13.1 17.5,15
-          C17.5,17.4 15.7,19.5 13,19.5
-          L8,19.5
-          Z
-
-          M9.5,10.5 L12.8,10.5
-          C14.2,10.5 15.3,9.6 15.3,8.1
-          C15.3,6.7 14.3,6 12.8,6
-          L9.5,6
-          Z
-
-          M9.5,18 L13.1,18
-          C14.7,18 15.8,16.9 15.8,15.2
-          C15.8,13.6 14.6,12.2 13,12.2
-          L9.5,12.2
-          Z
-        "
-        android:fillType="evenOdd" />
+        android:fillType="evenOdd"
+        android:pathData="M39.7356,71.5828H51.9357C60.4608,71.5828 66.8301,67.5651 66.8301,59.5296C66.8301,53.7975 62.8124,49.6326 56.6879,48.9467V48.6527C61.4899,47.8688 64.6256,43.5572 64.6256,39.2456C64.6256,32.3371 58.9416,28.5155 51.8374,28.5155H39.7356C37.5797,28.5155 36.1589,29.9853 36.1589,32.0921V68.0061C36.1589,70.1619 37.5797,71.5828 39.7356,71.5828ZM41.9404,47.0359V33.317H50.4165C55.1201,33.317 58.8438,35.1789 58.8438,39.9315C58.8438,45.223 54.3364,47.0359 49.0448,47.0359H41.9404ZM41.9404,66.7322V51.7394H50.3678C56.0999,51.7394 60.9997,53.5521 60.9997,59.2356C60.9997,64.8212 56.4431,66.7322 50.8575,66.7322H41.9404ZM42.4303,31.3572H45.7131V23.8609C45.7131,22.832 45.0271,22.146 44.0962,22.146C43.1163,22.146 42.4303,22.832 42.4303,23.8609V31.3572ZM50.3678,31.3572H53.6506V23.8609C53.6506,22.832 52.9642,22.146 51.9844,22.146C51.0537,22.146 50.3678,22.832 50.3678,23.8609V31.3572ZM42.4303,68.6919V76.3842C42.4303,77.3154 43.1163,78.0012 44.0962,78.0012C45.0271,78.0012 45.7131,77.3154 45.7131,76.3842V68.6919H42.4303ZM50.3678,68.6919V76.3842C50.3678,77.3154 51.0537,78.0012 51.9844,78.0012C52.9642,78.0012 53.6506,77.3154 53.6506,76.3842V68.6919H50.3678Z" />
 
 </vector>

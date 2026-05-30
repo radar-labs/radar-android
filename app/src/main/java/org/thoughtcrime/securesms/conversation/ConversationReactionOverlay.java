@@ -706,7 +706,7 @@ public final class ConversationReactionOverlay extends FrameLayout {
     }
 
     if (menuState.shouldShowPaymentDetails()) {
-      items.add(new ActionItem(R.drawable.symbol_payment_24, getResources().getString(R.string.conversation_selection__menu_payment_details), () -> handleActionItemClicked(Action.PAYMENT_DETAILS)));
+      items.add(new ActionItem(R.drawable.symbol_bitcoin_24, getResources().getString(R.string.conversation_selection__menu_payment_details), () -> handleActionItemClicked(Action.PAYMENT_DETAILS)));
     }
 
     items.add(new ActionItem(R.drawable.symbol_check_circle_24, getResources().getString(R.string.conversation_selection__menu_multi_select), () -> handleActionItemClicked(Action.MULTISELECT)));

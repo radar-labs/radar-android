@@ -388,7 +388,7 @@ private fun AppSettingsContent(
               },
               icon = {
                 Icon(
-                  painter = painterResource(R.drawable.symbol_payment_24),
+                  painter = painterResource(R.drawable.symbol_bitcoin_24),
                   contentDescription = null,
                   tint = MaterialTheme.colorScheme.onSurface
                 )
