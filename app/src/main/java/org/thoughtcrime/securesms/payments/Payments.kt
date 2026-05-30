@@ -33,13 +33,14 @@ class Payments(private val mobileCoinConfig: MobileCoinConfig) {
   @Synchronized
   @Throws(IOException::class)
   fun getCurrencyExchange(refreshIfAble: Boolean): CurrencyExchange {
-    if (_wallet == null) return CurrencyExchange(emptyMap(),0L)
-
     if (currencyConversions == null || shouldRefresh(refreshIfAble, currencyConversions!!.timestamp)) {
-      val currencyConversionsMap = wallet.exchangeRate
+      // Pull BTC->fiat rates from the already-connected Breez SDK rather than the heavy
+      // MobileCoin `wallet`, which is never initialized on the send flow (leaving the
+      // conversions map empty and the fiat equivalent permanently hidden).
+      val currencyConversionsMap = SignalStore.payments.breezSdkWrapperLatest().getConversions()
       val newCurrencyConversions = BreezCurrencyConversions(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC), currencyConversionsMap)
 
-      Log.i(TAG, "Currency conversion data is unavailable or a refresh was requested and available")
+      Log.i(TAG, "Refreshed currency conversions (${currencyConversionsMap.size} rates)")
       if (currencyConversions == null || (newCurrencyConversions.timestamp > currencyConversions!!.timestamp)) {
         currencyConversions = newCurrencyConversions
       }

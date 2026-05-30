@@ -90,12 +90,12 @@ public final class PayeeParcelable implements Parcelable {
           return new PayeeParcelable(new Payee(recipientId));
         }
         case CONTAINS_RECIPIENT_ID_AND_ADDRESS: {
-          RecipientId             recipientId   = in.readParcelable(RecipientId.class.getClassLoader());
-          MobileCoinPublicAddress publicAddress = MobileCoinPublicAddress.fromBase58OrThrow(in.readString());
-          return new PayeeParcelable(Payee.fromRecipientAndAddress(recipientId, publicAddress));
+          RecipientId      recipientId   = in.readParcelable(RecipientId.class.getClassLoader());
+          LightningAddress publicAddress = LightningAddress.Companion.fromLightningAddressOrThrow(in.readString());
+          return new PayeeParcelable(new Payee(recipientId, publicAddress));
         }
         case CONTAINS_ADDRESS: {
-          return new PayeeParcelable(new Payee(MobileCoinPublicAddress.fromBase58OrThrow(in.readString())));
+          return new PayeeParcelable(new Payee(LightningAddress.Companion.fromLightningAddressOrThrow(in.readString())));
         }
         default: {
           throw new AssertionError();

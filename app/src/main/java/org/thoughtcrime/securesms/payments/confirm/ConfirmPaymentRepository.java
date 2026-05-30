@@ -41,26 +41,21 @@ final class ConfirmPaymentRepository {
         return;
       }
 
-      Payee                   payee = state.getPayee();
-      RecipientId      recipientId = null;
+      Payee            payee       = state.getPayee();
+      RecipientId      recipientId = payee.hasRecipientId() ? payee.requireRecipientId() : null;
       LightningAddress paymentAddress;
 
-      if (payee.hasRecipientId()) {
-        recipientId = payee.requireRecipientId();
-        try {
-          paymentAddress = ProfileUtil.getAddressForRecipient(Recipient.resolved(recipientId));
-        } catch (IOException e) {
-          Log.w(TAG, "Failed to get address for recipient " + recipientId);
-          consumer.accept(new ConfirmPaymentResult.Error());
-          return;
-        } catch (PaymentsAddressException e) {
-          Log.w(TAG, "Failed to get address for recipient " + recipientId);
-          consumer.accept(new ConfirmPaymentResult.Error(e.getCode()));
-          return;
-        }
-      } else if (payee.hasPublicAddress()) {
-        paymentAddress = payee.requireLightningAddress();
-      } else throw new AssertionError();
+      try {
+        paymentAddress = resolveAddress(payee);
+      } catch (IOException e) {
+        Log.w(TAG, "Failed to get address for recipient " + recipientId);
+        consumer.accept(new ConfirmPaymentResult.Error());
+        return;
+      } catch (PaymentsAddressException e) {
+        Log.w(TAG, "Failed to get address for recipient " + recipientId);
+        consumer.accept(new ConfirmPaymentResult.Error(e.getCode()));
+        return;
+      }
 
       UUID paymentUuid = PaymentSendJob.enqueuePayment(recipientId,
                                                        paymentAddress,
@@ -74,11 +69,25 @@ final class ConfirmPaymentRepository {
   }
 
   @WorkerThread
-  @NonNull GetFeeResult getFee(@NonNull Money amount) {
+  @NonNull GetFeeResult getFee(@NonNull Payee payee, @NonNull Money amount) {
     try {
-      return new GetFeeResult.Success(wallet.getFee(amount));
-    } catch (IOException e) {
+      LightningAddress paymentAddress = resolveAddress(payee);
+      return new GetFeeResult.Success(wallet.getFee(paymentAddress, amount));
+    } catch (IOException | PaymentsAddressException e) {
+      Log.w(TAG, "Failed to get fee", e);
       return new GetFeeResult.Error();
+    }
+  }
+
+  /** Resolves the recipient's lightning address, fetching the profile when the payee is a recipient. */
+  @WorkerThread
+  private @NonNull LightningAddress resolveAddress(@NonNull Payee payee) throws IOException, PaymentsAddressException {
+    if (payee.hasRecipientId()) {
+      return ProfileUtil.getAddressForRecipient(Recipient.resolved(payee.requireRecipientId()));
+    } else if (payee.hasPublicAddress()) {
+      return payee.requireLightningAddress();
+    } else {
+      throw new AssertionError();
     }
   }
 

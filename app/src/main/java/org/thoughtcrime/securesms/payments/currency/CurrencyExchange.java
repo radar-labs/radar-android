@@ -72,8 +72,11 @@ public final class CurrencyExchange {
     }
 
     public @NonNull Optional<Money> exchange(@NonNull FiatMoney fiatMoney) {
-      if (rate != null) {
-        return Optional.of(Money.mobileCoin(fiatMoney.getAmount().setScale(12, RoundingMode.HALF_EVEN).divide(rate, RoundingMode.HALF_EVEN)));
+      if (rate != null && rate.signum() != 0) {
+        // fiat / (fiat-per-BTC) = BTC. Divide at satoshi precision (8) so the result is an
+        // exact Satoshi value. Previously returned a MobileCoin value, which crashed the
+        // fiat-entry path when callers invoked requireBitcoin().
+        return Optional.of(Money.bitcoin(fiatMoney.getAmount().divide(rate, 8, RoundingMode.HALF_EVEN)));
       } else {
         return Optional.empty();
       }

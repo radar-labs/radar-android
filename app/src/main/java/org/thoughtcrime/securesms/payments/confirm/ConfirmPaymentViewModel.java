@@ -112,7 +112,7 @@ final class ConfirmPaymentViewModel extends ViewModel {
   }
 
   private @NonNull ConfirmPaymentRepository.GetFeeResult getFee(@NonNull Money amount) {
-    ConfirmPaymentRepository.GetFeeResult result = confirmPaymentRepository.getFee(amount);
+    ConfirmPaymentRepository.GetFeeResult result = confirmPaymentRepository.getFee(store.getState().getPayee(), amount);
 
     if (result instanceof ConfirmPaymentRepository.GetFeeResult.Error) {
       errorEvents.postValue(ErrorType.CAN_NOT_GET_FEE);

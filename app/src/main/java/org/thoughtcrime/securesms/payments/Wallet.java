@@ -134,8 +134,12 @@ public final class Wallet {
   }
 
   @WorkerThread
-  public @NonNull Money.Satoshi getFee(@NonNull Money amount) throws IOException {
-    return Money.Satoshi.ZERO;
+  public @NonNull Money.Satoshi getFee(@NonNull LightningAddress to, @NonNull Money amount) throws IOException {
+    try {
+      return breezSdkWrapper.getLnurlFee(to.getPaymentAddress(), amount.requireBitcoin().toSatoshiBigInteger());
+    } catch (Exception e) {
+      throw new IOException(e);
+    }
   }
 
   @WorkerThread
@@ -198,9 +202,15 @@ public final class Wallet {
     Log.i(TAG, "Sending payment to " + to + " with amount " + amount + " and fee " + totalFee);
 
     try {
-      byte[] response = breezSdkWrapper.sendPayment(to.getPaymentAddress(), amount.requireBitcoin().toSatoshiBigInteger());
+      BreezSdkWrapper.SendPaymentResult result = breezSdkWrapper.sendPayment(to.getPaymentAddress(), amount.requireBitcoin().toSatoshiBigInteger());
 
-      results.add(TransactionSubmissionResult.successfullySubmitted(new PaymentTransactionId.MobileCoin(new byte[0], response, totalFee.requireBitcoin())));
+      // Persist the actual fee charged by the network (from the prepared payment) so the
+      // payment details screen shows the real fee, matching iOS. Falls back to the advised
+      // fee if the SDK reports nothing.
+      Money.Satoshi actualFee = Money.satoshi(result.getFeeSats());
+      Money.Satoshi storedFee = actualFee.isPositive() ? actualFee : totalFee.requireBitcoin();
+
+      results.add(TransactionSubmissionResult.successfullySubmitted(new PaymentTransactionId.MobileCoin(new byte[0], result.getResponse(), storedFee)));
     } catch (UnsupportedOperationException e) {
       results.add(TransactionSubmissionResult.failure(TransactionSubmissionResult.ErrorCode.GENERIC_FAILURE, false));
     } catch (Exception e) {
