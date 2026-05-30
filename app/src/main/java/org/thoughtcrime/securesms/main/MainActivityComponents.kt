@@ -47,7 +47,7 @@ fun EmptyDetailScreen() {
       .fillMaxSize()
   ) {
     Icon(
-      painter = painterResource(R.drawable.ic_signal_logo_large),
+      painter = painterResource(R.drawable.radar_logo),
       contentDescription = null,
       tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.32f),
       modifier = Modifier

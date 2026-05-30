@@ -87,7 +87,7 @@ enum class MainNavigationListLocation(
   // animation file exists for this destination.
   PAYMENTS(
     label = R.string.preferences__payments,
-    drawableIcon = R.drawable.symbol_payment_24
+    drawableIcon = R.drawable.symbol_bitcoin_24
   ),
   CALLS(
     label = R.string.ConversationListTabs__calls,
