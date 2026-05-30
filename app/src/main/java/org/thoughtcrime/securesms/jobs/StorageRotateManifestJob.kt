@@ -6,6 +6,7 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.payments.Entropy
 import org.whispersystems.signalservice.api.storage.SignalStorageManifest
 import org.whispersystems.signalservice.api.storage.StorageServiceRepository
 import java.util.concurrent.TimeUnit
@@ -78,6 +79,13 @@ class StorageRotateManifestJob private constructor(parameters: Parameters) : Job
       }
     }
 
+    // Recover the payments wallet seed from the server's AccountRecord before we touch the
+    // manifest. Otherwise a freshly-registered (empty) local entropy can later be pushed over the
+    // server's good seed, stranding the lightning wallet on a different Spark identity (it would
+    // appear as a brand-new wallet whose desired username is already taken). Mirrors iOS
+    // ae56882371's "merge server manifest before rotating".
+    restorePaymentsEntropyIfNecessary(repository, restoreKey, currentManifest)
+
     if (currentManifest.recordIkm == null) {
       Log.w(TAG, "No recordIkm set! Can't just rotate the manifest -- we need to re-encrypt all fo the records, too. Force pushing.")
       AppDependencies.jobManager.add(StorageForcePushJob())
@@ -111,6 +119,35 @@ class StorageRotateManifestJob private constructor(parameters: Parameters) : Job
         Log.w(TAG, "Encountered a network error during write, retrying.", result.exception)
         Result.retry(defaultBackoff())
       }
+    }
+  }
+
+  /**
+   * If no local payments entropy is set yet, pull it from the server's [AccountRecord] (using the
+   * still-readable restore key + the manifest's recordIkm) and persist it locally. Best-effort:
+   * any read failure is logged and ignored rather than blocking the rotation, mirroring iOS's
+   * `try?`-guarded merge. Non-destructive — it never overwrites an entropy that's already present.
+   */
+  private fun restorePaymentsEntropyIfNecessary(repository: StorageServiceRepository, storageKey: StorageKey, manifest: SignalStorageManifest) {
+    if (SignalStore.payments.paymentsEntropy != null) {
+      return
+    }
+
+    val accountStorageId = manifest.accountStorageId.orElse(null) ?: return
+
+    val record = when (val result = repository.readStorageRecords(storageKey, manifest.recordIkm, listOf(accountStorageId))) {
+      is StorageServiceRepository.StorageRecordResult.Success -> result.records.firstOrNull { it.proto.account != null }
+      else -> {
+        Log.w(TAG, "Could not read account record to recover payments entropy. Skipping. Result: $result")
+        null
+      }
+    } ?: return
+
+    val payments = record.proto.account?.payments
+    val entropy = Entropy.fromBytes(payments?.entropy?.toByteArray())
+    if (entropy != null) {
+      Log.i(TAG, "Restoring payments entropy from the server account record before manifest rotation.")
+      SignalStore.payments.setEnabledAndEntropy(payments?.enabled == true, entropy)
     }
   }
 

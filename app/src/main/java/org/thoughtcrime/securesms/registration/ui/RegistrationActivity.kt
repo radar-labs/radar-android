@@ -17,6 +17,7 @@ import org.thoughtcrime.securesms.BaseActivity
 import org.thoughtcrime.securesms.MainActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.isDecisionPending
 import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingActivity
 import org.thoughtcrime.securesms.registration.sms.SmsRetrieverReceiver
 import org.thoughtcrime.securesms.registration.util.RegistrationUtil
@@ -64,16 +65,36 @@ class RegistrationActivity : BaseActivity() {
       SignalStore.misc.shouldShowLinkedDevicesReminder = sharedViewModel.isReregister
     }
 
-    // New registrations enter the payments onboarding flow once (mirrors iOS PaymentsOnboardingCoordinator);
-    // it always routes on to MainActivity. Re-registration goes straight to the app.
+    // New registrations enter the payments onboarding flow once (mirrors iOS PaymentsOnboardingCoordinator).
+    // Re-registration goes straight to the app.
     if (!sharedViewModel.isReregister && !SignalStore.payments.paymentsOnboardingShown) {
-      SignalStore.payments.paymentsOnboardingShown = true
-      startActivity(PaymentsOnboardingActivity.createIntent(this))
+      if (isRestoreOrPinStepPending()) {
+        // A restore / "Enter your PIN" step still runs after this — it's driven by the
+        // PassphraseRequiredActivity router on the way to MainActivity, which PaymentsOnboardingActivity
+        // (a plain BaseActivity) would otherwise skip in front of. Defer onboarding so it appears AFTER
+        // the restore delivers the wallet seed, instead of registering/showing a username against a
+        // not-yet-restored Spark identity. MainActivity launches it once the restore finishes. (Fix A.)
+        SignalStore.payments.paymentsOnboardingPendingAfterRestore = true
+        startActivity(MainActivity.clearTop(this))
+      } else {
+        SignalStore.payments.paymentsOnboardingShown = true
+        startActivity(PaymentsOnboardingActivity.createIntent(this))
+      }
     } else {
       startActivity(MainActivity.clearTop(this))
     }
     finish()
     ActivityNavigator.applyPopAnimationsToPendingTransition(this)
+  }
+
+  /**
+   * Whether a restore or "Enter your PIN" step still runs before the app reaches its normal state
+   * (see [org.thoughtcrime.securesms.PassphraseRequiredActivity]'s STATE_TRANSFER_OR_RESTORE /
+   * STATE_ENTER_SIGNAL_PIN routing). While true, the payments onboarding must be deferred.
+   */
+  private fun isRestoreOrPinStepPending(): Boolean {
+    return SignalStore.storageService.needsAccountRestore ||
+      SignalStore.registration.restoreDecisionState.isDecisionPending
   }
 
   private inner class SmsRetrieverObserver : DefaultLifecycleObserver {
