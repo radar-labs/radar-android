@@ -1,5 +1,7 @@
 package org.thoughtcrime.securesms.components;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
@@ -39,7 +41,10 @@ public final class ContactFilterView extends FrameLayout {
   private final ImageView       keyboardToggle;
   private final ImageView       dialpadToggle;
   private final ImageView       clearToggle;
+  private final ImageView       pasteToggle;
   private final LinearLayout    toggleContainer;
+
+  private boolean pasteEnabled;
 
   public ContactFilterView(Context context) {
     this(context, null);
@@ -58,6 +63,7 @@ public final class ContactFilterView extends FrameLayout {
     this.keyboardToggle  = findViewById(R.id.search_keyboard);
     this.dialpadToggle   = findViewById(R.id.search_dialpad);
     this.clearToggle     = findViewById(R.id.search_clear);
+    this.pasteToggle     = findViewById(R.id.search_paste);
     this.toggleContainer = findViewById(R.id.toggle_container);
 
     EditTextExtensionsKt.setIncognitoKeyboardEnabled(searchText, TextSecurePreferences.isIncognitoKeyboardEnabled(context));
@@ -85,8 +91,16 @@ public final class ContactFilterView extends FrameLayout {
       public void onClick(View v) {
         searchText.setText("");
 
-        if (SearchUtil.isTextInput(searchText)) displayTogglingView(dialpadToggle);
+        if (pasteEnabled) displayTogglingView(pasteToggle);
+        else if (SearchUtil.isTextInput(searchText)) displayTogglingView(dialpadToggle);
         else displayTogglingView(keyboardToggle);
+      }
+    });
+
+    this.pasteToggle.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        pasteFromClipboard();
       }
     });
 
@@ -104,6 +118,7 @@ public final class ContactFilterView extends FrameLayout {
       @Override
       public void afterTextChanged(Editable s) {
         if (!SearchUtil.isEmpty(searchText)) displayTogglingView(clearToggle);
+        else if (pasteEnabled) displayTogglingView(pasteToggle);
         else if (SearchUtil.isTextInput(searchText)) displayTogglingView(dialpadToggle);
         else if (SearchUtil.isPhoneInput(searchText)) displayTogglingView(keyboardToggle);
         notifyListener();
@@ -151,6 +166,35 @@ public final class ContactFilterView extends FrameLayout {
   public void clear() {
     searchText.setText("");
     notifyListener();
+  }
+
+  /**
+   * Shows a paste affordance in the trailing slot whenever the field is empty, replacing the dialpad/keyboard
+   * toggle. Tapping it drops the clipboard contents into the search field.
+   */
+  public void enablePaste() {
+    pasteEnabled = true;
+    if (SearchUtil.isEmpty(searchText)) {
+      displayTogglingView(pasteToggle);
+    }
+  }
+
+  private void pasteFromClipboard() {
+    ClipboardManager clipboardManager = ServiceUtil.getClipboardManager(getContext());
+    ClipData         clip             = clipboardManager.getPrimaryClip();
+
+    if (clip == null || clip.getItemCount() == 0) {
+      return;
+    }
+
+    CharSequence pasted = clip.getItemAt(0).coerceToText(getContext());
+    if (pasted == null) {
+      return;
+    }
+
+    String text = pasted.toString().trim();
+    searchText.setText(text);
+    searchText.setSelection(searchText.getText().length());
   }
 
   public void setOnFilterChangedListener(OnFilterChangedListener listener) {

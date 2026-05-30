@@ -3477,6 +3477,7 @@
     <string name="contact_filter_toolbar__clear_entered_text_description">Clear entered text</string>
     <string name="contact_filter_toolbar__show_keyboard_description">Show keyboard</string>
     <string name="contact_filter_toolbar__show_dial_pad_description">Show dialpad</string>
+    <string name="contact_filter_toolbar__paste_from_clipboard_description">Paste from clipboard</string>
 
     <!-- contact_selection_group_activity -->
     <string name="contact_selection_group_activity__no_contacts">No contacts.</string>
@@ -4491,7 +4492,8 @@
     <!-- Button text to request the payment from a user -->
     <string name="CreatePaymentFragment__request">Request</string>
     <string name="CreatePaymentFragment__pay">Pay</string>
-    <string name="CreatePaymentFragment__available_balance_s">Available balance: %1$s</string>
+    <string name="CreatePaymentFragment__send">Send</string>
+    <string name="CreatePaymentFragment__available_balance_s">Available: %1$s</string>
     <string name="CreatePaymentFragment__toggle_content_description">Toggle</string>
     <string name="CreatePaymentFragment__1">1</string>
     <string name="CreatePaymentFragment__2">2</string>
@@ -4506,7 +4508,8 @@
     <string name="CreatePaymentFragment__0">0</string>
     <string name="CreatePaymentFragment__lt">&lt;</string>
     <string name="CreatePaymentFragment__backspace">Backspace</string>
-    <string name="CreatePaymentFragment__add_note">Add note</string>
+    <string name="CreatePaymentFragment__add_note">Add Note</string>
+    <string name="CreatePaymentFragment__paste">Paste</string>
     <string name="CreatePaymentFragment__conversions_are_just_estimates">Conversions are just estimates and may not be accurate.</string>
     <string name="CreatePaymentFragment__learn_more__conversions" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_currency_conversion</string>
 
@@ -6067,6 +6070,8 @@
 
     <!-- PaymentRecipientSelectionFragment -->
     <string name="PaymentRecipientSelectionFragment__new_payment">New payment</string>
+    <!-- Row shown beneath the search field when the typed text looks like a lightning address; tapping it sends to that address. %1$s is the address. -->
+    <string name="PaymentRecipientSelectionFragment__send_to_s">Send to %1$s</string>
 
     <!-- NewConversationActivity -->
     <string name="NewConversationActivity__new_message">New message</string>

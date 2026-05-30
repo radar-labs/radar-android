@@ -35,6 +35,23 @@
             android:layout_marginBottom="12dp"
             android:minHeight="44dp" />
 
+        <TextView
+            android:id="@+id/payment_recipient_selection_fragment_send_to_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dsl_settings_gutter"
+            android:layout_marginRight="@dimen/dsl_settings_gutter"
+            android:layout_marginBottom="8dp"
+            android:background="?selectableItemBackground"
+            android:drawablePadding="16dp"
+            android:gravity="center_vertical"
+            android:minHeight="56dp"
+            android:paddingHorizontal="8dp"
+            android:textAppearance="@style/Signal.Text.BodyLarge"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/symbol_bitcoin_24"
+            tools:text="Send to someone@radar.cash"
+            tools:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/contact_selection_list_fragment_holder"
