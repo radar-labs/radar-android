@@ -63,4 +63,6 @@
     <color name="safety_number_card_blue">#ff506ECD</color>
 
     <color name="notification_background_ultramarine">#3B45FD</color>
+
+    <color name="splash_radar_background">#FF081D4F</color>
 </resources>
