@@ -12,6 +12,7 @@ import com.annimon.stream.Stream;
 
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.payments.Payment;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.payments.ReconstructedPayment;
 import org.thoughtcrime.securesms.payments.State;
 import org.thoughtcrime.securesms.payments.preferences.PaymentType;
@@ -91,11 +92,12 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
       return context.getString(R.string.PaymentsHomeFragment__details);
     }
 
-    return payment.getAmountPlusFeeWithDirection()
-                  .toString(FormatterOptions.builder(Locale.getDefault())
-                                            .alwaysPrefixWithSign()
-//                                            .withMaximumFractionDigits(PaymentsConstants.SHORT_FRACTION_LENGTH)
-                                            .build());
+    // Route through the single display layer so the row follows the sats/BTC preference
+    // (mirrors MoneyView / iOS PaymentsFormat) instead of always rendering BTC.
+    return PaymentAmountFormatter.format(payment.getAmountPlusFeeWithDirection(),
+                                         FormatterOptions.builder(Locale.getDefault())
+                                                         .alwaysPrefixWithSign()
+                                                         .build());
   }
 
   public @ColorRes int getAmountColor() {

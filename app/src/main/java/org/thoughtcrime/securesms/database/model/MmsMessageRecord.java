@@ -33,10 +33,10 @@ import org.thoughtcrime.securesms.mms.Slide;
 import org.thoughtcrime.securesms.mms.SlideDeck;
 import org.thoughtcrime.securesms.payments.CryptoValueUtil;
 import org.thoughtcrime.securesms.payments.Payment;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.polls.PollRecord;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.whispersystems.signalservice.api.payments.FormatterOptions;
 import org.whispersystems.signalservice.api.payments.Money;
 
 import java.util.HashMap;
@@ -231,7 +231,7 @@ public class MmsMessageRecord extends MessageRecord {
     } else if (isLegacyMessage()) {
       return emphasisAdded(context.getString(R.string.MessageRecord_message_encrypted_with_a_legacy_protocol_version_that_is_no_longer_supported));
     } else if (isPaymentNotification() && payment != null) {
-      return new SpannableString(context.getString(R.string.MessageRecord__payment_s, payment.getAmount().toString(FormatterOptions.defaults())));
+      return new SpannableString(context.getString(R.string.MessageRecord__payment_s, PaymentAmountFormatter.format(payment.getAmount())));
     } else if (isPaymentTombstone() || isPaymentNotification()) {
       MessageExtras extras = getMessageExtras();
 
@@ -242,7 +242,7 @@ public class MmsMessageRecord extends MessageRecord {
       if (amount == null) {
         return new SpannableString(context.getString(R.string.MessageRecord__payment_tombstone));
       } else {
-        return new SpannableString(context.getString(R.string.MessageRecord__payment_s, amount.toString(FormatterOptions.defaults())));
+        return new SpannableString(context.getString(R.string.MessageRecord__payment_s, PaymentAmountFormatter.format(amount)));
       }
     }
 
