@@ -1,6 +1,8 @@
 package org.thoughtcrime.securesms.payments.create;
 
-import android.graphics.drawable.Drawable;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,12 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -23,23 +23,21 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.components.emoji.EmojiTextView;
+import org.thoughtcrime.securesms.components.emoji.EmojiEditText;
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil;
 import org.thoughtcrime.securesms.payments.MoneyView;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.payments.preferences.RecipientHasNotEnabledPaymentsDialog;
-import org.thoughtcrime.securesms.util.CommunicationActions;
 import org.thoughtcrime.securesms.util.PlayStoreUtil;
 import org.thoughtcrime.securesms.util.SpanUtil;
-import org.thoughtcrime.securesms.util.ViewUtil;
 import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
-import org.whispersystems.signalservice.api.payments.FormatterOptions;
+import org.thoughtcrime.securesms.util.text.AfterTextChanged;
 import org.whispersystems.signalservice.api.payments.Money;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class CreatePaymentFragment extends LoggingFragment {
 
@@ -64,11 +62,9 @@ public class CreatePaymentFragment extends LoggingFragment {
   private TextView         exchange;
   private View             pay;
   private View             request;
-  private EmojiTextView    note;
-  private View             addNote;
+  private EmojiEditText    note;
+  private View             notePaste;
   private View             toggle;
-  private Drawable         infoIcon;
-  private Drawable         spacer;
 
   private ConstraintSet cryptoConstraintSet;
   private ConstraintSet fiatConstraintSet;
@@ -94,30 +90,19 @@ public class CreatePaymentFragment extends LoggingFragment {
     pay              = view.findViewById(R.id.create_payment_fragment_pay);
     balance          = view.findViewById(R.id.create_payment_fragment_balance);
     note             = view.findViewById(R.id.create_payment_fragment_note);
-    addNote          = view.findViewById(R.id.create_payment_fragment_add_note);
+    notePaste        = view.findViewById(R.id.create_payment_fragment_note_paste);
     toggle           = view.findViewById(R.id.create_payment_fragment_toggle);
 
     TextView decimal = view.findViewById(R.id.create_payment_fragment_keyboard_decimal);
     decimal.setText(String.valueOf(DecimalFormatSymbols.getInstance().getDecimalSeparator()));
 
     View infoTapTarget = view.findViewById(R.id.create_payment_fragment_info_tap_region);
+    infoTapTarget.setVisibility(View.GONE);
 
-    //noinspection CodeBlock2Expr
-    infoTapTarget.setOnClickListener(v -> {
-      new MaterialAlertDialogBuilder(requireContext())
-          .setMessage(R.string.CreatePaymentFragment__conversions_are_just_estimates)
-          .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
-          .setNegativeButton(R.string.LearnMoreTextView_learn_more, (dialog, which) -> {
-            dialog.dismiss();
-            CommunicationActions.openBrowserLink(requireContext(), getString(R.string.CreatePaymentFragment__learn_more__conversions));
-          })
-          .show();
-         });
-
-    initializeInfoIcon();
-
-    note.setOnClickListener(v -> SafeNavigation.safeNavigate(Navigation.findNavController(v), R.id.action_createPaymentFragment_to_editPaymentNoteFragment));
-    addNote.setOnClickListener(v -> SafeNavigation.safeNavigate(Navigation.findNavController(v), R.id.action_createPaymentFragment_to_editPaymentNoteFragment));
+    // The note is entered inline. Keep the view model in sync as the user types or pastes so the
+    // current text is included when they tap Send (see getCreatePaymentDetails()).
+    note.addTextChangedListener(new AfterTextChanged(editable -> viewModel.setNote(editable != null ? editable.toString() : null)));
+    notePaste.setOnClickListener(v -> pasteIntoNote());
 
     pay.setOnClickListener(v -> {
       NavDirections directions = CreatePaymentFragmentDirections.actionCreatePaymentFragmentToConfirmPaymentFragment(viewModel.getCreatePaymentDetails())
@@ -143,6 +128,7 @@ public class CreatePaymentFragment extends LoggingFragment {
     viewModel.isValidAmount().observe(getViewLifecycleOwner(), this::updateRequestAmountButtons);
     viewModel.getNote().observe(getViewLifecycleOwner(), this::updateNote);
     viewModel.getSpendableBalance().observe(getViewLifecycleOwner(), this::updateBalance);
+    // NB: getNote() observed above only to seed the field with any note passed in via arguments.
     viewModel.getCanSendPayment().observe(getViewLifecycleOwner(), this::updatePayAmountButtons);
     viewModel.getEnclaveFailure().observe(getViewLifecycleOwner(), failure -> {
       if (failure) {
@@ -161,7 +147,7 @@ public class CreatePaymentFragment extends LoggingFragment {
   public void onDestroyView() {
     super.onDestroyView();
     constraintLayout = null;
-    addNote          = null;
+    notePaste        = null;
     balance          = null;
     amount           = null;
     exchange         = null;
@@ -177,21 +163,32 @@ public class CreatePaymentFragment extends LoggingFragment {
     }
   }
 
-  private void initializeInfoIcon() {
-    spacer   = Objects.requireNonNull(AppCompatResources.getDrawable(requireContext(), R.drawable.payment_info_pad));
-    infoIcon = Objects.requireNonNull(AppCompatResources.getDrawable(requireContext(), R.drawable.symbol_info_compact_16));
+  private void pasteIntoNote() {
+    ClipboardManager clipboard = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+    if (clipboard == null || !clipboard.hasPrimaryClip() || clipboard.getPrimaryClip() == null || clipboard.getPrimaryClip().getItemCount() == 0) {
+      return;
+    }
 
-    DrawableCompat.setTint(infoIcon, exchange.getCurrentTextColor());
+    ClipData.Item item   = clipboard.getPrimaryClip().getItemAt(0);
+    CharSequence  pasted = item.coerceToText(requireContext());
+    if (TextUtils.isEmpty(pasted) || note.getText() == null) {
+      return;
+    }
 
-    spacer.setBounds(0, 0, ViewUtil.dpToPx(8), ViewUtil.dpToPx(16));
-    infoIcon.setBounds(0, 0, ViewUtil.dpToPx(16), ViewUtil.dpToPx(16));
+    int start = Math.max(note.getSelectionStart(), 0);
+    int end   = Math.max(note.getSelectionEnd(), 0);
+    note.getText().replace(Math.min(start, end), Math.max(start, end), pasted);
+    note.requestFocus();
   }
 
-  private void updateNote(@Nullable CharSequence note) {
-    boolean hasNote = !TextUtils.isEmpty(note);
-    addNote.setVisibility(hasNote ? View.GONE : View.VISIBLE);
-    this.note.setVisibility(hasNote ? View.VISIBLE : View.GONE);
-    this.note.setText(note);
+  private void updateNote(@Nullable CharSequence noteValue) {
+    // Only seed the field when the incoming value differs (e.g. a note passed via arguments).
+    // Writing on every emission would fight the user's typing and move the cursor, and the
+    // text watcher already pushes edits back into the view model.
+    if (!TextUtils.equals(note.getText(), noteValue)) {
+      note.setText(noteValue);
+      note.setSelection(noteValue != null ? noteValue.length() : 0);
+    }
   }
 
   private void initializeKeyboardButtons(@NonNull View view, @NonNull CreatePaymentViewModel viewModel) {
@@ -208,12 +205,10 @@ public class CreatePaymentFragment extends LoggingFragment {
   private void updateAmount(@NonNull InputState inputState) {
     switch (inputState.getInputTarget()) {
       case MONEY:
-        amount.setMoney(inputState.getMoneyAmount(), inputState.getMoney().getCurrency());
+        amount.setMoney(inputState.getMoneyAmount(), PaymentAmountFormatter.unit(inputState.getMoney()));
         break;
       case FIAT_MONEY:
-        amount.setMoney(inputState.getMoney(), false, inputState.getExchangeRate().get().getTimestamp());
-        amount.append(SpanUtil.buildImageSpan(spacer));
-        amount.append(SpanUtil.buildImageSpan(infoIcon));
+        amount.setMoney(inputState.getMoney(), false);
         break;
     }
   }
@@ -223,9 +218,7 @@ public class CreatePaymentFragment extends LoggingFragment {
       case MONEY:
         if (inputState.getFiatMoney().isPresent()) {
           exchange.setVisibility(View.VISIBLE);
-          exchange.setText(FiatMoneyUtil.format(getResources(), inputState.getFiatMoney().get(), FiatMoneyUtil.formatOptions().withDisplayTime(true)));
-          exchange.append(SpanUtil.buildImageSpan(spacer));
-          exchange.append(SpanUtil.buildImageSpan(infoIcon));
+          exchange.setText(FiatMoneyUtil.format(getResources(), inputState.getFiatMoney().get(), FiatMoneyUtil.formatOptions().withDisplayTime(false)));
           toggle.setVisibility(View.VISIBLE);
           toggle.setEnabled(true);
         } else {
@@ -250,7 +243,8 @@ public class CreatePaymentFragment extends LoggingFragment {
   }
 
   private void updateBalance(@NonNull Money balance) {
-    this.balance.setText(getString(R.string.CreatePaymentFragment__available_balance_s, balance.toString(FormatterOptions.defaults())));
+    String value = PaymentAmountFormatter.format(balance);
+    this.balance.setText(SpanUtil.boldSubstring(getString(R.string.CreatePaymentFragment__available_balance_s, value), value));
   }
 
   private void initializeConstraintSets() {

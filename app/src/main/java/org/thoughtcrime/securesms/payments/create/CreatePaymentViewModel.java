@@ -29,6 +29,7 @@ import org.whispersystems.signalservice.api.payments.Money;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Currency;
 import java.util.Objects;
 import java.util.Optional;
@@ -165,6 +166,10 @@ public class CreatePaymentViewModel extends ViewModel {
 
     if (newFiatAmount.equals("0")) {
       newMoneyAmount = "0";
+    } else if (SignalStore.payments().getShowInSats()) {
+      // Keep the crypto string in the same unit the user enters/sees, so toggling back to
+      // crypto entry shows whole sats rather than a BTC decimal.
+      newMoneyAmount = newMoney.requireBitcoin().toSatoshiBigInteger().toString();
     } else {
       newMoneyAmount = newMoney.toString(FormatterOptions.builder().withoutUnit().build());
     }
@@ -180,8 +185,12 @@ public class CreatePaymentViewModel extends ViewModel {
                                                 @NonNull InputState inputState,
                                                 @NonNull AmountKeyboardGlyph glyph)
   {
-    String              newMoneyAmount = updateAmountString(context, inputState.getMoneyAmount(), glyph, inputState.getMoney().getCurrency().getDecimalPrecision());
-    Money.Satoshi    newMoney       = stringToMobileCoinValueOrZero(newMoneyAmount);
+    // The crypto amount is entered in whatever unit the user prefers: whole satoshis (no
+    // fractional digits) when sats display is on, otherwise BTC (8 decimal places).
+    boolean             showInSats     = SignalStore.payments().getShowInSats();
+    int                 maxPrecision   = showInSats ? 0 : inputState.getMoney().getCurrency().getDecimalPrecision();
+    String              newMoneyAmount = updateAmountString(context, inputState.getMoneyAmount(), glyph, maxPrecision);
+    Money.Satoshi       newMoney       = stringToCryptoValueOrZero(newMoneyAmount, showInSats);
     Optional<FiatMoney> newFiat        = inputState.getExchangeRate().flatMap(e -> e.exchange(newMoney));
     String              newFiatAmount;
 
@@ -220,10 +229,13 @@ public class CreatePaymentViewModel extends ViewModel {
     return new FiatMoney(BigDecimal.ZERO, currency);
   }
 
-  private @NonNull Money.Satoshi stringToMobileCoinValueOrZero(@Nullable String string) {
+  private @NonNull Money.Satoshi stringToCryptoValueOrZero(@Nullable String string, boolean showInSats) {
     try {
-      if (string != null) return Money.bitcoin(new BigDecimal(string));
-    } catch (NumberFormatException ignored) { }
+      if (string != null) {
+        return showInSats ? Money.satoshi(new BigInteger(string))
+                          : Money.bitcoin(new BigDecimal(string));
+      }
+    } catch (NumberFormatException | ArithmeticException ignored) { }
 
     return Money.Satoshi.ZERO;
   }
@@ -236,6 +248,11 @@ public class CreatePaymentViewModel extends ViewModel {
 
   private static @NonNull String updateAmountString(@NonNull Context context, @NonNull String oldAmount, @NonNull AmountKeyboardGlyph glyph, int maxPrecision) {
     if (glyph == AmountKeyboardGlyph.NONE) {
+      return oldAmount;
+    }
+
+    // No fractional digits allowed (e.g. sats entry): the decimal key is a no-op.
+    if (glyph == AmountKeyboardGlyph.DECIMAL && maxPrecision == 0) {
       return oldAmount;
     }
 

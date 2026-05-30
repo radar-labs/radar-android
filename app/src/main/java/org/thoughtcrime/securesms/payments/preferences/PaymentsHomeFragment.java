@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +18,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.annimon.stream.Stream;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,6 +28,8 @@ import org.thoughtcrime.securesms.PaymentPreferencesDirections;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.banner.BannerManager;
 import org.thoughtcrime.securesms.banner.banners.EnclaveFailureBanner;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
+import org.thoughtcrime.securesms.jobs.PaymentLedgerUpdateJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity;
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil;
@@ -56,12 +56,19 @@ public class PaymentsHomeFragment extends LoggingFragment {
   private static final String TAG = Log.tag(PaymentsHomeFragment.class);
 
   private PaymentsHomeViewModel viewModel;
+  private PaymentsHomeAdapter   adapter;
 
   /** Tracks whether the balance is currently visible to the user. */
   private boolean balanceVisible = true;
 
   /** Holds the most recently received balance so we can redisplay it on toggle. */
   private org.whispersystems.signalservice.api.payments.Money lastBalanceAmount = null;
+
+  /** The fiat-equivalent label; masked alongside the balance when hidden. */
+  private TextView exchangeView = null;
+
+  /** Holds the most recently rendered fiat-equivalent text so we can redisplay it on toggle. */
+  private CharSequence lastExchangeText = null;
 
   public PaymentsHomeFragment() {
     super(R.layout.payments_home_fragment);
@@ -100,12 +107,25 @@ public class PaymentsHomeFragment extends LoggingFragment {
   private void renderBalance(@NonNull MoneyView balance) {
     if (!balanceVisible) {
       balance.setText("••••••");
+    } else if (lastBalanceAmount != null) {
+      balance.setMoney(lastBalanceAmount);
+    }
+    renderExchange();
+  }
+
+  /** Renders the fiat-equivalent label respecting the hide/show preference. Masked with the same
+   *  bullets as the balance so the fiat value isn't leaked while the balance is hidden. */
+  private void renderExchange() {
+    if (exchangeView == null) {
       return;
     }
-    if (lastBalanceAmount == null) {
+    if (!balanceVisible) {
+      exchangeView.setText("••••••");
       return;
     }
-    balance.setMoney(lastBalanceAmount);
+    if (lastExchangeText != null) {
+      exchangeView.setText(lastExchangeText);
+    }
   }
 
   @Override
@@ -115,10 +135,9 @@ public class PaymentsHomeFragment extends LoggingFragment {
     View                header              = view.findViewById(R.id.payments_home_fragment_header);
     MoneyView           balance             = view.findViewById(R.id.payments_home_fragment_header_balance);
     TextView            exchange            = view.findViewById(R.id.payments_home_fragment_header_exchange);
+    exchangeView = exchange;
     View                addMoney            = view.findViewById(R.id.button_start_frame);
     View                sendMoney           = view.findViewById(R.id.button_end_frame);
-    View                refresh             = view.findViewById(R.id.payments_home_fragment_header_refresh);
-    LottieAnimationView refreshAnimation    = view.findViewById(R.id.payments_home_fragment_header_refresh_animation);
     Stub<ComposeView>   bannerView          = ViewUtil.findStubById(view, R.id.banner_compose_view);
 
     // Initialize visibility from the persisted preference (mirrors iOS PaymentsDisplayPreferences)
@@ -162,18 +181,13 @@ public class PaymentsHomeFragment extends LoggingFragment {
       if (viewModel.isEnclaveFailurePresent()) {
         showUpdateIsRequiredDialog();
       } else if (SignalStore.payments().getPaymentsAvailability().isSendAllowed()) {
-        PopupMenu popup = new PopupMenu(getContext(), v);
-
-        popup.setOnMenuItemClickListener(this::onMenuItemSelected);
-        popup.getMenuInflater().inflate(R.menu.payments_home_fragment_send_options_menu, popup.getMenu());
-        popup.show();
-//        SafeNavigation.safeNavigate(Navigation.findNavController(v), PaymentsHomeFragmentDirections.actionPaymentsHomeToPaymentRecipientSelectionFragment());
+        SafeNavigation.safeNavigate(Navigation.findNavController(v), PaymentsHomeFragmentDirections.actionPaymentsHomeToPaymentRecipientSelectionFragment());
       } else {
         showPaymentsDisabledDialog();
       }
     });
 
-    PaymentsHomeAdapter adapter = new PaymentsHomeAdapter(new HomeCallbacks());
+    adapter = new PaymentsHomeAdapter(new HomeCallbacks());
     recycler.setAdapter(adapter);
 
     viewModel = new ViewModelProvider(this, new PaymentsHomeViewModel.Factory()).get(PaymentsHomeViewModel.class);
@@ -214,6 +228,9 @@ public class PaymentsHomeFragment extends LoggingFragment {
     balance.setOnClickListener(v -> {
       SignalStore.payments().setShowInSats(!SignalStore.payments().getShowInSats());
       renderBalance(balance);
+      // The recent-activity rows format through PaymentAmountFormatter too, but DiffUtil
+      // can't see the preference flip (the items are unchanged), so force a rebind.
+      adapter.notifyDataSetChanged();
       PaymentSnippetRefresher.refreshAsync();
     });
 
@@ -230,35 +247,20 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
     viewModel.getExchange().observe(getViewLifecycleOwner(), amount -> {
       if (amount != null) {
-        exchange.setText(FiatMoneyUtil.format(getResources(), amount, FiatMoneyUtil.formatOptions().withDisplayTime(false)));
+        lastExchangeText = FiatMoneyUtil.format(getResources(), amount, FiatMoneyUtil.formatOptions().withDisplayTime(false));
       } else {
-        exchange.setText(R.string.PaymentsHomeFragment__unknown_amount);
+        lastExchangeText = getString(R.string.PaymentsHomeFragment__unknown_amount);
       }
+      renderExchange();
     });
 
-    refresh.setOnClickListener(v -> viewModel.refreshExchangeRates(true));
     exchange.setOnClickListener(v -> viewModel.refreshExchangeRates(true));
 
     viewModel.getExchangeLoadState().observe(getViewLifecycleOwner(), loadState -> {
-      switch (loadState) {
-        case INITIAL:
-        case LOADED:
-          refresh.setVisibility(View.VISIBLE);
-          refreshAnimation.cancelAnimation();
-          refreshAnimation.setVisibility(View.GONE);
-          break;
-        case LOADING:
-          refresh.setVisibility(View.INVISIBLE);
-          refreshAnimation.playAnimation();
-          refreshAnimation.setVisibility(View.VISIBLE);
-          break;
-        case ERROR:
-          refresh.setVisibility(View.VISIBLE);
-          refreshAnimation.cancelAnimation();
-          refreshAnimation.setVisibility(View.GONE);
-          exchange.setText(R.string.PaymentsHomeFragment__currency_conversion_not_available);
-          Toast.makeText(view.getContext(), R.string.PaymentsHomeFragment__cant_display_currency_conversion, Toast.LENGTH_SHORT).show();
-          break;
+      if (loadState == LoadState.ERROR) {
+        lastExchangeText = getString(R.string.PaymentsHomeFragment__currency_conversion_not_available);
+        renderExchange();
+        Toast.makeText(view.getContext(), R.string.PaymentsHomeFragment__cant_display_currency_conversion, Toast.LENGTH_SHORT).show();
       }
     });
 
@@ -332,6 +334,28 @@ public class PaymentsHomeFragment extends LoggingFragment {
   public void onResume() {
     super.onResume();
     viewModel.checkPaymentActivationState();
+
+    // Re-fetch the wallet balance from the Breez SDK every time the screen is shown. The
+    // balance LiveData (PaymentsValues#liveMobileCoinLedger) is only re-published when a
+    // ledger update job runs, so without this the displayed balance can lag behind a
+    // received payment that already appears in Recent activity (which is driven by the
+    // local payments DB). PaymentsActivity#onResume does the same for the standalone
+    // presentation, but in the MainActivity bottom-nav tab that activity never resumes,
+    // so the fragment must trigger the refresh itself. The job no-ops when payments are
+    // disabled and collapses duplicates via setMaxInstancesForQueue(1).
+    AppDependencies.getJobManager().add(PaymentLedgerUpdateJob.updateLedger());
+
+    // The sats/BTC unit can be changed on the settings menu screen; when we return here the
+    // view isn't recreated, so re-render the balance and rebind the recent-activity rows so
+    // they reflect the (possibly changed) preference. Mirrors iOS reloading on the amount-type
+    // notification.
+    View view = getView();
+    if (view != null) {
+      renderBalance(view.findViewById(R.id.payments_home_fragment_header_balance));
+      if (adapter != null) {
+        adapter.notifyDataSetChanged();
+      }
+    }
   }
 
   // MARK: - Balance-visibility helpers (eye toggle)
@@ -394,20 +418,6 @@ public class PaymentsHomeFragment extends LoggingFragment {
       // The individual settings rows now live behind this gear, in
       // PaymentSettingsMenuFragment (mirrors iOS PaymentSettingsMenuViewController).
       SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_paymentSettingsMenu);
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_send_options_menu_transfer_to_contact) {
-        if (viewModel.isEnclaveFailurePresent()) {
-          showUpdateIsRequiredDialog();
-        } else {
-          SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), PaymentsHomeFragmentDirections.actionPaymentsHomeToPaymentRecipientSelectionFragment());
-        }
-        return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_send_options_menu_transfer_to_address) {
-      if (viewModel.isEnclaveFailurePresent()) {
-        showUpdateIsRequiredDialog();
-      } else {
-        SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_paymentsTransfer);
-      }
       return true;
     }
 
