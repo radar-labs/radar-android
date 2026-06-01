@@ -48,6 +48,15 @@
 
     </ScrollView>
 
+    <ProgressBar
+        android:id="@+id/onboarding_add_funds_intro_spinner"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/onboarding_add_funds_intro_continue"
         style="@style/Signal.Widget.Button.Large.Primary"
@@ -55,6 +64,7 @@
         android:layout_height="52dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        android:enabled="false"
         android:text="@string/PaymentsOnboarding__continue"
         android:textAllCaps="false"
         app:cornerRadius="14dp" />

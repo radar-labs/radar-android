@@ -34,7 +34,12 @@ public final class DataExportUtil {
     }
 
     List<PaymentTable.PaymentTransaction> paymentTransactions = SignalDatabase.payments().getAll();
+    // The live ledger now loads asynchronously and may not have published a value yet, so fall back
+    // to a synchronous fetch (safe here — createTsv runs off the main thread).
     MobileCoinLedgerWrapper               ledger              = SignalStore.payments().liveMobileCoinLedger().getValue();
+    if (ledger == null) {
+      ledger = SignalStore.payments().mobileCoinLatestFullLedger();
+    }
     List<Payment>                            reconciled          = LedgerReconcile.reconcile(paymentTransactions, Objects.requireNonNull(ledger));
 
     return createTsv(reconciled);
