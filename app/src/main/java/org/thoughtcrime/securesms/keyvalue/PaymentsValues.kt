@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.mobilecoin.lib.Mnemonics
 import com.mobilecoin.lib.exceptions.BadMnemonicException
+import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.lock.v2.PinKeyboardType
@@ -86,7 +87,22 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     set(value) = putBoolean(USER_CONFIRMED_MNEMONIC_LARGE_BALANCE, value)
   private val liveCurrentCurrency: MutableLiveData<Currency> by lazy { MutableLiveData(currentCurrency()) }
   private val enclaveFailure: MutableLiveData<Boolean> by lazy { MutableLiveData(false) }
-  private val liveMobileCoinLedger: MutableLiveData<MobileCoinLedgerWrapper> by lazy { MutableLiveData(mobileCoinLatestFullLedger()) }
+  private val liveMobileCoinLedger: MutableLiveData<MobileCoinLedgerWrapper> by lazy {
+    // The real ledger requires a blocking Breez SDK connect() + getInfo(). The first access to this
+    // property happens on the UI thread (PaymentsHomeViewModel's constructor), so doing that work
+    // here froze the Payments screen for several seconds. Instead start with NO value — observers
+    // (the balance header) stay in a "loading" state until the ledger is fetched on a background
+    // thread and posted below.
+    val live = MutableLiveData<MobileCoinLedgerWrapper>()
+    SignalExecutors.BOUNDED.execute {
+      try {
+        live.postValue(mobileCoinLatestFullLedger())
+      } catch (e: Exception) {
+        Log.w(TAG, "Failed to load initial MobileCoin ledger", e)
+      }
+    }
+    live
+  }
   private val liveMobileCoinBalance: LiveData<Balance> by lazy { liveMobileCoinLedger.map { obj: MobileCoinLedgerWrapper -> obj.balance } }
 
   public override fun onFirstEverAppLaunch() {}

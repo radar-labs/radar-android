@@ -78,7 +78,7 @@ class RegistrationActivity : BaseActivity() {
         startActivity(MainActivity.clearTop(this))
       } else {
         SignalStore.payments.paymentsOnboardingShown = true
-        startActivity(PaymentsOnboardingActivity.createIntent(this))
+        startActivity(PaymentsOnboardingActivity.createIntent(this, awaitRestoredSeed = false))
       }
     } else {
       startActivity(MainActivity.clearTop(this))

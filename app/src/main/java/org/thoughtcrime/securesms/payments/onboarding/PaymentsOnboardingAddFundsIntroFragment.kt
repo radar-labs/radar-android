@@ -7,7 +7,9 @@ package org.thoughtcrime.securesms.payments.onboarding
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.button.MaterialButton
 import org.signal.core.util.logging.Log
@@ -24,23 +26,47 @@ class PaymentsOnboardingAddFundsIntroFragment : LoggingFragment(R.layout.fragmen
     private val TAG = Log.tag(PaymentsOnboardingAddFundsIntroFragment::class.java)
   }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    // Enable payments on arrival so the downstream Add Funds (QR/address) screen has a wallet.
-    // Mirrors iOS PaymentsOnboardingCoordinator.showAddFundsIntro().
-    if (!SignalStore.payments.mobileCoinPaymentsEnabled()) {
-      PaymentsHomeRepository().activatePayments(object : AsynchronousCallback.WorkerThread<Void, PaymentsHomeRepository.Error> {
-        override fun onComplete(result: Void?) = Unit
-        override fun onError(error: PaymentsHomeRepository.Error?) {
-          Log.w(TAG, "Failed to enable payments during onboarding: $error")
-        }
-      })
-    }
+  private val onboardingViewModel: PaymentsOnboardingViewModel by activityViewModels()
 
-    view.findViewById<MaterialButton>(R.id.onboarding_add_funds_intro_continue).setOnClickListener {
+  private var paymentsActivated = false
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    val spinner = view.findViewById<ProgressBar>(R.id.onboarding_add_funds_intro_spinner)
+    val continueButton = view.findViewById<MaterialButton>(R.id.onboarding_add_funds_intro_continue)
+
+    continueButton.setOnClickListener {
       NavHostFragment.findNavController(this).navigate(R.id.action_addFundsIntro_to_addFunds)
     }
     view.findViewById<TextView>(R.id.onboarding_add_funds_intro_skip).setOnClickListener {
       NavHostFragment.findNavController(this).navigate(R.id.action_addFundsIntro_to_setupComplete)
     }
+
+    // Gate activation and Continue on the wallet being ready. When onboarding was deferred behind a
+    // restore, the restored seed may still be landing; activating payments before it arrives would
+    // mint a fresh entropy/username. Until ready we show a spinner and keep Continue disabled.
+    onboardingViewModel.walletReady.observe(viewLifecycleOwner) { ready ->
+      spinner.visibility = if (ready) View.GONE else View.VISIBLE
+      continueButton.isEnabled = ready
+      if (ready) {
+        activatePaymentsOnce()
+      }
+    }
+  }
+
+  /**
+   * Enables payments on arrival so the downstream Add Funds (QR/address) screen has a wallet.
+   * Mirrors iOS PaymentsOnboardingCoordinator.showAddFundsIntro().
+   */
+  private fun activatePaymentsOnce() {
+    if (paymentsActivated || SignalStore.payments.mobileCoinPaymentsEnabled()) {
+      return
+    }
+    paymentsActivated = true
+    PaymentsHomeRepository().activatePayments(object : AsynchronousCallback.WorkerThread<Void, PaymentsHomeRepository.Error> {
+      override fun onComplete(result: Void?) = Unit
+      override fun onError(error: PaymentsHomeRepository.Error?) {
+        Log.w(TAG, "Failed to enable payments during onboarding: $error")
+      }
+    })
   }
 }

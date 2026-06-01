@@ -262,6 +262,7 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       sdkSingelton = null
     }
 
+    @Synchronized
     fun connect(entropy: ByteArray): BreezSdk {
       LightningLogger.installIfNeeded()
       if (sdkSingelton == null) {

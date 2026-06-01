@@ -40,6 +40,7 @@ import org.thoughtcrime.securesms.payments.backup.confirm.PaymentsRecoveryPhrase
 import org.thoughtcrime.securesms.payments.preferences.model.InfoCard;
 import org.thoughtcrime.securesms.payments.preferences.model.PaymentItem;
 import org.thoughtcrime.securesms.util.CommunicationActions;
+import org.thoughtcrime.securesms.util.DrawableUtil;
 import org.thoughtcrime.securesms.util.PlayStoreUtil;
 import org.thoughtcrime.securesms.util.SpanUtil;
 import org.thoughtcrime.securesms.util.ViewUtil;
@@ -69,6 +70,9 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
   /** Holds the most recently rendered fiat-equivalent text so we can redisplay it on toggle. */
   private CharSequence lastExchangeText = null;
+
+  /** Spinner shown over the balance slot until the first balance value is fetched from the SDK. */
+  private View balanceLoadingView = null;
 
   public PaymentsHomeFragment() {
     super(R.layout.payments_home_fragment);
@@ -136,6 +140,11 @@ public class PaymentsHomeFragment extends LoggingFragment {
     MoneyView           balance             = view.findViewById(R.id.payments_home_fragment_header_balance);
     TextView            exchange            = view.findViewById(R.id.payments_home_fragment_header_exchange);
     exchangeView = exchange;
+    balanceLoadingView = view.findViewById(R.id.payments_home_fragment_header_balance_loading);
+    // Start in the loading state; the balance observer below hides this once a value arrives. When
+    // the balance was already fetched earlier this session it arrives immediately, so there's no
+    // visible flash.
+    balanceLoadingView.setVisibility(View.VISIBLE);
     View                addMoney            = view.findViewById(R.id.button_start_frame);
     View                sendMoney           = view.findViewById(R.id.button_end_frame);
     Stub<ComposeView>   bannerView          = ViewUtil.findStubById(view, R.id.banner_compose_view);
@@ -218,6 +227,12 @@ public class PaymentsHomeFragment extends LoggingFragment {
           balanceItem.setVisible(!hostedInMainActivity);
           applyBalanceVisibilityMenuIcon(balanceItem);
         }
+        // The gear is a vector with a hardcoded black fill and no night variant, so it renders
+        // black on dark theme. Tint it to the theme-aware toolbar icon color.
+        MenuItem settingsItem = toolbar.getMenu().findItem(R.id.payments_home_fragment_menu_settings);
+        if (settingsItem != null && settingsItem.getIcon() != null) {
+          settingsItem.setIcon(DrawableUtil.tint(settingsItem.getIcon(), ContextCompat.getColor(requireContext(), R.color.signal_icon_tint_primary)));
+        }
       } else {
         toolbar.getMenu().clear();
       }
@@ -236,6 +251,9 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
     viewModel.getBalance().observe(getViewLifecycleOwner(), balanceAmount -> {
       lastBalanceAmount = balanceAmount;
+      if (balanceLoadingView != null) {
+        balanceLoadingView.setVisibility(View.GONE);
+      }
       renderBalance(balance);
       if (SignalStore.payments().getShowSaveRecoveryPhrase() &&
           !SignalStore.payments().getUserConfirmedMnemonic() &&

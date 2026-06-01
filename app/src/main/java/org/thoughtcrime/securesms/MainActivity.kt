@@ -78,7 +78,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
@@ -160,7 +159,6 @@ import org.thoughtcrime.securesms.net.DeviceTransferBlockingInterceptor
 import org.thoughtcrime.securesms.notifications.VitalsViewModel
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfile
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfiles
-import org.thoughtcrime.securesms.payments.BreezSdkWrapper
 import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingActivity
 import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.profiles.manage.UsernameEditFragment
@@ -197,10 +195,6 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
 
     private const val KEY_STARTING_TAB = "STARTING_TAB"
     const val RESULT_CONFIG_CHANGED = Activity.RESULT_FIRST_USER + 901
-
-    /** Bounded wait for the restore to deliver the payments seed before launching deferred onboarding. */
-    private const val DEFERRED_ONBOARDING_MAX_WAIT_MS = 8000L
-    private const val DEFERRED_ONBOARDING_POLL_MS = 200L
 
     @JvmStatic
     fun clearTop(context: Context): Intent {
@@ -381,9 +375,13 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
         }
       }
 
-      val mainBottomChromeState = remember(mainToolbarState.destination, snackbar, mainToolbarState.mode, megaphone) {
+      // Drive the FABs off the actual current tab (matching the nav-rail path) rather than the
+      // toolbar's destination: the Payments tab never calls a toolbar presenter, so
+      // mainToolbarState.destination stays CHATS there and the camera/compose FABs would otherwise
+      // render over the Payments screen, which has its own header actions.
+      val mainBottomChromeState = remember(mainNavigationState.currentListLocation, snackbar, mainToolbarState.mode, megaphone) {
         MainBottomChromeState(
-          destination = mainToolbarState.destination,
+          destination = mainNavigationState.currentListLocation,
           snackbarState = snackbar,
           mainToolbarMode = mainToolbarState.mode,
           megaphoneState = MainMegaphoneState(
@@ -912,10 +910,10 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
    * [org.thoughtcrime.securesms.registration.ui.RegistrationActivity] and
    * [org.thoughtcrime.securesms.keyvalue.PaymentsValues.paymentsOnboardingPendingAfterRestore]).
    *
-   * Waits briefly for the storage-service restore to deliver the payments seed so the Add Funds
-   * screen shows the restored lightning username rather than registering a fresh one against a
-   * not-yet-restored Spark identity. The restore is already awaited during registration, so the
-   * seed is normally present immediately; the bounded wait only covers the storage-sync timeout edge.
+   * Onboarding launches as soon as the restore / "Enter your PIN" step finishes so it appears right
+   * after the PIN. The wait for the restored payments seed happens inside the onboarding flow (see
+   * [org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingViewModel]) rather than here,
+   * so the user is already looking at onboarding while the seed lands instead of at the chat list.
    */
   private fun maybeLaunchDeferredPaymentsOnboarding() {
     if (launchingDeferredPaymentsOnboarding || !SignalStore.payments.paymentsOnboardingPendingAfterRestore) {
@@ -929,29 +927,12 @@ class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner
       return
     }
 
+    // Clear the flags synchronously at launch (not inside onboarding) so a subsequent onResume /
+    // process death can't relaunch onboarding.
     launchingDeferredPaymentsOnboarding = true
-
-    lifecycleScope.launch {
-      withContext(Dispatchers.IO) {
-        var waitedMs = 0L
-        while (SignalStore.payments.paymentsEntropy == null && waitedMs < DEFERRED_ONBOARDING_MAX_WAIT_MS) {
-          delay(DEFERRED_ONBOARDING_POLL_MS)
-          waitedMs += DEFERRED_ONBOARDING_POLL_MS
-        }
-      }
-
-      if (!SignalStore.payments.paymentsOnboardingPendingAfterRestore) {
-        return@launch
-      }
-
-      // Drop any Breez SDK connection that may have been established before the restored seed
-      // arrived, so onboarding connects with the correct (restored) Spark identity.
-      BreezSdkWrapper.reset()
-
-      SignalStore.payments.paymentsOnboardingPendingAfterRestore = false
-      SignalStore.payments.paymentsOnboardingShown = true
-      startActivity(PaymentsOnboardingActivity.createIntent(this@MainActivity))
-    }
+    SignalStore.payments.paymentsOnboardingPendingAfterRestore = false
+    SignalStore.payments.paymentsOnboardingShown = true
+    startActivity(PaymentsOnboardingActivity.createIntent(this, awaitRestoredSeed = true))
   }
 
   override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray, deviceId: Int) {
