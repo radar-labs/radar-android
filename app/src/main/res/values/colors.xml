@@ -64,5 +64,9 @@
 
     <color name="notification_background_ultramarine">#3B45FD</color>
 
-    <color name="splash_radar_background">#FF081D4F</color>
+    <!-- Splash background: white in light mode, black in dark mode (see values-night/colors.xml) -->
+    <color name="splash_radar_background">#FFFFFFFF</color>
+    <!-- Fixed variants for the system-splash themes (do not follow system night mode) -->
+    <color name="splash_radar_background_light">#FFFFFFFF</color>
+    <color name="splash_radar_background_dark">#FF000000</color>
 </resources>
