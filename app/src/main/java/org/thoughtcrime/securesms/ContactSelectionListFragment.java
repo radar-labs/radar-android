@@ -149,6 +149,10 @@ public final class ContactSelectionListFragment extends LoggingFragment {
       setNewConversationCallback((NewConversationCallback) context);
     }
 
+    if (getParentFragment() instanceof FindByCallback) {
+      setFindByCallback((FindByCallback) getParentFragment());
+    }
+
     if (context instanceof FindByCallback) {
       setFindByCallback((FindByCallback) context);
     }

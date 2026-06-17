@@ -916,16 +916,19 @@ class ConversationFragment :
   }
 
   override fun onShown() {
-    inputPanel.mediaKeyboardListener.onShown()
   }
 
   override fun onHidden() {
-    inputPanel.mediaKeyboardListener.onHidden()
     closeEmojiSearch()
   }
 
   override fun onKeyboardChanged(page: KeyboardPage) {
-    inputPanel.mediaKeyboardListener.onKeyboardChanged(page)
+    val mode = when (page) {
+      KeyboardPage.EMOJI -> TextSecurePreferences.MediaKeyboardMode.EMOJI
+      KeyboardPage.STICKER -> TextSecurePreferences.MediaKeyboardMode.STICKER
+      KeyboardPage.GIF -> TextSecurePreferences.MediaKeyboardMode.GIF
+    }
+    TextSecurePreferences.setMediaKeyboardMode(requireContext(), mode)
   }
 
   override fun onScheduleSend(scheduledTime: Long) {
@@ -2040,11 +2043,28 @@ class ConversationFragment :
       .addTo(disposables)
   }
 
+  private fun handlePaymentButtonClicked() {
+    val recipient = viewModel.recipientSnapshot ?: return
+    val paymentsAvailability = SignalStore.payments.paymentsAvailability
+
+    when {
+      !paymentsAvailability.isSendAllowed -> {
+        if (paymentsAvailability.canRegister()) {
+          startActivity(Intent(requireContext(), PaymentsActivity::class.java))
+        } else {
+          toast(R.string.ConversationActivity__payments_are_not_available_on_your_account)
+        }
+      }
+      recipient.isSelf -> toast(R.string.ConversationActivity__you_cant_send_a_payment_to_yourself)
+      recipient.isGroup -> toast(R.string.ConversationActivity__payments_cant_be_sent_in_group_chats)
+      !recipient.isRegistered -> toast(R.string.ConversationActivity__this_contact_isnt_registered_for_payments)
+      else -> AttachmentManager.selectPayment(this, recipient)
+    }
+  }
+
   private fun initializeMediaKeyboard() {
     val keyboardMode: TextSecurePreferences.MediaKeyboardMode = TextSecurePreferences.getMediaKeyboardMode(requireContext())
     val stickerIntro: Boolean = !TextSecurePreferences.hasSeenStickerIntroTooltip(requireContext())
-
-    inputPanel.showMediaKeyboardToggle(true)
 
     val keyboardPage = when (keyboardMode) {
       TextSecurePreferences.MediaKeyboardMode.EMOJI -> KeyboardPage.EMOJI
@@ -2052,13 +2072,11 @@ class ConversationFragment :
       TextSecurePreferences.MediaKeyboardMode.GIF -> if (RemoteConfig.gifSearchAvailable) KeyboardPage.GIF else KeyboardPage.STICKER
     }
 
-    inputPanel.setMediaKeyboardToggleMode(keyboardPage)
     keyboardPagerViewModel.switchToPage(keyboardPage)
 
     if (stickerIntro) {
       TextSecurePreferences.setMediaKeyboardMode(requireContext(), TextSecurePreferences.MediaKeyboardMode.STICKER)
-      inputPanel.setMediaKeyboardToggleMode(KeyboardPage.STICKER)
-      conversationTooltips.displayStickerIntroductionTooltip(inputPanel.mediaKeyboardToggleAnchorView) {
+      conversationTooltips.displayStickerIntroductionTooltip(binding.conversationInputPanel.attachButton) {
         EventBus.getDefault().removeStickyEvent(StickerPackInstallEvent::class.java)
       }
     }
@@ -4553,8 +4571,8 @@ class ConversationFragment :
       toast(R.string.ConversationFragment_cannot_record_voice_message_during_call)
     }
 
-    override fun onEmojiToggle() {
-      container.toggleInput(MediaKeyboardFragmentCreator, composeText, showSoftKeyOnHide = true)
+    override fun onPaymentToggle() {
+      handlePaymentButtonClicked()
     }
 
     override fun onLinkPreviewCanceled() {
@@ -4680,7 +4698,10 @@ class ConversationFragment :
           AttachmentKeyboardButton.GALLERY -> conversationActivityResultContracts.launchGallery(recipient.id, composeText.textTrimmed, inputPanel.quote.isPresent)
           AttachmentKeyboardButton.CONTACT -> conversationActivityResultContracts.launchSelectContact()
           AttachmentKeyboardButton.LOCATION -> conversationActivityResultContracts.launchSelectLocation(recipient.chatColors)
-          AttachmentKeyboardButton.PAYMENT -> AttachmentManager.selectPayment(this@ConversationFragment, recipient)
+          AttachmentKeyboardButton.EMOJI -> {
+            container.toggleInput(MediaKeyboardFragmentCreator, composeText, showSoftKeyOnHide = true)
+            return
+          }
           AttachmentKeyboardButton.FILE -> {
             if (!conversationActivityResultContracts.launchSelectFile()) {
               toast(R.string.AttachmentManager_cant_open_media_selection, Toast.LENGTH_LONG)
@@ -4783,8 +4804,8 @@ class ConversationFragment :
 
     EventBus.getDefault().removeStickyEvent(event)
 
-    if (!inputPanel.isStickerMode) {
-      conversationTooltips.displayStickerPackInstalledTooltip(inputPanel.mediaKeyboardToggleAnchorView, event)
+    if (TextSecurePreferences.getMediaKeyboardMode(requireContext()) != TextSecurePreferences.MediaKeyboardMode.STICKER) {
+      conversationTooltips.displayStickerPackInstalledTooltip(binding.conversationInputPanel.attachButton, event)
     }
   }
 

@@ -65,7 +65,7 @@ class CreateReleaseChannelJob private constructor(parameters: Parameters) : Base
       SignalStore.releaseChannel.setReleaseChannelRecipientId(releaseChannelId)
       SignalStore.releaseChannel.hasUpdatedAvatar = true
 
-      recipients.setProfileName(releaseChannelId, ProfileName.asGiven("Signal"))
+      recipients.setProfileName(releaseChannelId, ProfileName.asGiven("Radar"))
       recipients.setMuted(releaseChannelId, Long.MAX_VALUE)
       setAvatar(releaseChannelId)
     }

@@ -121,20 +121,22 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="edit_message_title,edit_message_thumbnail,quote_view,link_preview" />
 
-    <org.thoughtcrime.securesms.components.emoji.EmojiToggle
-        android:id="@+id/emoji_toggle"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/payment_button"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/conversation_compose_height"
         android:layout_gravity="bottom"
         android:background="@null"
-        android:contentDescription="@string/conversation_activity__emoji_toggle_description"
+        android:contentDescription="@string/conversation_activity__bitcoin_payment_description"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
+        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="@id/compose_bubble"
         app:layout_constraintStart_toStartOf="@id/compose_bubble"
         app:layout_constraintTop_toBottomOf="@id/compose_bubble_top_elements"
         app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/symbol_bitcoin_24"
         app:tint="@color/signal_colorOnSurfaceVariant" />
 
     <FrameLayout
@@ -143,7 +145,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/compose_bubble"
         app:layout_constraintEnd_toStartOf="@id/attachment_barrier"
-        app:layout_constraintStart_toEndOf="@id/emoji_toggle"
+        app:layout_constraintStart_toEndOf="@id/payment_button"
         android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@id/compose_bubble_top_elements">
 

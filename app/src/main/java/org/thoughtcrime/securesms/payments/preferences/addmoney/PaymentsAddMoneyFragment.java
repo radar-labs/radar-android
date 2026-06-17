@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.concurrent.SimpleTask;
@@ -164,8 +165,15 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
             return;
           }
           throw new AssertionError("Payments are not enabled");
+        case NOT_REGISTERED:
+          showSpinner(false);
+          showDeviceUnregisteredDialog();
+          break;
+        case COULD_NOT_GET_WALLET_ADDRESS:
         default:
-          throw new AssertionError();
+          showSpinner(false);
+          Toast.makeText(requireContext(), R.string.NetworkFailure__network_error_check_your_connection_and_try_again, Toast.LENGTH_SHORT).show();
+          break;
       }
     });
 
@@ -202,6 +210,26 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
         Log.w(TAG, "Failed to enable payments on onboarding Add Funds screen: " + error);
       }
     });
+  }
+
+  /**
+   * Shown when the wallet-address fetch comes back 403 (PaymentsRegionException). In this fork that
+   * means the device is no longer registered — typically because the account was re-registered on
+   * another device, which deregisters this one. Inform the user instead of crashing, then pop back.
+   */
+  private void showDeviceUnregisteredDialog() {
+    if (!isAdded()) {
+      return;
+    }
+    new MaterialAlertDialogBuilder(requireContext())
+        .setMessage(R.string.UnauthorizedReminder_this_is_likely_because_you_registered_your_phone_number_with_Signal_on_a_different_device)
+        .setCancelable(false)
+        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+          if (isAdded()) {
+            Navigation.findNavController(requireView()).popBackStack();
+          }
+        })
+        .show();
   }
 
   // MARK: - Onboarding deposit watch

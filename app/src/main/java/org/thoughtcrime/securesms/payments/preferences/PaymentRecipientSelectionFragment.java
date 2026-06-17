@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -27,19 +28,23 @@ import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.payments.CanNotSendPaymentDialog;
 import org.thoughtcrime.securesms.payments.LightningAddress;
+import org.thoughtcrime.securesms.payments.PaymentsAddressException;
 import org.thoughtcrime.securesms.payments.preferences.model.PayeeParcelable;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
+import org.thoughtcrime.securesms.recipients.ui.findby.FindByActivity;
+import org.thoughtcrime.securesms.recipients.ui.findby.FindByMode;
+import org.thoughtcrime.securesms.util.ProfileUtil;
 import org.thoughtcrime.securesms.util.ViewUtil;
 import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
-import org.whispersystems.signalservice.api.util.ExpiringProfileCredentialUtil;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 
-public class PaymentRecipientSelectionFragment extends LoggingFragment implements ContactSelectionListFragment.OnContactSelectedListener, ContactSelectionListFragment.ScrollCallback {
+public class PaymentRecipientSelectionFragment extends LoggingFragment implements ContactSelectionListFragment.OnContactSelectedListener, ContactSelectionListFragment.ScrollCallback, ContactSelectionListFragment.FindByCallback {
 
   private static final String TAG = Log.tag(PaymentRecipientSelectionFragment.class);
 
@@ -51,8 +56,24 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
   private TextView                     sendToAddressRow;
   private ContactSelectionListFragment contactsFragment;
 
+  private ActivityResultLauncher<FindByMode> findByUsernameLauncher;
+
   public PaymentRecipientSelectionFragment() {
     super(R.layout.payment_recipient_selection_fragment);
+  }
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    // Registered here (not in onViewCreated) because ActivityResult launchers must be registered
+    // before the fragment reaches STARTED. The found recipient is routed through the same funnel as
+    // a contact tap.
+    findByUsernameLauncher = registerForActivityResult(new FindByActivity.Contract(), recipientId -> {
+      if (recipientId != null) {
+        createPaymentOrShowWarningDialog(recipientId);
+      }
+    });
   }
 
   @Override
@@ -140,9 +161,7 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
   @Override
   public void onBeforeContactSelected(boolean isFromUnknownSearchKey, @NonNull Optional<RecipientId> recipientId, @Nullable String number, @NonNull Optional<ChatType> chatType, @NonNull Consumer<Boolean> callback) {
     if (recipientId.isPresent()) {
-      SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
-                     () -> Recipient.resolved(recipientId.get()),
-                     this::createPaymentOrShowWarningDialog);
+      createPaymentOrShowWarningDialog(recipientId.get());
     }
 
     callback.accept(false);
@@ -156,6 +175,16 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
   }
 
   @Override
+  public void onFindByUsername() {
+    findByUsernameLauncher.launch(FindByMode.USERNAME);
+  }
+
+  @Override
+  public void onFindByPhoneNumber() {
+    // No-op: only the find-by-username row is enabled in the payment recipient picker.
+  }
+
+  @Override
   public void onBeginScroll() {
     hideKeyboard();
   }
@@ -165,12 +194,50 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     toolbar.clearFocus();
   }
 
-  private void createPaymentOrShowWarningDialog(@NonNull Recipient recipient) {
-    if (ExpiringProfileCredentialUtil.isValid(recipient.getExpiringProfileKeyCredential())) {
-      createPayment(recipient.getId());
-    } else {
-      showWarningDialog(recipient.getId());
-    }
+  /**
+   * Resolves whether we can send a payment to {@code recipientId} and routes accordingly.
+   *
+   * <p>Mirrors {@link org.thoughtcrime.securesms.mms.AttachmentManager#selectPayment}: we
+   * intentionally do not gate on an expiring profile key credential (this fork does not use one and
+   * the server does not issue one for the fixed payment profile version). Instead we require the
+   * recipient's profile key (delivered in their messages once they share their profile with us) and
+   * then attempt to fetch their payment address from their versioned profile. Both the resolve and
+   * the network fetch run off the main thread.
+   */
+  private void createPaymentOrShowWarningDialog(@NonNull RecipientId recipientId) {
+    SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
+                   () -> {
+                     Recipient recipient = Recipient.resolved(recipientId);
+                     if (recipient.getProfileKey() == null) {
+                       return PaymentEligibility.NO_PROFILE_KEY;
+                     }
+                     try {
+                       ProfileUtil.getAddressForRecipient(recipient);
+                       return PaymentEligibility.CAN_SEND;
+                     } catch (IOException | PaymentsAddressException e) {
+                       Log.w(TAG, "Could not get address for recipient: ", e);
+                       return PaymentEligibility.NOT_ENABLED;
+                     }
+                   },
+                   eligibility -> {
+                     switch (eligibility) {
+                       case CAN_SEND:
+                         createPayment(recipientId);
+                         break;
+                       case NO_PROFILE_KEY:
+                         showWarningDialog(recipientId);
+                         break;
+                       case NOT_ENABLED:
+                         RecipientHasNotEnabledPaymentsDialog.show(requireContext());
+                         break;
+                     }
+                   });
+  }
+
+  private enum PaymentEligibility {
+    CAN_SEND,
+    NO_PROFILE_KEY,
+    NOT_ENABLED
   }
 
   private void createPayment(@NonNull RecipientId recipientId) {

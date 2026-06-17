@@ -63,7 +63,7 @@ object AndroidTelecomUtil {
   fun registerPhoneAccount() {
     if (Build.VERSION.SDK_INT >= 26 && !systemRejected) {
       Log.i(TAG, "Registering phone account")
-      val phoneAccount = PhoneAccount.Builder(getPhoneAccountHandle(), "Signal")
+      val phoneAccount = PhoneAccount.Builder(getPhoneAccountHandle(), "Radar")
         .setCapabilities(PhoneAccount.CAPABILITY_SELF_MANAGED or PhoneAccount.CAPABILITY_VIDEO_CALLING)
         .build()
 

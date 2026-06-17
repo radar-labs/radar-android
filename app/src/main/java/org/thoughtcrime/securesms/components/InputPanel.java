@@ -48,8 +48,6 @@ import org.thoughtcrime.securesms.animation.AnimationCompleteListener;
 import org.thoughtcrime.securesms.animation.AnimationStartListener;
 import org.thoughtcrime.securesms.audio.AudioRecordingHandler;
 import org.thoughtcrime.securesms.components.emoji.EmojiEventListener;
-import org.thoughtcrime.securesms.components.emoji.EmojiToggle;
-import org.thoughtcrime.securesms.components.emoji.MediaKeyboard;
 import org.thoughtcrime.securesms.components.voice.VoiceNotePlaybackState;
 import org.thoughtcrime.securesms.conversation.ConversationMessage;
 import org.thoughtcrime.securesms.conversation.ConversationStickerSuggestionAdapter;
@@ -61,7 +59,6 @@ import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
 import org.thoughtcrime.securesms.database.model.Quote;
 import org.thoughtcrime.securesms.database.model.StickerRecord;
-import org.thoughtcrime.securesms.keyboard.KeyboardPage;
 import org.thoughtcrime.securesms.linkpreview.LinkPreview;
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewRepository;
 import org.thoughtcrime.securesms.mms.DecryptableUri;
@@ -95,7 +92,7 @@ public class InputPanel extends ConstraintLayout
   private RecyclerView    stickerSuggestion;
   private QuoteView       quoteView;
   private LinkPreviewView linkPreview;
-  private EmojiToggle     mediaKeyboard;
+  private ImageButton     paymentButton;
   private ComposeText     composeText;
   private ImageButton     quickCameraToggle;
   private ImageButton     quickAudioToggle;
@@ -117,7 +114,6 @@ public class InputPanel extends ConstraintLayout
   private VoiceNoteDraftView     voiceNoteDraftView;
 
   private @Nullable Listener listener;
-  private           boolean  emojiVisible;
 
   private boolean hideForMessageRequestState;
   private boolean hideForGroupState;
@@ -150,7 +146,7 @@ public class InputPanel extends ConstraintLayout
     this.stickerSuggestion      = findViewById(R.id.input_panel_sticker_suggestion);
     this.quoteView              = findViewById(R.id.quote_view);
     this.linkPreview            = findViewById(R.id.link_preview);
-    this.mediaKeyboard          = findViewById(R.id.emoji_toggle);
+    this.paymentButton          = findViewById(R.id.payment_button);
     this.composeText            = findViewById(R.id.embedded_text_editor);
     this.composeTextContainer   = findViewById(R.id.embedded_text_editor_container);
     this.quickCameraToggle      = findViewById(R.id.quick_camera_toggle);
@@ -173,8 +169,7 @@ public class InputPanel extends ConstraintLayout
 
     this.recordLockCancel.setOnClickListener(v -> microphoneRecorderView.cancelAction(true));
 
-    mediaKeyboard.setVisibility(View.VISIBLE);
-    emojiVisible = true;
+    paymentButton.setVisibility(View.VISIBLE);
 
     quoteDismiss.setOnClickListener(v -> clearQuote());
 
@@ -197,7 +192,7 @@ public class InputPanel extends ConstraintLayout
   public void setListener(final @NonNull Listener listener) {
     this.listener = listener;
 
-    mediaKeyboard.setOnClickListener(v -> listener.onEmojiToggle());
+    paymentButton.setOnClickListener(v -> listener.onPaymentToggle());
     voiceNoteDraftView.setListener(listener);
 
     if (Camera.getNumberOfCameras() > 0) {
@@ -350,34 +345,9 @@ public class InputPanel extends ConstraintLayout
     composeText.performClick();
   }
 
-  public void setMediaKeyboard(@NonNull MediaKeyboard mediaKeyboard) {
-    this.mediaKeyboard.attach(mediaKeyboard);
-  }
-
   public void setStickerSuggestions(@NonNull List<StickerRecord> stickers) {
     stickerSuggestion.setVisibility(stickers.isEmpty() ? View.GONE : View.VISIBLE);
     stickerSuggestionAdapter.setStickers(stickers);
-  }
-
-  public void showMediaKeyboardToggle(boolean show) {
-    emojiVisible = show;
-    mediaKeyboard.setVisibility(show ? View.VISIBLE : GONE);
-  }
-
-  public void setMediaKeyboardToggleMode(@NonNull KeyboardPage page) {
-    mediaKeyboard.setStickerMode(page);
-  }
-
-  public boolean isStickerMode() {
-    return mediaKeyboard.isStickerMode();
-  }
-
-  public View getMediaKeyboardToggleAnchorView() {
-    return mediaKeyboard;
-  }
-
-  public MediaKeyboard.MediaKeyboardListener getMediaKeyboardListener() {
-    return mediaKeyboard;
   }
 
   public void setWallpaperEnabled(boolean enabled) {
@@ -403,7 +373,7 @@ public class InputPanel extends ConstraintLayout
       composeContainer.setBackground(Objects.requireNonNull(ContextCompat.getDrawable(getContext(), R.drawable.compose_background)));
     }
 
-    mediaKeyboard.setColorFilter(iconTint);
+    paymentButton.setColorFilter(iconTint);
     quickAudioToggle.setColorFilter(iconTint);
     quickCameraToggle.setColorFilter(iconTint);
     composeText.setTextColor(textColor);
@@ -448,7 +418,7 @@ public class InputPanel extends ConstraintLayout
     updateEditModeUi();
     updateEditModeThumbnail(requestManager);
 
-    int maxWidth = composeContainer.getWidth() - mediaKeyboard.getWidth();
+    int maxWidth = composeContainer.getWidth() - paymentButton.getWidth();
     if (!fromEditMessageMode) {
       maxWidth -= editMessageCancel.getWidth();
       if (editMessageCancel.getLayoutParams() instanceof MarginLayoutParams) {
@@ -583,9 +553,7 @@ public class InputPanel extends ConstraintLayout
     recordTime.display();
     slideToCancel.display();
 
-    if (emojiVisible) {
-      fadeOut(mediaKeyboard);
-    }
+    fadeOut(paymentButton);
 
     fadeOut(composeText);
     fadeOut(quickCameraToggle);
@@ -657,7 +625,7 @@ public class InputPanel extends ConstraintLayout
 
   public void setEnabled(boolean enabled) {
     composeText.setEnabled(enabled);
-    mediaKeyboard.setEnabled(enabled);
+    paymentButton.setEnabled(enabled);
     quickAudioToggle.setEnabled(enabled);
     quickCameraToggle.setEnabled(enabled);
   }
@@ -682,11 +650,6 @@ public class InputPanel extends ConstraintLayout
 
   @Override
   public void onKeyboardShown() {
-    mediaKeyboard.setToMedia();
-  }
-
-  public void setToIme() {
-    mediaKeyboard.setToIme();
   }
 
   @Override
@@ -737,10 +700,8 @@ public class InputPanel extends ConstraintLayout
   }
 
   private void hideNormalComposeViews() {
-    if (emojiVisible) {
-      mediaKeyboard.animate().cancel();
-      mediaKeyboard.setAlpha(0f);
-    }
+    paymentButton.animate().cancel();
+    paymentButton.setAlpha(0f);
 
     for (View view : Arrays.asList(composeText, quickCameraToggle, quickAudioToggle)) {
       view.animate().cancel();
@@ -749,9 +710,7 @@ public class InputPanel extends ConstraintLayout
   }
 
   private void fadeInNormalComposeViews() {
-    if (emojiVisible) {
-      fadeIn(mediaKeyboard);
-    }
+    fadeIn(paymentButton);
 
     fadeIn(composeText);
     fadeIn(quickCameraToggle);
@@ -825,7 +784,7 @@ public class InputPanel extends ConstraintLayout
     void onRecorderCanceled(boolean byUser);
     void onRecorderPermissionRequired();
     void onRecorderAlreadyInUse();
-    void onEmojiToggle();
+    void onPaymentToggle();
     void onLinkPreviewCanceled();
     void onStickerSuggestionSelected(@NonNull StickerRecord sticker);
     void onQuoteChanged(long id, @NonNull RecipientId author);

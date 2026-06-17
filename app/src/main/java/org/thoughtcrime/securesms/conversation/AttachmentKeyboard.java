@@ -34,7 +34,7 @@ public class AttachmentKeyboard extends FrameLayout implements InputAwareLayout.
 
   private static final int                            ANIMATION_DURATION  = 150;
   private static final List<AttachmentKeyboardButton> DEFAULT_BUTTONS     = Arrays.asList(
-      AttachmentKeyboardButton.PAYMENT,
+      AttachmentKeyboardButton.EMOJI,
       AttachmentKeyboardButton.GALLERY,
       AttachmentKeyboardButton.FILE,
       AttachmentKeyboardButton.POLL,
