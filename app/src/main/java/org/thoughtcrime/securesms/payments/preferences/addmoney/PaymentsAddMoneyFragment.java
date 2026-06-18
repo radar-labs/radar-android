@@ -471,9 +471,12 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
   private void shareAddress() {
     String address = currentAddress();
     if (address == null) return;
+    // For Lightning, share the resolved BOLT11 invoice rather than the lightning address
+    // (e.g. "xxx@radar.cash"); fall back to the address while the invoice is still being fetched.
+    String shareText = (!showingOnchain && bolt11Invoice != null) ? bolt11Invoice : address;
     Intent intent = new Intent(Intent.ACTION_SEND);
     intent.setType("text/plain");
-    intent.putExtra(Intent.EXTRA_TEXT, address);
+    intent.putExtra(Intent.EXTRA_TEXT, shareText);
     startActivity(Intent.createChooser(intent, null));
   }
 }
