@@ -1,12 +1,16 @@
 package org.thoughtcrime.securesms.payments.preferences;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,9 +72,18 @@ public final class SetCurrencyFragment extends LoggingFragment {
   /** Inflates and wires the toolbar SearchView (mirrors iOS UISearchController in nav bar). */
   private void setupSearchMenu(@NonNull Toolbar toolbar) {
     toolbar.inflateMenu(R.menu.payments_currency_picker_menu);
-    SearchView searchView = (SearchView) toolbar.getMenu()
-        .findItem(R.id.payments_currency_picker_menu_search)
-        .getActionView();
+    MenuItem searchItem = toolbar.getMenu().findItem(R.id.payments_currency_picker_menu_search);
+
+    // The shared symbol_search_24 drawable has a hardcoded black fill, so tint it with the
+    // theme-aware on-surface color to match the navigation icon in both light and dark themes.
+    Drawable icon = searchItem.getIcon();
+    if (icon != null) {
+      icon = DrawableCompat.wrap(icon.mutate());
+      DrawableCompat.setTint(icon, ContextCompat.getColor(requireContext(), R.color.signal_colorOnSurface));
+      searchItem.setIcon(icon);
+    }
+
+    SearchView searchView = (SearchView) searchItem.getActionView();
     if (searchView == null) return;
     searchView.setQueryHint(getString(R.string.SearchToolbar_search));
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

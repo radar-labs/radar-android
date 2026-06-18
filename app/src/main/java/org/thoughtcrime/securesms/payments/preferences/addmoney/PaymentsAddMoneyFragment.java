@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -116,6 +119,17 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
 
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
     toolbar.inflateMenu(R.menu.payments_add_money_menu);
+    MenuItem shareItem = toolbar.getMenu().findItem(R.id.payments_add_money_menu_share);
+
+    // The shared symbol_share_android_24 drawable has a hardcoded black fill, so tint it with the
+    // theme-aware on-surface color to match the navigation icon in both light and dark themes.
+    Drawable shareIcon = shareItem.getIcon();
+    if (shareIcon != null) {
+      shareIcon = DrawableCompat.wrap(shareIcon.mutate());
+      DrawableCompat.setTint(shareIcon, ContextCompat.getColor(requireContext(), R.color.signal_colorOnSurface));
+      shareItem.setIcon(shareIcon);
+    }
+
     toolbar.setOnMenuItemClickListener(item -> {
       if (item.getItemId() == R.id.payments_add_money_menu_share) {
         shareAddress();

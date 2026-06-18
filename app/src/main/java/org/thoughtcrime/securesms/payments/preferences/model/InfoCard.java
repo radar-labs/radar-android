@@ -100,7 +100,7 @@ public class InfoCard implements MappingModel<InfoCard> {
       infoCards.add(new InfoCard(R.string.payment_info_card_about_mobilecoin,
                                  R.string.payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency,
                                  R.string.LearnMoreTextView_learn_more,
-                                 R.drawable.ic_about_mc_80,
+                                 R.drawable.ic_bitcoin_lightning_24,
                                  Type.ABOUT_MOBILECOIN,
                                  paymentsValues::dismissAboutMobileCoinInfoCard));
     }
