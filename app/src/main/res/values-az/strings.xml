@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">%1$s tərəfindən göndərilən bir mesaj çatdırıla bilmədi</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s, nömrəsini dəyişdirdi.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Bu yeni xüsusiyyəti bəyənirsiniz? Birdəfəlik ianə ilə Radar-a dəstək olmağa kömək edin.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Bu yeni xüsusiyyəti bəyənirsiniz? Birdəfəlik ianə ilə Signal-a dəstək olmağa kömək edin.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">%1$s ilə olan mesaj tarixçəniz və onun %2$s əlaqə nömrəsi birləşdirildi.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">Yavaş</string>
     <string name="preferences__help">Kömək</string>
     <string name="preferences__advanced">Qabaqcıl</string>
-    <string name="preferences__donate_to_signal">Radar-a ianə verin</string>
+    <string name="preferences__donate_to_signal">Signal-a ianə verin</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Gizlilik</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Radar-a ianə verin</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Signal-a ianə verin</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar sizin kimi insanların dəstəyi ilə fəaliyyət göstərir. Aylıq ianə edin və nişan əldə edin.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal sizin kimi insanların dəstəyi ilə fəaliyyət göstərir. Aylıq ianə edin və nişan əldə edin.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">İanə ver</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Bir dəstəkçi olun</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar sizin kimi insanların sayəsində güclənir. İanə verin və bir profil nişanı əldə edin.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal sizin kimi insanların sayəsində güclənir. İanə verin və bir profil nişanı əldə edin.</string>
     <string name="BecomeASustainerMegaphone__not_now">İndi yox</string>
     <string name="BecomeASustainerMegaphone__donate">İanə ver</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Çatın səsi həmişəlik bağlanıb</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Telefon nömrəsi lövhəyə kopyalandı.</string>
     <string name="ConversationSettingsFragment__phone_number">Telefon nömrəsi</string>
-    <string name="ConversationSettingsFragment__get_badges">Radar-ı dəstəkləyərək profiliniz üçün nişanlar qazanın. Daha ətraflı məlumat üçün bir nişana toxunun.</string>
+    <string name="ConversationSettingsFragment__get_badges">Signal-ı dəstəkləyərək profiliniz üçün nişanlar qazanın. Daha ətraflı məlumat üçün bir nişana toxunun.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Bu media faylı hələ göndərilməyib.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">İndi ianə ver</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s Radar-ı dəstəkləyir</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s Signal-ı dəstəkləyir</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s Radar-a aylıq ianə köçürərək dəstək verir. Radar reklamlaçıları, yaxud da investorları olmayan və yalnız sizin kimi insanlardan dəstək alan bir qeyri-kommersiya təşkilatıdır.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s Signal-a aylıq ianə köçürərək dəstək verir. Signal reklamlaçıları, yaxud da investorları olmayan və yalnız sizin kimi insanlardan dəstək alan bir qeyri-kommersiya təşkilatıdır.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s Siqnal-a ianə ilə dəstək verir. Radar, reklamlaçıları, yaxud da investorları olmayan və yalnız sizin kimi insanlardan dəstək alan bir qeyri-kommersiya təşkilatıdır.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s Siqnal-a ianə ilə dəstək verir. Signal, reklamlaçıları, yaxud da investorları olmayan və yalnız sizin kimi insanlardan dəstək alan bir qeyri-kommersiya təşkilatıdır.</string>
 
     <string name="ImageView__badge">Nişan</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">Abunəliyin bitmə vaxtı: %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar fərqlidir.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal fərqlidir.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Şəxsi mesajlaşma. Reklamsız, təqibsiz və nəzarətsiz.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar-ın ianələrlə dəstəklənməsi o deməkdir ki, etdiyimiz hər şeyin mərkəzində sizin məxfiliyiniz dayanır. Radar məlumatlarınız və mənfəət üçün deyil, yalnız sizin üçün yaradılıb.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal-ın ianələrlə dəstəklənməsi o deməkdir ki, etdiyimiz hər şeyin mərkəzində sizin məxfiliyiniz dayanır. Signal məlumatlarınız və mənfəət üçün deyil, yalnız sizin üçün yaradılıb.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Əgər imkanınız varsa Radar-ın əyləncəli, etibarlı və hər kəsə açıq olması üçün bu gün ianə verin.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Əgər imkanınız varsa Signal-ın əyləncəli, etibarlı və hər kəsə açıq olması üçün bu gün ianə verin.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Dəstəyiniz üçün təşəkkürlər!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Radar-dan donor nişanı qazandınız! Dəstəyinizi nümayiş etdirmək üçün onu profilinizdə göstərin.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Signal-dan donor nişanı qazandınız! Dəstəyinizi nümayiş etdirmək üçün onu profilinizdə göstərin.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Həmçinin</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">aylıq bir Dəstəkçi ola bilərsiniz.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Profildə görüntülə</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Davam et</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Bir neçə nişana sahib olduğunuz zaman, profilinizdə başqalarının görməsi üçün onlardan birini seçə bilərsiniz.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Radar-ı dəstəkləyərək profiliniz üçün nişanlar qazanın.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar, reklamları və ya investoru olmayan və yalnız sizin kimi insanlardan dəstək alan qeyri-kommersiya təşkilatıdır.</string>
+    <string name="BecomeASustainerFragment__get_badges">Signal-ı dəstəkləyərək profiliniz üçün nişanlar qazanın.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal, reklamları və ya investoru olmayan və yalnız sizin kimi insanlardan dəstək alan qeyri-kommersiya təşkilatıdır.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Radar-a ianə verin</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Signal-a ianə verin</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Daha çox</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Google Pay-ə keç</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Abunəlik ödənişini emal etmək mümkün deyil</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Radar Dəstəkçi ödənişinizi almaqda çətinlik çəkirik. Ödəniş metodunuzun güncəl olduğuna əmin olun. Əgər deyilsə, Google Pay-də yeniləyin. Radar, bir neçə gün sonra ödənişi yenidən emal etməyə çalışacaq.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Signal Dəstəkçi ödənişinizi almaqda çətinlik çəkirik. Ödəniş metodunuzun güncəl olduğuna əmin olun. Əgər deyilsə, Google Pay-də yeniləyin. Signal, bir neçə gün sonra ödənişi yenidən emal etməyə çalışacaq.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Bunu təkrar göstərmə</string>
 
     <string name="Subscription__contact_support">Dəstək ilə əlaqə</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">İanəniz hələ də emal edilir. Bağlantınızdan asılı olaraq bu bir neçə dəqiqə çəkə bilər.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Abunəlik ləğv edilmədi</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Abunəlik ləğvi üçün internet bağlantısı tələb olunur.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Cihazınız tətbiqdaxili ianələri dəstəkləmir, buna görə də, nişan qazanmaq üçün abunə ola bilməzsiniz. Bununla belə vebsaytımızdan ianə edərək Radar-a dəstək ola bilərsiniz.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Cihazınız tətbiqdaxili ianələri dəstəkləmir, buna görə də, nişan qazanmaq üçün abunə ola bilməzsiniz. Bununla belə vebsaytımızdan ianə edərək Signal-a dəstək ola bilərsiniz.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Şəbəkə xətası. Bağlantınızı yoxlayıb yenidən sınayın.</string>
     <string name="NetworkFailure__retry">Yenidən sına</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s adından ianə</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s sizin adınızdan Radar-a ianə verdi</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s sizin adınızdan Signal-a ianə verdi</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Al</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Məbləğ</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Radar-ı dəstəklədiyiniz üçün təşəkkürlər. Töhfəniz, dünyadakı milyonlarla insan üçün güvənli qlobal ünsiyyəti təmin edən və azad ifadəni qoruyan açıq mənbəli gizlilik texnologiyasının inkişaf missiyasını dəstəkləməyə kömək edir. Əgər Birləşmiş Ştatlarda yaşayırsınızsa, zəhmət olmasa bu qəbzi vergi qeydlərinizin arasında saxlayın. Radar texnologiya fondu, Daxili Gəlir Məcəlləsinin 501c3 maddəsinə əsasən Birləşmiş Ştatlarda vergidən azad edilmiş qeyri-kommersiya təşkilatıdır. Federal Vergi Kimliyimiz: 82–4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Signal-ı dəstəklədiyiniz üçün təşəkkürlər. Töhfəniz, dünyadakı milyonlarla insan üçün güvənli qlobal ünsiyyəti təmin edən və azad ifadəni qoruyan açıq mənbəli gizlilik texnologiyasının inkişaf missiyasını dəstəkləməyə kömək edir. Əgər Birləşmiş Ştatlarda yaşayırsınızsa, zəhmət olmasa bu qəbzi vergi qeydlərinizin arasında saxlayın. Signal texnologiya fondu, Daxili Gəlir Məcəlləsinin 501c3 maddəsinə əsasən Birləşmiş Ştatlarda vergidən azad edilmiş qeyri-kommersiya təşkilatıdır. Federal Vergi Kimliyimiz: 82–4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Qəbz yoxdur</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Bir dostunuza ianə verin</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Radar-dan istifadə edən bir dostunuza və ya ailə üzvünə ianə verərək Radar-ı dəstəkləyin. O, profilində %1$d gün görünəcək bir nişan alacaq</item>
-        <item quantity="other">Radar-dan istifadə edən bir dostunuza və ya ilə üzvünə ianə verərək Radar-ı dəstəkləyin. O, profilində %1$d gün görünəcək bir nişan alacaq</item>
+        <item quantity="one">Radar-dan istifadə edən bir dostunuza və ya ailə üzvünə ianə verərək Signal-ı dəstəkləyin. O, profilində %1$d gün görünəcək bir nişan alacaq</item>
+        <item quantity="other">Radar-dan istifadə edən bir dostunuza və ya ilə üzvünə ianə verərək Signal-ı dəstəkləyin. O, profilində %1$d gün görünəcək bir nişan alacaq</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Növbəti</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Dəstəyiniz üçün təşəkkürlər!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s sizin adınızdan Radar-a ianə verdi! Profilinizdə Radar-ı dəstəklədiyinizi göstərin.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s sizin adınızdan Signal-a ianə verdi! Profilinizdə Signal-ı dəstəklədiyinizi göstərin.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Siz %1$s adından Radar-a ianə verdiniz. Ona öz dəstəyini profilində göstərmə imkanı veriləcək.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Siz %1$s adından Signal-a ianə verdiniz. Ona öz dəstəyini profilində göstərmə imkanı veriləcək.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Al</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Nişan alınır…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Siz %1$s adından Radar-a ianə verdiniz. Ona öz dəstəyini profilində göstərmə imkanı veriləcək.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Siz %1$s adından Signal-a ianə verdiniz. Ona öz dəstəyini profilində göstərmə imkanı veriləcək.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Nişanınızın müddəti bitdi</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Davam et</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Dəstəklərinizlə yaradılmış şəxsi mesajlaşma. Reklamsız, təqibsiz və güzəştsiz. Radar-ı dəstəkləmək üçün indi ianə verin.</string>
+    <string name="DonateToSignalFragment__private_messaging">Dəstəklərinizlə yaradılmış şəxsi mesajlaşma. Reklamsız, təqibsiz və güzəştsiz. Signal-ı dəstəkləmək üçün indi ianə verin.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Gözləyən bir ianəniz var</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Radar-a aylıq %1$s ianə verin</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Signal-a aylıq %1$s ianə verin</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">%1$s nişanını əldə edin</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Radar-a %1$s ianə verin</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Signal-a %1$s ianə verin</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">%2$d günlük %1$s nişanı əldə edin</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Bank köçürməsi</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe Radar-a edilmiş ianələri emal edir. Radar şəxsi məlumatlarınızı toplamır və ya saxlamır. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe Signal-a edilmiş ianələri emal edir. Signal şəxsi məlumatlarınızı toplamır və ya saxlamır. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Daha ətraflı</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Məlumatınız məxfidir</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">İanə verdiyiniz zaman Radar heç bir şəxsi məlumatınızı toplamır və ya saxlamır.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">İanə verdiyiniz zaman Signal heç bir şəxsi məlumatınızı toplamır və ya saxlamır.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">İanələrinizi qəbul etmək üçün ödəniş emalçımız kimi Stripe-dan istifadə edirik. Onlara verdiyiniz heç bir məlumatı əldə etmir, saxlamır və ya yaddaşa vermirik.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar ianələrinizi Radar hesabınızla əlaqələndirmir və bunu edə bilməz.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal ianələrinizi Radar hesabınızla əlaqələndirmir və bunu edə bilməz.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Dəstəyiniz üçün təşəkkürlər!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Ehtiyat nüsxə planınızı seçin</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Bütün ehtiyat nüsxələr tam şəkildə şifrələnib. Radar ehtiyat nüsxə xərclərinin ödənilməsi missiyamızı dəstəkləyən bir qeyri-kommersiya təşkilatıdır.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Bütün ehtiyat nüsxələr tam şəkildə şifrələnib. Signal ehtiyat nüsxə xərclərinin ödənilməsi missiyamızı dəstəkləyən bir qeyri-kommersiya təşkilatıdır.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Daha ətraflı</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s baytlıq yaddaş (%2$s şəkil)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Radar-ı dəstəklədiyiniz üçün təşəkkürlər!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Signal-ı dəstəklədiyiniz üçün təşəkkürlər!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Media faylı saxlamaq üçün son %1$d gün</item>

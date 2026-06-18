@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">%1$s-ის შეტყობინება ვერ გაიგზავნა.</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s-მა ტელეფონის ნომერი შეცვალა.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">მოგწონს ეს ახალი ფუნქცია? დაგვეხმარე Radar-ის მხარდაჭერაში ერთჯერადი დონაციით.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">მოგწონს ეს ახალი ფუნქცია? დაგვეხმარე Signal-ის მხარდაჭერაში ერთჯერადი დონაციით.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">%1$s-სთან შენი მიმოწერის ისტორია და მისი ნომერი %2$s გაერთიანდა.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">ნელი</string>
     <string name="preferences__help">დახმარება</string>
     <string name="preferences__advanced">დეტალური</string>
-    <string name="preferences__donate_to_signal">Radar-ისთვის დონაციის გაკეთება</string>
+    <string name="preferences__donate_to_signal">Signal-ისთვის დონაციის გაკეთება</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">კონფიდენციალურობა</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Radar-ისთვის დონაციის გაკეთება</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Signal-ისთვის დონაციის გაკეთება</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar-ი შენნაირ ხალხზე დგას. გააკეთე ყოველთვიური დონაცია და მიიღე ემბლემა.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal-ი შენნაირ ხალხზე დგას. გააკეთე ყოველთვიური დონაცია და მიიღე ემბლემა.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">გააკეთე დონაცია</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">გახდი მხარდამჭერი</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar-ი შენნაირ ხალხზე დგას. გააკეთე დონაცია და მიიღე ემბლემა.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal-ი შენნაირ ხალხზე დგას. გააკეთე დონაცია და მიიღე ემბლემა.</string>
     <string name="BecomeASustainerMegaphone__not_now">ახლა არა</string>
     <string name="BecomeASustainerMegaphone__donate">გააკეთე დონაცია</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">ჩატი დადუმებულია სამუდამოდ</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">მობილურის ნომერი ბუფერში დაკოპირდა.</string>
     <string name="ConversationSettingsFragment__phone_number">ტელეფონის ნომერი</string>
-    <string name="ConversationSettingsFragment__get_badges">მიიღე ემბლემები შენი პროფილისთვის Radar-ის მხარდაჭერით. მეტი ინფორმაციისთვის დააჭირე ემბლემას.</string>
+    <string name="ConversationSettingsFragment__get_badges">მიიღე ემბლემები შენი პროფილისთვის Signal-ის მხარდაჭერით. მეტი ინფორმაციისთვის დააჭირე ემბლემას.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">ეს მედია ფაილი ჯერ არაა გაგზავნილი.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">გააკეთე დონაცია ახლა</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s მხარს უჭერს Radar-ს</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s მხარს უჭერს Signal-ს</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s Radar-ს მხარს ყოველთვიური დონაციით უჭერს. Radar-ი არაკომერციული ორგანიზაციაა, რომელიც მხოლოდ შენნაირ ხალხზე დგას, რეკლამის დამკვეთებისა და ინვესტორების გარეშე.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s Signal-ს მხარს ყოველთვიური დონაციით უჭერს. Signal-ი არაკომერციული ორგანიზაციაა, რომელიც მხოლოდ შენნაირ ხალხზე დგას, რეკლამის დამკვეთებისა და ინვესტორების გარეშე.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s-მა Radar-ს მხარი დონაციით დაუჭირა. Radar-ი არაკომერციული ორგანიზაციაა, რომელიც მხოლოდ შენნაირ ხალხზე დგას, რეკლამის დამკვეთებისა და ინვესტორების გარეშე.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s-მა Signal-ს მხარი დონაციით დაუჭირა. Signal-ი არაკომერციული ორგანიზაციაა, რომელიც მხოლოდ შენნაირ ხალხზე დგას, რეკლამის დამკვეთებისა და ინვესტორების გარეშე.</string>
 
     <string name="ImageView__badge">ემბლემა</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">ვადის ამოწურვამდე დარჩა %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar-ი განსხვავებულია.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal-ი განსხვავებულია.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">კონფიდენციალური მიმოწერა. არანაირი რეკლამა, არანაირი ტრეკერები, არანაირი მეთვალყურეობა.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar-ი დონაციებზე დგას, რაც იმას ნიშნავს, რომ შენი კონფიდენციალურობა არის იმ ყველაფრის ცენტრში, რასაც ჩვენ ვაკეთებთ. Radar-ი შექმნილია შენთვის და არა შენი მონაცემების ან მოგებისთვის.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal-ი დონაციებზე დგას, რაც იმას ნიშნავს, რომ შენი კონფიდენციალურობა არის იმ ყველაფრის ცენტრში, რასაც ჩვენ ვაკეთებთ. Signal-ი შექმნილია შენთვის და არა შენი მონაცემების ან მოგებისთვის.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">თუ შეგიძლია, გთხოვთ, გააკეთო დონაცია დღესვე, რათა Radar-ი ხალისიანი, საიმედო და ყველასთვის ხელმისაწვდომი იყოს.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">თუ შეგიძლია, გთხოვთ, გააკეთო დონაცია დღესვე, რათა Signal-ი ხალისიანი, საიმედო და ყველასთვის ხელმისაწვდომი იყოს.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">მადლობას გიხდით მხარდაჭერისთვის!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">შენ მოიპოვე დონორის ემბლემა Radar-ისგან! გამოაჩინე ის შენს პროფილზე, რათა მხარდაჭერა გამოხატო.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">შენ მოიპოვე დონორის ემბლემა Signal-ისგან! გამოაჩინე ის შენს პროფილზე, რათა მხარდაჭერა გამოხატო.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">ასევე შეგიძლია</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">გახდი ყოველთვიური მხარდამჭერი.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">პროფილზე ჩვენება</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">გაგრძელება</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">როცა ერთზე მეტი ემბლემა გაქვს, შეგიძლია აირჩიო რომელი იქნება ხილვადი სხვებისთვის შენს პროფილზე.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">მიიღე ემბლემები შენი პროფილისთვის Radar-ის მხარდაჭერით.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar-ი არაკომერციული ორგანიზაციაა, რომელიც მხოლოდ შენნაირ ხალხზე დგას, რეკლამის დამკვეთებისა და ინვესტორების გარეშე.</string>
+    <string name="BecomeASustainerFragment__get_badges">მიიღე ემბლემები შენი პროფილისთვის Signal-ის მხარდაჭერით.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal-ი არაკომერციული ორგანიზაციაა, რომელიც მხოლოდ შენნაირ ხალხზე დგას, რეკლამის დამკვეთებისა და ინვესტორების გარეშე.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Radar-ისთვის დონაციის გაკეთება</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Signal-ისთვის დონაციის გაკეთება</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">მეტი</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Google Pay-ში შესვლა</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">გამოწერის ტრანზაქციის დამუშავება ვერ მოხერხდა</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Radar-ის შენი მხარდაჭერის ტრანზაქციის მოხსნისას პრობლემა შექიმნა. დარწმუნდი, რომ შენი ტრანზაქციის მეთოდი განახლებულია. თუ ეს ასე არ არის, განაახლე ის Google Pay-ში. Radar-ი რამდენიმე დღეში თავიდან შეეცდება ტრანზაქციის დამუშავებას.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Signal-ის შენი მხარდაჭერის ტრანზაქციის მოხსნისას პრობლემა შექიმნა. დარწმუნდი, რომ შენი ტრანზაქციის მეთოდი განახლებულია. თუ ეს ასე არ არის, განაახლე ის Google Pay-ში. Signal-ი რამდენიმე დღეში თავიდან შეეცდება ტრანზაქციის დამუშავებას.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">ეს აღარ მაჩვენო</string>
 
     <string name="Subscription__contact_support">მხარდაჭერის გუნდთან დაკავშირება</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">შენი დონაცია ისევ მუშავდება. ამას შეიძლება რამდენიმე წუთი დასჭირდეს შენი ინტერნეტ-კავშირიდან გამომდინარე.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">გამოწერის გაუქმება ვერ მოხერხდა</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">გამოწერის გაუქმება ინტერნეტ კავშირს საჭიროებს.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">შენს მოწყობილობას აპის შიდა დონაციების მხარდაჭერა არ აქვს, შესაბამისად გამოწერასა და ემბლემის მიღებას ვერ მოახერხებ. თუმცა Radar-ის მხარდასაჭერად დონაციის გაკეთება ჩვენს ვებსაიტზე მაინც შეგიძლია.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">შენს მოწყობილობას აპის შიდა დონაციების მხარდაჭერა არ აქვს, შესაბამისად გამოწერასა და ემბლემის მიღებას ვერ მოახერხებ. თუმცა Signal-ის მხარდასაჭერად დონაციის გაკეთება ჩვენს ვებსაიტზე მაინც შეგიძლია.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">ქსელის ხარვეზი. შეამოწმე შენი ინტერნეტ კავშირი და თავიდან სცადე.</string>
     <string name="NetworkFailure__retry">თავიდან ცდა</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">დონაცია %1$s-ის სახელზე</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s-მა Radar-ს დონაცია შენს სახელზე გაუკეთა</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s-მა Signal-ს დონაცია შენს სახელზე გაუკეთა</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">მიღება</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">თანხა</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">მადლობას გიხდით Radar-ის მხარდაჭერისთვის. შენი წვლილი ხელს უწყობს ღია კოდის კონფიდენციალურობის ტექნოლოგიის შემუშავების მისიას, რომელიც იცავს გამოხატვის თავისუფლებას და უზრუნველყოფს უსაფრთხო გლობალურ კომუნიკაციას მილიონობით ადამიანისთვის მთელს მსოფლიოში. თუ შენ ხარ შეერთებული შტატების რეზიდენტი, გთხოვთ, შეინახო ეს ქვითარი შენი საგადასახადო ჩანაწერებისთვის. Radar Technology Foundation არის გადასახადებისგან გათავისუფლებული არაკომერციული ორგანიზაცია შეერთებულ შტატებში შიდა შემოსავლების კოდექსის 501c3 ნაწილის მიხედვით. ჩვენი ფედერალური საგადასახადო ID-ი არის 82–4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">მადლობას გიხდით Signal-ის მხარდაჭერისთვის. შენი წვლილი ხელს უწყობს ღია კოდის კონფიდენციალურობის ტექნოლოგიის შემუშავების მისიას, რომელიც იცავს გამოხატვის თავისუფლებას და უზრუნველყოფს უსაფრთხო გლობალურ კომუნიკაციას მილიონობით ადამიანისთვის მთელს მსოფლიოში. თუ შენ ხარ შეერთებული შტატების რეზიდენტი, გთხოვთ, შეინახო ეს ქვითარი შენი საგადასახადო ჩანაწერებისთვის. Signal Technology Foundation არის გადასახადებისგან გათავისუფლებული არაკომერციული ორგანიზაცია შეერთებულ შტატებში შიდა შემოსავლების კოდექსის 501c3 ნაწილის მიხედვით. ჩვენი ფედერალური საგადასახადო ID-ი არის 82–4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">ქვითრები ვერ მოიძებნა</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">გაუკეთე დონაცია მეგობარს</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">დაუჭირე მხარი Radar-ს დონაციის გაკეთებით იმ მეგობრის ან ოჯახის წევრის სახელზე, რომელიც Radar-ს იყენებს. ისინი მათ პროფილზე გამოსაჩენ ემბლემას %1$d დღით მიიღებენ.</item>
-        <item quantity="other">დაუჭირე მხარი Radar-ს დონაციის გაკეთებით იმ მეგობრის ან ოჯახის წევრის სახელზე, რომელიც Radar-ს იყენებს. ისინი მათ პროფილზე გამოსაჩენ ემბლემას %1$d დღით მიიღებენ.</item>
+        <item quantity="one">დაუჭირე მხარი Signal-ს დონაციის გაკეთებით იმ მეგობრის ან ოჯახის წევრის სახელზე, რომელიც Radar-ს იყენებს. ისინი მათ პროფილზე გამოსაჩენ ემბლემას %1$d დღით მიიღებენ.</item>
+        <item quantity="other">დაუჭირე მხარი Signal-ს დონაციის გაკეთებით იმ მეგობრის ან ოჯახის წევრის სახელზე, რომელიც Radar-ს იყენებს. ისინი მათ პროფილზე გამოსაჩენ ემბლემას %1$d დღით მიიღებენ.</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">შემდეგი</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">მადლობა მხარდაჭერისთვის!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s-მა Radar-ს დონაცია შენს სახელზე გაუკეთა! გამოხატე Radar-ის მიმართ მხარდაჭერა შენს პროფილზე.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s-მა Signal-ს დონაცია შენს სახელზე გაუკეთა! გამოხატე Signal-ის მიმართ მხარდაჭერა შენს პროფილზე.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">შენ Radar-ს დონაცია %1$s-ის სახელზე გაუკეთე. მას საშუალება მიეცემა, მხარდაჭერა საკუთარ პროფილზე გამოხატოს.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">შენ Signal-ს დონაცია %1$s-ის სახელზე გაუკეთე. მას საშუალება მიეცემა, მხარდაჭერა საკუთარ პროფილზე გამოხატოს.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">მიღება</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">მიმდინარეობს ემბლემის განაღდება…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">შენ Radar-ს დონაცია %1$s-ის სახელზე გააკეთე. მას საშუალება მიეცემა, მხარდაჭერა საკუთარ პროფილზე გამოხატოს.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">შენ Signal-ს დონაცია %1$s-ის სახელზე გააკეთე. მას საშუალება მიეცემა, მხარდაჭერა საკუთარ პროფილზე გამოხატოს.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">შენს ემბლემას ვადა გაუვიდა</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">გაგრძელება</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">კონფიდენციალური მიმოწერა, რომელიც შენით ფინანსდება. არანაირი რეკლამა, არანაირი ტრეკერები, არანაირი კომპრომისი. გააკეთე დონაცია ახლა, რათა მხარი დაუჭირო Radar-ს.</string>
+    <string name="DonateToSignalFragment__private_messaging">კონფიდენციალური მიმოწერა, რომელიც შენით ფინანსდება. არანაირი რეკლამა, არანაირი ტრეკერები, არანაირი კომპრომისი. გააკეთე დონაცია ახლა, რათა მხარი დაუჭირო Signal-ს.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">შენ გაქვს მომლოდინე დონაცია</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">გააკეთე დონაცია %1$s/თვე Radar-ისთვის</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">გააკეთე დონაცია %1$s/თვე Signal-ისთვის</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">მიიღე %1$s ემბლემა</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">გააკეთე დონაცია %1$s Radar-ისთვის</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">გააკეთე დონაცია %1$s Signal-ისთვის</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">მიიღე %1$s ემბლემა %2$d დღით</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">საბანკო ტრანზაქცია</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe-ი Radar-ისთვის გადმორიცხულ დონაციებს ამუშავებს. Radar-ი არ აგროვებს და არ ინახავს შენს პერსონალურ მონაცემებს. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe-ი Signal-ისთვის გადმორიცხულ დონაციებს ამუშავებს. Signal-ი არ აგროვებს და არ ინახავს შენს პერსონალურ მონაცემებს. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">გაიგე მეტი</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">შენი ინფორმაცია კონფიდენციალურია</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar-ი არ აგროვებს და არ ინახავს შენს პირად მონაცემებს, როცა დონაციას აკეთებ.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal-ი არ აგროვებს და არ ინახავს შენს პირად მონაცემებს, როცა დონაციას აკეთებ.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">ჩვენ ვიყენებთ Stripe-ს, როგორც გადახდის პროცესორს შენი დონაციების მისაღებად. ჩვენ არ ვაგროვებთ და არ ვინახავთ შენს მიერ მოწოდებულ ინფორმაციას და არ გვაქვს მასზე წვდომა.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar არ და ვერ აკავშირებს შენს დონაციებს Radar-ის შენს ანგარიშთან.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal არ და ვერ აკავშირებს შენს დონაციებს Radar-ის შენს ანგარიშთან.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">მადლობას გიხდით მხარდაჭერისთვის!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">აირჩიე სარეზერვო კოპირების ტარიფი</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">ყველა სარეზერვო კოპია ბოლომდე დაშიფრულია. Radar-ი არაკომერციულია—სარეზერვო კოპირებაში თანხის გადახდა ჩვენი მისიის მხარდაჭერაში გვეხმარება.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">ყველა სარეზერვო კოპია ბოლომდე დაშიფრულია. Signal-ი არაკომერციულია—სარეზერვო კოპირებაში თანხის გადახდა ჩვენი მისიის მხარდაჭერაში გვეხმარება.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">გაიგე მეტი</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">მეხსიერების %1$s (%2$s ფოტო)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">მადლობა Radar-ის მხარდაჭერისთვის!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">მადლობა Signal-ის მხარდაჭერისთვის!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">მედია ფაილების ბოლო %1$d დღე</item>

@@ -2162,7 +2162,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Не атрымалася даставіць паведамленне ад %1$s</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s змяніў(-ла) свой нумар тэлефона.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Спадабалася гэтая новая функцыя? Падтрымайце Radar разавым ахвяраваннем.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Спадабалася гэтая новая функцыя? Падтрымайце Signal разавым ахвяраваннем.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Гісторыя вашых паведамленняў з %1$s і яго/яе нумарам %2$s была аб\'яднаная.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4229,7 +4229,7 @@
     <string name="preferences__slow">Павольна</string>
     <string name="preferences__help">Дапамога</string>
     <string name="preferences__advanced">Пашыраныя</string>
-    <string name="preferences__donate_to_signal">Зрабіць ахвяраванне для Radar</string>
+    <string name="preferences__donate_to_signal">Зрабіць ахвяраванне для Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Канфідэнцыйнасць</string>
     <!-- Preference label for stories -->
@@ -6089,9 +6089,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Зрабіць ахвяраванне для Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Зрабіць ахвяраванне для Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar існуе дзякуючы такім людзям, як вы. Рабіце ахвяраванне штомесяц і атрымлівайце значок.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal існуе дзякуючы такім людзям, як вы. Рабіце ахвяраванне штомесяц і атрымлівайце значок.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Зрабіць ахвяраванне</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -6114,7 +6114,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Стаць спонсарам</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar існуе дзякуючы такім людзям, як вы. Рабіце ахвяравання і атрымлівайце значок.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal існуе дзякуючы такім людзям, як вы. Рабіце ахвяравання і атрымлівайце значок.</string>
     <string name="BecomeASustainerMegaphone__not_now">Не зараз</string>
     <string name="BecomeASustainerMegaphone__donate">Зрабіць ахвяраванне</string>
 
@@ -6185,7 +6185,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Апавяшчэнні ў чаце адключаны назаўсёды</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Нумар тэлефона скапіраваны ў буфер абмену.</string>
     <string name="ConversationSettingsFragment__phone_number">Нумар тэлефона</string>
-    <string name="ConversationSettingsFragment__get_badges">Падтрымлівайце Radar і атрымлівайце значкі для свайго профілю. Націсніце на значок, каб даведацца больш.</string>
+    <string name="ConversationSettingsFragment__get_badges">Падтрымлівайце Signal і атрымлівайце значкі для свайго профілю. Націсніце на значок, каб даведацца больш.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Гэты медыяфайл яшчэ не адпраўлены.</string>
 
@@ -6448,11 +6448,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Зрабіць ахвяраванне</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s падтрымлівае Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s падтрымлівае Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s падтрымлівае Radar штомесячным ахвяраваннем. Radar - гэта некамерцыйная арганізацыя без рэкламадаўцаў і інвестараў, якую падтрымліваюць толькі такія людзі, як вы.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s падтрымлівае Signal штомесячным ахвяраваннем. Signal - гэта некамерцыйная арганізацыя без рэкламадаўцаў і інвестараў, якую падтрымліваюць толькі такія людзі, як вы.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s падтрымлівае Radar разавым ахвяраваннем. Radar - гэта некамерцыйная арганізацыя без рэкламадаўцаў і інвестараў, якую падтрымліваюць толькі такія людзі, як вы.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s падтрымлівае Signal разавым ахвяраваннем. Signal - гэта некамерцыйная арганізацыя без рэкламадаўцаў і інвестараў, якую падтрымліваюць толькі такія людзі, як вы.</string>
 
     <string name="ImageView__badge">Значок</string>
 
@@ -6474,17 +6474,17 @@
     <string name="Subscription__expires_s">Сканчаецца: %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar не такі, як іншыя.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal не такі, як іншыя.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Канфідэнцыйны абмен паведамленнямі. Без рэкламы, без трэкераў, без сачэння.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar існуе за кошт ахвяраванняў, то бок ваша канфідэнцыйнасць для нас стаіць на першым месцы. Radar створаны для вас, а не для атрымання вашых даных i прыбытку.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal існуе за кошт ахвяраванняў, то бок ваша канфідэнцыйнасць для нас стаіць на першым месцы. Signal створаны для вас, а не для атрымання вашых даных i прыбытку.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Калі гэта магчыма, зрабіце ахвяраванне сёння, каб Radar заставаўся заўсёды вясёлым, надзейным і даступным для ўсіх.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Калі гэта магчыма, зрабіце ахвяраванне сёння, каб Signal заставаўся заўсёды вясёлым, надзейным і даступным для ўсіх.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Дзякуй за вашу падтрымку!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Вы атрымалі значок донара ад Radar! Вы можаце размясціць яго ў сваім профілі, каб прадэманстраваць вашу падтрымку.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Вы атрымалі значок донара ад Signal! Вы можаце размясціць яго ў сваім профілі, каб прадэманстраваць вашу падтрымку.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Вы таксама можаце</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">стаць штомесячным спонсарам.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Паказаць у профілі</string>
@@ -6492,11 +6492,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Працягнуць</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Калі вы маеце некалькі значкоў, вы можаце выбраць асаблівы значок, каб іншыя змаглі бачыць яго ў вашым профілі.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Падтрымлівайце Radar і атрымлівайце значкі для свайго профілю.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar - гэта некамерцыйная арганізацыя без рэкламадаўцаў і інвестараў, якую падтрымліваюць толькі такія людзі, як вы.</string>
+    <string name="BecomeASustainerFragment__get_badges">Падтрымлівайце Signal і атрымлівайце значкі для свайго профілю.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal - гэта некамерцыйная арганізацыя без рэкламадаўцаў і інвестараў, якую падтрымліваюць толькі такія людзі, як вы.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Зрабіць ахвяраванне для Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Зрабіць ахвяраванне для Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Дадаткова</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6581,7 +6581,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Перайсці ў Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Немагчыма апрацаваць плацеж для падпіскі</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Узніклі праблемы з атрыманнем вашага плацяжу Спонсара Radar. Пераканайцеся, што звесткі пра спосаб аплаты правільныя. Калі гэта не так, трэба абнавіць іх у Google Pay. Radar паспрабуе апрацаваць плацеж яшчэ раз праз некалькі дзён.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Узніклі праблемы з атрыманнем вашага плацяжу Спонсара Signal. Пераканайцеся, што звесткі пра спосаб аплаты правільныя. Калі гэта не так, трэба абнавіць іх у Google Pay. Signal паспрабуе апрацаваць плацеж яшчэ раз праз некалькі дзён.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Больш не паказваць гэта</string>
 
     <string name="Subscription__contact_support">Звярнуцца да службы падтрымкі</string>
@@ -6636,7 +6636,7 @@
     <string name="DonationsErrors__your_payment_is_still">Ваша ахвяраванне яшчэ апрацоўваецца. Гэта можа заняць некалькі хвілін у залежнасці ад вашага падключэння.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Не атрымалася скасаваць падпіску</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Для скасавання падпіскі патрабуецца падключэнне да інтэрнэту.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Ваша прылада не падтрымлівае ахвяраванні праз праграму, таму вы не можаце падпісацца, каб атрымаць значок прыкладання. Але вы можаце зрабіць ахвяраванне на нашым сайце, каб падтрымаць Radar.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Ваша прылада не падтрымлівае ахвяраванні праз праграму, таму вы не можаце падпісацца, каб атрымаць значок прыкладання. Але вы можаце зрабіць ахвяраванне на нашым сайце, каб падтрымаць Signal.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Памылка сеткі. Праверце падключэнне і паўтарыце спробу.</string>
     <string name="NetworkFailure__retry">Паспрабаваць зноў</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6651,7 +6651,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Ахвяраванне ад імя %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s ахвяравана для Radar ад вашага імя</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s ахвяравана для Signal ад вашага імя</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Актываваць</string>
     <!-- Gift badge view action label -->
@@ -6912,7 +6912,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Сума</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Дзякуй вам за падтрымку Radar. Ваш унёсак дапамагае падтрымліваць місію па распрацоўцы тэхналогіі канфідэнцыйнасці з адкрытым зыходным кодам, якая абараняе свабоду слова і робіць магчымым бяспечныя зносіны паміж мільёнамі людзей па ўсім свеце. Калі вы рэзідэнт Злучаных Штатаў, захавайце гэтую квітанцыю для вашых падатковых дакументаў. Radar Technology Foundation з\'яўляецца некамерцыйнай грамадскай дабрачыннай арганізацыяй, заснаванай у ЗША, якая вызвалена ад выплаты падаткаў згодна з раздзелам 501c3 Падатковага кодэкса. Наш федэральны падатковы ідэнтыфікацыйны нумар 82–4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Дзякуй вам за падтрымку Signal. Ваш унёсак дапамагае падтрымліваць місію па распрацоўцы тэхналогіі канфідэнцыйнасці з адкрытым зыходным кодам, якая абараняе свабоду слова і робіць магчымым бяспечныя зносіны паміж мільёнамі людзей па ўсім свеце. Калі вы рэзідэнт Злучаных Штатаў, захавайце гэтую квітанцыю для вашых падатковых дакументаў. Signal Technology Foundation з\'яўляецца некамерцыйнай грамадскай дабрачыннай арганізацыяй, заснаванай у ЗША, якая вызвалена ад выплаты падаткаў згодна з раздзелам 501c3 Падатковага кодэкса. Наш федэральны падатковы ідэнтыфікацыйны нумар 82–4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Няма квітанцый</string>
 
@@ -7272,10 +7272,10 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Зрабіць ахвяраванне для сябра</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Зрабіце ахвяраванне ад імя сябра або члена сям\'і, карыстальнікаў Radar, каб падтрымаць Radar. Яны атрымаюць значок, які будзе паказаны ў іх профілі на %1$d дзень</item>
-        <item quantity="few">Зрабіце ахвяраванне ад імя сябра або члена сям\'і, карыстальнікаў Radar, каб падтрымаць Radar. Яны атрымаюць значок, які будзе паказаны ў іх профілі на %1$d дні</item>
-        <item quantity="many">Зрабіце ахвяраванне ад імя сябра або члена сям\'і, карыстальнікаў Radar, каб падтрымаць Radar. Яны атрымаюць значок, які будзе паказаны ў іх профілі на %1$d дзён</item>
-        <item quantity="other">Зрабіце ахвяраванне ад імя сябра або члена сям\'і, карыстальнікаў Radar, каб падтрымаць Radar. Яны атрымаюць значок, які будзе паказаны ў іх профілі на %1$d дзён</item>
+        <item quantity="one">Зрабіце ахвяраванне ад імя сябра або члена сям\'і, карыстальнікаў Radar, каб падтрымаць Signal. Яны атрымаюць значок, які будзе паказаны ў іх профілі на %1$d дзень</item>
+        <item quantity="few">Зрабіце ахвяраванне ад імя сябра або члена сям\'і, карыстальнікаў Radar, каб падтрымаць Signal. Яны атрымаюць значок, які будзе паказаны ў іх профілі на %1$d дні</item>
+        <item quantity="many">Зрабіце ахвяраванне ад імя сябра або члена сям\'і, карыстальнікаў Radar, каб падтрымаць Signal. Яны атрымаюць значок, які будзе паказаны ў іх профілі на %1$d дзён</item>
+        <item quantity="other">Зрабіце ахвяраванне ад імя сябра або члена сям\'і, карыстальнікаў Radar, каб падтрымаць Signal. Яны атрымаюць значок, які будзе паказаны ў іх профілі на %1$d дзён</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Далей</string>
@@ -7298,9 +7298,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Дзякуй за вашу падтрымку!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s зрабіў(-ла) ахвяраванне для Radar ад вашага імя! Прадэманструйце сваю падтрымку Radar у вашым профілі.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s зрабіў(-ла) ахвяраванне для Signal ад вашага імя! Прадэманструйце сваю падтрымку Signal у вашым профілі.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Вы зрабілі ахвяраванне для Radar ад імя %1$s. Гэты карыстальнік, калі пажадае, зможа прадэманстраваць сваю падтрымку ў сваім профілі.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Вы зрабілі ахвяраванне для Signal ад імя %1$s. Гэты карыстальнік, калі пажадае, зможа прадэманстраваць сваю падтрымку ў сваім профілі.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Актываваць</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7308,7 +7308,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Актываванне значка…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Вы зрабілі ахвяраванне для Radar ад імя %1$s. Гэты карыстальнік, калі пажадае, зможа прадэманстраваць сваю падтрымку ў сваім профілі.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Вы зрабілі ахвяраванне для Signal ад імя %1$s. Гэты карыстальнік, калі пажадае, зможа прадэманстраваць сваю падтрымку ў сваім профілі.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Тэрмін дзеяння вашага значка скончыўся</string>
     <!-- Expired gift sheet top description text -->
@@ -7552,7 +7552,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Працягнуць</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Канфідэнцыйны абмен паведамленнямі, які існуе дзякуючы вашай падтрымцы. Без рэкламы, без трэкераў, без кампрамісаў. Зрабіце ахвяраванне зараз, каб падтрымаць Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Канфідэнцыйны абмен паведамленнямі, які існуе дзякуючы вашай падтрымцы. Без рэкламы, без трэкераў, без кампрамісаў. Зрабіце ахвяраванне зараз, каб падтрымаць Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Ваша ахвяраванне чакае разгляду</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7577,11 +7577,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Зрабіць ахвяраванне для Radar %1$s/месяц</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Зрабіць ахвяраванне для Signal %1$s/месяц</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Атрымайце значок %1$s</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Зрабіць ахвяраванне %1$s для Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Зрабіць ахвяраванне %1$s для Signal</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Атрымайце значок %1$s на %2$d дзень</item>
@@ -7606,7 +7606,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Банкаўскі перавод</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe апрацоўвае ахвяраванні, зробленыя для Radar. Radar не збірае і не захоўвае вашу асабістую інфармацыю. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe апрацоўвае ахвяраванні, зробленыя для Signal. Signal не збірае і не захоўвае вашу асабістую інфармацыю. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Даведацца больш</string>
     <!-- Button label to continue with transfer -->
@@ -7742,9 +7742,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Ваша інфармацыя застаецца канфідэнцыйнай</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar не збірае і не захоўвае вашу асабістую інфармацыю, калі вы робіце ахвяраванне.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal не збірае і не захоўвае вашу асабістую інфармацыю, калі вы робіце ахвяраванне.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Для атрымання вашых ахвяраванняў мы выкарыстоўваем кампанію Stripe у якасці аператара плацяжоў. Мы не маем доступу ні да якой інфармацыі, што вы перадаеце іншым карыстальнікам, не захоўваем і не трымаем яе.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar не звязвае і не можа звязаць ваша ахвяраванне з вашым уліковым запісам Radar.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal не звязвае і не можа звязаць ваша ахвяраванне з вашым уліковым запісам Radar.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Дзякуй за вашу падтрымку!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8959,7 +8959,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Выберыце план для рэзервовага капiравання</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Усе рэзервовыя копіі абаронены скразным шыфраваннем. Radar — некамерцыйная арганізацыя, таму аплата за рэзервовае капіраванне дапамагае падтрымліваць нашу місію.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Усе рэзервовыя копіі абаронены скразным шыфраваннем. Signal — некамерцыйная арганізацыя, таму аплата за рэзервовае капіраванне дапамагае падтрымліваць нашу місію.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Даведацца больш</string>
     <!-- Primary action button label without a current selection -->
@@ -8996,7 +8996,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s сховішча (%2$s фота)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Дзякуй за падтрымку Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Дзякуй за падтрымку Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">%1$d апошні дзень утрымання медыяфайлаў</item>

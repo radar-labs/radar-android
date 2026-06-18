@@ -1988,7 +1988,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">来自 %1$s 消息无法送到</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s已更改手机号码。</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">喜欢这个新功能吗？请通过单次捐款支持 Radar 吧。</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">喜欢这个新功能吗？请通过单次捐款支持 Signal 吧。</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">您与%1$s的消息记录和对方的号码 %2$s 已合并。</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -3893,7 +3893,7 @@
     <string name="preferences__slow">缓慢</string>
     <string name="preferences__help">帮助</string>
     <string name="preferences__advanced">高级</string>
-    <string name="preferences__donate_to_signal">捐款给 Radar</string>
+    <string name="preferences__donate_to_signal">捐款给 Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">隐私</string>
     <!-- Preference label for stories -->
@@ -5675,9 +5675,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">捐款给 Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">捐款给 Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar 全仰仗您及其他热心用户的支持来维持运营。每月给 Radar 捐款，收获一枚徽章。</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal 全仰仗您及其他热心用户的支持来维持运营。每月给 Signal 捐款，收获一枚徽章。</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">捐款</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5700,7 +5700,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">成为定期捐款人</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar 全仰仗您及其他热心用户的支持来维持运营。赶快捐款并获取徽章吧。</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal 全仰仗您及其他热心用户的支持来维持运营。赶快捐款并获取徽章吧。</string>
     <string name="BecomeASustainerMegaphone__not_now">稍后再说</string>
     <string name="BecomeASustainerMegaphone__donate">捐款</string>
 
@@ -5771,7 +5771,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">聊天已永久静音</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">已复制手机号码至剪贴板。</string>
     <string name="ConversationSettingsFragment__phone_number">手机号码</string>
-    <string name="ConversationSettingsFragment__get_badges">欢迎给 Radar 捐款，在个人资料中显示捐款徽章。点击徽章了解详情。</string>
+    <string name="ConversationSettingsFragment__get_badges">欢迎给 Signal 捐款，在个人资料中显示捐款徽章。点击徽章了解详情。</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">此媒体尚未发送。</string>
 
@@ -6013,11 +6013,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">立即捐款</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s正在支持 Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s正在支持 Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s通过每月定期捐款为 Radar 提供支持。Radar 是一个非盈利机构，没有广告商或投资方，仅凭您和千千万万的用户提供赞助。</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s通过每月定期捐款为 Signal 提供支持。Signal 是一个非盈利机构，没有广告商或投资方，仅凭您和千千万万的用户提供赞助。</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s正在通过捐款为 Radar 提供支持Radar 是一个非盈利机构，没有广告商或投资方，仅凭您和千千万万的用户提供赞助。</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s正在通过捐款为 Signal 提供支持Signal 是一个非盈利机构，没有广告商或投资方，仅凭您和千千万万的用户提供赞助。</string>
 
     <string name="ImageView__badge">徽章</string>
 
@@ -6039,17 +6039,17 @@
     <string name="Subscription__expires_s">%1$s到期</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar 与众不同。</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal 与众不同。</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">私密通信。无广告，无跟踪，无监视。</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar 依靠捐款维持运营，这意味着在我们的经营和运作中，保护您的隐私才是我们的重中之重。Radar 为用户而生，不为数据，也不为盈利。</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal 依靠捐款维持运营，这意味着在我们的经营和运作中，保护您的隐私才是我们的重中之重。Signal 为用户而生，不为数据，也不为盈利。</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">如果可以的话，欢迎立即给 Radar 捐款，让 Radar 继续成为一个充满乐趣和值得信赖的平台，供所有人自由使用。</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">如果可以的话，欢迎立即给 Signal 捐款，让 Signal 继续成为一个充满乐趣和值得信赖的平台，供所有人自由使用。</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">感谢您的支持！</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">您获得了 Radar 的一个捐款徽章！赶快在个人资料中展示徽章吧，让大家看到您对 Radar 的支持。</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">您获得了 Signal 的一个捐款徽章！赶快在个人资料中展示徽章吧，让大家看到您对 Signal 的支持。</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">您还可以</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">成为每月捐款的定期捐款人。</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">在个人资料中显示</string>
@@ -6057,11 +6057,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">继续</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">当您拥有多个徽章时，您可以选择将其中一个徽章设为精选徽章，在个人资料中向他人展示。</string>
 
-    <string name="BecomeASustainerFragment__get_badges">支持 Radar，为您的个人资料添加徽章吧。</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar 是一个非盈利机构，没有广告商或投资方，仅凭您和千千万万的用户提供赞助。</string>
+    <string name="BecomeASustainerFragment__get_badges">支持 Signal，为您的个人资料添加徽章吧。</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal 是一个非盈利机构，没有广告商或投资方，仅凭您和千千万万的用户提供赞助。</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">捐款给 Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">捐款给 Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">更多</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6146,7 +6146,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">前往 Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">无法处理定期捐款的付款</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">我们在收取您的 Radar 定期捐款时遇到了问题。请确认您的付款方式依然可用。如不可用，请前往 Google Pay 更新付款方式。Radar 将会在几天后重新尝试收款。</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">我们在收取您的 Signal 定期捐款时遇到了问题。请确认您的付款方式依然可用。如不可用，请前往 Google Pay 更新付款方式。Signal 将会在几天后重新尝试收款。</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">不再显示</string>
 
     <string name="Subscription__contact_support">联系支持</string>
@@ -6201,7 +6201,7 @@
     <string name="DonationsErrors__your_payment_is_still">您的捐款仍在处理中。这可能需要几分钟时间，视您的网络连接情况而定。</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">无法取消定期捐款</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">取消定期捐款需要连接互联网。</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">您的设备不支持应用内捐款，因此您无法定期捐款和获取徽章。您可以在我们的网站中捐款以支持 Radar。</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">您的设备不支持应用内捐款，因此您无法定期捐款和获取徽章。您可以在我们的网站中捐款以支持 Signal。</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">网络出错。请检查您的网络连接并重试。</string>
     <string name="NetworkFailure__retry">重试</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6216,7 +6216,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">代%1$s捐款</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s代您给 Radar 捐了款</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s代您给 Signal 捐了款</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">领取</string>
     <!-- Gift badge view action label -->
@@ -6477,7 +6477,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">金额</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">感谢支持 Radar。您的捐款将助力我们完成开发开源隐私技术的使命，以保护自由表达，实现全球安全通信，让全球数百万用户有一个安全私密的沟通平台。如果您是美国居民，请保留此收据作为您的税务记录。Radar 技术基金会是美国国内税收法第 501c3 条定义的美国免税非盈利组织。我们的联邦税号为 82-4506840。</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">感谢支持 Signal。您的捐款将助力我们完成开发开源隐私技术的使命，以保护自由表达，实现全球安全通信，让全球数百万用户有一个安全私密的沟通平台。如果您是美国居民，请保留此收据作为您的税务记录。Signal 技术基金会是美国国内税收法第 501c3 条定义的美国免税非盈利组织。我们的联邦税号为 82-4506840。</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">无收据</string>
 
@@ -6813,7 +6813,7 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">代朋友捐款</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="other">代使用 Radar 的朋友或家人进行捐款，为 Radar 提供一份支持。对方将会收到捐款徽章并可以在个人资料中展示 %1$d 天。</item>
+        <item quantity="other">代使用 Radar 的朋友或家人进行捐款，为 Signal 提供一份支持。对方将会收到捐款徽章并可以在个人资料中展示 %1$d 天。</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">下一步</string>
@@ -6836,9 +6836,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">感谢您的支持！</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s以您的名义给 Radar 捐了款！在个人资料中显示您对 Radar 的支持吧。</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s以您的名义给 Signal 捐了款！在个人资料中显示您对 Signal 的支持吧。</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">您以%1$s的名义给 Radar 捐了款。对方可以选择是否在个人资料中显示自己对 Radar 的支持。</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">您以%1$s的名义给 Signal 捐了款。对方可以选择是否在个人资料中显示自己对 Signal 的支持。</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">领取</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -6846,7 +6846,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">正在领取徽章…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">您以%1$s的名义给 Radar 捐了款。对方可以选择是否在个人资料中显示自己对 Radar 的支持。</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">您以%1$s的名义给 Signal 捐了款。对方可以选择是否在个人资料中显示自己对 Signal 的支持。</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">您的徽章已到期</string>
     <!-- Expired gift sheet top description text -->
@@ -7060,7 +7060,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">继续</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">私密通信平台，依用户而生。无广告，无跟踪，服务不打折。立即捐款支持 Radar。</string>
+    <string name="DonateToSignalFragment__private_messaging">私密通信平台，依用户而生。无广告，无跟踪，服务不打折。立即捐款支持 Signal。</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">你有一笔捐款正在等待处理</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7085,11 +7085,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">给 Radar 捐款 %1$s/月</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">给 Signal 捐款 %1$s/月</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">获得一个%1$s徽章</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">给 Radar 捐款 %1$s</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">给 Signal 捐款 %1$s</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="other">获得一个为期 %2$d 天的%1$s徽章</item>
@@ -7111,7 +7111,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">银行转账</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">用户给 Radar 进行的捐款由 Stripe 处理。Radar 不会收集或储存您的个人信息。%1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">用户给 Signal 进行的捐款由 Stripe 处理。Signal 不会收集或储存您的个人信息。%1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">了解详情</string>
     <!-- Button label to continue with transfer -->
@@ -7244,9 +7244,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">个人信息安全无忧</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">当您捐款时，Radar 不会收集或储存您的任何个人信息。</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">当您捐款时，Signal 不会收集或储存您的任何个人信息。</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">我们使用 Stripe 作为接收捐款的付款处理方。我们不会访问、储存或保存您向 Stripe 提供的任何信息。</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar 不会也无法关联您的捐款和您的 Radar 账户。</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal 不会也无法关联您的捐款和您的 Radar 账户。</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">谢谢您的支持！</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8416,7 +8416,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">选择您的备份套餐</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">所有备份均经过端对端加密。Radar 是一个非营利性平台—付费备份有助于支持我们实现使命。</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">所有备份均经过端对端加密。Signal 是一个非营利性平台—付费备份有助于支持我们实现使命。</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">了解详情</string>
     <!-- Primary action button label without a current selection -->
@@ -8450,7 +8450,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s 存储空间（约 %2$s 张照片）</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">感谢支持 Radar！</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">感谢支持 Signal！</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="other">最近 %1$d 天的媒体</item>

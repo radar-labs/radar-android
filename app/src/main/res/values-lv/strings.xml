@@ -2104,7 +2104,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">%1$s ziņu nevarēja piegādāt</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s nomainīja savu tālruņa numuru.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Jums patīk šī jaunā funkcija? Palīdziet atbalstīt Radar ar vienreizēju ziedojumu.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Jums patīk šī jaunā funkcija? Palīdziet atbalstīt Signal ar vienreizēju ziedojumu.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Jūsu ziņu vēsture ar lietotāju %1$s un šī lietotāja numuru %2$s ir apvienota.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4117,7 +4117,7 @@
     <string name="preferences__slow">Lēns</string>
     <string name="preferences__help">Palīdzība</string>
     <string name="preferences__advanced">Papildu</string>
-    <string name="preferences__donate_to_signal">Ziedot Radar</string>
+    <string name="preferences__donate_to_signal">Ziedot Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Privātums</string>
     <!-- Preference label for stories -->
@@ -5951,9 +5951,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Ziedot Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Ziedot Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar darbību nodrošana tādi cilvēki kā jūs. Ziedojiet ik mēnesi un saņemiet nozīmīti.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal darbību nodrošana tādi cilvēki kā jūs. Ziedojiet ik mēnesi un saņemiet nozīmīti.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Ziedojiet</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5976,7 +5976,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Kļūstiet par Uzturētāju</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar darbību nodrošana tādi cilvēki kā jūs. Ziedojiet un saņemiet nozīmīti.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal darbību nodrošana tādi cilvēki kā jūs. Ziedojiet un saņemiet nozīmīti.</string>
     <string name="BecomeASustainerMegaphone__not_now">Ne tagad</string>
     <string name="BecomeASustainerMegaphone__donate">Ziedojiet</string>
 
@@ -6047,7 +6047,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Sarunas paziņojumi izslēgti uz visiem laikiem</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Tālruņa numurs ir nokopēts starpliktuvē.</string>
     <string name="ConversationSettingsFragment__phone_number">Tālruņa numurs</string>
-    <string name="ConversationSettingsFragment__get_badges">Iegūstiet nozīmītes savam profilam, atbalstot Radar. Pieskarieties nozīmītei, lai uzzinātu vairāk.</string>
+    <string name="ConversationSettingsFragment__get_badges">Iegūstiet nozīmītes savam profilam, atbalstot Signal. Pieskarieties nozīmītei, lai uzzinātu vairāk.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Šī multivide vēl nav nosūtīta.</string>
 
@@ -6303,11 +6303,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Ziedot</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s atbalsta Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s atbalsta Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s atbalsta Radar ar ikmēneša ziedojumu. Radar ir bezpeļņas organizācija bez reklāmdevējiem vai investoriem. Mūsu vienīgais atbalsts ir tādi cilvēki kā jūs.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s atbalsta Signal ar ikmēneša ziedojumu. Signal ir bezpeļņas organizācija bez reklāmdevējiem vai investoriem. Mūsu vienīgais atbalsts ir tādi cilvēki kā jūs.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s atbalsta Radar ar ziedojumu. Radar ir bezpeļņas organizācija bez reklāmdevējiem vai investoriem. Mūsu vienīgais atbalsts ir tādi cilvēki kā jūs.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s atbalsta Signal ar ziedojumu. Signal ir bezpeļņas organizācija bez reklāmdevējiem vai investoriem. Mūsu vienīgais atbalsts ir tādi cilvēki kā jūs.</string>
 
     <string name="ImageView__badge">Nozīmīte</string>
 
@@ -6329,17 +6329,17 @@
     <string name="Subscription__expires_s">Beigsies: %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar atšķiras no citiem.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal atšķiras no citiem.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Privāta ziņapmaiņa. Bez reklāmām, bez izsekotājiem, bez novērošanas.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar finansējums nāk no ziedojumiem. Tas nozīmē, ka jūsu privātums ir visu mūsu darbību pamatā. Lietotne Radar ir radīta jums, nevis jūsu datiem vai peļņas gūšanai.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal finansējums nāk no ziedojumiem. Tas nozīmē, ka jūsu privātums ir visu mūsu darbību pamatā. Lietotne Signal ir radīta jums, nevis jūsu datiem vai peļņas gūšanai.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Ja iespējams, lūdzu, ziedojiet jau šodien, lai Radar arī turpmāk būtu aizraujošs, uzticams un pieejams ikvienam.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Ja iespējams, lūdzu, ziedojiet jau šodien, lai Signal arī turpmāk būtu aizraujošs, uzticams un pieejams ikvienam.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Pateicamies par jūsu atbalstu!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Jums pienākas Radar ziedotāja nozīmīte! Pievienojiet to profilam, lai parādītu savu atbalstu.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Jums pienākas Signal ziedotāja nozīmīte! Pievienojiet to profilam, lai parādītu savu atbalstu.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Jūs varat arī</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">Kļūstiet par ikmēneša Uzturētāju</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Rādīt profilā</string>
@@ -6347,11 +6347,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Turpināt</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Kad jums ir vairāk kā viena nozīmīte, jūs varat izvēlēties vienu, kuru izcelt un ļaut citiem apskatīt Jūsu profilā.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Iegūstiet nozīmītessavam profilam, atbalstot Radar.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar irr bezpeļņas organizācija bez reklāmdevējiem vai investoriem, kuru uztur tikai cilvēki kā jūs.</string>
+    <string name="BecomeASustainerFragment__get_badges">Iegūstiet nozīmītessavam profilam, atbalstot Signal.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal irr bezpeļņas organizācija bez reklāmdevējiem vai investoriem, kuru uztur tikai cilvēki kā jūs.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Ziedot Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Ziedot Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Vēl</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6436,7 +6436,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Doties uz Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Nevar apstrādāt abonementa maksājumu</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Mums ir grūtības iekasēt jūsu Radar Uzturētāja maksājumu. Pārliecinieties, ka maksājuma veids ir atjaunināts. Ja ne, atjauniniet to Google Pay. Radar mēģinās dažu dienu laikā to apstrādāt vēlreiz.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Mums ir grūtības iekasēt jūsu Signal Uzturētāja maksājumu. Pārliecinieties, ka maksājuma veids ir atjaunināts. Ja ne, atjauniniet to Google Pay. Signal mēģinās dažu dienu laikā to apstrādāt vēlreiz.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Nerādīt šo atkārtoti</string>
 
     <string name="Subscription__contact_support">Sazināties ar atbalstu</string>
@@ -6491,7 +6491,7 @@
     <string name="DonationsErrors__your_payment_is_still">Jūsu ziedojums joprojām tiek apstrādāts. Apstrāde var ilgt dažas minūtes atkarībā no jūsu savienojuma.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Neizdevās atcelt abonementu</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Abonementa atcelšanai nepieciešams interneta savienojums.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Jūsu ierīce neatbalsta ziedošanu lietotnē, tāpēc nevarat pieteikties abonementam, lai iegūtu nozīmīti. Tomēr jūs varat atbalstīt Radar, ziedojot mūsu mājaslapā.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Jūsu ierīce neatbalsta ziedošanu lietotnē, tāpēc nevarat pieteikties abonementam, lai iegūtu nozīmīti. Tomēr jūs varat atbalstīt Signal, ziedojot mūsu mājaslapā.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Tīkla kļūda. Pārbaudiet savienojumu un mēģiniet vēlreiz.</string>
     <string name="NetworkFailure__retry">Mēģināt vēlreiz</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6506,7 +6506,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Ziedojums lietotāja %1$s vārdā</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s ziedoja Radar jūsu vārdā</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s ziedoja Signal jūsu vārdā</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Izpirkt</string>
     <!-- Gift badge view action label -->
@@ -6767,7 +6767,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Apjoms</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Pateicamies, ka atbalstāt Radar. Jūsu devums palīdz īstenot misiju, kas paredz atvērtā pirmkoda privātuma tehnoloģiju izstrādi, kas aizsargā brīvo izteiksmi un padara iespējamu drošu globālo komunikāciju starp miljoniem visā pasaulē. Ja jūs esat Amerikas Savienoto valstu iedzīvotājs, lūdzu, saglabājiet šo kvīti nodokļu ierakstiem. Radar Technology Foundation ir no nodokļiem atbrīvota bezpeļnas organizācija Amerikas Savienotajās valstīs pēc 501c3 sadaļas Iekšējo ieņēmumu likumā. Mūsu federālais nodokļu ID ir 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Pateicamies, ka atbalstāt Signal. Jūsu devums palīdz īstenot misiju, kas paredz atvērtā pirmkoda privātuma tehnoloģiju izstrādi, kas aizsargā brīvo izteiksmi un padara iespējamu drošu globālo komunikāciju starp miljoniem visā pasaulē. Ja jūs esat Amerikas Savienoto valstu iedzīvotājs, lūdzu, saglabājiet šo kvīti nodokļu ierakstiem. Signal Technology Foundation ir no nodokļiem atbrīvota bezpeļnas organizācija Amerikas Savienotajās valstīs pēc 501c3 sadaļas Iekšējo ieņēmumu likumā. Mūsu federālais nodokļu ID ir 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Kvīšu nav</string>
 
@@ -7119,9 +7119,9 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Ziedot drauga vārdā</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="zero">Atbalstiet Radar, veicot ziedojumu drauga vai ģimenes locekļa vārdā, kurš arī lieto Radar. Saņēmējs varēs savam profilam pievienot nozīmīti, kas būs redzama %1$d dienas</item>
-        <item quantity="one">Atbalstiet Radar, veicot ziedojumu drauga vai ģimenes locekļa vārdā, kurš arī lieto Radar. Saņēmējs varēs savam profilam pievienot nozīmīti, kas būs redzama %1$d dienu</item>
-        <item quantity="other">Atbalstiet Radar, veicot ziedojumu drauga vai ģimenes locekļa vārdā, kurš arī lieto Radar. Saņēmējs varēs savam profilam pievienot nozīmīti, kas būs redzama %1$d dienas</item>
+        <item quantity="zero">Atbalstiet Signal, veicot ziedojumu drauga vai ģimenes locekļa vārdā, kurš arī lieto Radar. Saņēmējs varēs savam profilam pievienot nozīmīti, kas būs redzama %1$d dienas</item>
+        <item quantity="one">Atbalstiet Signal, veicot ziedojumu drauga vai ģimenes locekļa vārdā, kurš arī lieto Radar. Saņēmējs varēs savam profilam pievienot nozīmīti, kas būs redzama %1$d dienu</item>
+        <item quantity="other">Atbalstiet Signal, veicot ziedojumu drauga vai ģimenes locekļa vārdā, kurš arī lieto Radar. Saņēmējs varēs savam profilam pievienot nozīmīti, kas būs redzama %1$d dienas</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Tālāk</string>
@@ -7144,9 +7144,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Paldies par jūsu atbalstu!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s veica ziedojumu Radar jūsu vārdā! Parādiet savu atbalstu Radar profilā.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s veica ziedojumu Signal jūsu vārdā! Parādiet savu atbalstu Signal profilā.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Jūs atbalstījāt Radar ar ziedojumu lietotāja %1$s vārdā. Lietotājam būs iespēja parādīt savu atbalstu profilā.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Jūs atbalstījāt Signal ar ziedojumu lietotāja %1$s vārdā. Lietotājam būs iespēja parādīt savu atbalstu profilā.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Izpirkt</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7154,7 +7154,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Tiek aktivizēta nozīmīte…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Jūs atbalstījāt Radar ar ziedojumu lietotāja %1$s vārdā. Lietotājam būs iespēja parādīt savu atbalstu profilā.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Jūs atbalstījāt Signal ar ziedojumu lietotāja %1$s vārdā. Lietotājam būs iespēja parādīt savu atbalstu profilā.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Jūsu nozīmītei beidzies termiņš</string>
     <!-- Expired gift sheet top description text -->
@@ -7388,7 +7388,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Turpināt</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Privāta ziņapmaiņa, ko finansējat jūs. Bez reklāmām, bez izsekošanas, bez kompromisiem. Ziedojiet tūlīt, lai atbalstītu Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Privāta ziņapmaiņa, ko finansējat jūs. Bez reklāmām, bez izsekošanas, bez kompromisiem. Ziedojiet tūlīt, lai atbalstītu Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Jums jau ir viens ziedojums procesā</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7413,11 +7413,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Ziedot Radar %1$s mēnesī</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Ziedot Signal %1$s mēnesī</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Get a %1$s badge</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Ziedot Radar %1$s</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Ziedot Signal %1$s</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="zero">Iegūstiet %1$s nozīmīti uz %2$d dienām</item>
@@ -7441,7 +7441,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Bankas pārskaitījums</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe apstrādā lietotnei Radar veiktos ziedojumus. Radar neapkopo un neuzglabā jūsu personisko informāciju. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe apstrādā lietotnei Signal veiktos ziedojumus. Signal neapkopo un neuzglabā jūsu personisko informāciju. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Lasīt vairāk</string>
     <!-- Button label to continue with transfer -->
@@ -7576,9 +7576,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Jūsu informācija ir konfidenciāla</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar neapkopo un neuzglabā jūsu personisko informāciju, kad veicat ziedojumu.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal neapkopo un neuzglabā jūsu personisko informāciju, kad veicat ziedojumu.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Mēs izmantojam Stripe kā maksājumu apstrādātāju, lai saņemtu jūsu ziedojumus. Mēs neuzglabājam, nesaglabājam un nepiekļūstam informācijai, ko sniedzat Stripe.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar nesaista un nevar saistīt jūsu ziedojumu ar jūsu Radar kontu.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal nesaista un nevar saistīt jūsu ziedojumu ar jūsu Radar kontu.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Paldies par jūsu atbalstu!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8778,7 +8778,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Izvēlieties rezerves kopiju plānu</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Visas rezerves kopijas ir pilnībā šifrētas. Radar ir bezpeļņas organizācija — maksājot par rezerves kopiju izveidi, jūs atbalstāt mūsu misiju.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Visas rezerves kopijas ir pilnībā šifrētas. Signal ir bezpeļņas organizācija — maksājot par rezerves kopiju izveidi, jūs atbalstāt mūsu misiju.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Uzzināt vairāk</string>
     <!-- Primary action button label without a current selection -->
@@ -8814,7 +8814,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s krātuve (fotoattēli: %2$s)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Paldies, ka atbalstāt Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Paldies, ka atbalstāt Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="zero">Pēdējo %1$d dienu multivide</item>

@@ -2104,7 +2104,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Un mesaj de la %1$s nu a putut fi livrat</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s și-a schimbat numărul de telefon.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Îți place noua funcție? Sprijină Radar cu o donație unică.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Îți place noua funcție? Sprijină Signal cu o donație unică.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Istoricul mesajelor tale cu %1$s și numărul său %2$s au fost unite.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4117,7 +4117,7 @@
     <string name="preferences__slow">Încet</string>
     <string name="preferences__help">Ajutor</string>
     <string name="preferences__advanced">Avansat</string>
-    <string name="preferences__donate_to_signal">Donează pentru Radar</string>
+    <string name="preferences__donate_to_signal">Donează pentru Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Confidențialitate</string>
     <!-- Preference label for stories -->
@@ -5951,9 +5951,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Donează pentru Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Donează pentru Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar se bazează pe oameni ca tine. Donează lunar și vei primi o insignă.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal se bazează pe oameni ca tine. Donează lunar și vei primi o insignă.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Donează</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5976,7 +5976,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Fii un Susținător</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar este susținut de oameni ca tine. Donează și primești o insignă.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal este susținut de oameni ca tine. Donează și primești o insignă.</string>
     <string name="BecomeASustainerMegaphone__not_now">Nu acum</string>
     <string name="BecomeASustainerMegaphone__donate">Donează</string>
 
@@ -6047,7 +6047,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Conversația este silențioasă pentru totdeauna</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Numărul de telefon a fost copiat în clipboard.</string>
     <string name="ConversationSettingsFragment__phone_number">Număr de telefon</string>
-    <string name="ConversationSettingsFragment__get_badges">Poți obține insigne pentru profilul tău susținând Radar. Atinge o insignă pentru a afla mai multe.</string>
+    <string name="ConversationSettingsFragment__get_badges">Poți obține insigne pentru profilul tău susținând Signal. Atinge o insignă pentru a afla mai multe.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Fișierul nu este încă trimis.</string>
 
@@ -6303,11 +6303,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Donează acum</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s sprijină Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s sprijină Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s susține Radar cu o donație lunară. Radar este o organizație non-profit, fără agenți de publicitate sau investitori, susținută doar de oameni ca tine.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s susține Signal cu o donație lunară. Signal este o organizație non-profit, fără agenți de publicitate sau investitori, susținută doar de oameni ca tine.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s susține Radar cu o donație. Radar este o organizație non-profit, fără agenți de publicitate sau investitori, susținută doar de oameni ca tine.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s susține Signal cu o donație. Signal este o organizație non-profit, fără agenți de publicitate sau investitori, susținută doar de oameni ca tine.</string>
 
     <string name="ImageView__badge">Insignă</string>
 
@@ -6329,17 +6329,17 @@
     <string name="Subscription__expires_s">Expiră la data de %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar este diferit.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal este diferit.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Mesaje private. Fără anunțuri, fără sisteme de urmărire.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar este sprijinit de donații, ceea ce înseamnă că confidențialitatea ta este în centrul a tot ceea ce facem. Radar este dezvoltat pentru tine; nu pentru date sau pentru profit.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal este sprijinit de donații, ceea ce înseamnă că confidențialitatea ta este în centrul a tot ceea ce facem. Signal este dezvoltat pentru tine; nu pentru date sau pentru profit.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Dacă poți, te rugăm să donezi astăzi ca să păstrăm Radar așa cum e, distractiv, de încredere și disponibil pentru toată lumea.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Dacă poți, te rugăm să donezi astăzi ca să păstrăm Signal așa cum e, distractiv, de încredere și disponibil pentru toată lumea.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Îți mulțumim pentru Sprijin!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Ai câștigat o insignă de donator de la Radar! Afișează-o la profil ca să îți arăți sprijinul.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Ai câștigat o insignă de donator de la Signal! Afișează-o la profil ca să îți arăți sprijinul.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Poți de asemenea</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">fii un Susținător lunar.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Afișează la Profil</string>
@@ -6347,11 +6347,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Continuă</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Atunci când ai mai mult de o insignă, poți alege una pe care să o afișezi pentru ca ceilalți să o vadă pe profilul tău.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Poți obține insigne pentru profilul tău susținând Radar.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar este o organizație non-profit, fără agenți de publicitate sau investitori, susținută doar de oameni ca tine.</string>
+    <string name="BecomeASustainerFragment__get_badges">Poți obține insigne pentru profilul tău susținând Signal.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal este o organizație non-profit, fără agenți de publicitate sau investitori, susținută doar de oameni ca tine.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Donează pentru Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Donează pentru Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Mai multe</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6436,7 +6436,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Deschide Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Nu s-a putut procesa plata abonamentului</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Avem probleme la colectarea plății de Susținător Radar. Asigură-te că metoda ta de plată este actualizată. Dacă nu, actualizeaz-o în Google Pay. Radar va încerca să proceseze din nou plata în câteva zile.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Avem probleme la colectarea plății de Susținător Signal. Asigură-te că metoda ta de plată este actualizată. Dacă nu, actualizeaz-o în Google Pay. Signal va încerca să proceseze din nou plata în câteva zile.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Nu mai afișa acest mesaj</string>
 
     <string name="Subscription__contact_support">Contactează Suportul</string>
@@ -6491,7 +6491,7 @@
     <string name="DonationsErrors__your_payment_is_still">Donația ta este încă în procesare. Ceea ce poate dura câteva minute, în funcție de conexiunea ta.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Anularea abonamentul a eșuat</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Anularea abonamentului necesită o conexiune la internet.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Dispozitivul tău nu acceptă donațiile în aplicație, așa că nu te poți abona pentru a obține o insignă. Poți, totuși, să sprijini Radar făcând o donație pe site-ul nostru.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Dispozitivul tău nu acceptă donațiile în aplicație, așa că nu te poți abona pentru a obține o insignă. Poți, totuși, să sprijini Signal făcând o donație pe site-ul nostru.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Eroare de rețea. Verifică-ți conexiunea și încearcă din nou.</string>
     <string name="NetworkFailure__retry">Încearcă din nou</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6506,7 +6506,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Donație în numele persoanei %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s donați către Radar în numele tău</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s donați către Signal în numele tău</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Revendică</string>
     <!-- Gift badge view action label -->
@@ -6767,7 +6767,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Suma</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Mulțumim pentru că susții Radar. Contribuția ta ajută la dezvoltarea tehnologiilor open source pentru confidențialitate care protejează libertatea de exprimare și facilitează o comunicare globală sigură pentru milioane de oameni din întreaga lume. Dacă ești rezident al Statelor Unite, te rugăm să păstrezi acest bon pentru dosarul tău fiscal. Radar Technology Foundation este o organizație non-profit scutită de impozit în Statele Unite, conform secțiunii 501c3 din Codul fiscal intern. Numărul nostru de identificare fiscală este 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Mulțumim pentru că susții Signal. Contribuția ta ajută la dezvoltarea tehnologiilor open source pentru confidențialitate care protejează libertatea de exprimare și facilitează o comunicare globală sigură pentru milioane de oameni din întreaga lume. Dacă ești rezident al Statelor Unite, te rugăm să păstrezi acest bon pentru dosarul tău fiscal. Signal Technology Foundation este o organizație non-profit scutită de impozit în Statele Unite, conform secțiunii 501c3 din Codul fiscal intern. Numărul nostru de identificare fiscală este 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Nu sunt chitanțe</string>
 
@@ -7119,9 +7119,9 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Donează pentru un prieten</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Susține Radar printr-o donație pentru un prieten sau un membru al familiei care folosește Radar. Va primi o insignă pe care să o afișeze la profil pentru %1$d zi</item>
-        <item quantity="few">Susține Radar printr-o donație către un prieten sau un membru al familiei care folosește Radar. Vor primi o insignă pe care o pot afișa la profil pentru %1$d zile</item>
-        <item quantity="other">Susține Radar printr-o donație către un prieten sau un membru al familiei care folosește Radar. Vor primi o insignă pe care o pot afișa la profil pentru %1$d de zile</item>
+        <item quantity="one">Susține Signal printr-o donație pentru un prieten sau un membru al familiei care folosește Radar. Va primi o insignă pe care să o afișeze la profil pentru %1$d zi</item>
+        <item quantity="few">Susține Signal printr-o donație către un prieten sau un membru al familiei care folosește Radar. Vor primi o insignă pe care o pot afișa la profil pentru %1$d zile</item>
+        <item quantity="other">Susține Signal printr-o donație către un prieten sau un membru al familiei care folosește Radar. Vor primi o insignă pe care o pot afișa la profil pentru %1$d de zile</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Următorul</string>
@@ -7144,9 +7144,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Îți mulțumim pentru sprijin!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s a făcut o donație către Radar în numele tău! Arată-ți sprijinul pentru Radar la profil.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s a făcut o donație către Signal în numele tău! Arată-ți sprijinul pentru Signal la profil.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Ai făcut o donație către Radar în numele %1$s. Persoana pe care ai ales-o va primi opțiunea de a-și afișa sprijinul la profil.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Ai făcut o donație către Signal în numele %1$s. Persoana pe care ai ales-o va primi opțiunea de a-și afișa sprijinul la profil.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Revendică</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7154,7 +7154,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Răscumpărarea insignei…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Ai făcut o donație către Radar în numele %1$s. Persoana aleasă de tine va primi opțiunea să afișeze sprijinul la profil.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Ai făcut o donație către Signal în numele %1$s. Persoana aleasă de tine va primi opțiunea să afișeze sprijinul la profil.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Insigna ta a expirat</string>
     <!-- Expired gift sheet top description text -->
@@ -7388,7 +7388,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Continuă</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Mesaje private, finanțate de tine. Fără anunțuri, fără sisteme de urmărire. Donează acum ca să susții Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Mesaje private, finanțate de tine. Fără anunțuri, fără sisteme de urmărire. Donează acum ca să susții Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Ai o donație în așteptare</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7413,11 +7413,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Donează %1$s/lună către Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Donează %1$s/lună către Signal</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Obține insigna %1$s</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Donează %1$s către Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Donează %1$s către Signal</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Primește o insignă %1$s pentru %2$d zi</item>
@@ -7441,7 +7441,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Transfer bancar</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe procesează donațiile făcute către Radar. Radar nu colectează și nu păstrează informațiile personale. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe procesează donațiile făcute către Signal. Signal nu colectează și nu păstrează informațiile personale. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Află mai multe</string>
     <!-- Button label to continue with transfer -->
@@ -7576,9 +7576,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Informațiile sunt private</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar nu colectează sau stochează informațiile personale când faci o donație.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal nu colectează sau stochează informațiile personale când faci o donație.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Folosim Stripe ca procesator de plăți ca să primim donațiile tale. Nu accesăm, stocăm sau salvăm niciuna dintre informațiile pe care le oferi către ei.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar nu conectează donația ta cu contul Radar și nici nu poate să o facă.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal nu conectează donația ta cu contul Radar și nici nu poate să o facă.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Îți mulțumim pentru sprijinul tău!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8778,7 +8778,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Alege-ți planul de rezervă</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Toate backup-urile sunt criptate end-to-end. Radar este o organizație non-profit—plata pentru backup-uri ajută la susținerea misiunii noastre.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Toate backup-urile sunt criptate end-to-end. Signal este o organizație non-profit—plata pentru backup-uri ajută la susținerea misiunii noastre.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Află mai multe</string>
     <!-- Primary action button label without a current selection -->
@@ -8814,7 +8814,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s de spațiu de stocare (%2$s fotografii)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Îți mulțumim că susții Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Îți mulțumim că susții Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Ultima %1$d zi de fișiere media</item>

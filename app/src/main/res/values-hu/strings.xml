@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Egy üzenet %1$s ismerősödtől nem érkezett meg</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s megváltoztatta a telefonszámát.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Tetszik ez az új funkció? Támogasd a Radart egy egyszeri adománnyal!</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Tetszik ez az új funkció? Támogasd a Signalt egy egyszeri adománnyal!</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">%1$s és számának (%2$s) üzenetelőzményei egyesítésre kerültek.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">Lassú</string>
     <string name="preferences__help">Súgó</string>
     <string name="preferences__advanced">Haladó</string>
-    <string name="preferences__donate_to_signal">Adomány a Radar számára</string>
+    <string name="preferences__donate_to_signal">Adomány a Signal számára</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Adatvédelem</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Adomány a Radar számára</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Adomány a Signal számára</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">A Radart hozzád hasonló emberek működtetik. Küldj havi támogatást, amiért cserébe egy jelvényt adunk!</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">A Signalt hozzád hasonló emberek működtetik. Küldj havi támogatást, amiért cserébe egy jelvényt adunk!</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Adományozás</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Válj Fenntartóvá!</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">A Radart hozzád hasonló emberek működtetik. Küldj támogatást, amiért cserébe egy jelvényt adunk!</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">A Signalt hozzád hasonló emberek működtetik. Küldj támogatást, amiért cserébe egy jelvényt adunk!</string>
     <string name="BecomeASustainerMegaphone__not_now">Később</string>
     <string name="BecomeASustainerMegaphone__donate">Adományozás</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">A csevegés örökre elnémítva</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Telefonszám átmásolva a vágólapra.</string>
     <string name="ConversationSettingsFragment__phone_number">Telefonszám</string>
-    <string name="ConversationSettingsFragment__get_badges">Szerezz jelvényeket a profilképedre a Radar támogatásával. Koppints az egyik jelvényre a további tudnivalókért!</string>
+    <string name="ConversationSettingsFragment__get_badges">Szerezz jelvényeket a profilképedre a Signal támogatásával. Koppints az egyik jelvényre a további tudnivalókért!</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Ez a médiafájl még nincs elküldve.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Adományozás most</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s támogatja a Radart</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s támogatja a Signalt</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s havi adománnyal támogatja a Radart. A Radar egy nonprofit, hirdetők és befektetők nélküli, kizárólag felhasználók és rajongók által fenntartott alkalmazás.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s havi adománnyal támogatja a Signalt. A Signal egy nonprofit, hirdetők és befektetők nélküli, kizárólag felhasználók és rajongók által fenntartott alkalmazás.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s adománnyal támogatja a Radart. A Radar egy nonprofit, hirdetők és befektetők nélküli, kizárólag felhasználók és rajongók által fenntartott alkalmazás.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s adománnyal támogatja a Signalt. A Signal egy nonprofit, hirdetők és befektetők nélküli, kizárólag felhasználók és rajongók által fenntartott alkalmazás.</string>
 
     <string name="ImageView__badge">Jelvény</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">%1$s dátummal lejár</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">A Radar más.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">A Signal más.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Privát üzenetküldés. Nincsenek hirdetések, nincsenek nyomkövetők, és nincs megfigyelés.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">A Radart adományokkal támogatják, ami azt jelenti, hogy minden tevékenységünk középpontjában az adataid védelme áll. A Radar neked készült; nem pedig az adataid megszerzése és haszonszerzés céljából.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">A Signalt adományokkal támogatják, ami azt jelenti, hogy minden tevékenységünk középpontjában az adataid védelme áll. A Signal neked készült; nem pedig az adataid megszerzése és haszonszerzés céljából.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Ha teheted, adományozz még ma, hogy a Radar továbbra is szórakoztató, megbízható és mindenki számára elérhető maradjon.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Ha teheted, adományozz még ma, hogy a Signal továbbra is szórakoztató, megbízható és mindenki számára elérhető maradjon.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Köszönjük a támogatásodat!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Kaptál egy adományozói jelvényt a Radartól! Tedd ki a profilodra, és mutasd meg, hogy te is adományoztál!</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Kaptál egy adományozói jelvényt a Signaltól! Tedd ki a profilodra, és mutasd meg, hogy te is adományoztál!</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">De ezen kívül</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">havi Fenntartóvá is válhatsz.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Megjelenítés profilképen</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Folytatás</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Ha egynél több jelvényed van, kiválaszthatod, hogy melyiket tűzöd ki a profilképedre.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Támogasd a Radart, és szerezz jelvényeket a profilképedre!</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">A Radar egy nonprofit, hirdetők és befektetők nélküli, kizárólag felhasználók és rajongók által fenntartott alkalmazás.</string>
+    <string name="BecomeASustainerFragment__get_badges">Támogasd a Signalt, és szerezz jelvényeket a profilképedre!</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">A Signal egy nonprofit, hirdetők és befektetők nélküli, kizárólag felhasználók és rajongók által fenntartott alkalmazás.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Adomány a Radar számára</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Adomány a Signal számára</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Tovább</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Google Pay megnyitása</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Nem sikerült feldolgozni a fizetési tranzakciót</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Nem sikerült feldolgozni a Radar Fenntartói előfizetésedhez kapcsolódó fizetési tranzakciót. Győződj meg róla, hogy a fizetési eszköz adatai naprakészek. Ha nem, kérlek frissítsd őket a Google Payben. A Radar néhány nap múlva újra megpróbálja végrehajtani a tranzakciót.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Nem sikerült feldolgozni a Signal Fenntartói előfizetésedhez kapcsolódó fizetési tranzakciót. Győződj meg róla, hogy a fizetési eszköz adatai naprakészek. Ha nem, kérlek frissítsd őket a Google Payben. A Signal néhány nap múlva újra megpróbálja végrehajtani a tranzakciót.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Ne jelenjen meg többet</string>
 
     <string name="Subscription__contact_support">Kapcsolatfelvétel a támogatással</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">Az adományod feldolgozása még folyamatban van. Ez a kapcsolattól függően néhány percig is eltarthat.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Előfizetés törlése sikertelen</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Az előfizetés törlése internetkapcsolatot igényel.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Az eszközöd nem támogatja az alkalmazáson belüli adományozást, így nem tudsz előfizetést indítani jelvény elnyeréséért. Alternatívaként továbbra is adományozhatsz a Radar számára a weboldalunkon.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Az eszközöd nem támogatja az alkalmazáson belüli adományozást, így nem tudsz előfizetést indítani jelvény elnyeréséért. Alternatívaként továbbra is adományozhatsz a Signal számára a weboldalunkon.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Hálózati hiba. Ellenőrizd a hálózati kapcsolatot és próbáld újra!</string>
     <string name="NetworkFailure__retry">Újra</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Adomány %1$s nevében</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s adományozott a Radarnak a nevedben</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s adományozott a Signalnak a nevedben</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Beváltás</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Összeg</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Köszönjük, hogy támogatod a Radart! Adományoddal hozzájárulsz a szabad véleménynyilvánítást és milliók számára biztonságos kommunikációt lehetővé tévő, nyílt forrású, magánéletet védő technológiák fejlesztéséhez. Ha az Egyesült Államokban adózol, kérünk, őrizd meg ezt a nyugtát adóbevallásodhoz. A Radar Technology Foundation egy adómentes, non-profit szervezet, amely az USA területén az 501c3 Internal Revenue Code hatálya alá tartozik. Szövetségi adóazonosító: 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Köszönjük, hogy támogatod a Signalt! Adományoddal hozzájárulsz a szabad véleménynyilvánítást és milliók számára biztonságos kommunikációt lehetővé tévő, nyílt forrású, magánéletet védő technológiák fejlesztéséhez. Ha az Egyesült Államokban adózol, kérünk, őrizd meg ezt a nyugtát adóbevallásodhoz. A Signal Technology Foundation egy adómentes, non-profit szervezet, amely az USA területén az 501c3 Internal Revenue Code hatálya alá tartozik. Szövetségi adóazonosító: 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Nincsenek nyugták</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Adomány egy ismerősnek</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Támogasd a Radart azáltal, hogy adományozol egy olyan ismerősödnek vagy családtagodnak, aki használja a Radart. Ezáltal az adott személy kap egy jelvényt, amelyet %1$d napig megjeleníthet a profilján</item>
-        <item quantity="other">Támogasd a Radart azáltal, hogy adományozol egy olyan ismerősödnek vagy családtagodnak, aki használja a Radart. Ezáltal az adott személy kap egy jelvényt, amelyet %1$d napig megjeleníthet a profilján</item>
+        <item quantity="one">Támogasd a Signalt azáltal, hogy adományozol egy olyan ismerősödnek vagy családtagodnak, aki használja a Radart. Ezáltal az adott személy kap egy jelvényt, amelyet %1$d napig megjeleníthet a profilján</item>
+        <item quantity="other">Támogasd a Signalt azáltal, hogy adományozol egy olyan ismerősödnek vagy családtagodnak, aki használja a Radart. Ezáltal az adott személy kap egy jelvényt, amelyet %1$d napig megjeleníthet a profilján</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Tovább</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Köszönjük a támogatásodat!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s adományozott a Radarnak a nevedben! Mutasd meg a profilodon, hogy támogatod a Radart!</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s adományozott a Signalnak a nevedben! Mutasd meg a profilodon, hogy támogatod a Signalt!</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Adományoztál a Radar számára %1$s nevében. Lehetőséget kap arra, hogy a profilján megjelenítse a támogatást.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Adományoztál a Signal számára %1$s nevében. Lehetőséget kap arra, hogy a profilján megjelenítse a támogatást.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Beváltás</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Jelvény beváltása…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Adományoztál a Radar számára %1$s nevében. Lehetőséget kap arra, hogy a profilján megjelenítse a támogatást.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Adományoztál a Signal számára %1$s nevében. Lehetőséget kap arra, hogy a profilján megjelenítse a támogatást.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">A kitűződ lejárt</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Folytatás</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Privát üzenetküldés, általad támogatva. Nincsenek hirdetések, nincs nyomon követés, nincsenek kompromisszumok. Adományozz most, és támogasd a Radart!</string>
+    <string name="DonateToSignalFragment__private_messaging">Privát üzenetküldés, általad támogatva. Nincsenek hirdetések, nincs nyomon követés, nincsenek kompromisszumok. Adományozz most, és támogasd a Signalt!</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Van egy függőben lévő adományod</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Adományozz %1$s összeget havonta a Radarnak</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Adományozz %1$s összeget havonta a Signalnak</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Szerezz egy %1$s jelvényt</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Adományozz %1$s összeget a Radarnak</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Adományozz %1$s összeget a Signalnak</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Szerezz %1$s jelvényt %2$d napra</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Banki átutalás</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">A Stripe feldolgozza a Radarnak adott adományokat. A Radar nem gyűjti és nem tárolja a személyes adataidat. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">A Stripe feldolgozza a Signalnak adott adományokat. A Signal nem gyűjti és nem tárolja a személyes adataidat. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Tudj meg többet</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Az adataid privátak</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">A Radar nem gyűjti és nem tárolja a személyes adataidat, amikor adományozol.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">A Signal nem gyűjti és nem tárolja a személyes adataidat, amikor adományozol.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">A Stripe-ot használjuk fizetésfeldolgozóként az adományok fogadására. Nem férünk hozzá, nem tárolunk és nem mentünk el semmilyen információt, amelyet megadsz számukra.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">A Radar nem fogja és nem is tudja összekapcsolni az adományod a Radar-fiókoddal.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">A Signal nem fogja és nem is tudja összekapcsolni az adományod a Radar-fiókoddal.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Köszönjük a támogatásod!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Válassz csomagot a biztonsági mentéshez!</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Minden biztonsági mentés végponttól végpontig titkosított. A Radar egy nonprofit szervezet – azzal, hogy fizetsz a biztonsági mentésekért, segíted küldetésünket.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Minden biztonsági mentés végponttól végpontig titkosított. A Signal egy nonprofit szervezet – azzal, hogy fizetsz a biztonsági mentésekért, segíted küldetésünket.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Tudj meg többet</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s tárhely (%2$s fotó)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Köszönjük, hogy támogattad a Radart!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Köszönjük, hogy támogattad a Signalt!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Médiafájl az elmúlt %1$d napban</item>

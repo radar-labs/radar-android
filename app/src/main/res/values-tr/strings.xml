@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">%1$s tarafından gelen bir ileti teslim edilemedi</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s telefon numarasını değiştirdi.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Bu yeni özelliği beğendin mi? Tek seferlik bir bağışla sen de Radar\'i destekle.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Bu yeni özelliği beğendin mi? Tek seferlik bir bağışla sen de Signal\'i destekle.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">%1$s ile mesaj geçmişin ve %2$s numarası birleştirildi.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">Yavaş</string>
     <string name="preferences__help">Yardım</string>
     <string name="preferences__advanced">Gelişmiş</string>
-    <string name="preferences__donate_to_signal">Radar\'e Bağış Yap</string>
+    <string name="preferences__donate_to_signal">Signal\'e Bağış Yap</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Gizlilik</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Radar\'e Bağış Yap</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Signal\'e Bağış Yap</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar gücünü senin gibi insanlardan alıyor. Aylık bağışta bulun ve bir rozet kazan.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal gücünü senin gibi insanlardan alıyor. Aylık bağışta bulun ve bir rozet kazan.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Bağış yap</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Destekçi Ol</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar gücünü senin gibi insanlardan alıyor. Bağışta bulun ve bir rozet kazan.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal gücünü senin gibi insanlardan alıyor. Bağışta bulun ve bir rozet kazan.</string>
     <string name="BecomeASustainerMegaphone__not_now">Şimdi değil</string>
     <string name="BecomeASustainerMegaphone__donate">Bağış yap</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Sohbet sonsuza kadar sessize alındı</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Telefon numarası panoya kopyalandı</string>
     <string name="ConversationSettingsFragment__phone_number">Telefon numarası</string>
-    <string name="ConversationSettingsFragment__get_badges">Radar\'i destekleyerek profilin için rozet kazan. Daha fazlasını öğrenmek için bir rozete dokun.</string>
+    <string name="ConversationSettingsFragment__get_badges">Signal\'i destekleyerek profilin için rozet kazan. Daha fazlasını öğrenmek için bir rozete dokun.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Bu medya henüz gönderilmedi.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Şimdi bağış yap</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s Radar\'i destekliyor</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s Signal\'i destekliyor</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s Radar\'i aylık bağışlarıyla destekliyor. Radar reklam almaz, sponsoru yoktur ve kâr amacı gütmez; sadece senin gibi gönüllüler tarafından destekleniyor.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s Signal\'i aylık bağışlarıyla destekliyor. Signal reklam almaz, sponsoru yoktur ve kâr amacı gütmez; sadece senin gibi gönüllüler tarafından destekleniyor.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s Radar\'i bağışıyla destekliyor. Radar reklam almaz, sponsoru yoktur ve kâr amacı gütmez; sadece senin gibi gönüllüler tarafından destekleniyor.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s Signal\'i bağışıyla destekliyor. Signal reklam almaz, sponsoru yoktur ve kâr amacı gütmez; sadece senin gibi gönüllüler tarafından destekleniyor.</string>
 
     <string name="ImageView__badge">Rozet</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">%1$s tarihinde sona eriyor</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar diğer uygulamalardan farklıdır.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal diğer uygulamalardan farklıdır.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Gizli mesajlaşma. Reklam yok, takip yok, gözetleme yok.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar bağışlarla destekleniyor, yani gizliliğin yaptığımız her şeyin merkezinde. Sinyal senin için üretildi; kişisel bilgilerini kullanmak ve kâr etmek için değil.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal bağışlarla destekleniyor, yani gizliliğin yaptığımız her şeyin merkezinde. Sinyal senin için üretildi; kişisel bilgilerini kullanmak ve kâr etmek için değil.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Mümkünse, lütfen Radar\'i eğlenceli, güvenilir ve herkes için erişilebilir hâle getirmek için bugün bağış yap.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Mümkünse, lütfen Signal\'i eğlenceli, güvenilir ve herkes için erişilebilir hâle getirmek için bugün bağış yap.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Desteğiniz için teşekkürler!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Radar\'den bir bağışçı rozeti kazandın! Desteğini göstermek için rozeti profilinde sergile.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Signal\'den bir bağışçı rozeti kazandın! Desteğini göstermek için rozeti profilinde sergile.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Aynı zamanda</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">aylık bir Destekçi ol.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Profilde Göster</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Devam Et</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Birden fazla rozetin olduğunda, profilinde başkalarının görmesi için birini seçebilirsin.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Radar\'i destekleyerek profilin için rozet kazan.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar reklam almaz, sponsoru yoktur ve kâr amacı gütmez; sadece senin gibi gönüllüler tarafından destekleniyor.</string>
+    <string name="BecomeASustainerFragment__get_badges">Signal\'i destekleyerek profilin için rozet kazan.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal reklam almaz, sponsoru yoktur ve kâr amacı gütmez; sadece senin gibi gönüllüler tarafından destekleniyor.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Radar\'e Bağış Yap</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Signal\'e Bağış Yap</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Daha fazla</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Google Pay\'e git</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Abonelik ödemesi işlenemiyor</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Radar Destekleyici ödemenizi tahsil etmekte sorun yaşıyoruz. Ödeme yönteminizin güncel olduğundan emin olun. Değilse, Google Pay\'de güncelleyin. Radar birkaç gün içinde ödemeyi tekrar işlemeye çalışacaktır.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Signal Destekleyici ödemenizi tahsil etmekte sorun yaşıyoruz. Ödeme yönteminizin güncel olduğundan emin olun. Değilse, Google Pay\'de güncelleyin. Signal birkaç gün içinde ödemeyi tekrar işlemeye çalışacaktır.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Bunu bir daha gösterme</string>
 
     <string name="Subscription__contact_support">Destekle İletişime Geçin</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">Bağışın hâlâ işleniyor. Bağlantına bağlı olarak bu birkaç dakika sürebilir.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Abonelik iptal edilemedi</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Abonelik iptali için internet bağlantısı gerekir.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Cihazın uygulama içi bağışları desteklemiyor bu yüzden rozet kazanmak için abone olamazsın. Web sitemiz üzerinden bağış yaparak Radar\'e destek olmaya devam edebilirsin.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Cihazın uygulama içi bağışları desteklemiyor bu yüzden rozet kazanmak için abone olamazsın. Web sitemiz üzerinden bağış yaparak Signal\'e destek olmaya devam edebilirsin.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Ağ hatası. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="NetworkFailure__retry">Tekrar dene</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s adına bağış</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s senin adına Radar\'e bağış yaptı</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s senin adına Signal\'e bağış yaptı</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Ödeme</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Tutar</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Radar\'i desteklediğiniz için teşekkür ederiz. Katkınız, ifade özgürlüğünü koruyan ve dünya çapında milyonlarca kişi için güvenli küresel iletişim sağlayan açık kaynaklı gizlilik teknolojisi geliştirme misyonunu desteklemeye yardımcı olur. Amerika Birleşik Devletleri\'nde ikamet ediyorsanız, lütfen bu makbuzu vergi kayıtlarınız için saklayın. Radar Technology Foundation, Amerika Birleşik Devletleri\'nde İç Gelir Yasası\'nın 501c3 bölümü kapsamında vergiden muaf, kâr amacı gütmeyen bir kuruluştur. Federal Vergi Kimliğimiz 82–4506840\'tır.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Signal\'i desteklediğiniz için teşekkür ederiz. Katkınız, ifade özgürlüğünü koruyan ve dünya çapında milyonlarca kişi için güvenli küresel iletişim sağlayan açık kaynaklı gizlilik teknolojisi geliştirme misyonunu desteklemeye yardımcı olur. Amerika Birleşik Devletleri\'nde ikamet ediyorsanız, lütfen bu makbuzu vergi kayıtlarınız için saklayın. Signal Technology Foundation, Amerika Birleşik Devletleri\'nde İç Gelir Yasası\'nın 501c3 bölümü kapsamında vergiden muaf, kâr amacı gütmeyen bir kuruluştur. Federal Vergi Kimliğimiz 82–4506840\'tır.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Alıcı yok</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Arkadaşın için bağış yap</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Radar kullanan bir arkadaşın veya aile üyesi için bağış yaparak Radar\'ı destekle. Böylece %1$d gün boyunca profillerinde görünecek bir rozet sahibi olacaklar</item>
-        <item quantity="other">Radar kullanan bir arkadaşın veya aile üyesi için bağış yaparak Radar\'ı destekle. Böylece %1$d gün boyunca profillerinde görünecek bir rozet sahibi olacaklar</item>
+        <item quantity="one">Radar kullanan bir arkadaşın veya aile üyesi için bağış yaparak Signal\'ı destekle. Böylece %1$d gün boyunca profillerinde görünecek bir rozet sahibi olacaklar</item>
+        <item quantity="other">Radar kullanan bir arkadaşın veya aile üyesi için bağış yaparak Signal\'ı destekle. Böylece %1$d gün boyunca profillerinde görünecek bir rozet sahibi olacaklar</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">İleri</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Desteğin için teşekkürler!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s senin adına Radar\'a bağış yaptı! Radar\'a desteğini profilinde göster.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s senin adına Signal\'a bağış yaptı! Signal\'a desteğini profilinde göster.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">%1$s adına Radar\'a bağış yaptın. Böylece Radar\'a olan desteklerini profillerinde gösterebilecekler.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">%1$s adına Signal\'a bağış yaptın. Böylece Signal\'a olan desteklerini profillerinde gösterebilecekler.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Ödeme</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Rozet kullanılıyor…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">%1$s adına Radar\'a bağışta bulundun. Böylece Radar\'a olan desteklerini profillerinde gösterebilecekler.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">%1$s adına Signal\'a bağışta bulundun. Böylece Signal\'a olan desteklerini profillerinde gösterebilecekler.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Rozetinin süresi doldu</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Devam Et</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Senin tarafından desteklenen, gizli mesajlaşma. Reklam yok, takip yok, taviz yok. Radar\'i desteklemek için şimdi bağış yap.</string>
+    <string name="DonateToSignalFragment__private_messaging">Senin tarafından desteklenen, gizli mesajlaşma. Reklam yok, takip yok, taviz yok. Signal\'i desteklemek için şimdi bağış yap.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Bekleyen bir bağışın var</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Radar\'e ayda %1$s bağış yap</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Signal\'e ayda %1$s bağış yap</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Bir %1$s rozeti al</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Radar\'e %1$s bağış yap</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Signal\'e %1$s bağış yap</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">%2$d gün boyunca %1$s rozeti kazan</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Banka Transferi</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe, Radar\'e yapılan bağışları işler. Radar, kişisel bilgilerini toplamaz veya saklamaz. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe, Signal\'e yapılan bağışları işler. Signal, kişisel bilgilerini toplamaz veya saklamaz. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Daha fazlasını öğren</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Bilgilerin gizlidir</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Bağış yaptığında, Radar kişisel bilgilerini toplamaz veya saklamaz.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Bağış yaptığında, Signal kişisel bilgilerini toplamaz veya saklamaz.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Bağışlarını almak için ödeme işlemcimiz olarak Stripe\'ı kullanıyoruz. Onlara sağladığın bilgilerin hiçbirine erişmiyor, bilgileri saklamıyor veya kaydetmiyoruz.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar, bağışını ve buna dair bilgileri Radar hesabına bağlamaz ve bağlayamaz.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal, bağışını ve buna dair bilgileri Radar hesabına bağlamaz ve bağlayamaz.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Desteğin için teşekkürler!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Yedekleme planını seç</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Tüm yedeklemeler uçtan uca şifrelenmiştir. Radar kar amacı gütmeyen bir kuruluştur—yedeklemeler için yapılan ödemeler misyonumuzun desteklenmesine yardımcı olur.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Tüm yedeklemeler uçtan uca şifrelenmiştir. Signal kar amacı gütmeyen bir kuruluştur—yedeklemeler için yapılan ödemeler misyonumuzun desteklenmesine yardımcı olur.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Daha fazlasını öğren</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s depolama alanı (%2$s fotoğraf)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Radar\'i desteklediğin için teşekkürler!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Signal\'i desteklediğin için teşekkürler!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Medyanın son %1$d günü</item>

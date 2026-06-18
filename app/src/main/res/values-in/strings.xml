@@ -1988,7 +1988,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Sebuah pesan dari %1$s tidak dapat diterima</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s mengubah nomor teleponnya.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Suka fitur baru ini? Dukung Radar dengan donasi satu-kali.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Suka fitur baru ini? Dukung Signal dengan donasi satu-kali.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Riwayat pesan Anda dengan %1$s dan nomor %2$s telah digabungkan.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -3893,7 +3893,7 @@
     <string name="preferences__slow">Lambat</string>
     <string name="preferences__help">Bantuan</string>
     <string name="preferences__advanced">Lanjutan</string>
-    <string name="preferences__donate_to_signal">Donasi ke Radar</string>
+    <string name="preferences__donate_to_signal">Donasi ke Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Privasi</string>
     <!-- Preference label for stories -->
@@ -5675,9 +5675,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Donasi ke Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Donasi ke Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar didukung oleh orang-orang seperti Anda. Beri donasi setiap bulan dan dapatkan lencana.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal didukung oleh orang-orang seperti Anda. Beri donasi setiap bulan dan dapatkan lencana.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Donasi</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5700,7 +5700,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Menjadi Penyokong</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar didukung oleh orang-orang seperti Anda. Beri donasi dan dapatkan sebuah lencana.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal didukung oleh orang-orang seperti Anda. Beri donasi dan dapatkan sebuah lencana.</string>
     <string name="BecomeASustainerMegaphone__not_now">Nanti saja</string>
     <string name="BecomeASustainerMegaphone__donate">Donasi</string>
 
@@ -5771,7 +5771,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Obrolan dibisukan selamanya</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Nomor telepon disalin ke papan klip.</string>
     <string name="ConversationSettingsFragment__phone_number">Nomor telepon</string>
-    <string name="ConversationSettingsFragment__get_badges">Dapatkan lencana untuk profil Anda dengan mendukung Radar. Ketuk lencana untuk mempelajari lebih lanjut.</string>
+    <string name="ConversationSettingsFragment__get_badges">Dapatkan lencana untuk profil Anda dengan mendukung Signal. Ketuk lencana untuk mempelajari lebih lanjut.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Media ini belum dikirim.</string>
 
@@ -6013,11 +6013,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Donasi sekarang</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s mendukung Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s mendukung Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s mendukung Radar dengan donasi bulanan. Radar adalah organisasi nirlaba tanpa pengiklan dan investor, didukung hanya oleh orang seperti Anda.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s mendukung Signal dengan donasi bulanan. Signal adalah organisasi nirlaba tanpa pengiklan dan investor, didukung hanya oleh orang seperti Anda.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s mendukung Radar dengan donasi. Radar adalah lembaga nirlaba tanpa pengiklan dan investor, didukung hanya oleh orang-orang seperti Anda.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s mendukung Signal dengan donasi. Signal adalah lembaga nirlaba tanpa pengiklan dan investor, didukung hanya oleh orang-orang seperti Anda.</string>
 
     <string name="ImageView__badge">Lencana</string>
 
@@ -6039,17 +6039,17 @@
     <string name="Subscription__expires_s">Kedaluwarsa %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar itu berbeda.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal itu berbeda.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Perpesanan privat. Tanpa iklan, tanpa pelacak, tanpa pengawasan.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar didukung oleh donasi, yang berarti bahwa privasi Anda merupakan inti dari semua yang kami lakukan. Radar dibuat untuk Anda; bukan untuk data Anda dan bukan pula demi keuntungan.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal didukung oleh donasi, yang berarti bahwa privasi Anda merupakan inti dari semua yang kami lakukan. Signal dibuat untuk Anda; bukan untuk data Anda dan bukan pula demi keuntungan.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Jika bisa, silakan berdonasi hari ini agar Radar tetap menyenangkan, dapat diandalkan, dan tersedia untuk semua orang.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Jika bisa, silakan berdonasi hari ini agar Signal tetap menyenangkan, dapat diandalkan, dan tersedia untuk semua orang.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Terima kasih untuk Dukungan Anda!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Anda telah mendapatkan lencana donor dari Radar! Tampilkan di profil untuk menunjukkan dukungan Anda.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Anda telah mendapatkan lencana donor dari Signal! Tampilkan di profil untuk menunjukkan dukungan Anda.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Anda juga dapat</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">menjadi Penyokong bulanan.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Tampilkan di Profil</string>
@@ -6057,11 +6057,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Lanjutkan</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Jika punya lebih dari satu lencana, Anda dapat memilih salah satu untuk ditampilkan di profil Anda.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Dapatkan lencana untuk profil Anda dengan mendukung Radar.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar adalah lembaga nirlaba tanpa pengiklan dan investor, didukung hanya oleh orang seperti Anda.</string>
+    <string name="BecomeASustainerFragment__get_badges">Dapatkan lencana untuk profil Anda dengan mendukung Signal.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal adalah lembaga nirlaba tanpa pengiklan dan investor, didukung hanya oleh orang seperti Anda.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Donasi ke Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Donasi ke Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Selanjutnya</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6146,7 +6146,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Pergi ke Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Tidak dapat memproses pembayaran langganan</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Kami mengalami masalah mengumpulkan pembayaran Penyokong Radar Anda. Pastikan metode pembayaran Anda adalah yang terbaru. Jika bukan, perbarui di Google Pay. Radar akan mencoba memproses pembayarannya lagi dalam beberapa hari.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Kami mengalami masalah mengumpulkan pembayaran Penyokong Signal Anda. Pastikan metode pembayaran Anda adalah yang terbaru. Jika bukan, perbarui di Google Pay. Signal akan mencoba memproses pembayarannya lagi dalam beberapa hari.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Jangan tampilkan ini lagi</string>
 
     <string name="Subscription__contact_support">Hubungi Bantuan</string>
@@ -6201,7 +6201,7 @@
     <string name="DonationsErrors__your_payment_is_still">Donasi Anda sedang diproses. Ini dapat memakan waktu beberapa menit tergantung koneksi Anda.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Gagal membatalkan langganan</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Pembatalan langganan memerlukan koneksi internet.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Perangkat Anda tidak mendukung donasi dalam aplikasi, jadi Anda tidak bisa berlangganan untuk dapat lencana. Anda tetap bisa mendukung Radar dengan berdonasi lewat situs web kami.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Perangkat Anda tidak mendukung donasi dalam aplikasi, jadi Anda tidak bisa berlangganan untuk dapat lencana. Anda tetap bisa mendukung Signal dengan berdonasi lewat situs web kami.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Galat jaringan. Periksa koneksi Anda dan coba lagi.</string>
     <string name="NetworkFailure__retry">Coba lagi</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6216,7 +6216,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Donasi atas nama %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s berdonasi ke Radar atas nama Anda</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s berdonasi ke Signal atas nama Anda</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Tukarkan</string>
     <!-- Gift badge view action label -->
@@ -6477,7 +6477,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Jumlah</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Terima kasih telah mendukung Radar. Kontribusi Anda membantu mendukung misi dari mengembangkan teknologi privasi open source yang melindungi kebebasan berekspresi dan memungkinkan komunikasi global yang aman untuk jutaan di seluruh dunia. Jika Anda penduduk Amerika, mohon untuk menjaga resi ini untuk rekaman pajak Anda. Radar Technology Foundation adalah organisasi nonprofit bebas pajak di Amerika Serikat di bawah seksi 501c3 dari Kode Pendapatan Internal. ID Pajak Federal kami adalah 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Terima kasih telah mendukung Signal. Kontribusi Anda membantu mendukung misi dari mengembangkan teknologi privasi open source yang melindungi kebebasan berekspresi dan memungkinkan komunikasi global yang aman untuk jutaan di seluruh dunia. Jika Anda penduduk Amerika, mohon untuk menjaga resi ini untuk rekaman pajak Anda. Signal Technology Foundation adalah organisasi nonprofit bebas pajak di Amerika Serikat di bawah seksi 501c3 dari Kode Pendapatan Internal. ID Pajak Federal kami adalah 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Tidak ada resi</string>
 
@@ -6813,7 +6813,7 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Donasi untuk Teman</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="other">Dukung Radar dengan memberikan donasi untuk teman atau anggota keluarga yang menggunakan Radar. Mereka akan menerima lencana untuk ditampilkan di profil mereka selama %1$d hari</item>
+        <item quantity="other">Dukung Signal dengan memberikan donasi untuk teman atau anggota keluarga yang menggunakan Radar. Mereka akan menerima lencana untuk ditampilkan di profil mereka selama %1$d hari</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Berikutnya</string>
@@ -6836,9 +6836,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Terima kasih untuk dukungan Anda!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s memberikan donasi ke Radar atas nama Anda! Tunjukkan dukungan untuk Radar di profil Anda.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s memberikan donasi ke Signal atas nama Anda! Tunjukkan dukungan untuk Signal di profil Anda.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Anda memberikan donasi ke Radar atas nama %1$s. Dia akan diberi opsi untuk menunjukkan dukungan di profilnya.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Anda memberikan donasi ke Signal atas nama %1$s. Dia akan diberi opsi untuk menunjukkan dukungan di profilnya.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Tukarkan</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -6846,7 +6846,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Menebus lencana…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Anda memberikan donasi ke Radar atas nama %1$s. Dia akan diberi opsi untuk menunjukkan dukungan di profilnya.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Anda memberikan donasi ke Signal atas nama %1$s. Dia akan diberi opsi untuk menunjukkan dukungan di profilnya.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Lencana Anda sudah kedaluwarsa</string>
     <!-- Expired gift sheet top description text -->
@@ -7060,7 +7060,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Lanjutkan</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Perpesanan privat, didanai oleh Anda. Tanpa iklan, tanpa pelacak, tanpa kompromi. Donasi sekarang untuk mendukung Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Perpesanan privat, didanai oleh Anda. Tanpa iklan, tanpa pelacak, tanpa kompromi. Donasi sekarang untuk mendukung Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Anda memiliki donasi yang tertunda</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7085,11 +7085,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Donasi %1$s/bulan ke Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Donasi %1$s/bulan ke Signal</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Dapatkan lencana %1$s</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Donasi %1$s ke Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Donasi %1$s ke Signal</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="other">Dapatkan lencana %1$s untuk %2$d hari</item>
@@ -7111,7 +7111,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Transfer Bank</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe memproses donasi yang diberikan ke Radar. Radar tidak mengumpulkan atau menyimpan informasi pribadi Anda. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe memproses donasi yang diberikan ke Signal. Signal tidak mengumpulkan atau menyimpan informasi pribadi Anda. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Pelajari selengkapnya</string>
     <!-- Button label to continue with transfer -->
@@ -7244,9 +7244,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Informasi Anda bersifat pribadi</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar tidak mengumpulkan atau menyimpan informasi pribadi saat Anda memberikan donasi.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal tidak mengumpulkan atau menyimpan informasi pribadi saat Anda memberikan donasi.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Kami menggunakan Stripe sebagai pemroses pembayaran donasi Anda. Kami tidak mengakses, menahan, atau menyimpan informasi apa pun yang Anda berikan kepada mereka.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar tidak dan tidak dapat menghubungkan donasi Anda ke akun Radar Anda.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal tidak dan tidak dapat menghubungkan donasi Anda ke akun Radar Anda.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Terima kasih untuk dukungan Anda!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8416,7 +8416,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Pilih paket cadangan Anda</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Semua cadangan dienkripsi ujung ke ujung. Radar adalah organisasi nirlaba — dengan membayar cadangan, Anda turut membantu mendukung misi kami.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Semua cadangan dienkripsi ujung ke ujung. Signal adalah organisasi nirlaba — dengan membayar cadangan, Anda turut membantu mendukung misi kami.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Selengkapnya</string>
     <!-- Primary action button label without a current selection -->
@@ -8450,7 +8450,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">Penyimpanan %1$s (%2$s foto)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Terima kasih telah mendukung Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Terima kasih telah mendukung Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="other">Media selama %1$d hari terakhir</item>

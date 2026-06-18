@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Viestiä lähettäjältä %1$s ei voitu toimittaa</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s vaihtoi puhelinnumeroaan.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Pidätkö tästä uudesta ominaisuudesta? Tue Radaria kertalahjoituksella.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Pidätkö tästä uudesta ominaisuudesta? Tue Signalia kertalahjoituksella.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Viestihistoriasi yhteystiedon %1$s kanssa ja numero %2$s on yhdistetty.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">Hidas</string>
     <string name="preferences__help">Tuki</string>
     <string name="preferences__advanced">Lisäasetukset</string>
-    <string name="preferences__donate_to_signal">Lahjoita Radarille</string>
+    <string name="preferences__donate_to_signal">Lahjoita Signalille</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Yksityisyys</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Lahjoita Radarille</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Lahjoita Signalille</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar toimii kaltaistesi ihmisten tuella. Tee kuukausilahjoitus ja ansaitse merkki.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal toimii kaltaistesi ihmisten tuella. Tee kuukausilahjoitus ja ansaitse merkki.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Lahjoita</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Ryhdy tukijaksi</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar toimii kaltaistesi ihmisten tuella. Tee lahjoitus ja ansaitse merkki.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal toimii kaltaistesi ihmisten tuella. Tee lahjoitus ja ansaitse merkki.</string>
     <string name="BecomeASustainerMegaphone__not_now">Ei nyt</string>
     <string name="BecomeASustainerMegaphone__donate">Lahjoita</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Keskustelu mykistetty pysyvästi</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Puhelinnumero kopioitu leikepöydälle.</string>
     <string name="ConversationSettingsFragment__phone_number">Puhelinnumero</string>
-    <string name="ConversationSettingsFragment__get_badges">Hanki profiiliisi merkkejä tukemalla Radaria. Lue lisää napauttamalla merkkiä.</string>
+    <string name="ConversationSettingsFragment__get_badges">Hanki profiiliisi merkkejä tukemalla Signalia. Lue lisää napauttamalla merkkiä.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Tätä mediaa ei ole vielä lähetetty.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Lahjoita nyt</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s tukee Radaria</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s tukee Signalia</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s tukee Radaria kuukausilahjoituksella. Radar on voittoa tavoittelematon taho, joka toimii ilman mainostajia tai sijoittajia. Sen toiminta perustuu pelkästään kaltaistesi käyttäjien tukeen.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s tukee Signalia kuukausilahjoituksella. Signal on voittoa tavoittelematon taho, joka toimii ilman mainostajia tai sijoittajia. Sen toiminta perustuu pelkästään kaltaistesi käyttäjien tukeen.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s tukee Radaria lahjoituksella. Radar on voittoa tavoittelematon taho, joka toimii ilman mainostajia tai sijoittajia. Sen toiminta perustuu pelkästään kaltaistesi käyttäjien tukeen.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s tukee Signalia lahjoituksella. Signal on voittoa tavoittelematon taho, joka toimii ilman mainostajia tai sijoittajia. Sen toiminta perustuu pelkästään kaltaistesi käyttäjien tukeen.</string>
 
     <string name="ImageView__badge">Merkki</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">Päättyy %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar on erilainen.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal on erilainen.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Yksityistä viestintää. Ei mainoksia, seurantaevästeitä tai valvontaa.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radaria tuetaan lahjoituksilla. Tämä tarkoittaa, että yksityisyytesi on koko toimintamme keskiössä. Radar on luotu sinua varten, ei datan tarpeisiin tai voiton tavoittelemiseksi.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signalia tuetaan lahjoituksilla. Tämä tarkoittaa, että yksityisyytesi on koko toimintamme keskiössä. Signal on luotu sinua varten, ei datan tarpeisiin tai voiton tavoittelemiseksi.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Jos mahdollista, lahjoita Radarille jo tänään varmistaaksesi, että Radar pysyy jatkossakin hauskana, luotettavana ja kaikkien käytettävissä.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Jos mahdollista, lahjoita Signalille jo tänään varmistaaksesi, että Signal pysyy jatkossakin hauskana, luotettavana ja kaikkien käytettävissä.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Kiitämme tuestasi!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Olet ansainnut lahjoittajamerkin Radarilta! Näytä se profiilissasi osoittaaksesi, että tuet Radaria.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Olet ansainnut lahjoittajamerkin Signalilta! Näytä se profiilissasi osoittaaksesi, että tuet Signalia.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Voit myös</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">ryhtyä kuukausittaiseksi tukijaksi.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Näytä profiilissa</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Jatka</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Jos sinulla on enemmän kuin yksi merkki, voit valita yhden niistä esiteltäväksi profiilissasi.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Hanki profiiliisi merkkejä tukemalla Radaria.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar on voittoa tavoittelematon järjestö, joka toimii ilman mainostajia tai sijoittajia pelkästään kaltaistesi käyttäjien tuella.</string>
+    <string name="BecomeASustainerFragment__get_badges">Hanki profiiliisi merkkejä tukemalla Signalia.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal on voittoa tavoittelematon järjestö, joka toimii ilman mainostajia tai sijoittajia pelkästään kaltaistesi käyttäjien tuella.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Lahjoita Radarille</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Lahjoita Signalille</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Lisää</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Siirry Google Payhin</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Tilauksen maksua ei voida käsitellä</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Radar tukija -tilauksen maksun veloituksessa on ongelmia. Varmista, että maksutapasi on ajan tasalla. Jos näin ei ole, päivitä se Google Payssa. Radar yrittää veloitusta uudelleen muutaman päivän kuluessa.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Signal tukija -tilauksen maksun veloituksessa on ongelmia. Varmista, että maksutapasi on ajan tasalla. Jos näin ei ole, päivitä se Google Payssa. Signal yrittää veloitusta uudelleen muutaman päivän kuluessa.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Älä näytä tätä uudelleen</string>
 
     <string name="Subscription__contact_support">Ota yhteyttä tukeen</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">Lahjoitusta käsitellään vielä. Tämä voi kestää muutamia minuutteja yhteydestäsi riippuen.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Tilauksen peruutus epäonnistui</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Tilauksen peruutus vaatii internet-yhteyden.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Laitteesi ei tue sovelluksen sisäistä lahjoittamista, joten et voi tehdä tilausta ansaitaksesi merkin. Voit silti tukea Radaria tekemällä lahjoituksen verkkosivustomme kautta.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Laitteesi ei tue sovelluksen sisäistä lahjoittamista, joten et voi tehdä tilausta ansaitaksesi merkin. Voit silti tukea Signalia tekemällä lahjoituksen verkkosivustomme kautta.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Verkkovirhe. Tarkista yhteys ja yritä uudelleen.</string>
     <string name="NetworkFailure__retry">Yritä uudelleen</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Lahjoitus henkilön %1$s puolesta</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s lahjoitti Radarille puolestasi</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s lahjoitti Signalille puolestasi</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Lunasta</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Summa</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Kiitos Radarin tukemisesta. Lahjoituksesi auttaa edistämään avoimen lähdekoodin tietosuojateknologian kehittämistä, joka suojaa sananvapautta ja mahdollistaa turvallisen maailmanlaajuisen viestinnän miljoonille käyttäjille ympäri maailmaa. Jos asut Yhdysvalloissa, säilytä tämä kuitti verotusta varten. Radar Technology Foundation on verovapaa voittoa tavoittelematon organisaatio Yhdysvaltojen Internal Revenue Code -pykälän 501c3 mukaisesti. Liittovaltion verotunnuksemme on 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Kiitos Signalin tukemisesta. Lahjoituksesi auttaa edistämään avoimen lähdekoodin tietosuojateknologian kehittämistä, joka suojaa sananvapautta ja mahdollistaa turvallisen maailmanlaajuisen viestinnän miljoonille käyttäjille ympäri maailmaa. Jos asut Yhdysvalloissa, säilytä tämä kuitti verotusta varten. Signal Technology Foundation on verovapaa voittoa tavoittelematon organisaatio Yhdysvaltojen Internal Revenue Code -pykälän 501c3 mukaisesti. Liittovaltion verotunnuksemme on 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Ei kuitteja</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Lahjoita ystävän puolesta</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Tue Radaria tekemällä lahjoitus Radaria käyttävän ystävän tai perheenjäsenen puolesta. Hän saa merkin, jonka hän voi näyttää profiilissaan %1$d päivän ajan.</item>
-        <item quantity="other">Tue Radaria tekemällä lahjoitus Radaria käyttävän ystävän tai perheenjäsenen puolesta. Hän saa merkin, jonka hän voi näyttää profiilissaan %1$d päivän ajan.</item>
+        <item quantity="one">Tue Signalia tekemällä lahjoitus Radaria käyttävän ystävän tai perheenjäsenen puolesta. Hän saa merkin, jonka hän voi näyttää profiilissaan %1$d päivän ajan.</item>
+        <item quantity="other">Tue Signalia tekemällä lahjoitus Radaria käyttävän ystävän tai perheenjäsenen puolesta. Hän saa merkin, jonka hän voi näyttää profiilissaan %1$d päivän ajan.</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Seuraava</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Kiitämme tuestasi!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s teki lahjoituksen Radarille puolestasi! Näytä profiilissasi, että tuet Radaria.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s teki lahjoituksen Signalille puolestasi! Näytä profiilissasi, että tuet Signalia.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Olet tehnyt lahjoituksen Radarille henkilön %1$s puolesta. Hän saa mahdollisuuden näyttää omassa profiilissaan, että hän tukee Radaria.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Olet tehnyt lahjoituksen Signalille henkilön %1$s puolesta. Hän saa mahdollisuuden näyttää omassa profiilissaan, että hän tukee Signalia.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Lunasta</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Lunastetaan merkkiä…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Olet tehnyt lahjoituksen Radarille henkilön %1$s puolesta. Hän saa mahdollisuuden näyttää omassa profiilissaan, että hän tukee Radaria.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Olet tehnyt lahjoituksen Signalille henkilön %1$s puolesta. Hän saa mahdollisuuden näyttää omassa profiilissaan, että hän tukee Signalia.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Merkkisi on vanhentunut</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Jatka</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Yksityistä viestintää – sinun rahoittamanasi. Ei mainoksia, seurantaa tai kompromisseja. Tue Radaria lahjoittamalla nyt.</string>
+    <string name="DonateToSignalFragment__private_messaging">Yksityistä viestintää – sinun rahoittamanasi. Ei mainoksia, seurantaa tai kompromisseja. Tue Signalia lahjoittamalla nyt.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Sinulla on käsittelyssä oleva lahjoitus</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Lahjoita Radarille %1$s/kuukausi</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Lahjoita Signalille %1$s/kuukausi</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Hanki %1$s-merkki</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Lahjoita Radarille %1$s</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Lahjoita Signalille %1$s</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Hanki %1$s-merkki %2$d päiväksi</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Pankkisiirto</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe käsittelee Radarille tehdyt lahjoitukset. Radar ei kerää tai tallenna henkilötietojasi. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe käsittelee Signalille tehdyt lahjoitukset. Signal ei kerää tai tallenna henkilötietojasi. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Lue lisää</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Tietosi ovat yksityisiä</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar ei kerää tai tallenna mitään henkilötietoja, kun teet lahjoituksen.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal ei kerää tai tallenna mitään henkilötietoja, kun teet lahjoituksen.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Käytämme Stripea maksujen käsittelijänä lahjoitusten vastaanottamiseksi. Emme käytä, säilytä tai tallenna mitään heille antamistasi tiedoista.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar ei yhdistä eikä voi yhdistää lahjoitustasi Radar-tiliisi.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal ei yhdistä eikä voi yhdistää lahjoitustasi Radar-tiliisi.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Kiitos tuestasi!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Valitse varmuuskopioinnin tilaus</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Kaikki varmuuskopiot salataan päästä päähän. Radar on voittoa tavoittelematon organisaatio. Varmuuskopioinnin maksullisuus tukee tehtäväämme.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Kaikki varmuuskopiot salataan päästä päähän. Signal on voittoa tavoittelematon organisaatio. Varmuuskopioinnin maksullisuus tukee tehtäväämme.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Lue lisää</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s tallennustilaa (%2$s valokuvaa)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Kiitos Radarin tukemisesta!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Kiitos Signalin tukemisesta!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Mediasisältö viimeisen %1$d päivän ajalta</item>

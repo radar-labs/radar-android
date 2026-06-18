@@ -2162,7 +2162,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Nepavyko pristatyti žinutės nuo %1$s</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s pasikeitė telefono numerį.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Patinka ši nauja funkcija? Prisidėk prie „Radar“ palaikymo vienkartine parama.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Patinka ši nauja funkcija? Prisidėk prie „Signal“ palaikymo vienkartine parama.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Tavo ir %1$s žinučių istorija susieta su šio žmogaus numeriu %2$s.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4229,7 +4229,7 @@
     <string name="preferences__slow">Lėtas</string>
     <string name="preferences__help">Pagalba</string>
     <string name="preferences__advanced">Išplėstiniai</string>
-    <string name="preferences__donate_to_signal">Paremk „Radar“</string>
+    <string name="preferences__donate_to_signal">Paremk „Signal“</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Privatumas</string>
     <!-- Preference label for stories -->
@@ -6089,9 +6089,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Paremk „Radar“</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Paremk „Signal“</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">„Radar“ variklis yra tokie žmonės kaip tu. Skirk kasmėnesinę paramą ir gauk ženklelį.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">„Signal“ variklis yra tokie žmonės kaip tu. Skirk kasmėnesinę paramą ir gauk ženklelį.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Paremti</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -6114,7 +6114,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Tapkite rėmėju</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">„Radar“ variklis yra tokie žmonės kaip tu. Skirk paramą ir gauk ženklelį.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">„Signal“ variklis yra tokie žmonės kaip tu. Skirk paramą ir gauk ženklelį.</string>
     <string name="BecomeASustainerMegaphone__not_now">Ne dabar</string>
     <string name="BecomeASustainerMegaphone__donate">Paremti</string>
 
@@ -6185,7 +6185,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Pokalbis nutildytas visam laikui</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Telefono numeris nukopijuotas į iškarpinę.</string>
     <string name="ConversationSettingsFragment__phone_number">Telefono numeris</string>
-    <string name="ConversationSettingsFragment__get_badges">Gauk ženklelių savo profiliui už paramą „Radar“. Bakstelėk ženklelį ir sužinok daugiau.</string>
+    <string name="ConversationSettingsFragment__get_badges">Gauk ženklelių savo profiliui už paramą „Signal“. Bakstelėk ženklelį ir sužinok daugiau.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Šis įrašas dar neišsiųstas.</string>
 
@@ -6448,11 +6448,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Paremk dabar</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s remia „Radar“</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s remia „Signal“</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s skiria „Radar“ kasmėnesinę paramą. „Radar“ yra pelno nesiekianti organizacija be reklamos užsakovų ar investuotojų, ją išlaiko tokie žmonės kaip tu.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s skiria „Signal“ kasmėnesinę paramą. „Signal“ yra pelno nesiekianti organizacija be reklamos užsakovų ar investuotojų, ją išlaiko tokie žmonės kaip tu.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s skiria paramą „Radar“. „Radar“ yra pelno nesiekianti organizacija be reklamos užsakovų ar investuotojų, ją išlaiko tokie žmonės kaip tu.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s skiria paramą „Signal“. „Signal“ yra pelno nesiekianti organizacija be reklamos užsakovų ar investuotojų, ją išlaiko tokie žmonės kaip tu.</string>
 
     <string name="ImageView__badge">Ženklelis</string>
 
@@ -6474,17 +6474,17 @@
     <string name="Subscription__expires_s">Baigia galioti %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">„Radar“ – kitokia programėlė.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">„Signal“ – kitokia programėlė.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Privačios žinutės. Nebrukame reklamų, nesekame ir nestebime.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">„Radar“ išlaiko rėmėjų skiriama parama, tad visa mūsų veikla sukasi apie tavo privatumą. „Radar“ sukurta tau, o ne tavo duomenims rinkti ar pasipelnyti.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">„Signal“ išlaiko rėmėjų skiriama parama, tad visa mūsų veikla sukasi apie tavo privatumą. „Signal“ sukurta tau, o ne tavo duomenims rinkti ar pasipelnyti.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Jei gali – skirk paramą šiandien, kad „Radar“ išliktų smagi, patikima ir prieinama kiekvienam.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Jei gali – skirk paramą šiandien, kad „Signal“ išliktų smagi, patikima ir prieinama kiekvienam.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Dėkojame už jūsų palaikymą!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Tu pelnei „Radar“ rėmėjo ženklelį! Užsidėk jį ant savo profilio ir parodyk palaikymą.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Tu pelnei „Signal“ rėmėjo ženklelį! Užsidėk jį ant savo profilio ir parodyk palaikymą.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Be to, galite</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">tapti rėmėju ir remti kas mėnesį.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Rodyti profilyje</string>
@@ -6492,11 +6492,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Tęsti</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Jei turi daugiau nei vieną ženklelį, gali kurį nors pasirinkti kaip pagrindinį, matomą kitiems tavo profilyje.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Gauk ženklelių savo profiliui už paramą „Radar“.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar yra pelno nesiekianti organizacija, kuri neturi reklamuotojų ar investuotojų ir, kuri yra palaikoma tik tokių žmonių, kaip jūs.</string>
+    <string name="BecomeASustainerFragment__get_badges">Gauk ženklelių savo profiliui už paramą „Signal“.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal yra pelno nesiekianti organizacija, kuri neturi reklamuotojų ar investuotojų ir, kuri yra palaikoma tik tokių žmonių, kaip jūs.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Paremk „Radar“</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Paremk „Signal“</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Daugiau</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6581,7 +6581,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Pereiti į „Google Pay“</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Nepavyksta apdoroti prenumeratos mokėjimo</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Mums iškilo sunkumų atsiimant jūsų Radar rėmėjo mokėjimą. Įsitikinkite, kad jūsų mokėjimo būdas yra atnaujintas, o jeigu jis pasenęs, atnaujinkite jį „Google Pay“ sistemoje. Po kelių dienų Radar vėl pabandys apdoroti mokėjimą.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Mums iškilo sunkumų atsiimant jūsų Signal rėmėjo mokėjimą. Įsitikinkite, kad jūsų mokėjimo būdas yra atnaujintas, o jeigu jis pasenęs, atnaujinkite jį „Google Pay“ sistemoje. Po kelių dienų Signal vėl pabandys apdoroti mokėjimą.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Daugiau neberodyti</string>
 
     <string name="Subscription__contact_support">Susisiekti su palaikymu</string>
@@ -6636,7 +6636,7 @@
     <string name="DonationsErrors__your_payment_is_still">Tavo parama vis dar apdorojama. Tai gali užtrukti kelias minutes, priklausomai nuo interneto ryšio.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Nepavyko nutraukti prenumeratos</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Prenumeratos nutraukimui reikia interneto ryšio.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Jūsų įrenginys nepalaiko paramos programėlėje, todėl negalite prenumeruoti ir gauti ženklelio. Tačiau galite palaikyti „Radar“ ir skirti paramą mūsų interneto svetainėje.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Jūsų įrenginys nepalaiko paramos programėlėje, todėl negalite prenumeruoti ir gauti ženklelio. Tačiau galite palaikyti „Signal“ ir skirti paramą mūsų interneto svetainėje.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Tinklo klaida. Patikrinkite interneto ryšį ir bandykite dar kartą.</string>
     <string name="NetworkFailure__retry">Bandyti dar kartą</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6651,7 +6651,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Parama %1$s vardu</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s skyrė „Radar“ paramą tavo vardu</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s skyrė „Signal“ paramą tavo vardu</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Atsiimti</string>
     <!-- Gift badge view action label -->
@@ -6912,7 +6912,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Suma</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Dėkojame, kad remiate Radar. Jūsų įnašas padės skatinti misiją kurti atvirojo kodo privatumo technologiją, kuri apsaugo žodžio laisvę ir įgalina saugų bendravimą milijonams žmonių visame pasaulyje. Jei gyvenate Jungtinėse Valstijose, išsaugokite šį kvitą, kad turėtumėte jį savo mokestinių duomenų reikmėms. Radar technologijų fondas yra Jungtinėse Valstijose įsteigta, pagal vidaus mokesčių kodekso 501c3 sekciją neapmokestinama, pelno nesiekianti organizacija. Mūsų federalinis mokesčių ID yra 82–4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Dėkojame, kad remiate Signal. Jūsų įnašas padės skatinti misiją kurti atvirojo kodo privatumo technologiją, kuri apsaugo žodžio laisvę ir įgalina saugų bendravimą milijonams žmonių visame pasaulyje. Jei gyvenate Jungtinėse Valstijose, išsaugokite šį kvitą, kad turėtumėte jį savo mokestinių duomenų reikmėms. Signal technologijų fondas yra Jungtinėse Valstijose įsteigta, pagal vidaus mokesčių kodekso 501c3 sekciją neapmokestinama, pelno nesiekianti organizacija. Mūsų federalinis mokesčių ID yra 82–4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Nėra kvitų</string>
 
@@ -7272,10 +7272,10 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Skirk paramą draugo vardu</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Palaikyk „Radar“ – skirk paramą draugo ar šeimos nario, naudojančio šią programėlę, vardu. Šis žmogus gaus ženklelį, kurį galės rodyti savo profilyje %1$d dieną</item>
-        <item quantity="few">Palaikyk „Radar“ – skirk paramą draugo ar šeimos nario, naudojančio šią programėlę, vardu. Šis žmogus gaus ženklelį, kurį galės rodyti savo profilyje %1$d dienas</item>
-        <item quantity="many">Palaikyk „Radar“ – skirk paramą draugo ar šeimos nario, naudojančio šią programėlę, vardu. Šis žmogus gaus ženklelį, kurį galės rodyti savo profilyje %1$d d.</item>
-        <item quantity="other">Palaikyk „Radar“ – skirk paramą draugo ar šeimos nario, naudojančio šią programėlę, vardu. Šis žmogus gaus ženklelį, kurį galės rodyti savo profilyje %1$d dienų</item>
+        <item quantity="one">Palaikyk „Signal“ – skirk paramą draugo ar šeimos nario, naudojančio šią programėlę, vardu. Šis žmogus gaus ženklelį, kurį galės rodyti savo profilyje %1$d dieną</item>
+        <item quantity="few">Palaikyk „Signal“ – skirk paramą draugo ar šeimos nario, naudojančio šią programėlę, vardu. Šis žmogus gaus ženklelį, kurį galės rodyti savo profilyje %1$d dienas</item>
+        <item quantity="many">Palaikyk „Signal“ – skirk paramą draugo ar šeimos nario, naudojančio šią programėlę, vardu. Šis žmogus gaus ženklelį, kurį galės rodyti savo profilyje %1$d d.</item>
+        <item quantity="other">Palaikyk „Signal“ – skirk paramą draugo ar šeimos nario, naudojančio šią programėlę, vardu. Šis žmogus gaus ženklelį, kurį galės rodyti savo profilyje %1$d dienų</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Kitas</string>
@@ -7298,9 +7298,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Ačiū už jūsų palaikymą!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s skyrė „Radar“ paramą tavo vardu! Parodyk, kad palaikai programėlę „Radar“ savo profilyje.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s skyrė „Signal“ paramą tavo vardu! Parodyk, kad palaikai programėlę „Signal“ savo profilyje.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Tu skyrei „Radar“ paramą %1$s vardu. Šis žmogus turės galimybę parodyti palaikymą savo profilyje.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Tu skyrei „Signal“ paramą %1$s vardu. Šis žmogus turės galimybę parodyti palaikymą savo profilyje.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Atsiimti</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7308,7 +7308,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Pasiimamas ženklelis…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Tu skyrei „Radar“ paramą %1$s vardu. Šis žmogus turės galimybę parodyti palaikymą savo profilyje.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Tu skyrei „Signal“ paramą %1$s vardu. Šis žmogus turės galimybę parodyti palaikymą savo profilyje.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Tavo ženklelis nebegalioja</string>
     <!-- Expired gift sheet top description text -->
@@ -7552,7 +7552,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Tęsti</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Privačios žinutės – jūsų remiama paslauga. Jokių reklamų, jokio sekimo, jokių kompromisų. Skirk paramą dabar ir palaikyk „Radar“.</string>
+    <string name="DonateToSignalFragment__private_messaging">Privačios žinutės – jūsų remiama paslauga. Jokių reklamų, jokio sekimo, jokių kompromisų. Skirk paramą dabar ir palaikyk „Signal“.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Tu jau turi laukiančią paramą</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7577,11 +7577,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Skirti %1$s per mėn. paramą „Radar“</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Skirti %1$s per mėn. paramą „Signal“</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Gauk %1$s ženklelį</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Skirti „Radar“ %1$s paramą</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Skirti „Signal“ %1$s paramą</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Gauti %1$s ženklelį %2$d d.</item>
@@ -7606,7 +7606,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Banko pavedimas</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">„Stripe“ tvarko „Radar“ skirtą paramą. „Radar“ nerenka ir nekaupia tavo asmeninės informacijos. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">„Stripe“ tvarko „Signal“ skirtą paramą. „Signal“ nerenka ir nekaupia tavo asmeninės informacijos. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Sužinoti daugiau</string>
     <!-- Button label to continue with transfer -->
@@ -7742,9 +7742,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Tavo informacija yra privati</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">„Radar“ nerenka ir nekaupia jokios tavo asmeninės informacijos, kai skiri mums paramą.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">„Signal“ nerenka ir nekaupia jokios tavo asmeninės informacijos, kai skiri mums paramą.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Naudojame „Stripe“ mokėjimams apdoroti, kad parama mus pasiektų. Nesiekiame rinkti, nekaupiame ir nesaugome jokios informacijos, kurią tu jiems pateiki.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">„Radar“ nebando ir negali susieti tavo paramos su tavo „Radar“ paskyra.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">„Signal“ nebando ir negali susieti tavo paramos su tavo „Radar“ paskyra.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Dėkojame tau už paramą!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8959,7 +8959,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Pasirinkite savo atsarginio kopijavimo planą</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Visos atsarginės kopijos yra visiškai užšifruotos. „Radar“ yra ne pelno siekianti organizacija – mokėdami už atsarginį kopijavimą palaikote mūsų misiją.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Visos atsarginės kopijos yra visiškai užšifruotos. „Signal“ yra ne pelno siekianti organizacija – mokėdami už atsarginį kopijavimą palaikote mūsų misiją.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Sužinoti daugiau</string>
     <!-- Primary action button label without a current selection -->
@@ -8996,7 +8996,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s saugyklos vietos (%2$s nuotraukų)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Ačiū, kad palaikote „Radar“!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Ačiū, kad palaikote „Signal“!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Paskutinė %1$d diena įrašų</item>

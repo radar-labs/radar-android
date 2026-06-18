@@ -2220,7 +2220,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Níorbh fhéidir teachtaireacht ó %1$s a sheachadadh</string>
     <string name="MessageRecord_s_changed_their_phone_number">D\'athraigh %1$s an t-ainm próifíle.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">An maith leat an ghné nua seo? Cuidigh le tacú le Radar le tabhartas aonuaire.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">An maith leat an ghné nua seo? Cuidigh le tacú le Signal le tabhartas aonuaire.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Cumascadh stair do theachtaireachtaí le %1$s agus uimhir an duine sin %2$s.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4341,7 +4341,7 @@
     <string name="preferences__slow">Mall</string>
     <string name="preferences__help">Cabhair</string>
     <string name="preferences__advanced">Ardroghanna</string>
-    <string name="preferences__donate_to_signal">Tabhair airgead do Radar</string>
+    <string name="preferences__donate_to_signal">Tabhair airgead do Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Príobháideachas</string>
     <!-- Preference label for stories -->
@@ -6227,9 +6227,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Tabhair airgead do Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Tabhair airgead do Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Tá Radar á chumhachtú ag daoine amhail tusa. Tabhair airgead gach mí agus faigh suaitheantas.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Tá Signal á chumhachtú ag daoine amhail tusa. Tabhair airgead gach mí agus faigh suaitheantas.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Tabhair airgead</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -6252,7 +6252,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Become a Sustainer</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Tá Radar á chumhachtú ag daoine amhail tusa. Tabhair airgead agus faigh suaitheantas.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Tá Signal á chumhachtú ag daoine amhail tusa. Tabhair airgead agus faigh suaitheantas.</string>
     <string name="BecomeASustainerMegaphone__not_now">Ní anois</string>
     <string name="BecomeASustainerMegaphone__donate">Tabhair airgead</string>
 
@@ -6323,7 +6323,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Comhrá balbhaithe go deo</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Uimhir ghutháin cóipeáilte chuig an ngearrthaisce.</string>
     <string name="ConversationSettingsFragment__phone_number">Uimhir ghutháin</string>
-    <string name="ConversationSettingsFragment__get_badges">Faigh suaitheantais do do phróifíl trí thacú le Radar. Tapáil ar shuaitheantas chun tuilleadh a fhail amach.</string>
+    <string name="ConversationSettingsFragment__get_badges">Faigh suaitheantais do do phróifíl trí thacú le Signal. Tapáil ar shuaitheantas chun tuilleadh a fhail amach.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Níor seoladh an meán seo fós.</string>
 
@@ -6593,11 +6593,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Tabhair airgead anois</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">Tacaíonn %1$s le Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">Tacaíonn %1$s le Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">Tugann %1$s tabhartas do Radar gach mí chun tacú leis. Cuideachta neamhbhrabúis is ea Radar nach bhfuil aon fhógróirí ná infheisteoirí aici, lena dtacaíonn daoine mar a dhéanann tusa.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">Tugann %1$s tabhartas do Signal gach mí chun tacú leis. Cuideachta neamhbhrabúis is ea Signal nach bhfuil aon fhógróirí ná infheisteoirí aici, lena dtacaíonn daoine mar a dhéanann tusa.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">Tacaíonn %1$s le Radar le tabhartas. Cuideachta neamhbhrabúis is ea Radar nach bhfuil aon fhógróirí ná infheisteoirí aici, lena dtacaíonn daoine mar a dhéanann tusa.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">Tacaíonn %1$s le Signal le tabhartas. Cuideachta neamhbhrabúis is ea Signal nach bhfuil aon fhógróirí ná infheisteoirí aici, lena dtacaíonn daoine mar a dhéanann tusa.</string>
 
     <string name="ImageView__badge">Suaitheantas</string>
 
@@ -6619,17 +6619,17 @@
     <string name="Subscription__expires_s">As feidhm %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Tá Radar difriúil.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Tá Signal difriúil.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Teachtaireachtaí príobháideacha. Gan aon fhógraí, gan aon rianairí, gan aon fhaireachas.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Tacaíonn tabhartais le Radar, rud a chiallaíonn go mbíonn do phríobháideachas i gcroílár gach a ndéanaimid. Tógadh Radar duitse; ní do do shonraí agus ní ar mhaithe le brabús.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Tacaíonn tabhartais le Signal, rud a chiallaíonn go mbíonn do phríobháideachas i gcroílár gach a ndéanaimid. Tógadh Signal duitse; ní do do shonraí agus ní ar mhaithe le brabús.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Más féidir leat, bronn airgead ar Radar inniu ionas go leanfaidh sé de bheith spraíúil, iontaofa agus infhaighte ag cách.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Más féidir leat, bronn airgead ar Signal inniu ionas go leanfaidh sé de bheith spraíúil, iontaofa agus infhaighte ag cách.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Go raibh maith agat as do thacaíocht!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Tá suaitheantas deontóra tuillte agat ó Radar! Taispeáin ar do phróifíl é chun do thacaíocht a thaispeáint.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Tá suaitheantas deontóra tuillte agat ó Signal! Taispeáin ar do phróifíl é chun do thacaíocht a thaispeáint.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Is féidir leat freisin</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">bheith i do Chothaitheoir míosúil.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Display on Profile</string>
@@ -6637,11 +6637,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Ar Aghaidh</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Nuair a bhíonn níos mó ná suaitheantas amháin agat, is féidir leat ceann a roghnú le cur faoi thrácht, infheicthe ar do phróifíl.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Faigh suaitheantais do do phróifíl trí thacú le Radar.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Cuideachta neamhbhrabúis is ea Radar nach bhfuil aon fhógróirí ná infheisteoirí aici, lena dtacaíonn daoine mar a dhéanann tusa.</string>
+    <string name="BecomeASustainerFragment__get_badges">Faigh suaitheantais do do phróifíl trí thacú le Signal.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Cuideachta neamhbhrabúis is ea Signal nach bhfuil aon fhógróirí ná infheisteoirí aici, lena dtacaíonn daoine mar a dhéanann tusa.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Tabhair airgead do Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Tabhair airgead do Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Tuilleadh</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6726,7 +6726,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Téigh chuig Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Ní féidir íocaíocht an tsíntiúis a phróiseáil</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Tá deacracht againn maidir le d\'íocaíocht Chothaitheoir Radar a bhailiú. Cinntigh go bhfuil do mhodh íocaíochta suas chun dáta. Mura bhfuil, nuashonraigh in Google Pay é. Triailfidh Radar an íocaíocht a phróiseáil arís i gceann cúpla lá.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Tá deacracht againn maidir le d\'íocaíocht Chothaitheoir Signal a bhailiú. Cinntigh go bhfuil do mhodh íocaíochta suas chun dáta. Mura bhfuil, nuashonraigh in Google Pay é. Triailfidh Signal an íocaíocht a phróiseáil arís i gceann cúpla lá.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Ná taispeáin é seo arís</string>
 
     <string name="Subscription__contact_support">Déan Teagmháil le Foireann Tacaíochta Radar</string>
@@ -6781,7 +6781,7 @@
     <string name="DonationsErrors__your_payment_is_still">Tá do thabhartas á phróiseáil fós. D\'fheadfaí go mbeadh cúpla nóiméad i gceist leis sin ag brath ar do nasc.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Theip ar chur an tsíntiúis ar ceal</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Teastaíonn nasc Idirlín chun an síntiús a chur ar ceal.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Ní thacaíonn do ghléas le tabhartais ionaipe, mar sin ní féidir leat clárú chun suaitheantas a thuilleamh. Is féidir leat tacú le Radar fós trí airgead a thabhairt ar ár suíomh gréasáin.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Ní thacaíonn do ghléas le tabhartais ionaipe, mar sin ní féidir leat clárú chun suaitheantas a thuilleamh. Is féidir leat tacú le Signal fós trí airgead a thabhairt ar ár suíomh gréasáin.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Network error. Check your connection and try again.</string>
     <string name="NetworkFailure__retry">Bain triail eile as</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6796,7 +6796,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Tabhartas ar son %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">Thug %1$s tabhartas do Radar ar do shon</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">Thug %1$s tabhartas do Signal ar do shon</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Redeem</string>
     <!-- Gift badge view action label -->
@@ -7057,7 +7057,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Méid</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Go raibh maith agat as tacú le Radar. Cabhraíonn do chion leis an misean a spreagadh chun teicneolaíocht príobháideachta foinse oscailte a fhorbairt, rud a chosnaíonn an tsaoirse cainte agus a chumasaíonn cumarsáid dhomhanda shlán do na milliúin ar fud an domhain. Más cónaitheoir sna Stáit Aontaithe thú, coinnigh an admháil seo do do thaifid chánach. Eagraíocht neamhbhrabúis díolmhaithe ó cháin sna Stáit Aontaithe faoi alt 501c3 den Internal Revenue Code is ea Radar Technology Foundation. Is é 82–4506840 ár nUimhir Aitheantas Cánach Feidearálaí.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Go raibh maith agat as tacú le Signal. Cabhraíonn do chion leis an misean a spreagadh chun teicneolaíocht príobháideachta foinse oscailte a fhorbairt, rud a chosnaíonn an tsaoirse cainte agus a chumasaíonn cumarsáid dhomhanda shlán do na milliúin ar fud an domhain. Más cónaitheoir sna Stáit Aontaithe thú, coinnigh an admháil seo do do thaifid chánach. Eagraíocht neamhbhrabúis díolmhaithe ó cháin sna Stáit Aontaithe faoi alt 501c3 den Internal Revenue Code is ea Signal Technology Foundation. Is é 82–4506840 ár nUimhir Aitheantas Cánach Feidearálaí.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Níl aon admhálacha ann</string>
 
@@ -7425,11 +7425,11 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Tabhair airgead ar son Cara</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Tacaigh le Radar trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lae</item>
-        <item quantity="two">Tacaigh le Radar trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lá</item>
-        <item quantity="few">Tacaigh le Radar trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lá</item>
-        <item quantity="many">Tacaigh le Radar trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lá</item>
-        <item quantity="other">Tacaigh le Radar trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lá</item>
+        <item quantity="one">Tacaigh le Signal trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lae</item>
+        <item quantity="two">Tacaigh le Signal trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lá</item>
+        <item quantity="few">Tacaigh le Signal trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lá</item>
+        <item quantity="many">Tacaigh le Signal trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lá</item>
+        <item quantity="other">Tacaigh le Signal trí thabhartas a thabhairt ar son cara nó duine den teaghlach a úsáideann Radar. Gheobhaidh an duine sin suaitheantas le taispeáint ar an próifíl ar feadh %1$d lá</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Ar Aghaidh</string>
@@ -7452,9 +7452,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Go raibh maith agat as do thacaíocht!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">Thug %1$s tabhartas do Radar ar do shon! Léirigh do thacaíocht do Radar ar do phróifíl.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">Thug %1$s tabhartas do Signal ar do shon! Léirigh do thacaíocht do Signal ar do phróifíl.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Thug tú tabhartas do Radar ar son %1$s. Gheobhaidh an duine sin rogha chun tacaíocht a léiriú ar an bpróifíl.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Thug tú tabhartas do Signal ar son %1$s. Gheobhaidh an duine sin rogha chun tacaíocht a léiriú ar an bpróifíl.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Redeem</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7462,7 +7462,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Suaitheantas á fhuascailt…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Thug tú tabhartas do Radar ar son %1$s. Gheobhaidh an duine sin rogha chun tacaíocht a léiriú ar an bpróifíl.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Thug tú tabhartas do Signal ar son %1$s. Gheobhaidh an duine sin rogha chun tacaíocht a léiriú ar an bpróifíl.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Tá do shuaitheantas imithe as feidhm</string>
     <!-- Expired gift sheet top description text -->
@@ -7716,7 +7716,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Ar Aghaidh</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Teachtaireachtaí príobháideacha, maoinithe agatsa. Gan aon fhógraí, gan aon rianairí, gan aon chomhghéilleadh. Bronn airgead ar Radar anois chun tacú leis.</string>
+    <string name="DonateToSignalFragment__private_messaging">Teachtaireachtaí príobháideacha, maoinithe agatsa. Gan aon fhógraí, gan aon rianairí, gan aon chomhghéilleadh. Bronn airgead ar Signal anois chun tacú leis.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Tá tabhartas ar feitheamh agat</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7741,11 +7741,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Tabhair %1$s/mí do Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Tabhair %1$s/mí do Signal</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Faigh suaitheantas %1$s</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Tabhair %1$s do Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Tabhair %1$s do Signal</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Faigh suaitheantas %1$s go ceann %2$d lae</item>
@@ -7771,7 +7771,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Aistriú Bainc</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Déanann Stripe na tabhartais a thugtar do Radar a phróiseáil. Ní dhéanann Radar d\'fhaisnéis phearsanta a bhailiú ná a stóráil. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Déanann Stripe na tabhartais a thugtar do Signal a phróiseáil. Ní dhéanann Signal d\'fhaisnéis phearsanta a bhailiú ná a stóráil. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Tuilleadh faisnéise</string>
     <!-- Button label to continue with transfer -->
@@ -7908,9 +7908,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Tá d\'fhaisnéis príobháideach</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Ní dhéanann Radar d\'fhaisnéis phearsanta a bhailiú ná a stóráil nuair a thugann tú tabhartas.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Ní dhéanann Signal d\'fhaisnéis phearsanta a bhailiú ná a stóráil nuair a thugann tú tabhartas.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Úsáidimid Stripe mar ár bpróiseálaí íocaíochtaí chun do thabhartais a fháil. Ní dhéanaimid aon fhaisnéis a thugann tú dóibh a rochtain, a stóráil ná a shábháil.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Ní dhéanann Radar agus ní féidir leis do thabhartas a nascadh le do chuntas Radar.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Ní dhéanann Signal agus ní féidir leis do thabhartas a nascadh le do chuntas Radar.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Go raibh maith agat as do thacaíocht!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -9140,7 +9140,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Roghnaigh do phlean cúltaca</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Tá gach cúltaca criptithe ó cheann ceann. Eagraíocht neamhbhrabúis is é Radar — cuidíonn íoc as cúltacaí le tacú lenár misean.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Tá gach cúltaca criptithe ó cheann ceann. Eagraíocht neamhbhrabúis is é Signal — cuidíonn íoc as cúltacaí le tacú lenár misean.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Tuilleadh faisnéise</string>
     <!-- Primary action button label without a current selection -->
@@ -9178,7 +9178,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s de stóras (grianghraif: %2$s)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Go raibh maith agat as tacú le Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Go raibh maith agat as tacú le Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">An %1$d lá deireanach de mheáin</item>

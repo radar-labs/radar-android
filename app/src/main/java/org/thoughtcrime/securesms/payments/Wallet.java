@@ -214,7 +214,8 @@ public final class Wallet {
     } catch (UnsupportedOperationException e) {
       results.add(TransactionSubmissionResult.failure(TransactionSubmissionResult.ErrorCode.GENERIC_FAILURE, false));
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      Log.w(TAG, "Payment send failed", e);
+      results.add(TransactionSubmissionResult.failure(TransactionSubmissionResult.ErrorCode.GENERIC_FAILURE, false));
     }
     //    Money.MobileCoin defragmentFees = Money.MobileCoin.ZERO;
 //    if (defragmentFirst) {

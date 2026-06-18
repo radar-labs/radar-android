@@ -1988,7 +1988,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">«%1$s» دىن كەلگەن بىر ئۇچۇر يەتكۈزۈلمىدى</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s تېلېفون نومۇرىنى ئۆزگەرتتى.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">بۇ يېڭى ئىقتىدارنى ياقتۇردىڭىزمۇ؟ بىر قېتىملىق ئىئانە قىلىش ئارقىلىق Radar نى قوللاشقا ياردەم قىلىڭ.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">بۇ يېڭى ئىقتىدارنى ياقتۇردىڭىزمۇ؟ بىر قېتىملىق ئىئانە قىلىش ئارقىلىق Signal نى قوللاشقا ياردەم قىلىڭ.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">%1$s ۋە ئۇلارنىڭ نومۇرى %2$s بىلەن بولغان ئۇچۇرلىشىش خاتىرىڭىز بىرلەشتۈرۈلدى.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -3893,7 +3893,7 @@
     <string name="preferences__slow">ئاستا</string>
     <string name="preferences__help">ياردەم</string>
     <string name="preferences__advanced">ئالىي</string>
-    <string name="preferences__donate_to_signal">‫Radar غا ئىئانە قىلىڭ</string>
+    <string name="preferences__donate_to_signal">‫Signal غا ئىئانە قىلىڭ</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">مەخپىيەتلىك</string>
     <!-- Preference label for stories -->
@@ -5675,9 +5675,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">‫Radar غا ئىئانە قىلىڭ</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">‫Signal غا ئىئانە قىلىڭ</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar نى سىزگە ئوخشاش كىشىلەر قوللىغان. ئايلىق ئىئانە قىلىپ ئىزنەككە ئېرىشىڭ.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal نى سىزگە ئوخشاش كىشىلەر قوللىغان. ئايلىق ئىئانە قىلىپ ئىزنەككە ئېرىشىڭ.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">ئىئانە قىلىڭ</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5700,7 +5700,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">قۇۋۋەتلىگۈچى بولۇڭ</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar نى سىزگە ئوخشاش كىشىلەر قوللىغان. ئىئانە قىلىپ ئىزنەككە ئېرىشىڭ.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal نى سىزگە ئوخشاش كىشىلەر قوللىغان. ئىئانە قىلىپ ئىزنەككە ئېرىشىڭ.</string>
     <string name="BecomeASustainerMegaphone__not_now">ھازىر ئەمەس</string>
     <string name="BecomeASustainerMegaphone__donate">ئىئانە قىلىڭ</string>
 
@@ -5771,7 +5771,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">پاراڭ مەڭگۈلۈك ئۈنسىز قىلىنغان</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">تېلېفون نومۇرىنى چاپلاش تاختىسىغا كۆچۈر</string>
     <string name="ConversationSettingsFragment__phone_number">تېلېفون نومۇرىڭىز</string>
-    <string name="ConversationSettingsFragment__get_badges">Radar نى قوللاپ ئارخىپىڭىزدا ئىزنەككە ئېرىشىڭ. تەپسىلاتىنى ئىزنەكنى چېكىپ كۆرۈڭ.</string>
+    <string name="ConversationSettingsFragment__get_badges">Signal نى قوللاپ ئارخىپىڭىزدا ئىزنەككە ئېرىشىڭ. تەپسىلاتىنى ئىزنەكنى چېكىپ كۆرۈڭ.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">بۇ مېدىيا تېخى ئەۋەتىلمىدى.</string>
 
@@ -6013,11 +6013,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">دەرھال ئىئانە قىلىش</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s Radar نى قوللايدۇ</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s Signal نى قوللايدۇ</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s Radar نى ئايلىق ئىئانە بىلەن قوللايدۇ. Radar خۇددى سىزگە ئوخشاش كىشىلەرلا قوللايدىغان، ئېلان بەرگۈچىسى ياكى مەبلەغ سالغۇچىسى يوق، پايدا ئالمايدىغان ئەپ.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s Signal نى ئايلىق ئىئانە بىلەن قوللايدۇ. Signal خۇددى سىزگە ئوخشاش كىشىلەرلا قوللايدىغان، ئېلان بەرگۈچىسى ياكى مەبلەغ سالغۇچىسى يوق، پايدا ئالمايدىغان ئەپ.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s Radar نى ئىئانە بىلەن قوللىدى. Radar خۇددى سىزگە ئوخشاش كىشىلەرلا قوللايدىغان، ئېلان بەرگۈچىسى ياكى مەبلەغ سالغۇچىسى يوق، پايدا ئالمايدىغان ئەپ.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s Signal نى ئىئانە بىلەن قوللىدى. Signal خۇددى سىزگە ئوخشاش كىشىلەرلا قوللايدىغان، ئېلان بەرگۈچىسى ياكى مەبلەغ سالغۇچىسى يوق، پايدا ئالمايدىغان ئەپ.</string>
 
     <string name="ImageView__badge">ئىزناك</string>
 
@@ -6039,17 +6039,17 @@
     <string name="Subscription__expires_s">مۇددىتى %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar باشقىچە.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal باشقىچە.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">ئۇچۇرلىشىش شەخسىي. ئېلان يوق، ئىز قوغلاش يوق، نازارەت يوق.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar نىڭ بارلىق تىرىشچانلىقى سىزنىڭ مەخپىيەتلىكىڭىز ئۈچۈن. Radar سىزنىڭ سانلىق مەلۇماتىڭىزنى دەپ ئەمەس، سىزنى دەپ قۇرۇلغان؛ Radar پايدا بىلەن ئەمەس، ئىئانە بىلەن يۈرۈشىدۇ.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal نىڭ بارلىق تىرىشچانلىقى سىزنىڭ مەخپىيەتلىكىڭىز ئۈچۈن. Signal سىزنىڭ سانلىق مەلۇماتىڭىزنى دەپ ئەمەس، سىزنى دەپ قۇرۇلغان؛ Signal پايدا بىلەن ئەمەس، ئىئانە بىلەن يۈرۈشىدۇ.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">ئەگەر شارائىتىڭىز يار بەرسە، Radar نى قىزىقارلىق، ئىشەنچىلىك، ئاممىباب قىلىش ئۈچۈن بۈگۈنلا ئىئانە قىلىڭ.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">ئەگەر شارائىتىڭىز يار بەرسە، Signal نى قىزىقارلىق، ئىشەنچىلىك، ئاممىباب قىلىش ئۈچۈن بۈگۈنلا ئىئانە قىلىڭ.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">قوللىغانلىقىڭىزغا رەھمەت!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">سىز بىر دانە Radar ئىئانە قىلغۇچىلار ئىزنىكىگە ئېرىشتىڭىز! ئۇنى ئارخىپىڭىزدا كۆرسىتىپ قوللىشىڭىزنى نامايەن قىلىڭ.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">سىز بىر دانە Signal ئىئانە قىلغۇچىلار ئىزنىكىگە ئېرىشتىڭىز! ئۇنى ئارخىپىڭىزدا كۆرسىتىپ قوللىشىڭىزنى نامايەن قىلىڭ.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">باشقا قوللاش ئۇسۇللىرى</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">ئايلىق قوللىغۇچى بولۇش.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">ئارخىپتا كۆرسىتىش</string>
@@ -6057,11 +6057,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">داۋاملاشتۇر</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">ئىزنەك سانىڭىز بىردىن كۆپ بولغاندا، بىر ئىزنەكنى تاللاپ ئۇنى ئارخىپىڭىزدا باشقىلار كۆرەلەيدىغان قىلالايسىز.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Radar نى قوللاپ ئارخىپىڭىزدا كۆرۈنىدىغان ئىزنەكلەرگە ئېرىشىڭ.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar خۇددى سىزگە ئوخشاش كىشىلەرلا قوللايدىغان، ئېلان بەرگۈچىسى ياكى مەبلەغ سالغۇچىسى يوق، پايدا ئالمايدىغان ئەپ.</string>
+    <string name="BecomeASustainerFragment__get_badges">Signal نى قوللاپ ئارخىپىڭىزدا كۆرۈنىدىغان ئىزنەكلەرگە ئېرىشىڭ.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal خۇددى سىزگە ئوخشاش كىشىلەرلا قوللايدىغان، ئېلان بەرگۈچىسى ياكى مەبلەغ سالغۇچىسى يوق، پايدا ئالمايدىغان ئەپ.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">‫Radar غا ئىئانە قىلىڭ</string>
+    <string name="ManageDonationsFragment__donate_to_signal">‫Signal غا ئىئانە قىلىڭ</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">تېخىمۇ كۆپ</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6146,7 +6146,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Google Pay غا كىرىڭ</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">مۇشتەرىلىك ھەققىنى بىر تەرەپ قىلالمىدى</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Radar ئىزچىل قوللىغۇچىسى ھەققىنى يىغىشتا مەسىلىگە يولۇقتۇق. پۇل تۆلەش ئۇسۇلىنىڭ ئەڭ يېڭى ئۇسۇل ئىكەنلىكىنى جەزملەشتۈرۈڭ. ئەگەر ئەڭ يېڭى بولمىسا ئۇنى Google Pay دا يېڭىلاڭ. Radar پۇل تۆلەشنى بىر قانچە كۈندىن كېيىن قايتا بىر تەرەپ قىلىپ سىناپ باقىدۇ.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Signal ئىزچىل قوللىغۇچىسى ھەققىنى يىغىشتا مەسىلىگە يولۇقتۇق. پۇل تۆلەش ئۇسۇلىنىڭ ئەڭ يېڭى ئۇسۇل ئىكەنلىكىنى جەزملەشتۈرۈڭ. ئەگەر ئەڭ يېڭى بولمىسا ئۇنى Google Pay دا يېڭىلاڭ. Signal پۇل تۆلەشنى بىر قانچە كۈندىن كېيىن قايتا بىر تەرەپ قىلىپ سىناپ باقىدۇ.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">بۇنى قايتا كۆرسەتمىسۇن</string>
 
     <string name="Subscription__contact_support">قوللىغۇچىلار  بىلەن ئالاقىلىشىڭ</string>
@@ -6201,7 +6201,7 @@
     <string name="DonationsErrors__your_payment_is_still">ئىئانىڭىزنى تېخىچە بىر تەرەپ قىلىۋاتىدۇ. تور ئۇلىنىشىڭىزغا ئاساسەن بۇنىڭغا بىر نەچچە مىنۇت كېتىشى مۇمكىن.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">مۇشتەرىلىكنى بىكار قىلغىلى بولمىدى</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">مۇشتەرىلىكنى بىكار قىلىش ئۈچۈن تورغا ئۇلىنىش كېرەك.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">ئۈسكۈنىڭىز ئەپ ئىچىدىكى ئىئانە قىلىشنى قوللىمايدۇ ، شۇڭا ئىزنەككە مۇشتەرى بولۇپ ئېرىشەلمەيسىز. سىز تور بېتىمىزدە ئىئانە قىلىش ئارقىلىق يەنىلا Radar نى قوللىيالايسىز.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">ئۈسكۈنىڭىز ئەپ ئىچىدىكى ئىئانە قىلىشنى قوللىمايدۇ ، شۇڭا ئىزنەككە مۇشتەرى بولۇپ ئېرىشەلمەيسىز. سىز تور بېتىمىزدە ئىئانە قىلىش ئارقىلىق يەنىلا Signal نى قوللىيالايسىز.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">تور خاتالىقى. تور ئۇلىنىشىڭىزنى تەكشۈرۈپ قايتا سىناڭ.</string>
     <string name="NetworkFailure__retry">قايتا سىنا</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6216,7 +6216,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">«%1$s» گە ۋاكالىتەن ئىئانە قىلىش</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s سىزنىڭ ئورنىڭىزدا Radar ئۈچۈن ئىئانە قىلدى</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s سىزنىڭ ئورنىڭىزدا Signal ئۈچۈن ئىئانە قىلدى</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">نەقلەشتۈرۈش</string>
     <!-- Gift badge view action label -->
@@ -6477,7 +6477,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">سومما</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Radar نى قوللىغانلىقىڭىزغا رەھمەت. سىزنىڭ ئىئانىڭىز ئەركىن ئىپادىلەش ھوقۇقىنى قوغداش ۋە دۇنيادىكى مىليونلىغان كىشىلەرنىڭ ئالاقىلىشىش بىخەتەرلىكىگە كاپالەتلىك قىلىدىغان ئوچۇق مەنبە مەخپىيەتلىك تېخنىكىسىنى ئىلگىرى سۈرۈش بۇرچىمىزنى ئىشقا ئاشۇرۇشقا ياردەم قىلىدۇ. ئەگەر سىز ئامېرىكا پۇقراسى بولسىڭىز، بۇ تالوننى باج خاتىرىڭىز ئۈچۈن ساقلاپ قويۇڭ. Radar تېخنىكا فوندى (Radar Technology Foundation) ئامېرىكا دۆلەت ئىچى باج قانۇنى 501c3 ماددىسىدىكى بەلگىلىمە بويىچە باجدىن كەچۈرۈم قىلىنىدىغان تاپاۋەتسىز ئورگان بولۇپ ھېسابلىنىدۇ. فېدېراتسىيە باج ID نومۇرىمىز 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Signal نى قوللىغانلىقىڭىزغا رەھمەت. سىزنىڭ ئىئانىڭىز ئەركىن ئىپادىلەش ھوقۇقىنى قوغداش ۋە دۇنيادىكى مىليونلىغان كىشىلەرنىڭ ئالاقىلىشىش بىخەتەرلىكىگە كاپالەتلىك قىلىدىغان ئوچۇق مەنبە مەخپىيەتلىك تېخنىكىسىنى ئىلگىرى سۈرۈش بۇرچىمىزنى ئىشقا ئاشۇرۇشقا ياردەم قىلىدۇ. ئەگەر سىز ئامېرىكا پۇقراسى بولسىڭىز، بۇ تالوننى باج خاتىرىڭىز ئۈچۈن ساقلاپ قويۇڭ. Signal تېخنىكا فوندى (Signal Technology Foundation) ئامېرىكا دۆلەت ئىچى باج قانۇنى 501c3 ماددىسىدىكى بەلگىلىمە بويىچە باجدىن كەچۈرۈم قىلىنىدىغان تاپاۋەتسىز ئورگان بولۇپ ھېسابلىنىدۇ. فېدېراتسىيە باج ID نومۇرىمىز 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">تالون يوق</string>
 
@@ -6836,9 +6836,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">قوللىغانلىقىڭىزغا رەھمەت!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s سىزنىڭ ئورنىڭىزدا Radar غا ئىئانە قىلدى! Radar غا بولغان قوللىشىڭىزنى ئارخىپىڭىزدا نامايەن قىلىڭ.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s سىزنىڭ ئورنىڭىزدا Signal غا ئىئانە قىلدى! Signal غا بولغان قوللىشىڭىزنى ئارخىپىڭىزدا نامايەن قىلىڭ.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">سىز «%1$s» نىڭ ئورنىدا Radar غا ئىئانە قىلدىڭىز. ئۇلار ئۆزىنىڭ قوللىشىنى ئارخىپتا نامايەن قىلىش-قىلماسلىقنى قارار قىلسا بولىدۇ.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">سىز «%1$s» نىڭ ئورنىدا Signal غا ئىئانە قىلدىڭىز. ئۇلار ئۆزىنىڭ قوللىشىنى ئارخىپتا نامايەن قىلىش-قىلماسلىقنى قارار قىلسا بولىدۇ.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">نەقلەشتۈرۈش</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -6846,7 +6846,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">ئىزنەكلەرنى نەقلەشتۈرىۋاتىدۇ…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">سىز «%1$s» نىڭ ئورنىدا Radar غا ئىئانە قىلدىڭىز. ئۇلار ئۆزىنىڭ قوللىشىنى ئارخىپتا نامايەن قىلىش-قىلماسلىقنى قارار قىلسا بولىدۇ.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">سىز «%1$s» نىڭ ئورنىدا Signal غا ئىئانە قىلدىڭىز. ئۇلار ئۆزىنىڭ قوللىشىنى ئارخىپتا نامايەن قىلىش-قىلماسلىقنى قارار قىلسا بولىدۇ.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">ئىزنىكىڭىزنىڭ ۋاقتى ئۆتكەن</string>
     <!-- Expired gift sheet top description text -->
@@ -7060,7 +7060,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">داۋاملاشتۇر</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">بىخەتەر ئۇچۇرلىشىش - سىزنىڭ ياردىمىڭىزدە. ئېلان ۋە ئىز قوغلاشقا ھېچقانداق يول يوق. Radar نى قوللاش ئۈچۈن ئىئانە قىلىڭ.</string>
+    <string name="DonateToSignalFragment__private_messaging">بىخەتەر ئۇچۇرلىشىش - سىزنىڭ ياردىمىڭىزدە. ئېلان ۋە ئىز قوغلاشقا ھېچقانداق يول يوق. Signal نى قوللاش ئۈچۈن ئىئانە قىلىڭ.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">بىر ئىئانىڭىز بىر تەرەپ قىلىنىۋاتىدۇ</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7085,11 +7085,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">‫Radar غا ئايلىقىغا %1$s ئىئانە قىلىڭ</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">‫Signal غا ئايلىقىغا %1$s ئىئانە قىلىڭ</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">يېڭى %1$s ئىزنەككە ئېرىشىڭ</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">‫Radar غا %1$s ئىئانە قىلىمەن</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">‫Signal غا %1$s ئىئانە قىلىمەن</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="other">%2$d كۈنلۈك %1$s ئىزنەككە ئېرىشىڭ</item>
@@ -7111,7 +7111,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">بانكىدىن ئاغدۇرۇش</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Radar غا قىلغان ئىئانىنى Stripe بىر تەرەپ قىلىدۇ. Radar شەخسىي ئۇچۇرىڭىزنى توپلىمايدۇ ياكى ساقلىمايدۇ. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Signal غا قىلغان ئىئانىنى Stripe بىر تەرەپ قىلىدۇ. Signal شەخسىي ئۇچۇرىڭىزنى توپلىمايدۇ ياكى ساقلىمايدۇ. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">تەپسىلاتى</string>
     <!-- Button label to continue with transfer -->
@@ -7244,9 +7244,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">ئۇچۇرلىرىڭىز شەخسىي</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">سىز ئىئانە قىلغاندا Radar شەخسىي ئۇچۇرلىرىڭىزنى توپلىمايدۇ ياكى ساقلىمايدۇ.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">سىز ئىئانە قىلغاندا Signal شەخسىي ئۇچۇرلىرىڭىزنى توپلىمايدۇ ياكى ساقلىمايدۇ.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">ئىئانىڭىزنى تاپشۇرۇۋېلىش ئۈچۈن Stripe پۇل تۆلەش بىر تەرەپ قىلغۇچىسى ئورنىدا ئىشلىتىمىز. سىز ئۇلارغا تەمىنلىگەن ئۇچۇرلارنى بىز كۆرەلمەيمىز ياكى ساقلىيالمايمىز.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar سىزنىڭ ئىئانىڭىزنى سىزنىڭ Radar ھېساباتىڭىزغا باغلىمايدۇ ۋە ئۇنداق قىلىش ھوقۇقىمۇ بولمايدۇ.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal سىزنىڭ ئىئانىڭىزنى سىزنىڭ Radar ھېساباتىڭىزغا باغلىمايدۇ ۋە ئۇنداق قىلىش ھوقۇقىمۇ بولمايدۇ.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">قوللىغىنىڭىزغا رەھمەت!</string>
 
     <!-- GroupStoryEducationSheet -->

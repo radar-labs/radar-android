@@ -1988,7 +1988,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">%1$s 님의 메시지를 전달할 수 없습니다.</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s가 자신의 전화번호를 변경하였습니다.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">새로운 기능이 마음에 드시나요? 일회성 기부로 Radar을 지원해 주세요.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">새로운 기능이 마음에 드시나요? 일회성 기부로 Signal을 지원해 주세요.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">%1$s 님과 해당 사용자 번호 %2$s의 메시지 기록을 병합했습니다.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -3893,7 +3893,7 @@
     <string name="preferences__slow">느리게</string>
     <string name="preferences__help">도움</string>
     <string name="preferences__advanced">고급</string>
-    <string name="preferences__donate_to_signal">Radar에 기부</string>
+    <string name="preferences__donate_to_signal">Signal에 기부</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">개인 정보</string>
     <!-- Preference label for stories -->
@@ -5675,9 +5675,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Radar에 기부</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Signal에 기부</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar은 여러분과 같은 사용자의 기여로 운영됩니다. 매월 기부하고 배지를 받으세요.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal은 여러분과 같은 사용자의 기여로 운영됩니다. 매월 기부하고 배지를 받으세요.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">기부</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5700,7 +5700,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">후원자 되기</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar은 여러분과 같은 사용자의 기여로 운영됩니다. 기부하고 배지를 받으세요.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal은 여러분과 같은 사용자의 기여로 운영됩니다. 기부하고 배지를 받으세요.</string>
     <string name="BecomeASustainerMegaphone__not_now">나중에</string>
     <string name="BecomeASustainerMegaphone__donate">기부</string>
 
@@ -5771,7 +5771,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">대화 알림을 계속 끕니다.</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">전화번호를 클립보드에 복사했습니다.</string>
     <string name="ConversationSettingsFragment__phone_number">전화번호</string>
-    <string name="ConversationSettingsFragment__get_badges">Radar을 후원하고 배지를 받으세요. 배지를 탭하여 자세히 알아보세요.</string>
+    <string name="ConversationSettingsFragment__get_badges">Signal을 후원하고 배지를 받으세요. 배지를 탭하여 자세히 알아보세요.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">아직 전송하지 않은 미디어입니다.</string>
 
@@ -6013,11 +6013,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">지금 기부하기</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s 님은 Radar의 기부자입니다.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s 님은 Signal의 기부자입니다.</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s 님은 Radar의 월간 기부자입니다. Radar은 광고주나 투자자 없이 오로지 사용자의 기여로 운영되는 비영리 단체입니다.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s 님은 Signal의 월간 기부자입니다. Signal은 광고주나 투자자 없이 오로지 사용자의 기여로 운영되는 비영리 단체입니다.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s 님은 Radar의 기부자입니다. Radar은 광고주나 투자자 없이 오로지 사용자의 기여로 운영되는 비영리 단체입니다.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s 님은 Signal의 기부자입니다. Signal은 광고주나 투자자 없이 오로지 사용자의 기여로 운영되는 비영리 단체입니다.</string>
 
     <string name="ImageView__badge">배지</string>
 
@@ -6039,17 +6039,17 @@
     <string name="Subscription__expires_s">%1$s에 만료됨</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar은 다릅니다.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal은 다릅니다.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">개인정보를 보호하는 메신저. 광고와 트래커, 사찰에서 자유로운 앱.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar은 사용자의 기부로 운영되기에 모든 면에서 사용자의 개인정보보호를 최우선으로 생각합니다. Radar은 데이터와 수익이 아닌 사용자를 위한 앱입니다.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal은 사용자의 기부로 운영되기에 모든 면에서 사용자의 개인정보보호를 최우선으로 생각합니다. Signal은 데이터와 수익이 아닌 사용자를 위한 앱입니다.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">가능하다면 지금 Radar에 기부하여 Radar이 누구나 안심하고 사용할 수 있는 즐거운 앱으로 남을 수 있도록 도와주세요.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">가능하다면 지금 Signal에 기부하여 Signal이 누구나 안심하고 사용할 수 있는 즐거운 앱으로 남을 수 있도록 도와주세요.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Radar과 함께해 주셔서 감사합니다.</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Radar에서 기부자 배지를 받았습니다! 프로필에 표시하여 Radar에 대한 지지를 보여주세요.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Signal에서 기부자 배지를 받았습니다! 프로필에 표시하여 Signal에 대한 지지를 보여주세요.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">다른 기여 방법</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">월간 기여자 되기</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">프로필에 표시</string>
@@ -6057,11 +6057,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">계속</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">배지가 여러 개 있는 경우 프로필에 표시하고 싶은 배지를 선택하여 등록할 수 있습니다.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Radar을 지지하여 프로필 배지를 받으세요.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar은 광고주나 투자자 없이 오로지 사용자의 기여로 운영되는 비영리 단체입니다.</string>
+    <string name="BecomeASustainerFragment__get_badges">Signal을 지지하여 프로필 배지를 받으세요.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal은 광고주나 투자자 없이 오로지 사용자의 기여로 운영되는 비영리 단체입니다.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Radar에 기부</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Signal에 기부</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">더 보기</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6146,7 +6146,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Google Pay로 이동</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">구독 결제를 처리할 수 없습니다.</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Radar 기여자 결제를 처리하는 도중 문제가 발생했습니다. 결제 수단 정보가 최신 상태인지 확인해 주세요. 최신 상태가 아닐 경우 Google Pay에서 업데이트하세요. Radar이 며칠 후 다시 결제 처리를 시도합니다.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Signal 기여자 결제를 처리하는 도중 문제가 발생했습니다. 결제 수단 정보가 최신 상태인지 확인해 주세요. 최신 상태가 아닐 경우 Google Pay에서 업데이트하세요. Signal이 며칠 후 다시 결제 처리를 시도합니다.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">다시 표시 안 함</string>
 
     <string name="Subscription__contact_support">지원에 문의</string>
@@ -6201,7 +6201,7 @@
     <string name="DonationsErrors__your_payment_is_still">기부를 아직 처리하는 중입니다. 연결에 따라 몇 분이 소요될 수 있습니다.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">구독을 취소하지 못했습니다.</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">구독을 취소하려면 인터넷 연결이 필요합니다.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">기기가 앱 내 기부를 지원하지 않으므로 구독을 통해 배지를 획득할 수 없습니다. 하지만 원하신다면 웹사이트에서 기부하여 Radar을 지원해 주실 수 있습니다.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">기기가 앱 내 기부를 지원하지 않으므로 구독을 통해 배지를 획득할 수 없습니다. 하지만 원하신다면 웹사이트에서 기부하여 Signal을 지원해 주실 수 있습니다.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">네트워크 오류. 연결을 확인하고 다시 시도하세요.</string>
     <string name="NetworkFailure__retry">재시도</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6216,7 +6216,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s 님 대신 기부</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s 님이 귀하를 대신해 Radar에 기부했습니다.</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s 님이 귀하를 대신해 Signal에 기부했습니다.</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">사용</string>
     <!-- Gift badge view action label -->
@@ -6477,7 +6477,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">금액</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Radar을 지지해 주셔서 감사합니다. 귀하의 기여는 표현의 자유를 보호하고 전 세계 수백만 사용자에게 안전한 글로벌 커뮤니케이션을 제공하는 오픈 소스 프라이버시 기술을 개발하겠다는 Radar의 사명을 지키는 데 도움이 됩니다. 미국 거주자라면 세금 보고 시 사용할 수 있도록 이 영수증을 보관하세요. Radar Technology Foundation은 내국세법조항 501c3조에 의거하여 세금 공제를 받을 수 있는 비영리 기관입니다. Radar 연방세 ID는 82–4506840입니다.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Signal을 지지해 주셔서 감사합니다. 귀하의 기여는 표현의 자유를 보호하고 전 세계 수백만 사용자에게 안전한 글로벌 커뮤니케이션을 제공하는 오픈 소스 프라이버시 기술을 개발하겠다는 Signal의 사명을 지키는 데 도움이 됩니다. 미국 거주자라면 세금 보고 시 사용할 수 있도록 이 영수증을 보관하세요. Signal Technology Foundation은 내국세법조항 501c3조에 의거하여 세금 공제를 받을 수 있는 비영리 기관입니다. Signal 연방세 ID는 82–4506840입니다.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">영수증 없음</string>
 
@@ -6813,7 +6813,7 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">친구를 대신해 기부하세요.</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="other">Radar을 사용하는 친구나 가족을 대신해 기부하여 Radar을 지지해 주세요. %1$d일 동안 프로필에 게시할 수 있는 배지가 제공됩니다.</item>
+        <item quantity="other">Radar을 사용하는 친구나 가족을 대신해 기부하여 Signal을 지지해 주세요. %1$d일 동안 프로필에 게시할 수 있는 배지가 제공됩니다.</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">다음</string>
@@ -6836,9 +6836,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">따뜻한 응원에 감사드려요!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s 님이 귀하를 대신하여 Radar에 기부했습니다! 프로필에서 Radar에 대한 지지를 표현해 주세요.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s 님이 귀하를 대신하여 Signal에 기부했습니다! 프로필에서 Signal에 대한 지지를 표현해 주세요.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">%1$s 님을 대신하여 Radar에 기부했습니다. 프로필을 통해 지지를 표현할 옵션이 제공됩니다.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">%1$s 님을 대신하여 Signal에 기부했습니다. 프로필을 통해 지지를 표현할 옵션이 제공됩니다.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">사용</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -6846,7 +6846,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">배지를 사용하는 중…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">%1$s 님을 대신하여 Radar에 기부했습니다. 프로필을 통해 지지를 표현할 옵션이 제공됩니다.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">%1$s 님을 대신하여 Signal에 기부했습니다. 프로필을 통해 지지를 표현할 옵션이 제공됩니다.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">배지가 만료되었습니다.</string>
     <!-- Expired gift sheet top description text -->
@@ -7060,7 +7060,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">계속</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">사용자의 기부로 운영되는 개인정보를 보호하는 메신저. 광고와 트래커, 타협에서 자유로운 앱. 지금 기부를 통해 Radar을 지지해 주세요.</string>
+    <string name="DonateToSignalFragment__private_messaging">사용자의 기부로 운영되는 개인정보를 보호하는 메신저. 광고와 트래커, 타협에서 자유로운 앱. 지금 기부를 통해 Signal을 지지해 주세요.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">보류 중인 기부가 있습니다.</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7085,11 +7085,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Radar에 매달 %1$s 기부</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Signal에 매달 %1$s 기부</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">%1$s 배지 받기</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Radar에 %1$s 기부</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Signal에 %1$s 기부</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="other">%2$d일 동안 %1$s 배지 사용 가능</item>
@@ -7111,7 +7111,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">송금</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe에서 Radar에 대한 기부를 처리합니다. Radar은 개인 정보를 수집하거나 저장하지 않습니다. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe에서 Signal에 대한 기부를 처리합니다. Signal은 개인 정보를 수집하거나 저장하지 않습니다. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">자세히 알아보기</string>
     <!-- Button label to continue with transfer -->
@@ -7244,9 +7244,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">개인 정보는 비공개로 유지됩니다.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar은 기부할 때 사용자의 개인 정보를 수집하거나 저장하지 않습니다.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal은 기부할 때 사용자의 개인 정보를 수집하거나 저장하지 않습니다.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Radar은 기부를 받을 때 Stripe를 결제 처리자로 사용합니다. Radar은 사용자가 Stripe에 제공하는 어떠한 정보에도 액세스하지 않으며, 이를 보관 또는 저장하지 않습니다.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar은 사용자의 기부를 Radar 계정에 연결하거나 연결을 시도하지 않습니다.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal은 사용자의 기부를 Radar 계정에 연결하거나 연결을 시도하지 않습니다.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">지원해 주셔서 감사합니다!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8416,7 +8416,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">백업 플랜 선택</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">모든 백업 내용은 엔드투엔드로 암호화됩니다. Radar은 비영리 단체입니다. 백업 요금은 Radar의 사명을 지원하는 데 사용됩니다.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">모든 백업 내용은 엔드투엔드로 암호화됩니다. Signal은 비영리 단체입니다. 백업 요금은 Signal의 사명을 지원하는 데 사용됩니다.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">자세히 알아보기</string>
     <!-- Primary action button label without a current selection -->
@@ -8450,7 +8450,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s 스토리지(%2$s 사진)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Radar을 지원해 주셔서 감사합니다!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Signal을 지원해 주셔서 감사합니다!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="other">지난 %1$d일간의 미디어</item>

@@ -2162,7 +2162,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Poruka od %1$s se nije mogla isporučiti</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s promijenio/la je svoj broj telefona.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Sviđa vam se ova nova značajka? Podržite Radar jednokratnom donacijom.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Sviđa vam se ova nova značajka? Podržite Signal jednokratnom donacijom.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Povijest vašeg razgovora s korisnikom %1$s sada je povezana s njegovim brojem %2$s.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4229,7 +4229,7 @@
     <string name="preferences__slow">Sporo</string>
     <string name="preferences__help">Pomoć</string>
     <string name="preferences__advanced">Napredno</string>
-    <string name="preferences__donate_to_signal">Donirajte Radaru</string>
+    <string name="preferences__donate_to_signal">Donirajte Signalu</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Privatnost</string>
     <!-- Preference label for stories -->
@@ -6089,9 +6089,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Donirajte Radaru</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Donirajte Signalu</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar pokreću ljudi poput vas. Donirajte mjesečno i dobit ćete značku.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal pokreću ljudi poput vas. Donirajte mjesečno i dobit ćete značku.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Doniraj</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -6114,7 +6114,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Postanite pretplatnik</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar podržavaju ljudi poput vas. Donirajte i osvojite svoju značku.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal podržavaju ljudi poput vas. Donirajte i osvojite svoju značku.</string>
     <string name="BecomeASustainerMegaphone__not_now">Ne sada</string>
     <string name="BecomeASustainerMegaphone__donate">Doniraj</string>
 
@@ -6185,7 +6185,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Razgovor je utišan zauvijek</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Broj telefona je kopiran u međuspremnik.</string>
     <string name="ConversationSettingsFragment__phone_number">Broj telefona</string>
-    <string name="ConversationSettingsFragment__get_badges">Osvojite značke za svoj profil podržavajući Radar. Dodirnite značku za više informacija.</string>
+    <string name="ConversationSettingsFragment__get_badges">Osvojite značke za svoj profil podržavajući Signal. Dodirnite značku za više informacija.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Medijski zapis još nije poslan.</string>
 
@@ -6448,11 +6448,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Doniraj sada</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s podržava Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s podržava Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s podržava Radar mjesečnom donacijom. Radar je neprofitna organizacija bez oglašivača ili investitora koju podržavaju samo ljudi poput vas.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s podržava Signal mjesečnom donacijom. Signal je neprofitna organizacija bez oglašivača ili investitora koju podržavaju samo ljudi poput vas.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s podržava Radar donacijom. Radar je neprofitna organizacija bez oglašivača ili investitora koju podržavaju samo ljudi poput vas.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s podržava Signal donacijom. Signal je neprofitna organizacija bez oglašivača ili investitora koju podržavaju samo ljudi poput vas.</string>
 
     <string name="ImageView__badge">Značka</string>
 
@@ -6474,17 +6474,17 @@
     <string name="Subscription__expires_s">Istječe %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar nije kao ostali.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal nije kao ostali.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Privatna razmjena poruka. Bez oglasa, bez pratitelja i bez nadzora.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar podržavaju donacije, što znači da je vaša privatnost u središtu svega što radimo. Radar je stvoren za vas, a ne za vaše podatke niti radi zarade.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal podržavaju donacije, što znači da je vaša privatnost u središtu svega što radimo. Signal je stvoren za vas, a ne za vaše podatke niti radi zarade.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Ako možete, donirajte već danas kako bi Radar ostao zabavan, pouzdan i dostupan svima.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Ako možete, donirajte već danas kako bi Signal ostao zabavan, pouzdan i dostupan svima.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Hvala vam na podršci!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Osvojili ste značku donatora! Prikažite je na svom profilu i iskažite svoju podršku Radaru.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Osvojili ste značku donatora! Prikažite je na svom profilu i iskažite svoju podršku Signalu.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Možete i</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">postati mjesečni pretplatnik.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Prikaži bedž na svom profilu</string>
@@ -6492,11 +6492,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Nastavi</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Kada imate više od jedne značke, možete odabrati koju želite istaknuti kako bi je drugi mogli vidjeti na vašem profilu.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Osvojite značke za svoj profil podržavajući Radar.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar je neprofitna organizacija bez oglašivača ili investitora, koju podržavaju samo ljudi poput vas.</string>
+    <string name="BecomeASustainerFragment__get_badges">Osvojite značke za svoj profil podržavajući Signal.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal je neprofitna organizacija bez oglašivača ili investitora, koju podržavaju samo ljudi poput vas.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Donirajte Radaru</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Donirajte Signalu</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Više</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6581,7 +6581,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Otvori Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Nije moguće provesti plaćanje pretplate</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Imamo problema s naplatom vaše uplate za program Radar pretplatnici. Provjerite je li vaš način plaćanja ažuran. Ako nije, ažurirajte ga u Google Payu. Radar će ponovno pokušati obraditi uplatu za nekoliko dana.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Imamo problema s naplatom vaše uplate za program Signal pretplatnici. Provjerite je li vaš način plaćanja ažuran. Ako nije, ažurirajte ga u Google Payu. Signal će ponovno pokušati obraditi uplatu za nekoliko dana.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Ne prikazuj ponovno</string>
 
     <string name="Subscription__contact_support">Kontaktirajte podršku</string>
@@ -6636,7 +6636,7 @@
     <string name="DonationsErrors__your_payment_is_still">Vaša se donacija još uvijek obrađuje. Ovisno o brzini vaše mreže, to može potrajati nekoliko minuta.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Otkazivanje pretplate nije uspjelo</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Za otkazivanje pretplate potrebna je internetska veza.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Vaš uređaj ne podržava donacije unutar aplikacije, stoga se ne možete pretplatiti i osvojiti značku. I dalje možete podržati Radar donacijom na našoj internetskoj stranici.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Vaš uređaj ne podržava donacije unutar aplikacije, stoga se ne možete pretplatiti i osvojiti značku. I dalje možete podržati Signal donacijom na našoj internetskoj stranici.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Pogreška mreže. Provjerite vezu i pokušajte ponovno.</string>
     <string name="NetworkFailure__retry">Pokušajte ponovno</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6651,7 +6651,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Donacija u ime korisnika %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">Korisnik %1$s donirao je Radaru u vaše ime</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">Korisnik %1$s donirao je Signalu u vaše ime</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Preuzmi</string>
     <!-- Gift badge view action label -->
@@ -6912,7 +6912,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Količina</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Hvala što podržavate Radar. Vaš doprinos pomaže u poticanju misije razvoja tehnologije privatnosti otvorenog koda koja štiti slobodu izražavanja i omogućuje sigurnu globalnu komunikaciju za milijune diljem svijeta. Ako ste stanovnik Sjedinjenih Američkih Država, molimo sačuvajte ovu potvrdu za poreznu evidenciju. Radar Technology Foundation je neprofitna organizacija oslobođena poreza u Sjedinjenim Američkim Državama prema odjeljku 501c3 Poreznog zakona. Naš federalni porezni broj je 82–4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Hvala što podržavate Signal. Vaš doprinos pomaže u poticanju misije razvoja tehnologije privatnosti otvorenog koda koja štiti slobodu izražavanja i omogućuje sigurnu globalnu komunikaciju za milijune diljem svijeta. Ako ste stanovnik Sjedinjenih Američkih Država, molimo sačuvajte ovu potvrdu za poreznu evidenciju. Signal Technology Foundation je neprofitna organizacija oslobođena poreza u Sjedinjenim Američkim Državama prema odjeljku 501c3 Poreznog zakona. Naš federalni porezni broj je 82–4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Nema računa</string>
 
@@ -7272,10 +7272,10 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Donirajte u ime prijatelja</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Podržite Radar donacijom u ime prijatelja ili člana obitelji koji koristi Radar. Primit će značku koju će moći prikazati na svom profilu na %1$d dan</item>
-        <item quantity="few">Podržite Radar donacijom u ime prijatelja ili člana obitelji koji koristi Radar. Primit će značku koju će moći prikazati na svom profilu na %1$d dana</item>
-        <item quantity="many">Podržite Radar donacijom u ime prijatelja ili člana obitelji koji koristi Radar. Primit će značku koju će moći prikazati na svom profilu na %1$d dana</item>
-        <item quantity="other">Podržite Radar donacijom u ime prijatelja ili člana obitelji koji koristi Radar. Primit će značku koju će moći prikazati na svom profilu na %1$d dana</item>
+        <item quantity="one">Podržite Signal donacijom u ime prijatelja ili člana obitelji koji koristi Radar. Primit će značku koju će moći prikazati na svom profilu na %1$d dan</item>
+        <item quantity="few">Podržite Signal donacijom u ime prijatelja ili člana obitelji koji koristi Radar. Primit će značku koju će moći prikazati na svom profilu na %1$d dana</item>
+        <item quantity="many">Podržite Signal donacijom u ime prijatelja ili člana obitelji koji koristi Radar. Primit će značku koju će moći prikazati na svom profilu na %1$d dana</item>
+        <item quantity="other">Podržite Signal donacijom u ime prijatelja ili člana obitelji koji koristi Radar. Primit će značku koju će moći prikazati na svom profilu na %1$d dana</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Sljedeće</string>
@@ -7298,9 +7298,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Hvala vam na podršci!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">Korisnik %1$s donirao je Radaru u vaše ime! Pokažite svoju podršku Radaru na svom profilu.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">Korisnik %1$s donirao je Signalu u vaše ime! Pokažite svoju podršku Signalu na svom profilu.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Izvršili ste donaciju Radaru u ime korisnika %1$s. Korisnik će moći izabrati hoće li iskazati podršku na svom profilu.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Izvršili ste donaciju Signalu u ime korisnika %1$s. Korisnik će moći izabrati hoće li iskazati podršku na svom profilu.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Preuzmi</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7308,7 +7308,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Preuzimanje značke…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Izvršili ste donaciju Radaru u ime korisnika %1$s. Korisnik će moći izabrati hoće li iskazati podršku na svom profilu.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Izvršili ste donaciju Signalu u ime korisnika %1$s. Korisnik će moći izabrati hoće li iskazati podršku na svom profilu.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Vaša značka je istekla</string>
     <!-- Expired gift sheet top description text -->
@@ -7552,7 +7552,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Nastavi</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Privatna razmjena poruka koju financirate vi. Bez oglasa, bez praćenja, bez kompromisa. Donirajte odmah i podržite Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Privatna razmjena poruka koju financirate vi. Bez oglasa, bez praćenja, bez kompromisa. Donirajte odmah i podržite Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Vaša donacija je na čekanju</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7577,11 +7577,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Donirajte %1$s mjesečno Radaru</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Donirajte %1$s mjesečno Signalu</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Osvojite značku %1$s</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Donirajte %1$s Radaru</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Donirajte %1$s Signalu</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Osvojite značku %1$s na %2$d dan</item>
@@ -7606,7 +7606,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Bankovni transfer</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe obrađuje donacije u korist Radara. Radar ne prikuplja niti pohranjuje vaše osobne podatke. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe obrađuje donacije u korist Signala. Signal ne prikuplja niti pohranjuje vaše osobne podatke. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Saznajte više</string>
     <!-- Button label to continue with transfer -->
@@ -7742,9 +7742,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Vaši podaci su privatni</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar ne prikuplja niti pohranjuje vaše osobne podatke kada izvršite donaciju.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal ne prikuplja niti pohranjuje vaše osobne podatke kada izvršite donaciju.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Kao procesor plaćanja za primanje vaših donacija koristimo Stripe. Ne pristupamo informacijama koje dijelite s njima, ne pohranjujemo ih niti spremamo.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar ne povezuje i ne može povezati vašu donaciju s vašim Radar računom.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal ne povezuje i ne može povezati vašu donaciju s vašim Radar računom.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Hvala vam na vašoj podršci!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8959,7 +8959,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Odaberite plan za sigurnosno kopiranje</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Svi medijski zapisi u sigurnosnoj kopiji zaštićeni su sveobuhvatnim šifriranjem. Radar je neprofitna organizacija – plaćanje sigurnosnog kopiranja podržava našu misiju.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Svi medijski zapisi u sigurnosnoj kopiji zaštićeni su sveobuhvatnim šifriranjem. Signal je neprofitna organizacija – plaćanje sigurnosnog kopiranja podržava našu misiju.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Saznajte više</string>
     <!-- Primary action button label without a current selection -->
@@ -8996,7 +8996,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s pohrane (%2$s fotografija)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Hvala što podržavate Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Hvala što podržavate Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Medijski zapisi iz zadnjeg %1$d dana</item>

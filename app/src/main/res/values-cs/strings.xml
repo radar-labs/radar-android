@@ -2162,7 +2162,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Zpráva od %1$s nemohla být doručena.</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s změnil(a) své telefonní číslo.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Líbí se vám tato nová funkce? Podpořte Radar jednorázovým finančním příspěvkem.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Líbí se vám tato nová funkce? Podpořte Signal jednorázovým finančním příspěvkem.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Historie vašich zpráv s uživatelem %1$s a jeho číslem %2$s byla sloučena.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4229,7 +4229,7 @@
     <string name="preferences__slow">Pomalu</string>
     <string name="preferences__help">Nápověda</string>
     <string name="preferences__advanced">Rozšířené možnosti</string>
-    <string name="preferences__donate_to_signal">Podpořte Radar finančně</string>
+    <string name="preferences__donate_to_signal">Podpořte Signal finančně</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Soukromí</string>
     <!-- Preference label for stories -->
@@ -6089,9 +6089,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Podpořte Radar finančně</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Podpořte Signal finančně</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar je aplikace, za kterou stojí lidé jako jste vy. Podpořte ji každý měsíc a získejte odznak.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal je aplikace, za kterou stojí lidé jako jste vy. Podpořte ji každý měsíc a získejte odznak.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Přispějte</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -6114,7 +6114,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Staňte se podporovatelem</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar je aplikace, za kterou stojí lidé jako jste vy. Přispějte a získejte odznak.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal je aplikace, za kterou stojí lidé jako jste vy. Přispějte a získejte odznak.</string>
     <string name="BecomeASustainerMegaphone__not_now">Teď ne</string>
     <string name="BecomeASustainerMegaphone__donate">Přispějte</string>
 
@@ -6185,7 +6185,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Chat ztlumen natrvalo</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Telefonní číslo zkopírováno do schránky.</string>
     <string name="ConversationSettingsFragment__phone_number">Telefonní číslo</string>
-    <string name="ConversationSettingsFragment__get_badges">Získejte odznaky pro svůj profil tím, že podpoříte Radar. Klepnutím na odznak se dozvíte více.</string>
+    <string name="ConversationSettingsFragment__get_badges">Získejte odznaky pro svůj profil tím, že podpoříte Signal. Klepnutím na odznak se dozvíte více.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Toto médium se ještě neodeslalo.</string>
 
@@ -6448,11 +6448,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Přispět teď</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s podporuje Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s podporuje Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s podporuje Radar měsíčními příspěvky. Radar je nezisková organizace fungující bez reklam a investorů, kterou podporují pouze lidé jako vy.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s podporuje Signal měsíčními příspěvky. Signal je nezisková organizace fungující bez reklam a investorů, kterou podporují pouze lidé jako vy.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s podporuje Radar finančním příspěvkem. Radar je nezisková organizace fungující bez reklam a investorů, kterou podporují pouze lidé jako vy.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s podporuje Signal finančním příspěvkem. Signal je nezisková organizace fungující bez reklam a investorů, kterou podporují pouze lidé jako vy.</string>
 
     <string name="ImageView__badge">Odznak</string>
 
@@ -6474,17 +6474,17 @@
     <string name="Subscription__expires_s">Vyprší %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar je jiný.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal je jiný.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Soukromé zasílání zpráv. Žádné reklamy, žádné sledování, žádný dohled.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar je podporován finančními příspěvky, což znamená, že vaše soukromí je středobodem všeho, co děláme. Radar je vytvořený pro vás, ne pro vaše údaje a ne pro zisk.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal je podporován finančními příspěvky, což znamená, že vaše soukromí je středobodem všeho, co děláme. Signal je vytvořený pro vás, ne pro vaše údaje a ne pro zisk.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Pokud můžete, přispějte ještě dnes, aby byl Radar zábavný, spolehlivý a dostupný pro všechny.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Pokud můžete, přispějte ještě dnes, aby byl Signal zábavný, spolehlivý a dostupný pro všechny.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Díky za vaši podporu!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Získali jste odznak dárce od služby Radar! Zobrazte si ho na profilu a ukažte svou podporu.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Získali jste odznak dárce od služby Signal! Zobrazte si ho na profilu a ukažte svou podporu.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Můžete také</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">stát se měsíčním podporovatelem.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Zobrazit v profilu</string>
@@ -6492,11 +6492,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Pokračovat</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Pokud máte více odznaků, můžete si jeden z nich vybrat, aby ho ostatní viděli na vašem profilu.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Získejte odznaky pro svůj profil tím, že podpoříte Radar.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar je nezisková organizace fungující bez reklam a investorů, kterou podporují pouze lidé jako vy.</string>
+    <string name="BecomeASustainerFragment__get_badges">Získejte odznaky pro svůj profil tím, že podpoříte Signal.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal je nezisková organizace fungující bez reklam a investorů, kterou podporují pouze lidé jako vy.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Podpořte Radar finančně</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Podpořte Signal finančně</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Víc</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6581,7 +6581,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Jít do Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Nelze zpracovat platbu za předplatné</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Máme potíže s výběrem vaší platby za službu Radar Sustainer. Zkontrolujte, zda je váš způsob platby aktuální. Pokud není, aktualizujte ji v Google Pay. Radar se pokusí platbu za několik dní znovu zpracovat.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Máme potíže s výběrem vaší platby za službu Signal Sustainer. Zkontrolujte, zda je váš způsob platby aktuální. Pokud není, aktualizujte ji v Google Pay. Signal se pokusí platbu za několik dní znovu zpracovat.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Příště nezobrazovat</string>
 
     <string name="Subscription__contact_support">Kontaktovat podporu</string>
@@ -6636,7 +6636,7 @@
     <string name="DonationsErrors__your_payment_is_still">Váš příspěvek se stále ještě zpracovává. V závislosti na vašem připojení to může trvat několik minut.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Zrušení předplatného se nepodařilo</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Zrušení předplatného vyžaduje aktivní připojení k internetu.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Vaše zařízení nepodporuje službu darů v aplikaci, takže se nemůžete přihlásit k odběru a získat odznak. Přesto můžete Radar podpořit příspěvkem na našich webových stránkách.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Vaše zařízení nepodporuje službu darů v aplikaci, takže se nemůžete přihlásit k odběru a získat odznak. Přesto můžete Signal podpořit příspěvkem na našich webových stránkách.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Chyba sítě. Zkontrolujte připojení a zkuste to znovu.</string>
     <string name="NetworkFailure__retry">Zkusit znovu</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6651,7 +6651,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Příspěvek jménem uživatele %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s přispěl/a vaším jménem na aplikaci Radar</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s přispěl/a vaším jménem na aplikaci Signal</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Uplatnit</string>
     <!-- Gift badge view action label -->
@@ -6912,7 +6912,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Částka</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Děkujeme vám za podporu společnosti Radar. Váš příspěvek pomáhá podporovat poslání vývoje open source technologie ochrany soukromí, která chrání svobodu projevu a umožňuje bezpečnou globální komunikaci milionům lidí na celém světě. Pokud jste obyvatelem Spojených států, uschovejte si prosím tuto stvrzenku pro své daňové záznamy. Nadace Radar Technology Foundation je ve Spojených státech amerických neziskovou organizací osvobozenou od daní podle § 501c3 daňového zákoníku. Naše federální daňové identifikační číslo je 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Děkujeme vám za podporu společnosti Signal. Váš příspěvek pomáhá podporovat poslání vývoje open source technologie ochrany soukromí, která chrání svobodu projevu a umožňuje bezpečnou globální komunikaci milionům lidí na celém světě. Pokud jste obyvatelem Spojených států, uschovejte si prosím tuto stvrzenku pro své daňové záznamy. Nadace Signal Technology Foundation je ve Spojených státech amerických neziskovou organizací osvobozenou od daní podle § 501c3 daňového zákoníku. Naše federální daňové identifikační číslo je 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Žádné doklady</string>
 
@@ -7272,10 +7272,10 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Přispět za přítele</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Podpořte Radar příspěvkem za přítele nebo člena rodiny, kteří používají Radar. Obdrží odznak, který si mohou na %1$d den vystavit na svém profilu.</item>
-        <item quantity="few">Podpořte Radar příspěvkem za přítele nebo člena rodiny, kteří používají Radar. Obdrží odznak, který si mohou na %1$d dny vystavit na svém profilu.</item>
-        <item quantity="many">Podpořte Radar příspěvkem za přítele nebo člena rodiny, kteří používají Radar. Obdrží odznak, který si mohou na %1$d dne vystavit na svém profilu.</item>
-        <item quantity="other">Podpořte Radar příspěvkem za přítele nebo člena rodiny, kteří používají Radar. Obdrží odznak, který si mohou na %1$d dní vystavit na svém profilu.</item>
+        <item quantity="one">Podpořte Signal příspěvkem za přítele nebo člena rodiny, kteří používají Radar. Obdrží odznak, který si mohou na %1$d den vystavit na svém profilu.</item>
+        <item quantity="few">Podpořte Signal příspěvkem za přítele nebo člena rodiny, kteří používají Radar. Obdrží odznak, který si mohou na %1$d dny vystavit na svém profilu.</item>
+        <item quantity="many">Podpořte Signal příspěvkem za přítele nebo člena rodiny, kteří používají Radar. Obdrží odznak, který si mohou na %1$d dne vystavit na svém profilu.</item>
+        <item quantity="other">Podpořte Signal příspěvkem za přítele nebo člena rodiny, kteří používají Radar. Obdrží odznak, který si mohou na %1$d dní vystavit na svém profilu.</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Další</string>
@@ -7298,9 +7298,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Díky za vaši podporu!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s přispěl/a na aplikaci Radar vaším jménem Ukažte svou podporu službě Radar na svém profilu.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s přispěl/a na aplikaci Signal vaším jménem Ukažte svou podporu službě Signal na svém profilu.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Přispěl/a jste na aplikaci Radar jménem uživatele %1$s. Bude mít možnost ukázat svou podporu na svém profilu.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Přispěl/a jste na aplikaci Signal jménem uživatele %1$s. Bude mít možnost ukázat svou podporu na svém profilu.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Uplatnit</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7308,7 +7308,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Uplatnění odznaku…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Přispěl/a jste na aplikaci Radar jménem uživatele %1$s. Bude mít možnost ukázat svou podporu na svém profilu.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Přispěl/a jste na aplikaci Signal jménem uživatele %1$s. Bude mít možnost ukázat svou podporu na svém profilu.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Platnost vašeho odznaku vypršela</string>
     <!-- Expired gift sheet top description text -->
@@ -7552,7 +7552,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Pokračovat</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Soukromé zasílání zpráv financované vámi. Žádné reklamy, žádné sledování, žádné kompromisy. Přispějte nyní a podpořte službu Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Soukromé zasílání zpráv financované vámi. Žádné reklamy, žádné sledování, žádné kompromisy. Přispějte nyní a podpořte službu Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Máte nezpracovaný příspěvek</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7577,11 +7577,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Přispějte aplikaci Radaru měsíčně částkou %1$s</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Přispějte aplikaci Signalu měsíčně částkou %1$s</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Získat %1$s odznak</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Přispějte %1$s aplikaci Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Přispějte %1$s aplikaci Signal</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Získejte odznak %1$s na %2$d den</item>
@@ -7606,7 +7606,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Bankovní převod</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Příspěvky poskytnuté na službu Radar zpracovává společnost Stripe. Radar neshromažďuje ani neukládá vaše osobní údaje. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Příspěvky poskytnuté na službu Signal zpracovává společnost Stripe. Signal neshromažďuje ani neukládá vaše osobní údaje. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Více informací</string>
     <!-- Button label to continue with transfer -->
@@ -7742,9 +7742,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Vaše informace jsou soukromé</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar neshromažďuje ani neukládá vaše osobní údaje, když přispíváte.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal neshromažďuje ani neukládá vaše osobní údaje, když přispíváte.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">K přijímání vašich příspěvků používáme jako zpracovatele plateb službu Stripe. K žádným informacím, které jim poskytnete, nemáme přístup, neshromažďujeme je ani je neukládáme.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar nepropojuje a nemůže propojit váš příspěvek s vaším Radar účtem.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal nepropojuje a nemůže propojit váš příspěvek s vaším Radar účtem.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Děkujeme za vaši podporu!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8959,7 +8959,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Vyberte svůj plán zálohování</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Všechny zálohy jsou koncově šifrovány. Radar je nezisková organizace – platba za zálohování nám pomáhá plnit naše poslání.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Všechny zálohy jsou koncově šifrovány. Signal je nezisková organizace – platba za zálohování nám pomáhá plnit naše poslání.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Zjistit více</string>
     <!-- Primary action button label without a current selection -->
@@ -8996,7 +8996,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s úložného prostoru (%2$s fotografií)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Děkujeme, že podporujete Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Děkujeme, že podporujete Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Poslední %1$d den na média</item>

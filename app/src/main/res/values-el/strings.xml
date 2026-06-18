@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Ένα μήνυμα από τον/την %1$s δεν μπόρεσε να παραδοθεί</string>
     <string name="MessageRecord_s_changed_their_phone_number">Ο/Η %1$s άλλαξε τον αριθμό τηλεφώνου του/της.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Απολαμβάνεις αυτή τη νέα λειτουργία; Υποστήριξε το Radar με μια μεμονωμένη δωρεά.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Απολαμβάνεις αυτή τη νέα λειτουργία; Υποστήριξε το Signal με μια μεμονωμένη δωρεά.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Συγχωνεύτηκαν το ιστορικό μηνυμάτων σου με τον χρήστη %1$s και τον αριθμό του, %2$s.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">Αργό</string>
     <string name="preferences__help">Βοήθεια</string>
     <string name="preferences__advanced">Για προχωρημένους</string>
-    <string name="preferences__donate_to_signal">Κάνε μια δωρεά στο Radar</string>
+    <string name="preferences__donate_to_signal">Κάνε μια δωρεά στο Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Ιδιωτικότητα</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Κάνε μια δωρεά στο Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Κάνε μια δωρεά στο Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Το Radar υποστηρίζεται από ανθρώπους σαν κι εσένα. Κάνε μηνιαίες δωρεές για να λάβεις ένα σήμα.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Το Signal υποστηρίζεται από ανθρώπους σαν κι εσένα. Κάνε μηνιαίες δωρεές για να λάβεις ένα σήμα.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Δωρεά</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Γίνε υποστηρικτής/τρια</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Το Radar βασίζεται σε άτομα σαν κι εσένα. Με τη δωρεά σου λαμβάνεις ένα σήμα.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Το Signal βασίζεται σε άτομα σαν κι εσένα. Με τη δωρεά σου λαμβάνεις ένα σήμα.</string>
     <string name="BecomeASustainerMegaphone__not_now">Όχι τώρα</string>
     <string name="BecomeASustainerMegaphone__donate">Δωρεά</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Η συνομιλία τέθηκε σε σίγαση για πάντα</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Ο αριθμός τηλεφώνου αντιγράφτηκε στο πρόχειρο.</string>
     <string name="ConversationSettingsFragment__phone_number">Αριθμός τηλεφώνου</string>
-    <string name="ConversationSettingsFragment__get_badges">Πάρε σήματα για το προφίλ σου στηρίζοντας το Radar. Πάτα σε ένα σήμα για να μάθεις περισσότερα.</string>
+    <string name="ConversationSettingsFragment__get_badges">Πάρε σήματα για το προφίλ σου στηρίζοντας το Signal. Πάτα σε ένα σήμα για να μάθεις περισσότερα.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Αυτό το πολυμέσο δεν έχει σταλεί ακόμα.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Κάνε δωρεά</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">Ο χρήστης %1$s στηρίζει το Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">Ο χρήστης %1$s στηρίζει το Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">Ο χρήστης %1$s στηρίζει το Radar με μηνιαία δωρεά. Το Radar είναι μη κερδοσκοπικός οργανισμός, χωρίς διαφημιστές και επενδυτές, που υποστηρίζεται από άτομα όπως εσύ.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">Ο χρήστης %1$s στηρίζει το Signal με μηνιαία δωρεά. Το Signal είναι μη κερδοσκοπικός οργανισμός, χωρίς διαφημιστές και επενδυτές, που υποστηρίζεται από άτομα όπως εσύ.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">O χρήστης %1$s στηρίζει το Radar με δωρεά. Το Radar είναι μη κερδοσκοπικός οργανισμός, χωρίς διαφημιστές και επενδυτές, που υποστηρίζεται από άτομα όπως εσύ.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">O χρήστης %1$s στηρίζει το Signal με δωρεά. Το Signal είναι μη κερδοσκοπικός οργανισμός, χωρίς διαφημιστές και επενδυτές, που υποστηρίζεται από άτομα όπως εσύ.</string>
 
     <string name="ImageView__badge">Σήμα</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">Λήγει στις %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Το Radar είναι διαφορετικό.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Το Signal είναι διαφορετικό.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Ιδιωτικά μηνύματα. Χωρίς διαφημίσεις, παρακολούθηση, επιτήρηση.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Το Radar υποστηρίζεται από δωρεές, που σημαίνει ότι το απόρρητό σου βρίσκεται στο επίκεντρο για όλα αυτά που κάνουμε. Το Radar έχει φτιαχτεί για εσένα, όχι για τα δεδομένα σου ή το κέρδος.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Το Signal υποστηρίζεται από δωρεές, που σημαίνει ότι το απόρρητό σου βρίσκεται στο επίκεντρο για όλα αυτά που κάνουμε. Το Signal έχει φτιαχτεί για εσένα, όχι για τα δεδομένα σου ή το κέρδος.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Εάν μπορείς, κάνε δωρεά σήμερα για να βοηθήσεις να παραμείνει το Radar διασκεδαστικό, αξιόπιστο και διαθέσιμο για όλους.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Εάν μπορείς, κάνε δωρεά σήμερα για να βοηθήσεις να παραμείνει το Signal διασκεδαστικό, αξιόπιστο και διαθέσιμο για όλους.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Ευχαριστούμε για την υποστήριξη!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Κέρδισες σήμα δωρεάς από το Radar! Πρόσθεσέ το στο προφίλ σου για να δείξεις την υποστήριξή σου.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Κέρδισες σήμα δωρεάς από το Signal! Πρόσθεσέ το στο προφίλ σου για να δείξεις την υποστήριξή σου.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Μπορείς επίσης</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">Να γίνεις μηνιαίος υποστηρικτής/τρια.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Εμφάνιση στο προφίλ</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Συνέχεια</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Όταν έχεις πάνω από ένα σήματα, μπορείς να επιλέξεις ποιο μπορούν να δουν τα άλλα άτομα στο προφίλ σου.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Στηρίζοντας το Radar παίρνεις σήματα για το προφίλ σου.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Το Radar είναι μια μη κερδοσκοπική οργάνωση, χωρίς διαφημιστές και επενδυτές, που υποστηρίζεται από άτομα σαν κι εσένα.</string>
+    <string name="BecomeASustainerFragment__get_badges">Στηρίζοντας το Signal παίρνεις σήματα για το προφίλ σου.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Το Signal είναι μια μη κερδοσκοπική οργάνωση, χωρίς διαφημιστές και επενδυτές, που υποστηρίζεται από άτομα σαν κι εσένα.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Κάνε μια δωρεά στο Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Κάνε μια δωρεά στο Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Περισσότερα</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Μετάβαση στο Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Αδυναμία επεξεργασίας πληρωμής συνδρομής</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Έχουμε δυσκολίες με το να λάβουμε την πληρωμή για την Υποστήριξη του Radar. Επιβεβαίωσε πως η μέθοδος πληρωμής είναι επικαιροποιημένη. Αν δεν είναι, επικαιροποίησέ την στο Google Pay. Το Radar θα προσπαθήσει να πραγματοποιήσει αυτή τη πληρωμή ξανά σε μερικές ημέρες.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Έχουμε δυσκολίες με το να λάβουμε την πληρωμή για την Υποστήριξη του Signal. Επιβεβαίωσε πως η μέθοδος πληρωμής είναι επικαιροποιημένη. Αν δεν είναι, επικαιροποίησέ την στο Google Pay. Το Signal θα προσπαθήσει να πραγματοποιήσει αυτή τη πληρωμή ξανά σε μερικές ημέρες.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Να μην εμφανιστεί ξανά</string>
 
     <string name="Subscription__contact_support">Επικοινωνία με την υποστήριξη</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">Η δωρεά σου είναι ακόμη σε επεξεργασία. Μπορεί να διαρκέσει μερικά λεπτά, ανάλογα με τη σύνδεσή σου.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Αποτυχία ακύρωσης συνδρομής</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Πρέπει να υπάρχει σύνδεση στο διαδίκτυο για την ακύρωση της συνδρομής.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Η συσκευή σου δεν υποστηρίζει δωρεές μέσω εφαρμογής, οπότε δεν μπορείς να γίνεις συνδρομητής για να λάβεις σήμα. Μπορείς όμως να υποστηρίξεις το Radar κάνοντας μια δωρεά στην ιστοσελίδα μας.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Η συσκευή σου δεν υποστηρίζει δωρεές μέσω εφαρμογής, οπότε δεν μπορείς να γίνεις συνδρομητής για να λάβεις σήμα. Μπορείς όμως να υποστηρίξεις το Signal κάνοντας μια δωρεά στην ιστοσελίδα μας.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Σφάλμα δικτύου. Έλεγξε τη σύνδεσή σου και ξαναπροσπάθησε.</string>
     <string name="NetworkFailure__retry">Επανάληψη</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Δωρεά εκ μέρους του χρήστη %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">Ο/Η %1$s έκανε δωρεά στη Radar εκ μέρους σου</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">Ο/Η %1$s έκανε δωρεά στη Signal εκ μέρους σου</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Εξαργύρωση</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Ποσό</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Ευχαριστούμε που υποστηρίζεις το Radar. Η συνεισφορά σου βοηθά στην αποστολή της ανάπτυξης τεχνολογίας ιδιωτικότητας ανοιχτού κώδικα, που προστατεύει την ελευθερία της έκφρασης και δίνει τη δυνατότητα ασφαλών διεθνών επικοινωνιών για εκατομμύρια ανθρώπους σε όλο τον κόσμο. Αν είσαι κάτοικος των Ηνωμένων Πολιτειών, παρακαλούμε κράτα αυτή την απόδειξη για τα φορολογικά σου αρχεία. Το Radar Technology Foundation ένας μη κερδοσκοπικός οργανισμός στις Ηνωμένες Πολιτείες, με tax–exemption σύμφωνα με την ενότητα 501c3 του Internal Revenue Code. Το Federal Tax ID μας είναι 82–4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Ευχαριστούμε που υποστηρίζεις το Signal. Η συνεισφορά σου βοηθά στην αποστολή της ανάπτυξης τεχνολογίας ιδιωτικότητας ανοιχτού κώδικα, που προστατεύει την ελευθερία της έκφρασης και δίνει τη δυνατότητα ασφαλών διεθνών επικοινωνιών για εκατομμύρια ανθρώπους σε όλο τον κόσμο. Αν είσαι κάτοικος των Ηνωμένων Πολιτειών, παρακαλούμε κράτα αυτή την απόδειξη για τα φορολογικά σου αρχεία. Το Signal Technology Foundation ένας μη κερδοσκοπικός οργανισμός στις Ηνωμένες Πολιτείες, με tax–exemption σύμφωνα με την ενότητα 501c3 του Internal Revenue Code. Το Federal Tax ID μας είναι 82–4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Χωρίς παραλήπτες</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Κάνε δωρεά για έναν φίλο ή φίλη</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Υποστήριξε τη Radar με δωρεά για έναν φίλο, μία φίλη ή ένα μέλος της οικογένειας που χρησιμοποιεί τη Radar. Θα λάβουν ένα σήμα που θα εμφανίζεται στο προφίλ τους για %1$d μέρα</item>
-        <item quantity="other">Υποστήριξε τη Radar με δωρεά για έναν φίλο, μία φίλη ή ένα μέλος της οικογένειας που χρησιμοποιεί τη Radar. Θα λάβουν ένα σήμα που θα εμφανίζεται στο προφίλ τους για %1$d μέρες</item>
+        <item quantity="one">Υποστήριξε τη Signal με δωρεά για έναν φίλο, μία φίλη ή ένα μέλος της οικογένειας που χρησιμοποιεί τη Radar. Θα λάβουν ένα σήμα που θα εμφανίζεται στο προφίλ τους για %1$d μέρα</item>
+        <item quantity="other">Υποστήριξε τη Signal με δωρεά για έναν φίλο, μία φίλη ή ένα μέλος της οικογένειας που χρησιμοποιεί τη Radar. Θα λάβουν ένα σήμα που θα εμφανίζεται στο προφίλ τους για %1$d μέρες</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Επόμενο</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Ευχαριστούμε για την υποστήριξη!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">Ο/Η %1$s έκανε δωρεά στη Radar εκ μέρους σου! Δείξε την υποστήριξή σου για τη Radar στο προφίλ σου.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">Ο/Η %1$s έκανε δωρεά στη Signal εκ μέρους σου! Δείξε την υποστήριξή σου για τη Signal στο προφίλ σου.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Έκανες δωρεά στη Radar εκ μέρους του/της %1$s. Θα τους δοθεί η επιλογή να δείξουν την υποστήριξή τους στο προφίλ τους.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Έκανες δωρεά στη Signal εκ μέρους του/της %1$s. Θα τους δοθεί η επιλογή να δείξουν την υποστήριξή τους στο προφίλ τους.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Εξαργύρωση</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Εξαργύρωση σήματος…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Έκανες δωρεά στη Radar εκ μέρους του/της %1$s. Θα τους δοθεί η επιλογή να δείξουν την υποστήριξή τους στο προφίλ τους.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Έκανες δωρεά στη Signal εκ μέρους του/της %1$s. Θα τους δοθεί η επιλογή να δείξουν την υποστήριξή τους στο προφίλ τους.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Το σήμα σου έληξε</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Συνέχεια</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Ιδιωτικά μηνύματα, χρηματοδότηση από εσένα. Χωρίς διαφημίσεις, παρακολούθηση, συμβιβασμούς. Κάνε τώρα μια δωρεά για να στηρίξεις το Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Ιδιωτικά μηνύματα, χρηματοδότηση από εσένα. Χωρίς διαφημίσεις, παρακολούθηση, συμβιβασμούς. Κάνε τώρα μια δωρεά για να στηρίξεις το Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Μια δωρεά σου εκκρεμεί</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Κάνε μια δωρεά %1$s/μήνα στο Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Κάνε μια δωρεά %1$s/μήνα στο Signal</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Πάρε ένα σήμα %1$s</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Κάνε μια δωρεά %1$s στο Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Κάνε μια δωρεά %1$s στο Signal</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Πάρε ένα σήμα %1$s για %2$d μέρα</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Τραπεζική μεταφορά</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Η Stripe επεξεργάζεται τις δωρεές που γίνονται στο Radar. Το Radar δεν συλλέγει ούτε αποθηκεύει τα προσωπικά στοιχεία σου. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Η Stripe επεξεργάζεται τις δωρεές που γίνονται στο Signal. Το Signal δεν συλλέγει ούτε αποθηκεύει τα προσωπικά στοιχεία σου. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Μάθε περισσότερα</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Τα στοιχεία σου είναι ιδιωτικά</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Το Radar δεν συλλέγει ούτε αποθηκεύει τα προσωπικά στοιχεία σου όταν κάνεις δωρεά.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Το Signal δεν συλλέγει ούτε αποθηκεύει τα προσωπικά στοιχεία σου όταν κάνεις δωρεά.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Χρησιμοποιούμε τη Stripe για την επεξεργασία πληρωμών, ώστε να λαμβάνουμε τις δωρεές μας. Δεν επεξεργαζόμαστε ούτε αποθηκεύουμε κανένα από τα στοιχεία που της παρέχεις.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Το Radar δεν μπορεί να συνδέσει τη δωρεά με τον λογαριασμό σου στο Radar.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Το Signal δεν μπορεί να συνδέσει τη δωρεά με τον λογαριασμό σου στο Radar.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Ευχαριστούμε για την υποστήριξή σου!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Διάλεξε το πρόγραμμα των αντιγράφων ασφαλείας σου</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Όλα τα αντίγραφα ασφαλείας είναι κρυπτογραφημένα από άκρο σε άκρο. Το Radar είναι μη κερδοσκοπικό—η πληρωμή για αντίγραφα ασφαλείας βοηθά στην υποστήριξη της αποστολής μας.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Όλα τα αντίγραφα ασφαλείας είναι κρυπτογραφημένα από άκρο σε άκρο. Το Signal είναι μη κερδοσκοπικό—η πληρωμή για αντίγραφα ασφαλείας βοηθά στην υποστήριξη της αποστολής μας.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Μάθε περισσότερα</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s αποθηκευτικού χώρου (%2$s φωτογραφίες)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Ευχαριστούμε που στηρίζεις το Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Ευχαριστούμε που στηρίζεις το Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Τελευταία ημέρα πολυμέσων</item>

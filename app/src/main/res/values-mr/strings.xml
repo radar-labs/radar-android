@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">%1$s कडील संदेश डिलिव्हर केला जाऊ शकला नाही</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s यांनी त्यांचा फोन नंबर बदलला.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">हे नवीन वैशिष्ट्य आवडले? एक-वेळ देणगी देऊन Radar ला समर्थन करण्यास मदत करा.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">हे नवीन वैशिष्ट्य आवडले? एक-वेळ देणगी देऊन Signal ला समर्थन करण्यास मदत करा.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">आपला %1$s यांच्यासह असलेला संदेश इतिहास आणि त्यांचा नंबर %2$s एकत्रित करण्यात आला आहे.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">हळू</string>
     <string name="preferences__help">मदत</string>
     <string name="preferences__advanced">प्रगत</string>
-    <string name="preferences__donate_to_signal">Radar ला देणगी द्या</string>
+    <string name="preferences__donate_to_signal">Signal ला देणगी द्या</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">गोपनीयता</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Radar ला देणगी द्या</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Signal ला देणगी द्या</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar आपल्यासारख्या लोकांच्या मदतीने चालते. दर महिन्याला देणगी द्या आणि एक बॅज प्राप्त करा.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal आपल्यासारख्या लोकांच्या मदतीने चालते. दर महिन्याला देणगी द्या आणि एक बॅज प्राप्त करा.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">देणगी द्या</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">सस्टेनर बना</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar आपल्यासारख्या लोकांद्वारे समर्थित आहे. देणगी द्या आणि एक बॅज प्राप्त करा.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal आपल्यासारख्या लोकांद्वारे समर्थित आहे. देणगी द्या आणि एक बॅज प्राप्त करा.</string>
     <string name="BecomeASustainerMegaphone__not_now">आता नाही</string>
     <string name="BecomeASustainerMegaphone__donate">देणगी द्या</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">चॅट कायमस्वरुपी मूक राहतील</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">फोन नंबर क्लिपबोर्डवर कॉपी केले गेले.</string>
     <string name="ConversationSettingsFragment__phone_number">फोन नंबर</string>
-    <string name="ConversationSettingsFragment__get_badges">Radar ला समर्थन करून आपल्या प्रोफाइलसाठी बॅज मिळवा. अधिक जाणून घेण्यासाठी बॅज वर टॅप करा.</string>
+    <string name="ConversationSettingsFragment__get_badges">Signal ला समर्थन करून आपल्या प्रोफाइलसाठी बॅज मिळवा. अधिक जाणून घेण्यासाठी बॅज वर टॅप करा.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">हा मीडिया अजून पाठवलेला नाही.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">आता देणगी द्या</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s Radar ला सपोर्ट करतात</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s Signal ला सपोर्ट करतात</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s हे Radar ला मासिक देणगीसह सपोर्ट करत आहेत. Radar ही जाहिरातदार किंवा गुंतवणूकदार नसलेली विना-नफा संस्था आहे, केवळ आपल्यासारख्या लोकांकडून समर्थित आहे.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s हे Signal ला मासिक देणगीसह सपोर्ट करत आहेत. Signal ही जाहिरातदार किंवा गुंतवणूकदार नसलेली विना-नफा संस्था आहे, केवळ आपल्यासारख्या लोकांकडून समर्थित आहे.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s नी Radar ला देणगी देऊन सपोर्ट केला. Radar ही जाहिरातदार किंवा गुंतवणूकदार नसलेली विना-नफा संस्था आहे, केवळ आपल्यासारख्या लोकांकडून समर्थित आहे.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s नी Signal ला देणगी देऊन सपोर्ट केला. Signal ही जाहिरातदार किंवा गुंतवणूकदार नसलेली विना-नफा संस्था आहे, केवळ आपल्यासारख्या लोकांकडून समर्थित आहे.</string>
 
     <string name="ImageView__badge">बॅज</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">%1$s ला कालबाह्य</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar वेगळा आहे.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal वेगळा आहे.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">खाजगी संदेशन. कोणत्याही जाहिराती नाहीत, कोणतेही ट्रॅकर्स नाहीत, कोणतीही पाळत नाही.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar हे आपल्या देण्ग्यांद्वारे समर्थित आहे, ज्याचा अर्थ आम्ही जे काही करतो त्याच्या केंद्रस्थानी आपली गोपनीयता असते. Radar हे आपल्या डेटा आणि फायद्यासाठी नव्हे; तर आपल्यासाठी तयार केलेले आहे.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal हे आपल्या देण्ग्यांद्वारे समर्थित आहे, ज्याचा अर्थ आम्ही जे काही करतो त्याच्या केंद्रस्थानी आपली गोपनीयता असते. Signal हे आपल्या डेटा आणि फायद्यासाठी नव्हे; तर आपल्यासाठी तयार केलेले आहे.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">आपण करु शकत असल्यास, Radar ला मजेशीर, विश्वासार्ह, आणि प्रत्येकासाठी उपलब्ध असलेला ठेवण्यासाठी कृपया आजच देणगी द्या.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">आपण करु शकत असल्यास, Signal ला मजेशीर, विश्वासार्ह, आणि प्रत्येकासाठी उपलब्ध असलेला ठेवण्यासाठी कृपया आजच देणगी द्या.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">आपल्या समर्थनासाठी धन्यवाद !</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">आपणाला Radar कडून डोनर बॅज मिळाला आहे! आपले समर्थन दाखवण्यास त्याला आपल्या प्रोफाइल वर प्रदर्शित करा.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">आपणाला Signal कडून डोनर बॅज मिळाला आहे! आपले समर्थन दाखवण्यास त्याला आपल्या प्रोफाइल वर प्रदर्शित करा.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">आपण सुद्धा</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">मासिक सस्टेनर व्हा</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">प्रोफाइलवर दाखवा</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">सुरू ठेवा</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">आपणाकडे एकापेक्षा जास्त बॅज असल्यास आपल्या प्रोफाइलवर इतरांना पाहण्यासाठी आपण एक वैशिष्ट्य निवडू शकता.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Radar ला समर्थन करून आपल्या प्रोफाइलसाठी बॅज मिळवा.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar ही जाहिरातदार किंवा गुंतवणूकदार नसलेली विना-नफा संस्था आहे, केवळ आपल्यासारख्या लोकांकडून समर्थित आहे.</string>
+    <string name="BecomeASustainerFragment__get_badges">Signal ला समर्थन करून आपल्या प्रोफाइलसाठी बॅज मिळवा.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal ही जाहिरातदार किंवा गुंतवणूकदार नसलेली विना-नफा संस्था आहे, केवळ आपल्यासारख्या लोकांकडून समर्थित आहे.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Radar ला देणगी द्या</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Signal ला देणगी द्या</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">अधिक</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Google Pay वर जा</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">सदस्यत्व पेमेंट वर प्रक्रिया करू शकत नाही</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">आपले Radar सस्टेनर पेमेंट गोळा करण्यात आम्हाला समस्या येत आहे. आपली पेमेंट पद्धत अद्ययावत असल्याची खात्री करा. तसे नसल्यास, ते Google Pay मध्ये अपडेट करा. Radar काही दिवसात पुन्हा पेमेंटवर प्रक्रिया करण्याचा प्रयत्न करेल.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">आपले Signal सस्टेनर पेमेंट गोळा करण्यात आम्हाला समस्या येत आहे. आपली पेमेंट पद्धत अद्ययावत असल्याची खात्री करा. तसे नसल्यास, ते Google Pay मध्ये अपडेट करा. Signal काही दिवसात पुन्हा पेमेंटवर प्रक्रिया करण्याचा प्रयत्न करेल.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">हे पुन्हा दाखवू नका</string>
 
     <string name="Subscription__contact_support">समर्थन सोबत संपर्क साधा</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">आपल्या देणगीवर अद्याप प्रक्रिया केली जात आहे. आपल्या कनेक्शन वर अवलंबून हे काही मिनिटांचा वेळ घेऊ शकते.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">सदस्यत्व रद्द करणे अयशस्वी झाले</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">सदस्यत्व रद्द करण्यास इंटरनेट कनेक्शन आवश्यक आहे.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">तुमच्या डिव्हाईसवर इन-ॲप देणग्यांना सपोर्ट मिळत नाही, त्यामुळे तुम्ही बॅज कमावण्यासाठी सदस्यत्व घेऊ शकत नाही. पण तुम्ही आमच्या वेबसाईटवर देणगी देऊन Radarला सपोर्ट करू शकता.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">तुमच्या डिव्हाईसवर इन-ॲप देणग्यांना सपोर्ट मिळत नाही, त्यामुळे तुम्ही बॅज कमावण्यासाठी सदस्यत्व घेऊ शकत नाही. पण तुम्ही आमच्या वेबसाईटवर देणगी देऊन Signalला सपोर्ट करू शकता.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">नेटवर्क त्रुटी. आपले कनेक्शन तपासा आणि पुन्हा प्रयत्न करा.</string>
     <string name="NetworkFailure__retry">पुन्हा प्रयत्न करा</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">%1$s च्या वतीने देणगी</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s ने आपल्यावतीने Radar ला देणगी दिली</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s ने आपल्यावतीने Signal ला देणगी दिली</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">रिडीम करा</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">रक्कम</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Radar ला समर्थन दिल्याबद्दल धन्यवाद. आपले योगदान मुक्त अभिव्यक्तीचे संरक्षण करणारे आणि जगभरातील लाखो लोकांसाठी सुरक्षित जागतिक संचार सक्षम करणारे ओपन सोर्स गोपनीयता तंत्रज्ञान विकसित करण्याच्या मिशनला चालना देण्यास मदत करते. आपण जर युनायटेड स्टेट्सचे रहिवासी असल्यास, कृपया आपल्या कर रेकॉर्डसाठी ही पावती जपून ठेवा. Radar Technology Foundation ही युनायटेड स्टेट्समधील अंतर्गत महसूल संहितेच्या कलम 501c3 अंतर्गत करमुक्त विना-नफा संस्था आहे. आमचा फेडरल टॅक्स आयडी 82–4506840 आहे.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Signal ला समर्थन दिल्याबद्दल धन्यवाद. आपले योगदान मुक्त अभिव्यक्तीचे संरक्षण करणारे आणि जगभरातील लाखो लोकांसाठी सुरक्षित जागतिक संचार सक्षम करणारे ओपन सोर्स गोपनीयता तंत्रज्ञान विकसित करण्याच्या मिशनला चालना देण्यास मदत करते. आपण जर युनायटेड स्टेट्सचे रहिवासी असल्यास, कृपया आपल्या कर रेकॉर्डसाठी ही पावती जपून ठेवा. Signal Technology Foundation ही युनायटेड स्टेट्समधील अंतर्गत महसूल संहितेच्या कलम 501c3 अंतर्गत करमुक्त विना-नफा संस्था आहे. आमचा फेडरल टॅक्स आयडी 82–4506840 आहे.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">पावत्या नाहीत</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">एका मित्रासाठी देणगी द्या</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Radar वापरणाऱ्या मित्रासाठी किंवा कौटुंब सदस्यासाठी देणगी देऊन Radar ला सपोर्ट करा. त्यांना %1$d दिवसासाठी त्यांच्या प्रोफाईलवर प्रदर्शित करण्यासाठी एक बॅज प्राप्त होईल</item>
-        <item quantity="other">Radar वापरणाऱ्या मित्रासाठी किंवा कौटुंब सदस्यांसाठी देणगी देऊन Radar ला सपोर्ट करा. त्यांना %1$d दिवसांसाठी त्यांच्या प्रोफाईलवर प्रदर्शित करण्यासाठी एक बॅज प्राप्त होईल</item>
+        <item quantity="one">Radar वापरणाऱ्या मित्रासाठी किंवा कौटुंब सदस्यासाठी देणगी देऊन Signal ला सपोर्ट करा. त्यांना %1$d दिवसासाठी त्यांच्या प्रोफाईलवर प्रदर्शित करण्यासाठी एक बॅज प्राप्त होईल</item>
+        <item quantity="other">Radar वापरणाऱ्या मित्रासाठी किंवा कौटुंब सदस्यांसाठी देणगी देऊन Signal ला सपोर्ट करा. त्यांना %1$d दिवसांसाठी त्यांच्या प्रोफाईलवर प्रदर्शित करण्यासाठी एक बॅज प्राप्त होईल</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">पुढे</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">आपल्या समर्थनासाठी धन्यवाद !</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s नी आपल्या वतीने Radar ला देणगी दिली! आपल्या प्रोफाईलवर Radar साठी सपोर्ट दाखवा.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s नी आपल्या वतीने Signal ला देणगी दिली! आपल्या प्रोफाईलवर Signal साठी सपोर्ट दाखवा.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">आपण %1$s च्या वतीने Radar ला देणगी दिली आहे. त्यांना त्यांच्या प्रोफाईलवर त्यांचा सपोर्ट दाखवण्याचा पर्याय दिला जाईल.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">आपण %1$s च्या वतीने Signal ला देणगी दिली आहे. त्यांना त्यांच्या प्रोफाईलवर त्यांचा सपोर्ट दाखवण्याचा पर्याय दिला जाईल.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">रिडीम करा</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">बॅज रिडीम करत आहे…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">आपण %1$s च्या वतीने Radar ला देणगी दिली आहे. त्यांना त्यांच्या प्रोफाईलवर त्यांचा सपोर्ट दाखवण्याचा पर्याय दिला जाईल.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">आपण %1$s च्या वतीने Signal ला देणगी दिली आहे. त्यांना त्यांच्या प्रोफाईलवर त्यांचा सपोर्ट दाखवण्याचा पर्याय दिला जाईल.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">आपला बॅज कालबाह्य झाला आहे</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">सुरू ठेवा</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">आपल्या निधीवर चालणारे, गोपनीय संदेशन. कोणत्याही जाहिराती नाहीत, कोणतेही ट्रॅकिंग नाही, कोणतीही तडजोड नाही. Radar ला सपोर्ट करण्यासाठी आता देणगी द्या.</string>
+    <string name="DonateToSignalFragment__private_messaging">आपल्या निधीवर चालणारे, गोपनीय संदेशन. कोणत्याही जाहिराती नाहीत, कोणतेही ट्रॅकिंग नाही, कोणतीही तडजोड नाही. Signal ला सपोर्ट करण्यासाठी आता देणगी द्या.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">आपली देणगी प्रलंबित आहे</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Radar ला %1$s/महिना देणगी द्या</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Signal ला %1$s/महिना देणगी द्या</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">एक %1$s बॅज मिळवा</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Radar %1$s ला देणगी द्या</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Signal %1$s ला देणगी द्या</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">%1$s बॅज %2$d दिवसासाठी मिळवा</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">बँक हस्तांतरण</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Radar ला केलेले देणगीवर स्ट्राईप प्रक्रिया करते. Radar आपली वैयक्तिक माहिती संकलित किंवा संग्रहित करत नाही. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Signal ला केलेले देणगीवर स्ट्राईप प्रक्रिया करते. Signal आपली वैयक्तिक माहिती संकलित किंवा संग्रहित करत नाही. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">अधिक जाणून घ्या</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">आपली माहिती गोपनीय आहे</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">आपण जेव्हा देणगी देता तेव्हा Radar आपली कोणतीही वैयक्तिक माहिती संकलित किंवा संग्रहित करत नाही.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">आपण जेव्हा देणगी देता तेव्हा Signal आपली कोणतीही वैयक्तिक माहिती संकलित किंवा संग्रहित करत नाही.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">आपल्या देणग्या प्राप्त करण्यासाठी आम्ही आमचा पेमेंट्स प्रोसेसर म्हणून स्ट्राईपचा वापर करतो. आपण त्यांना प्रदान करत असलेल्या कोणत्याही माहितीमध्ये आम्ही प्रवेश करत नाही, ती संग्रहित, किंवा जतन करत नाही.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar आपल्या देणग्या आपल्या Radar अकाऊंटशी कनेक्ट करत नाही आणि करु शकत नाही.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal आपल्या देणग्या आपल्या Radar अकाऊंटशी कनेक्ट करत नाही आणि करु शकत नाही.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">आपल्या सपोर्टसाठी धन्यवाद!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">आपली बॅकअप प्लॅन योजना</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">सर्व बॅकअप हे एंड-टू-एंड कूटबद्ध केलेले असतात. Radar ही एक ना-नफा आहे—बॅकअप्ससाठी पैसे देणे आमच्या मिशनला मदत करते.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">सर्व बॅकअप हे एंड-टू-एंड कूटबद्ध केलेले असतात. Signal ही एक ना-नफा आहे—बॅकअप्ससाठी पैसे देणे आमच्या मिशनला मदत करते.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">अधिक जाणून घ्या</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">संचयनापैकी %1$s (%2$s फोटोज)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Radar ला समर्थन दिल्याबद्दल धन्यवाद!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Signal ला समर्थन दिल्याबद्दल धन्यवाद!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">मिडीयाचा शेवटचा %1$d दिवस</item>

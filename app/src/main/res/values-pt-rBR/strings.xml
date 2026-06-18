@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">Uma mensagem de %1$s não pôde ser entregue</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s alterou o número de telefone.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Curtiu esse recurso novo? Ajude a apoiar o Radar fazendo uma doação única.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Curtiu esse recurso novo? Ajude a apoiar o Signal fazendo uma doação única.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Seu histórico de mensagens com %1$s e o número %2$s foram mesclados.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">Lento</string>
     <string name="preferences__help">Ajuda</string>
     <string name="preferences__advanced">Avançadas</string>
-    <string name="preferences__donate_to_signal">Doar para o Radar</string>
+    <string name="preferences__donate_to_signal">Doar para o Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Privacidade</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Doar para o Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Doar para o Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">O Radar é mantido por pessoas como você. Contribua todo mês e ganhe um selo.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">O Signal é mantido por pessoas como você. Contribua todo mês e ganhe um selo.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Doar</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Torne-se um apoiador</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">O Radar é mantido por pessoas como você. Contribua e ganhe um selo.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">O Signal é mantido por pessoas como você. Contribua e ganhe um selo.</string>
     <string name="BecomeASustainerMegaphone__not_now">Agora não</string>
     <string name="BecomeASustainerMegaphone__donate">Doar</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Chat silenciado para sempre</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Número de telefone copiado para a área de transferência.</string>
     <string name="ConversationSettingsFragment__phone_number">Número de telefone</string>
-    <string name="ConversationSettingsFragment__get_badges">Ao apoiar o Radar você ganha selos para o seu perfil. Toque em um selo para saber mais.</string>
+    <string name="ConversationSettingsFragment__get_badges">Ao apoiar o Signal você ganha selos para o seu perfil. Toque em um selo para saber mais.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Essa mídia ainda não foi enviada.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Doe agora</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s apoia o Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s apoia o Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s apoia o Radar com uma doação mensal. O Radar é uma organização sem fins lucrativos, sem anunciantes ou investidores, sustentada apenas por pessoas como você.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s apoia o Signal com uma doação mensal. O Signal é uma organização sem fins lucrativos, sem anunciantes ou investidores, sustentada apenas por pessoas como você.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s apoiou o Radar com uma doação. O Radar é uma organização sem fins lucrativos, sem anunciantes ou investidores, sustentada apenas por pessoas como você.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s apoiou o Signal com uma doação. O Signal é uma organização sem fins lucrativos, sem anunciantes ou investidores, sustentada apenas por pessoas como você.</string>
 
     <string name="ImageView__badge">Selo</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">Expira em %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">O Radar é diferente.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">O Signal é diferente.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Mensagens privadas. Sem anúncios, sem rastreamento, sem vigilância.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">O Radar é apoiado por doações, ou seja, a sua privacidade está no centro de tudo que fazemos. O Radar foi criado para você, não para recolher seus dados ou para fins lucrativos.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">O Signal é apoiado por doações, ou seja, a sua privacidade está no centro de tudo que fazemos. O Signal foi criado para você, não para recolher seus dados ou para fins lucrativos.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Se puder, faça uma doação hoje para manter o Radar divertido, confiável e disponível para todos.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Se puder, faça uma doação hoje para manter o Signal divertido, confiável e disponível para todos.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Agradecemos por seu apoio!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Você recebeu um selo de doador do Radar! Exiba-o em seu perfil para mostrar o seu apoio.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Você recebeu um selo de doador do Signal! Exiba-o em seu perfil para mostrar o seu apoio.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Você também pode</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">se tornar um Apoiador mensal.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Exibir no perfil</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Continuar</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Quando tiver mais de um selo, você poderá escolher qual deles será apresentado em seu perfil para as outras pessoas verem.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Obtenha selos para o seu perfil ao apoiar o Radar.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar é uma organização sem fins lucrativos, sem anunciantes ou investidores, sustentada apenas por pessoas como você.</string>
+    <string name="BecomeASustainerFragment__get_badges">Obtenha selos para o seu perfil ao apoiar o Signal.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal é uma organização sem fins lucrativos, sem anunciantes ou investidores, sustentada apenas por pessoas como você.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Doar para o Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Doar para o Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Mais</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Vá ao Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Não foi possível processar o pagamento da assinatura</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Estamos tendo problemas para receber seu pagamento de Colaborador do Radar. Certifique-se de que seu método de pagamento esteja atualizado. Se não estiver, atualize-o no Google Pay. O Radar tentará processar o pagamento novamente dentro de alguns dias.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Estamos tendo problemas para receber seu pagamento de Colaborador do Signal. Certifique-se de que seu método de pagamento esteja atualizado. Se não estiver, atualize-o no Google Pay. O Signal tentará processar o pagamento novamente dentro de alguns dias.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Não mostrar novamente esta mensagem</string>
 
     <string name="Subscription__contact_support">Entre em contato com o suporte</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">Sua doação ainda está sendo processada. Isso pode demorar alguns minutos, dependendo da sua conexão.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Ocorreu um erro ao cancelar a doação mensal</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">O cancelamento da doação mensal requer uma conexão com a internet.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Seu aparelho não é compatível com doações no aplicativo, portanto você não pode doar para ganhar um selo. Você ainda pode apoiar o Radar ao fazer uma doação em nosso site.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Seu aparelho não é compatível com doações no aplicativo, portanto você não pode doar para ganhar um selo. Você ainda pode apoiar o Signal ao fazer uma doação em nosso site.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Erro na rede. Verifique a sua conexão e tente novamente.</string>
     <string name="NetworkFailure__retry">Tentar novamente</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Doação em nome de %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s fez uma doação para o Radar no seu nome</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s fez uma doação para o Signal no seu nome</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Resgatar</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Valor</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Obrigado por apoiar o Radar. Sua contribuição ajuda a incentivar a missão de desenvolver uma tecnologia de privacidade de software livre que protege a liberdade de expressão e permite a comunicação global segura para milhões de pessoas em todo o mundo. Se você for residente nos Estados Unidos, por favor, fique com este recibo para seus registros fiscais. A Radar Technology Foundation é uma organização sem fins lucrativos isenta de impostos nos Estados Unidos, sob a seção 501c3 do Código da Receita Federal. Nossa CNPJ é 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Obrigado por apoiar o Signal. Sua contribuição ajuda a incentivar a missão de desenvolver uma tecnologia de privacidade de software livre que protege a liberdade de expressão e permite a comunicação global segura para milhões de pessoas em todo o mundo. Se você for residente nos Estados Unidos, por favor, fique com este recibo para seus registros fiscais. A Signal Technology Foundation é uma organização sem fins lucrativos isenta de impostos nos Estados Unidos, sob a seção 501c3 do Código da Receita Federal. Nossa CNPJ é 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Nenhuma nota fiscal</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Doar para um amigo</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Apoie o Radar fazendo uma doação para um amigo ou familiar que usa o app. Essa pessoa receberá um selo para exibir no perfil por %1$d dia</item>
-        <item quantity="other">Apoie o Radar fazendo uma doação para um amigo ou familiar que usa o app. Essa pessoa receberá um selo para exibir no perfil por %1$d dias</item>
+        <item quantity="one">Apoie o Signal fazendo uma doação para um amigo ou familiar que usa o app. Essa pessoa receberá um selo para exibir no perfil por %1$d dia</item>
+        <item quantity="other">Apoie o Signal fazendo uma doação para um amigo ou familiar que usa o app. Essa pessoa receberá um selo para exibir no perfil por %1$d dias</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Próximo</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Agradecemos por seu apoio!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s fez uma doação para o Radar no seu nome. Mostre que você apoia o Radar no seu perfil.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s fez uma doação para o Signal no seu nome. Mostre que você apoia o Signal no seu perfil.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Você fez uma doação para o Radar no nome de %1$s. Essa pessoa poderá escolher se quer mostrar que apoia o Radar no perfil.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Você fez uma doação para o Signal no nome de %1$s. Essa pessoa poderá escolher se quer mostrar que apoia o Signal no perfil.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Resgatar</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Resgatando selo…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Você fez uma doação para o Radar no nome de %1$s. Essa pessoa poderá escolher se quer mostrar que apoia o Radar no perfil.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Você fez uma doação para o Signal no nome de %1$s. Essa pessoa poderá escolher se quer mostrar que apoia o Signal no perfil.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Seu selo expirou</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Continuar</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Mensagens privadas, financiadas por você. Sem anúncios, sem rastreamento, sem vigilância. Faça uma doação agora para apoiar o Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Mensagens privadas, financiadas por você. Sem anúncios, sem rastreamento, sem vigilância. Faça uma doação agora para apoiar o Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Você tem uma doação pendente</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Doar %1$s/mês para o Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Doar %1$s/mês para o Signal</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Obter um selo %1$s</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Doar %1$s para o Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Doar %1$s para o Signal</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Ganhe um selo %1$s por %2$d dia</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Transferência bancária</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">O Stripe processa as doações para o Radar. O Radar não coleta nem armazena suas informações pessoais. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">O Stripe processa as doações para o Signal. O Signal não coleta nem armazena suas informações pessoais. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Saiba mais</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Suas informações são privadas</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">O Radar não coleta ou armazena suas informações pessoais quando você faz uma doação.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">O Signal não coleta ou armazena suas informações pessoais quando você faz uma doação.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Usamos o Stripe para processar pagamentos e receber suas doações. Não acessamos, armazenamos ou salvamos informações fornecidas por você.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">O Radar não conecta e não pode conectar sua doação à sua conta do Radar.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">O Signal não conecta e não pode conectar sua doação à sua conta do Radar.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Agradecemos o seu apoio!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Escolha seu plano de backup</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Todos os backups são criptografados de ponta a ponta. O Radar é uma organização sem fins lucrativos. Pagar por backups nos ajuda a apoiar nossa missão.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Todos os backups são criptografados de ponta a ponta. O Signal é uma organização sem fins lucrativos. Pagar por backups nos ajuda a apoiar nossa missão.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Saiba mais</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s de armazenamento (%2$s fotos)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Agradecemos seu apoio ao Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Agradecemos seu apoio ao Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Último dia de arquivo de mídia</item>

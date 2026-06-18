@@ -2046,7 +2046,7 @@
     <string name="MessageRecord_a_message_from_s_couldnt_be_delivered">En besked fra %1$s kunne ikke leveres</string>
     <string name="MessageRecord_s_changed_their_phone_number">%1$s ændrede sit telefonnummer.</string>
     <!-- Update item message shown in the release channel when someone is already a sustainer so we ask them if they want to boost. -->
-    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Kan du lide denne nye funktion? Hjælp ved at støtte Radar med en engangsdonation.</string>
+    <string name="MessageRecord_like_this_new_feature_help_support_signal_with_a_one_time_donation">Kan du lide denne nye funktion? Hjælp ved at støtte Signal med en engangsdonation.</string>
     <!-- Update item message shown when we merge two threads together. First placeholder is a name, second placeholder is a phone number. -->
     <string name="MessageRecord_your_message_history_with_s_and_their_number_s_has_been_merged">Din meddelelseshistorik med %1$s og vedkommendes nummer %2$s er slået sammen.</string>
     <!-- Update item message shown when we merge two threads together and we don\'t know the phone number of the other thread. The placeholder is a person\'s name. -->
@@ -4005,7 +4005,7 @@
     <string name="preferences__slow">Langsom</string>
     <string name="preferences__help">Hjælp</string>
     <string name="preferences__advanced">Avanceret</string>
-    <string name="preferences__donate_to_signal">Donér til Radar</string>
+    <string name="preferences__donate_to_signal">Donér til Signal</string>
     <!-- Preference label for making one-time donations to Signal -->
     <string name="preferences__privacy">Privatliv</string>
     <!-- Preference label for stories -->
@@ -5813,9 +5813,9 @@
     <!-- ChatColorGradientTool -->
 
     <!-- Title text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_donate_to_signal">Donér til Radar</string>
+    <string name="Donate2022Q2Megaphone_donate_to_signal">Donér til Signal</string>
     <!-- Body text for prompt to donate. Shown in a popup at the bottom of the chat list. -->
-    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Radar er drevet af personer som dig. Donér månedligt og modtag et badge.</string>
+    <string name="Donate2022Q2Megaphone_signal_is_powered_by_people_like_you">Signal er drevet af personer som dig. Donér månedligt og modtag et badge.</string>
     <!-- Button label that brings a user to the donate screen. Shown in a popup at the bottom of the chat list. -->
     <string name="Donate2022Q2Megaphone_donate">Donér</string>
     <!-- Button label that dismissed a prompt to donate. Shown in a popup at the bottom of the chat list. -->
@@ -5838,7 +5838,7 @@
     <!-- BecomeASustainerMegaphone -->
     <string name="BecomeASustainerMegaphone__become_a_sustainer">Bliv bidragsyder</string>
     <!-- Displayed in the Become a Sustainer megaphone -->
-    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Radar er drevet af personer som dig. Donér og modtag et badge.</string>
+    <string name="BecomeASustainerMegaphone__signal_is_powered_by">Signal er drevet af personer som dig. Donér og modtag et badge.</string>
     <string name="BecomeASustainerMegaphone__not_now">Ikke nu</string>
     <string name="BecomeASustainerMegaphone__donate">Donér</string>
 
@@ -5909,7 +5909,7 @@
     <string name="ConversationSettingsFragment__conversation_muted_forever">Chat ignoreret for evigt</string>
     <string name="ConversationSettingsFragment__copied_phone_number_to_clipboard">Kopierede telefonnummer til udklipsholder.</string>
     <string name="ConversationSettingsFragment__phone_number">Telefonnummer</string>
-    <string name="ConversationSettingsFragment__get_badges">Få badges til din profil ved at støtte Radar. Tryk på et badge for at få mere at vide.</string>
+    <string name="ConversationSettingsFragment__get_badges">Få badges til din profil ved at støtte Signal. Tryk på et badge for at få mere at vide.</string>
     <!-- Error message shown when the user is trying to open a media that is not sent yet. -->
     <string name="ConversationSettingsFragment__this_media_is_not_sent_yet">Dette medie er ikke sendt endnu.</string>
 
@@ -6158,11 +6158,11 @@
     <!-- Displayed on primary button in the bottom sheet as a call-to-action to launch into the donation flow -->
     <string name="ViewBadgeBottomSheetDialogFragment__donate_now">Donér nu</string>
     <!-- Title of a page in the bottom sheet. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s understøtter Radar</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal">%1$s understøtter Signal</string>
     <!-- Description of a page in the bottom sheet of a monthly badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s støtter Radar med en månedlig donation. Radar er en nonprofitorganisation uden annoncører eller investorer, der kun støttes af folk som dig.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_monthly">%1$s støtter Signal med en månedlig donation. Signal er en nonprofitorganisation uden annoncører eller investorer, der kun støttes af folk som dig.</string>
     <!-- Description of a page in the bottom sheet of a one-time badge. Placeholder is a user\'s short-name -->
-    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s støtter Radar med en donation. Radar er en nonprofitorganisation uden annoncører eller investorer, der kun støttes af folk som dig.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__s_supports_signal_with_a_donation">%1$s støtter Signal med en donation. Signal er en nonprofitorganisation uden annoncører eller investorer, der kun støttes af folk som dig.</string>
 
     <string name="ImageView__badge">Badge</string>
 
@@ -6184,17 +6184,17 @@
     <string name="Subscription__expires_s">Udløber %1$s</string>
 
     <!-- Title of learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Radar er anderledes.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_different">Signal er anderledes.</string>
     <!-- First small text blurb on learn more sheet -->
     <string name="SubscribeLearnMoreBottomSheetDialogFragment__private_messaging">Private beskeder. Ingen annoncer, ingen trackere, ingen overvågning.</string>
     <!-- Second small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Radar er bygget på donationer, hvilket betyder at dit privatliv er i fokus i alle vores processer. Radar er udviklet til dig; ikke dine data og ikke for profit.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__signal_is_supported_by">Signal er bygget på donationer, hvilket betyder at dit privatliv er i fokus i alle vores processer. Signal er udviklet til dig; ikke dine data og ikke for profit.</string>
     <!-- Third small text blurb on learn more sheet -->
-    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Hvis du kan, opfordrer vi dig til at donere i dag, så Radar fortsat kan være sjov, pålidelig og tilgængelig for alle.</string>
+    <string name="SubscribeLearnMoreBottomSheetDialogFragment__if_you_can">Hvis du kan, opfordrer vi dig til at donere i dag, så Signal fortsat kan være sjov, pålidelig og tilgængelig for alle.</string>
 
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__thanks_for_your_support">Tak for din støtte!</string>
     <!-- Subtext underneath the dialog title on the thanks sheet -->
-    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Du har optjent en donorbadge fra Radar! Vis det på din profil for at vise din støtte.</string>
+    <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__youve_earned_a_donor_badge">Du har optjent en donorbadge fra Signal! Vis det på din profil for at vise din støtte.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__you_can_also">Du kan også</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__become_a_montly_sustainer">blive en månedlig bidragsyder.</string>
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__display_on_profile">Vis på profil</string>
@@ -6202,11 +6202,11 @@
     <string name="SubscribeThanksForYourSupportBottomSheetDialogFragment__continue">Fortsæt</string>
     <string name="ThanksForYourSupportBottomSheetFragment__when_you_have_more">Når du har mere end ét badge, kan du udvælge et af dem, som skal vises på din profil.</string>
 
-    <string name="BecomeASustainerFragment__get_badges">Få badges til din profil ved at støtte Radar.</string>
-    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Radar er en nonprofitorganisation uden annoncører eller investorer, der kun støttes af folk som dig.</string>
+    <string name="BecomeASustainerFragment__get_badges">Få badges til din profil ved at støtte Signal.</string>
+    <string name="BecomeASustainerFragment__signal_is_a_non_profit">Signal er en nonprofitorganisation uden annoncører eller investorer, der kun støttes af folk som dig.</string>
 
     <!-- Button label for creating a donation -->
-    <string name="ManageDonationsFragment__donate_to_signal">Donér til Radar</string>
+    <string name="ManageDonationsFragment__donate_to_signal">Donér til Signal</string>
     <!-- Heading for more area of manage subscriptions page -->
     <string name="ManageDonationsFragment__more">Mere</string>
     <!-- Heading for receipts area of manage subscriptions page -->
@@ -6291,7 +6291,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__go_to_google_pay">Gå til Google Pay</string>
 
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__cant_process_subscription_payment">Kan ikke behandle betaling af abonnement</string>
-    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Vi har problemer med at modtage din Radar-bidragsyderbetaling. Sørg for, at din betalingsmetode er opdateret. Hvis den ikke er det, skal du opdatere den i Google Pay. Radar vil forsøge at behandle betalingen igen om et par dage.</string>
+    <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__were_having_trouble">Vi har problemer med at modtage din Signal-bidragsyderbetaling. Sørg for, at din betalingsmetode er opdateret. Hvis den ikke er det, skal du opdatere den i Google Pay. Signal vil forsøge at behandle betalingen igen om et par dage.</string>
     <string name="CantProcessSubscriptionPaymentBottomSheetDialogFragment__dont_show_this_again">Vis ikke dette igen</string>
 
     <string name="Subscription__contact_support">Kontakt Support</string>
@@ -6346,7 +6346,7 @@
     <string name="DonationsErrors__your_payment_is_still">Din donation er stadig under behandling. Det kan tage et par minutter afhængigt af din forbindelse.</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">Opsigelse af abonnementet mislykkedes</string>
     <string name="DonationsErrors__subscription_cancellation_requires_an_internet_connection">Opsigelse af abonnement kræver en internetforbindelse.</string>
-    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Din enhed understøtter ikke donationer i appen, så du kan ikke abonnere for at optjene et badge. Du kan stadig støtte Radar ved at give et bidrag på vores hjemmeside.</string>
+    <string name="ViewBadgeBottomSheetDialogFragment__your_device_doesn_t_support">Din enhed understøtter ikke donationer i appen, så du kan ikke abonnere for at optjene et badge. Du kan stadig støtte Signal ved at give et bidrag på vores hjemmeside.</string>
     <string name="NetworkFailure__network_error_check_your_connection_and_try_again">Netværksfejl. Kontroller din forbindelse, og prøv igen.</string>
     <string name="NetworkFailure__retry">Prøv igen</string>
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
@@ -6361,7 +6361,7 @@
     <!-- Gift message view title -->
     <string name="GiftMessageView__donation_on_behalf_of_s">Donation på vegne af %1$s</string>
     <!-- Gift message view title for incoming donations -->
-    <string name="GiftMessageView__s_donated_to_signal_on">%1$s donerede til Radar på dine vegne</string>
+    <string name="GiftMessageView__s_donated_to_signal_on">%1$s donerede til Signal på dine vegne</string>
     <!-- Gift badge redeem action label -->
     <string name="GiftMessageView__redeem">Indløs</string>
     <!-- Gift badge view action label -->
@@ -6622,7 +6622,7 @@
     <!-- Donation receipts amount title -->
     <string name="DonationReceiptDetailsFragment__amount">Beløb</string>
     <!-- Donation receipts thanks -->
-    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Tak for din støtte til Radar. Dit bidrag støtter vores mission om at udvikle open source-privatlivsteknologi, der beskytter ytringsfrihed og muliggør sikker global kommunikation for millioner af mennesker verden over. Hvis du er bosiddende i USA, bedes du gemme denne kvittering til dine skattepapirer. Radar Technology Foundation er en skattefritaget nonprofitorganisation i USA i henhold til afsnit 501c3 i Internal Revenue Code. Vores føderale Skatte-ID er 82-4506840.</string>
+    <string name="DonationReceiptDetailsFragment__thank_you_for_supporting">Tak for din støtte til Signal. Dit bidrag støtter vores mission om at udvikle open source-privatlivsteknologi, der beskytter ytringsfrihed og muliggør sikker global kommunikation for millioner af mennesker verden over. Hvis du er bosiddende i USA, bedes du gemme denne kvittering til dine skattepapirer. Signal Technology Foundation er en skattefritaget nonprofitorganisation i USA i henhold til afsnit 501c3 i Internal Revenue Code. Vores føderale Skatte-ID er 82-4506840.</string>
     <!-- Donation reciepts screen empty state title -->
     <string name="DonationReceiptListFragment__no_receipts">Ingen kvitteringer</string>
 
@@ -6966,8 +6966,8 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">Donér for en ven</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="one">Støt Radar ved at donere på vegne af en ven eller et familiemedlem, der bruger Radar. De vil modtage et badge, som kan vises på deres profil i %1$d dag</item>
-        <item quantity="other">Støt Radar ved at donere på vegne af en ven eller et familiemedlem, der bruger Radar. De vil modtage et badge, som kan vises på deres profil i %1$d dage</item>
+        <item quantity="one">Støt Signal ved at donere på vegne af en ven eller et familiemedlem, der bruger Radar. De vil modtage et badge, som kan vises på deres profil i %1$d dag</item>
+        <item quantity="other">Støt Signal ved at donere på vegne af en ven eller et familiemedlem, der bruger Radar. De vil modtage et badge, som kan vises på deres profil i %1$d dage</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">Næste</string>
@@ -6990,9 +6990,9 @@
     <!-- Title for sheet shown when opening a sent gift -->
     <string name="ViewSentGiftBottomSheet__thanks_for_your_support">Tak for din støtte!</string>
     <!-- Description for sheet shown when opening a redeemed gift -->
-    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s har doneret til Radar på dine vegne! Vis at du støtter Radar på din profil.</string>
+    <string name="ViewReceivedGiftBottomSheet__s_made_a_donation_to_signal">%1$s har doneret til Signal på dine vegne! Vis at du støtter Signal på din profil.</string>
     <!-- Description for sheet shown when opening a sent gift -->
-    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Du har foretaget en donation til Radar på vegne af %1$s. De vil få mulighed for at vise deres støtte på deres profil.</string>
+    <string name="ViewSentGiftBottomSheet__youve_made_a_donation_to_signal">Du har foretaget en donation til Signal på vegne af %1$s. De vil få mulighed for at vise deres støtte på deres profil.</string>
     <!-- Primary action for pending gift sheet to redeem badge now -->
     <string name="ViewReceivedGiftSheet__redeem">Indløs</string>
     <!-- Primary action for pending gift sheet to redeem badge later -->
@@ -7000,7 +7000,7 @@
     <!-- Dialog text while redeeming a gift -->
     <string name="ViewReceivedGiftSheet__redeeming_badge">Indløser badge…</string>
     <!-- Description text in gift thanks sheet -->
-    <string name="GiftThanksSheet__youve_made_a_donation">Du har foretaget en donation til Radar på vegne af %1$s. De vil få mulighed for at vise deres støtte på deres profil.</string>
+    <string name="GiftThanksSheet__youve_made_a_donation">Du har foretaget en donation til Signal på vegne af %1$s. De vil få mulighed for at vise deres støtte på deres profil.</string>
     <!-- Expired gift sheet title -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired">Dit badge er udløbet</string>
     <!-- Expired gift sheet top description text -->
@@ -7224,7 +7224,7 @@
     <!-- Continue button label -->
     <string name="DonateToSignalFragment__continue">Fortsæt</string>
     <!-- Description below title -->
-    <string name="DonateToSignalFragment__private_messaging">Private beskeder, der er finansieret af dig. Ingen annoncer, ingen sporing, ingen kompromiser. Donér nu for at støtte Radar.</string>
+    <string name="DonateToSignalFragment__private_messaging">Private beskeder, der er finansieret af dig. Ingen annoncer, ingen sporing, ingen kompromiser. Donér nu for at støtte Signal.</string>
     <!-- Dialog title when a user tries to donate while they already have a pending donation. -->
     <string name="DonateToSignalFragment__you_have_a_donation_pending">Du har en afventende donation</string>
     <!-- Dialog body when a user tries to donate while they already have a pending monthly donation. -->
@@ -7249,11 +7249,11 @@
 
     <!-- GatewaySelectorBottomSheet -->
     <!-- Sheet title when subscribing -->
-    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Doner %1$s/måned til Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_month_to_signal">Doner %1$s/måned til Signal</string>
     <!-- Sheet summary when subscribing -->
     <string name="GatewaySelectorBottomSheet__get_a_s_badge">Få et %1$s-badge</string>
     <!-- Sheet title when giving a one-time donation -->
-    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Doner %1$s til Radar</string>
+    <string name="GatewaySelectorBottomSheet__donate_s_to_signal">Doner %1$s til Signal</string>
     <!-- Sheet summary when giving a one-time donation -->
     <plurals name="GatewaySelectorBottomSheet__get_a_s_badge_for_d_days">
         <item quantity="one">Få en %1$s badge i %2$d dag</item>
@@ -7276,7 +7276,7 @@
     <!-- Title of screen displaying the bank transfer mandate -->
     <string name="BankTransferMandateFragment__bank_transfer">Bankoverførsel</string>
     <!-- Subtitle of screen displaying the bank transfer mandate, placeholder is \'Learn more\' -->
-    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe behandler donationer til Radar. Radar indsamler eller opbevarer ikke dine personlige oplysninger. %1$s</string>
+    <string name="BankTransferMandateFragment__stripe_processes_donations">Stripe behandler donationer til Signal. Signal indsamler eller opbevarer ikke dine personlige oplysninger. %1$s</string>
     <!-- Subtitle learn more of screen displaying bank transfer mandate -->
     <string name="BankTransferMandateFragment__learn_more">Få mere at vide</string>
     <!-- Button label to continue with transfer -->
@@ -7410,9 +7410,9 @@
 
     <!-- YourInformationIsPrivateBottomSheet -->
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">Dine oplysninger er private</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Radar indsamler eller gemmer ikke nogen af dine personlige oplysninger, når du foretager en donation.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal indsamler eller gemmer ikke nogen af dine personlige oplysninger, når du foretager en donation.</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">Vi bruger Stripe som vores betalingbehandler til at modtage dine donationer. Vi får ikke adgang til, opbevarer eller gemmer nogen af de oplysninger, du giver dem.</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Radar har ikke mulighed for at forbinde din donation til din Radar-konto.</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal har ikke mulighed for at forbinde din donation til din Radar-konto.</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">Tak for din støtte!</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -8597,7 +8597,7 @@
     <!-- Screen headline -->
     <string name="MessagesBackupsTypeSelectionScreen__choose_your_backup_plan">Vælg dine sikkerhedskopier</string>
     <!-- Screen subhead -->
-    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Alle sikkerhedskopier er end-to-end krypteret. Radar er en non-profitorganisation – når du betaler for sikkerhedskopier hjælper du med at støtte vores mission.</string>
+    <string name="MessageBackupsTypeSelectionScreen__all_backups_are_end_to_end_encrypted">Alle sikkerhedskopier er end-to-end krypteret. Signal er en non-profitorganisation – når du betaler for sikkerhedskopier hjælper du med at støtte vores mission.</string>
     <!-- Screen subhead highlighted read-more button -->
     <string name="MessageBackupsTypeSelectionScreen__learn_more">Få mere at vide</string>
     <!-- Primary action button label without a current selection -->
@@ -8632,7 +8632,7 @@
     <!-- Description text for storage space for paid tier media. Placeholder 1 is for byte amount, placeholder 2 is for a photo count estimate -->
     <string name="MessageBackupsTypeSelectionScreen__s_of_storage_s_photos">%1$s lagerplads (%2$s billeder)</string>
     <!-- Description text for thanks -->
-    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Tak, fordi du støtter Radar!</string>
+    <string name="MessageBackupsTypeSelectionScreen__thanks_for_supporting_signal">Tak, fordi du støtter Signal!</string>
     <!-- Description text for free tier media retention. Placeholder is retention day count. -->
     <plurals name="MessageBackupsTypeSelectionScreen__last_d_days_of_media">
         <item quantity="one">Sidste %1$d dags medier</item>
