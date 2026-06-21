@@ -70,22 +70,42 @@ class LightningAddress internal constructor(val paymentAddress: String, val lnur
       }
     }
 
+    /**
+     * Builds a [LightningAddress] from a recipient's published payment-address string (decrypted from
+     * their profile). Clients serialize this differently, so accept all known forms and normalize to
+     * the "user@host" lightning address:
+     *  - Android stores the bech32 LNURL (`lnurl1...`).
+     *  - iOS stores the decoded LNURLP URL (`https://host/.well-known/lnurlp/user`).
+     *  - a plain `user@host` lightning address is also accepted.
+     *
+     * "user@host" is the form every consumer needs: Breez's `parse` (fee + send), and PaymentSendJob,
+     * which reconstructs the address via [fromLightningAddress] (splitting on "@"). It must NOT be
+     * `Uri.parse`d as-is when bech32: a bech32 string has no host/path and previously produced a
+     * malformed "<bech32>@null" address that Breez rejected with InvalidInput.
+     */
     @Throws(AddressException::class)
-    fun fromLNURL(lnurl: String): LightningAddress {
+    fun fromLNURL(serialized: String): LightningAddress {
       try {
-        // `lnurl` is the bech32-encoded LNURL string that [serialize] stored (e.g. "lnurl1..."). Decode
-        // it back to the LNURLP URL and derive the "user@host" lightning address — the form every
-        // consumer needs: Breez's `parse` (fee + send), and PaymentSendJob, which reconstructs the
-        // address via [fromLightningAddress] (which splits on "@") when its Factory recreates the job.
-        //
-        // It must NOT be `Uri.parse`d as-is: a bech32 string has no host/path, which previously yielded
-        // a malformed "<bech32>@null" address that Breez rejected with InvalidInput on the fee request.
-        // LNURLs exceed bech32's standard 90-char cap, so decode with no length limit.
-        val decoded = Bech32.decode(lnurl, Int.MAX_VALUE)
-        val url = Uri.parse(String(Bech32.convert(decoded.data, 5, 8, false), Charsets.UTF_8))
-        val lightningAddress = "${url.pathSegments.last()}@${url.host}"
+        val lightningAddress = when {
+          // bech32 LNURL → decode to the LNURLP URL, then derive user@host. LNURLs exceed bech32's
+          // standard 90-char cap, so decode with no length limit.
+          serialized.startsWith("lnurl1", ignoreCase = true) -> {
+            val url = Uri.parse(String(Bech32.convert(Bech32.decode(serialized, Int.MAX_VALUE).data, 5, 8, false), Charsets.UTF_8))
+            "${url.pathSegments.last()}@${url.host}"
+          }
+          // a LNURLP URL (e.g. published by iOS)
+          serialized.contains("://") -> {
+            val url = Uri.parse(serialized)
+            "${url.pathSegments.last()}@${url.host}"
+          }
+          // already a "user@host" lightning address
+          serialized.contains("@") -> serialized
+          else -> throw AddressException("Unrecognized lightning payment address")
+        }
 
-        return LightningAddress(lightningAddress, lnurl)
+        return LightningAddress(lightningAddress, serialized)
+      } catch (e: AddressException) {
+        throw e
       } catch (e: Exception) {
         throw AddressException(e)
       }
