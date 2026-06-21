@@ -437,6 +437,15 @@ public final class ProfileUtil {
       SignalDatabase.recipients().setProfileAvatar(Recipient.self().getId(), avatarPath, false);
     }
     AppDependencies.getJobManager().add(new RefreshOwnProfileJob());
+
+    // A default-version upload (version == null) becomes the account's "current" profile version on
+    // the server, which hides the lightning payment address we store at LIGHTNING_PROFILE_VERSION —
+    // senders read that version and would get a null address ("hasn't activated payments"). Re-assert
+    // the lightning address as the current version after any such upload. (The lightning upload itself
+    // passes a non-null version, so this does not recurse.)
+    if (version == null) {
+      PublishLightningAddressJob.enqueueIfPaymentsEnabled();
+    }
   }
 
   private static @Nullable PaymentAddress getSelfPaymentsAddressProtobuf() {

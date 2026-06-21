@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.dependencies.AppDependencies
+import org.thoughtcrime.securesms.jobs.PublishLightningAddressJob
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.payments.BreezSdkWrapper
 
@@ -70,6 +71,10 @@ class PaymentsOnboardingViewModel : ViewModel() {
         // BreezSdkWrapper.reset() alone is not enough — Payments caches the entropy-bound Wallet.
         BreezSdkWrapper.reset()
         AppDependencies.payments.closeWallet()
+        // The restored wallet is ready: (re)publish its lightning address to our profile so senders
+        // can pay this account without waiting for us to open a Receive/Send screen. No-ops until
+        // payments are enabled (the Add Funds step enables them); retries on failure.
+        AppDependencies.jobManager.add(PublishLightningAddressJob())
       } else {
         Log.w(TAG, "Restored payments seed did not arrive within ${SEED_MAX_WAIT_MS}ms; proceeding (may mint a fresh wallet).")
       }

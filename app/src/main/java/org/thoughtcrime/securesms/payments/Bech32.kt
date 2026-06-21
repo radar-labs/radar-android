@@ -112,12 +112,14 @@ object Bech32 {
   /**
    * Decodes a Bech32 string.
    */
-  fun decode(str: String): Bech32Data {
+  // maxLength defaults to the standard Bech32 cap of 90, but LNURLs use length-unlimited bech32, so
+  // callers decoding an LNURL pass a larger limit (e.g. Int.MAX_VALUE).
+  fun decode(str: String, maxLength: Int = 90): Bech32Data {
     var lower = false
     var upper = false
     if (str.length < 8)
       throw AddressFormatException.InvalidDataLength("Input too short: " + str.length)
-    if (str.length > 90)
+    if (str.length > maxLength)
       throw AddressFormatException.InvalidDataLength("Input too long: " + str.length)
     for (i in 0 until str.length) {
       val c = str[i]
