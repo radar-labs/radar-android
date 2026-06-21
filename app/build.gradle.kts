@@ -22,8 +22,14 @@ plugins {
 
 apply(from = "static-ips.gradle.kts")
 
-val canonicalVersionCode = 1
-val canonicalVersionName = "1.0.0"
+// NOTE: `canonicalVersionCode` is an INTERNAL monotonic version signal, not the user-facing version
+// (that's `canonicalVersionName`). It must stay high enough that the resulting BuildConfig.VERSION_CODE
+// (= canonicalVersionCode * maxHotfixVersions) is >= ApplicationMigrations.LEGACY_CANONICAL_VERSION (455);
+// i.e. canonicalVersionCode >= 5. Below that, the app treats every launch as a pre-2018 "legacy update"
+// and runs LegacyMigrationJob, which crashes on the modern DB schema ("no such column: color"). Setting
+// this to 1 (VERSION_CODE 100) is what caused the launch crash — keep it >= the prior 1633.
+val canonicalVersionCode = 1633
+val canonicalVersionName = "7.68.5"
 val currentHotfixVersion = 0
 val maxHotfixVersions = 100
 
