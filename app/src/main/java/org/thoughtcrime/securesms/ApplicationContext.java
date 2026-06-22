@@ -73,6 +73,7 @@ import org.thoughtcrime.securesms.jobs.LinkedDeviceInactiveCheckJob;
 import org.thoughtcrime.securesms.jobs.MultiDeviceContactUpdateJob;
 import org.thoughtcrime.securesms.jobs.PreKeysSyncJob;
 import org.thoughtcrime.securesms.jobs.ProfileUploadJob;
+import org.thoughtcrime.securesms.jobs.PublishLightningAddressJob;
 import org.thoughtcrime.securesms.jobs.RefreshSvrCredentialsJob;
 import org.thoughtcrime.securesms.jobs.RestoreOptimizedMediaJob;
 import org.thoughtcrime.securesms.jobs.RetrieveProfileJob;
@@ -221,6 +222,7 @@ public class ApplicationContext extends Application implements AppForegroundObse
               .addPostRender(() -> AppDependencies.getJobManager().add(new FontDownloaderJob()))
               .addPostRender(CheckServiceReachabilityJob::enqueueIfNecessary)
               .addPostRender(GroupV2UpdateSelfProfileKeyJob::enqueueForGroupsIfNecessary)
+              .addPostRender(PublishLightningAddressJob::enqueueIfPaymentsEnabled)
               .addPostRender(StoryOnboardingDownloadJob.Companion::enqueueIfNeeded)
               .addPostRender(() -> AppDependencies.getExoPlayerPool().getPoolStats().getMaxUnreserved())
               .addPostRender(() -> AppDependencies.getRecipientCache().warmUp())

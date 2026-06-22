@@ -232,6 +232,7 @@ public final class JobManagerFactories {
       put(PreKeysSyncJob.KEY,                          new PreKeysSyncJob.Factory());
       put(ProfileKeySendJob.KEY,                       new ProfileKeySendJob.Factory());
       put(ProfileUploadJob.KEY,                        new ProfileUploadJob.Factory());
+      put(PublishLightningAddressJob.KEY,              new PublishLightningAddressJob.Factory());
       put(PushDistributionListSendJob.KEY,             new PushDistributionListSendJob.Factory());
       put(PushGroupSendJob.KEY,                        new PushGroupSendJob.Factory());
       put(PushGroupSilentUpdateSendJob.KEY,            new PushGroupSilentUpdateSendJob.Factory());

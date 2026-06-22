@@ -14,6 +14,7 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.payments.MobileCoinLedgerWrapper.OwnedTxo
 import org.thoughtcrime.securesms.util.ProfileUtil
 import org.whispersystems.signalservice.api.payments.Money
+import java.io.IOException
 import java.math.BigInteger
 import java.security.SecureRandom
 import java.time.LocalDateTime
@@ -71,29 +72,45 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       return LightningAddress("\\*.*/ No Address Found. Missing SDK", "")
     }
 
-    try {
-      val existing = runBlocking { sdk.getLightningAddress() }
+    // Lenient UI accessor: resolve + publish the address, but never throw — fall back to a
+    // placeholder so screens that display the address can't crash. The reliable, retrying publish
+    // path is publishLightningAddress(), driven by PublishLightningAddressJob.
+    return try {
+      publishLightningAddress()
+    } catch (e: Exception) {
+      Log.e("BreezSdk", "Error getting lightning address", e)
+      LightningAddress("\\*.*/ No Address Found", "")
+    }
+  }
 
-      // Keep an existing address only if it's on our configured lnurl domain; otherwise (or if no
-      // address is registered yet) register a freshly-generated random username. Mirrors iOS
-      // BreezSdk.validateInitialLightningAddress().
-      val info = if (existing != null && existing.lightningAddress.contains("@$LNURL_DOMAIN")) {
+  /**
+   * Resolves the wallet's lightning address — reusing the one already registered on our
+   * [LNURL_DOMAIN], or registering a freshly-generated random username — and publishes it to the
+   * account's Signal profile (at the fixed lightning profile version) so other users can pay it.
+   *
+   * Unlike [getLightningAddress], this throws on any failure instead of returning a placeholder, so
+   * a caller such as [org.thoughtcrime.securesms.jobs.PublishLightningAddressJob] can retry until
+   * the address is actually published. Keeping an existing on-domain address (otherwise registering
+   * a new username) mirrors iOS `BreezSdk.validateInitialLightningAddress()`.
+   */
+  @Throws(IOException::class)
+  fun publishLightningAddress(): LightningAddress {
+    val sdk = this.sdk ?: throw IOException("Breez SDK is not available")
+
+    val info = try {
+      val existing = runBlocking { sdk.getLightningAddress() }
+      if (existing != null && existing.lightningAddress.contains("@$LNURL_DOMAIN")) {
         existing
       } else {
         tryToRegisterLightningAddress(sdk)
       }
-
-      if (info != null) {
-        val address = LightningAddress(info.lightningAddress, info.lnurl.bech32)
-        ProfileUtil.uploadLightingProfile(AppDependencies.application, address)
-        return address
-      }
-
-      return LightningAddress("\\*.*/ No Address Found", "")
     } catch (e: SdkException) {
-      Log.e("BreezSdk", "Error getting lightning address", e)
-      return LightningAddress("\\*.*/ Error getting lightning address", "")
-    }
+      throw IOException("Failed to resolve lightning address", e)
+    } ?: throw IOException("Could not register a lightning address (out of retries)")
+
+    val address = LightningAddress(info.lightningAddress, info.lnurl.bech32)
+    ProfileUtil.uploadLightingProfile(AppDependencies.application, address)
+    return address
   }
 
   /**
