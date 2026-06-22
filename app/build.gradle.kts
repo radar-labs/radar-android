@@ -28,7 +28,7 @@ apply(from = "static-ips.gradle.kts")
 // i.e. canonicalVersionCode >= 5. Below that, the app treats every launch as a pre-2018 "legacy update"
 // and runs LegacyMigrationJob, which crashes on the modern DB schema ("no such column: color"). Setting
 // this to 1 (VERSION_CODE 100) is what caused the launch crash — keep it >= the prior 1633.
-val canonicalVersionCode = 1633
+val canonicalVersionCode = 1634
 val canonicalVersionName = "7.68.5"
 val currentHotfixVersion = 0
 val maxHotfixVersions = 100
