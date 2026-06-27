@@ -5,8 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Typeface
@@ -297,10 +295,12 @@ class UsernameLinkSettingsViewModel : ViewModel() {
       }
     }
 
-    // Draw the signal logo -- unfortunately can't have the normal QR code drawing handle it because it requires a composable ImageBitmap
+    // Draw the Radar badge -- unfortunately can't have the normal QR code drawing handle it because it requires a composable ImageBitmap.
+    // Drawn full-color (no tint) so the badge keeps its brand colors.
     BitmapFactory.decodeResource(AppDependencies.application.resources, R.drawable.qrcode_logo).also { logoBitmap ->
-      val tintedPaint = Paint().apply {
-        colorFilter = PorterDuffColorFilter(state.qrCodeColorScheme.foregroundColor.toArgb(), PorterDuff.Mode.SRC_IN)
+      val logoPaint = Paint().apply {
+        isAntiAlias = true
+        isFilterBitmap = true
       }
       val sourceRect = Rect(0, 0, logoBitmap.width, logoBitmap.height)
 
@@ -308,7 +308,7 @@ class UsernameLinkSettingsViewModel : ViewModel() {
       val destLeft = (width / 2f) - (logoSize / 2f)
       val destTop = destLeft - (10f * scaleFactor) + (logoSize / 2f)
       val destRect = RectF(destLeft, destTop, destLeft + logoSize, destTop + logoSize)
-      androidCanvas.drawBitmap(logoBitmap, sourceRect, destRect, tintedPaint)
+      androidCanvas.drawBitmap(logoBitmap, sourceRect, destRect, logoPaint)
     }
 
     // Draw the username

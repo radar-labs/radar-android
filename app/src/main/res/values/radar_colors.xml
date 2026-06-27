@@ -11,4 +11,6 @@
     <color name="radar_gray_fill">#29787880</color>
     <!-- Availability status colors on the edit-username screen. -->
     <color name="radar_available_green">#46B827</color>
+    <!-- Radar orange brand background (story/release-channel avatar). -->
+    <color name="radar_orange">#F46300</color>
 </resources>

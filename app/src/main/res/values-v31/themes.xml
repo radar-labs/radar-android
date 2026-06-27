@@ -2,18 +2,21 @@
 <resources>
     <style name="Theme.Signal.DayNight.NoActionBar" parent="TextSecure.LightNoActionBar">
         <item name="android:windowSplashScreenBackground">@color/splash_radar_background_light</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/radar_logo_light</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/radar_splash_icon</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/radar_orange</item>
     </style>
 
     <!-- Manual override of Splash theme when the app theme is forced Light -->
     <style name="Theme.Signal.DayNight.NoActionBar.LightSplash" parent="Theme.Signal.DayNight.NoActionBar">
         <item name="android:windowSplashScreenBackground">@color/splash_radar_background_light</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/radar_logo_light</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/radar_splash_icon</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/radar_orange</item>
     </style>
 
     <!-- Manual override of Splash theme when the app theme is forced Dark -->
     <style name="Theme.Signal.DayNight.NoActionBar.DarkSplash" parent="Theme.Signal.DayNight.NoActionBar">
         <item name="android:windowSplashScreenBackground">@color/splash_radar_background_dark</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/radar_logo_dark</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/radar_splash_icon</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/radar_orange</item>
     </style>
 </resources>
