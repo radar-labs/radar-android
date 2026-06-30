@@ -14,9 +14,10 @@ enum class UsernameQrCodeColorScheme(
   private val key: String
 ) {
   Blue(
-    borderColor = Color(0xFF506ECD),
-    foregroundColor = Color(0xFF2449C0),
-    backgroundColor = Color(0xFFEDF0FA),
+    // Radar brand orange (default QR scheme): orange card + darker-orange dots.
+    borderColor = Color(0xFFF46300),
+    foregroundColor = Color(0xFFC24E00),
+    backgroundColor = Color(0xFFFCF1EB),
     key = "blue"
   ),
   White(

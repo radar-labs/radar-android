@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="signal_light_colorPrimary">#2C58C3</color>
+    <color name="signal_light_colorPrimary">#F46300</color>
     <color name="signal_light_colorPrimaryContainer">#D2DFFB</color>
     <color name="signal_light_colorSecondary">#586071</color>
     <color name="signal_light_colorSecondaryContainer">#DCE5F9</color>
