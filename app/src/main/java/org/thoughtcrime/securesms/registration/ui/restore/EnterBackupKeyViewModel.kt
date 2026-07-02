@@ -30,14 +30,21 @@ class EnterBackupKeyViewModel : ViewModel() {
     )
   )
 
+  /** Raw user-typed text (illegal chars stripped, length-capped); bound to the TextField so the # and = display characters stay visible. */
+  var enteredText by mutableStateOf("")
+    private set
+
+  /** Storage-normalized (un-swizzled, lowercase) form of [enteredText]; used for validation and registration. */
   var backupKey by mutableStateOf("")
     private set
 
   val state: StateFlow<EnterBackupKeyState> = store
 
   fun updateBackupKey(key: String) {
-    val newKey = AccountEntropyPool.removeIllegalCharacters(key).take(AccountEntropyPool.LENGTH + 16).lowercase()
+    val newEnteredText = AccountEntropyPool.removeIllegalCharacters(key).take(AccountEntropyPool.LENGTH + 16)
+    val newKey = AccountEntropyPool.formatForStorage(newEnteredText).lowercase()
     val changed = newKey != backupKey
+    enteredText = newEnteredText
     backupKey = newKey
     store.update {
       val (isValid, updatedError) = AccountEntropyPoolVerification.verifyAEP(

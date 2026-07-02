@@ -68,7 +68,7 @@ class BobClient(val serviceId: ServiceId, val e164: String, val identityKeyPair:
     val cipher = SignalServiceCipher(serviceAddress, 1, aciStore, sessionLock, null)
 
     if (!aciStore.containsSession(getAliceProtocolAddress())) {
-      val sessionBuilder = SignalSessionBuilder(sessionLock, SessionBuilder(aciStore, getAliceProtocolAddress()))
+      val sessionBuilder = SignalSessionBuilder(sessionLock, SessionBuilder(aciStore, getAliceProtocolAddress(), SignalProtocolAddress(serviceId.toString(), 1)))
       sessionBuilder.process(getAlicePreKeyBundle())
     }
 

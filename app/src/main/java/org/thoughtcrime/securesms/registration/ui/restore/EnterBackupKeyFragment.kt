@@ -97,7 +97,7 @@ class EnterBackupKeyFragment : ComposeFragment() {
 
     EnterBackupKeyScreen(
       isDisplayedDuringManualRestore = true,
-      backupKey = viewModel.backupKey,
+      backupKey = viewModel.enteredText,
       inProgress = sharedState.inProgress,
       isBackupKeyValid = state.backupKeyValid,
       chunkLength = state.chunkLength,
