@@ -359,6 +359,13 @@ object RemoteConfig {
     }
   }
 
+  private fun Any?.asDouble(defaultValue: Double): Double {
+    return when (this) {
+      is String -> this.toDoubleOrNull() ?: defaultValue
+      else -> defaultValue
+    }
+  }
+
   private fun <T : String?> Any?.asString(defaultValue: T): T {
     @Suppress("UNCHECKED_CAST")
     return when (this) {
@@ -473,6 +480,23 @@ object RemoteConfig {
       active = active,
       onChangeListener = onChangeListener,
       transformer = { it.asLong(defaultValue) }
+    )
+  }
+
+  private fun remoteDouble(
+    key: String,
+    defaultValue: Double,
+    hotSwappable: Boolean,
+    active: Boolean = true,
+    onChangeListener: OnFlagChange? = null
+  ): Config<Double> {
+    return remoteValue(
+      key = key,
+      hotSwappable = hotSwappable,
+      sticky = false,
+      active = active,
+      onChangeListener = onChangeListener,
+      transformer = { it.asDouble(defaultValue) }
     )
   }
 
@@ -632,6 +656,15 @@ object RemoteConfig {
   val automaticSessionResetIntervalSeconds: Int by remoteInt(
     key = "android.automaticSessionResetInterval",
     defaultValue = 1.hours.inWholeSeconds.toInt(),
+    hotSwappable = true
+  )
+
+  /** Ratio of sessions that should require a post-quantum (SPQR) sender chain. 0.0 = never require it (server-controlled rollout). */
+  @JvmStatic
+  @get:JvmName("requirePqRatio")
+  val requirePqRatio: Double by remoteDouble(
+    key = "android.requirePqRatio",
+    defaultValue = 0.0,
     hotSwappable = true
   )
 

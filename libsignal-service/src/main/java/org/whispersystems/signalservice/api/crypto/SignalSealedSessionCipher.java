@@ -69,13 +69,13 @@ public class SignalSealedSessionCipher {
     }
   }
 
-  public int getSessionVersion(SignalProtocolAddress remoteAddress) {
+  public int getSessionVersion(SignalProtocolAddress remoteAddress) throws NoSessionException {
     try (SignalSessionLock.Lock unused = lock.acquire()) {
       return cipher.getSessionVersion(remoteAddress);
     }
   }
 
-  public int getRemoteRegistrationId(SignalProtocolAddress remoteAddress) {
+  public int getRemoteRegistrationId(SignalProtocolAddress remoteAddress) throws NoSessionException {
     try (SignalSessionLock.Lock unused = lock.acquire()) {
       return cipher.getRemoteRegistrationId(remoteAddress);
     }
