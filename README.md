@@ -1,57 +1,26 @@
-# Signal Android
+# Radar Android
 
-Signal is a simple, powerful, and secure messenger that uses your phone's data connection (WiFi/3G/4G/5G) to communicate securely.
+Radar is a private messenger with built-in Bitcoin payments over the Lightning Network. It is a fork of [Signal-Android](https://github.com/signalapp/Signal-Android) and keeps Signal's end-to-end encryption. Radar is an independent project and is not affiliated with or endorsed by Signal Messenger, LLC.
 
-Millions of people use Signal every day for free and instantaneous communication anywhere in the world. Send and receive high-fidelity messages, participate in HD voice/video calls, and explore a growing set of new features that help you stay connected. 
+## Install
 
-Signal’s advanced privacy-preserving technology is always enabled, so you can focus on sharing the moments that matter with the people who matter to you.
+[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="54">](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://app/%7B%22id%22%3A%20%22com.radarlabs.radar%22%2C%20%22url%22%3A%20%22https%3A%2F%2Fgithub.com%2Fradar-labs%2Fradar-android%22%2C%20%22author%22%3A%20%22Radar%20Labs%22%2C%20%22name%22%3A%20%22Radar%22%7D)
 
-Currently available on the [Play Store](https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms) and [signal.org](https://signal.org/android/apk/).
-
-<a href='https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height='80px'/></a>
-
-Also available on [iOS](https://github.com/signalapp/signal-ios) and [Desktop](https://github.com/signalapp/signal-desktop).
+- **Obtainium** (recommended — automatic update notifications): tap the badge above, or add `https://github.com/radar-labs/radar-android` as an app in [Obtainium](https://github.com/ImranR98/Obtainium).
+- **Direct APK**: download from [GitHub Releases](https://github.com/radar-labs/radar-android/releases/latest) (arm64-v8a).
 
 ## Contributing Bug Reports
+
 We use GitHub for bug tracking. Please search the existing issues for your bug and create a new one if the issue is not yet tracked!
 
-https://github.com/signalapp/Signal-Android/issues
-
-## Joining the Beta
-Want to live life on the bleeding edge and help out with testing?
-
-You can subscribe to Signal Android Beta releases here:
-https://play.google.com/apps/testing/org.thoughtcrime.securesms
-
-If you're interested in a life of peace and tranquility, stick with the standard releases.
-
-## Contributing Translations
-Interested in helping translate Signal? Contribute here:
-
-https://community.signalusers.org/c/translation-feedback/
+https://github.com/radar-labs/radar-android/issues
 
 ## Contributing Code
 
-If you're new to the Signal codebase, we recommend going through our issues and picking out a simple bug to fix in order to get yourself familiar. Also please have a look at the [CONTRIBUTING.md](https://github.com/signalapp/Signal-Android/blob/main/CONTRIBUTING.md), that might answer some of your questions.
-
-For larger changes and feature ideas, we ask that you propose it on the [unofficial Community Forum](https://community.signalusers.org) for a high-level discussion with the wider community before implementation.
-
-## Contributing Ideas
-Have something you want to say about Signal projects or want to be part of the conversation? Get involved in the [community forum](https://community.signalusers.org).
-
-Help
-====
-## Support
-For troubleshooting and questions, please visit our support center!
-
-https://support.signal.org/
-
-## Documentation
-Looking for documentation? Check out the wiki!
-
-https://github.com/signalapp/Signal-Android/wiki
+If you're new to the codebase, we recommend going through the issues and picking out a simple bug to fix in order to get yourself familiar. Also please have a look at [CONTRIBUTING.md](CONTRIBUTING.md), which might answer some of your questions.
 
 # Legal things
+
 ## Cryptography Notice
 
 This distribution includes cryptographic software. The country in which you currently reside may have restrictions on the import, possession, use, and/or re-export to another country, of encryption software.
@@ -66,5 +35,3 @@ The form and manner of this distribution makes it eligible for export under the 
 Copyright 2013-2025 Signal Messenger, LLC
 
 Licensed under the GNU AGPLv3: https://www.gnu.org/licenses/agpl-3.0.html
-
-Google Play and the Google Play logo are trademarks of Google LLC.

@@ -28,8 +28,11 @@ apply(from = "static-ips.gradle.kts")
 // i.e. canonicalVersionCode >= 5. Below that, the app treats every launch as a pre-2018 "legacy update"
 // and runs LegacyMigrationJob, which crashes on the modern DB schema ("no such column: color"). Setting
 // this to 1 (VERSION_CODE 100) is what caused the launch crash — keep it >= the prior 1633.
-val canonicalVersionCode = 1636
-val canonicalVersionName = "7.68.5"
+// `canonicalVersionName` is Radar's own product version; it diverged from upstream Signal's
+// 7.68.x at Radar 1.0.4 and must match the vX.Y.Z git tag of each GitHub release exactly
+// (Obtainium detects updates by comparing the release tag against the installed versionName).
+val canonicalVersionCode = 1637
+val canonicalVersionName = "1.0.4"
 val currentHotfixVersion = 0
 val maxHotfixVersions = 100
 
