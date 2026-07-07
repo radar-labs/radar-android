@@ -4,10 +4,10 @@ Radar is a private messenger with built-in Bitcoin payments over the Lightning N
 
 ## Install
 
-[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="54">](https://apps.obtainium.imranr.dev/redirect.html?r=obtainium://app/%7B%22id%22%3A%20%22com.radarlabs.radar%22%2C%20%22url%22%3A%20%22https%3A%2F%2Fgithub.com%2Fradar-labs%2Fradar-android%22%2C%20%22author%22%3A%20%22Radar%20Labs%22%2C%20%22name%22%3A%20%22Radar%22%7D)
+[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="54">](https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/%7B%22id%22%3A%20%22com.radarlabs.radar%22%2C%20%22url%22%3A%20%22https%3A%2F%2Fgithub.com%2Fradar-labs%2Fradar-android%22%2C%20%22author%22%3A%20%22Radar%20Labs%22%2C%20%22name%22%3A%20%22Radar%22%7D)
 
 - **Obtainium** (recommended — automatic update notifications): tap the badge above, or add `https://github.com/radar-labs/radar-android` as an app in [Obtainium](https://github.com/ImranR98/Obtainium).
-- **Direct APK**: download from [GitHub Releases](https://github.com/radar-labs/radar-android/releases/latest) (arm64-v8a).
+- **Direct APK**: download from [GitHub Releases](https://github.com/radar-labs/radar-android/releases/latest) — `arm64-v8a` for most phones, `armeabi-v7a` for older 32-bit devices.
 
 ## Contributing Bug Reports
 
