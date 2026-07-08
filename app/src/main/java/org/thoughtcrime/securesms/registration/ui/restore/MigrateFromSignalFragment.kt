@@ -59,6 +59,7 @@ import org.thoughtcrime.securesms.compose.ComposeFragment
 import org.thoughtcrime.securesms.registration.data.network.RegisterAccountResult
 import org.thoughtcrime.securesms.registration.ui.RegistrationViewModel
 import org.thoughtcrime.securesms.registration.ui.shared.RegistrationScreen
+import org.thoughtcrime.securesms.registration.ui.welcome.WelcomeUserSelection
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
 
 /**
@@ -145,6 +146,7 @@ class MigrateFromSignalFragment : ComposeFragment() {
       },
       onRetry = viewModel::restart,
       onRegistrationErrorDismiss = viewModel::clearRegistrationError,
+      onNoOldPhone = ::onNoOldPhone,
       onCancel = { findNavController().popBackStack() }
     )
 
@@ -170,6 +172,11 @@ class MigrateFromSignalFragment : ComposeFragment() {
       false
     }
   }
+
+  private fun onNoOldPhone() {
+    sharedViewModel.intendToRestore(hasOldDevice = false, fromRemote = true)
+    findNavController().safeNavigate(MigrateFromSignalFragmentDirections.goToSelectRestoreMethod(WelcomeUserSelection.RESTORE_WITH_NO_PHONE))
+  }
 }
 
 @Composable
@@ -178,6 +185,7 @@ private fun MigrateFromSignalScreen(
   onOpenSignal: (String) -> Unit = {},
   onRetry: () -> Unit = {},
   onRegistrationErrorDismiss: () -> Unit = {},
+  onNoOldPhone: () -> Unit = {},
   onCancel: () -> Unit = {}
 ) {
   RegistrationScreen(
@@ -196,6 +204,10 @@ private fun MigrateFromSignalScreen(
           modifier = Modifier.fillMaxWidth()
         ) {
           Text(text = stringResource(R.string.MigrateFromSignal_open_signal))
+        }
+
+        TextButton(onClick = onNoOldPhone) {
+          Text(text = stringResource(R.string.WelcomeFragment_restore_action_i_dont_have_my_old_phone))
         }
 
         TextButton(onClick = onCancel) {

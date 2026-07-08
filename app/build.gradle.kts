@@ -31,8 +31,14 @@ apply(from = "static-ips.gradle.kts")
 // `canonicalVersionName` is Radar's own product version; it diverged from upstream Signal's
 // 7.68.x at Radar 1.0.4 and must match the vX.Y.Z git tag of each GitHub release exactly
 // (Obtainium detects updates by comparing the release tag against the installed versionName).
-val canonicalVersionCode = 1637
-val canonicalVersionName = "1.0.4"
+val canonicalVersionCode = 1638
+val canonicalVersionName = "1.0.5"
+// Version string Radar reports to Signal's servers in the "Signal-Android/<version>" User-Agent.
+// Signal's infra rejects unrecognized/deprecated client versions with HTTP 499 (DeprecatedVersionException),
+// which blocks registration ("Could not create valid session for confirming the entered E164"). It must
+// therefore stay a real, currently-supported upstream Signal Android version (this fork's 7.68.x base) and
+// be kept SEPARATE from Radar's product versionName above. Bump when rebasing on upstream or if 499 returns.
+val signalUpstreamVersionName = "7.68.5"
 val currentHotfixVersion = 0
 val maxHotfixVersions = 100
 
@@ -237,6 +243,7 @@ android {
     buildConfigField("String[]", "SIGNAL_CDSI_IPS", rootProject.extra["cdsi_ips"] as String)
     buildConfigField("String[]", "SIGNAL_SVR2_IPS", rootProject.extra["svr2_ips"] as String)
     buildConfigField("String", "SIGNAL_AGENT", "\"OWA\"")
+    buildConfigField("String", "SIGNAL_CLIENT_VERSION", "\"$signalUpstreamVersionName\"")
     buildConfigField("String", "SVR2_MRENCLAVE_LEGACY", "\"093be9ea32405e85ae28dbb48eb668aebeb7dbe29517b9b86ad4bec4dfe0e6a6\"")
     buildConfigField("String", "SVR2_MRENCLAVE", "\"29cd63c87bea751e3bfd0fbd401279192e2e5c99948b4ee9437eafc4968355fb\"")
     buildConfigField("String[]", "UNIDENTIFIED_SENDER_TRUST_ROOTS", "new String[]{ \"BXu6QIKVz5MA8gstzfOgRQGqyLqOwNKHL6INkv3IHWMF\", \"BUkY0I+9+oPgDCn4+Ac6Iu813yvqkDr/ga8DzLxFxuk6\"}")
@@ -261,7 +268,7 @@ android {
     buildConfigField("String", "STRIPE_BASE_URL", "\"https://api.stripe.com/v1\"")
     buildConfigField("String", "STRIPE_PUBLISHABLE_KEY", "\"pk_live_6cmGZopuTsV8novGgJJW9JpC00vLIgtQ1D\"")
     buildConfigField("boolean", "TRACING_ENABLED", "false")
-    buildConfigField("boolean", "LINK_DEVICE_UX_ENABLED", "false")
+    buildConfigField("boolean", "LINK_DEVICE_UX_ENABLED", "true")
     buildConfigField("boolean", "USE_STRING_ID", "true")
 
     ndk {

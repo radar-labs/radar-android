@@ -130,9 +130,8 @@ private fun RegisterLinkDeviceQrScreen(
   onErrorDismiss: () -> Unit = {},
   onCancel: () -> Unit = {}
 ) {
-  // TODO [link-device] use actual design
   RegistrationScreen(
-    title = "Scan this code with your phone",
+    title = stringResource(R.string.RegisterLinkDeviceFragment__scan_this_code),
     subtitle = null,
     bottomContent = {
       TextButton(
@@ -201,7 +200,7 @@ private fun RegisterLinkDeviceQrScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                   ) {
                     val text = if (state.qrState is RegisterLinkDeviceQrViewModel.QrState.Scanned) {
-                      "Scanned on device"
+                      stringResource(R.string.RegisterLinkDeviceFragment__scanned_on_device)
                     } else {
                       stringResource(R.string.RestoreViaQr_qr_code_error)
                     }
@@ -228,7 +227,6 @@ private fun RegisterLinkDeviceQrScreen(
         }
       }
 
-      // TODO [link-device] use actual copy
       Column(
         modifier = Modifier
           .align(alignment = Alignment.CenterVertically)
@@ -236,17 +234,17 @@ private fun RegisterLinkDeviceQrScreen(
       ) {
         InstructionRow(
           icon = painterResource(R.drawable.symbol_settings_android_24),
-          instruction = "Open Signal Settings on your device"
+          instruction = stringResource(R.string.RegisterLinkDeviceFragment__open_radar_settings)
         )
 
         InstructionRow(
           icon = painterResource(R.drawable.symbol_link_24),
-          instruction = "Tap \"Linked devices\""
+          instruction = stringResource(R.string.RegisterLinkDeviceFragment__tap_linked_devices)
         )
 
         InstructionRow(
           icon = painterResource(R.drawable.symbol_qrcode_24),
-          instruction = "Tap \"Link a new device\" and scan this code"
+          instruction = stringResource(R.string.RegisterLinkDeviceFragment__tap_link_a_new_device)
         )
       }
     }
@@ -255,19 +253,19 @@ private fun RegisterLinkDeviceQrScreen(
       Dialogs.IndeterminateProgressDialog()
     } else if (state.showProvisioningError) {
       Dialogs.SimpleMessageDialog(
-        message = "failed provision",
+        message = stringResource(R.string.RegisterLinkDeviceFragment__unable_to_link_device),
         onDismiss = onErrorDismiss,
         dismiss = stringResource(android.R.string.ok)
       )
     } else if (state.registrationErrorResult != null) {
       val message = when (state.registrationErrorResult) {
-        RegisterLinkDeviceResult.IncorrectVerification -> "incorrect verification"
-        RegisterLinkDeviceResult.InvalidRequest -> "invalid request"
-        RegisterLinkDeviceResult.MaxLinkedDevices -> "max linked devices reached"
-        RegisterLinkDeviceResult.MissingCapability -> "missing capability, must update"
-        is RegisterLinkDeviceResult.NetworkException -> "network exception ${state.registrationErrorResult.t.message}"
-        is RegisterLinkDeviceResult.RateLimited -> "rate limited ${state.registrationErrorResult.retryAfter}"
-        is RegisterLinkDeviceResult.UnexpectedException -> "unexpected exception ${state.registrationErrorResult.t.message}"
+        RegisterLinkDeviceResult.IncorrectVerification -> stringResource(R.string.RegisterLinkDeviceFragment__couldnt_verify_account)
+        RegisterLinkDeviceResult.InvalidRequest -> stringResource(R.string.RegisterLinkDeviceFragment__unable_to_link_device)
+        RegisterLinkDeviceResult.MaxLinkedDevices -> stringResource(R.string.RegisterLinkDeviceFragment__max_linked_devices)
+        RegisterLinkDeviceResult.MissingCapability -> stringResource(R.string.RegisterLinkDeviceFragment__update_other_device)
+        is RegisterLinkDeviceResult.NetworkException -> stringResource(R.string.RegisterLinkDeviceFragment__network_error)
+        is RegisterLinkDeviceResult.RateLimited -> stringResource(R.string.RegisterLinkDeviceFragment__rate_limited)
+        is RegisterLinkDeviceResult.UnexpectedException -> stringResource(R.string.RegisterLinkDeviceFragment__unable_to_link_device)
         RegisterLinkDeviceResult.Success -> throw IllegalStateException()
       }
 

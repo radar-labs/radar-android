@@ -8874,6 +8874,29 @@
     <!-- Dialog confirm text shown as a warning when skipping restore during registration -->
     <string name="SelectRestoreMethodFragment__skip_restore">Skip restore</string>
 
+    <!-- Screen title for linking this device as a secondary device by scanning a QR code from an existing device -->
+    <string name="RegisterLinkDeviceFragment__scan_this_code">Scan this code with your other device</string>
+    <!-- Instruction row telling the user to open the settings screen on their existing device -->
+    <string name="RegisterLinkDeviceFragment__open_radar_settings">Open Radar Settings on your other device</string>
+    <!-- Instruction row telling the user to tap the linked devices menu entry -->
+    <string name="RegisterLinkDeviceFragment__tap_linked_devices">Tap “Linked devices”</string>
+    <!-- Instruction row telling the user to tap link a new device and scan the QR code -->
+    <string name="RegisterLinkDeviceFragment__tap_link_a_new_device">Tap “Link a new device” and scan this code</string>
+    <!-- Status shown once the QR code has been successfully scanned by the other device -->
+    <string name="RegisterLinkDeviceFragment__scanned_on_device">Scanned on device</string>
+    <!-- Generic error shown when this device could not be linked -->
+    <string name="RegisterLinkDeviceFragment__unable_to_link_device">Unable to link device. Please try again.</string>
+    <!-- Error shown when the account could not be verified while linking -->
+    <string name="RegisterLinkDeviceFragment__couldnt_verify_account">We couldn\'t verify your account. Please try again.</string>
+    <!-- Error shown when the maximum number of linked devices has been reached -->
+    <string name="RegisterLinkDeviceFragment__max_linked_devices">You\'ve reached the maximum number of linked devices. Remove one from your other device and try again.</string>
+    <!-- Error shown when the existing device needs to be updated before it can link a new device -->
+    <string name="RegisterLinkDeviceFragment__update_other_device">Update Radar on your other device, then try linking again.</string>
+    <!-- Error shown when there was a network problem while linking -->
+    <string name="RegisterLinkDeviceFragment__network_error">Couldn\'t connect. Check your internet connection and try again.</string>
+    <!-- Error shown when too many linking attempts have been made -->
+    <string name="RegisterLinkDeviceFragment__rate_limited">Too many attempts. Please try again later.</string>
+
     <!-- Screen title for restore via local backup -->
     <string name="RestoreLocalBackup_title">Restore local backup</string>
     <!-- Screen subtitle for restore via local backup -->

@@ -33,6 +33,7 @@ import org.signal.core.ui.compose.BottomSheets
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.horizontalGutters
+import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.compose.ComposeBottomSheetDialogFragment
 
@@ -51,6 +52,7 @@ class RestoreWelcomeBottomSheet : ComposeBottomSheetDialogFragment() {
   @Composable
   override fun SheetContent() {
     Sheet(
+      showLinkDevice = BuildConfig.LINK_DEVICE_UX_ENABLED,
       onMigrateFromSignal = {
         result = WelcomeUserSelection.MIGRATE_FROM_SIGNAL
         dismissAllowingStateLoss()
@@ -75,6 +77,7 @@ class RestoreWelcomeBottomSheet : ComposeBottomSheetDialogFragment() {
 
 @Composable
 private fun Sheet(
+  showLinkDevice: Boolean = true,
   onMigrateFromSignal: () -> Unit = {},
   onHasOldPhone: () -> Unit = {},
   onLinkDevice: () -> Unit = {}
@@ -103,12 +106,14 @@ private fun Sheet(
       onRowClick = onHasOldPhone
     )
 
-    RestoreActionRow(
-      icon = painterResource(R.drawable.welcome_link_44),
-      title = stringResource(R.string.WelcomeFragment_restore_action_link_device),
-      subtitle = stringResource(R.string.WelcomeFragment_restore_action_link_device_subtitle),
-      onRowClick = onLinkDevice
-    )
+    if (showLinkDevice) {
+      RestoreActionRow(
+        icon = painterResource(R.drawable.welcome_link_44),
+        title = stringResource(R.string.WelcomeFragment_restore_action_link_device),
+        subtitle = stringResource(R.string.WelcomeFragment_restore_action_link_device_subtitle),
+        onRowClick = onLinkDevice
+      )
+    }
   }
 }
 
