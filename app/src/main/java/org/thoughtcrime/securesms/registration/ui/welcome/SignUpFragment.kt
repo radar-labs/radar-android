@@ -52,7 +52,9 @@ class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
       if (requestKey == RestoreWelcomeBottomSheet.REQUEST_KEY) {
         when (val userSelection = bundle.getSerializableCompat(RestoreWelcomeBottomSheet.REQUEST_KEY, WelcomeUserSelection::class.java)) {
           WelcomeUserSelection.RESTORE_WITH_OLD_PHONE,
-          WelcomeUserSelection.RESTORE_WITH_NO_PHONE -> afterRestoreOrTransferClicked(userSelection)
+          WelcomeUserSelection.RESTORE_WITH_NO_PHONE,
+          WelcomeUserSelection.MIGRATE_FROM_SIGNAL -> afterRestoreOrTransferClicked(userSelection)
+          WelcomeUserSelection.LINK -> onLinkDeviceClicked()
           else -> Unit
         }
       }
@@ -62,9 +64,10 @@ class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
       if (requestKey == GrantPermissionsFragment.REQUEST_KEY) {
         when (val userSelection = bundle.getSerializableCompat(GrantPermissionsFragment.REQUEST_KEY, WelcomeUserSelection::class.java)) {
           WelcomeUserSelection.RESTORE_WITH_OLD_PHONE,
-          WelcomeUserSelection.RESTORE_WITH_NO_PHONE -> navigateToNextScreenViaRestore(userSelection)
+          WelcomeUserSelection.RESTORE_WITH_NO_PHONE,
+          WelcomeUserSelection.MIGRATE_FROM_SIGNAL -> navigateToNextScreenViaRestore(userSelection)
           WelcomeUserSelection.CONTINUE -> navigateToNextScreenViaContinue()
-          WelcomeUserSelection.LINK,
+          WelcomeUserSelection.LINK -> navigateToLinkDevice()
           null -> Unit
         }
       }
@@ -117,6 +120,18 @@ class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
     RestoreWelcomeBottomSheet().show(childFragmentManager, null)
   }
 
+  private fun onLinkDeviceClicked() {
+    if (!hasAllPermissions()) {
+      findNavController().safeNavigate(SignUpFragmentDirections.actionSignUpFragmentToGrantPermissionsFragment(WelcomeUserSelection.LINK))
+    } else {
+      navigateToLinkDevice()
+    }
+  }
+
+  private fun navigateToLinkDevice() {
+    findNavController().safeNavigate(SignUpFragmentDirections.goToLinkViaQr())
+  }
+
   private fun afterRestoreOrTransferClicked(userSelection: WelcomeUserSelection) {
     if (!hasAllPermissions()) {
       findNavController().safeNavigate(SignUpFragmentDirections.actionSignUpFragmentToGrantPermissionsFragment(userSelection))
@@ -139,6 +154,10 @@ class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
       WelcomeUserSelection.RESTORE_WITH_NO_PHONE -> {
         sharedViewModel.intendToRestore(hasOldDevice = false, fromRemote = true)
         findNavController().safeNavigate(SignUpFragmentDirections.goToSelectRestoreMethod(userSelection))
+      }
+      WelcomeUserSelection.MIGRATE_FROM_SIGNAL -> {
+        sharedViewModel.intendToRestore(hasOldDevice = true, fromRemote = true)
+        findNavController().safeNavigate(SignUpFragmentDirections.goToMigrateFromSignal())
       }
     }
   }

@@ -22,8 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -51,12 +51,16 @@ class RestoreWelcomeBottomSheet : ComposeBottomSheetDialogFragment() {
   @Composable
   override fun SheetContent() {
     Sheet(
+      onMigrateFromSignal = {
+        result = WelcomeUserSelection.MIGRATE_FROM_SIGNAL
+        dismissAllowingStateLoss()
+      },
       onHasOldPhone = {
         result = WelcomeUserSelection.RESTORE_WITH_OLD_PHONE
         dismissAllowingStateLoss()
       },
-      onNoPhone = {
-        result = WelcomeUserSelection.RESTORE_WITH_NO_PHONE
+      onLinkDevice = {
+        result = WelcomeUserSelection.LINK
         dismissAllowingStateLoss()
       }
     )
@@ -71,8 +75,9 @@ class RestoreWelcomeBottomSheet : ComposeBottomSheetDialogFragment() {
 
 @Composable
 private fun Sheet(
+  onMigrateFromSignal: () -> Unit = {},
   onHasOldPhone: () -> Unit = {},
-  onNoPhone: () -> Unit = {}
+  onLinkDevice: () -> Unit = {}
 ) {
   Column(
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,22 +86,28 @@ private fun Sheet(
   ) {
     BottomSheets.Handle()
 
-    val context = LocalContext.current
-
     Spacer(modifier = Modifier.size(26.dp))
 
     RestoreActionRow(
-      icon = painterResource(R.drawable.symbol_qrcode_24),
-      title = stringResource(R.string.WelcomeFragment_restore_action_i_have_my_old_phone),
-      subtitle = stringResource(R.string.WelcomeFragment_restore_action_scan_qr),
+      icon = painterResource(R.drawable.welcome_signal_app_icon),
+      iconTint = Color.Unspecified,
+      title = stringResource(R.string.WelcomeFragment_restore_action_migrate_from_signal),
+      subtitle = stringResource(R.string.WelcomeFragment_restore_action_migrate_from_signal_subtitle),
+      onRowClick = onMigrateFromSignal
+    )
+
+    RestoreActionRow(
+      icon = painterResource(R.drawable.welcome_transfer_phone_44),
+      title = stringResource(R.string.WelcomeFragment_restore_action_set_up_new_phone),
+      subtitle = stringResource(R.string.WelcomeFragment_restore_action_set_up_new_phone_subtitle),
       onRowClick = onHasOldPhone
     )
 
     RestoreActionRow(
-      icon = painterResource(R.drawable.symbol_no_phone_44),
-      title = stringResource(R.string.WelcomeFragment_restore_action_i_dont_have_my_old_phone),
-      subtitle = stringResource(R.string.WelcomeFragment_restore_action_reinstalling),
-      onRowClick = onNoPhone
+      icon = painterResource(R.drawable.welcome_link_44),
+      title = stringResource(R.string.WelcomeFragment_restore_action_link_device),
+      subtitle = stringResource(R.string.WelcomeFragment_restore_action_link_device_subtitle),
+      onRowClick = onLinkDevice
     )
   }
 }
@@ -114,6 +125,7 @@ fun RestoreActionRow(
   icon: Painter,
   title: String,
   subtitle: String,
+  iconTint: Color = MaterialTheme.colorScheme.primary,
   onRowClick: () -> Unit = {}
 ) {
   Row(
@@ -129,13 +141,15 @@ fun RestoreActionRow(
   ) {
     Icon(
       painter = icon,
-      tint = MaterialTheme.colorScheme.primary,
+      tint = iconTint,
       contentDescription = null,
       modifier = Modifier.size(44.dp)
     )
 
     Column(
-      modifier = Modifier.padding(start = 16.dp)
+      modifier = Modifier
+        .padding(start = 16.dp)
+        .weight(1f)
     ) {
       Text(
         text = title,
@@ -148,6 +162,13 @@ fun RestoreActionRow(
         color = MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
+
+    Icon(
+      painter = painterResource(R.drawable.symbol_chevron_right_24),
+      tint = MaterialTheme.colorScheme.onSurfaceVariant,
+      contentDescription = null,
+      modifier = Modifier.padding(start = 8.dp)
+    )
   }
 }
 
@@ -156,9 +177,9 @@ fun RestoreActionRow(
 private fun RestoreActionRowPreview() {
   Previews.Preview {
     RestoreActionRow(
-      icon = painterResource(R.drawable.symbol_qrcode_24),
-      title = stringResource(R.string.WelcomeFragment_restore_action_i_have_my_old_phone),
-      subtitle = stringResource(R.string.WelcomeFragment_restore_action_scan_qr)
+      icon = painterResource(R.drawable.welcome_transfer_phone_44),
+      title = stringResource(R.string.WelcomeFragment_restore_action_set_up_new_phone),
+      subtitle = stringResource(R.string.WelcomeFragment_restore_action_set_up_new_phone_subtitle)
     )
   }
 }

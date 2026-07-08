@@ -66,7 +66,9 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
       if (requestKey == RestoreWelcomeBottomSheet.REQUEST_KEY) {
         when (val userSelection = bundle.getSerializableCompat(RestoreWelcomeBottomSheet.REQUEST_KEY, WelcomeUserSelection::class.java)) {
           WelcomeUserSelection.RESTORE_WITH_OLD_PHONE,
-          WelcomeUserSelection.RESTORE_WITH_NO_PHONE -> afterRestoreOrTransferClicked(userSelection)
+          WelcomeUserSelection.RESTORE_WITH_NO_PHONE,
+          WelcomeUserSelection.MIGRATE_FROM_SIGNAL -> afterRestoreOrTransferClicked(userSelection)
+          WelcomeUserSelection.LINK -> onLinkDeviceClicked()
           else -> Unit
         }
       }
@@ -76,7 +78,8 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
       if (requestKey == GrantPermissionsFragment.REQUEST_KEY) {
         when (val userSelection = bundle.getSerializableCompat(GrantPermissionsFragment.REQUEST_KEY, WelcomeUserSelection::class.java)) {
           WelcomeUserSelection.RESTORE_WITH_OLD_PHONE,
-          WelcomeUserSelection.RESTORE_WITH_NO_PHONE -> navigateToNextScreenViaRestore(userSelection)
+          WelcomeUserSelection.RESTORE_WITH_NO_PHONE,
+          WelcomeUserSelection.MIGRATE_FROM_SIGNAL -> navigateToNextScreenViaRestore(userSelection)
           WelcomeUserSelection.CONTINUE -> navigateToNextScreenViaContinue()
           WelcomeUserSelection.LINK -> navigateToLinkDevice()
           null -> Unit
@@ -141,6 +144,10 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
       WelcomeUserSelection.RESTORE_WITH_NO_PHONE -> {
         sharedViewModel.intendToRestore(hasOldDevice = false, fromRemote = true)
         findNavController().safeNavigate(WelcomeFragmentDirections.goToSelectRestoreMethod(userSelection))
+      }
+      WelcomeUserSelection.MIGRATE_FROM_SIGNAL -> {
+        sharedViewModel.intendToRestore(hasOldDevice = true, fromRemote = true)
+        findNavController().safeNavigate(WelcomeFragmentDirections.goToMigrateFromSignal())
       }
     }
   }

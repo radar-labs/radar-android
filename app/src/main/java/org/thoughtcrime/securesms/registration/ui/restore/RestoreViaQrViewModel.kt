@@ -130,7 +130,7 @@ class RestoreViaQrViewModel : ViewModel() {
           if (it.currentSocketId == null || it.currentSocketId == id) {
             Log.w(TAG, "Current socket [$id] has failed, stopping automatic connects", t)
             shutdown()
-            it.copy(currentSocketId = null, qrState = QrState.Failed)
+            it.copy(currentSocketId = null, qrState = QrState.Failed, provisioningUrl = null)
           } else {
             Log.i(TAG, "Old socket [$id] failed, ignoring")
             it
@@ -144,6 +144,7 @@ class RestoreViaQrViewModel : ViewModel() {
 
         it.copy(
           currentSocketId = socket.id,
+          provisioningUrl = url,
           qrState = QrState.Loaded(
             qrData = QrCodeData.forData(
               data = url,
@@ -193,7 +194,8 @@ class RestoreViaQrViewModel : ViewModel() {
     val showProvisioningError: Boolean = false,
     val showRegistrationError: Boolean = false,
     val registerAccountResult: RegisterAccountResult? = null,
-    val currentSocketId: Int? = null
+    val currentSocketId: Int? = null,
+    val provisioningUrl: String? = null
   )
 
   sealed interface QrState {

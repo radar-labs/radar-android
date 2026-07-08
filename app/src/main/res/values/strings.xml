@@ -9,7 +9,7 @@
 <resources>
     <string name="app_name" translatable="false">Radar</string>
 
-    <string name="install_url" translatable="false">https://signal.org/install</string>
+    <string name="install_url" translatable="false">https://radar.chat/install/</string>
     <string name="donate_url" translatable="false">https://signal.org/donate</string>
     <string name="backup_support_url" translatable="false">https://support.signal.org/hc/articles/360007059752</string>
     <string name="backup_failed_support_url" translatable="false">https://support.signal.org/hc/articles/8768161836954</string>
@@ -3006,7 +3006,7 @@
     <string name="SubmitDebugLogActivity_error" translatable="false">Error</string>
 
     <!-- SupportEmailUtil -->
-    <string name="SupportEmailUtil_support_email" translatable="false">support@signal.org</string>
+    <string name="SupportEmailUtil_support_email" translatable="false">support@radar.chat</string>
     <string name="SupportEmailUtil_filter">Filter:</string>
     <string name="SupportEmailUtil_device_info">Device info:</string>
     <string name="SupportEmailUtil_android_version">Android version:</string>
@@ -8818,6 +8818,36 @@
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">I don\'t have my old phone</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_reinstalling">Or you\'re reinstalling Radar on the same device</string>
+
+    <!-- Row title for migrating an account from the Signal app installed on this device -->
+    <string name="WelcomeFragment_restore_action_migrate_from_signal">Migrate from Signal</string>
+    <!-- Row subtitle for migrating an account from the Signal app installed on this device -->
+    <string name="WelcomeFragment_restore_action_migrate_from_signal_subtitle">Restore your account from the Signal app installed on this device</string>
+    <!-- Row title for restore/transfer by scanning a QR code with a previous device -->
+    <string name="WelcomeFragment_restore_action_set_up_new_phone">Set up my new phone</string>
+    <!-- Row subtitle for restore/transfer by scanning a QR code with a previous device -->
+    <string name="WelcomeFragment_restore_action_set_up_new_phone_subtitle">Scan a QR code from your current Signal/Radar account to get started quickly</string>
+    <!-- Row title for linking this device as a secondary device of an existing account -->
+    <string name="WelcomeFragment_restore_action_link_device">Link device</string>
+    <!-- Row subtitle for linking this device as a secondary device of an existing account -->
+    <string name="WelcomeFragment_restore_action_link_device_subtitle">Use this as a secondary device for your existing session</string>
+
+    <!-- Screen title for migrating an account from the Signal app installed on this device -->
+    <string name="MigrateFromSignal_title">Migrate from Signal</string>
+    <!-- Screen subtitle for migrating an account from the Signal app installed on this device -->
+    <string name="MigrateFromSignal_subtitle">Restore your account and messages from the Signal app installed on this device.</string>
+    <!-- Instruction row telling the user to open the Signal app -->
+    <string name="MigrateFromSignal_instruction_1">Tap the button below to open Signal</string>
+    <!-- Instruction row telling the user to confirm the transfer inside the Signal app -->
+    <string name="MigrateFromSignal_instruction_2">In Signal, confirm by tapping “Transfer account”</string>
+    <!-- Instruction row telling the user to return to this app after confirming in Signal -->
+    <string name="MigrateFromSignal_instruction_3">Come back to Radar to finish setting up</string>
+    <!-- Button label that opens the Signal app to start the migration -->
+    <string name="MigrateFromSignal_open_signal">Open Signal</string>
+    <!-- Error message shown when the Signal app is not installed on this device -->
+    <string name="MigrateFromSignal_signal_not_installed">Couldn\'t find the Signal app on this device. Make sure it is installed and up to date, then try again.</string>
+    <!-- Error message shown when the migration could not be prepared, e.g. no network connection -->
+    <string name="MigrateFromSignal_unable_to_prepare">Unable to prepare migration</string>
 
     <!-- Screen title for selecting which restore method to use during registration -->
     <string name="SelectRestoreMethodFragment__restore_or_transfer_account">Restore or transfer account</string>
