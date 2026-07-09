@@ -289,6 +289,7 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
 
         config.lnurlDomain = LNURL_DOMAIN
         config.preferSparkOverLightning = true
+        config.maxDepositClaimFee = MaxFee.Rate(satPerVbyte = 5u)
 
         val dataDir = AppDependencies.application.applicationInfo.dataDir
 
