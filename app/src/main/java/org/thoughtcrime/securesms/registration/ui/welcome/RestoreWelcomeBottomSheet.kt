@@ -43,6 +43,8 @@ import org.thoughtcrime.securesms.compose.ComposeBottomSheetDialogFragment
  */
 class RestoreWelcomeBottomSheet : ComposeBottomSheetDialogFragment() {
 
+  override val peekHeightPercentage: Float = 1f
+
   private var result: WelcomeUserSelection = WelcomeUserSelection.CONTINUE
 
   companion object {
