@@ -37,9 +37,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 
-import breez_sdk_spark.LnurlPayResponse;
-import breez_sdk_spark.PaymentStatus;
-
 public final class Wallet {
 
   private static final String TAG         = Log.tag(Wallet.class);
@@ -180,15 +177,21 @@ public final class Wallet {
   }
 
   @WorkerThread
-  public @NonNull ReceivedTransactionStatus getReceivedTransactionStatus(@NonNull byte[] receiptBytes) throws IllegalStateException{
-    LnurlPayResponse          response = BreezSdkWrapper.Companion.deserializeLnurlPayResponse(receiptBytes);
-    PaymentStatus             status   = response.getPayment().getStatus();
+  public @NonNull ReceivedTransactionStatus getReceivedTransactionStatus(@NonNull byte[] receiptBytes) throws ReceiptDecodeException {
+    // ReceiptCodec understands every receipt generation we have ever written or received (proto
+    // tail, current-SDK uniffi bytes, frozen 0.14.0 layout). A null therefore means a genuinely
+    // foreign blob; surface it as a checked exception so callers (PaymentTransactionCheckJob)
+    // treat it as a non-fatal, non-retryable failure rather than crashing the app via the job
+    // runner's fatal-RuntimeException path.
+    ReceiptData receipt = ReceiptCodec.decode(receiptBytes);
+    if (receipt == null) {
+      throw new ReceiptDecodeException("Unable to decode received payment receipt");
+    }
 
-    if (status == PaymentStatus.FAILED) {
+    if (receipt.getStatus() == ReceiptStatus.FAILED) {
       return ReceivedTransactionStatus.failed();
     } else {
-      final BigInteger amount = response.getPayment().getAmount();
-      return ReceivedTransactionStatus.complete(Money.satoshi(amount), 0L);
+      return ReceivedTransactionStatus.complete(Money.satoshi(receipt.getAmountSats()), 0L);
     }
   }
 
@@ -421,6 +424,21 @@ public final class Wallet {
 
     public long getBlockIndex() {
       return blockIndex;
+    }
+  }
+
+  /**
+   * Thrown when a stored payment receipt cannot be deserialized (e.g. it was serialized under a
+   * different breez_sdk_spark layout before an SDK upgrade). Checked on purpose so that jobs treat
+   * it as a non-fatal, non-retryable failure instead of crashing via the fatal-RuntimeException path.
+   */
+  public static final class ReceiptDecodeException extends Exception {
+    public ReceiptDecodeException(@NonNull String message) {
+      super(message);
+    }
+
+    public ReceiptDecodeException(@NonNull String message, @NonNull Throwable cause) {
+      super(message, cause);
     }
   }
 
