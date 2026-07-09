@@ -192,11 +192,9 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
 
     val response = runBlocking { sdk!!.lnurlPay(LnurlPayRequest(prepareResponse)) }
 
-    val allocationSize = FfiConverterTypeLnurlPayResponse.allocationSize(response)
-    val buffer = ByteBuffer(java.nio.ByteBuffer.allocate(allocationSize.toInt()))
-    FfiConverterTypeLnurlPayResponse.write(response, buffer)
-
-    return SendPaymentResult(buffer.internal().array(), feeSats)
+    // Dual-format receipt: raw uniffi bytes (readable by Radar iOS) + a version-stable proto tail
+    // that survives breez_sdk_spark upgrades. See ReceiptCodec.
+    return SendPaymentResult(ReceiptCodec.encode(response), feeSats)
   }
 
   /** The currently-registered lightning-address username, or null if none/unavailable. */
@@ -314,25 +312,13 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       return BreezSdkWrapper(connect(entropy))
     }
 
-    fun deserializeLnurlPayResponse(serialized: ByteArray): LnurlPayResponse {
-      val buffer = ByteBuffer(java.nio.ByteBuffer.wrap(serialized))
-      return FfiConverterTypeLnurlPayResponse.read(buffer)
-    }
-
-    fun getIdentifierFromReceipt(receipt: ByteArray): String? {
-      val response = deserializeLnurlPayResponse(receipt)
-      return getIdentifierFromReceipt(response)
-    }
-
-    fun getIdentifierFromReceipt(response: LnurlPayResponse): String? = when (response.payment.details) {
-      is PaymentDetails.Lightning -> (response.payment.details as PaymentDetails.Lightning).htlcDetails.paymentHash
-      is PaymentDetails.Deposit -> (response.payment.details as PaymentDetails.Deposit).txId
-      is PaymentDetails.Withdraw -> (response.payment.details as PaymentDetails.Withdraw).txId
-
-      is PaymentDetails.Spark -> null
-      is PaymentDetails.Token -> null
-      null -> null
-    }
+    /**
+     * The reconciliation key (lightning paymentHash / on-chain txId) of a stored receipt, or null
+     * when the receipt has none (spark/token payments) or cannot be decoded under any known
+     * format. Callers (e.g. LedgerReconcile) already skip null keys, so an unreadable receipt is
+     * a graceful no-op rather than a crash.
+     */
+    fun getIdentifierFromReceipt(receipt: ByteArray): String? = ReceiptCodec.decode(receipt)?.identifier
   }
 }
 

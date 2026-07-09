@@ -46,15 +46,25 @@ object SvrRepository {
 
   val TAG = Log.tag(SvrRepository::class.java)
 
-  private val svr2Legacy: SecureValueRecovery = AppDependencies.signalServiceAccountManager.getSecureValueRecoveryV2(BuildConfig.SVR2_MRENCLAVE_LEGACY)
+  // Radar: current SVR2 enclave — PIN restore reads/writes this first. Mirrors iOS TSConstants.svr2Enclave.
   private val svr2: SecureValueRecovery = AppDependencies.signalServiceAccountManager.getSecureValueRecoveryV2(BuildConfig.SVR2_MRENCLAVE)
+
+  // Previously-used SVR2 enclaves, newest→oldest (mirrors iOS TSConstants.svr2PreviousEnclaves). SVR2
+  // key material migrates forward to the current enclave, so if the current one reports no backup we
+  // fall through these until we find it. Read-only — we never back up to a previous enclave. Every
+  // entry MUST be attestable by the bundled libsignal or the whole restore chain aborts with
+  // "Error looking up mrenclave" (this is why the retired 093be9ea… enclave, absent from libsignal
+  // 0.96.3, is no longer listed). Keep this + BuildConfig in lockstep with iOS and the libsignal bump.
+  private val svr2Previous: List<SecureValueRecovery> = BuildConfig.SVR2_MRENCLAVE_PREVIOUS.map {
+    AppDependencies.signalServiceAccountManager.getSecureValueRecoveryV2(it)
+  }
   private val svr3: SecureValueRecovery = AppDependencies.signalServiceAccountManager.getSecureValueRecoveryV3(AppDependencies.libsignalNetwork)
 
   /** An ordered list of SVR implementations to read from. They should be in priority order, with the most important one listed first. */
   private val readImplementations: List<SecureValueRecovery> = if (Svr3Migration.shouldReadFromSvr3) {
-    listOf(svr3, svr2)
+    listOf(svr3, svr2) + svr2Previous
   } else {
-    listOf(svr2, svr2Legacy)
+    listOf(svr2) + svr2Previous
   }
 
   /** An ordered list of SVR implementations to write to. They should be in priority order, with the most important one listed first. */
@@ -66,7 +76,6 @@ object SvrRepository {
       }
       if (Svr3Migration.shouldWriteToSvr2) {
         implementations += svr2
-        implementations += svr2Legacy
       }
       return implementations
     }
@@ -96,16 +105,18 @@ object SvrRepository {
     operationLock.withLock {
       Log.i(TAG, "restoreMasterKeyPreRegistration()", true)
 
+      val svr2PreviousOps: List<Pair<SecureValueRecovery, () -> RestoreResponse>> = svr2Previous.map { prev ->
+        prev to { restoreMasterKeyPreRegistrationFromV2(prev, credentials.svr2, userPin) }
+      }
       val operations: List<Pair<SecureValueRecovery, () -> RestoreResponse>> = if (Svr3Migration.shouldReadFromSvr3) {
         listOf(
           svr3 to { restoreMasterKeyPreRegistrationFromV3(credentials.svr3, userPin) },
           svr2 to { restoreMasterKeyPreRegistrationFromV2(svr2, credentials.svr2, userPin) }
-        )
+        ) + svr2PreviousOps
       } else {
         listOf(
-          svr2 to { restoreMasterKeyPreRegistrationFromV2(svr2, credentials.svr2, userPin) },
-          svr2Legacy to { restoreMasterKeyPreRegistrationFromV2(svr2Legacy, credentials.svr2, userPin) }
-        )
+          svr2 to { restoreMasterKeyPreRegistrationFromV2(svr2, credentials.svr2, userPin) }
+        ) + svr2PreviousOps
       }
 
       for ((implementation, operation) in operations) {

@@ -89,7 +89,17 @@ public final class PaymentTransactionCheckJob extends BaseJob {
       }
       case RECEIVED: {
         Log.i(TAG, "Checking received status of " + uuid);
-        Wallet.ReceivedTransactionStatus transactionStatus = payments.getWallet().getReceivedTransactionStatus(Objects.requireNonNull(payment.getReceipt()));
+        final Wallet.ReceivedTransactionStatus transactionStatus;
+        try {
+          transactionStatus = payments.getWallet().getReceivedTransactionStatus(Objects.requireNonNull(payment.getReceipt()));
+        } catch (Wallet.ReceiptDecodeException e) {
+          // The stored receipt can't be decoded (e.g. serialized under an older breez_sdk_spark
+          // layout). Retrying can never succeed since the bytes are fixed, so skip this payment
+          // instead of failing the job repeatedly or crashing. The record is left in its current
+          // state rather than fabricating a status.
+          Log.w(TAG, "Unable to decode receipt for received payment " + uuid + "; skipping.", e);
+          break;
+        }
 
         switch (transactionStatus.getStatus()) {
           case COMPLETE:
