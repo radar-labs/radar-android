@@ -53,6 +53,10 @@ class MobileCoinLedgerWrapper(private val lnWrapper: BreezSdkWrapper) {
         return ByteString.EMPTY
       }
 
+    /** LNURL sender comment on a received lightning payment, or null. */
+    val senderComment: String?
+      get() = (payment.details as? PaymentDetails.Lightning)?.lnurlReceiveMetadata?.senderComment
+
     val receivedInBlock: Long
       get() = 0
 

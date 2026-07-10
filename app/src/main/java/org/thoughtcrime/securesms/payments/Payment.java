@@ -49,6 +49,14 @@ public interface Payment {
   @NonNull String getNote();
 
   /**
+   * The LNURL sender comment attached to a received lightning payment, or null if none.
+   * Defaults to null so only payment types that actually carry one need to override it.
+   */
+  default @Nullable String getSenderComment() {
+    return null;
+  }
+
+  /**
    * Always >= 0, does not include fee
    */
   @NonNull Money getAmount();

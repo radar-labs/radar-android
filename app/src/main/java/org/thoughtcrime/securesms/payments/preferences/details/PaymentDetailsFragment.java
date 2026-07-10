@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
+import android.text.util.Linkify;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -17,9 +18,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
+import androidx.core.text.method.LinkMovementMethodCompat;
+import androidx.core.text.util.LinkifyCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
@@ -69,6 +74,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
     TextView          contactFromTo   = view.findViewById(R.id.payments_details_contact_to_from);
     MoneyView         amount          = view.findViewById(R.id.payments_details_amount);
     TextView          note            = view.findViewById(R.id.payments_details_note);
+    TextView          message         = view.findViewById(R.id.payments_details_message);
     TextView          status          = view.findViewById(R.id.payments_details_status);
     View              sentByHeader    = view.findViewById(R.id.payments_details_sent_by_header);
     TextView          sentBy          = view.findViewById(R.id.payments_details_sent_by);
@@ -86,6 +92,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
       contactFromTo.setText(getContactFromToTextFromDirection(payment.getDirection()));
       amount.setMoney(payment.getAmountPlusFeeWithDirection());
       note.setVisibility(View.GONE);
+      bindSenderComment(message, payment.getSenderComment());
       status.setText(getStatusFromPayment(payment));
       sentByHeader.setVisibility(View.GONE);
       sentBy.setVisibility(View.GONE);
@@ -143,6 +150,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
                           String trimmedNote = state.getPayment().getNote().trim();
                           note.setText(trimmedNote);
                           note.setVisibility(TextUtils.isEmpty(trimmedNote) ? View.GONE : View.VISIBLE);
+                          bindSenderComment(message, state.getPayment().getSenderComment());
                           status.setText(describeStatus(state.getPayment()));
                           sentBy.setText(describeSentBy(state));
                           if (state.getPayment().getDirection().isReceived()) {
@@ -168,6 +176,35 @@ public final class PaymentDetailsFragment extends LoggingFragment {
                  }
                });
     }
+  }
+
+  private void bindSenderComment(@NonNull TextView view, @Nullable String comment) {
+    String trimmed = comment == null ? "" : comment.trim();
+    if (TextUtils.isEmpty(trimmed)) {
+      view.setVisibility(View.GONE);
+      return;
+    }
+    view.setVisibility(View.VISIBLE);
+    view.setText(trimmed);
+    view.setOnClickListener(v -> showSenderCommentDialog(trimmed));
+  }
+
+  private void showSenderCommentDialog(@NonNull String comment) {
+    SpannableString spannable = new SpannableString(comment);
+    LinkifyCompat.addLinks(spannable, Linkify.WEB_URLS | Linkify.EMAIL_ADDRESSES);
+
+    int      padding  = (int) (24 * getResources().getDisplayMetrics().density);
+    TextView textView = new TextView(requireContext());
+    textView.setPadding(padding, padding, padding, padding);
+    textView.setText(spannable);
+    textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.signal_text_primary));
+    textView.setMovementMethod(LinkMovementMethodCompat.getInstance());
+
+    new MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.PaymentsDetailsFragment__message_from_sender)
+        .setView(textView)
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
   }
 
   private void openConversation(@NonNull RecipientId recipientId) {
