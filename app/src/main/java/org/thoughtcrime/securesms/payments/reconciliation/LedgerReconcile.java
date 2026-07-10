@@ -67,7 +67,7 @@ public final class LedgerReconcile {
     localPayments.addAll(allLocalPaymentTransactions);
 
     for (MobileCoinLedgerWrapper.OwnedTxo txo : unknownTxOutsReceived) {
-      reconstructedPayments.add(new ReconstructedPayment(0L, txo.getReceivedInBlockTimestamp(), txo.getDirection(), txo.getValue(), txo.getFee()));
+      reconstructedPayments.add(new ReconstructedPayment(0L, txo.getReceivedInBlockTimestamp(), txo.getDirection(), txo.getValue(), txo.getFee(), txo.getSenderComment()));
     }
 
     reconstructedPayments.sort(Payment.DESCENDING_TIMESTAMP);
