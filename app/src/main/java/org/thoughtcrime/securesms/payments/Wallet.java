@@ -205,7 +205,8 @@ public final class Wallet {
     Log.i(TAG, "Sending payment to " + to + " with amount " + amount + " and fee " + totalFee);
 
     try {
-      BreezSdkWrapper.SendPaymentResult result = breezSdkWrapper.sendPayment(to.getPaymentAddress(), amount.requireBitcoin().toSatoshiBigInteger());
+      BigInteger amountWithFee = amount.requireBitcoin().toSatoshiBigInteger().add(totalFee.requireBitcoin().toSatoshiBigInteger());
+      BreezSdkWrapper.SendPaymentResult result = breezSdkWrapper.sendPayment(to.getPaymentAddress(), amountWithFee);
 
       // Persist the actual fee charged by the network (from the prepared payment) so the
       // payment details screen shows the real fee, matching iOS. Falls back to the advised
