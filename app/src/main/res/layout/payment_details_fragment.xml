@@ -108,13 +108,33 @@
                 app:layout_constraintTop_toBottomOf="@id/payments_details_amount"
                 tools:text="Thanks for dinner!" />
 
+            <TextView
+                android:id="@+id/payments_details_message"
+                style="@style/Signal.Text.Body"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/signal_text_secondary"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payments_details_note"
+                app:layout_goneMarginTop="12dp"
+                tools:text="Check out https://example.com — thanks for the Satogram!"
+                tools:visibility="visible" />
+
             <View
                 android:id="@+id/payments_details_horizontal_divide"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="32dp"
                 android:background="@color/signal_background_secondary"
-                app:layout_constraintTop_toBottomOf="@id/payments_details_note" />
+                app:layout_goneMarginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@id/payments_details_message" />
 
             <TextView
                 android:id="@+id/payments_details_sent_to_header"

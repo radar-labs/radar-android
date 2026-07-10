@@ -4479,6 +4479,7 @@
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">Coin cleanup fee</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">A “coin cleanup fee” is charged when the coins in your possession can not be combined to complete a transaction. Cleanup will allow you to continue sending payments.</string>
     <string name="PaymentsDetailsFragment__no_details_available">No further details available for this transaction</string>
+    <string name="PaymentsDetailsFragment__message_from_sender">Message</string>
     <string name="PaymentsDetailsFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_details</string>
     <string name="PaymentsDetailsFragment__learn_more__cleanup_fee" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_details_fees</string>
     <string name="PaymentsDetailsFragment__sent_payment">Sent payment</string>
