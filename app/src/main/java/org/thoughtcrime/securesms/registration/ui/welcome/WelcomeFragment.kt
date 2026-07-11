@@ -147,7 +147,7 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
       }
       WelcomeUserSelection.MIGRATE_FROM_SIGNAL -> {
         sharedViewModel.intendToRestore(hasOldDevice = true, fromRemote = true)
-        findNavController().safeNavigate(WelcomeFragmentDirections.goToMigrateFromSignal())
+        findNavController().safeNavigate(WelcomeFragmentDirections.goToRestoreViaQr())
       }
     }
   }
