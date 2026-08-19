@@ -57,6 +57,7 @@ import org.signal.core.ui.compose.Rows
 import org.signal.core.ui.compose.Scaffolds
 import org.signal.core.ui.compose.horizontalGutters
 import org.signal.core.ui.compose.theme.SignalTheme
+import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.avatar.AvatarImage
 import org.thoughtcrime.securesms.backup.v2.BackupRepository
@@ -315,43 +316,46 @@ private fun AppSettingsContent(
             )
           }
 
-          item {
-            val context = LocalContext.current
-            val donateUrl = stringResource(R.string.donate_url)
+          // Radar does not take donations. Mirrors iOS BuildFlags.donations = false.
+          if (BuildConfig.DONATIONS_ENABLED) {
+            item {
+              val context = LocalContext.current
+              val donateUrl = stringResource(R.string.donate_url)
 
-            Rows.TextRow(
-              text = {
-                Text(
-                  text = stringResource(R.string.preferences__donate_to_signal),
-                  modifier = Modifier.weight(1f)
-                )
-
-                if (state.hasExpiredGiftBadge) {
-                  Icon(
-                    painter = painterResource(R.drawable.symbol_info_fill_24),
-                    tint = colorResource(R.color.signal_accent_primary),
-                    contentDescription = null
+              Rows.TextRow(
+                text = {
+                  Text(
+                    text = stringResource(R.string.preferences__donate_to_signal),
+                    modifier = Modifier.weight(1f)
                   )
+
+                  if (state.hasExpiredGiftBadge) {
+                    Icon(
+                      painter = painterResource(R.drawable.symbol_info_fill_24),
+                      tint = colorResource(R.color.signal_accent_primary),
+                      contentDescription = null
+                    )
+                  }
+                },
+                icon = {
+                  Icon(
+                    painter = painterResource(R.drawable.symbol_heart_24),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurface
+                  )
+                },
+                onClick = {
+                  if (state.allowUserToGoToDonationManagementScreen) {
+                    callbacks.navigate(AppSettingsRoute.DonationsRoute.Donations())
+                  } else {
+                    CommunicationActions.openBrowserLink(context, donateUrl)
+                  }
+                },
+                onLongClick = {
+                  callbacks.copyDonorBadgeSubscriberIdToClipboard()
                 }
-              },
-              icon = {
-                Icon(
-                  painter = painterResource(R.drawable.symbol_heart_24),
-                  contentDescription = null,
-                  tint = MaterialTheme.colorScheme.onSurface
-                )
-              },
-              onClick = {
-                if (state.allowUserToGoToDonationManagementScreen) {
-                  callbacks.navigate(AppSettingsRoute.DonationsRoute.Donations())
-                } else {
-                  CommunicationActions.openBrowserLink(context, donateUrl)
-                }
-              },
-              onLongClick = {
-                callbacks.copyDonorBadgeSubscriberIdToClipboard()
-              }
-            )
+              )
+            }
           }
 
           item {
