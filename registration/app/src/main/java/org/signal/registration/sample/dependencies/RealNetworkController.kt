@@ -615,7 +615,8 @@ class RealNetworkController(
       storage,
       versionedExpirationTimer,
       attachmentBackfill,
-      spqr
+      spqr,
+      usernameChangeSyncMessage
     )
   }
 
