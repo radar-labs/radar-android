@@ -273,6 +273,10 @@ android {
     buildConfigField("String", "STRIPE_PUBLISHABLE_KEY", "\"pk_live_6cmGZopuTsV8novGgJJW9JpC00vLIgtQ1D\"")
     buildConfigField("boolean", "TRACING_ENABLED", "false")
     buildConfigField("boolean", "LINK_DEVICE_UX_ENABLED", "true")
+    // Radar does not sell the paid Backups tier. Mirrors iOS
+    // BuildFlags.Backups.showPaidPlan = false: hides the paid tier in the plan chooser and the
+    // free-tier upgrade button, while leaving manage/cancel reachable for existing subscribers.
+    buildConfigField("boolean", "PAID_BACKUPS_ENABLED", "false")
     buildConfigField("boolean", "USE_STRING_ID", "true")
 
     ndk {
