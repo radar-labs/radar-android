@@ -3,7 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/payments_onboarding"
-    app:startDestination="@id/paymentsOnboardingIntro">
+    app:startDestination="@id/paymentsOnboardingUsername">
+
+    <!--
+      Username step, ahead of the payments intro, mirroring iOS's onboarding coordinator. Editing
+      delegates to the shared UsernameEditFragment, which pops back here when it is done.
+    -->
+    <fragment
+        android:id="@+id/paymentsOnboardingUsername"
+        android:name="org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingUsernameFragment"
+        tools:layout="@layout/fragment_payments_onboarding_username">
+        <action
+            android:id="@+id/action_username_to_intro"
+            app:destination="@id/paymentsOnboardingIntro" />
+        <action
+            android:id="@+id/action_username_to_editUsername"
+            app:destination="@id/paymentsOnboardingEditUsername" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentsOnboardingEditUsername"
+        android:name="org.thoughtcrime.securesms.profiles.manage.UsernameEditFragment"
+        tools:layout="@layout/username_edit_fragment" />
 
     <fragment
         android:id="@+id/paymentsOnboardingIntro"
@@ -24,7 +45,7 @@
         <action
             android:id="@+id/action_addFundsIntro_to_setupComplete"
             app:destination="@id/paymentsOnboardingSetupComplete"
-            app:popUpTo="@id/paymentsOnboardingIntro"
+            app:popUpTo="@id/paymentsOnboardingUsername"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -39,7 +60,7 @@
         <action
             android:id="@+id/action_addFunds_to_setupComplete"
             app:destination="@id/paymentsOnboardingSetupComplete"
-            app:popUpTo="@id/paymentsOnboardingIntro"
+            app:popUpTo="@id/paymentsOnboardingUsername"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addFunds_to_depositReceived"
@@ -59,7 +80,7 @@
         <action
             android:id="@+id/action_depositReceived_to_setupComplete"
             app:destination="@id/paymentsOnboardingSetupComplete"
-            app:popUpTo="@id/paymentsOnboardingIntro"
+            app:popUpTo="@id/paymentsOnboardingUsername"
             app:popUpToInclusive="true" />
     </fragment>
 

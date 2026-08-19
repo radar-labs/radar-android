@@ -4421,6 +4421,16 @@
     <string name="PaymentsOnboarding__skip">Skip</string>
     <!-- Skip button on the Add Funds onboarding step -->
     <string name="PaymentsOnboarding__skip_this_step">Skip this step</string>
+    <!-- Title of the username step of payments onboarding -->
+    <string name="PaymentsOnboarding__username_title">Your Username</string>
+    <!-- Subtitle shown on the username onboarding step when no username is set yet -->
+    <string name="PaymentsOnboarding__username_subtitle">Set your custom username for connecting with other users on Radar and Signal</string>
+    <!-- Subtitle shown on the username onboarding step when a username is already set -->
+    <string name="PaymentsOnboarding__username_existing_subtitle">This is your username for connecting with other users on Radar and Signal</string>
+    <!-- Button that opens the username editor from payments onboarding -->
+    <string name="PaymentsOnboarding__username_set">Set my Username</string>
+    <!-- Button that accepts the existing username and continues payments onboarding -->
+    <string name="PaymentsOnboarding__username_confirm">Confirm</string>
     <!-- Deposit received screen title -->
     <string name="PaymentsOnboarding__deposit_received_title">Deposit Received</string>
     <!-- Deposit received screen subtitle -->
