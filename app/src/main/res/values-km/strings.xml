@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">Play Services មានបញ្ហាា</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play Services កំពុងធ្វើបច្ចុប្បន្នភាព ឬមិនអាចប្រើបានជាបណ្តោះអាសន្ន។ សូមព្យាយាមម្តងទៀត។</string>
     <string name="RegistrationActivity_terms_and_privacy">លក្ខខណ្ឌ &amp; គោលនយោបាយឯកជនភាព</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar ត្រូវការអនុញ្ញាតបញ្ជីទំនាក់ទំនង និងឯកសារមេឌៀ ដើម្បីជួយតភ្ជាប់អ្នកជាមួយមិត្តភក្តិ និងផ្ញើសារ។ បញ្ជីទំនាក់ទំនងរបស់អ្នក ត្រូវបានផ្ទុកប្រើប្រាស់ការរកឃើញបញ្ជីទំនាក់ទំនងឯកជនរបស់ Radar ដែលមានន័យថាវាត្រូវបានធ្វើកូដនីយកម្មទាំងសងខាង និងមិនដែលបង្ហាញទៅកាន់សេវាកម្ម Radar ទេ។</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar ត្រូវការអនុញ្ញាតបញ្ជីទំនាក់ទំនង ដើម្បីជួយតភ្ជាប់អ្នកជាមួយមិត្តភក្តិ។ បញ្ជីទំនាក់ទំនងរបស់អ្នក ត្រូវបានផ្ទុកប្រើប្រាស់ការរកឃើញបញ្ជីទំនាក់ទំនងឯកជនរបស់ Radar ដែលមានន័យថាវាត្រូវបានធ្វើកូដនីយកម្មទាំងសងខាង និងមិនដែលបង្ហាញទៅកាន់សេវាកម្ម Radar ទេ។</string>
     <string name="RegistrationActivity_rate_limited_to_service">អ្នកបានសាកល្បងច្រើនដងពេក ដើម្បីចុះឈ្មោះជាមួយលេខទូរស័ព្ទនេះ។ សូមសាកល្បងម្តងទៀតនៅពេលក្រោយ។</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">អ្នកបានព្យាយាមជាច្រើនដងពេកក្នុងការចុះឈ្មោះលេខនេះ។ សូមព្យាយាមម្តងទៀតក្នុងរយៈពេល %1$s។</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">ទេ អរគុណ</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">អនុញ្ញាតឱ្យចូលប្រើបញ្ជីទំនាក់ទំនងរបស់អ្នក។ បញ្ជីទំនាក់ទំនងរបស់អ្នកត្រូវបានអ៊ីនគ្រីប និងមិនអាចមើលឃើញដោយសេវាកម្ម Radar បានទេ។</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar ត្រូវការចូលប្រើប្រាស់បញ្ជីទំនាក់ទំនងរបស់អ្នក ដើម្បីបង្ហាញវា។</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">បញ្ជីទំនាក់ទំនង</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">ស្វែងរកមនុស្សដែលអ្នកស្គាល់។ បញ្ជីទំនាក់ទំនងរបស់អ្នកត្រូវបានអ៊ីនគ្រីប និងមិនអាចមើលឃើញដោយសេវាកម្ម Radar បានទេ។</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ការហៅទូរសព្ទ</string>
     <!-- Phone calls permission row description -->

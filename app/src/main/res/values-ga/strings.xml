@@ -3003,8 +3003,6 @@
     <string name="RegistrationActivity_play_services_error">Botún le Play Services</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Tá Seirbhísí Google Play á nuashonrú, nó níl aon fháil orthu faoi láthair. Bain triail eile as.</string>
     <string name="RegistrationActivity_terms_and_privacy">Téarmaí Úsáide ⁊ Polasaí Príobháideachais</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Tá gá ag Radar riochtain ar do theagmhálaithe agus do mheáin chun nasc a dhéanamh le cairde, teachtaireachtaí a mhalairt agus glaonna slán a dhéanamh.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Teastaíonn cead teagmhálaithe ó Radar chun cabhrú leat nascadh le cairde. Uaslódáiltear do theagmhálaithe trí aimsiú príobháideach teagmhálaithe de chuid Radar, rud a chiallaíonn go bhfuil siad criptithe ó cheann ceann agus dofheicthe sa tseirbhís Radar i gcónaí.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Rinne tú an iomarca iarrachtaí ar an uimhir seo a chlárú. Bain triail eile as ar ball.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Tá an iomarca iarrachtaí déanta agat leis an uimhir sin a chlárú. Triail arís i gceann %1$s.</string>
@@ -3793,7 +3791,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Níl, go raibh maith agat</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Ceadaigh rochtain ar do theagmhálaithe. Tá do theagmhálaithe criptithe agus dofheicthe ag seirbhís Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Tá gá ag Radar riochtain ar do theagmhálaithe chun iad a thaispeáint.</string>
@@ -4611,7 +4608,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Teagmhálaithe</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Aimsigh daoine a bhfuil aithne agat orthu. Tá do theagmhálaithe criptithe agus dofheicthe ag seirbhís Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Glaonna gutháin</string>
     <!-- Phone calls permission row description -->

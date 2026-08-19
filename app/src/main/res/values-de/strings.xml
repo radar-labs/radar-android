@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Fehler bei den Google-Play-Diensten</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google-Play-Dienste werden aktualisiert oder sind vorübergehend nicht verfügbar. Bitte versuche es erneut.</string>
     <string name="RegistrationActivity_terms_and_privacy">Nutzungsbedingungen und Datenschutzerklärung</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar benötigt die Berechtigungen »Kontakte« und »Speicher«, damit du deine Kontakte einfacher erreichen und ihnen Nachrichten senden kannst. Deine Kontakte werden mittels Radars vertraulicher Kontaktsuche auf die Radar-Server hochgeladen. Das heißt, sie sind Ende-zu-Ende-verschlüsselt und somit zu keiner Zeit dem Radar-Dienst bekannt.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar benötigt die Berechtigung »Kontakte«, damit du deine Kontakte einfacher erreichen kannst. Deine Kontakte werden mittels Radars vertraulicher Kontaktsuche auf die Radar-Server hochgeladen. Das heißt, sie sind Ende-zu-Ende-verschlüsselt und somit zu keiner Zeit dem Radar-Dienst bekannt.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Du hast zu oft versucht, diese Telefonnummer zu registrieren. Bitte versuche es später erneut.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Du hast zu oft versucht, diese Nummer zu registrieren. Bitte versuche es erneut in %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Nein danke</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Zugriff auf deine Kontakte erlauben. Deine Kontakte sind verschlüsselt und für den Radar-Dienst nicht sichtbar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar benötigt Zugriff auf deine Kontakte, um sie anzeigen zu können.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakte</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Finde Leute, die du kennst. Deine Kontakte sind verschlüsselt und für den Radar-Dienst nicht sichtbar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Anrufe</string>
     <!-- Phone calls permission row description -->

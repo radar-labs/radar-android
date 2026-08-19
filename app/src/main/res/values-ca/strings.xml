@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Error amb el Play Services</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">El Google Play Services s\'està actualitzant o no està disponible. Torneu a provar-ho.</string>
     <string name="RegistrationActivity_terms_and_privacy">Termes i política de privadesa</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">El Radar necessita els contactes i els permisos multimèdia per ajudar-vos a connectar-vos amb amics i enviar missatges. Els vostres contactes es carreguen mitjançant el descobriment de contactes privats del Radar, la qual cosa significa que estan encriptats d\'extrem a extrem i mai no són visibles per al servei de Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">El Radar necessita el permís dels contactes per ajudar-vos a connectar-vos amb els amics. Els vostres contactes es carreguen mitjançant el descobriment de contactes privats del Radar, la qual cosa significa que estan encriptats d\'extrem a extrem i mai no són visibles per al servei de Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Heu fet massa intents per registrar aquest número. Si us plau, torneu-ho a provar més tard.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Has fet massa intents per registrar aquest número. Si us plau, torna-ho a provar en %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">No, gràcies.</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Permet l\'accés als teus contactes. Els teus contactes estan xifrats i no són visibles pel servei de Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">El Radar necessita accés als contactes per tal de mostrar-los.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Contactes</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Troba gent que coneixes. Els teus contactes estan xifrats i no són visibles per al servei de Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Trucades de telèfon</string>
     <!-- Phone calls permission row description -->

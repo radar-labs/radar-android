@@ -5,10 +5,15 @@
 
 package org.thoughtcrime.securesms.registration.ui.permissions
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -18,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.compose.ComposeFragment
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.registration.fragments.WelcomePermissions
 import org.thoughtcrime.securesms.registration.ui.RegistrationCheckpoint
 import org.thoughtcrime.securesms.registration.ui.RegistrationViewModel
@@ -47,20 +53,54 @@ class GrantPermissionsFragment : ComposeFragment() {
 
   @Composable
   override fun FragmentContent() {
-    GrantPermissionsScreen(
-      deviceBuildVersion = Build.VERSION.SDK_INT,
-      isBackupSelectionRequired = BackupUtil.isUserSelectionRequired(LocalContext.current),
-      onNextClicked = this::launchPermissionRequests,
-      onNotNowClicked = this::proceedToNextScreen
-    )
+    val context = LocalContext.current
+
+    // Being routed here with every permission already granted (e.g. installs with pre-granted
+    // permissions) means the only outstanding step is the contact-discovery disclosure, so the
+    // permission rows screen is skipped and the disclosure is shown directly.
+    var showContactDisclosure by remember {
+      val allPermissionsGranted = WelcomePermissions.getWelcomePermissions(BackupUtil.isUserSelectionRequired(context)).all {
+        ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+      }
+      mutableStateOf(allPermissionsGranted)
+    }
+
+    if (showContactDisclosure) {
+      ContactDiscoveryConsentScreen(
+        onAllowClicked = {
+          SignalStore.account.setContactDiscoveryConsent(true)
+          launchPermissionRequests(includeContacts = true)
+        },
+        onNotNowClicked = {
+          SignalStore.account.setContactDiscoveryConsent(false)
+          launchPermissionRequests(includeContacts = false)
+        }
+      )
+    } else {
+      GrantPermissionsScreen(
+        deviceBuildVersion = Build.VERSION.SDK_INT,
+        isBackupSelectionRequired = BackupUtil.isUserSelectionRequired(context),
+        onNextClicked = { showContactDisclosure = true },
+        onNotNowClicked = {
+          SignalStore.account.setContactDiscoveryConsent(false)
+          proceedToNextScreen()
+        }
+      )
+    }
   }
 
-  private fun launchPermissionRequests() {
+  /**
+   * @param includeContacts whether the contacts permission should be requested. This is only true after the user has
+   * accepted the contact-discovery prominent disclosure; declining it still lets the remaining permissions be requested.
+   */
+  private fun launchPermissionRequests(includeContacts: Boolean) {
     val isUserSelectionRequired = BackupUtil.isUserSelectionRequired(requireContext())
 
-    val neededPermissions = WelcomePermissions.getWelcomePermissions(isUserSelectionRequired).filterNot {
-      ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
-    }
+    val contactPermissions = setOf(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)
+
+    val neededPermissions = WelcomePermissions.getWelcomePermissions(isUserSelectionRequired)
+      .filter { includeContacts || it !in contactPermissions }
+      .filterNot { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
 
     if (neededPermissions.isEmpty()) {
       proceedToNextScreen()

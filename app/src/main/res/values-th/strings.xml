@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">ข้อผิดพลาดเกี่ยวกับ Play Services</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play Services กำลังปรับรุ่นหรือใช้ไม่ได้ชั่วคราว โปรดลองอีกครั้ง</string>
     <string name="RegistrationActivity_terms_and_privacy">เงื่อนไขและนโยบายความเป็นส่วนตัว</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar จำเป็นต้องมีการอนุญาตให้ใช้รายชื่อผู้ติดต่อและสื่อเพื่อช่วยให้คุณเชื่อมต่อกับเพื่อนๆ และส่งข้อความ รายชื่อผู้ติดต่อของคุณจะถูกอัปโหลดโดยใช้การค้นหาผู้ติดต่อส่วนตัว Radar ซึ่งแปลว่าสิ่งนี้เป็นการเข้ารหัสจากต้นทางถึงปลายทางและไม่ปรากฏในบริการของ Radar</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar จำเป็นต้องได้รับการอนุญาตให้ใช้รายชื่อผู้ติดต่อเพื่อช่วยให้คุณเชื่อมต่อกับเพื่อนๆ รายชื่อผู้ติดต่อของคุณจะถูกอัปโหลดโดยใช้โดยใช้การค้นหาผู้ติดต่อส่วนตัว Radar ซึ่งแปลว่าสิ่งนี้เป็นการเข้ารหัสจากต้นทางถึงปลายทางและไม่ปรากฏในบริการของ Radar</string>
     <string name="RegistrationActivity_rate_limited_to_service">คุณได้พยายามลงทะเบียนด้วยหมายเลขนี้หลายครั้งเกินไป โปรดลองใหม่ในภายหลัง</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">คุณพยายามลงทะเบียนด้วยหมายเลขนี้หลายครั้งเกินไป โปรดลองอีกครั้งใน %1$s</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">ไม่ ขอบคุณ</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">อนุญาตให้เข้าถึงรายชื่อผู้ติดต่อของคุณ โดยรายชื่อผู้ติดต่อของคุณจะได้รับการเข้ารหัสและไม่ถูกเปิดเผยต่อบริการของ Radar</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar ต้องการเข้าถึงผู้ติดต่อของคุณ เพื่อจะแสดงข้อมูลเหล่านั้นได้</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">ผู้ติดต่อ</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">ค้นหาคนที่คุณรู้จัก โดยรายชื่อผู้ติดต่อของคุณจะได้รับการเข้ารหัสและไม่ถูกเปิดเผยต่อบริการของ Radar</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">การโทร</string>
     <!-- Phone calls permission row description -->

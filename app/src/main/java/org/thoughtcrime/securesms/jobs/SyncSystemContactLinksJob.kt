@@ -14,6 +14,7 @@ import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.contacts.sync.ContactDiscovery
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.jobmanager.Job
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.thoughtcrime.securesms.util.SignalE164Util
@@ -41,6 +42,11 @@ class SyncSystemContactLinksJob private constructor(parameters: Parameters) : Ba
   override fun onRun() {
     if (!Permissions.hasAll(context, Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)) {
       Log.w(TAG, "No contact permissions. Skipping.")
+      return
+    }
+
+    if (!SignalStore.account.isContactDiscoveryAllowed) {
+      Log.w(TAG, "User has not consented to contact discovery. Skipping.")
       return
     }
 

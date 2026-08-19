@@ -2915,8 +2915,6 @@
     <string name="RegistrationActivity_play_services_error">Pogreška Play Servicesa</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play Services se trenutno ažurira ili je nedostupno. Pokušajte ponovno kasnije.</string>
     <string name="RegistrationActivity_terms_and_privacy">Uvjeti korištenja i Politika privatnosti</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar treba pristup vašim kontaktima i medijima za povezivanje s prijateljima i razmjenu poruka. Vaši se kontakti učitavaju korištenjem Radarovog otkrivanja privatnih kontakata, što znači da su sveobuhvatno šifrirani i nikada nisu vidljivi usluzi Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar treba pristup vašim kontaktima za povezivanje s prijateljima. Vaši se kontakti učitavaju korištenjem Radarovog otkrivanja privatnih kontakata, što znači da su sveobuhvatno šifrirani i nikada nisu vidljivi usluzi Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Previše neuspjelih pokušaja registracije ovog broja telefona. Pokušajte ponovo kasnije.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Previše neuspjelih pokušaja registracije ovog broja telefona. Pokušajte ponovno za %1$s.</string>
@@ -3691,7 +3689,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Ne, hvala</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Omogućite pristup vašim kontaktima. Vaši kontakti su šifrirani i nisu vidljivi usluzi Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar zahtjeva pristup vašim kontaktima kako bi ih mogao prikazati.</string>
@@ -4497,7 +4494,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakti</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Pronađite ljude koje poznajete. Vaši kontakti su šifrirani i nisu vidljivi usluzi Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Pozivi</string>
     <!-- Phone calls permission row description -->

@@ -20,6 +20,7 @@ import org.thoughtcrime.securesms.LoggingFragment
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.ViewBinderDelegate
 import org.thoughtcrime.securesms.databinding.FragmentRegistrationSignUpBinding
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.registration.fragments.WelcomePermissions
 import org.thoughtcrime.securesms.registration.ui.RegistrationCheckpoint
 import org.thoughtcrime.securesms.registration.ui.RegistrationViewModel
@@ -104,7 +105,7 @@ class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
   }
 
   private fun onCreateAccountClicked() {
-    if (!hasAllPermissions()) {
+    if (!hasAllPermissionsAndConsent()) {
       findNavController().safeNavigate(SignUpFragmentDirections.actionSignUpFragmentToGrantPermissionsFragment(WelcomeUserSelection.CONTINUE))
     } else {
       navigateToNextScreenViaContinue()
@@ -121,7 +122,7 @@ class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
   }
 
   private fun onLinkDeviceClicked() {
-    if (!hasAllPermissions()) {
+    if (!hasAllPermissionsAndConsent()) {
       findNavController().safeNavigate(SignUpFragmentDirections.actionSignUpFragmentToGrantPermissionsFragment(WelcomeUserSelection.LINK))
     } else {
       navigateToLinkDevice()
@@ -133,7 +134,7 @@ class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
   }
 
   private fun afterRestoreOrTransferClicked(userSelection: WelcomeUserSelection) {
-    if (!hasAllPermissions()) {
+    if (!hasAllPermissionsAndConsent()) {
       findNavController().safeNavigate(SignUpFragmentDirections.actionSignUpFragmentToGrantPermissionsFragment(userSelection))
     } else {
       navigateToNextScreenViaRestore(userSelection)
@@ -162,8 +163,14 @@ class SignUpFragment : LoggingFragment(R.layout.fragment_registration_sign_up) {
     }
   }
 
-  private fun hasAllPermissions(): Boolean {
+  /**
+   * The permissions screen also hosts the contact-discovery prominent disclosure, which must be shown even
+   * when every runtime permission is already granted (e.g. installs with pre-granted permissions), so the
+   * screen can only be skipped once a consent choice has been recorded.
+   */
+  private fun hasAllPermissionsAndConsent(): Boolean {
     val isUserSelectionRequired = BackupUtil.isUserSelectionRequired(requireContext())
-    return WelcomePermissions.getWelcomePermissions(isUserSelectionRequired).all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
+    val hasAllPermissions = WelcomePermissions.getWelcomePermissions(isUserSelectionRequired).all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
+    return hasAllPermissions && SignalStore.account.hasRecordedContactDiscoveryConsent
   }
 }

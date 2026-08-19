@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">Play 服務錯誤</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play 服務正在更新，或暫時未能運作。請再試一次。</string>
     <string name="RegistrationActivity_terms_and_privacy">條款及私隱條例</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar 需要聯絡人和媒體權限，以助您與好友連繫和傳送訊息。您的聯絡人將經 Radar 私密聯絡人探索上載，即是經端對端加密，Radar 服務從不可見到。</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar 需要聯絡人權限，以助您與好友連繫。您的聯絡人將經 Radar 私密聯絡人探索上載，即是經端對端加密，Radar 服務從不可見到。</string>
     <string name="RegistrationActivity_rate_limited_to_service">你已多次嘗試登記此電話號碼。請稍後再試。</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">你已多次嘗試註冊此電話號碼。請在 %1$s後再試。</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">不必了</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">允許存取你的通訊錄。你的通訊錄已加密，Radar 服務無法看到。</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar 需要存取您的聯絡人以便為您顯示。</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">聯絡人</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">找到你認識的人。你的聯絡人名單已加密，Radar 服務無法看到。</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">電話通話</string>
     <!-- Phone calls permission row description -->

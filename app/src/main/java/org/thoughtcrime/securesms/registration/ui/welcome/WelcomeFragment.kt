@@ -19,6 +19,7 @@ import org.thoughtcrime.securesms.LoggingFragment
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.ViewBinderDelegate
 import org.thoughtcrime.securesms.databinding.FragmentRegistrationWelcomeV3Binding
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.registration.fragments.RegistrationViewDelegate.setDebugLogSubmitMultiTapView
 import org.thoughtcrime.securesms.registration.fragments.WelcomePermissions
 import org.thoughtcrime.securesms.registration.ui.RegistrationCheckpoint
@@ -89,7 +90,7 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
   }
 
   private fun onLinkDeviceClicked() {
-    if (!hasAllPermissions()) {
+    if (!hasAllPermissionsAndConsent()) {
       findNavController().safeNavigate(WelcomeFragmentDirections.actionWelcomeFragmentToGrantPermissionsFragment(WelcomeUserSelection.LINK))
     } else {
       navigateToLinkDevice()
@@ -123,7 +124,7 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
   }
 
   private fun afterRestoreOrTransferClicked(userSelection: WelcomeUserSelection) {
-    if (!hasAllPermissions()) {
+    if (!hasAllPermissionsAndConsent()) {
       findNavController().safeNavigate(WelcomeFragmentDirections.actionWelcomeFragmentToGrantPermissionsFragment(userSelection))
     } else {
       navigateToNextScreenViaRestore(userSelection)
@@ -152,8 +153,14 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
     }
   }
 
-  private fun hasAllPermissions(): Boolean {
+  /**
+   * The permissions screen also hosts the contact-discovery prominent disclosure, which must be shown even
+   * when every runtime permission is already granted (e.g. installs with pre-granted permissions), so the
+   * screen can only be skipped once a consent choice has been recorded.
+   */
+  private fun hasAllPermissionsAndConsent(): Boolean {
     val isUserSelectionRequired = BackupUtil.isUserSelectionRequired(requireContext())
-    return WelcomePermissions.getWelcomePermissions(isUserSelectionRequired).all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
+    val hasAllPermissions = WelcomePermissions.getWelcomePermissions(isUserSelectionRequired).all { ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED }
+    return hasAllPermissions && SignalStore.account.hasRecordedContactDiscoveryConsent
   }
 }

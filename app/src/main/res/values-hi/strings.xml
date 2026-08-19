@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Play सेवाओं में कोई गड़बड़ी हुई</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play सेवाएं अपडेट हो रही हैं या फिर यह अस्थायी रूप से उपलब्ध नहीं है। कृपया दोबाार कोशिश करें।</string>
     <string name="RegistrationActivity_terms_and_privacy">नियम और गोपनीयता नीति</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar को आपके कॉन्टैक्ट और मीडिया का ऐक्सेस चाहिए, ताकि वह आपके दोस्तों से कनेक्ट कर सके और उन्हें मैसेज भेज सके।आपके कॉन्टैक्ट Radar की प्राइवेट कॉन्टैक्ट डिसकवरी से अपलोड किए जाते हैं। इसका मतलब है कि वे एंड-टू-एंड एनक्रिप्टेड होते हैं और Radar सेवा उन्हें नहीं देख पाती।</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar को आपके कॉन्टैक्ट का ऐक्सेस चाहिए, ताकि वह आपके दोस्तों से कनेक्ट कर सके। आपके कॉन्टैक्ट Radar की प्राइवेट कॉन्टैक्ट डिसकवरी से अपलोड किए जाते हैं। इसका मतलब है कि वे एंड-टू-एंड एनक्रिप्टेड होते हैं और Radar सेवा उन्हें नहीं देख पाती।</string>
     <string name="RegistrationActivity_rate_limited_to_service">इस नंबर को रजिस्टर करने के लिए आपने कई बार कोशिशें कर ली हैं। कृपया कुछ देर बाद फिर से कोशिश करें।</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">आपने इस नंबर को पंजीकृत करने के बहुत सारे प्रयास किए। कृपया %1$s में पुन: प्रयास करें।</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">नहीं धन्यवाद</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">कॉन्टैक्ट्स के एक्सेस की अनुमति दें। आपके संपर्क एनक्रिप्टेड हैं और Radar सेवा को दिखाई नहीं देते हैं।</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar पर कौन-कौन मौजूद हैं, इसे दिखाने के लिए Radar को आपके कॉन्टैक्ट का ऐक्सेस चाहिए।</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">संपर्क</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">अपनी पहचान के लोगों को ढूंढें। आपके संपर्क एन्क्रिप्टेड हैं और Radar सेवा को दिखाई नहीं देते हैं।</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">फोन कॉल</string>
     <!-- Phone calls permission row description -->

@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Gabim nga Shërbime Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Shërbimet Google Play po përditësohen ose janë përkohësisht jashtë funksionimi. Ju lutemi, riprovoni.</string>
     <string name="RegistrationActivity_terms_and_privacy">Kushte &amp; Rregulla Privatësie</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Për t\\’ju ndihmuar të lidheni me shokët tuaj dhe dërgoni mesazhe, Radar-i lyp leje mbi kontaktet dhe median. Kontaktet tuaja ngarkohen duke përdorur pikasje private kontaktesh të Radar-it, që do të thotë se janë të fshehtëzuara skaj-më-skaj dhe kurrë të dukshme për shërbimin Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Për t\\’ju ndihmuar të lidheni me shokët tuaj, Radar-i lyp leje mbi kontaktet. Kontaktet tuaja ngarkohen duke përdorur pikasje private kontaktesh të Radar-it, që do të thotë se janë të fshehtëzuara skaj-më-skaj dhe kurrë të dukshme për shërbimin Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Keni bërë shumë përpjekje për të regjistruar këtë numër. Ju lutemi, riprovoni më vonë.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Ke bërë shumë përpjekje për të regjistruar këtë numër. Të lutem provoje përsëri për %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Jo, faleminderit</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Lejo aksesin te kontaktet. Kontaktet janë të koduara dhe nuk janë të dukshme për shërbimin e Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Që të mund t\\’i shfaqë, Radar-i lyp leje përdorimi të kontakteve.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakte</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Gjej persona që njeh. Kontaktet e tua janë të koduara dhe nuk janë të dukshme për shërbimin e Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefonata</string>
     <!-- Phone calls permission row description -->

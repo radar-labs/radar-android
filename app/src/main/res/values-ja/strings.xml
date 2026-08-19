@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">Google Play開発者サービスのエラー</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play開発者サービスは更新中か一時的に使用不能です。再度試してください。</string>
     <string name="RegistrationActivity_terms_and_privacy">使用条件とプライバシーポリシー</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radarは、ご友人とのつながりやメッセージ送信を支えるため、連絡先とメディアへのアクセス許可が必要です。連絡先はエンドツーエンドで暗号化し、Radarプライベートコンタクトディスカバリーを使用してアップロードされるため、Radarのサービス管理者は閲覧できません。</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radarは、ご友人とのつながりを支えるため、連絡先へのアクセス許可が必要です。連絡先はエンドツーエンドで暗号化し、Radarプライベートコンタクトディスカバリーを使用してアップロードされるため、Radarのサービス管理者は閲覧できません。</string>
     <string name="RegistrationActivity_rate_limited_to_service">この番号の登録試行回数が多すぎます。あとで再度試してください。</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">この番号の登録試行回数が多すぎます。%1$s分後にもう一度お試しください。.</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">今はしない</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">連絡先へのアクセスを許可しましょう。連絡先は暗号化され、私たちRadarからは見えません。</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">連絡先を表示するには、Radarに連絡先へのアクセスを許可してください。</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">連絡先</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">知り合いを探しましょう。連絡先は暗号化され、私たちRadarからは見えません。</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">通話</string>
     <!-- Phone calls permission row description -->

@@ -2915,8 +2915,6 @@
     <string name="RegistrationActivity_play_services_error">שגיאת שירותי Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">שירותי Google Play מתעדכנים או שהם בלתי זמינים באופן זמני. אנא נסה שוב.</string>
     <string name="RegistrationActivity_terms_and_privacy">תנאים ומדיניות פרטיות</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar צריך הרשאה אל אנשי הקשר והמדיה שלך כדי לעזור לך לחבור אל חברים ולשלוח הודעות. אנשי הקשר שלך מועלים ע״י שימוש בגילוי אנשי קשר פרטי של Radar, מה שאומר שהם מוצפנים מקצה־אל־קצה ואף פעם אינם גלויים אל השירות של Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar צריך הרשאה אל אנשי הקשר שלך כדי לעזור לך לחבור אל חברים. אנשי הקשר שלך מועלים ע״י שימוש בגילוי אנשי קשר פרטי של Radar, מה שאומר שהם מוצפנים מקצה־אל־קצה ואף פעם אינם גלויים אל השירות של Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">עשית יותר מדי ניסיונות להירשם עם המספר הזה. אנא נסה שוב מאוחר יותר.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">עשית יותר מדי ניסיונות להירשם עם המספר הזה. יש לנסות שוב עוד %1$s.</string>
@@ -3691,7 +3689,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">לא תודה</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">צריך לאפשר גישה לאנשי הקשר שלך. אנשי הקשר שלך מוצפנים ואינם גלויים לשירות Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar צריך הרשאה אל אנשי הקשר שלך על מנת להציגם.</string>
@@ -4497,7 +4494,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">אנשי קשר</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">למצוא אנשים שאת.ה מכיר.ה. אנשי הקשר שלך מוצפנים ואינם גלויים לשירות Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">שיחות טלפון</string>
     <!-- Phone calls permission row description -->

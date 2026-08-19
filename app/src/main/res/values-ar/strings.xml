@@ -3091,8 +3091,6 @@
     <string name="RegistrationActivity_play_services_error">خطأ في خدمات Google Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">جارٍ تحديث خدمات Google Play أو أنها غير موجودة مؤقتًا. حاوِل مرّة أخرى.</string>
     <string name="RegistrationActivity_terms_and_privacy">الشروط وسياسة الخصوصية</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">يحتاج رادار إلى أذونات جهات الاتصال والوسائط للمساعدة في التواصل مع أصدقائك وإرسال الرسائل. يتم تحميل جهات اتصالك باستخدام نظام اكتشاف جهة الاتصال الخاص في رادار، وهذا يعني أنها مُشفَّرة من الطرفين وغير مرئية على الإطلاق لخدمة رادار.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">يحتاج رادار إلى أذونات جهات الاتصال للمساعدة في التواصل مع أصدقائك. يتمُّ تحميل جهات اتصالك باستخدام نظام اكتشاف جهة الاتصال الخاص في رادار، وهذا يعني أنها مُشفَّرة من الطرفين وغير مرئية على الإطلاق لخدمة رادار.</string>
     <string name="RegistrationActivity_rate_limited_to_service">قُمتَ بمحاولاتٍ كثيرة للتسجيل بهذا الرقم. يُرجى المحاولة لاحقًا.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">قُمتَ بمحاولاتٍ كثيرة للتسجيل بهذا الرقم. يُرجى المحاولة لاحقًا %1$s.</string>
@@ -3895,7 +3893,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">لا، شكرًا</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">اسمح بالوصول إلى جهات الاتصال على جهازك. جهات اتصالك مُشفَّرة وغير مرئية لخدمة رادار.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">رادار بحاجة إلى الوصول إلى جهات الاتصال لديك وذلك بغرض عرضها.</string>
@@ -4725,7 +4722,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">جهات الاتصال</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">اعثُر على أشخاص تعرفهم. جهات اتصالك مُشفَّرة وغير مرئية لخدمة رادار.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">مكالمات هاتفية</string>
     <!-- Phone calls permission row description -->

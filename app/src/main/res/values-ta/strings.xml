@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">சேவைகளில் பிழை</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play சேவைகள் புதுப்பித்தல் அல்லது தற்காலிகமாக கிடைக்கவில்லை. தயவு செய்து மீண்டும் முயற்சிக்கவும்.</string>
     <string name="RegistrationActivity_terms_and_privacy">விதிமுறைகள் &amp; ஆம்ப்; தனியுரிமைக் கொள்கை</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">உங்கள் நண்பர்களுடன் இணைவதற்கும் செய்திகளை அனுப்புவதற்கும் உதவ சிக்னலுக்கு தொடர்புகள் மற்றும் மீடியா அனுமதிகள் தேவை. உங்கள் தொடர்புகள் சிக்னலின் தனிப்பட்ட தொடர்பு கண்டறிதலைப் பயன்படுத்தி பதிவேற்றப்படுகின்றன, அதாவது அவை முடிவிலிருந்து-முடிவுவரை மறையாக்கப்பட்டவை மற்றும் சிக்னல் சேவைக்கு ஒருபோதும் தெரியப்படுவதில்லை.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">நண்பர்களுடன் நீங்கள் இணைவதற்கு உதவ சிக்னலுக்கு தொடர்புகளின் அனுமதி தேவை. உங்கள் தொடர்புகள் சிக்னலின் தனிப்பட்ட தொடர்பு கண்டறிதலைப் பயன்படுத்தி பதிவேற்றப்படுகின்றன, அதாவது அவை முடிவிலிருந்து-முடிவுவரை மறையாக்கப்பட்டவை மற்றும் சிக்னல் சேவைக்கு ஒருபோதும் தெரியப்படுவதில்லை.</string>
     <string name="RegistrationActivity_rate_limited_to_service">இந்த எண்ணை பதிவு செய்ய நீங்கள் பல முயற்சிகளை செய்துள்ளீர்கள். சிறிது நேரம் கழித்து மீண்டும் முயற்சிக்கவும்.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">இந்த எண்ணை பதிவு செய்ய நீங்கள் பல முயற்சிகளை செய்துள்ளீர்கள். %1$s இல் மீண்டும் முயற்சிக்கவும்.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">தேவையில்லை,நன்றி</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">உங்கள் தொடர்புகளுக்கான அணுகலை அனுமதிக்கவும். உங்கள் தொடர்புகள் குறியாக்கம் செய்யப்பட்டுள்ளது, மேலும் சிக்னல் சேவைக்குக் காண்பிக்கப்படாது.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">உங்கள் தொடர்புகளைக் காண்பிக்க சிக்னலுக்கு அணுகல் தேவை.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">தொடர்புகள்</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">உங்களுக்குத் தெரிந்தவர்களைக் கண்டறியவும். உங்கள் தொடர்புகள் குறியாக்கம் செய்யப்பட்டுள்ளது, மேலும் Radar சேவைக்குக் காண்பிக்கப்படாது.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ஃபோன் அழைப்புகள்</string>
     <!-- Phone calls permission row description -->

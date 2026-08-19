@@ -2915,8 +2915,6 @@
     <string name="RegistrationActivity_play_services_error">Памылка Сэрвісаў Google Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Сэрвісы Google Play абнаўляюцца або часова недаступныя. Калі ласка, паўтарыце спробу.</string>
     <string name="RegistrationActivity_terms_and_privacy">Умовы &amp; Палітыка канфідэнцыйнасці</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar патрабуе дазволу на кантакты і медыяфайлы, каб вы маглі быць на сувязі з сябрамі і адпраўляць ім паведамленні. Вашы кантакты запампоўваюцца з дапамогай тэхналогіі канфідэнцыйнага выяўлення кантактаў Radar, якая выкарыстоўвае скразное шыфраванне, таму вашы кантакты ніколі не бачныя сэрвісу Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar патрабуе дазволу на кантакты, каб вы маглі быць на сувязі з сябрамі. Вашы кантакты запампоўваюцца з дапамогай тэхналогіі канфідэнцыйнага выяўлення кантактаў Radar, якая выкарыстоўвае скразное шыфраванне, таму вашы кантакты ніколі не бачныя сэрвісу Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Вы зрабілі занадта шмат спроб зарэгістраваць гэты нумар. Калі ласка, паўтарыце спробу пазней.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Вы зрабілі занадта шмат спроб зарэгістраваць гэты нумар. Калі ласка, паўтарыце спробу праз %1$s.</string>
@@ -3691,7 +3689,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Не, дзякуй</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Уключыце доступ да вашых кантактаў. Вашы кантакты зашыфраваны і не бачныя сэрвісу Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar патрабуе доступу да вашых кантактаў, каб паказаць іх.</string>
@@ -4497,7 +4494,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Кантакты</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Знаходзьце людзей, якіх вы ведаеце. Вашы кантакты зашыфраваны і не бачныя сэрвісу Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Тэлефонныя званкі</string>
     <!-- Phone calls permission row description -->

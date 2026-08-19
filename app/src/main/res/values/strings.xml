@@ -2746,8 +2746,6 @@
     <string name="RegistrationActivity_play_services_error">Play Services Error</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play Services is updating or temporarily unavailable. Please try again.</string>
     <string name="RegistrationActivity_terms_and_privacy">Terms &amp; Privacy Policy</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar needs the contacts and media permissions to help you connect with friends and send messages. Your contacts are uploaded using Radar\'s private contact discovery, which means they are end-to-end encrypted and never visible to the Radar service.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar needs the contacts permission to help you connect with friends. Your contacts are uploaded using Radar\'s private contact discovery, which means they are end-to-end encrypted and never visible to the Radar service.</string>
     <string name="RegistrationActivity_rate_limited_to_service">You\'ve made too many attempts to register this number. Please try again later.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">You\'ve made too many attempts to register this number. Please try again in %s.</string>
@@ -3515,7 +3513,7 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">No thanks</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Allow access to your contacts. Your contacts are encrypted and not visible to the Radar service.</string>
+    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Allow access to your contacts to find people you know. Radar collects and uploads your contact list to check which of your contacts are on Radar. You\'ll be asked to confirm before anything is collected.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar needs access to your contacts in order to display them.</string>
@@ -4324,6 +4322,18 @@
     <!-- Content description for the toolbar gear button that opens the payment settings screen -->
     <string name="PaymentsHomeFragment__payment_settings">Payment settings</string>
 
+    <!-- ContactDiscoveryConsent: prominent disclosure required by the Google Play User Data policy, shown before the app requests the contacts permission or collects any address book data -->
+    <!-- Title of the contact-discovery disclosure screen/dialog -->
+    <string name="ContactDiscoveryConsent__title">Allow Radar to access your contacts?</string>
+    <!-- First paragraph of the disclosure. Must comprehensively state what contact list data is collected and why. -->
+    <string name="ContactDiscoveryConsent__body">Radar collects your contact list — phone numbers, names, and photos — to help you find, message, and pay people you know.</string>
+    <!-- Second paragraph of the disclosure. Must state how the collected data is transmitted, how often, and how it is protected. -->
+    <string name="ContactDiscoveryConsent__details">Phone numbers from your address book are uploaded to Radar\'s contact discovery service when you allow access and periodically afterwards, including in the background, to check which of your contacts are on Radar. Contact names and photos are used to display your contacts in the app and are only ever transmitted end-to-end encrypted, such as when syncing to your linked devices. Radar\'s servers never see your contacts in readable form, and your contact list is never sold or used for advertising.</string>
+    <!-- Secondary line clarifying that contact discovery is optional -->
+    <string name="ContactDiscoveryConsent__optional">This is optional. You can still message or pay anyone by entering their username or phone number.</string>
+    <!-- Affirmative accept button on the contact-discovery disclosure -->
+    <string name="ContactDiscoveryConsent__allow_access">Allow access</string>
+
     <!-- GrantPermissionsFragment -->
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Not now</string>
@@ -4339,8 +4349,8 @@
     <string name="GrantPermissionsFragment__get_notified_when">Get notified when new messages arrive.</string>
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Contacts</string>
-    <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Find people you know. Your contacts are encrypted and not visible to the Radar service.</string>
+    <!-- Contacts permission row description. Doubles as a prominent-disclosure summary: it must state that the contact list is collected/uploaded, ahead of the full disclosure screen. -->
+    <string name="GrantPermissionsFragment__find_people_you_know">Radar collects and uploads your contact list (phone numbers, names, and photos) to find people you know. You\'ll be asked to confirm before anything is collected.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Phone calls</string>
     <!-- Phone calls permission row description -->

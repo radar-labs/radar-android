@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Play Szolgáltatások hiba</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">A Google Play Szolgáltatások épp frissítés alatt áll, vagy átmenetileg nem elérhető. Kérlek próbáld újra.</string>
     <string name="RegistrationActivity_terms_and_privacy">Feltételek &amp; Adatvédelmi irányelvek</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">A Radarnak hozzá kell férnie telefonkönyvedhez és a médiafájljaidhoz annak érdekében, hogy összeköthessen barátaiddal, és lehetővé váljon az üzenetküldés. Telefonkönyvedet feltöltjük a Radar privát felderítő szolgáltatásába, azonban a végpontok közti titkosításnak köszönhetően annak tartalma még a Radar szolgáltatás üzemeltetői számára sem lesz olvasható.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">A Radarnak hozzá kell férnie telefonkönyvedhez annak érdekében, hogy összeköthessen barátaiddal, és lehetővé váljon az üzenetküldés. Telefonkönyvedet feltöltjük a Radar privát felderítő szolgáltatásába, azonban a végpontok közti titkosításnak köszönhetően annak tartalma még a Radar szolgáltatás üzemeltetői számára sem lesz olvasható.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Túl sokszor próbálkoztál ennek a számnak a regisztrációjával. Kérlek próbáld újra később!</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Túl sokszor próbáltad regisztrálni ezt a számot. Kérjük, próbáld újra %1$s múlva.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Nem, köszönöm</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Engedélyezd a névjegyeidhez való hozzáférést. A névjegyeid titkosítva vannak, és nem láthatók a Radar számára.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">A Radarnak szüksége van a névjegyeidhez való hozzáférésre annak érdekében, hogy megjelenítse őket.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Névjegyek</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Találj olyan személyeket, akiket ismersz. A névjegyeid titkosítva vannak, és nem láthatók a Radar számára.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefonhívások</string>
     <!-- Phone calls permission row description -->

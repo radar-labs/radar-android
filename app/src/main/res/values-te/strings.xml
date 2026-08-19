@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">ప్లే సేవల దోషం.</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">గూగల్ ేవలను నవీకరించుటకు లేదా తాత్కాలికంగా అందుబాటులో చేస్తున్నారు. మళ్ళి ప్రయత్నించండి.</string>
     <string name="RegistrationActivity_terms_and_privacy">నిబంధనలు &amp; గోప్యతా విధానం</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">మీరు స్నేహితులతో అనుసంధానం కావడానికి మరియు సందేశాలను పంపడానికి సాయపడేందుకు Radar కు కాంటాక్ట్‌లు మరియు మీడియా పర్మిషన్‌లు అవసరం. Radar ప్రైవేట్ కాంటాక్ట్ డిస్కవరీ ఉపయోగించి మీ కాంటాక్ట్‌లు అప్‌లోడ్ చేయబడతాయి, అంటే అవి ఎండ్- టూ-ఎండ్ ఎన్‌క్రిప్ట్ చేయబడ్డవి మరియు Radar సర్వీస్‌కు ఎన్నడూ కనిపించవు.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">స్నేహితులతో అనుసంధానం కావడానికి సాయపడేందుకు Radar కు కాంటాక్ట్‌ల పర్మిషన్ కావాలి. Radar ప్రైవేట్ కాంటాక్ట్ డిస్కవరీ ఉపయోగించి మీ కాంటాక్ట్‌లు అప్‌లోడ్ చేయబడతాయి, అంటే అవి ఎండ్- టూ-ఎండ్ ఎన్‌క్రిప్ట్ చేయబడ్డవి మరియు Radar సర్వీస్‌కు ఎన్నడూ కనిపించవు.</string>
     <string name="RegistrationActivity_rate_limited_to_service">మీరు ఈ నంబరును నమోదు చేయడానికి చాలా ప్రయత్నాలు చేసారు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">ఈ నంబర్‌ను నమోదు చేయడానికి మీరు చాలా ఎక్కువ ప్రయత్నాలు చేశారు. దయచేసి %1$sలో మళ్ళీ ప్రయత్నించండి.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">వద్దు ధన్యవాదాలు</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">మీ కాంటాక్ట్‌లకు యాక్సెస్‌ను అనుమతించండి. మీ కాంటాక్ట్‌లు గుప్తీకరించబడ్డాయి మరియు Radar సేవకు కనిపించవు.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">మీ పరిచయాలను Radar ప్రదర్శించడానికి పరిచయాలకు ప్రాప్యత అవసరం</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">పరిచయాలు</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">మీకు తెలిసిన వ్యక్తులను కనుగొనండి. మీ పరిచయాలు గుప్తీకరించబడ్డాయి మరియు Radar సేవకు కనిపించవు.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ఫోన్ కాల్స్</string>
     <!-- Phone calls permission row description -->

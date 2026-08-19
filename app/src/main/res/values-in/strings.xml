@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">Play Services gagal</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play Services diperbarui atau untuk sementara tidak tersedia. Silahkan coba lagi.</string>
     <string name="RegistrationActivity_terms_and_privacy">Istilah &amp; Kebijakan Privasi</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar memerlukan akses ke kontak dan media agar dapat terhubung dengan teman dan mengirimkan pesan. Kontak Anda diunggah menggunakan pendeteksi kontak privat Radar, yang dienkripsi ujung-ke-ujung dan tidak akan terlihat pada layanan Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar memerlukan akses ke kontak agar dapat terhubung dengan teman Anda. Kontak Anda diunggah menggunakan pendeteksi kontak privat Radar, yang dienkripsi ujung-ke-ujung dan tidak akan terlihat pada layanan Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Anda membuat terlalu banyak percobaan untuk mendaftarkan nomor ini. Mohon coba lagi nanti.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Anda terlalu sering mencoba mendaftar dengan nomor ini. Mohon coba lagi dalam %1$s.</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Tidak, terima kasih</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Izinkan akses ke kontak Anda. Kontak Anda dienkripsi dan tidak terlihat oleh layanan Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar memerlukan akses ke daftar kontak Anda supaya dapat menampilkannya.</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontak</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Temukan orang yang Anda kenal. Kontak Anda dienkripsi dan tidak terlihat oleh layanan Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Panggilan telepon</string>
     <!-- Phone calls permission row description -->

@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">სერვისების ჩართვის შეცდომა</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">მიმდინარეობს Google Play-ის სერვისები ს განახლება ან ისინი დროებით მიუწვდომელია. გთხოვთ სცადოთ ხელახლა.</string>
     <string name="RegistrationActivity_terms_and_privacy">პირობები &amp; კონფიდენციალურობის პოლიტიკა</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">მეგობრებთან დაკავშირების დასახმარებლად და შეტყობინებების გასაგზავნად, Radar-ს კონტაქტებსა და მედიაზე წვდომის ნებართვა სჭირდება. შენი კონტაქტები იტვირთება Radar-ის პირადი კონტაქტის აღმოჩენის საშუალებით, რაც ნიშნავს, რომ ისინი ბოლომდე დაშიფრულია და არასოდეს ჩანს Radar-ის სერვისისთვის.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">მეგობრებთან დაკავშირების დასახმარებლად Radar-ს კონტაქტებზე წვდომის ნებართვა სჭირდება. შენი კონტაქტები იტვირთება Radar-ის პირადი კონტაქტის აღმოჩენის საშუალებით, რაც ნიშნავს, რომ ისინი ბოლომდე დაშიფრულია და არასოდეს ჩანს Radar-ის სერვისისთვის.</string>
     <string name="RegistrationActivity_rate_limited_to_service">თქვენ მოახდინეთ ძალიან ბევრი მცდელობა ამ ნომრის დარეგისტრირებისთვის. გთხოვთ ხელახლა სცადოთ მოგვიანებით.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">ამ ნომრის დარეგისტრირება ზედმეტად ბევრჯერ სცადე. გთხოვთ, %1$s-ში თავიდან სცადო.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">არა, მადლობა</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">შენს კონტაქტებზე წვდომის მიცემა. შენი კონტაქტები დაშიფრულია და Radar-ის სერვისისთვის უხილავია.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar-ს შენს კონტაქტებზე წვდომა სჭირდება, რათა ისინი აჩვენოს.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">კონტაქტები</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">იპოვე ნაცნობები. შენი კონტაქტები დაშიფრულია და Radar-ის სერვისისთვის უხილავია.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">სატელეფონო ზარები</string>
     <!-- Phone calls permission row description -->

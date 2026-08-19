@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Play teenuste viga</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play teenused uuenevad või pole hetkel saadaval. Palun proovi uuesti.</string>
     <string name="RegistrationActivity_terms_and_privacy">Tingimused ja privaatsuspoliitika</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar vajab sinu kontaktidele ja meediale ligipääsu, et võimaldada sul ühenduda sõpradega ja vahetada sõnumeid. Sinu kontaktid laetakse üles Radari privaatse kontaktituvastuse abil, mis tähendab, et need on lõpp-punkti krüpteeringuga ega ole Radari teenusele kunagi nähtavad.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar vajab kontaktidega seotud luba, et võimaldada sul sõpradega ühenduda. Sinu kontaktid laetakse üles Radari privaatse kontaktituvastuse abil, mis tähendab, et need on lõpp-punkti krüpteeringuga ega ole Radari teenusele kunagi nähtavad.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Oled sooritanud liiga palju selle numbri registreerimise katseid. Palun proovi hiljem uuesti.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Oled proovinud seda numbrit liiga palju kordi registreerida. Palun proovi uuesti %1$s pärast.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Tänan, ei</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Anna ligipääs oma kontaktidele. Sinu kontaktid on krüptitud ega ole Radari teenusele nähtavad.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar vajab kontaktide kuvamiseks nendele ligipääsu.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontaktid</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Leia tuttavaid. Sinu kontaktid on krüptitud ega ole Radari teenusele nähtavad.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefonikõned</string>
     <!-- Phone calls permission row description -->

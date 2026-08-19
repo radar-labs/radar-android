@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">Play 服務錯誤</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play 服務一係更新緊，一係暫時用唔到。請您再試下啦。</string>
     <string name="RegistrationActivity_terms_and_privacy">使用條款同私隱政策</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar 要攞聯絡人同埋多媒體檔案權限，等您可以同好友連繫同埋傳送訊息。您嘅聯絡人會用 Radar 嘅私密聯絡人探索嚟上載，即係話會經點對點加密，唔會畀 Radar 服務睇到。</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar 要攞聯絡人權限，等您可以同好友連繫。您嘅聯絡人會用 Radar 嘅私密聯絡人探索嚟上載，即係話會經點對點加密，唔會畀 Radar 服務睇到。</string>
     <string name="RegistrationActivity_rate_limited_to_service">呢個冧把試過註冊太多次喇。請您晏啲再試下啦。</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">你已經嘗試用呢個手機號碼註冊太多次喇，請你喺 %1$s 後再試。</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">唔使喇，唔該晒</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">請允許存取你嘅通訊錄。你嘅通訊錄資料已經加密，Radar 唔會睇到。</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar 要存取您嘅聯絡人，先可以顯示畀您睇。</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">聯絡人</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">尋找你識得嘅人。你嘅聯絡人清單已經加密，Radar 唔會睇到。</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">電話通話</string>
     <!-- Phone calls permission row description -->

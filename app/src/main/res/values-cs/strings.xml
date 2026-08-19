@@ -2915,8 +2915,6 @@
     <string name="RegistrationActivity_play_services_error">Chyba Google Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Služba Google Play se aktualizuje nebo je dočasně nedostupná. Zkuste to prosím znovu.</string>
     <string name="RegistrationActivity_terms_and_privacy">Podmínky a zásady ochrany osobních údajů</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar potřebuje oprávnění pro přístup ke kontaktům a médiím, abyste se mohli spojit s přáteli a posílat zprávy. Vaše kontakty jsou nahrávány pomocí soukromého zjišťování kontaktů služby Radar, což znamená, že jsou end-to-end šifrovány a pro Radar nejsou nikdy viditelné.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar potřebuje oprávnění pro přístup ke kontaktům, abyste se mohli spojit s přáteli a posílat zprávy. Vaše kontakty jsou nahrávány pomocí soukromého zjišťování kontaktů služby Radar, což znamená, že jsou end-to-end šifrovány a pro Radar nejsou nikdy viditelné.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Učinili jste příliš mnoho pokusů zaregistrovat toto číslo. Zkuste to prosím znovu později.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Učinili jste příliš mnoho pokusů o registraci tohoto čísla. Zkuste to prosím znovu za %1$s.</string>
@@ -3691,7 +3689,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Ne, díky</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Povolte přístup ke svým kontaktům. Vaše kontakty jsou šifrované a nejsou ve službě Radar viditelné.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar potřebuje přístup k vašim kontaktům, aby je mohl zobrazit.</string>
@@ -4497,7 +4494,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakty</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Najděte lidi, které znáte. Vaše kontakty jsou šifrované a Radar je nevidí.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefonní hovory</string>
     <!-- Phone calls permission row description -->

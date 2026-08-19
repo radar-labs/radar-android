@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Play Xidmətlər Xətası</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play Xidmətləri yenilənir və ya müvəqqəti olaraq əlçatmazdır. Zəhmət olmasa yenidən sınayın.</string>
     <string name="RegistrationActivity_terms_and_privacy">Şərtlər və Gizlilik Siyasəti</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar-ın dostlarınızla bağlantı qurmağınıza və mesaj göndərməyinizə kömək etməsi üçün əlaqələr və media icazələrinə ehtiyacı var. Əlaqələriniz Radar-ın özəl əlaqə kəşfi istifadə edilərək yüklənir, bu da o deməkdir ki, əlaqələriniz bir ucdan digərinə qədər şifrələnir və heç vaxt Radar xidməti tərəfindən görüntülənə bilmir.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar-ın dostlarınızla bağlantı qurmağınıza kömək etməsi üçün əlaqələr və media icazələrinə ehtiyacı var. Əlaqələriniz Radar-ın özəl əlaqə kəşfi istifadə edilərək yüklənir, bu da o deməkdir ki, əlaqələriniz bir ucdan digərinə qədər şifrələnir və heç vaxt Radar xidməti tərəfindən görüntülənə bilmir.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Bu nömrəni qeydiyyatdan keçirmək üçün həddindən çox cəhd etdiniz. Zəhmət olmasa daha sonra yenidən sınayın.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Bu nömrəni qeydiyyatdan keçirmək üçün həddindən çox cəhd etdiniz. %1$s dəqiqə sonra yenidən cəhd edin.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Xeyr, təşəkkürlər</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Kontaktlara giriş icazəsi ver. Kontaktlar şifrələnib və Radar xidmətində görünmür.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar-ın, əlaqələrinizi görüntüləmək üçün müraciətə ehtiyacı var.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Əlaqələr</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Tanıdığınız şəxsləri tapın. Mesajlarınız şifrələnib və Radar xidmətində görünmür.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefon zəngləri</string>
     <!-- Phone calls permission row description -->

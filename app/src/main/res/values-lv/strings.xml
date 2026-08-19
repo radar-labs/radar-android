@@ -2827,8 +2827,6 @@
     <string name="RegistrationActivity_play_services_error">Google Play pakalpojumu kļūme</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play pakalpojumi tiek aktualizēti vai īslaicīgi nav pieejami. Lūdzu, mēģiniet vēlreiz.</string>
     <string name="RegistrationActivity_terms_and_privacy">Noteikumi &amp; privātuma politika</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar nepieciešama pieeja kontaktiem un failiem, lai palīdzētu Jums atrast draugus un sūtīt ziņas. Jūsu kontaktu saraksts tiks augšupielādēts lietojot Radar privāto kontaktu atklāšanu, kas nozīmē, ka tie būs šifrēti, un nekad nebūs redzami Radar servisam.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar nepieciešama pieeja kontaktiem, lai palīdzētu Jums atrast draugus. Jūsu kontaktu saraksts tiks augšupielādēts lietojot Radar privāto kontaktu atklāšanu, kas nozīmē, ka tie būs šifrēti, un nekad nebūs redzami Radar servisam.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Pārāk daudz šī numura reģistrēšanas mēģinājumu. Vēlāk mēģiniet vēlreiz.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Pārāk daudz šī numura reģistrēšanas mēģinājumu. Mēģiniet vēlreiz pēc %1$s.</string>
@@ -3589,7 +3587,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Nē, paldies</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Atļaujiet piekļuvi kontaktpersonām. Jūsu kontaktpersonas tiek šifrētas un nav redzamas pakalpojumam Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar nepieciešama pieeja jūsu kontaktiem, lai varētu tos parādīt.</string>
@@ -4383,7 +4380,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakti</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Atrodiet pazīstamus cilvēkus. Jūsu kontakti ir šifrēti un nav redzami pakalpojumam Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Tālruņa zvani</string>
     <!-- Phone calls permission row description -->

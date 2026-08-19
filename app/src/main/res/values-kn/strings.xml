@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">ಪ್ಲೇ ಸರ್ವೀಸಸ್ ದೋಷ</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google ಪ್ಲೇ ಸರ್ವೀಸಸ್ ಅಪ್‌ಡೇಟ್ ಆಗುತ್ತಿದೆ ಅಥವಾ ತಾತ್ಕಾಲಿಕವಾಗಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
     <string name="RegistrationActivity_terms_and_privacy">ನಿಯಮಗಳು &amp; ಖಾಸಗಿತನ ನೀತಿ</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">ಸ್ನೇಹಿತರೊಂದಿಗೆ ಕನೆಕ್ಟ್ ಆಗಲು ಮತ್ತು ಸಂದೇಶಗಳನ್ನು ಕಳುಹಿಸಲು ನಿಮಗೆ ನೆರವಾಗಲು Radar ಗೆ ಸಂಪರ್ಕಗಳು ಮತ್ತು ಮಾಧ್ಯಮ ಅನುಮತಿಗಳು ಬೇಕಾಗುತ್ತವೆ. Radar ನ ಗೌಪ್ಯ ಸಂಪರ್ಕ ಅನ್ವೇಷಣೆಯನ್ನು ಬಳಸಿಕೊಂಡು ನಿಮ್ಮ ಸಂಪರ್ಕಗಳು ಅಪ್‌ಲೋಡ್ ಆಗಿವೆ, ಇದರರ್ಥ, ಅವುಗಳು ಎಂಡ್-ಟು-ಎಂಡ್ ಎನ್‌ಕ್ರಿಪ್ಟ್ ಆಗಿವೆ ಮತ್ತು Radar ಸೇವೆಗೆ ಯಾವತ್ತೂ ಕಾಣಿಸುವುದಿಲ್ಲ.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">ಸ್ನೇಹಿತರೊಂದಿಗೆ ಕನೆಕ್ಟ್ ಆಗಲು ನಿಮಗೆ ನೆರವಾಗಲು Radar ಗೆ ಸಂಪರ್ಕಗಳು ಮತ್ತು ಮಾಧ್ಯಮ ಅನುಮತಿ ಬೇಕಾಗುತ್ತದೆ. Radar ನ ಗೌಪ್ಯ ಸಂಪರ್ಕ ಅನ್ವೇಷಣೆಯನ್ನು ಬಳಸಿಕೊಂಡು ನಿಮ್ಮ ಸಂಪರ್ಕಗಳು ಅಪ್‌ಲೋಡ್ ಆಗಿವೆ, ಇದರರ್ಥ, ಅವುಗಳು ಎಂಡ್-ಟು-ಎಂಡ್ ಎನ್‌ಕ್ರಿಪ್ಟ್ ಆಗಿವೆ ಮತ್ತು Radar ಸೇವೆಗೆ ಯಾವತ್ತೂ ಕಾಣಿಸುವುದಿಲ್ಲ.</string>
     <string name="RegistrationActivity_rate_limited_to_service">ಈ ಸಂಖ್ಯೆಯನ್ನು ರಿಜಿಸ್ಟರ್ ಮಾಡಲು ನೀವು ತುಂಬಾ ಪ್ರಯತ್ನಗಳನ್ನು ಮಾಡಿದ್ದೀರಿ. ದಯವಿಟ್ಟು ಪುನಃ</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">ಈ ಸಂಖ್ಯೆಯನ್ನು ನೋಂದಾಯಿಸಲು ನೀವು ತುಂಬಾ ಪ್ರಯತ್ನಗಳನ್ನು ಮಾಡಿದ್ದೀರಿ. ದಯವಿಟ್ಟು %1$s ನಲ್ಲಿ ಮತ್ತೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">ಇಲ್ಲ, ಧನ್ಯವಾದಗಳು</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">ನಿಮ್ಮ ಸಂಪರ್ಕಗಳಿಗೆ ಆ್ಯಕ್ಸೆಸ್ ಅನುಮತಿಸಿ. ನಿಮ್ಮ ಸಂಪರ್ಕಗಳು ಎನ್ಕ್ರಿಪ್ಟ್ ಆಗಿವೆ ಮತ್ತು Radar ಸೇವೆಗೆ ಗೋಚರಿಸುವುದಿಲ್ಲ.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar ಗೆ ನಿಮ್ಮ ಸಂಪರ್ಕಗಳನ್ನು ಪ್ರದರ್ಶಿಸಲು ಪ್ರವೇಶ ಅಗತ್ಯವಿದೆ.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">ಸಂಪರ್ಕಗಳು</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">ನೀವು ತಿಳಿದಿರುವ ಜನರನ್ನು ಹುಡುಕಿ. ನಿಮ್ಮ ಸಂಪರ್ಕಗಳು ಎನ್‌ಕ್ರಿಪ್ಟ್ ಆಗಿವೆ ಮತ್ತು Radar ಸೇವೆಗೆ ಗೋಚರಿಸುವುದಿಲ್ಲ.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ಫೋನ್ ಕರೆಗಳು</string>
     <!-- Phone calls permission row description -->

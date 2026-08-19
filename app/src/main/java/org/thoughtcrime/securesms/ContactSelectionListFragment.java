@@ -499,6 +499,40 @@ public final class ContactSelectionListFragment extends LoggingFragment {
   }
 
   private void requestContactPermissions() {
+    if (hasExplicitContactDiscoveryConsent()) {
+      requestContactPermissionsAfterDisclosure();
+    } else {
+      showContactDiscoveryDisclosure();
+    }
+  }
+
+  private boolean hasExplicitContactDiscoveryConsent() {
+    return SignalStore.account().getHasRecordedContactDiscoveryConsent() &&
+           SignalStore.account().getContactDiscoveryConsentGranted();
+  }
+
+  /**
+   * Prominent disclosure required by the Google Play User Data policy: must be shown before the contacts
+   * permission request whenever the user has not explicitly consented to contact discovery (address book
+   * upload), e.g. when they declined it during registration or never saw the registration disclosure.
+   */
+  private void showContactDiscoveryDisclosure() {
+    String message = getString(R.string.ContactDiscoveryConsent__body) + "\n\n" +
+                     getString(R.string.ContactDiscoveryConsent__details) + "\n\n" +
+                     getString(R.string.ContactDiscoveryConsent__optional);
+
+    new MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.ContactDiscoveryConsent__title)
+        .setMessage(message)
+        .setPositiveButton(R.string.ContactDiscoveryConsent__allow_access, (dialog, which) -> {
+          SignalStore.account().setContactDiscoveryConsent(true);
+          requestContactPermissionsAfterDisclosure();
+        })
+        .setNegativeButton(R.string.GrantPermissionsFragment__not_now, (dialog, which) -> SignalStore.account().setContactDiscoveryConsent(false))
+        .show();
+  }
+
+  private void requestContactPermissionsAfterDisclosure() {
     Permissions.with(this)
                .request(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
                .ifNecessary()
@@ -912,7 +946,7 @@ public final class ContactSelectionListFragment extends LoggingFragment {
       builder.setQuery(contactSearchState.getQuery());
 
       if ((newConversationCallback != null || findByCallback != null) &&
-          !hasContactsPermissions(requireContext()) &&
+          !(hasContactsPermissions(requireContext()) && hasExplicitContactDiscoveryConsent()) &&
           !SignalStore.uiHints().getDismissedContactsPermissionBanner() &&
           !hasQuery)
       {
@@ -1001,7 +1035,7 @@ public final class ContactSelectionListFragment extends LoggingFragment {
 
   private void addMoreSection(@NonNull ContactSearchConfiguration.Builder builder) {
     builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.MORE_HEADING.getCode());
-    if (hasContactsPermissions(requireContext())) {
+    if (hasContactsPermissions(requireContext()) && hasExplicitContactDiscoveryConsent()) {
       builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.REFRESH_CONTACTS.getCode());
     } else if (SignalStore.uiHints().getDismissedContactsPermissionBanner()) {
       builder.arbitrary(ContactSelectionListAdapter.ArbitraryRepository.ArbitraryRow.FIND_CONTACTS.getCode());

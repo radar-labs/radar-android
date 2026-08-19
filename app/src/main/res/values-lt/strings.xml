@@ -2915,8 +2915,6 @@
     <string name="RegistrationActivity_play_services_error">„Play“ paslaugų klaida</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">„Google Play“ paslaugos yra atnaujinamos arba laikinai neprieinamos. Prašome bandyti dar kartą.</string>
     <string name="RegistrationActivity_terms_and_privacy">Sąlygos ir Privatumo politika</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar programėlei reikia leidimo gauti prieigą prie jūsų adresatų ir medijos, kad padėtų jums susisiekti su draugais ir siųsti žinutes. Jūsų adresatai yra išsiunčiami naudojant Radar privatų adresatų atradimą, o tai reiškia, kad adresatai yra šifruoti ištisiniu būdu ir niekada nebus matomi Radar paslaugai.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar programėlei reikia leidimo gauti prieigą prie jūsų adresatų, kad padėtų jums susisiekti su draugais. Jūsų adresatai yra išsiunčiami naudojant Radar privatų adresatų atradimą, o tai reiškia, kad adresatai yra šifruoti ištisiniu būdu ir niekada nebus matomi Radar paslaugai.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Atlikote per daug bandymų užregistruoti šį numerį. Vėliau bandykite dar kartą.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Atlikai per daug bandymų užregistruoti šį numerį. Pabandyk už %1$s.</string>
@@ -3691,7 +3689,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Ne, ačiū</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Leiskite prieigą prie savo kontaktų. Jūsų kontaktai yra užšifruoti ir „Radar“ jų nemato.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Norint rodyti jūsų adresatus, Radar reikia prieigos prie jų.</string>
@@ -4497,7 +4494,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Adresatai</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Rask savo pažįstamų. Tavo adresatai yra užšifruoti ir „Radar“ jų nemato.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefono skambučiai</string>
     <!-- Phone calls permission row description -->

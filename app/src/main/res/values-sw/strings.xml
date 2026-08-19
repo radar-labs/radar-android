@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Hitilafu katika huduma za Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Huduma za Google Play zinasasisha au hazipatikani kwa muda. Tafadhali jaribu tena.</string>
     <string name="RegistrationActivity_terms_and_privacy">Vigezo &amp;amp: Sera ya Faragha</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar inahitaji idhini za mawasiliano na media ili kukuwezesha kuwasiliana na marafiki na kutuma jumbe. Wawasiliani wako wamesasishwa kwa kutumia mfumo wa siri wa kuvumbua wawasiliani wa Radar, inayomaanisha zipo kwenye mfumo wa end-to-end na haionekani kwenye huduma za Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar inahitaji idhini ya wawasiliani wako kukuwezesha kuwasiliana na marafiki. Wawasiliani wako wamesasishwa kwa kutumia mfumo wa siri wa kuvumbua wawasiliani wa Radar, inayomaanisha zipo kwenye mfumo wa end-to-end na haionekani kwenye huduma za Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Umefanya majaribio mengi sana ili kusajili nambari hii. Tafadhali jaribu tena baadaye.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Umefanya majaribio mengi ya kusajili nambari hii. Tafadhali jaribu tena baada ya %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Hapana nashukuru</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Ruhusu ufikiaji kwa wawasiliani wako. Wawasiliani wako wamesimbwa fiche na hawaonekani kwenye huduma ya Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar inahitaji upatikanaji wa wawasiliani yako ili kuonyesha.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Wawasiliani</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Tafuta watu unaowafahamu. Wawasiliani wako wamesimbwa fiche na hawaonekani kwa huduma ya Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Simu</string>
     <!-- Phone calls permission row description -->

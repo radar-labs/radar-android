@@ -56,6 +56,11 @@ object ContactDiscovery {
       return
     }
 
+    if (!SignalStore.account.isContactDiscoveryAllowed) {
+      Log.w(TAG, "User has not consented to contact discovery (address book upload). Skipping.")
+      return
+    }
+
     if (!SignalStore.registration.isRegistrationComplete) {
       if (SignalStore.account.isRegistered && SignalStore.svr.lastPinCreateFailed()) {
         Log.w(TAG, "Registration isn't complete, but only because PIN creation failed. Allowing CDS to continue.")
@@ -135,6 +140,11 @@ object ContactDiscovery {
       return
     }
 
+    if (!SignalStore.account.isContactDiscoveryAllowed) {
+      Log.w(TAG, "[syncRecipientInfoWithSystemContacts] User has not consented to contact discovery, skipping.")
+      return
+    }
+
     syncRecipientsWithSystemContacts(
       context = context,
       rewrites = emptyMap(),
@@ -162,7 +172,7 @@ object ContactDiscovery {
     val result: RefreshResult = refresh()
     stopwatch.split("cds")
 
-    if (hasContactsPermissions(context)) {
+    if (hasContactsPermissions(context) && SignalStore.account.isContactDiscoveryAllowed) {
       AppDependencies.jobManager.add(SyncSystemContactLinksJob())
 
       val useFullSync = forceFullSystemContactSync || (removeSystemContactLinksIfMissing && result.registeredIds.size > FULL_SYSTEM_CONTACT_SYNC_THRESHOLD)
@@ -196,7 +206,7 @@ object ContactDiscovery {
       }
       stopwatch.split("notify")
     } else {
-      Log.w(TAG, "No contacts permission, can't sync with system contacts.")
+      Log.w(TAG, "No contacts permission or no contact discovery consent, can't sync with system contacts.")
     }
 
     stopwatch.stop(TAG)

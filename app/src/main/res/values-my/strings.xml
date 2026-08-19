@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">Google Play အသုံးပြု၍မရပါ</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play Serivice ကို အဆင့်မြှင့်တင်နေခြင်း၊ သို့၊ အသုံးပြု၍ မရခြင်းဖြစ်နေပါသည်။ ပြန်လည် စမ်းသပ်ကြည့်ပါ။</string>
     <string name="RegistrationActivity_terms_and_privacy">လိုက်နာဆောင်ရွက်ရမည့် အချက်များ</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar သည် သင့်အား မိတ်ဆွေများနှင့် ဆက်သွယ်ပေးနိုင်ရန်နှင့် မက်ဆေ့ချ်များ ပေးပို့နိုင်စေရန်အတွက် ကူညီပေးရန် အဆက်အသွယ်နှင့် မီဒီယာ ခွင့်ပြုချက်များ လိုအပ်ပါသည်။ သင့်အဆက်အသွယ်များကို End-to-end ကုဒ်ပြောင်းဝှက်ထားသော Radar ၏ သီးသန့် အဆက်အသွယ် ရှာဖွေရေးကို သုံး၍ အပ်လုဒ်လုပ်ထားသောကြောင့် Radar ဝန်ဆောင်မှုတွင် မည်သည့်အခါမျှ မြင်ရမည် မဟုတ်ပါ။</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar သည် သင့်အား မိတ်ဆွေများနှင့် ဆက်သွယ်ပေးရန်အတွက် အဆက်အသွယ် ခွင့်ပြုချက် လိုအပ်ပါသည်။ သင့်အဆက်အသွယ်များကို End-to-end ကုဒ်ပြောင်းဝှက်ထားသော Radar ၏ သီးသန့် အဆက်အသွယ် ရှာဖွေရေးကို သုံး၍ အပ်လုဒ်လုပ်ထားသောကြောင့် Radar ဝန်ဆောင်မှုတွင် မည်သည့်အခါမျှ မြင်ရမည် မဟုတ်ပါ။</string>
     <string name="RegistrationActivity_rate_limited_to_service">ဤနံပတ်ဖြင့် မှတ်ပုံတင်ခြင်းကို အကြိမ်ပေါင်းများစွာ ကြိုးစားပြီးပါပြီ။ ကျေးဇူးပြူ၍ နောင်အခါမှ ပြန်လည်ကြိုးစားပါ။</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">ဤနံပါတ်ကို မှတ်ပုံတင်ရန် ကြိုးပမ်းမှုများစွာ ဆောင်ရွက်ခဲ့ပါသည်။ %1$s အကြာတွင် ထပ်ကြိုးစားကြည့်ပါ။</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">မလုပ်လိုပါ</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">သင့် အဆက်အသွယ်များကို အသုံးပြုခွင့်ပေးပါ။ သင့်အဆက်အသွယ်များကို ကုဒ်ပြောင်းဝှက်ထားပြီး Radar ဝန်ဆောင်မှုက မမြင်တွေ့ရပါ။</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">မိမိ၏ အဆက်အသွယ်များကို ပြသရန် Radar က အဆက်အသွယ်များကို ရယူရန်လိုသည်။</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">အဆက်အသွယ်များ</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">သင် သိသောသူများကို ရှာဖွေလိုက်ပါ။ သင့်အဆက်အသွယ်များကို ကုဒ်ပြောင်းဝှက်ထားပြီး Radar ဝန်ဆောင်မှုက မမြင်တွေ့ရပါ။</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ဖုန်းကောလ်များ</string>
     <!-- Phone calls permission row description -->

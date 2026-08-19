@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Σφάλμα υπηρεσιών Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Οι υπηρεσίες Google Play αναβαθμίζονται ή είναι προσωρινά μη διαθέσιμες. Παρακαλώ ξαναπροσπάθησε.</string>
     <string name="RegistrationActivity_terms_and_privacy">Όροι &amp; Πολιτική Απορρήτου</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Το Radar χρειάζεται τα δικαιώματα επαφών και πολυμέσων για να σας βοηθήσει να συνδεθείτε με φίλους και να στείλετε μηνύματα. Οι επαφές σας μεταφορτώνονται χρησιμοποιώντας τον ιδιωτικό εντοπισμό επαφών του Radar, πράγμα που σημαίνει ότι είναι κρυπτογραφημένες end-to-end και ποτέ ορατές από την υπηρεσία Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Το Radar χρειάζεται την άδεια επαφών για να σας βοηθήσει να συνδεθείτε με φίλους. Οι επαφές σας μεταφορτώνονται χρησιμοποιώντας τον ιδιωτικό εντοπισμό επαφών του Radar, πράγμα που σημαίνει ότι είναι κρυπτογραφημένες end-to-end και ποτέ ορατές από την υπηρεσία Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Έχεις προσπαθήσει πάρα πολλές φορές να εγγράψεις αυτόν τον αριθμό. Παρακαλώ ξαναπροσπάθησε αργότερα.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Έχεις προσπαθήσει πάρα πολλές φορές να εγγράψεις αυτόν τον αριθμό. Ξαναπροσπάθησε σε %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Όχι, ευχαριστώ</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Να δοθεί πρόσβαση στις επαφές σου. Οι επαφές σου είναι κρυπτογραφημένες και δεν είναι ορατές στην υπηρεσία Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Το Radar χρειάζεται πρόσβαση στις επαφές σου για να μπορέσει να τις εμφανίσει.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Επαφές</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Βρες άτομα που γνωρίζεις. Οι επαφές σου είναι κρυπτογραφημένες και δεν είναι ορατές στην υπηρεσία Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Τηλεφωνικές κλήσεις</string>
     <!-- Phone calls permission row description -->

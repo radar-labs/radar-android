@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Erro de Servizos Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Servizos de Google Play está actualizándose ou non está temporalmente dispoñible. Volve tentalo.</string>
     <string name="RegistrationActivity_terms_and_privacy">Termos e política de privacidade</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar necesita ter os permisos activos para acceder aos teus contactos e multimedia e así axudarche a conectar cos teus amigos e enviarlles mensaxes. Os teus contactos cargaranse a través do modo de detección privado de Radar, o que significa que están encriptados de extremo a extremo e Radar nunca poderá velos.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar necesita ter o permiso activo para acceder aos teus contactos e axudarche a contectar cos teus amigos. Os teus contactos cargaranse a través do modo de detección privado de Radar, o que significa que están encriptados de extremo a extremo e Radar nunca poderá velos.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Levas demasiados intentos para rexistrar este número. Téntao máis tarde.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Levas demasiados intentos para rexistrar este número. Téntao de novo en %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Non, grazas</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Permite o acceso á listaxe de contactos. Os teus contactos están encriptados e non son visibles para o servizo de Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar necesita acceder aos teus contactos para poder mostralos.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Contactos</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Atopa persoas que coñezas. Os teus contactos están encriptados e non son visibles para o servizo de Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Chamadas de teléfono</string>
     <!-- Phone calls permission row description -->

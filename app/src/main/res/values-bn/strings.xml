@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">প্লে সার্ভিস সমস্যা</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">গুগল প্লে পরিষেবাদি আপডেট করছে বা অস্থায়ীভাবে অনুপলব্ধ। অনুগ্রহপূর্বক আবার চেষ্টা করুন।</string>
     <string name="RegistrationActivity_terms_and_privacy">শর্তাদি এবং গোপনীয়তা নীতি</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">আপনাকে বন্ধুদের সাথে সংযোগ করতে এবং বার্তা পাঠাতে সাহায্য করার জন্য সিগন্যালের পরিচিতি এবং মিডিয়ার অনুমতির প্রয়োজন হয়। আপনার পরিচিতিগুলি সিগন্যালের ব্যক্তিগত পরিচিতি আবিষ্কার ব্যবহার করে আপলোড করা হয়, যার মানে সেগুলি এন্ড-টু-এন্ড এনক্রিপ্ট করা এবং সিগন্যাল পরিষেবাতে কখনই দৃশ্যমান নয়৷</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">আপনাকে বন্ধুদের সাথে সংযোগ করতে সাহায্য করার জন্য সিগন্যালের পরিচিতির অনুমতির প্রয়োজন হয়। আপনার পরিচিতিগুলি সিগন্যালের ব্যক্তিগত পরিচিতি আবিষ্কার ব্যবহার করে আপলোড করা হয়, যার মানে সেগুলি এন্ড-টু-এন্ড এনক্রিপ্ট করা এবং সিগন্যাল পরিষেবাতে কখনই দৃশ্যমান নয়।</string>
     <string name="RegistrationActivity_rate_limited_to_service">আপনি এই নম্বরটি নিবন্ধন করার জন্য অনেকবার চেষ্টা করেছেন। দয়া করে পরে আবার চেষ্টা করুন।</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">আপনি এই নম্বরটি রেজিস্ট্রেশন করার জন্য ইতোমধ্যে অনেকবার চেষ্টা করে ফেলেছেন। অনুগ্রহ করে %1$s মিনিটের মধ্যে আবার চেষ্টা করুন।</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">না ধন্যবাদ</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">আপনার কন্টাক্টে অ্যাক্সেসের অনুমতি দিন। আপনার কন্টাক্টগুলো এনক্রিপ্ট করা অবস্থায় আছে এবং সেগুলো Radar পরিষেবায় দৃশ্যমান নয়।</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar আপনার পরিচিতিসমূহ প্রদর্শন করতে তাদের প্রবেশাধিকার প্রয়োজন।</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">পরিচিতিসমূহ</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">আপনার পরিচিত ব্যক্তিদের খুঁজে বের করুন। আপনার কন্টাক্টগুলো এনক্রিপ্ট অবস্থায় আছে এবং সেগুলো সিগন্যাল সার্ভিসে দৃশ্যমান নয়।</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ফোন কল</string>
     <!-- Phone calls permission row description -->

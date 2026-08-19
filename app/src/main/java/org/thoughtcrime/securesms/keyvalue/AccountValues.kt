@@ -85,6 +85,9 @@ class AccountValues internal constructor(store: KeyValueStore, context: Context)
 
     private const val KEY_HAS_LINKED_DEVICES = "account.has_linked_devices"
 
+    private const val KEY_CONTACT_DISCOVERY_CONSENT_RECORDED = "account.contact_discovery_consent_recorded"
+    private const val KEY_CONTACT_DISCOVERY_CONSENT_GRANTED = "account.contact_discovery_consent_granted"
+
     private const val KEY_ACCOUNT_ENTROPY_POOL = "account.account_entropy_pool"
     private const val KEY_RESTORED_ACCOUNT_ENTROPY_KEY = "account.restored_account_entropy_pool"
     private const val KEY_RESTORED_ACCOUNT_ENTROPY_KEY_FROM_PRIMARY = "account.restore_account_entropy_pool_primary"
@@ -545,6 +548,35 @@ class AccountValues internal constructor(store: KeyValueStore, context: Context)
    */
   @get:JvmName("isMultiDevice")
   var isMultiDevice by booleanValue(KEY_HAS_LINKED_DEVICES, false)
+
+  /**
+   * Whether the user has been shown the contact-discovery (address book upload) prominent disclosure
+   * and made an explicit choice.
+   */
+  var hasRecordedContactDiscoveryConsent: Boolean by booleanValue(KEY_CONTACT_DISCOVERY_CONSENT_RECORDED, false)
+
+  /** The user's explicit choice from the contact-discovery disclosure. Only meaningful when [hasRecordedContactDiscoveryConsent] is true. */
+  var contactDiscoveryConsentGranted: Boolean by booleanValue(KEY_CONTACT_DISCOVERY_CONSENT_GRANTED, false)
+
+  /**
+   * Whether we're allowed to upload the device's address book to the contact discovery service (CDSI)
+   * or read system contact info into the database.
+   *
+   * Only an explicitly accepted in-app prominent disclosure permits this (Google Play User Data policy).
+   * There is deliberately no isRegistered fallback for unrecorded consent: review pipelines install with
+   * all runtime permissions pre-granted, which skips the registration permissions flow (and therefore the
+   * disclosure) entirely, and any address book collection in that state is a policy violation. Installs
+   * that registered before the disclosure existed are grandfathered by
+   * [org.thoughtcrime.securesms.migrations.ContactDiscoveryConsentMigrationJob] on app update.
+   */
+  val isContactDiscoveryAllowed: Boolean
+    get() = hasRecordedContactDiscoveryConsent && contactDiscoveryConsentGranted
+
+  /** Records the user's accept/decline choice from the contact-discovery prominent disclosure. */
+  fun setContactDiscoveryConsent(granted: Boolean) {
+    contactDiscoveryConsentGranted = granted
+    hasRecordedContactDiscoveryConsent = true
+  }
 
   /** Do not alter. If you need to migrate more stuff, create a new method. */
   private fun migrateFromSharedPrefsV1(context: Context) {

@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Play Services Fout</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play-dienste word bygewerk of is nie tydelik beskikbaar nie. Probeer asseblief weer.</string>
     <string name="RegistrationActivity_terms_and_privacy">Bepalings &amp; Privaatheidsbeleid</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar benodig kontakte- en mediatoestemmings om jou te help om met vriende te verbind en boodskappe te stuur. Jou kontakte word opgelaai deur middel van Radar se privaatkontak-ontdekking, wat beteken dat hulle end-tot-end geënkripteer is en nooit vir die Radar-diens sigbaar is nie.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar benodig kontakte- en mediatoestemmings om jou te help om met vriende te verbind. Jou kontakte word opgelaai deur middel van Radar se privaatkontak-ontdekking, wat beteken dat hulle end-tot-end geënkripteer is en nooit vir die Radar-diens sigbaar is nie.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Jy het te veel keer probeer om hierdie nommer te registreer. Probeer gerus later weer.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Jy het te veel keer probeer om hierdie nommer te registreer. Probeer asseblief weer oor %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Nee dankie</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Laat toegang tot jou kontakte toe. Jou kontakte is geënkripteer en is nie vir die Radar-diens sigbaar nie.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar het toegang tot jou kontakte nodig om dit te kan vertoon.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakte</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Vind mense wat jy ken. Jou kontakte is geënkripteer en is nie vir die Radar-diens sigbaar nie.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefoonoproepe</string>
     <!-- Phone calls permission row description -->

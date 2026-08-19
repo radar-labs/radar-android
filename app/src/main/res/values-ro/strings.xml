@@ -2827,8 +2827,6 @@
     <string name="RegistrationActivity_play_services_error">Eroare Servicii Play</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Serviciile Google Play se actualizează sau sunt temporar indisponibile. Te rugăm încearcă din nou.</string>
     <string name="RegistrationActivity_terms_and_privacy">Termeni &amp; Politica de confidențialitate</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar are nevoie de permisiunea pentru contacte și media să te ajute să iei legătura cu prietenii și să trimiți mesaje. Contactele tale sunt încărcate utilizând descoperirea privată a contactelor de la Radar, ceea ce înseamnă că sunt criptate integral și nu sunt niciodată vizibile pentru serviciul Radar.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar are nevoie de permisiunea pentru contacte să te ajute să iei legătura cu prietenii. Contactele tale sunt încărcate utilizând descoperirea privată a contactelor de la Radar, ceea ce înseamnă că sunt criptate integral și nu sunt niciodată vizibile pentru serviciul Radar.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Ai făcut prea multe încercări de înregistrare a acestui număr. Te rugăm să încerci din nou mai târziu.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Ai făcut prea multe încercări pentru înregistrarea acestui număr. Încearcă din nou în %1$s.</string>
@@ -3589,7 +3587,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Nu, mulțumesc</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Permite accesul la contacte. Contactele tale sunt criptate și nu sunt vizibile pentru serviciul Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar are nevoie de acces la contactele tale pentru a le afișa.</string>
@@ -4383,7 +4380,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Contacte</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Găsește oameni pe care îi cunoști. Contactele tale sunt criptate și nu sunt vizibile pentru serviciul Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Apeluri telefonice</string>
     <!-- Phone calls permission row description -->

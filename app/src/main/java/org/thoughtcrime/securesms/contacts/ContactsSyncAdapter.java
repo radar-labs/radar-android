@@ -48,6 +48,11 @@ public class ContactsSyncAdapter extends AbstractThreadedSyncAdapter {
       return;
     }
 
+    if (!SignalStore.account().isContactDiscoveryAllowed()) {
+      Log.i(TAG, "User has not consented to contact discovery (address book upload), skipping all sync operations.");
+      return;
+    }
+
     if (!SignalStore.account().isRegistered()) {
       Log.i(TAG, "Not push registered. Just syncing contact info.");
       ContactDiscovery.syncRecipientInfoWithSystemContacts(context);

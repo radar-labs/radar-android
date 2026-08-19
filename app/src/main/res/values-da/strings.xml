@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Play Services fejl</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play-tjenester opdateres eller er midlertidigt utilgængelig. Prøv venligst igen.</string>
     <string name="RegistrationActivity_terms_and_privacy">Vilkår og privatlivspolitik</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar har brug for tilladelse til at tilgå kontakter og lagerplads for at du kan oprette forbindelse til venner og sende beskeder. Dine kontakter uploades ved hjælp af Radars private kontaktopdagelse, hvilket betyder, at de er end-to-end-krypteret og aldrig synlige for Radar-tjenesten.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar har brug for tilladelse til at tilgå kontakter for at du kan oprette forbindelse til venner. Dine kontakter uploades ved hjælp af Radars private kontaktopdagelse, hvilket betyder, at de er end-to-end-krypteret og aldrig synlige for Radar-tjenesten.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Du har foretaget for mange forsøg på at registrere dette nummer. Prøv igen senere.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Du har forsøgt at registrere dette nummer for mange gange. Prøv igen om %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Nej tak</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Giv adgang til dine kontakter. Dine kontakter er krypterede og er ikke synlige for Radar-tjenesten.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar kræver tilladelse til at tilgå dine kontakter for at kunne vise dem.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakter</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Find personer, du kender. Dine kontakter er krypterede og ikke synlige for Radar-tjenesten.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefonopkald</string>
     <!-- Phone calls permission row description -->

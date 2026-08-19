@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Грешка со Play услуги</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play услугите се ажурираат или привремено се недостапни. Ве молиме обидете се повторно.</string>
     <string name="RegistrationActivity_terms_and_privacy">Услови и политика за приватност</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar има потреба од дозвола до контакти и склад за да Ви помогне да се поврзете со пријателите и да испраќате пораки. Вашите контакти се прикачуваат преку приватното откривање на контакти на Radar, ова значи дека се шифрирани од крај до крај и никогаш не се видливи за Radar услугата.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar има потреба од дозвола до контакти за да Ви помогне да се поврзете со пријателите. Вашите контакти се прикачуваат преку приватното откривање на контакти на Radar, ова значи дека се шифрирани од крај до крај и никогаш не се видливи за Radar услугата.</string>
     <string name="RegistrationActivity_rate_limited_to_service">Направивте премногу обиди за регистрација на овој број. Ве молиме обидете се повторно подоцна.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">Направивте премногу обиди за регистрација на овој број. Ве молиме обидете се повторно за %1$s.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">Не, благодарам</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">Дозволете пристап до вашите контакти. Вашите контакти се шифрирани и не се видливи за услугата Radar.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">На Radar му треба пристап до Вашите контакти за да може да ги прикаже.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Контакти</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Пронајдете луѓе кои ги познавате. Вашите контакти се шифрирани и не се видливи за услугата Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Телефонски повици</string>
     <!-- Phone calls permission row description -->

@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">Play مۇلازىمەتلىرى خاتالىقى</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play مۇلازىمەتلىرى يېڭىلىنىۋاتىدۇ ياكى ئۇلارنى ۋاقىتلىق ئىشلەتكىلى بولمايدۇ. سەل تۇرۇپ قايتا سىناڭ.</string>
     <string name="RegistrationActivity_terms_and_privacy">شەرتلەر &amp;  مەخپىيەتلىك تۈزۈمى</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">دوستلىرىڭىز بىلەن ئالاقە قىلىش ۋە ئۇلارغا ئۇچۇر يوللاش ئۈچۈن Radar ئالاقىداشلار ۋە مېدىيا ھوقۇقىنى تەلەپ قىلىدۇ. ئالاقىداشلىرىڭىز Radar نىڭ «شەخسىي ئالاقىداشلارنى بايقاش» ئىقتىدارى ئارقىلىق يۈكلەنگەن بولۇپ، ئۇلار تېرمىنالدىن تېرمىنالغا مەخپىيەلەشتۈرۈلگەن، Radar مۇلازىمىتى ئۇلارنى كۆرەلمەيدۇ.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">دوستلىرىڭىز بىلەن ئۇلىنىش ئۈچۈن Radar ئالاقىداشلار ھوقۇقىنى تەلەپ قىلىدۇ. ئالاقىداشلىرىڭىز Radar نىڭ «شەخسىي ئالاقىداشلارنى بايقاش» ئىقتىدارى ئارقىلىق يۈكلەنگەن بولۇپ، ئۇلار تېرمىنالدىن تېرمىنالغا مەخپىيەلەشتۈرۈلگەن، Radar مۇلازىمىتى ئۇلارنى كۆرەلمەيدۇ.</string>
     <string name="RegistrationActivity_rate_limited_to_service">سىز بۇ نومۇرنى تىزىملىتىشقا بەك كۆپ قېتىم ئۇرۇندىڭىز. كېيىنرەك قايتا سىناڭ.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">سىز بۇ نومۇرنى تىزىملىتىشنى بەك كۆپ قېتىم سىنىدىڭىز. «%1$s» تىن كېيىن قايتا سىناڭ.</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">ياق، رەھمەت</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">ئالاقىداش ھوقۇقىغا ئىجازەت قىلىڭ. ئالاقىداشلىرىڭىز مەخپىيلەشتۈرۈلگەن بولۇپ، Radar مۇلازىمىتىگە كۆرۈنمەيدۇ.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar ئۇلارنى كۆرسىتىش ئۈچۈن ئالاقەداشلىرىڭىزنى زىيارەت قىلىشى كېرەك.</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">ئالاقەداشلار</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">سىز تونۇيدىغان كىشىلەرنى تېپىڭ. ئالاقىداشلىرىڭىز مەخپىيلەشتۈرۈلگەن بولۇپ، سىگنال مۇلازىمىتىگە كۆرۈنمەيدۇ.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">تېلېفون چاقىرىقلىرى</string>
     <!-- Phone calls permission row description -->

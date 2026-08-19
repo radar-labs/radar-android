@@ -2739,8 +2739,6 @@
     <string name="RegistrationActivity_play_services_error">Play Services പിശക്</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play Services അപ്‌ഡേറ്റുചെയ്യുന്നു അല്ലെങ്കിൽ താൽക്കാലികമായി ലഭ്യമല്ല. ദയവായി വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="RegistrationActivity_terms_and_privacy">നിബന്ധനകളും സ്വകാര്യതാ നയവും</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">സുഹൃത്തുക്കളുമായി ബന്ധപ്പെടാനും സന്ദേശങ്ങള്‍ അയക്കാനും നിങ്ങളെ സഹായിക്കുന്നതിന് Radar-ന് കോൺ‌ടാക്റ്റുകൾ, മീഡിയ അനുമതികൾ ആവശ്യമാണ്. Radar-ന്റെ സ്വകാര്യ കോൺടാക്റ്റ് കണ്ടെത്തൽ ഉപയോഗിച്ചാണ് നിങ്ങളുടെ കോൺ‌ടാക്റ്റുകൾ അപ്‌ലോഡ് ചെയ്‌തിരിക്കുന്നത്, അതിനർത്ഥം അവ ആദ്യാവസാന എൻക്രിപ്റ്റ് ചെയ്‌തതും Radar സേവനത്തിന് ഒരിക്കലും ദൃശ്യമാകാത്തതുമാണ്.</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">സുഹൃത്തുക്കളുമായി ബന്ധപ്പെടാൻ നിങ്ങളെ സഹായിക്കുന്നതിന് Radar-ന് കോൺ‌ടാക്റ്റുകൾ അനുമതി ആവശ്യമാണ്. Radar-ന്റെ സ്വകാര്യ കോൺടാക്റ്റ് കണ്ടെത്തൽ ഉപയോഗിച്ചാണ് നിങ്ങളുടെ കോൺ‌ടാക്റ്റുകൾ അപ്‌ലോഡ് ചെയ്‌തിരിക്കുന്നത്, അതിനർത്ഥം അവ ആദ്യാവസാന എൻക്രിപ്റ്റ് ചെയ്‌തതും Radar സേവനത്തിന് ഒരിക്കലും ദൃശ്യമാകാത്തതുമാണ്.</string>
     <string name="RegistrationActivity_rate_limited_to_service">ഈ നമ്പർ രജിസ്റ്റർ ചെയ്യുന്നതിന് നിങ്ങൾ വളരെയധികം ശ്രമങ്ങൾ നടത്തി. പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">ഈ നമ്പർ രജിസ്റ്റർ ചെയ്യാൻ നിങ്ങൾ നിരവധി ശ്രമങ്ങൾ നടത്തി. %1$s സമയത്തിന് ശേഷം വീണ്ടും ശ്രമിക്കുക.</string>
@@ -3487,7 +3485,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">വേണ്ട</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">നിങ്ങളുടെ കോൺടാക്റ്റുകളിലേക്ക് ആക്സസ് അനുവദിക്കുക. നിങ്ങളുടെ കോൺടാക്റ്റുകൾ എൻക്രിപ്റ്റ് ചെയ്‌തിരിക്കുന്നു, അത് Radar സേവനത്തിന് കാണാനാകില്ല.</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">Radar-ന് നിങ്ങളുടെ കോൺടാക്റ്റുകൾ പ്രദർശിപ്പിക്കുന്നതിന് അവയിലേക്ക് ആക്സസ് ആവശ്യമാണ്.</string>
@@ -4269,7 +4266,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">കോൺടാക്ടുകൾ</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">നിങ്ങൾക്ക് അറിയാവുന്ന ആളുകളെ കണ്ടെത്തൂ. നിങ്ങളുടെ കോൺടാക്റ്റുകൾ എൻക്രിപ്റ്റ് ചെയ്‌തിരിക്കുന്നു, അത് Radar സേവനത്തിന് കാണാനാകില്ല.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ഫോൺ കോളുകൾ</string>
     <!-- Phone calls permission row description -->

@@ -2651,8 +2651,6 @@
     <string name="RegistrationActivity_play_services_error">Google Play 服务错误</string>
     <string name="RegistrationActivity_google_play_services_is_updating_or_unavailable">Google Play 服务正在更新或者暂时不可用，请稍后再试。</string>
     <string name="RegistrationActivity_terms_and_privacy">条款和隐私政策</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_and_media_in_order_to_connect_with_friends">Radar 需要通讯录和媒体权限以帮助您联系朋友和发送消息。您的通讯录将通过 Radar 的私密联系人发现技术上传，这意味着您的联系人将获得端对端加密保护，对 Radar 服务绝对不可见。</string>
-    <string name="RegistrationActivity_signal_needs_access_to_your_contacts_in_order_to_connect_with_friends">Radar 需要通讯录权限以帮助您联系朋友。您的通讯录将通过 Radar 的私密联系人发现技术上传，这意味着您的联系人将获得端对端加密保护，对 Radar 服务绝对不可见。</string>
     <string name="RegistrationActivity_rate_limited_to_service">您尝试注册此号码次数过多，请稍候再试。</string>
     <!--    During registration, if the user attempts (and fails) to register, we display this error message with a number of minutes timer they are allowed to try again.-->
     <string name="RegistrationActivity_rate_limited_to_try_again">您尝试注册此号码的次数过多，请在 %1$s 后再试。</string>
@@ -3385,7 +3383,6 @@
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">不，谢谢。</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">允许访问您的联系人。您的联系人将会被加密，Radar 服务将无法看到您的联系人。</string>
 
     <!-- contact_selection_list_fragment -->
     <string name="contact_selection_list_fragment__signal_needs_access_to_your_contacts_in_order_to_display_them">为了显示联系人，Radar 需要其访问权限。</string>
@@ -4155,7 +4152,6 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">联系人</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">帮助您寻找认识的人。您的联系人将会被加密，Radar 服务将无法看到您的联系人。</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">电话通话</string>
     <!-- Phone calls permission row description -->
