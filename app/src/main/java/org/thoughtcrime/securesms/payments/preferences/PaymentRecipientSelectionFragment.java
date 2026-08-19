@@ -1,5 +1,9 @@
 package org.thoughtcrime.securesms.payments.preferences;
 
+import android.Manifest;
+import android.widget.Toast;
+import org.thoughtcrime.securesms.payments.preferences.transfer.PaymentsTransferQrScanFragment;
+import org.thoughtcrime.securesms.permissions.Permissions;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -80,6 +84,28 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     toolbar = view.findViewById(R.id.payment_recipient_selection_fragment_toolbar);
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+    toolbar.inflateMenu(R.menu.payment_recipient_selection_fragment_menu);
+    toolbar.setOnMenuItemClickListener(item -> {
+      if (item.getItemId() == R.id.payment_recipient_selection_scan_qr) {
+        scanQrCode();
+        return true;
+      }
+      return false;
+    });
+
+    // The scanner reports back as a fragment result rather than through the transfer graph's view
+    // model, because this screen is not part of that graph. Dropping the scanned destination into
+    // the filter field reuses the existing "Send to <destination>" row rather than adding a second
+    // way to start a payment.
+    getParentFragmentManager().setFragmentResultListener(
+        PaymentsTransferQrScanFragment.REQUEST_KEY_SCANNED_DESTINATION,
+        getViewLifecycleOwner(),
+        (key, bundle) -> {
+          String destination = bundle.getString(PaymentsTransferQrScanFragment.RESULT_DESTINATION);
+          if (destination != null) {
+            contactFilterView.setQuery(destination);
+          }
+        });
 
     contactFilterView = view.findViewById(R.id.contact_filter_edit_text);
     contactFilterView.enablePaste();
@@ -256,6 +282,17 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     CAN_SEND,
     NO_PROFILE_KEY,
     NOT_ENABLED
+  }
+
+  private void scanQrCode() {
+    Permissions.with(this)
+               .request(Manifest.permission.CAMERA)
+               .ifNecessary()
+               .withRationaleDialog(getString(R.string.CameraXFragment_allow_access_camera), getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs), R.drawable.ic_camera_24)
+               .withPermanentDenialDialog(getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera), null, R.string.CameraXFragment_allow_access_camera, R.string.CameraXFragment_to_scan_qr_codes, getParentFragmentManager())
+               .onAllGranted(() -> SafeNavigation.safeNavigate(Navigation.findNavController(requireView()), R.id.action_paymentRecipientSelection_to_scanQr))
+               .onAnyDenied(() -> Toast.makeText(requireContext(), R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera, Toast.LENGTH_LONG).show())
+               .execute();
   }
 
   private void createPayment(@NonNull RecipientId recipientId) {

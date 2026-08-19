@@ -258,6 +258,14 @@
         tools:layout="@layout/payment_recipient_selection_fragment">
 
         <action
+            android:id="@+id/action_paymentRecipientSelection_to_scanQr"
+            app:destination="@id/paymentRecipientScanQr"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
             android:id="@+id/action_paymentRecipientSelection_to_createPayment"
             app:destination="@id/payments_create"
             app:enterAnim="@anim/fragment_open_enter"
@@ -418,6 +426,16 @@
         app:popExitAnim="@anim/fragment_close_exit" />
 
     <include app:graph="@navigation/payments_create" />
+
+    <!--
+      A second destination for the same scanner fragment. The one in the payments_transfer graph is
+      scoped to that graph's view model; this one reports back through a fragment result instead,
+      so the send screen can consume it without joining that graph.
+    -->
+    <fragment
+        android:id="@+id/paymentRecipientScanQr"
+        android:name="org.thoughtcrime.securesms.payments.preferences.transfer.PaymentsTransferQrScanFragment"
+        tools:layout="@layout/payments_transfer_qr_scan_fragment" />
 
     <include app:graph="@navigation/payments_transfer" />
 
