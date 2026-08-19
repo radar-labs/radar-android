@@ -228,6 +228,38 @@ private fun MigrateFromSignalScreen(
           .size(64.dp)
       )
 
+      // Message history comes across from the user's Signal backup, not from the live handoff, so
+      // say so before they leave for Signal — afterwards is too late, and the only alternative is
+      // the "nothing to restore" dead end further down this flow. Mirrors the disclaimer iOS shows
+      // on its own migrate path (b4f557f2be), adapted to the fact that Android hands off live.
+      Column(
+        modifier = Modifier
+          .widthIn(max = 320.dp)
+          .padding(bottom = 24.dp)
+      ) {
+        Text(
+          text = stringResource(R.string.MigrateFromSignal_before_you_start),
+          style = MaterialTheme.typography.titleSmall,
+          color = MaterialTheme.colorScheme.onSurface
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+          text = stringResource(R.string.MigrateFromSignal_backup_step_1),
+          style = MaterialTheme.typography.bodyMedium,
+          color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+          text = stringResource(R.string.MigrateFromSignal_backup_step_2),
+          style = MaterialTheme.typography.bodyMedium,
+          color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+      }
+
       Column(modifier = Modifier.widthIn(max = 320.dp)) {
         MigrateInstructionRow(
           icon = painterResource(R.drawable.symbol_device_phone_24),
