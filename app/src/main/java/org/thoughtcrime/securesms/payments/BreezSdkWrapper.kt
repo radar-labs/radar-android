@@ -209,6 +209,81 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     return runBlocking { sdk.checkLightningAddressAvailable(CheckLightningAddressRequest(username)) }
   }
 
+  /**
+   * A freshly minted BOLT11 invoice for this wallet, paired with its own absolute expiry so
+   * callers can re-mint before it lapses. [expiresAtMillis] is null when the expiry could not be
+   * read back, which callers should treat as "unknown — do not auto-refresh".
+   */
+  data class LightningInvoice(val bolt11: String, val expiresAtMillis: Long?)
+
+  /**
+   * Mints a BOLT11 invoice for this wallet directly from the SDK.
+   *
+   * The invoice is deliberately *amountless*: the Add Funds screen has no amount field, so the
+   * sender chooses what to pay.
+   *
+   * [expirySeconds] has no documented ceiling in the Spark SDK, so a rejected value falls back to
+   * the SDK default rather than failing the whole call — otherwise the caller loses the invoice
+   * entirely and shows something non-payable in its place. Pass 0 to use the SDK default outright.
+   * Mirrors iOS `fetchLightningInvoice`.
+   */
+  @JvmOverloads
+  @Throws(IOException::class)
+  fun fetchLightningInvoice(description: String = "", expirySeconds: Int = 0): LightningInvoice {
+    val sdk = this.sdk ?: throw IOException("Breez SDK is not available")
+    val expirySecs: UInt? = if (expirySeconds > 0) expirySeconds.toUInt() else null
+
+    val bolt11 = try {
+      mintBolt11Invoice(sdk, description, expirySecs)
+    } catch (e: Exception) {
+      if (expirySecs == null) {
+        throw IOException("Could not mint a lightning invoice", e)
+      }
+      Log.w("BreezSdk", "Breez rejected expirySecs=$expirySecs; retrying with the SDK default", e)
+      try {
+        mintBolt11Invoice(sdk, description, null)
+      } catch (retry: Exception) {
+        throw IOException("Could not mint a lightning invoice", retry)
+      }
+    }
+
+    return LightningInvoice(bolt11, expiryOf(sdk, bolt11))
+  }
+
+  private fun mintBolt11Invoice(sdk: BreezSdk, description: String, expirySecs: UInt?): String {
+    return runBlocking {
+      sdk.receivePayment(
+        ReceivePaymentRequest(
+          ReceivePaymentMethod.Bolt11Invoice(
+            description = description,
+            amountSats = null,
+            expirySecs = expirySecs,
+            paymentHash = null
+          )
+        )
+      ).paymentRequest
+    }
+  }
+
+  /**
+   * Reads the absolute expiry back off a freshly minted invoice rather than assuming a window the
+   * SDK never promised. Null when the invoice cannot be parsed.
+   */
+  private fun expiryOf(sdk: BreezSdk, bolt11: String): Long? {
+    return runCatching {
+      val parsed = runBlocking { sdk.parse(bolt11) }
+      if (parsed !is InputType.Bolt11Invoice) {
+        Log.w("BreezSdk", "Minted invoice did not parse as a BOLT11 invoice; expiry unknown.")
+        return@runCatching null
+      }
+      val details = parsed.v1
+      (details.timestamp + details.expiry).toLong() * 1000L
+    }.getOrElse {
+      Log.w("BreezSdk", "Could not parse minted invoice to read its expiry", it)
+      null
+    }
+  }
+
   /** Fetches an on-chain (Bitcoin) receive address, or null if unavailable. */
   fun getOnchainAddress(): String? {
     val sdk = this.sdk ?: return null
