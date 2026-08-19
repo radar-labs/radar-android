@@ -131,6 +131,19 @@ public class CreatePaymentViewModel extends ViewModel {
     });
   }
 
+  /**
+   * Seeds the amount from a destination that dictates it — a BOLT11 invoice carrying its own
+   * amount. The user does not get to choose in that case: the invoice does, and sending anything
+   * else would be refused by the network.
+   */
+  void setAmount(@NonNull Money money) {
+    inputState.update(s -> {
+      final Optional<FiatMoney> fiat = s.getExchangeRate().flatMap(r -> r.exchange(money));
+
+      return s.updateAmount(money.requireBitcoin().toSatoshiBigInteger().toString(), "0", money, fiat);
+    });
+  }
+
   void toggleMoneyInputTarget() {
     inputState.update(s -> s.updateInputTarget(s.getInputTarget().next()));
   }

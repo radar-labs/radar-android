@@ -113,20 +113,38 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
   }
 
   /**
-   * Mirrors iOS's inline "find by …" section: when the typed query looks like a lightning address
-   * (e.g. {@code name@radar.cash}), surface a tappable row that sends directly to that address.
+   * Mirrors iOS's inline "find by …" section: when the typed query looks like a payable
+   * destination, surface a tappable row that sends straight to it.
+   *
+   * <p>Two shapes are accepted: a lightning address ({@code name@radar.cash}) and a BOLT11 invoice
+   * ({@code lnbc…}), the latter typically arriving via the paste button. An invoice is far too long
+   * to show in full, so it is abbreviated for display while the full string is what gets sent.
    */
   private void updateSendToAddressRow(@Nullable String filter) {
     String query = filter != null ? filter.trim() : "";
 
-    if (LIGHTNING_ADDRESS_SHAPE.matcher(query).matches()) {
-      sendToAddressRow.setText(getString(R.string.PaymentRecipientSelectionFragment__send_to_s, query));
+    boolean isAddress = LIGHTNING_ADDRESS_SHAPE.matcher(query).matches();
+    boolean isInvoice = LightningAddress.looksLikeBolt11Invoice(query);
+
+    if (isAddress || isInvoice) {
+      String display = isInvoice ? abbreviate(query) : query;
+      sendToAddressRow.setText(getString(R.string.PaymentRecipientSelectionFragment__send_to_s, display));
       sendToAddressRow.setVisibility(View.VISIBLE);
       sendToAddressRow.setOnClickListener(v -> onSendToAddressClicked(query));
     } else {
       sendToAddressRow.setVisibility(View.GONE);
       sendToAddressRow.setOnClickListener(null);
     }
+  }
+
+  /** Shortens a long destination to head…tail for display. Matches iOS's 10/9 split. */
+  private static @NonNull String abbreviate(@NonNull String value) {
+    final int prefix = 10;
+    final int suffix = 9;
+    if (value.length() <= prefix + suffix + 1) {
+      return value;
+    }
+    return value.substring(0, prefix) + "\u2026" + value.substring(value.length() - suffix);
   }
 
   private void onSendToAddressClicked(@NonNull String query) {
