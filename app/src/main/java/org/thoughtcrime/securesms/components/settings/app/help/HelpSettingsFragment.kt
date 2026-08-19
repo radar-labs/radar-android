@@ -116,6 +116,10 @@ class HelpSettingsFragment : ComposeFragment() {
               label = StringBuilder().apply {
                 append(getString(R.string.HelpFragment__copyright_signal_messenger))
                 append("\n")
+                // Radar's own copyright alongside the upstream notice. Deliberately keeps the
+                // AGPL line that iOS dropped: the licence requires the notice be preserved.
+                append(getString(R.string.HelpFragment__copyright_radar))
+                append("\n")
                 append(getString(R.string.HelpFragment__licenced_under_the_agplv3))
               }.toString()
             )

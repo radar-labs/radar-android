@@ -34,10 +34,6 @@ class LinkDeviceLearnMoreBottomSheetFragment : ComposeBottomSheetDialogFragment(
 
   override val peekHeightPercentage: Float = 0.8f
 
-  companion object {
-    const val SIGNAL_DOWNLOAD_URL = "https://signal.org/download"
-  }
-
   @Composable
   override fun SheetContent() {
     LearnMoreSheet()
@@ -47,9 +43,13 @@ class LinkDeviceLearnMoreBottomSheetFragment : ComposeBottomSheetDialogFragment(
 @Composable
 fun LearnMoreSheet() {
   val context = LocalContext.current
+  // Display text and link target both point at Radar's own install page: the sentence says
+  // "install Radar", so sending people to signal.org/download would install the wrong app.
+  // The href reuses install_url so there is a single source of truth for that address.
   val downloadUrl = stringResource(id = R.string.LinkDeviceFragment__signal_download_url)
+  val downloadHref = stringResource(id = R.string.install_url)
   val fullString = stringResource(id = R.string.LinkDeviceFragment__on_other_device_visit_signal, downloadUrl)
-  val spanned = SpanUtil.urlSubsequence(fullString, downloadUrl, LinkDeviceLearnMoreBottomSheetFragment.SIGNAL_DOWNLOAD_URL)
+  val spanned = SpanUtil.urlSubsequence(fullString, downloadUrl, downloadHref)
 
   return Column(
     horizontalAlignment = Alignment.CenterHorizontally,
