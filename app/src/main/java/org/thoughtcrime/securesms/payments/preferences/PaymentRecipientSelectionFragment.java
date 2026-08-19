@@ -1,5 +1,18 @@
 package org.thoughtcrime.securesms.payments.preferences;
 
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+import androidx.annotation.WorkerThread;
+import org.thoughtcrime.securesms.database.PaymentTable;
+import org.thoughtcrime.securesms.payments.Direction;
+import org.thoughtcrime.securesms.payments.Payee;
+import org.thoughtcrime.securesms.payments.Payment;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -49,9 +62,13 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
   private static final String TAG = Log.tag(PaymentRecipientSelectionFragment.class);
 
   /** Loose "looks like a lightning address" gate (e.g. {@code name@radar.cash}) before we attempt to parse it. */
+  private static final int MAX_RECENT_RECIPIENTS = 5;
+
   private static final Pattern LIGHTNING_ADDRESS_SHAPE = Pattern.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
 
   private Toolbar                      toolbar;
+  private TextView                     recentHeader;
+  private LinearLayout                 recentContainer;
   private ContactFilterView            contactFilterView;
   private TextView                     sendToAddressRow;
   private ContactSelectionListFragment contactsFragment;
@@ -81,6 +98,10 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     toolbar = view.findViewById(R.id.payment_recipient_selection_fragment_toolbar);
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
+    recentHeader    = view.findViewById(R.id.payment_recipient_selection_fragment_recent_header);
+    recentContainer = view.findViewById(R.id.payment_recipient_selection_fragment_recents);
+    loadRecentRecipients();
+
     contactFilterView = view.findViewById(R.id.contact_filter_edit_text);
     contactFilterView.enablePaste();
     sendToAddressRow  = view.findViewById(R.id.payment_recipient_selection_fragment_send_to_address);
@@ -109,6 +130,7 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     contactFilterView.setOnFilterChangedListener(filter -> {
       contactsFragment.setQueryFilter(filter);
       updateSendToAddressRow(filter);
+      setRecentsVisible(TextUtils.isEmpty(filter) && recentContainer.getChildCount() > 0);
     });
   }
 
@@ -238,6 +260,84 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     CAN_SEND,
     NO_PROFILE_KEY,
     NOT_ENABLED
+  }
+
+  /**
+   * Fills the "Recent" section with the last few destinations this wallet paid, newest first.
+   * Mirrors the recent-recipients section on iOS's send screen, which is backed by the same
+   * outgoing-payment history.
+   */
+  private void loadRecentRecipients() {
+    SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
+                   PaymentRecipientSelectionFragment::queryRecentPayees,
+                   this::bindRecentRecipients);
+  }
+
+  @WorkerThread
+  private static @NonNull List<Payee> queryRecentPayees() {
+    List<Payee>  payees = new ArrayList<>();
+    Set<String>  seen   = new HashSet<>();
+
+    List<PaymentTable.PaymentTransaction> all = new ArrayList<>(SignalDatabase.payments().getAll());
+    Collections.sort(all, Payment.DESCENDING_TIMESTAMP);
+
+    for (PaymentTable.PaymentTransaction transaction : all) {
+      if (transaction.getDirection() != Direction.SENT) {
+        continue;
+      }
+
+      Payee  payee = transaction.getPayee();
+      String key   = payeeKey(payee);
+      if (key == null || !seen.add(key)) {
+        continue;
+      }
+
+      payees.add(payee);
+      if (payees.size() == MAX_RECENT_RECIPIENTS) {
+        break;
+      }
+    }
+
+    return payees;
+  }
+
+  /** Identity for de-duplication: a contact by id, an external destination by its address. */
+  private static @Nullable String payeeKey(@NonNull Payee payee) {
+    if (payee.hasRecipientId()) {
+      return "id:" + payee.requireRecipientId().serialize();
+    } else if (payee.hasPublicAddress()) {
+      return "addr:" + payee.requireLightningAddress().getPaymentAddress();
+    } else {
+      return null;
+    }
+  }
+
+  private void bindRecentRecipients(@NonNull List<Payee> payees) {
+    recentContainer.removeAllViews();
+
+    for (Payee payee : payees) {
+      TextView row = (TextView) LayoutInflater.from(requireContext())
+                                              .inflate(R.layout.payment_recipient_selection_recent_item, recentContainer, false);
+
+      if (payee.hasRecipientId()) {
+        RecipientId recipientId = payee.requireRecipientId();
+        row.setText(Recipient.resolved(recipientId).getDisplayName(requireContext()));
+        row.setOnClickListener(v -> createPaymentOrShowWarningDialog(recipientId));
+      } else {
+        String address = payee.requireLightningAddress().getPaymentAddress();
+        row.setText(address);
+        row.setOnClickListener(v -> onSendToAddressClicked(address));
+      }
+
+      recentContainer.addView(row);
+    }
+
+    setRecentsVisible(!payees.isEmpty() && TextUtils.isEmpty(contactFilterView.getQuery()));
+  }
+
+  private void setRecentsVisible(boolean visible) {
+    recentHeader.setVisibility(visible ? View.VISIBLE : View.GONE);
+    recentContainer.setVisibility(visible ? View.VISIBLE : View.GONE);
   }
 
   private void createPayment(@NonNull RecipientId recipientId) {
