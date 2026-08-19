@@ -5512,6 +5512,12 @@
     <string name="PaymentsRecoveryPasteFragment__next">Next</string>
     <string name="PaymentsRecoveryPasteFragment__invalid_recovery_phrase">Invalid recovery phrase</string>
     <string name="PaymentsRecoveryPasteFragment__make_sure">Make sure you\'ve entered %1$d words and try again.</string>
+    <!-- Error shown when a pasted recovery phrase is neither 12 nor 24 words long -->
+    <string name="PaymentsRecoveryPasteFragment__make_sure_12_or_24">Make sure you\'ve entered your full 12-word or 24-word recovery phrase and try again.</string>
+    <!-- Option to enter a 12-word recovery phrase -->
+    <string name="PaymentsRecoveryEntryFragment__12_words">12 words</string>
+    <!-- Option to enter a 24-word recovery phrase, for wallets created before the switch to 12 words -->
+    <string name="PaymentsRecoveryEntryFragment__24_words">24 words</string>
 
     <string name="PaymentsRecoveryStartFragment__learn_more__view" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_wallet_view_passphrase</string>
     <string name="PaymentsRecoveryStartFragment__learn_more__restore" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_wallet_restore_passphrase</string>
