@@ -30,6 +30,7 @@ import org.thoughtcrime.securesms.payments.CanNotSendPaymentDialog;
 import org.thoughtcrime.securesms.payments.LightningAddress;
 import org.thoughtcrime.securesms.payments.PaymentsAddressException;
 import org.thoughtcrime.securesms.payments.preferences.model.PayeeParcelable;
+import org.thoughtcrime.securesms.mms.AttachmentManager;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.recipients.ui.findby.FindByActivity;
@@ -228,7 +229,9 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
                          showWarningDialog(recipientId);
                          break;
                        case NOT_ENABLED:
-                         RecipientHasNotEnabledPaymentsDialog.show(requireContext());
+                         // Offer to ask them to turn payments on, rather than the OK-only dead end
+                         // this used to show. Same dialog the conversation attachment menu uses.
+                         AttachmentManager.showRequestToActivatePayments(requireContext(), Recipient.resolved(recipientId));
                          break;
                      }
                    });
