@@ -29,7 +29,18 @@ public final class PaymentAmountFormatter {
 
   public static final String SATS_UNIT = "sats";
 
+  /**
+   * Placeholder rendered in place of an amount while the user has chosen to hide their balance.
+   * Single definition so every masked surface uses the same glyph run.
+   */
+  public static final String HIDDEN_AMOUNT = "\u2022\u2022\u2022\u2022\u2022\u2022";
+
   private PaymentAmountFormatter() {}
+
+  /** Whether amounts should currently be masked, i.e. the user has hidden their balance. */
+  public static boolean isBalanceHidden() {
+    return SignalStore.payments().getBalanceHidden();
+  }
 
   /** Whether the given amount should currently be rendered in sats. */
   public static boolean isSatsDisplay(@NonNull Money money) {
@@ -48,6 +59,25 @@ public final class PaymentAmountFormatter {
   /** Formats with default options, respecting the sats/BTC preference. */
   public static @NonNull String format(@NonNull Money money) {
     return format(money, FormatterOptions.defaults());
+  }
+
+  /**
+   * Formats respecting the sats/BTC preference <em>and</em> the hide-balance preference, returning
+   * {@link #HIDDEN_AMOUNT} while the balance is hidden.
+   *
+   * <p>Use this for any amount that is merely being <em>displayed</em> — a settled payment, a
+   * balance readout. Do <em>not</em> use it for an amount the user is actively entering or
+   * confirming: hiding the balance is about not shoulder-surfing your holdings, not about being
+   * unable to see what you are about to send. Mirrors the split iOS draws between
+   * {@code PaymentsFormat.formattedBalance} (masks) and {@code PaymentsFormat.format} (does not).
+   */
+  public static @NonNull String formatRespectingHiddenBalance(@NonNull Money money) {
+    return formatRespectingHiddenBalance(money, FormatterOptions.defaults());
+  }
+
+  /** @see #formatRespectingHiddenBalance(Money) */
+  public static @NonNull String formatRespectingHiddenBalance(@NonNull Money money, @NonNull FormatterOptions options) {
+    return isBalanceHidden() ? HIDDEN_AMOUNT : format(money, options);
   }
 
   /** Formats with the given options, respecting the sats/BTC preference. */

@@ -53,7 +53,7 @@ public abstract class UnreadPayments {
     public @NonNull String getDescription(@NonNull Context context) {
       if (recipient != null) {
         String amountString = SignalStore.payments().getBalanceHidden()
-                              ? "••••••"
+                              ? PaymentAmountFormatter.HIDDEN_AMOUNT
                               : PaymentAmountFormatter.format(amount);
         return context.getString(R.string.UnreadPayments__s_sent_you_s,
                                  recipient.getShortDisplayName(context),

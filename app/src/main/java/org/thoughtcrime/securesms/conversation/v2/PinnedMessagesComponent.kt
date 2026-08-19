@@ -270,7 +270,7 @@ fun getMessageMetadata(conversationMessage: ConversationMessage): Triple<SignalS
   } else if (message.hasSharedContact()) {
     Triple(SignalSymbols.Glyph.PERSON_CIRCLE, SpannableString(message.sharedContacts.first().name.givenName), false)
   } else if (message.isPaymentNotification && message.payment != null) {
-    Triple(SignalSymbols.Glyph.CREDIT_CARD, SpannableString(PaymentAmountFormatter.format(message.payment!!.amount)), false)
+    Triple(SignalSymbols.Glyph.CREDIT_CARD, SpannableString(PaymentAmountFormatter.formatRespectingHiddenBalance(message.payment!!.amount)), false)
   } else if (slide?.isVideoGif == true) {
     Triple(SignalSymbols.Glyph.GIF_RECTANGLE, SpannableString(stringResource(R.string.PinnedMessage__gif)), false)
   } else if (slide is ImageSlide && message.body.isEmpty()) {
