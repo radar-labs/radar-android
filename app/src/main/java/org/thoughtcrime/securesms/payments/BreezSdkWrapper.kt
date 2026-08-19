@@ -287,7 +287,11 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
 
         config.lnurlDomain = LNURL_DOMAIN
         config.preferSparkOverLightning = true
-        config.maxDepositClaimFee = MaxFee.Rate(satPerVbyte = 5u)
+        // Cap auto-claiming of on-chain deposits at the network's own recommended fee plus 5
+        // sat/vB of headroom, rather than a flat 5 sat/vB ceiling. A fixed cap silently stops
+        // claiming deposits whenever the mempool sits above it, which is exactly when a user is
+        // most likely to be watching for the funds. Matches iOS (79f87e5654).
+        config.maxDepositClaimFee = MaxFee.NetworkRecommended(leewaySatPerVbyte = 5u)
 
         val dataDir = AppDependencies.application.applicationInfo.dataDir
 
