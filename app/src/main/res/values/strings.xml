@@ -8844,6 +8844,12 @@
     <string name="MigrateFromSignal_instruction_3">Come back to Radar to finish setting up</string>
     <!-- Button label that opens the Signal app to start the migration -->
     <string name="MigrateFromSignal_open_signal">Open Signal</string>
+    <!-- Heading of the advisory shown before migrating, telling the user to back up Signal first -->
+    <string name="MigrateFromSignal_before_you_start">Before you start</string>
+    <!-- First thing to do in Signal before migrating -->
+    <string name="MigrateFromSignal_backup_step_1">In Signal, go to Settings → Backups and create a backup if you haven\'t already</string>
+    <!-- Second thing to do in Signal before migrating -->
+    <string name="MigrateFromSignal_backup_step_2">Securely save your Recovery Key so your messages can be restored</string>
     <!-- Error message shown when the Signal app is not installed on this device -->
     <string name="MigrateFromSignal_signal_not_installed">Couldn\'t find the Signal app on this device. Make sure it is installed and up to date, then try again.</string>
     <!-- Error message shown when the migration could not be prepared, e.g. no network connection -->
