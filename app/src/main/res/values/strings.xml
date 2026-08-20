@@ -6086,6 +6086,8 @@
 
     <!-- PaymentRecipientSelectionFragment -->
     <string name="PaymentRecipientSelectionFragment__new_payment">New payment</string>
+    <!-- Header above the list of people this wallet has recently paid, on the new-payment screen -->
+    <string name="PaymentRecipientSelectionFragment__recent">Recent</string>
     <!-- Row shown beneath the search field when the typed text looks like a lightning address; tapping it sends to that address. %1$s is the address. -->
     <string name="PaymentRecipientSelectionFragment__send_to_s">Send to %1$s</string>
 
