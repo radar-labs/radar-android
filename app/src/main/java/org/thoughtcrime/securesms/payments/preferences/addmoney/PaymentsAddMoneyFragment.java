@@ -40,12 +40,12 @@ import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.qr.QrView;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.payments.LightningInvoiceFetcher;
 import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingDepositReceivedFragment;
 import org.thoughtcrime.securesms.payments.preferences.PaymentsHomeRepository;
 import org.thoughtcrime.securesms.util.AsynchronousCallback;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Add Funds (receive) screen. Mirrors iOS PaymentsTransferInViewController: a Lightning/Onchain
@@ -79,9 +79,19 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
   private boolean initialBalancePositive;
   private boolean navigatedToDeposit;
 
+  /**
+   * A BOLT11 invoice is single-use and expires, unlike the permanent lightning address, so ask for
+   * a generously long window and re-mint once the current one is nearly spent.
+   */
+  private static final int  INVOICE_EXPIRY_SECONDS  = (int) TimeUnit.HOURS.toSeconds(24);
+  private static final long INVOICE_REFRESH_LEEWAY_MS = TimeUnit.HOURS.toMillis(1);
+
   /** Cached BOLT11 invoice for the current {@link #lightningAddress}; cleared when the address changes. */
   private @Nullable String  bolt11Invoice;
   private boolean           bolt11FetchInFlight;
+  /** Absolute expiry of {@link #bolt11Invoice}, or null when unknown — meaning "do not auto-refresh". */
+  private @Nullable Long    bolt11ExpiresAtMillis;
+  private boolean           hasResumedOnce;
 
   private QrView              qrView;
   private View                logoBox;
@@ -161,6 +171,7 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
       if (!Objects.equals(address, lightningAddress)) {
         // Invalidate the BOLT11 cache — the previous invoice was tied to the previous address.
         bolt11Invoice = null;
+        bolt11ExpiresAtMillis = null;
         bolt11FetchInFlight = false;
       }
       lightningAddress = address;
@@ -369,18 +380,19 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
   }
 
   /**
-   * Resolves the current Lightning address to a BOLT11 invoice via LNURL-pay (in the background).
-   * On success, re-renders the QR with `lightning:<bolt11>`. On failure, leaves the
-   * `lightning:<address>` fallback in place. Mirrors iOS `getBolt11FromLightningAddress`.
+   * Mints a fresh BOLT11 invoice for this wallet straight from the Breez SDK (in the background)
+   * and re-renders the QR with `lightning:<bolt11>`. On failure the `lightning:<address>` fallback
+   * stays in place — payable, just less precise. Mirrors iOS `fetchLightningInvoice`.
    */
   private void fetchBolt11Invoice(@NonNull String addressAtFetchTime) {
     bolt11FetchInFlight = true;
     SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
                    () -> {
                      try {
-                       return LightningInvoiceFetcher.fetchBolt11(addressAtFetchTime, 0L);
+                       return SignalStore.payments().breezSdkWrapperLatest()
+                                         .fetchLightningInvoice("", INVOICE_EXPIRY_SECONDS);
                      } catch (Exception e) {
-                       Log.w(TAG, "BOLT11 fetch failed; falling back to lightning:<address>", e);
+                       Log.w(TAG, "Could not mint a lightning invoice; falling back to lightning:<address>", e);
                        return null;
                      }
                    },
@@ -388,12 +400,41 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
                      bolt11FetchInFlight = false;
                      // Discard a stale response if the user changed username (and thus address) while in flight.
                      if (invoice != null && addressAtFetchTime.equals(lightningAddress)) {
-                       bolt11Invoice = invoice;
+                       bolt11Invoice = invoice.getBolt11();
+                       bolt11ExpiresAtMillis = invoice.getExpiresAtMillis();
                        if (!showingOnchain) {
                          renderQr();
                        }
                      }
                    });
+  }
+
+  /**
+   * Re-mints the invoice once it has expired or is close to it, so a screen returned to after a
+   * long absence never presents a lapsed, unpayable QR. With the 24h expiry requested above this is
+   * a no-op for ordinary navigation; it only fires after a genuinely long gap.
+   *
+   * <p>onResume covers both cases iOS needs two hooks for — re-entering the screen and the app
+   * returning from the background — so no separate foreground observer is required.
+   */
+  private void refreshInvoiceIfExpiring() {
+    if (showingOnchain || bolt11ExpiresAtMillis == null || bolt11FetchInFlight || lightningAddress == null) {
+      return;
+    }
+    if (System.currentTimeMillis() < bolt11ExpiresAtMillis - INVOICE_REFRESH_LEEWAY_MS) {
+      return;
+    }
+    fetchBolt11Invoice(lightningAddress);
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    // Skip the first resume: the initial render already started a mint, and running again here
+    // would mint a second invoice and discard the first.
+    if (hasResumedOnce) {
+      refreshInvoiceIfExpiring();
+    }
+    hasResumedOnce = true;
   }
 
   private void showSpinner(boolean show) {
