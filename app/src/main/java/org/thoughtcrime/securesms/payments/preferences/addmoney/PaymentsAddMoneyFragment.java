@@ -44,6 +44,7 @@ import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingDepositR
 import org.thoughtcrime.securesms.payments.preferences.PaymentsHomeRepository;
 import org.thoughtcrime.securesms.util.AsynchronousCallback;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -79,6 +80,8 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
   private boolean initialBalancePositive;
   private boolean navigatedToDeposit;
 
+  /** BIP-21 URI scheme prefixed onto the on-chain address in the QR payload. */
+  private static final String BITCOIN_URI_SCHEME = "bitcoin:";
   /**
    * A BOLT11 invoice is single-use and expires, unlike the permanent lightning address, so ask for
    * a generously long window and re-mint once the current one is nearly spent.
@@ -364,7 +367,11 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     }
     String payload;
     if (showingOnchain) {
-      payload = address;
+      // BIP-21 `bitcoin:` scheme in the QR payload only, so a scanner can hand the address to any
+      // wallet registered for that scheme instead of treating it as opaque text. The visible label,
+      // Copy and Share all keep the bare address (they read currentAddress(), not this payload).
+      // Guarded in case the SDK ever returns an already-schemed payment request. Mirrors iOS.
+      payload = address.toLowerCase(Locale.US).startsWith(BITCOIN_URI_SCHEME) ? address : BITCOIN_URI_SCHEME + address;
     } else if (bolt11Invoice != null) {
       // Preferred: encode the LNURL-pay-resolved BOLT11 invoice (mirrors iOS commit 4f069a4e30).
       payload = "lightning:" + bolt11Invoice;
