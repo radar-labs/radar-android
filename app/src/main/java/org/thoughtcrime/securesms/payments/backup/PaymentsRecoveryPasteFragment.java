@@ -45,7 +45,7 @@ public class PaymentsRecoveryPasteFragment extends Fragment {
       String   mnemonic = input.getText().toString();
       String[] words    = mnemonic.split("\\s+");
 
-      if (words.length != PaymentsConstants.MNEMONIC_LENGTH) {
+      if (!PaymentsConstants.isSupportedMnemonicLength(words.length)) {
         showErrorDialog();
         return;
       }
@@ -57,7 +57,7 @@ public class PaymentsRecoveryPasteFragment extends Fragment {
   private void showErrorDialog() {
     new MaterialAlertDialogBuilder(requireContext())
                    .setTitle(R.string.PaymentsRecoveryPasteFragment__invalid_recovery_phrase)
-                   .setMessage(getString(R.string.PaymentsRecoveryPasteFragment__make_sure, PaymentsConstants.MNEMONIC_LENGTH))
+                   .setMessage(getString(R.string.PaymentsRecoveryPasteFragment__make_sure_12_or_24))
                    .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
                    .show();
   }
