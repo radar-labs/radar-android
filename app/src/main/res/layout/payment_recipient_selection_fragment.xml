@@ -53,6 +53,30 @@
             tools:text="Send to someone@radar.cash"
             tools:visibility="visible" />
 
+        <TextView
+            android:id="@+id/payment_recipient_selection_fragment_recent_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dsl_settings_gutter"
+            android:layout_marginRight="@dimen/dsl_settings_gutter"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp"
+            android:text="@string/PaymentRecipientSelectionFragment__recent"
+            android:textAppearance="@style/Signal.Text.Body"
+            android:textColor="@color/signal_text_secondary"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/payment_recipient_selection_fragment_recents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dsl_settings_gutter"
+            android:layout_marginRight="@dimen/dsl_settings_gutter"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
         <FrameLayout
             android:id="@+id/contact_selection_list_fragment_holder"
             android:layout_width="match_parent"

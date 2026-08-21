@@ -103,6 +103,35 @@ public final class MoneyView extends AppCompatTextView {
     setMoney(money, timestamp, (highlightCurrency ? new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.payment_currency_code_foreground_color)) : null));
   }
 
+  /**
+   * Displays {@code money}, or {@link PaymentAmountFormatter#HIDDEN_AMOUNT} while the user has
+   * hidden their balance. For amounts that are being shown back to the user (a settled payment, a
+   * balance); the send-flow input keeps using {@link #setMoney} so the user can always see what
+   * they are typing.
+   */
+  public void setMoneyRespectingHiddenBalance(@NonNull Money money) {
+    setMoneyRespectingHiddenBalance(money, true, 0L);
+  }
+
+  /** @see #setMoneyRespectingHiddenBalance(Money) */
+  public void setMoneyRespectingHiddenBalance(@NonNull Money money, boolean highlightCurrency) {
+    setMoneyRespectingHiddenBalance(money, highlightCurrency, 0L);
+  }
+
+  /** @see #setMoneyRespectingHiddenBalance(Money) */
+  public void setMoneyRespectingHiddenBalance(@NonNull Money money, boolean highlightCurrency, long timestamp) {
+    setMoneyRespectingHiddenBalance(money, timestamp, (highlightCurrency ? new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.payment_currency_code_foreground_color)) : null));
+  }
+
+  /** @see #setMoneyRespectingHiddenBalance(Money) */
+  public void setMoneyRespectingHiddenBalance(@NonNull Money money, long timestamp, @Nullable Object currencySpan) {
+    if (PaymentAmountFormatter.isBalanceHidden()) {
+      setText(PaymentAmountFormatter.HIDDEN_AMOUNT);
+      return;
+    }
+    setMoney(money, timestamp, currencySpan);
+  }
+
   public void setMoney(@NonNull Money money, long timestamp, @Nullable Object currencySpan) {
     // The sats-vs-BTC decision and all formatting live in PaymentAmountFormatter, the single
     // display layer. Every caller (home balance, chat bubble, history, send flow, chat-list

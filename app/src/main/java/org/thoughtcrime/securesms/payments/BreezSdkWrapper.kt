@@ -146,19 +146,46 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
   }
 
   /**
-   * Prepares an LNURL/lightning-address payment for [amount] sats, returning the Breez quote
-   * (which carries the real network [PrepareLnurlPayResponse.feeSats]). Throws
-   * [UnsupportedOperationException] for non-LNURL inputs.
+   * A payment quote from Breez, whichever kind of destination produced it. Both variants carry the
+   * real network fee, so callers never have to know which shape they are holding.
    */
-  private fun prepareLnurl(address: String, amount: BigInteger): PrepareLnurlPayResponse {
-    val inputType = runBlocking { sdk!!.parse(address) }
+  private sealed class PreparedPayment {
+    abstract val feeSats: BigInteger
+
+    data class Lnurl(val response: PrepareLnurlPayResponse) : PreparedPayment() {
+      override val feeSats: BigInteger get() = response.feeSats.toLong().toBigInteger()
+    }
+
+    data class Bolt11(val response: PrepareSendPaymentResponse) : PreparedPayment() {
+      override val feeSats: BigInteger
+        get() = when (val method = response.paymentMethod) {
+          // A Spark transfer fee, when present, is what actually gets charged; the lightning fee is
+          // the fallback for a payment that leaves the Spark network.
+          is SendPaymentMethod.Bolt11Invoice -> (method.sparkTransferFeeSats ?: method.lightningFeeSats).toLong().toBigInteger()
+          else                               -> BigInteger.ZERO
+        }
+    }
+  }
+
+  /**
+   * Prepares a payment to [destination] for [amount] sats, returning the Breez quote (which carries
+   * the real network fee).
+   *
+   * [destination] is whatever the user gave us — a lightning address, an LNURL, or a BOLT11
+   * invoice — and the SDK's own parser decides which it is rather than this class guessing.
+   * Throws [UnsupportedOperationException] for destinations Radar does not send to.
+   */
+  private fun prepare(destination: String, amount: BigInteger): PreparedPayment {
+    val sdk = this.sdk ?: throw IllegalStateException("Breez SDK is not available")
+    val inputType = runBlocking { sdk.parse(destination) }
 
     // Breez SDK 0.14.0: `amountSats: ULong` → `amount: BigInteger`;
     // `optionalValidateSuccessActionUrl` → named `validateSuccessActionUrl: Boolean?`.
     val payRequest: LnurlPayRequestDetails = when (inputType) {
       is InputType.LightningAddress -> inputType.v1.payRequest
       is InputType.LnurlPay         -> inputType.v1
-      else                          -> throw UnsupportedOperationException()
+      is InputType.Bolt11Invoice    -> return prepareBolt11(sdk, inputType.v1, amount)
+      else                          -> throw UnsupportedOperationException("Unsupported payment destination")
     }
 
     val req = PrepareLnurlPayRequest(
@@ -167,34 +194,80 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       comment = null,
       validateSuccessActionUrl = true
     )
-    return runBlocking { sdk!!.prepareLnurlPay(req) }
+    return PreparedPayment.Lnurl(runBlocking { sdk.prepareLnurlPay(req) })
   }
 
   /**
-   * The real network fee for sending [amount] sats to [address], obtained from the Breez
+   * Prepares a BOLT11 invoice.
+   *
+   * An invoice may carry its own amount, in which case that amount is what gets paid and a
+   * caller-supplied one is rejected by the SDK. [amount] is therefore only forwarded for an
+   * amountless invoice, where the sender is the one choosing. Mirrors iOS `prepareOutgoingPayment`.
+   *
+   * When the invoice does carry an amount we refuse to proceed unless it matches what the caller
+   * asked for. The user confirmed a specific number on the previous screen; quietly paying the
+   * invoice's amount instead would let a pasted invoice spend more than was authorised.
+   */
+  private fun prepareBolt11(sdk: BreezSdk, details: Bolt11InvoiceDetails, amount: BigInteger): PreparedPayment.Bolt11 {
+    val invoiceSats: BigInteger? = details.amountMsat?.let { BigInteger.valueOf((it / 1000uL).toLong()) }
+
+    if (invoiceSats != null && invoiceSats != amount) {
+      throw InvoiceAmountMismatchException(invoiceSats, amount)
+    }
+
+    val request = PrepareSendPaymentRequest(
+      paymentRequest = PaymentRequest.Input(details.invoice.bolt11),
+      amount = if (invoiceSats == null) amount.toLong().toBigInteger() else null
+    )
+    return PreparedPayment.Bolt11(runBlocking { sdk.prepareSendPayment(request) })
+  }
+
+  /**
+   * Thrown when a BOLT11 invoice specifies an amount that differs from the one the user entered.
+   * Carries both so a caller can tell the user what the invoice actually asks for.
+   */
+  class InvoiceAmountMismatchException(val invoiceSats: BigInteger, val requestedSats: BigInteger) :
+    IllegalArgumentException("Invoice is for $invoiceSats sats but $requestedSats sats was requested")
+
+  /** The amount a BOLT11 invoice asks for in sats, or null if it is amountless or unparseable. */
+  fun bolt11AmountSats(invoice: String): BigInteger? {
+    val sdk = this.sdk ?: return null
+    return runCatching {
+      val parsed = runBlocking { sdk.parse(invoice) }
+      (parsed as? InputType.Bolt11Invoice)?.v1?.amountMsat?.let { BigInteger.valueOf((it / 1000uL).toLong()) }
+    }.getOrNull()
+  }
+
+  /**
+   * The real network fee for sending [amount] sats to [destination], obtained from the Breez
    * prepared-payment quote. Matches the fee that will actually be charged (and later shown in
    * payment details), unlike the coarser `recommendedFees()` estimate used by iOS's confirm screen.
    */
-  fun getLnurlFee(address: String, amount: BigInteger): Money.Satoshi {
+  fun getLnurlFee(destination: String, amount: BigInteger): Money.Satoshi {
     if (sdk == null) return Money.Satoshi.ZERO
-    return Money.satoshi(prepareLnurl(address, amount).feeSats.toLong().toBigInteger())
+    return Money.satoshi(prepare(destination, amount).feeSats)
   }
 
   /** Result of sending a payment: the serialized response plus the actual network fee charged. */
   data class SendPaymentResult(val response: ByteArray, val feeSats: BigInteger)
 
-  fun sendPayment(address: String, amount: BigInteger): SendPaymentResult {
-    val prepareResponse = prepareLnurl(address, amount)
+  fun sendPayment(destination: String, amount: BigInteger): SendPaymentResult {
+    val sdk = this.sdk ?: throw IllegalStateException("Breez SDK is not available")
 
     // Capture the real fee from the prepared payment so it can be persisted on the
-    // transaction. Mirrors iOS, which stores `prepareLnurlPay().feeSats` as the payment fee.
-    val feeSats = prepareResponse.feeSats.toLong().toBigInteger()
-
-    val response = runBlocking { sdk!!.lnurlPay(LnurlPayRequest(prepareResponse)) }
-
-    // Dual-format receipt: raw uniffi bytes (readable by Radar iOS) + a version-stable proto tail
-    // that survives breez_sdk_spark upgrades. See ReceiptCodec.
-    return SendPaymentResult(ReceiptCodec.encode(response), feeSats)
+    // transaction. Mirrors iOS, which stores the prepared quote's fee as the payment fee.
+    return when (val prepared = prepare(destination, amount)) {
+      is PreparedPayment.Lnurl -> {
+        val response = runBlocking { sdk.lnurlPay(LnurlPayRequest(prepared.response)) }
+        // Dual-format receipt: raw uniffi bytes (readable by Radar iOS) + a version-stable proto
+        // tail that survives breez_sdk_spark upgrades. See ReceiptCodec.
+        SendPaymentResult(ReceiptCodec.encode(response), prepared.feeSats)
+      }
+      is PreparedPayment.Bolt11 -> {
+        val response = runBlocking { sdk.sendPayment(SendPaymentRequest(prepared.response)) }
+        SendPaymentResult(ReceiptCodec.encode(response), prepared.feeSats)
+      }
+    }
   }
 
   /** The currently-registered lightning-address username, or null if none/unavailable. */
@@ -207,6 +280,81 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
   fun isUsernameAvailable(username: String): Boolean {
     if (sdk == null) return false
     return runBlocking { sdk.checkLightningAddressAvailable(CheckLightningAddressRequest(username)) }
+  }
+
+  /**
+   * A freshly minted BOLT11 invoice for this wallet, paired with its own absolute expiry so
+   * callers can re-mint before it lapses. [expiresAtMillis] is null when the expiry could not be
+   * read back, which callers should treat as "unknown — do not auto-refresh".
+   */
+  data class LightningInvoice(val bolt11: String, val expiresAtMillis: Long?)
+
+  /**
+   * Mints a BOLT11 invoice for this wallet directly from the SDK.
+   *
+   * The invoice is deliberately *amountless*: the Add Funds screen has no amount field, so the
+   * sender chooses what to pay.
+   *
+   * [expirySeconds] has no documented ceiling in the Spark SDK, so a rejected value falls back to
+   * the SDK default rather than failing the whole call — otherwise the caller loses the invoice
+   * entirely and shows something non-payable in its place. Pass 0 to use the SDK default outright.
+   * Mirrors iOS `fetchLightningInvoice`.
+   */
+  @JvmOverloads
+  @Throws(IOException::class)
+  fun fetchLightningInvoice(description: String = "", expirySeconds: Int = 0): LightningInvoice {
+    val sdk = this.sdk ?: throw IOException("Breez SDK is not available")
+    val expirySecs: UInt? = if (expirySeconds > 0) expirySeconds.toUInt() else null
+
+    val bolt11 = try {
+      mintBolt11Invoice(sdk, description, expirySecs)
+    } catch (e: Exception) {
+      if (expirySecs == null) {
+        throw IOException("Could not mint a lightning invoice", e)
+      }
+      Log.w("BreezSdk", "Breez rejected expirySecs=$expirySecs; retrying with the SDK default", e)
+      try {
+        mintBolt11Invoice(sdk, description, null)
+      } catch (retry: Exception) {
+        throw IOException("Could not mint a lightning invoice", retry)
+      }
+    }
+
+    return LightningInvoice(bolt11, expiryOf(sdk, bolt11))
+  }
+
+  private fun mintBolt11Invoice(sdk: BreezSdk, description: String, expirySecs: UInt?): String {
+    return runBlocking {
+      sdk.receivePayment(
+        ReceivePaymentRequest(
+          ReceivePaymentMethod.Bolt11Invoice(
+            description = description,
+            amountSats = null,
+            expirySecs = expirySecs,
+            paymentHash = null
+          )
+        )
+      ).paymentRequest
+    }
+  }
+
+  /**
+   * Reads the absolute expiry back off a freshly minted invoice rather than assuming a window the
+   * SDK never promised. Null when the invoice cannot be parsed.
+   */
+  private fun expiryOf(sdk: BreezSdk, bolt11: String): Long? {
+    return runCatching {
+      val parsed = runBlocking { sdk.parse(bolt11) }
+      if (parsed !is InputType.Bolt11Invoice) {
+        Log.w("BreezSdk", "Minted invoice did not parse as a BOLT11 invoice; expiry unknown.")
+        return@runCatching null
+      }
+      val details = parsed.v1
+      (details.timestamp + details.expiry).toLong() * 1000L
+    }.getOrElse {
+      Log.w("BreezSdk", "Could not parse minted invoice to read its expiry", it)
+      null
+    }
   }
 
   /** Fetches an on-chain (Bitcoin) receive address, or null if unavailable. */

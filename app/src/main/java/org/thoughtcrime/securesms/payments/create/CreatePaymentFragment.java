@@ -21,6 +21,11 @@ import androidx.transition.TransitionManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
+import org.thoughtcrime.securesms.payments.LightningAddress;
+import org.signal.core.util.concurrent.SimpleTask;
+import org.thoughtcrime.securesms.payments.Payee;
+import org.thoughtcrime.securesms.payments.preferences.model.PayeeParcelable;
 import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.emoji.EmojiEditText;
@@ -82,6 +87,8 @@ public class CreatePaymentFragment extends LoggingFragment {
     CreatePaymentFragmentArgs      arguments = CreatePaymentFragmentArgs.fromBundle(requireArguments());
     CreatePaymentViewModel.Factory factory   = new CreatePaymentViewModel.Factory(arguments.getPayee(), arguments.getNote());
     CreatePaymentViewModel         viewModel = new ViewModelProvider(Navigation.findNavController(view).getViewModelStoreOwner(R.id.payments_create), factory).get(CreatePaymentViewModel.class);
+
+    seedAmountFromInvoiceIfFixed(arguments.getPayee(), viewModel);
 
     constraintLayout = view.findViewById(R.id.create_payment_fragment_amount_header);
     request          = view.findViewById(R.id.create_payment_fragment_request);
@@ -238,12 +245,39 @@ public class CreatePaymentFragment extends LoggingFragment {
     request.setEnabled(isValidAmount);
   }
 
+  /**
+   * A BOLT11 invoice may specify its own amount, in which case that is the only amount the network
+   * will accept. Fill it in so the user is confirming the real figure rather than guessing — and so
+   * the send is not refused later by the mismatch guard in BreezSdkWrapper.
+   *
+   * <p>Runs off the main thread: reading the amount means parsing the invoice through the SDK.
+   */
+  private void seedAmountFromInvoiceIfFixed(@NonNull PayeeParcelable payeeParcelable, @NonNull CreatePaymentViewModel viewModel) {
+    Payee payee = payeeParcelable.getPayee();
+    if (!payee.hasPublicAddress()) {
+      return;
+    }
+
+    String destination = payee.requireLightningAddress().getPaymentAddress();
+    if (!LightningAddress.looksLikeBolt11Invoice(destination)) {
+      return;
+    }
+
+    SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
+                   () -> SignalStore.payments().breezSdkWrapperLatest().bolt11AmountSats(destination),
+                   amountSats -> {
+                     if (amountSats != null && amountSats.signum() > 0) {
+                       viewModel.setAmount(Money.satoshi(amountSats));
+                     }
+                   });
+  }
+
   private void updatePayAmountButtons(boolean isValidAmount) {
     pay.setEnabled(isValidAmount);
   }
 
   private void updateBalance(@NonNull Money balance) {
-    String value = PaymentAmountFormatter.format(balance);
+    String value = PaymentAmountFormatter.formatRespectingHiddenBalance(balance);
     this.balance.setText(SpanUtil.boldSubstring(getString(R.string.CreatePaymentFragment__available_balance_s, value), value));
   }
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Scan action on the "New payment" screen. Radar's receive QR encodes a lightning: URI, so the
+  send screen needs a way to read one; previously the only payments scanner lived behind
+  Deactivate wallet -> Transfer remaining balance.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/payment_recipient_selection_scan_qr"
+        android:icon="@drawable/symbol_qrcode_24"
+        android:title="@string/PaymentsTransferFragment__scan_qr_code"
+        app:showAsAction="always" />
+
+</menu>

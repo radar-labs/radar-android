@@ -120,7 +120,7 @@ public class ConfirmPaymentAdapter extends MappingAdapter {
 
     public @NonNull CharSequence getInfoText(@NonNull Context context) {
       switch (status) {
-        case CONFIRM:    return context.getString(R.string.ConfirmPayment__balance_s, PaymentAmountFormatter.format(balance));
+        case CONFIRM:    return context.getString(R.string.ConfirmPayment__balance_s, PaymentAmountFormatter.formatRespectingHiddenBalance(balance));
         case SUBMITTING: return context.getString(R.string.ConfirmPayment__submitting_payment);
         case PROCESSING: return context.getString(R.string.ConfirmPayment__processing_payment);
         case DONE:       return context.getString(R.string.ConfirmPayment__payment_complete);
