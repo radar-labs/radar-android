@@ -192,8 +192,12 @@ public final class ContactFilterView extends FrameLayout {
       return;
     }
 
-    String text = pasted.toString().trim();
-    searchText.setText(text);
+    setQuery(pasted.toString().trim());
+  }
+
+  /** Replaces the search text, leaving the cursor at the end. */
+  public void setQuery(@NonNull String query) {
+    searchText.setText(query);
     searchText.setSelection(searchText.getText().length());
   }
 

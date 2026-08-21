@@ -1,5 +1,9 @@
 package org.thoughtcrime.securesms.payments.preferences;
 
+import android.Manifest;
+import android.widget.Toast;
+import org.thoughtcrime.securesms.payments.preferences.transfer.PaymentsTransferQrScanFragment;
+import org.thoughtcrime.securesms.permissions.Permissions;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -98,6 +102,28 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     toolbar = view.findViewById(R.id.payment_recipient_selection_fragment_toolbar);
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+    toolbar.inflateMenu(R.menu.payment_recipient_selection_fragment_menu);
+    toolbar.setOnMenuItemClickListener(item -> {
+      if (item.getItemId() == R.id.payment_recipient_selection_scan_qr) {
+        scanQrCode();
+        return true;
+      }
+      return false;
+    });
+
+    // The scanner reports back as a fragment result rather than through the transfer graph's view
+    // model, because this screen is not part of that graph. Dropping the scanned destination into
+    // the filter field reuses the existing "Send to <destination>" row rather than adding a second
+    // way to start a payment.
+    getParentFragmentManager().setFragmentResultListener(
+        PaymentsTransferQrScanFragment.REQUEST_KEY_SCANNED_DESTINATION,
+        getViewLifecycleOwner(),
+        (key, bundle) -> {
+          String destination = bundle.getString(PaymentsTransferQrScanFragment.RESULT_DESTINATION);
+          if (destination != null) {
+            contactFilterView.setQuery(destination);
+          }
+        });
 
     recentHeader    = view.findViewById(R.id.payment_recipient_selection_fragment_recent_header);
     recentContainer = view.findViewById(R.id.payment_recipient_selection_fragment_recents);
@@ -136,20 +162,38 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
   }
 
   /**
-   * Mirrors iOS's inline "find by …" section: when the typed query looks like a lightning address
-   * (e.g. {@code name@radar.cash}), surface a tappable row that sends directly to that address.
+   * Mirrors iOS's inline "find by …" section: when the typed query looks like a payable
+   * destination, surface a tappable row that sends straight to it.
+   *
+   * <p>Two shapes are accepted: a lightning address ({@code name@radar.cash}) and a BOLT11 invoice
+   * ({@code lnbc…}), the latter typically arriving via the paste button. An invoice is far too long
+   * to show in full, so it is abbreviated for display while the full string is what gets sent.
    */
   private void updateSendToAddressRow(@Nullable String filter) {
     String query = filter != null ? filter.trim() : "";
 
-    if (LIGHTNING_ADDRESS_SHAPE.matcher(query).matches()) {
-      sendToAddressRow.setText(getString(R.string.PaymentRecipientSelectionFragment__send_to_s, query));
+    boolean isAddress = LIGHTNING_ADDRESS_SHAPE.matcher(query).matches();
+    boolean isInvoice = LightningAddress.looksLikeBolt11Invoice(query);
+
+    if (isAddress || isInvoice) {
+      String display = isInvoice ? abbreviate(query) : query;
+      sendToAddressRow.setText(getString(R.string.PaymentRecipientSelectionFragment__send_to_s, display));
       sendToAddressRow.setVisibility(View.VISIBLE);
       sendToAddressRow.setOnClickListener(v -> onSendToAddressClicked(query));
     } else {
       sendToAddressRow.setVisibility(View.GONE);
       sendToAddressRow.setOnClickListener(null);
     }
+  }
+
+  /** Shortens a long destination to head…tail for display. Matches iOS's 10/9 split. */
+  private static @NonNull String abbreviate(@NonNull String value) {
+    final int prefix = 10;
+    final int suffix = 9;
+    if (value.length() <= prefix + suffix + 1) {
+      return value;
+    }
+    return value.substring(0, prefix) + "\u2026" + value.substring(value.length() - suffix);
   }
 
   private void onSendToAddressClicked(@NonNull String query) {
@@ -263,6 +307,17 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     CAN_SEND,
     NO_PROFILE_KEY,
     NOT_ENABLED
+  }
+
+  private void scanQrCode() {
+    Permissions.with(this)
+               .request(Manifest.permission.CAMERA)
+               .ifNecessary()
+               .withRationaleDialog(getString(R.string.CameraXFragment_allow_access_camera), getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs), R.drawable.ic_camera_24)
+               .withPermanentDenialDialog(getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera), null, R.string.CameraXFragment_allow_access_camera, R.string.CameraXFragment_to_scan_qr_codes, getParentFragmentManager())
+               .onAllGranted(() -> SafeNavigation.safeNavigate(Navigation.findNavController(requireView()), R.id.action_paymentRecipientSelection_to_scanQr))
+               .onAnyDenied(() -> Toast.makeText(requireContext(), R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera, Toast.LENGTH_LONG).show())
+               .execute();
   }
 
   /**
