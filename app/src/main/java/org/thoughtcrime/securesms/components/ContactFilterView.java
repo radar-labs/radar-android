@@ -201,6 +201,11 @@ public final class ContactFilterView extends FrameLayout {
     searchText.setSelection(searchText.getText().length());
   }
 
+  /** The current search text. */
+  public @NonNull String getQuery() {
+    return searchText.getText().toString();
+  }
+
   public void setOnFilterChangedListener(OnFilterChangedListener listener) {
     this.listener = listener;
   }
