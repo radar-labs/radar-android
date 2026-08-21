@@ -76,7 +76,7 @@ public final class ThreadBodyUtil {
 
   /**
    * Extracts a formatted amount string for the payment associated with a chat-list message.
-   * Returns `null` if the amount can't be resolved; "•••••" if the balance is hidden
+   * Returns `null` if the amount can't be resolved; the hidden-balance placeholder if the
    * (mirrors iOS `balanceHidden` masking from c90dd2d790).
    */
   private static @Nullable String formatPaymentAmount(@NonNull MmsMessageRecord record) {
@@ -93,7 +93,7 @@ public final class ThreadBodyUtil {
       return null;
     }
     if (SignalStore.payments().getBalanceHidden()) {
-      return "•••••";
+      return PaymentAmountFormatter.HIDDEN_AMOUNT;
     }
     // Single display layer decides sats vs BTC (mirrors MoneyView / iOS PaymentsFormat).
     return PaymentAmountFormatter.format(amount, FormatterOptions.builder(Locale.getDefault()).build());

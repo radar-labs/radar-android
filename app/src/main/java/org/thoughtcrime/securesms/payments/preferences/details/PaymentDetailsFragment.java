@@ -84,7 +84,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
       avatar.disableQuickContact();
       avatar.setImageResource(R.drawable.ic_ln_black);
       contactFromTo.setText(getContactFromToTextFromDirection(payment.getDirection()));
-      amount.setMoney(payment.getAmountPlusFeeWithDirection());
+      amount.setMoneyRespectingHiddenBalance(payment.getAmountPlusFeeWithDirection());
       note.setVisibility(View.GONE);
       status.setText(getStatusFromPayment(payment));
       sentByHeader.setVisibility(View.GONE);
@@ -96,7 +96,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
       sentToAmount.setVisibility(View.GONE);
 
       if (payment.getDirection() == Direction.SENT) {
-        sentFeeAmount.setMoney(payment.getFee());
+        sentFeeAmount.setMoneyRespectingHiddenBalance(payment.getFee());
         sentFeeHeader.setVisibility(View.VISIBLE);
         sentFeeAmount.setVisibility(View.VISIBLE);
       }
@@ -124,10 +124,10 @@ public final class PaymentDetailsFragment extends LoggingFragment {
 
                           if (state.getPayment().getState() == State.FAILED) {
                             amount.setTextColor(ContextCompat.getColor(requireContext(), R.color.signal_text_primary_disabled));
-                            amount.setMoney(state.getPayment().getAmountPlusFeeWithDirection(), false);
+                            amount.setMoneyRespectingHiddenBalance(state.getPayment().getAmountPlusFeeWithDirection(), false);
                             transactionInfo.setVisibility(View.GONE);
                           } else {
-                            amount.setMoney(state.getPayment().getAmountPlusFeeWithDirection());
+                            amount.setMoneyRespectingHiddenBalance(state.getPayment().getAmountPlusFeeWithDirection());
                             if (state.getPayment().isDefrag()) {
                               transactionInfo.setLearnMoreVisible(true);
                               transactionInfo.setText(R.string.PaymentsDetailsFragment__coin_cleanup_information);
@@ -146,13 +146,13 @@ public final class PaymentDetailsFragment extends LoggingFragment {
                           status.setText(describeStatus(state.getPayment()));
                           sentBy.setText(describeSentBy(state));
                           if (state.getPayment().getDirection().isReceived()) {
-                            sentToAmount.setMoney(Money.MobileCoin.ZERO);
-                            sentFeeAmount.setMoney(Money.MobileCoin.ZERO);
+                            sentToAmount.setMoneyRespectingHiddenBalance(Money.MobileCoin.ZERO);
+                            sentFeeAmount.setMoneyRespectingHiddenBalance(Money.MobileCoin.ZERO);
                             sentViews.setVisibility(View.GONE);
                           } else {
                             sentTo.setText(describeSentTo(state, state.getPayment()));
-                            sentToAmount.setMoney(state.getPayment().getAmount());
-                            sentFeeAmount.setMoney(state.getPayment().getFee());
+                            sentToAmount.setMoneyRespectingHiddenBalance(state.getPayment().getAmount());
+                            sentFeeAmount.setMoneyRespectingHiddenBalance(state.getPayment().getFee());
                             sentViews.setVisibility(View.VISIBLE);
                           }
                         }

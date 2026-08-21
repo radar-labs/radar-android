@@ -277,7 +277,7 @@ public class CreatePaymentFragment extends LoggingFragment {
   }
 
   private void updateBalance(@NonNull Money balance) {
-    String value = PaymentAmountFormatter.format(balance);
+    String value = PaymentAmountFormatter.formatRespectingHiddenBalance(balance);
     this.balance.setText(SpanUtil.boldSubstring(getString(R.string.CreatePaymentFragment__available_balance_s, value), value));
   }
 
