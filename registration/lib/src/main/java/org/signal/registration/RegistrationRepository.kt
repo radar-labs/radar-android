@@ -134,7 +134,8 @@ class RegistrationRepository(val networkController: NetworkController, val stora
         storage = false,
         versionedExpirationTimer = true,
         attachmentBackfill = true,
-        spqr = true
+        spqr = true,
+        usernameChangeSyncMessage = true
       ),
       name = null,
       pniRegistrationId = keyMaterial.pniRegistrationId,
