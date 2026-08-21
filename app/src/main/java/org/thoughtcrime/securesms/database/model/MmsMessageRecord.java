@@ -231,7 +231,7 @@ public class MmsMessageRecord extends MessageRecord {
     } else if (isLegacyMessage()) {
       return emphasisAdded(context.getString(R.string.MessageRecord_message_encrypted_with_a_legacy_protocol_version_that_is_no_longer_supported));
     } else if (isPaymentNotification() && payment != null) {
-      return new SpannableString(context.getString(R.string.MessageRecord__payment_s, PaymentAmountFormatter.format(payment.getAmount())));
+      return new SpannableString(context.getString(R.string.MessageRecord__payment_s, PaymentAmountFormatter.formatRespectingHiddenBalance(payment.getAmount())));
     } else if (isPaymentTombstone() || isPaymentNotification()) {
       MessageExtras extras = getMessageExtras();
 
@@ -242,7 +242,7 @@ public class MmsMessageRecord extends MessageRecord {
       if (amount == null) {
         return new SpannableString(context.getString(R.string.MessageRecord__payment_tombstone));
       } else {
-        return new SpannableString(context.getString(R.string.MessageRecord__payment_s, PaymentAmountFormatter.format(amount)));
+        return new SpannableString(context.getString(R.string.MessageRecord__payment_s, PaymentAmountFormatter.formatRespectingHiddenBalance(amount)));
       }
     }
 

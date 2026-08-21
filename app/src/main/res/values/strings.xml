@@ -5512,6 +5512,12 @@
     <string name="PaymentsRecoveryPasteFragment__next">Next</string>
     <string name="PaymentsRecoveryPasteFragment__invalid_recovery_phrase">Invalid recovery phrase</string>
     <string name="PaymentsRecoveryPasteFragment__make_sure">Make sure you\'ve entered %1$d words and try again.</string>
+    <!-- Error shown when a pasted recovery phrase is neither 12 nor 24 words long -->
+    <string name="PaymentsRecoveryPasteFragment__make_sure_12_or_24">Make sure you\'ve entered your full 12-word or 24-word recovery phrase and try again.</string>
+    <!-- Option to enter a 12-word recovery phrase -->
+    <string name="PaymentsRecoveryEntryFragment__12_words">12 words</string>
+    <!-- Option to enter a 24-word recovery phrase, for wallets created before the switch to 12 words -->
+    <string name="PaymentsRecoveryEntryFragment__24_words">24 words</string>
 
     <string name="PaymentsRecoveryStartFragment__learn_more__view" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_wallet_view_passphrase</string>
     <string name="PaymentsRecoveryStartFragment__learn_more__restore" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_wallet_restore_passphrase</string>
@@ -6086,6 +6092,8 @@
 
     <!-- PaymentRecipientSelectionFragment -->
     <string name="PaymentRecipientSelectionFragment__new_payment">New payment</string>
+    <!-- Header above the list of people this wallet has recently paid, on the new-payment screen -->
+    <string name="PaymentRecipientSelectionFragment__recent">Recent</string>
     <!-- Row shown beneath the search field when the typed text looks like a lightning address; tapping it sends to that address. %1$s is the address. -->
     <string name="PaymentRecipientSelectionFragment__send_to_s">Send to %1$s</string>
 
@@ -8844,6 +8852,12 @@
     <string name="MigrateFromSignal_instruction_3">Come back to Radar to finish setting up</string>
     <!-- Button label that opens the Signal app to start the migration -->
     <string name="MigrateFromSignal_open_signal">Open Signal</string>
+    <!-- Heading of the advisory shown before migrating, telling the user to back up Signal first -->
+    <string name="MigrateFromSignal_before_you_start">Before you start</string>
+    <!-- First thing to do in Signal before migrating -->
+    <string name="MigrateFromSignal_backup_step_1">In Signal, go to Settings → Backups and create a backup if you haven\'t already</string>
+    <!-- Second thing to do in Signal before migrating -->
+    <string name="MigrateFromSignal_backup_step_2">Securely save your Recovery Key so your messages can be restored</string>
     <!-- Error message shown when the Signal app is not installed on this device -->
     <string name="MigrateFromSignal_signal_not_installed">Couldn\'t find the Signal app on this device. Make sure it is installed and up to date, then try again.</string>
     <!-- Error message shown when the migration could not be prepared, e.g. no network connection -->

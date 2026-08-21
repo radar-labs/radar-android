@@ -25,6 +25,7 @@ import org.signal.core.util.billing.BillingPurchaseResult
 import org.signal.core.util.concurrent.SignalDispatchers
 import org.signal.core.util.logging.Log
 import org.signal.donations.InAppPaymentType
+import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.backup.DeletionState
 import org.thoughtcrime.securesms.backup.v2.BackupRepository
 import org.thoughtcrime.securesms.backup.v2.MessageBackupTier
@@ -102,9 +103,14 @@ class MessageBackupsFlowViewModel(
     viewModelScope.launch {
       val allBackupTypes: List<MessageBackupsType> = try {
         withContext(SignalDispatchers.IO) {
-          BackupRepository.getBackupTypes(
+          // Radar does not offer the paid tier, so it is never requested and therefore never
+          // appears in the chooser. Mirrors iOS BuildFlags.Backups.showPaidPlan = false.
+          val offeredTiers = if (BuildConfig.PAID_BACKUPS_ENABLED) {
             listOf(MessageBackupTier.FREE, MessageBackupTier.PAID)
-          )
+          } else {
+            listOf(MessageBackupTier.FREE)
+          }
+          BackupRepository.getBackupTypes(offeredTiers)
         }
       } catch (e: Exception) {
         Log.w(TAG, "Failed to download available backup types.", e)

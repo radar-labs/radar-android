@@ -94,7 +94,7 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
 
     // Route through the single display layer so the row follows the sats/BTC preference
     // (mirrors MoneyView / iOS PaymentsFormat) instead of always rendering BTC.
-    return PaymentAmountFormatter.format(payment.getAmountPlusFeeWithDirection(),
+    return PaymentAmountFormatter.formatRespectingHiddenBalance(payment.getAmountPlusFeeWithDirection(),
                                          FormatterOptions.builder(Locale.getDefault())
                                                          .alwaysPrefixWithSign()
                                                          .build());

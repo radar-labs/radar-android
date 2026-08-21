@@ -33,6 +33,7 @@ import org.thoughtcrime.securesms.jobs.PaymentLedgerUpdateJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity;
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.payments.MoneyView;
 import org.thoughtcrime.securesms.payments.PaymentSnippetRefresher;
 import org.thoughtcrime.securesms.payments.backup.RecoveryPhraseStates;
@@ -110,7 +111,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
    *  centrally by {@link MoneyView#setMoney} so no caller-side toggle check is needed. */
   private void renderBalance(@NonNull MoneyView balance) {
     if (!balanceVisible) {
-      balance.setText("••••••");
+      balance.setText(PaymentAmountFormatter.HIDDEN_AMOUNT);
     } else if (lastBalanceAmount != null) {
       balance.setMoney(lastBalanceAmount);
     }
@@ -124,7 +125,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
       return;
     }
     if (!balanceVisible) {
-      exchangeView.setText("••••••");
+      exchangeView.setText(PaymentAmountFormatter.HIDDEN_AMOUNT);
       return;
     }
     if (lastExchangeText != null) {
@@ -409,6 +410,12 @@ public class PaymentsHomeFragment extends LoggingFragment {
     MenuItem menuItem = toolbar.getMenu().findItem(R.id.payments_home_fragment_menu_balance_visibility);
     if (menuItem != null && menuItem.isVisible()) {
       applyBalanceVisibilityMenuIcon(menuItem);
+    }
+
+    // The transaction rows below the balance are masked from the same preference, but nothing in
+    // their LiveData chain changed, so they will not re-emit on their own. Rebind them explicitly.
+    if (adapter != null) {
+      adapter.notifyItemRangeChanged(0, adapter.getItemCount());
     }
 
     // Mirrors iOS — chat-list payment snippets re-render with the new mask state.

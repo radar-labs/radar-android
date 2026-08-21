@@ -31,7 +31,7 @@ apply(from = "static-ips.gradle.kts")
 // `canonicalVersionName` is Radar's own product version; it diverged from upstream Signal's
 // 7.68.x at Radar 1.0.4 and must match the vX.Y.Z git tag of each GitHub release exactly
 // (Obtainium detects updates by comparing the release tag against the installed versionName).
-val canonicalVersionCode = 1640
+val canonicalVersionCode = 1647
 val canonicalVersionName = "1.0.5"
 // Version string Radar reports to Signal's servers in the "Signal-Android/<version>" User-Agent.
 // Signal's infra rejects unrecognized/deprecated client versions with HTTP 499 (DeprecatedVersionException),
@@ -276,6 +276,10 @@ android {
     // Radar does not take donations; donating routes to Signal's infrastructure. Mirrors iOS
     // BuildFlags.donations = false, which hides the Donate entry in app settings.
     buildConfigField("boolean", "DONATIONS_ENABLED", "false")
+    // Radar does not sell the paid Backups tier. Mirrors iOS
+    // BuildFlags.Backups.showPaidPlan = false: hides the paid tier in the plan chooser and the
+    // free-tier upgrade button, while leaving manage/cancel reachable for existing subscribers.
+    buildConfigField("boolean", "PAID_BACKUPS_ENABLED", "false")
     buildConfigField("boolean", "USE_STRING_ID", "true")
 
     ndk {

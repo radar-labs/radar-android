@@ -7,6 +7,9 @@ package org.thoughtcrime.securesms.payments
 
 import breez_sdk_spark.ByteBuffer
 import breez_sdk_spark.FfiConverterTypeLnurlPayResponse
+import breez_sdk_spark.FfiConverterTypeSendPaymentResponse
+import breez_sdk_spark.Payment
+import breez_sdk_spark.SendPaymentResponse
 import breez_sdk_spark.LnurlPayResponse
 import breez_sdk_spark.PaymentDetails
 import breez_sdk_spark.PaymentStatus
@@ -61,6 +64,9 @@ object ReceiptCodec {
 
   /** Tail magic: "RDRCPT" + 2-digit structure version. Bump the digits only if the footer layout changes. */
   private val MAGIC = "RDRCPT01".toByteArray(Charsets.US_ASCII)
+
+  /** Leading marker for a BOLT11 send receipt, matching the one Radar iOS writes. */
+  private val BOLT11_MAGIC = "BOLT".toByteArray(Charsets.US_ASCII)
   private const val LEN_SIZE = 4
   private val FOOTER_SIZE = LEN_SIZE + MAGIC.size
 
@@ -84,10 +90,44 @@ object ReceiptCodec {
     return uniffiBytes + proto + footer.array()
   }
 
+  /**
+   * Serializes the response from paying a BOLT11 invoice.
+   *
+   * Prefixed with [BOLT11_MAGIC] before the uniffi bytes, matching the marker Radar iOS writes, so
+   * a reader can tell a SendPaymentResponse from an LnurlPayResponse — the two are different
+   * uniffi layouts and would otherwise be indistinguishable. The proto tail is identical either
+   * way and remains the authoritative part for us.
+   */
+  @JvmStatic
+  fun encode(response: SendPaymentResponse): ByteArray {
+    val size = FfiConverterTypeSendPaymentResponse.allocationSize(response)
+    val nioBuffer = java.nio.ByteBuffer.allocate(size.toInt())
+    FfiConverterTypeSendPaymentResponse.write(response, ByteBuffer(nioBuffer))
+    val uniffiBytes = nioBuffer.array().copyOf(nioBuffer.position())
+
+    val proto = toProto(fromSdk(response)).encode()
+    val footer = java.nio.ByteBuffer.allocate(FOOTER_SIZE)
+    footer.putInt(proto.size)
+    footer.put(MAGIC)
+
+    return BOLT11_MAGIC + uniffiBytes + proto + footer.array()
+  }
+
   /** Decodes a receipt blob from any supported generation, or null if nothing can read it. */
   @JvmStatic
   fun decode(receipt: ByteArray): ReceiptData? {
     parseTail(receipt)?.let { return it }
+
+    if (receipt.size > BOLT11_MAGIC.size && receipt.copyOf(BOLT11_MAGIC.size).contentEquals(BOLT11_MAGIC)) {
+      // A tail-less BOLT11 receipt, i.e. one written by Radar iOS.
+      try {
+        val payload = receipt.copyOfRange(BOLT11_MAGIC.size, receipt.size)
+        var input = ByteBuffer(java.nio.ByteBuffer.wrap(payload))
+        return fromSdk(FfiConverterTypeSendPaymentResponse.read(input))
+      } catch (e: Throwable) {
+        Log.d(TAG, "Receipt carried the BOLT marker but did not parse as a SendPaymentResponse", e)
+      }
+    }
 
     try {
       return fromSdk(deserializeLnurlPayResponse(receipt))
@@ -110,8 +150,13 @@ object ReceiptCodec {
 
   /** Maps an in-memory SDK response to the fields we persist. */
   @JvmStatic
-  fun fromSdk(response: LnurlPayResponse): ReceiptData {
-    val payment = response.payment
+  fun fromSdk(response: LnurlPayResponse): ReceiptData = fromPayment(response.payment)
+
+  @JvmStatic
+  fun fromSdk(response: SendPaymentResponse): ReceiptData = fromPayment(response.payment)
+
+  @JvmStatic
+  fun fromPayment(payment: Payment): ReceiptData {
     val (identifier, detailsType) = when (val details = payment.details) {
       is PaymentDetails.Lightning -> details.htlcDetails.paymentHash to ReceiptDetailsType.LIGHTNING
       is PaymentDetails.Deposit -> details.txId to ReceiptDetailsType.DEPOSIT

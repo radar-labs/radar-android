@@ -54,6 +54,33 @@
                 app:layout_constraintTop_toBottomOf="@id/payments_recovery_entry_fragment_title"
                 tools:text="Enter word 6" />
 
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/payments_recovery_entry_fragment_word_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/payments_recovery_entry_fragment_message"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/payments_recovery_entry_fragment_word_count_12"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PaymentsRecoveryEntryFragment__12_words" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/payments_recovery_entry_fragment_word_count_24"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PaymentsRecoveryEntryFragment__24_words" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/payments_recovery_entry_fragment_word_wrapper"
                 android:layout_width="match_parent"
@@ -65,7 +92,7 @@
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/payments_recovery_entry_fragment_message">
+                app:layout_constraintTop_toBottomOf="@id/payments_recovery_entry_fragment_word_count">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/payments_recovery_entry_fragment_word"
