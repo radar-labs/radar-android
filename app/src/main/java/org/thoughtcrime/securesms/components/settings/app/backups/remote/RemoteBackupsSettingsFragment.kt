@@ -87,6 +87,7 @@ import org.signal.core.util.gibiBytes
 import org.signal.core.util.logging.Log
 import org.signal.core.util.mebiBytes
 import org.signal.core.util.money.FiatMoney
+import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.BiometricDeviceAuthentication
 import org.thoughtcrime.securesms.BiometricDeviceLockContract
 import org.thoughtcrime.securesms.DevicePinAuthEducationSheet
@@ -1100,7 +1101,15 @@ private fun BackupCard(
       )
     }
 
-    if (backupState.isActive() && isPaidTierPricingAvailable && isGooglePlayServicesAvailable) {
+    // The Free-tier button is the "upgrade to paid" call to action, so it is gated off with the
+    // paid tier. The Paid-tier button is "manage or cancel" and must stay reachable for anyone who
+    // already holds a subscription. iOS gates exactly the same half.
+    val canShowBackupTypeAction = backupState.isActive() &&
+      isPaidTierPricingAvailable &&
+      isGooglePlayServicesAvailable &&
+      (BuildConfig.PAID_BACKUPS_ENABLED || messageBackupsType is MessageBackupsType.Paid)
+
+    if (canShowBackupTypeAction) {
       val buttonText = when (messageBackupsType) {
         is MessageBackupsType.Paid -> stringResource(R.string.RemoteBackupsSettingsFragment__manage_or_cancel)
         is MessageBackupsType.Free -> stringResource(R.string.RemoteBackupsSettingsFragment__upgrade)
