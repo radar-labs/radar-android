@@ -62,6 +62,9 @@ import java.text.NumberFormat
  * Allows members to be added to an existing Signal group by selecting from a list of recipients.
  */
 class AddMembersActivity : PassphraseRequiredActivity() {
+  /** Draws edge to edge and positions its own content against the insets. */
+  override fun fitsSystemBars(): Boolean = false
+
   companion object {
     private const val EXTRA_GROUP_ID = "group_id"
     private const val EXTRA_SELECTION_LIMITS = "selection_limits"

@@ -49,6 +49,9 @@ import org.thoughtcrime.securesms.recipients.ui.RecipientSelection
  * Allows the user to add a recipient to a group.
  */
 class AddToGroupsActivity : PassphraseRequiredActivity() {
+  /** Draws edge to edge and positions its own content against the insets. */
+  override fun fitsSystemBars(): Boolean = false
+
   companion object {
     private const val EXTRA_RECIPIENT_ID = "recipient_id"
     private const val EXTRA_SELECTION_LIMITS = "selection_limits"

@@ -66,6 +66,9 @@ import java.text.NumberFormat
  * Allows creation of a Signal group by selecting from a list of recipients.
  */
 class CreateGroupActivity : PassphraseRequiredActivity() {
+  /** Draws edge to edge and positions its own content against the insets. */
+  override fun fitsSystemBars(): Boolean = false
+
   companion object {
     @JvmStatic
     fun createIntent(context: Context): Intent {

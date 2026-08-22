@@ -189,6 +189,9 @@ import org.thoughtcrime.securesms.window.rememberThreePaneScaffoldNavigatorDeleg
 import org.whispersystems.signalservice.api.websocket.WebSocketConnectionState
 
 class MainActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner, MainNavigator.NavigatorProvider, Material3OnScrollHelperBinder, ConversationListFragment.Callback, CallLogFragment.Callback, GooglePayComponent {
+  /** Draws edge to edge and positions its own content against the insets. */
+  override fun fitsSystemBars(): Boolean = false
+
 
   companion object {
     private val TAG = Log.tag(MainActivity::class)

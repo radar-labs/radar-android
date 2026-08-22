@@ -44,6 +44,9 @@ import kotlin.random.nextInt
  * Screen to verify the backup key
  */
 class VerifyBackupKeyActivity : PassphraseRequiredActivity() {
+  /** Draws edge to edge and positions its own content against the insets. */
+  override fun fitsSystemBars(): Boolean = false
+
 
   companion object {
     private val TAG = Log.tag(VerifyBackupKeyActivity::class)

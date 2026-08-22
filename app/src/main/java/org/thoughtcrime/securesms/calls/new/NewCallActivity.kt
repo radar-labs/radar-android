@@ -53,6 +53,9 @@ import org.thoughtcrime.securesms.util.CommunicationActions
  * Allows the user to start a new call by selecting a recipient.
  */
 class NewCallActivity : PassphraseRequiredActivity() {
+  /** Draws edge to edge and positions its own content against the insets. */
+  override fun fitsSystemBars(): Boolean = false
+
   companion object {
     @JvmStatic
     fun createIntent(context: Context): Intent {

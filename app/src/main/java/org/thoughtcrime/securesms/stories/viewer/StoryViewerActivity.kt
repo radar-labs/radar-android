@@ -32,6 +32,9 @@ import kotlin.math.max
 import kotlin.math.min
 
 class StoryViewerActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner {
+  /** Draws edge to edge and positions its own content against the insets. */
+  override fun fitsSystemBars(): Boolean = false
+
 
   private val viewModel: StoryVolumeViewModel by viewModels()
   private val storyViewStateViewModel: StoryViewStateViewModel by viewModels()

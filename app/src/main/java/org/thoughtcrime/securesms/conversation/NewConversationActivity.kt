@@ -64,6 +64,9 @@ import org.thoughtcrime.securesms.util.CommunicationActions
  * Allows the user to start a new conversation by selecting a recipient.
  */
 class NewConversationActivity : PassphraseRequiredActivity() {
+  /** Draws edge to edge and positions its own content against the insets. */
+  override fun fitsSystemBars(): Boolean = false
+
   companion object {
     @JvmOverloads
     @JvmStatic
