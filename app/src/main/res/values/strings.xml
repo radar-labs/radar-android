@@ -8828,10 +8828,10 @@
     <!-- Row subtitle for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_reinstalling">Or you\'re reinstalling Radar on the same device</string>
 
-    <!-- Row title for migrating an account from the Signal app installed on this device -->
+    <!-- Row title for migrating an account from Signal on a previous device -->
     <string name="WelcomeFragment_restore_action_migrate_from_signal">Migrate from Signal</string>
-    <!-- Row subtitle for migrating an account from the Signal app installed on this device -->
-    <string name="WelcomeFragment_restore_action_migrate_from_signal_subtitle">Restore your account from the Signal app installed on this device</string>
+    <!-- Row subtitle for migrating an account from Signal on a previous device -->
+    <string name="WelcomeFragment_restore_action_migrate_from_signal_subtitle">Use Signal on your old phone to scan a QR code and transfer your account</string>
     <!-- Row title for restore/transfer by scanning a QR code with a previous device -->
     <string name="WelcomeFragment_restore_action_set_up_new_phone">Set up my new phone</string>
     <!-- Row subtitle for restore/transfer by scanning a QR code with a previous device -->
