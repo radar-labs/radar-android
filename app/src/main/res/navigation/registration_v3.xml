@@ -174,31 +174,15 @@
         android:name="org.thoughtcrime.securesms.registration.ui.restore.MigrateFromSignalFragment">
 
         <action
-            android:id="@+id/go_to_noBackupToRestore"
-            app:destination="@id/noBackupToRestore"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/signup"/>
-
-        <action
-            android:id="@+id/go_to_accountLocked"
-            app:destination="@id/accountLockedFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/welcomeFragment"
-            app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/go_to_selectRestoreMethod"
-            app:destination="@id/selectRestoreMethod"
+            android:id="@+id/go_to_enterPhoneNumber"
+            app:destination="@id/enterPhoneNumberFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+
+
     </fragment>
 
     <fragment

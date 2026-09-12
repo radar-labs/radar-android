@@ -146,7 +146,9 @@ class WelcomeFragment : LoggingFragment(R.layout.fragment_registration_welcome_v
         findNavController().safeNavigate(WelcomeFragmentDirections.goToSelectRestoreMethod(userSelection))
       }
       WelcomeUserSelection.MIGRATE_FROM_SIGNAL -> {
-        sharedViewModel.intendToRestore(hasOldDevice = true, fromRemote = true)
+        // No hasOldDevice here: migrating from Signal on this phone is a restore from the user's
+        // Signal backup, not a device-to-device transfer. The explainer screen sets the restore
+        // decision itself once the user commits, so nothing is written yet.
         findNavController().safeNavigate(WelcomeFragmentDirections.goToMigrateFromSignal())
       }
     }
