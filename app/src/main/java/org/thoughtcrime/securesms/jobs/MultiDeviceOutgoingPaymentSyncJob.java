@@ -17,6 +17,7 @@ import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientUtil;
 import org.whispersystems.signalservice.api.messages.multidevice.OutgoingPaymentMessage;
 import org.whispersystems.signalservice.api.messages.multidevice.SignalServiceSyncMessage;
+import org.whispersystems.signalservice.api.payments.Money;
 import org.signal.core.models.ServiceId;
 import org.whispersystems.signalservice.api.push.exceptions.PushNetworkException;
 import org.whispersystems.signalservice.api.push.exceptions.ServerRejectedException;
@@ -83,6 +84,11 @@ public final class MultiDeviceOutgoingPaymentSyncJob extends BaseJob {
 
     if (payment == null) {
       Log.w(TAG, "Payment not found " + uuid);
+      return;
+    }
+
+    if (!(payment.getAmount() instanceof Money.MobileCoin)) {
+      Log.i(TAG, "Skipping multi-device sync for non-MobileCoin payment " + this.uuid);
       return;
     }
 
