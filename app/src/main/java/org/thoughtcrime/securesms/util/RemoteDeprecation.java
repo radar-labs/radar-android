@@ -24,7 +24,10 @@ public final class RemoteDeprecation {
    *         there's no pending expiration.
    */
   public static long getTimeUntilDeprecation(long currentTime) {
-    return getTimeUntilDeprecation(RemoteConfig.clientExpiration(), currentTime, BuildConfig.VERSION_NAME);
+    // Signal's clientExpiration minVersions are upstream Signal versions (7.x), so compare
+    // against the upstream version this build reports to the server, not Radar's own
+    // VERSION_NAME (1.x), which every published entry would treat as expired.
+    return getTimeUntilDeprecation(RemoteConfig.clientExpiration(), currentTime, BuildConfig.SIGNAL_CLIENT_VERSION);
   }
 
   /**
