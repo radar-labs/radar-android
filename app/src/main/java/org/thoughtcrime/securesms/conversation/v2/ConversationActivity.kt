@@ -50,6 +50,13 @@ open class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaCo
 
   override fun onPreCreate() {
     theme.onCreate(this)
+
+    // Window features must be requested before BaseActivity.onCreate() installs
+    // the content view (it looks up android.R.id.content to apply insets);
+    // requesting it later throws "requestFeature() must be called before adding content".
+    if (ActivityCompat.isLaunchedFromBubble(this)) {
+      window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+    }
   }
 
   override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
@@ -72,7 +79,6 @@ open class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaCo
     enableSavedStateHandles()
     supportPostponeEnterTransition()
     transitionDebouncer.publish { supportStartPostponedEnterTransition() }
-    window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
 
     shareDataTimestampViewModel.setTimestampFromActivityCreation(savedInstanceState, intent)
     setContentView(R.layout.fragment_container)

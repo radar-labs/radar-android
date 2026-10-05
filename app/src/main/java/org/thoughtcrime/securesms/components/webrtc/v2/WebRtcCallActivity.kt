@@ -104,6 +104,15 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     private const val VIBRATE_DURATION = 50
   }
 
+  /**
+   * Draws edge to edge via [ComposeCallScreenMediator] and positions its own content against the insets.
+   *
+   * This must also stay false because [onCreate] calls [requestWindowFeature] after `super.onCreate()`.
+   * BaseActivity's inset handling looks up `android.R.id.content`, which makes AppCompat install the
+   * window content, after which [requestWindowFeature] throws and the call screen crashes.
+   */
+  override fun fitsSystemBars(): Boolean = false
+
   private lateinit var callScreen: CallScreenMediator
   private var videoTooltip: Dismissible? = null
   private var switchCameraTooltip: Dismissible? = null
