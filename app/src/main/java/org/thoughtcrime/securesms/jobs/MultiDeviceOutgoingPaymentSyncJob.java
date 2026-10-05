@@ -17,6 +17,7 @@ import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientUtil;
 import org.whispersystems.signalservice.api.messages.multidevice.OutgoingPaymentMessage;
 import org.whispersystems.signalservice.api.messages.multidevice.SignalServiceSyncMessage;
+import org.whispersystems.signalservice.api.payments.Money;
 import org.signal.core.models.ServiceId;
 import org.whispersystems.signalservice.api.push.exceptions.PushNetworkException;
 import org.whispersystems.signalservice.api.push.exceptions.ServerRejectedException;
@@ -86,6 +87,15 @@ public final class MultiDeviceOutgoingPaymentSyncJob extends BaseJob {
       return;
     }
 
+    // Radar payments are Bitcoin (Money.Satoshi), but OutgoingPaymentMessage only
+    // carries MobileCoin amounts. requireMobileCoin() throws an AssertionError, which
+    // JobRunner doesn't catch, so the process died and this persisted job crashed the
+    // app again on every launch for anyone with a linked device.
+    if (!(payment.getAmount() instanceof Money.MobileCoin) || !(payment.getFee() instanceof Money.MobileCoin)) {
+      Log.w(TAG, "Not a MobileCoin payment, nothing to sync " + uuid);
+      return;
+    }
+
     PaymentMetaData.MobileCoinTxoIdentification txoIdentification = payment.getPaymentMetaData().mobileCoinTxoIdentification;
 
     boolean defrag = payment.isDefrag();
@@ -100,7 +110,9 @@ public final class MultiDeviceOutgoingPaymentSyncJob extends BaseJob {
     byte[] receipt = payment.getReceipt();
 
     if (receipt == null) {
-      throw new AssertionError("Trying to sync payment before sent?");
+      // Logged rather than thrown: an AssertionError here would also crash-loop the app.
+      Log.w(TAG, "Trying to sync payment before sent? " + uuid);
+      return;
     }
 
     OutgoingPaymentMessage outgoingPaymentMessage = new OutgoingPaymentMessage(uuid,
