@@ -209,7 +209,7 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
    * invoice's amount instead would let a pasted invoice spend more than was authorised.
    */
   private fun prepareBolt11(sdk: BreezSdk, details: Bolt11InvoiceDetails, amount: BigInteger): PreparedPayment.Bolt11 {
-    val invoiceSats: BigInteger? = details.amountMsat?.let { BigInteger.valueOf((it / 1000uL).toLong()) }
+    val invoiceSats: BigInteger? = details.amountMsat?.let { invoiceAmountSats(it) }
 
     if (invoiceSats != null && invoiceSats != amount) {
       throw InvoiceAmountMismatchException(invoiceSats, amount)
@@ -234,8 +234,18 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     val sdk = this.sdk ?: return null
     return runCatching {
       val parsed = runBlocking { sdk.parse(invoice) }
-      (parsed as? InputType.Bolt11Invoice)?.v1?.amountMsat?.let { BigInteger.valueOf((it / 1000uL).toLong()) }
+      (parsed as? InputType.Bolt11Invoice)?.v1?.amountMsat?.let { invoiceAmountSats(it) }
     }.getOrNull()
+  }
+
+  /**
+   * The whole sats Breez pays for an invoice amount given in msat. Since 0.23 the SDK rounds a
+   * sub-sat remainder up, so this must too: rounding down would have the user confirm one sat less
+   * than is actually sent, and would refuse a sub-sat invoice outright as a mismatch.
+   */
+  private fun invoiceAmountSats(amountMsat: ULong): BigInteger {
+    val sats = amountMsat / 1000uL + if (amountMsat % 1000uL == 0uL) 0uL else 1uL
+    return BigInteger(sats.toString())
   }
 
   /**
@@ -331,7 +341,8 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
             description = description,
             amountSats = null,
             expirySecs = expirySecs,
-            paymentHash = null
+            paymentHash = null,
+            receiverIdentityPublicKey = null
           )
         )
       ).paymentRequest
@@ -439,7 +450,18 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
         // sat/vB of headroom, rather than a flat 5 sat/vB ceiling. A fixed cap silently stops
         // claiming deposits whenever the mempool sits above it, which is exactly when a user is
         // most likely to be watching for the funds. Matches iOS (79f87e5654).
-        config.maxDepositClaimFee = MaxFee.NetworkRecommended(leewaySatPerVbyte = 5u)
+        //
+        // On top of that, allow 0.1% of the deposit amount (Breez's own default). The on-chain
+        // part is the same for every deposit size, so if the deposit provider starts charging a
+        // percentage, large deposits would exceed it at any fee level and sit unclaimed, with no
+        // screen to claim them by hand. Matches iOS (f9f4dc3936). The SDK also holds early
+        // (pre-maturity) claims to this ceiling, so it decides whether a deposit is credited
+        // before its third confirmation, at the provider's higher spread; the share barely moves
+        // that, since early claims cost around 3%.
+        config.maxDepositClaimFee = MaxFee(
+          onchain = MaxOnchainFee.NetworkRecommended(leewaySatPerVbyte = 5u),
+          proportionalPpm = 1_000u
+        )
 
         val dataDir = AppDependencies.application.applicationInfo.dataDir
 

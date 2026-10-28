@@ -53,7 +53,8 @@ enum class ReceiptDetailsType { NONE, LIGHTNING, SPARK, TOKEN, DEPOSIT, WITHDRAW
  *
  * [decode] therefore tries, in order:
  *  1. the magic-delimited proto tail,
- *  2. the current SDK's uniffi reader (tail-less blobs written by the current SDK, incl. iOS 0.18 senders),
+ *  2. the current SDK's uniffi reader (tail-less blobs written by the current SDK, incl. Radar iOS
+ *     senders: breez 0.18 through 0.27 write Radar's payments byte-identically, see ReceiptCodecTest),
  *  3. a frozen hand-rolled reader for the 0.14.0 layout ([Breez014ReceiptReader]) — receipts from
  *     old-breez iOS senders and pre-upgrade local installs,
  *  4. null — callers treat an undecodable receipt as a non-fatal skip.
