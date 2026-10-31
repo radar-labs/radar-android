@@ -63,9 +63,12 @@ public class CreatePaymentViewModel extends ViewModel {
         try {
           ProfileUtil.getAddressForRecipient(Recipient.resolved(r));
           return true;
+        } catch (org.thoughtcrime.securesms.payments.PaymentsAddressException e) {
+          Log.w(TAG, "Could not validate recipient payment address: ", e);
+          return e.getCode() == org.thoughtcrime.securesms.payments.PaymentsAddressException.Code.NOT_ENABLED ? false : null;
         } catch (Exception e) {
           Log.w(TAG, "Could not get address for recipient: ", e);
-          return false;
+          return null;
         }
       });
     } else {

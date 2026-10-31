@@ -248,6 +248,10 @@ object DataMessageProcessor {
     }
 
     localMetrics?.onPostProcessComplete()
+    if (android.os.Build.VERSION.SDK_INT >= 26 && groupId == null && insertResult != null &&
+      message.body?.contains(org.thoughtcrime.securesms.payments.monero.MoneroAddressExchange.PREFIX) == true) {
+      AppDependencies.jobManager.add(org.thoughtcrime.securesms.jobs.MoneroAddressReplyJob(insertResult.messageId))
+    }
     localMetrics?.complete(groupId != null)
   }
 

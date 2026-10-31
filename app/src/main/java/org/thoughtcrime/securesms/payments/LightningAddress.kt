@@ -66,6 +66,17 @@ class LightningAddress internal constructor(val paymentAddress: String, val lnur
       return trimmed.length > 20 && trimmed.lowercase().startsWith("ln") && !trimmed.contains("@")
     }
 
+    @JvmStatic
+    fun looksLikeBitcoinDestination(input: String): Boolean {
+      val value = input.trim()
+      val address = if (value.startsWith("bitcoin:", ignoreCase = true)) {
+        value.substringAfter(':').substringBefore('?').removePrefix("//")
+      } else {
+        value
+      }
+      return address.matches(Regex("(?i)(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})"))
+    }
+
     /**
      * A destination that is already a BOLT11 invoice. The invoice *is* the payment request, so
      * there is no LNURL to derive: both fields carry it, which keeps `lightning:<invoice>` correct
@@ -89,6 +100,9 @@ class LightningAddress internal constructor(val paymentAddress: String, val lnur
     fun fromLightningAddress(lightningAddress: String): LightningAddress {
       if (looksLikeBolt11Invoice(lightningAddress)) {
         return fromBolt11(lightningAddress)
+      }
+      if (looksLikeBitcoinDestination(lightningAddress)) {
+        return LightningAddress(lightningAddress.trim(), lightningAddress.trim())
       }
       try {
         val lnParts = lightningAddress.split("@")
@@ -138,6 +152,9 @@ class LightningAddress internal constructor(val paymentAddress: String, val lnur
           serialized.contains("@") -> serialized
           // a BOLT11 invoice — the payment request itself, nothing to derive
           looksLikeBolt11Invoice(serialized) -> return fromBolt11(serialized)
+          // Bitcoin address/BIP-21 destination: Breez performs the network/checksum validation
+          // before preparing a transaction.
+          looksLikeBitcoinDestination(serialized) -> return LightningAddress(serialized, serialized)
           else -> throw AddressException("Unrecognized lightning payment address")
         }
 

@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.payments.preferences.transfer;
 
 import org.thoughtcrime.securesms.payments.LightningAddress;
+import org.thoughtcrime.securesms.payments.monero.MoneroPaymentQr;
 import java.util.regex.Pattern;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -43,6 +44,11 @@ public final class PaymentsTransferQrScanFragment extends LoggingFragment {
    */
   private static @Nullable String parseScannedDestination(@NonNull String data) {
     String trimmed = data.trim();
+
+    MoneroPaymentQr moneroRequest = MoneroPaymentQr.parse(trimmed);
+    if (moneroRequest != null) {
+      return moneroRequest.getScannerValue();
+    }
 
     if (trimmed.regionMatches(true, 0, LIGHTNING_URI_SCHEME, 0, LIGHTNING_URI_SCHEME.length())) {
       trimmed = trimmed.substring(LIGHTNING_URI_SCHEME.length());

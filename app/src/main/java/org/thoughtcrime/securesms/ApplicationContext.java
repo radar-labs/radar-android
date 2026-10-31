@@ -146,6 +146,10 @@ public class ApplicationContext extends Application implements AppForegroundObse
 
   @Override
   public void onCreate() {
+    if (org.thoughtcrime.securesms.payments.monero.MoneroProcess.isIsolated(this)) {
+      super.onCreate();
+      return;
+    }
     Tracer.getInstance().start("Application#onCreate()");
     AppStartup.getInstance().onApplicationCreate();
     SignalLocalMetrics.ColdStart.start();
@@ -557,7 +561,9 @@ public class ApplicationContext extends Application implements AppForegroundObse
 
   @Override
   protected void attachBaseContext(Context base) {
-    DynamicLanguageContextWrapper.updateContext(base);
+    if (!org.thoughtcrime.securesms.payments.monero.MoneroProcess.isIsolated(base)) {
+      DynamicLanguageContextWrapper.updateContext(base);
+    }
     super.attachBaseContext(base);
   }
 

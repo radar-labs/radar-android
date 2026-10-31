@@ -560,6 +560,13 @@ object RemoteConfig {
     !value.asBoolean(false)
   }
 
+  /** JSON array of Radar-managed Monero nodes; empty until Radar Labs publishes endpoints. */
+  val moneroNodesJson: String? by remoteString(
+    key = "android.moneroNodes",
+    defaultValue = null,
+    hotSwappable = true
+  )
+
   /** Whether or not to use the UUID in verification codes.  */
   val verifyV2: Boolean by remoteBoolean(
     key = "android.verifyV2",
@@ -1244,7 +1251,7 @@ object RemoteConfig {
   @get:JvmName("receivePinnedMessages")
   val receivePinnedMessages: Boolean by remoteBoolean(
     key = "android.receivePinnedMessages",
-    defaultValue = false,
+    defaultValue = true,
     hotSwappable = true
   )
 
@@ -1252,7 +1259,7 @@ object RemoteConfig {
   @get:JvmName("sendPinnedMessages")
   val sendPinnedMessages: Boolean by remoteBoolean(
     key = "android.sendPinnedMessages",
-    defaultValue = false,
+    defaultValue = true,
     hotSwappable = true
   )
 

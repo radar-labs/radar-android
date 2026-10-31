@@ -1,0 +1,14 @@
+diff --git a/lib/android/src/main/cpp/wallet/wallet.cc b/lib/android/src/main/cpp/wallet/wallet.cc
+index 9ad7de9..f8f122f 100644
+--- a/lib/android/src/main/cpp/wallet/wallet.cc
++++ b/lib/android/src/main/cpp/wallet/wallet.cc
+@@ -47,7 +47,8 @@ Wallet::Wallet(
+       m_last_block_timestamp(0),
+       m_restore_height(0),
+       m_refresh_running(false),
+-      m_refresh_canceled(false) {
++      m_refresh_canceled(false),
++      m_balance_changed(false) {
+   // Use a bogus ipv6 address as a placeholder for the daemon address.
+   LOG_FATAL_IF(!m_wallet.init("[100::/64]", {}, {}, 0, false),
+                "Init failed");

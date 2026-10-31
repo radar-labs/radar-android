@@ -129,7 +129,7 @@ public class CreatePaymentFragment extends LoggingFragment {
     });
 
     viewModel.getIsPaymentsSupportedByPayee().observe(getViewLifecycleOwner(), isSupported -> {
-      if (!isSupported) RecipientHasNotEnabledPaymentsDialog.show(requireContext(), () -> goBack(requireView()));
+      if (Boolean.FALSE.equals(isSupported)) RecipientHasNotEnabledPaymentsDialog.show(requireContext(), () -> goBack(requireView()));
     });
 
     viewModel.isValidAmount().observe(getViewLifecycleOwner(), this::updateRequestAmountButtons);
@@ -259,12 +259,16 @@ public class CreatePaymentFragment extends LoggingFragment {
     }
 
     String destination = payee.requireLightningAddress().getPaymentAddress();
-    if (!LightningAddress.looksLikeBolt11Invoice(destination)) {
+    boolean isBolt11 = LightningAddress.looksLikeBolt11Invoice(destination);
+    boolean isBitcoinUri = destination.trim().regionMatches(true, 0, "bitcoin:", 0, "bitcoin:".length());
+    if (!isBolt11 && !isBitcoinUri) {
       return;
     }
 
     SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
-                   () -> SignalStore.payments().breezSdkWrapperLatest().bolt11AmountSats(destination),
+                   () -> isBolt11
+                       ? SignalStore.payments().breezSdkWrapperLatest().bolt11AmountSats(destination)
+                       : SignalStore.payments().breezSdkWrapperLatest().bitcoinUriAmountSats(destination),
                    amountSats -> {
                      if (amountSats != null && amountSats.signum() > 0) {
                        viewModel.setAmount(Money.satoshi(amountSats));

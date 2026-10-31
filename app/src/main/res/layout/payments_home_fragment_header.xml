@@ -8,6 +8,31 @@
     android:layout_height="wrap_content"
     android:padding="16dp">
 
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/payments_currency_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:checkedButton="@id/payments_currency_bitcoin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/payments_currency_bitcoin"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/PaymentsMonero__bitcoin" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/payments_home_monero_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/PaymentsMonero__open_wallet" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
     <!-- Balance: full-width MoneyView. The hide/show toggle lives in the toolbar (top-left
          nav icon in tab mode, leading menu item in standalone mode) so the balance can sit
          centered like iOS. -->
@@ -21,7 +46,7 @@
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/payments_currency_selector"
         tools:money="BTC:7500000000000" />
 
     <!-- Shown while the wallet balance is being fetched from the Breez SDK (the first fetch
@@ -53,6 +78,7 @@
         tools:text="$55.00" />
 
     <org.thoughtcrime.securesms.components.PaymentPillStrip
+        android:id="@+id/payments_home_fragment_header_pill_strip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
