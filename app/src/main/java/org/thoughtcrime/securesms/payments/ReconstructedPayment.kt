@@ -10,7 +10,8 @@ class ReconstructedPayment(
   private val blockTimestamp: Long,
   private val direction: Direction,
   private val amount: Money,
-  private val fee: Money
+  private val fee: Money,
+  private val senderComment: String? = null
 ) : Payment {
   override fun getUuid(): UUID = UuidUtil.UNKNOWN_UUID
 
@@ -29,6 +30,8 @@ class ReconstructedPayment(
   override fun getFailureReason(): FailureReason? = null
 
   override fun getNote(): String = ""
+
+  override fun getSenderComment(): String? = senderComment
 
   override fun getAmount(): Money = amount
 

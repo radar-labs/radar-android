@@ -65,6 +65,7 @@ public class PaymentParcelable implements Parcelable {
     }
 
     dest.writeString(payment.getNote());
+    dest.writeString(payment.getSenderComment());
     dest.writeString(payment.getAmount().serialize());
     dest.writeString(payment.getFee().serialize());
     dest.writeByteArray(payment.getPaymentMetaData().encode());
@@ -86,6 +87,7 @@ public class PaymentParcelable implements Parcelable {
     private final State           state;
     private final FailureReason   failureReason;
     private final String          note;
+    private final String          senderComment;
     private final Money           amount;
     private final Money           fee;
     private final PaymentMetaData paymentMetaData;
@@ -116,6 +118,7 @@ public class PaymentParcelable implements Parcelable {
         }
 
         note                       = in.readString();
+        senderComment              = in.readString();
         amount                     = Money.parse(in.readString());
         fee                        = Money.parse(in.readString());
         paymentMetaData            = PaymentMetaData.ADAPTER.decode(in.createByteArray());
@@ -176,6 +179,11 @@ public class PaymentParcelable implements Parcelable {
     @Override
     public @NonNull String getNote() {
       return note;
+    }
+
+    @Override
+    public @Nullable String getSenderComment() {
+      return senderComment;
     }
 
     @Override
