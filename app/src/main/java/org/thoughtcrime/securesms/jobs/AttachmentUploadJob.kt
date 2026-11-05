@@ -168,7 +168,7 @@ class AttachmentUploadJob private constructor(
     if (uploadSpec == null) {
       Log.d(TAG, "Need an upload spec. Fetching...")
       uploadSpec = SignalNetwork.attachments
-        .getAttachmentV4UploadForm()
+        .getAttachmentV4UploadForm(AttachmentCipherStreamUtil.getCiphertextLength(PaddingInputStream.getPaddedSize(databaseAttachment.size)))
         .then { form ->
           SignalNetwork.attachments.getResumableUploadSpec(
             key = Base64.decode(databaseAttachment.remoteKey!!),
