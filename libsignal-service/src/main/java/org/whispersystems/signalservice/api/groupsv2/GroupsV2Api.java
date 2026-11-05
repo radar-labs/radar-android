@@ -1,5 +1,6 @@
 package org.whispersystems.signalservice.api.groupsv2;
 
+import org.signal.libsignal.protocol.logging.Log;
 import org.signal.libsignal.zkgroup.InvalidInputException;
 import org.signal.libsignal.zkgroup.VerificationFailedException;
 import org.signal.libsignal.zkgroup.auth.AuthCredentialPresentation;
@@ -43,6 +44,8 @@ import javax.annotation.Nonnull;
 import okio.ByteString;
 
 public class GroupsV2Api {
+
+  private static final String TAG = GroupsV2Api.class.getSimpleName();
 
   private final SignalWebSocket.AuthenticatedWebSocket authWebSocket;
   private final PushServiceSocket                      socket;
@@ -210,7 +213,11 @@ public class GroupsV2Api {
       try {
         callLinkAuthCredentialResponse = new CallLinkAuthCredentialResponse(credential.getCredential());
       } catch (InvalidInputException e) {
-        throw new IOException(e);
+        // A call link credential we can't parse must not block the group credentials fetched alongside it.
+        // Signal is moving call link credentials to new zkgroup params (Signal-Server 355d95c6, libsignal
+        // v0.101.0) whose format this libsignal can't read; if the server starts sending those, skip them.
+        Log.w(TAG, "Skipping call link credential we couldn't parse", e);
+        continue;
       }
 
       callLinkCredentials.put(credential.getRedemptionTime(), callLinkAuthCredentialResponse);
