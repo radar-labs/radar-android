@@ -286,7 +286,7 @@ public class MultiDeviceContactUpdateJob extends BaseJob {
                                                                                         .withStream(stream)
                                                                                         .withContentType("application/octet-stream")
                                                                                         .withLength(length)
-                                                                                        .withResumableUploadSpec(messageSender.getResumableUploadSpec());
+                                                                                        .withResumableUploadSpec(messageSender.getResumableUploadSpec(length));
 
         messageSender.sendSyncMessage(SignalServiceSyncMessage.forContacts(new ContactsMessage(attachmentStream.build(), complete))
         );
