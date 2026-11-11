@@ -594,7 +594,10 @@ public final class Megaphones {
   }
 
   private static boolean shouldShowOnboardingMegaphone(@NonNull Context context) {
-    return SignalStore.account().isPrimaryDevice() && SignalStore.onboarding().hasOnboarding();
+    // Radar: the "Get started" onboarding megaphone (New Group / Invite Friends / Add a profile
+    // photo / Chat Colors cards) is hidden on the chat list. The flow is replaced by Radar's
+    // own onboarding (PaymentsOnboardingActivity) — keep the chat list uncluttered.
+    return false;
   }
 
   private static boolean shouldShowNewLinkedDeviceMegaphone() {

@@ -90,6 +90,7 @@ import org.signal.core.util.bytes
 import org.signal.core.util.gibiBytes
 import org.signal.core.util.mebiBytes
 import org.signal.core.util.money.FiatMoney
+import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.backup.ArchiveUploadProgress
 import org.thoughtcrime.securesms.backup.DeletionState
@@ -1129,6 +1130,14 @@ private fun BackupCard(
       )
     }
 
+    // Radar: the Free-tier button is the "upgrade to paid" call to action, so it is gated off with the
+    // paid tier. The Paid-tier button is "manage or cancel" and must stay reachable for anyone who
+    // already holds a subscription. iOS gates exactly the same half.
+    val canShowBackupTypeAction = backupState.isActive() &&
+      isPaidTierPricingAvailable &&
+      isGooglePlayServicesAvailable &&
+      (BuildConfig.PAID_BACKUPS_ENABLED || messageBackupsType is MessageBackupsType.Paid)
+
     if (isLinkedDevice) {
       val primaryDeviceText = when (backupState) {
         is BackupState.ActivePaid -> stringResource(R.string.RemoteBackupsSettingsFragment__you_can_manage_or_cancel_your_subscription_on_your_primary_device)
@@ -1143,7 +1152,7 @@ private fun BackupCard(
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier.padding(top = 12.dp)
       )
-    } else if (backupState.isActive() && isPaidTierPricingAvailable && isGooglePlayServicesAvailable) {
+    } else if (canShowBackupTypeAction) {
       val buttonText = when (messageBackupsType) {
         is MessageBackupsType.Paid -> stringResource(R.string.RemoteBackupsSettingsFragment__manage_or_cancel)
         is MessageBackupsType.Free -> stringResource(R.string.RemoteBackupsSettingsFragment__upgrade)
