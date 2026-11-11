@@ -16,7 +16,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -31,7 +30,7 @@ import kotlin.math.ceil
 import kotlin.math.floor
 
 /**
- * Shows a QRCode that represents the provided data. Includes a Signal logo in the middle.
+ * Shows a QRCode that represents the provided data. Includes a Radar logo in the middle.
  */
 @Composable
 fun QrCode(
@@ -131,11 +130,11 @@ fun DrawScope.drawQr(
     val logoWidthPx = (((deadzonePercent - deadzonePaddingPercent) * 0.6f) * size.width).toInt()
     val logoOffsetPx = ((size.width - logoWidthPx) / 2).toInt()
     if (logo != null) {
+      // Drawn full-color (no tint) so the Radar badge keeps its brand colors
       drawImage(
         image = logo,
         dstOffset = IntOffset(logoOffsetPx, logoOffsetPx),
-        dstSize = IntSize(logoWidthPx, logoWidthPx),
-        colorFilter = ColorFilter.tint(foregroundColor)
+        dstSize = IntSize(logoWidthPx, logoWidthPx)
       )
     }
   }

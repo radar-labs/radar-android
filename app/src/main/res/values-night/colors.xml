@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Splash background is black in dark mode (white in light mode, see values/colors.xml) -->
+    <color name="splash_radar_background">#FF000000</color>
+</resources>

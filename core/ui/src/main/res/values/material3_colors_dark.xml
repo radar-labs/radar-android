@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="signal_dark_colorPrimary">#B6C5FA</color>
+    <color name="signal_dark_colorPrimary">#FF8A3D</color>
     <color name="signal_dark_colorPrimaryContainer">#464B5C</color>
     <color name="signal_dark_colorSecondary">#C1C6DD</color>
     <color name="signal_dark_colorSecondaryContainer">#414659</color>

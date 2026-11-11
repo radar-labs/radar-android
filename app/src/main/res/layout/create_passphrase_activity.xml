@@ -7,7 +7,7 @@
     android:id="@+id/prompt_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/core_ultramarine">
+    android:background="@color/splash_radar_background">
 
   <ProgressBar
       android:id="@+id/passphrase_edit"
@@ -20,12 +20,12 @@
 
   <ImageView
       android:id="@+id/watermark"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_width="120dp"
+      android:layout_height="120dp"
       android:layout_above="@id/passphrase_edit"
       android:layout_centerHorizontal="true"
       android:layout_marginBottom="20dp"
       android:contentDescription="@string/PassphrasePromptActivity_watermark_content_description"
-      app:srcCompat="@drawable/ic_launcher_foreground" />
+      app:srcCompat="@drawable/ic_splash_radar" />
 
 </RelativeLayout>

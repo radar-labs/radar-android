@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="core_ultramarine">#2c6bed</color>
-    <color name="core_ultramarine_light">#6191f3</color>
-    <color name="core_ultramarine_dark">#1851b4</color>
-    <color name="core_ultramarine_icon">#3a76f0</color>
-    <color name="core_ultramarine_33">#552c6bed</color>
-    <color name="core_ultramarine_50">#802c6bed</color>
+    <!-- Radar brand orange (#F46300). Kept under the core_ultramarine names so all
+         existing references (signal_accent_primary + ~32 drawables) inherit the accent. -->
+    <color name="core_ultramarine">#f46300</color>
+    <color name="core_ultramarine_light">#ff8a3d</color>
+    <color name="core_ultramarine_dark">#c24e00</color>
+    <color name="core_ultramarine_icon">#f46300</color>
+    <color name="core_ultramarine_33">#55f46300</color>
+    <color name="core_ultramarine_50">#80f46300</color>
 
     <color name="core_green">#4caf50</color>
     <color name="core_yellow">#ffd624</color>

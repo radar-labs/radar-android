@@ -30,7 +30,7 @@ fun EmptyDetailScreen() {
       .fillMaxSize()
   ) {
     Icon(
-      imageVector = ImageVector.vectorResource(id = R.drawable.ic_signal_logo_large),
+      imageVector = ImageVector.vectorResource(id = R.drawable.radar_glyph),
       contentDescription = null,
       tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.32f),
       modifier = Modifier

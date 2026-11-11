@@ -79,7 +79,7 @@ class CreateReleaseChannelJob private constructor(parameters: Parameters) : Base
     SignalStore.releaseChannel.setReleaseChannelRecipientId(releaseChannelId)
     SignalStore.releaseChannel.hasUpdatedAvatar = true
 
-    recipients.setProfileName(releaseChannelId, ProfileName.asGiven("Signal"))
+    recipients.setProfileName(releaseChannelId, ProfileName.asGiven("Radar"))
     recipients.setMuted(releaseChannelId, Long.MAX_VALUE)
     setAvatar(releaseChannelId)
   }
@@ -89,8 +89,8 @@ class CreateReleaseChannelJob private constructor(parameters: Parameters) : Base
     AvatarRenderer.renderAvatar(
       context,
       Avatar.Resource(
-        R.drawable.ic_signal_logo_large,
-        Avatars.ColorPair(ContextCompat.getColor(context, R.color.notification_background_ultramarine), ContextCompat.getColor(context, CoreUiR.color.core_white), "")
+        R.drawable.radar_glyph,
+        Avatars.ColorPair(ContextCompat.getColor(context, R.color.radar_orange), ContextCompat.getColor(context, CoreUiR.color.core_white), "")
       ),
       onAvatarRendered = { media ->
         AvatarHelper.setAvatar(context, id, AppDependencies.blobs.getStream(context, media.uri))
