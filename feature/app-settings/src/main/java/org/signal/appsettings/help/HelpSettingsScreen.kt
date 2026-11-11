@@ -133,10 +133,12 @@ private fun LegalNotice() {
     verticalAlignment = Alignment.CenterVertically
   ) {
     TextAndLabel(
+      // Radar: our own copyright alongside Signal's, and the AGPL notice the licence requires us to keep.
+      // Signal's "501c3 nonprofit" line describes Signal, not Radar, so it is not shown (same as iOS).
       label = listOf(
         stringResource(R.string.HelpFragment__copyright_signal_messenger),
-        stringResource(R.string.HelpFragment__licenced_under_the_agplv3),
-        stringResource(R.string.HelpSettingsFragment__signal_is_a_501c3)
+        stringResource(R.string.HelpFragment__copyright_radar),
+        stringResource(R.string.HelpFragment__licenced_under_the_agplv3)
       ).joinToString("\n")
     )
   }
