@@ -7,6 +7,7 @@ import androidx.lifecycle.map
 import com.mobilecoin.lib.Mnemonics
 import com.mobilecoin.lib.exceptions.BadMnemonicException
 import org.signal.core.util.Util
+import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.logging.Log
 import org.signal.remoteconfig.RemoteConfig
 import org.signal.storage.keyvalue.KeyValueStore
@@ -17,12 +18,12 @@ import org.signal.storage.keyvalue.longValue
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.lock.v2.PinKeyboardType
 import org.thoughtcrime.securesms.payments.Balance
+import org.thoughtcrime.securesms.payments.BreezSdkWrapper
 import org.thoughtcrime.securesms.payments.Entropy
 import org.thoughtcrime.securesms.payments.GeographicalRestrictions
 import org.thoughtcrime.securesms.payments.Mnemonic
 import org.thoughtcrime.securesms.payments.MobileCoinLedgerWrapper
 import org.thoughtcrime.securesms.payments.currency.CurrencyUtil
-import org.thoughtcrime.securesms.payments.proto.MobileCoinLedger
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.whispersystems.signalservice.api.payments.Money
@@ -53,9 +54,29 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     private const val PAYMENT_LOCK_TIMESTAMP = "mob_payments_payment_lock_timestamp"
     private const val PAYMENT_LOCK_SKIP_COUNT = "mob_payments_payment_lock_skip_count"
     private const val SHOW_SAVE_RECOVERY_PHRASE = "mob_show_save_recovery_phrase"
+    private const val SHOW_IN_SATS = "payments_show_in_sats"
+    private const val BALANCE_HIDDEN = "payments_balance_hidden"
+    private const val PAYMENTS_ONBOARDING_SHOWN = "payments_onboarding_shown"
+    private const val PAYMENTS_ONBOARDING_PENDING_AFTER_RESTORE = "payments_onboarding_pending_after_restore"
 
-    private val LARGE_BALANCE_THRESHOLD = Money.mobileCoin(BigDecimal.valueOf(500))
+    private val LARGE_BALANCE_THRESHOLD = Money.bitcoin(BigDecimal.valueOf(500))
   }
+
+  /** Display amounts in satoshis rather than BTC. Defaults to sats (mirrors iOS "Sats by default"). */
+  var showInSats: Boolean by booleanValue(SHOW_IN_SATS, true)
+
+  /** Whether the wallet balance is hidden behind a mask. Mirrors iOS PaymentsDisplayPreferences. */
+  var balanceHidden: Boolean by booleanValue(BALANCE_HIDDEN, false)
+
+  /** Whether the post-registration payments onboarding flow has already been shown. */
+  var paymentsOnboardingShown: Boolean by booleanValue(PAYMENTS_ONBOARDING_SHOWN, false)
+
+  /**
+   * Set when a restore defers the post-registration payments onboarding so it can be launched once
+   * the restore has delivered the wallet seed, instead of racing it (which would register/display a
+   * username against a not-yet-restored Spark identity). Consumed by [org.thoughtcrime.securesms.MainActivity].
+   */
+  var paymentsOnboardingPendingAfterRestore: Boolean by booleanValue(PAYMENTS_ONBOARDING_PENDING_AFTER_RESTORE, false)
 
   @get:JvmName("isPaymentLockEnabled")
   var paymentLock: Boolean by booleanValue(PAYMENT_LOCK_ENABLED, false)
@@ -71,7 +92,22 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     set(value) = putBoolean(USER_CONFIRMED_MNEMONIC_LARGE_BALANCE, value)
   private val liveCurrentCurrency: MutableLiveData<Currency> by lazy { MutableLiveData(currentCurrency()) }
   private val enclaveFailure: MutableLiveData<Boolean> by lazy { MutableLiveData(false) }
-  private val liveMobileCoinLedger: MutableLiveData<MobileCoinLedgerWrapper> by lazy { MutableLiveData(mobileCoinLatestFullLedger()) }
+  private val liveMobileCoinLedger: MutableLiveData<MobileCoinLedgerWrapper> by lazy {
+    // The real ledger requires a blocking Breez SDK connect() + getInfo(). The first access to this
+    // property happens on the UI thread (PaymentsHomeViewModel's constructor), so doing that work
+    // here froze the Payments screen for several seconds. Instead start with NO value — observers
+    // (the balance header) stay in a "loading" state until the ledger is fetched on a background
+    // thread and posted below.
+    val live = MutableLiveData<MobileCoinLedgerWrapper>()
+    SignalExecutors.BOUNDED.execute {
+      try {
+        live.postValue(mobileCoinLatestFullLedger())
+      } catch (e: Exception) {
+        Log.w(TAG, "Failed to load initial MobileCoin ledger", e)
+      }
+    }
+    live
+  }
   private val liveMobileCoinBalance: LiveData<Balance> by lazy { liveMobileCoinLedger.map { obj: MobileCoinLedgerWrapper -> obj.balance } }
 
   public override fun onFirstEverAppLaunch() {}
@@ -296,12 +332,16 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
   }
 
   fun mobileCoinLatestFullLedger(): MobileCoinLedgerWrapper {
-    val blob = store.getBlob(MOB_LEDGER, null) ?: return MobileCoinLedgerWrapper(MobileCoinLedger())
+    val bsdk = breezSdkWrapperLatest()
+    return MobileCoinLedgerWrapper(bsdk)
+  }
+
+  fun breezSdkWrapperLatest(): BreezSdkWrapper {
+    val entropy = paymentsEntropy ?: return BreezSdkWrapper(null)
     return try {
-      MobileCoinLedgerWrapper(MobileCoinLedger.ADAPTER.decode(blob))
+      BreezSdkWrapper.connectWrapper(entropy.bytes)
     } catch (e: IOException) {
       Log.w(TAG, "Bad cached ledger, clearing", e)
-      setMobileCoinFullLedger(MobileCoinLedgerWrapper(MobileCoinLedger()))
       throw AssertionError(e)
     }
   }
@@ -355,7 +395,7 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
       .putBoolean(USER_CONFIRMED_MNEMONIC, true)
       .commit()
 
-    liveMobileCoinLedger.postValue(MobileCoinLedgerWrapper(MobileCoinLedger()))
+    liveMobileCoinLedger.postValue(MobileCoinLedgerWrapper(breezSdkWrapperLatest()))
     StorageSyncHelper.scheduleSyncForDataChange()
 
     return WalletRestoreResult.ENTROPY_CHANGED
@@ -367,7 +407,26 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     MNEMONIC_ERROR
   }
 
+  /**
+   * Permanently deletes the local payment wallet: clears the entropy + cached ledger and disables
+   * payments. Mirrors iOS resetPaymentsState. Callers should unregister the lightning address first
+   * via [BreezSdkWrapper.deleteLightningAddress].
+   */
+  @WorkerThread
+  fun deleteWallet() {
+    store.beginWrite()
+      .remove(PAYMENTS_ENTROPY)
+      .remove(MOB_LEDGER)
+      .putBoolean(MOB_PAYMENTS_ENABLED, false)
+      .putBoolean(USER_CONFIRMED_MNEMONIC, false)
+      .commit()
+    BreezSdkWrapper.reset()
+    liveMobileCoinLedger.postValue(MobileCoinLedgerWrapper(BreezSdkWrapper(null)))
+    SignalDatabase.recipients.markNeedsSync(Recipient.self().id)
+    StorageSyncHelper.scheduleSyncForDataChange()
+  }
+
   private fun userHasLargeBalance(): Boolean {
-    return mobileCoinLatestBalance().fullAmount.requireMobileCoin().greaterThan(LARGE_BALANCE_THRESHOLD)
+    return mobileCoinLatestBalance().fullAmount.requireBitcoin().greaterThan(LARGE_BALANCE_THRESHOLD)
   }
 }

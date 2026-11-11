@@ -42,3 +42,37 @@ message PaymentMetaData {
 
   MobileCoinTxoIdentification mobileCoinTxoIdentification = 1;
 }
+
+/**
+ * Version-stable payment receipt, appended by ReceiptCodec as a magic-delimited tail behind the
+ * raw uniffi-serialized breez LnurlPayResponse. The uniffi wire format is positional and changes
+ * between breez_sdk_spark releases (an SDK bump made pre-upgrade receipts unreadable); this
+ * message carries the few fields Radar actually consumes in a format that survives SDK bumps.
+ * Only add fields — never renumber or reuse tags.
+ */
+message LightningReceipt {
+
+  enum Status {
+    UNKNOWN   = 0;
+    PENDING   = 1;
+    COMPLETED = 2;
+    FAILED    = 3;
+  }
+
+  enum DetailsType {
+    NONE      = 0;
+    LIGHTNING = 1;
+    SPARK     = 2;
+    TOKEN     = 3;
+    DEPOSIT   = 4;
+    WITHDRAW  = 5;
+  }
+
+  string      identifier  = 1; // lightning paymentHash or on-chain txId; "" when n/a (spark/token)
+  string      paymentId   = 2; // breez payment.id
+  Status      status      = 3;
+  string      amountSats  = 4; // decimal string (breez amounts are u128)
+  string      feeSats     = 5; // decimal string
+  uint64      timestamp   = 6; // seconds since epoch, from the breez payment
+  DetailsType detailsType = 7;
+}

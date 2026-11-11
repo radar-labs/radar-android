@@ -31,7 +31,10 @@ public final class Entropy {
     if (bytes == null) {
       return null;
     }
-    if (bytes.length == PaymentsConstants.PAYMENTS_ENTROPY_LENGTH) {
+    // Accept every restorable length, not just the one we mint at: a wallet created before the
+    // switch to a 12-word phrase holds 32 bytes, and rejecting it here silently turned a valid
+    // recovery phrase into "no wallet".
+    if (PaymentsConstants.isSupportedPaymentsEntropyLength(bytes.length)) {
       return new Entropy(bytes);
     } else {
       Log.w(TAG, String.format(Locale.US, "Entropy was supplied of length %d and ignored", bytes.length), new Throwable());

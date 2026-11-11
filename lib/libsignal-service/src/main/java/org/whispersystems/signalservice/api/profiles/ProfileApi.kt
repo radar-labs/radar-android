@@ -32,6 +32,7 @@ import org.whispersystems.signalservice.internal.push.ProfileAvatarData
 import org.whispersystems.signalservice.internal.push.ProfileAvatarUploadAttributes
 import org.whispersystems.signalservice.internal.push.PushServiceSocket
 import org.whispersystems.signalservice.internal.push.http.ProfileCipherOutputStreamFactory
+import kotlinx.coroutines.runBlocking
 import java.security.SecureRandom
 
 /**
@@ -59,6 +60,7 @@ class ProfileApi(
    *
    * @return The avatar URL path, if one was written.
    */
+  @JvmOverloads
   fun setVersionedProfile(
     aci: ServiceId.ACI,
     profileKey: ProfileKey,
@@ -68,12 +70,14 @@ class ProfileApi(
     paymentsAddress: PaymentAddress?,
     avatar: AvatarUploadParams,
     visibleBadgeIds: List<String>,
-    phoneNumberSharing: Boolean
+    phoneNumberSharing: Boolean,
+    // Radar: the Lightning payment address is written at a fixed profile version (ProfileUtil.LIGHTNING_PROFILE_VERSION).
+    version: String? = null
   ): NetworkResult<String?> {
     val profileCipher = ProfileCipher(profileKey)
 
     val profileWrite = SignalServiceProfileWrite(
-      version = profileKey.getProfileKeyVersion(aci.libSignalAci).serialize(),
+      version = version ?: profileKey.getProfileKeyVersion(aci.libSignalAci).serialize(),
       name = profileCipher.encryptString(name ?: "", ProfileCipher.getTargetNameLength(name)),
       about = profileCipher.encryptString(about ?: "", ProfileCipher.getTargetAboutLength(about)),
       aboutEmoji = profileCipher.encryptString(aboutEmoji ?: "", ProfileCipher.EMOJI_PADDED_LENGTH),
@@ -118,8 +122,8 @@ class ProfileApi(
    * - 404: Recipient is not a registered Signal user
    * - 429: Rate-limited
    */
-  suspend fun getVersionedProfileAndCredential(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?): NetworkResult<Pair<SignalServiceProfile, ExpiringProfileKeyCredential?>> {
-    val profileVersion = profileKey.getProfileKeyVersion(aci.libSignalAci).serialize()
+  suspend fun getVersionedProfileAndCredential(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?, version: String? = null): NetworkResult<Pair<SignalServiceProfile, ExpiringProfileKeyCredential?>> {
+    val profileVersion = version ?: profileKey.getProfileKeyVersion(aci.libSignalAci).serialize()
     val profileRequestContext = clientZkProfileOperations.createProfileKeyCredentialRequestContext(SecureRandom(), aci.libSignalAci, profileKey)
     val serializedProfileRequest = Hex.toStringCondensed(profileRequestContext.request.serialize())
 
@@ -145,9 +149,8 @@ class ProfileApi(
    * - 404: Recipient is not a registered Signal user
    * - 429: Rate-limited
    */
-  suspend fun getVersionedProfile(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?): NetworkResult<SignalServiceProfile> {
-    val profileKeyIdentifier = profileKey.getProfileKeyVersion(aci.libSignalAci)
-    val profileVersion = profileKeyIdentifier.serialize()
+  suspend fun getVersionedProfile(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?, version: String? = null): NetworkResult<SignalServiceProfile> {
+    val profileVersion = version ?: profileKey.getProfileKeyVersion(aci.libSignalAci).serialize()
 
     val request = WebSocketRequestMessage.get("/v1/profile/$aci/$profileVersion")
     val converter = NetworkResult.DefaultWebSocketConverter(SignalServiceProfile::class)
@@ -161,6 +164,14 @@ class ProfileApi(
           fallback = { NetworkResult.fromWebSocketSuspend(converter) { authWebSocket.requestSuspend(request) } }
         )
     }
+  }
+
+  /**
+   * Radar: blocking [getVersionedProfile] for Java callers (the payment address lookup in ProfileUtil runs on a
+   * worker thread and reads the profile at the fixed Lightning profile version).
+   */
+  fun getVersionedProfileBlocking(aci: ServiceId.ACI, profileKey: ProfileKey, sealedSenderAccess: SealedSenderAccess?, version: String?): NetworkResult<SignalServiceProfile> {
+    return runBlocking { getVersionedProfile(aci, profileKey, sealedSenderAccess, version) }
   }
 
   /**

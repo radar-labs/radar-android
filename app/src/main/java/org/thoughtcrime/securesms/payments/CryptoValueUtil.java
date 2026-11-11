@@ -18,8 +18,8 @@ public final class CryptoValueUtil {
   public static @NonNull CryptoValue moneyToCryptoValue(@NonNull Money money) {
     CryptoValue.Builder builder = new CryptoValue.Builder();
 
-    if (money instanceof Money.MobileCoin) {
-      Money.MobileCoin mobileCoin = (Money.MobileCoin) money;
+    if (money instanceof Money.Satoshi) {
+      Money.Satoshi mobileCoin = (Money.Satoshi) money;
       builder.mobileCoinValue(new CryptoValue.MobileCoinValue.Builder().picoMobileCoin(mobileCoin.serializeAmountString()).build());
     }
 
@@ -28,7 +28,7 @@ public final class CryptoValueUtil {
 
   public static @NonNull Money cryptoValueToMoney(@NonNull CryptoValue amount) {
     if (amount.mobileCoinValue != null) {
-      return Money.picoMobileCoin(new BigInteger(amount.mobileCoinValue.picoMobileCoin));
+      return Money.satoshi(new BigInteger(amount.mobileCoinValue.picoMobileCoin));
     } else {
       throw new AssertionError();
     }

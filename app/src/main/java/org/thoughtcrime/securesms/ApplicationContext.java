@@ -96,6 +96,7 @@ import org.thoughtcrime.securesms.jobs.MessageSendLogCleanupJob;
 import org.thoughtcrime.securesms.jobs.MultiDeviceContactUpdateJob;
 import org.thoughtcrime.securesms.jobs.PreKeysSyncJob;
 import org.thoughtcrime.securesms.jobs.ProfileUploadJob;
+import org.thoughtcrime.securesms.jobs.PublishLightningAddressJob;
 import org.thoughtcrime.securesms.jobs.RefreshAttributesJob;
 import org.thoughtcrime.securesms.jobs.RefreshSvrCredentialsJob;
 import org.thoughtcrime.securesms.jobs.RestoreOptimizedMediaJob;
@@ -259,6 +260,7 @@ public class ApplicationContext extends Application implements AppForegroundObse
               .addPostRender(() -> AppDependencies.getJobManager().add(new CallingAssetsDownloadJob()))
               .addPostRender(CheckServiceReachabilityJob::enqueueIfNecessary)
               .addPostRender(GroupV2UpdateSelfProfileKeyJob::enqueueForGroupsIfNecessary)
+              .addPostRender(PublishLightningAddressJob::enqueueIfPaymentsEnabled)
               .addPostRender(StoryOnboardingDownloadJob.Companion::enqueueIfNeeded)
               .addPostRender(() -> AppDependencies.getExoPlayerPool().getPoolStats().getMaxUnreserved())
               .addPostRender(() -> AppDependencies.getRecipientCache().warmUp())

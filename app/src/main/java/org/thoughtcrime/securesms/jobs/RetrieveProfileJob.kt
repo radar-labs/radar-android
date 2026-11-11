@@ -6,7 +6,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64.decode
-import org.signal.core.util.ExpiringProfileCredentialUtil
 import org.signal.core.util.Stopwatch
 import org.signal.core.util.Util
 import org.signal.core.util.concurrent.SignalExecutors
@@ -127,7 +126,14 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
           serviceId = recipient.requireServiceId(),
           profileKey = recipient.profileKey?.let { ProfileKey(it) },
           sealedSenderAccess = SealedSenderAccessUtil.getSealedSenderAccessForProfileFetch(recipient, true),
-          fetchExpiringCredential = !ExpiringProfileCredentialUtil.isValid(recipient.expiringProfileKeyCredential)
+          // This payments fork stores the payment address at a fixed profile version (see
+          // ProfileUtil.LIGHTNING_PROFILE_VERSION), which becomes the account's "current" version on the
+          // server. The server only issues an expiring profile key credential for the current version, so a
+          // request at the standard (profile-key-derived) version comes back with no credential. That empty
+          // response is treated as a verification failure below and would clear the recipient's profile key
+          // on every message, breaking outgoing payments. We don't use expiring profile key credentials in
+          // this fork, so never request them here.
+          fetchExpiringCredential = false
         )
       }
 

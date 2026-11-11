@@ -20,6 +20,8 @@ public interface Payment {
   Comparator<Payment> ASCENDING_BLOCK_INDEX                = (a, b) -> Long.compare(a.getBlockIndex(), b.getBlockIndex());
   Comparator<Payment> DESCENDING_BLOCK_INDEX               = ASCENDING_BLOCK_INDEX.reversed();
   Comparator<Payment> DESCENDING_BLOCK_INDEX_UNKNOWN_FIRST = UNKNOWN_BLOCK_INDEX_FIRST.thenComparing(DESCENDING_BLOCK_INDEX);
+  Comparator<Payment> ASCENDING_TIMESTAMP  = Comparator.comparingLong(Payment::getTimestamp);
+  Comparator<Payment> DESCENDING_TIMESTAMP = ASCENDING_TIMESTAMP.reversed();
 
   @NonNull UUID getUuid();
 
@@ -60,28 +62,30 @@ public interface Payment {
 
   @NonNull PaymentMetaData getPaymentMetaData();
 
+  default byte[] getReceipt() {
+    return null;
+  }
+
   boolean isSeen();
 
   /**
    * Negative if sent, positive if received.
    */
   default @NonNull Money getAmountWithDirection() {
-    switch (getDirection()) {
-      case SENT    : return getAmount().negate();
-      case RECEIVED: return getAmount();
-      default      : throw new AssertionError();
-    }
+    return switch (getDirection()) {
+      case SENT -> getAmount().negate();
+      case RECEIVED -> getAmount();
+    };
   }
 
   /**
    * Negative if sent including fee, positive if received.
    */
   default @NonNull Money getAmountPlusFeeWithDirection() {
-    switch (getDirection()) {
-      case SENT    : return getAmount().add(getFee()).negate();
-      case RECEIVED: return getAmount();
-      default      : throw new AssertionError();
-    }
+    return switch (getDirection()) {
+      case SENT -> getAmount().add(getFee()).negate();
+      case RECEIVED -> getAmount();
+    };
   }
 
   default boolean isDefrag() {

@@ -18,7 +18,10 @@ import org.whispersystems.signalservice.internal.storage.protos.Payments
 
 fun AccountRecord.Builder.safeSetPayments(enabled: Boolean, entropy: ByteArray?): AccountRecord.Builder {
   val paymentsBuilder = Payments.Builder()
-  val entropyPresent = entropy != null && entropy.size == PaymentsConstants.PAYMENTS_ENTROPY_LENGTH
+  // Any restorable length, not just the one we mint at. A wallet recovered from a pre-12-word
+  // phrase holds 32 bytes; rejecting it here would drop the seed from the Storage Service record
+  // *and* write payments back as disabled, losing the wallet on the next restore.
+  val entropyPresent = entropy != null && PaymentsConstants.isSupportedPaymentsEntropyLength(entropy.size)
 
   paymentsBuilder.enabled(enabled && entropyPresent)
 

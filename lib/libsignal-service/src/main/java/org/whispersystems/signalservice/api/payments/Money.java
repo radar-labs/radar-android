@@ -28,6 +28,22 @@ public abstract class Money {
   }
 
   /**
+   * @param amount Can be positive or negative. Can exceed 64 bits.
+   *               Must not have a decimal scale beyond that which mobile coin allows.
+   */
+  public static Satoshi bitcoin(BigDecimal amount) {
+    return satoshi(amount.movePointRight(Satoshi.PRECISION).toBigIntegerExact());
+  }
+
+
+  /**
+   * @param satoshi Can be positive or negative. Can exceed 64 bits.
+   */
+  public static Satoshi satoshi(BigInteger satoshi) {
+    return satoshi.signum() == 0 ? Satoshi.ZERO : new Satoshi(satoshi);
+  }
+
+  /**
    * @param picoMobileCoinUint64 Treated as unsigned.
    */
   public static MobileCoin picoMobileCoin(long picoMobileCoinUint64) {
@@ -49,6 +65,9 @@ public abstract class Money {
     }
     if (Money.MobileCoin.CURRENCY.getCurrencyCode().equals(split[0])) {
       return picoMobileCoin(new BigInteger(split[1]));
+    }
+    if (Money.Satoshi.CURRENCY.getCurrencyCode().equals(split[0])) {
+      return satoshi(new BigInteger(split[1]));
     }
     throw new ParseException();
   }
@@ -86,6 +105,10 @@ public abstract class Money {
     throw new AssertionError();
   }
 
+  public Satoshi requireBitcoin() {
+    throw new AssertionError();
+  }
+
   public final String serialize() {
     return getCurrency().getCurrencyCode() + ":" + serializeAmountString();
   }
@@ -111,7 +134,7 @@ public abstract class Money {
 
     private static final int PRECISION = 12;
 
-    public static final Currency CURRENCY  = Currency.fromCodeAndPrecision("MOB", PRECISION);
+    public static final Currency CURRENCY  = Currency.fromCodeAndPrecision("KONSTI", PRECISION);
 
     private final BigInteger amount;
     private final BigDecimal amountDecimal;
@@ -237,6 +260,149 @@ public abstract class Money {
 
     public long toPicoMobUint64() throws Uint64RangeException {
       return Uint64Util.bigIntegerToUInt64(amount);
+    }
+
+    @Override
+    public String toString(Formatter formatter) {
+      return formatter.format(amountDecimal);
+    }
+  }
+
+  public static final class Satoshi extends Money {
+    public static final Comparator<Satoshi> ASCENDING  = (x, y) -> x.amount.compareTo(y.amount);
+    public static final Comparator<Satoshi> DESCENDING = (x, y) -> y.amount.compareTo(x.amount);
+
+    public static final Satoshi ZERO = new Satoshi(BigInteger.ZERO);
+    public static final Satoshi MAX_VALUE;
+
+    static {
+      byte[] bytes = new byte[8];
+      Arrays.fill(bytes, (byte) 0xff);
+      BigInteger max64Bit = new BigInteger(1, bytes);
+      MAX_VALUE = Money.satoshi(max64Bit);
+    }
+
+    private static final int PRECISION = 8;
+
+    public static final Currency CURRENCY  = Currency.fromCodeAndPrecision("BTC", PRECISION);
+
+    private final BigInteger amount;
+    private final BigDecimal amountDecimal;
+
+    private Satoshi(BigInteger amount) {
+      this.amount        = amount;
+      this.amountDecimal = new BigDecimal(amount).movePointLeft(PRECISION).stripTrailingZeros();
+    }
+
+    public static Satoshi sum(Collection<Satoshi> values) {
+      switch (values.size()) {
+        case 0:
+          return ZERO;
+        case 1:
+          return values.iterator().next();
+        default: {
+          BigInteger result = ZERO.amount;
+
+          for (Satoshi value : values) {
+            result = result.add(value.amount);
+          }
+
+          return Money.satoshi(result);
+        }
+      }
+    }
+
+    @Override
+    public boolean isPositive() {
+      return amount.signum() == 1;
+    }
+
+    @Override
+    public boolean isNegative() {
+      return amount.signum() == -1;
+    }
+
+    @Override
+    public boolean isEqualOrLessThanZero() {
+      return amount != null && amount.compareTo(BigInteger.ZERO) <= 0;
+    }
+
+    @Override
+    public Satoshi negate() {
+      return new Satoshi(amount.negate());
+    }
+
+    @Override
+    public Satoshi abs() {
+      if (amount.signum() == -1) {
+        return negate();
+      }
+      return this;
+    }
+
+    @Override
+    public Money add(Money other) {
+      return new Satoshi(amount.add(other.requireBitcoin().amount));
+    }
+
+    @Override
+    public Money subtract(Money other) {
+      return new Satoshi(amount.subtract(other.requireBitcoin().amount));
+    }
+
+    @Override
+    public Currency getCurrency() {
+      return CURRENCY;
+    }
+
+    @Override
+    public Satoshi requireBitcoin() {
+      return this;
+    }
+
+    @Override
+    public Money toZero() {
+      return ZERO;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      return o instanceof Satoshi && amount.equals(((Satoshi) o).amount);
+    }
+
+    @Override
+    public int hashCode() {
+      return amount.hashCode();
+    }
+
+    @Override
+    public String serializeAmountString() {
+      return toSatoshiBigInteger().toString();
+    }
+
+    public String getAmountDecimalString() {
+      return amountDecimal.toString();
+    }
+
+    public boolean greaterThan(Satoshi other) {
+      return amount.compareTo(other.amount) > 0;
+    }
+
+    public boolean lessThan(Satoshi other) {
+      return amount.compareTo(other.amount) < 0;
+    }
+
+    @Deprecated
+    public double toDouble() {
+      return amountDecimal.doubleValue();
+    }
+
+    public BigDecimal toBigDecimal() {
+      return amountDecimal;
+    }
+
+    public BigInteger toSatoshiBigInteger() {
+      return amount;
     }
 
     @Override

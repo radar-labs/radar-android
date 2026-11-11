@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public final class Payee {
   private final RecipientId             recipientId;
-  private final MobileCoinPublicAddress publicAddress;
+  private final LightningAddress publicAddress;
 
   /**
    * Used for reconstructed payments from the ledger where we do not know who it was from or to.
@@ -17,7 +17,7 @@ public final class Payee {
   public static final Payee UNKNOWN = new Payee(null, null);
 
   public static Payee fromRecipientAndAddress(@NonNull RecipientId recipientId, @NonNull MobileCoinPublicAddress publicAddress) {
-     return new Payee(Objects.requireNonNull(recipientId), publicAddress);
+     return new Payee(Objects.requireNonNull(recipientId));
   }
 
   public Payee(@NonNull RecipientId recipientId) {
@@ -25,10 +25,14 @@ public final class Payee {
   }
 
   public Payee(@NonNull MobileCoinPublicAddress publicAddress) {
+    this(null, null);
+  }
+
+  public Payee(@NonNull LightningAddress publicAddress) {
     this(null, Objects.requireNonNull(publicAddress));
   }
 
-  private Payee(@Nullable RecipientId recipientId, @Nullable MobileCoinPublicAddress publicAddress) {
+  public Payee(@Nullable RecipientId recipientId, @Nullable LightningAddress publicAddress) {
     this.recipientId   = recipientId;
     this.publicAddress = publicAddress;
   }
@@ -45,7 +49,12 @@ public final class Payee {
     return publicAddress != null;
   }
 
+  @Deprecated
   public @NonNull MobileCoinPublicAddress requirePublicAddress() {
+    return null;
+  }
+
+  public @NonNull LightningAddress requireLightningAddress() {
     return Objects.requireNonNull(publicAddress);
   }
 

@@ -12,6 +12,7 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.util.OutgoingContent
+import org.whispersystems.signalservice.api.payments.Money
 import org.whispersystems.signalservice.internal.push.SyncMessage
 import java.util.UUID
 import kotlin.time.Duration.Companion.days
@@ -68,7 +69,20 @@ class MultiDeviceOutgoingPaymentSyncJob private constructor(
       return Result.success()
     }
 
-    val txoIdentification = payment.paymentMetaData.mobileCoinTxoIdentification!!
+    // Radar: payments are Bitcoin over Lightning (Money.Satoshi), but OutgoingPayment only carries
+    // MobileCoin amounts. The MobileCoin metadata and requireMobileCoin() below would throw, and an
+    // exception from a persisted job crash-loops the app on every launch for anyone with a linked device.
+    if (payment.amount !is Money.MobileCoin || payment.fee !is Money.MobileCoin) {
+      Log.w(TAG, "Not a MobileCoin payment, nothing to sync $uuid")
+      return Result.success()
+    }
+
+    // Radar's PaymentTable does not keep MobileCoin metadata, so never force-unwrap it.
+    val txoIdentification = payment.paymentMetaData.mobileCoinTxoIdentification
+    if (txoIdentification == null) {
+      Log.w(TAG, "No MobileCoin metadata, nothing to sync $uuid")
+      return Result.success()
+    }
     val defrag = payment.isDefrag
 
     val recipientServiceId = if (!defrag && payment.payee.hasRecipientId()) {
@@ -77,7 +91,12 @@ class MultiDeviceOutgoingPaymentSyncJob private constructor(
       null
     }
 
-    val receipt = payment.receipt ?: throw AssertionError("Trying to sync payment before sent?")
+    val receipt = payment.receipt
+    if (receipt == null) {
+      // Radar: logged rather than thrown, an AssertionError here would also crash-loop the app.
+      Log.w(TAG, "Trying to sync payment before sent? $uuid")
+      return Result.success()
+    }
 
     val outgoingPayment = SyncMessage.OutgoingPayment(
       recipientServiceId = recipientServiceId?.toString(),

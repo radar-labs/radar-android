@@ -14,12 +14,7 @@ import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobmanager.JobManager;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.net.NotPushRegisteredException;
-import org.thoughtcrime.securesms.payments.FailureReason;
-import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
-import org.thoughtcrime.securesms.payments.PaymentSubmissionResult;
-import org.thoughtcrime.securesms.payments.PaymentTransactionId;
-import org.thoughtcrime.securesms.payments.TransactionSubmissionResult;
-import org.thoughtcrime.securesms.payments.Wallet;
+import org.thoughtcrime.securesms.payments.*;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.signal.core.util.Stopwatch;
 import org.whispersystems.signalservice.api.payments.Money;
@@ -48,9 +43,9 @@ public final class PaymentSendJob extends BaseJob {
 
   private final UUID                    uuid;
   private final long                    timestamp;
-  private final RecipientId             recipientId;
-  private final MobileCoinPublicAddress publicAddress;
-  private final String                  note;
+  private final RecipientId      recipientId;
+  private final LightningAddress publicAddress;
+  private final String           note;
   private final Money                   amount;
   private final Money                   totalFee;
 
@@ -59,7 +54,7 @@ public final class PaymentSendJob extends BaseJob {
    */
   @AnyThread
   public static @NonNull UUID enqueuePayment(@Nullable RecipientId recipientId,
-                                             @NonNull MobileCoinPublicAddress publicAddress,
+                                             @NonNull LightningAddress publicAddress,
                                              @NonNull String note,
                                              @NonNull Money amount,
                                              @NonNull Money totalFee)
@@ -98,7 +93,7 @@ public final class PaymentSendJob extends BaseJob {
                          @NonNull UUID uuid,
                          long timestamp,
                          @Nullable RecipientId recipientId,
-                         @NonNull MobileCoinPublicAddress publicAddress,
+                         @NonNull LightningAddress publicAddress,
                          @NonNull String note,
                          @NonNull Money amount,
                          @NonNull Money totalFee)
@@ -148,30 +143,8 @@ public final class PaymentSendJob extends BaseJob {
     stopwatch.split("Record created");
 
     try {
-      PaymentSubmissionResult paymentSubmissionResult = wallet.sendPayment(publicAddress, amount.requireMobileCoin(), totalFee.requireMobileCoin());
+      PaymentSubmissionResult paymentSubmissionResult = wallet.sendPayment(publicAddress, amount, totalFee);
       stopwatch.split("Payment submitted");
-
-      if (paymentSubmissionResult.containsDefrags()) {
-        Log.i(TAG, "Payment contains " + paymentSubmissionResult.defrags().size() + " defrags, main payment" + uuid);
-        RecipientId             self        = Recipient.self().getId();
-        MobileCoinPublicAddress selfAddress = wallet.getMobileCoinPublicAddress();
-        for (TransactionSubmissionResult defrag : paymentSubmissionResult.defrags()) {
-          UUID                            defragUuid            = UUID.randomUUID();
-          PaymentTransactionId.MobileCoin mobileCoinTransaction = (PaymentTransactionId.MobileCoin) defrag.getTransactionId();
-          paymentDatabase.createDefrag(defragUuid,
-                                       self,
-                                       selfAddress,
-                                       timestamp - 1,
-                                       mobileCoinTransaction.getFee(),
-                                       mobileCoinTransaction.getTransaction(), mobileCoinTransaction.getReceipt());
-          Log.i(TAG, "Defrag entered with id " + defragUuid);
-          AppDependencies.getJobManager()
-                         .startChain(new PaymentTransactionCheckJob(defragUuid, QUEUE))
-                         .then(new MultiDeviceOutgoingPaymentSyncJob(defragUuid))
-                         .enqueue();
-        }
-        stopwatch.split("Defrag");
-      }
 
       TransactionSubmissionResult.ErrorCode errorCode = paymentSubmissionResult.getErrorCode();
 
@@ -217,7 +190,7 @@ public final class PaymentSendJob extends BaseJob {
                    .putString(KEY_UUID, uuid.toString())
                    .putLong(KEY_TIMESTAMP, timestamp)
                    .putString(KEY_RECIPIENT, recipientId != null ? recipientId.serialize() : null)
-                   .putString(KEY_ADDRESS, publicAddress != null ? publicAddress.getPaymentAddressBase58() : null)
+                   .putString(KEY_ADDRESS, publicAddress != null ? publicAddress.getPaymentAddress() : null)
                    .putString(KEY_NOTE, note)
                    .putString(KEY_AMOUNT, amount.serialize())
                    .putString(KEY_FEE, totalFee.serialize())
@@ -249,7 +222,7 @@ public final class PaymentSendJob extends BaseJob {
                                 UUID.fromString(data.getString(KEY_UUID)),
                                 data.getLong(KEY_TIMESTAMP),
                                 RecipientId.fromNullable(data.getString(KEY_RECIPIENT)),
-                                MobileCoinPublicAddress.fromBase58NullableOrThrow(data.getString(KEY_ADDRESS)),
+                                LightningAddress.Companion.fromLightningAddressNullableOrThrow(data.getString(KEY_ADDRESS)),
                                 data.getString(KEY_NOTE),
                                 Money.parseOrThrow(data.getString(KEY_AMOUNT)),
                                 Money.parseOrThrow(data.getString(KEY_FEE)));

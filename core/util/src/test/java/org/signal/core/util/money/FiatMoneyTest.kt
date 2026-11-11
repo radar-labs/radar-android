@@ -16,7 +16,7 @@ class FiatMoneyTest {
     val result = fiatMoney.getDefaultPrecisionString(Locale.US)
 
     // THEN
-    assertEquals("100.00", result)
+    assertEquals("100,00", result)
   }
 
   @Test
