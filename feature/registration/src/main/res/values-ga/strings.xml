@@ -840,4 +840,5 @@
     <string name="PasskeyVerificationScreen__cancel">Cuir ar ceal</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Chuaigh rud éigin amú le do phaseochair. Triail arís.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Téarmaí Úsáide ⁊ Polasaí Príobháideachais</string>
 </resources>

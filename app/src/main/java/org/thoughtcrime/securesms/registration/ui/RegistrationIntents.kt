@@ -18,7 +18,8 @@ object RegistrationIntents {
 
   @JvmStatic
   fun newIntentForNewRegistration(context: Context): Intent {
-    return RegistrationActivity.createIntent(context, nextIntent = MainActivity.clearTop(context))
+    // Radar: a new registration ends in the payments onboarding (see MainActivity.EXTRA_OFFER_PAYMENTS_ONBOARDING).
+    return RegistrationActivity.createIntent(context, nextIntent = MainActivity.clearTopAfterNewRegistration(context))
   }
 
   @JvmStatic

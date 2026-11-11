@@ -834,4 +834,5 @@
     <string name="PasskeyVerificationScreen__cancel">Ləğv et</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Giriş metodu ilə bağlı səhv baş verdi. Yenidən cəhd edin.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Şərtlər və Gizlilik Siyasəti</string>
 </resources>

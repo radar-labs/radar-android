@@ -834,4 +834,5 @@
     <string name="PasskeyVerificationScreen__cancel">Бас тарту</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Кіру кілтіңізде бірдеңе дұрыс болмады. Қайталап көріңіз.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Шарттар және Құпиялық саясаты</string>
 </resources>

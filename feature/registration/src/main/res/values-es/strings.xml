@@ -834,4 +834,5 @@
     <string name="PasskeyVerificationScreen__cancel">Cancelar</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Se ha producido un error con tu clave de acceso. Inténtalo de nuevo.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Términos y Política de privacidad</string>
 </resources>

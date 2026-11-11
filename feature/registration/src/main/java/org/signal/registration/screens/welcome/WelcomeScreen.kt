@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
@@ -47,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -318,12 +320,28 @@ private fun LargeLayout(
 private fun HeroImage(
   modifier: Modifier = Modifier
 ) {
-  Image(
-    painter = painterResource(R.drawable.welcome),
-    contentDescription = null,
+  // Radar: the Radar icon and wordmark instead of Signal's welcome illustration (as in Radar 1.0.9).
+  Column(
     modifier = modifier.attachDebugLogHelper(),
-    contentScale = ContentScale.Fit
-  )
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center
+  ) {
+    Image(
+      painter = painterResource(R.drawable.radar_logo_icon),
+      contentDescription = null,
+      contentScale = ContentScale.Fit,
+      modifier = Modifier.size(120.dp)
+    )
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    Image(
+      painter = painterResource(R.drawable.radar_logo_wordmark),
+      contentDescription = null,
+      contentScale = ContentScale.Fit,
+      modifier = Modifier.width(132.dp)
+    )
+  }
 }
 
 @Composable
@@ -354,8 +372,9 @@ private fun TermsAndPrivacy(
     ),
     modifier = modifier
   ) {
+    // Radar: plain "Terms & Privacy Policy"; upstream's string also says "Signal is a 501c3 nonprofit".
     Text(
-      text = stringResource(R.string.RegistrationActivity_terms_and_privacy),
+      text = stringResource(R.string.RegistrationActivity_radar_terms_and_privacy),
       textAlign = TextAlign.Center
     )
   }
@@ -367,13 +386,14 @@ private fun PrimaryDeviceCallToActionButtons(
   onRestoreOrTransferClick: () -> Unit,
   showRestoreOrTransfer: Boolean
 ) {
-  Buttons.LargeTonal(
-    onClick = { onEvent(WelcomeScreenEvents.Continue) },
+  // Radar: "I'm new to Radar" opens Radar's sign-up screen (create an account or use a Signal account).
+  Buttons.LargePrimary(
+    onClick = { onEvent(WelcomeScreenEvents.SignUp) },
     modifier = Modifier
       .fillMaxWidth()
       .testTag(TestTags.WELCOME_GET_STARTED_BUTTON)
   ) {
-    Text(stringResource(R.string.RegistrationActivity_continue))
+    Text(stringResource(R.string.RegistrationActivity_im_new_to_radar))
   }
 
   if (showRestoreOrTransfer) {
@@ -388,7 +408,7 @@ private fun PrimaryDeviceCallToActionButtons(
         .fillMaxWidth()
         .testTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON)
     ) {
-      Text(stringResource(R.string.registration_activity__restore_or_transfer))
+      Text(stringResource(R.string.RegistrationActivity_i_already_have_an_account))
     }
   }
 }
@@ -467,26 +487,10 @@ private fun RestoreOrTransferBottomSheetContent(
   ) {
     Spacer(modifier = Modifier.size(26.dp))
 
-    RestoreActionRow(
-      icon = SignalIcons.QrCode.painter,
-      title = stringResource(R.string.WelcomeFragment_restore_action_i_have_my_old_phone),
-      subtitle = stringResource(R.string.WelcomeFragment_restore_action_scan_qr),
-      modifier = Modifier.testTag(TestTags.WELCOME_RESTORE_HAS_OLD_PHONE_BUTTON),
-      onRowClick = {
+    RadarRestoreOptions(
+      onOptionClick = { event ->
         sheetState.dismissWithAnimation(scope) {
-          onEvent(WelcomeScreenEvents.HasOldPhone)
-        }
-      }
-    )
-
-    RestoreActionRow(
-      icon = painterResource(R.drawable.symbol_no_phone_44),
-      title = stringResource(R.string.WelcomeFragment_restore_action_i_dont_have_my_old_phone),
-      subtitle = stringResource(R.string.WelcomeFragment_restore_action_reinstalling),
-      modifier = Modifier.testTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON),
-      onRowClick = {
-        sheetState.dismissWithAnimation(scope) {
-          onEvent(WelcomeScreenEvents.DoesNotHaveOldPhone)
+          onEvent(event)
         }
       }
     )
@@ -494,11 +498,12 @@ private fun RestoreOrTransferBottomSheetContent(
 }
 
 @Composable
-private fun RestoreActionRow(
+internal fun RestoreActionRow(
   icon: Painter,
   title: String,
   subtitle: String,
   modifier: Modifier = Modifier,
+  iconTint: Color = MaterialTheme.colorScheme.primary,
   onRowClick: () -> Unit = {}
 ) {
   Row(
@@ -514,13 +519,15 @@ private fun RestoreActionRow(
   ) {
     Icon(
       painter = icon,
-      tint = MaterialTheme.colorScheme.primary,
+      tint = iconTint,
       contentDescription = null,
       modifier = Modifier.size(44.dp)
     )
 
     Column(
-      modifier = Modifier.padding(start = 16.dp)
+      modifier = Modifier
+        .padding(start = 16.dp)
+        .weight(1f)
     ) {
       Text(
         text = title,
@@ -533,7 +540,47 @@ private fun RestoreActionRow(
         color = MaterialTheme.colorScheme.onSurfaceVariant
       )
     }
+
+    Icon(
+      painter = SignalIcons.ChevronRight.painter,
+      tint = MaterialTheme.colorScheme.onSurfaceVariant,
+      contentDescription = null,
+      modifier = Modifier.padding(start = 8.dp)
+    )
   }
+}
+
+/**
+ * Radar: the "I already have an account" options, as in Radar 1.0.9 — migrate from Signal (restore a Signal
+ * backup on this phone), set up a new phone from the old one (QR code: transfer or restore), or link this device.
+ */
+@Composable
+internal fun RadarRestoreOptions(
+  onOptionClick: (WelcomeScreenEvents) -> Unit
+) {
+  RestoreActionRow(
+    icon = painterResource(R.drawable.welcome_signal_app_icon),
+    iconTint = Color.Unspecified,
+    title = stringResource(R.string.WelcomeFragment_restore_action_migrate_from_signal),
+    subtitle = stringResource(R.string.WelcomeFragment_restore_action_migrate_from_signal_subtitle),
+    modifier = Modifier.testTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON),
+    onRowClick = { onOptionClick(WelcomeScreenEvents.MigrateFromSignal) }
+  )
+
+  RestoreActionRow(
+    icon = painterResource(R.drawable.welcome_transfer_phone_44),
+    title = stringResource(R.string.WelcomeFragment_restore_action_set_up_new_phone),
+    subtitle = stringResource(R.string.WelcomeFragment_restore_action_set_up_new_phone_subtitle),
+    modifier = Modifier.testTag(TestTags.WELCOME_RESTORE_HAS_OLD_PHONE_BUTTON),
+    onRowClick = { onOptionClick(WelcomeScreenEvents.HasOldPhone) }
+  )
+
+  RestoreActionRow(
+    icon = painterResource(R.drawable.welcome_link_44),
+    title = stringResource(R.string.WelcomeFragment_restore_action_link_device),
+    subtitle = stringResource(R.string.WelcomeFragment_restore_action_link_device_subtitle),
+    onRowClick = { onOptionClick(WelcomeScreenEvents.LinkDevice) }
+  )
 }
 
 private const val TABLET_MIN_DIAGONAL_INCHES = 7f

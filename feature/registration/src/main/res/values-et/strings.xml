@@ -834,4 +834,5 @@
     <string name="PasskeyVerificationScreen__cancel">Loobu</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Sinu pääsuvõtmega läks midagi valesti. Palun proovi uuesti.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Tingimused ja privaatsuspoliitika</string>
 </resources>

@@ -124,6 +124,8 @@ import org.signal.registration.screens.pinentry.PinEntryForSvrRestoreViewModel
 import org.signal.registration.screens.pinentry.PinEntryScreen
 import org.signal.registration.screens.quickrestore.QuickRestoreQrScreen
 import org.signal.registration.screens.quickrestore.QuickRestoreQrViewModel
+import org.signal.registration.screens.radar.MigrateFromSignalScreen
+import org.signal.registration.screens.radar.RadarSignUpScreen
 import org.signal.registration.screens.remotebackuprestore.RemoteBackupRestoreViewModel
 import org.signal.registration.screens.remotebackuprestore.RemoteRestoreScreen
 import org.signal.registration.screens.restoreselection.ArchiveRestoreOption
@@ -178,6 +180,14 @@ import org.signal.signallogin.viewdetails.SignalLoginViewDetailsScreen
 sealed interface RegistrationRoute : NavKey, Parcelable {
   @Serializable
   data object Welcome : RegistrationRoute
+
+  /** Radar: sign up — create a new account or use an existing Signal account. */
+  @Serializable
+  data object RadarSignUp : RegistrationRoute
+
+  /** Radar: what to do in Signal before restoring its backup here. */
+  @Serializable
+  data object MigrateFromSignal : RegistrationRoute
 
   @Serializable
   data class Permissions(val nextRoute: RegistrationRoute) : RegistrationRoute
@@ -558,6 +568,42 @@ private fun EntryProviderScope<NavKey>.navigationEntries(
   }
 
   // --- Allow Notifications Screen
+  // --- Radar: Sign up screen ("I'm new to Radar")
+  entry<RegistrationRoute.RadarSignUp> {
+    val context = LocalContext.current
+    val viewModel: WelcomeScreenViewModel = viewModel {
+      WelcomeScreenViewModel(
+        repository = registrationRepository,
+        parentState = registrationViewModel.state,
+        parentEventEmitter = registrationViewModel::onEvent,
+        hasPermissions = { RegistrationPermissions.hasAllRequiredPermissions(context) },
+        getRequiredLinkedDevicePermission = { registrationViewModel.getRequiredLinkedDevicePermission() }
+      )
+    }
+
+    RadarSignUpScreen(
+      onEvent = { viewModel.onEvent(it) }
+    )
+  }
+
+  // --- Radar: Migrate from Signal (restore the user's Signal backup on this phone)
+  entry<RegistrationRoute.MigrateFromSignal> {
+    val context = LocalContext.current
+
+    MigrateFromSignalScreen(
+      onContinue = {
+        // Same as choosing Signal Secure Backups on the restore selection screen before registering: remember the
+        // pending remote restore, then collect the phone number (the recovery key is asked for after it).
+        parentEventEmitter(RegistrationFlowEvent.PendingRestoreOptionSelected(PendingRestoreOption.RemoteBackup))
+        val next: RegistrationRoute = RegistrationRoute.PhoneNumberEntry
+        parentEventEmitter.navigateTo(
+          if (RegistrationPermissions.hasAllRequiredPermissions(context)) next else RegistrationRoute.Permissions(nextRoute = next)
+        )
+      },
+      onCancel = { parentEventEmitter(RegistrationFlowEvent.NavigateBack) }
+    )
+  }
+
   entry<RegistrationRoute.AllowNotifications> { key ->
     val onProceed = { parentEventEmitter.navigateTo(key.nextRoute) }
     val localPermissionState = rememberPermissionState(

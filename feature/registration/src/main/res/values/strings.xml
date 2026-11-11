@@ -834,4 +834,26 @@
     <string name="PasskeyVerificationScreen__cancel">Cancel</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Something went wrong with your passkey. Please try again.</string>
+    <string name="RegistrationActivity_im_new_to_radar">I\'m new to Radar</string>
+    <string name="RegistrationActivity_i_already_have_an_account">I already have an account</string>
+    <string name="RegistrationActivity_sign_up">Sign up</string>
+    <string name="RegistrationActivity_create_a_new_account_or_restore">Create a new account or restore an existing Radar account</string>
+    <string name="RegistrationActivity_radar_is_based_on_signal">Radar is based on Signal</string>
+    <string name="RegistrationActivity_and_compatible_with_it">%1$s and compatible with it, letting you keep all your existing conversations</string>
+    <string name="RegistrationActivity_create_new_account">Create New Account</string>
+    <string name="RegistrationActivity_use_my_signal_account">Use my Signal account</string>
+    <string name="WelcomeFragment_restore_action_migrate_from_signal">Migrate from Signal</string>
+    <string name="WelcomeFragment_restore_action_migrate_from_signal_subtitle">Use your Signal backup to bring your account and messages to this phone</string>
+    <string name="WelcomeFragment_restore_action_set_up_new_phone">Set up my new phone</string>
+    <string name="WelcomeFragment_restore_action_set_up_new_phone_subtitle">Scan a QR code from your current Signal/Radar account to get started quickly</string>
+    <string name="WelcomeFragment_restore_action_link_device">Link device</string>
+    <string name="WelcomeFragment_restore_action_link_device_subtitle">Use this as a secondary device for your existing session</string>
+    <string name="MigrateFromSignal_title">Migrate from Signal</string>
+    <string name="MigrateFromSignal_subtitle">Bring your account and messages across using your Signal backup. You\'ll need your Signal Recovery Key.</string>
+    <string name="MigrateFromSignal_instruction_1">In Signal, go to Settings → Backups and turn on backups</string>
+    <string name="MigrateFromSignal_instruction_2">Save your Recovery Key — you\'ll need it in a moment</string>
+    <string name="MigrateFromSignal_instruction_3">Come back to Radar and enter your phone number and Recovery Key</string>
+    <string name="MigrateFromSignal_continue">Continue</string>
+    <string name="MigrateFromSignal_signal_will_be_signed_out">Setting Radar up on this number will sign you out of Signal. Your number can only be active in one app at a time.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Terms &amp; Privacy Policy</string>
 </resources>

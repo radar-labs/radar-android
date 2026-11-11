@@ -105,6 +105,7 @@ import org.signal.core.util.getParcelableCompat
 import org.signal.core.util.getSerializableCompat
 import org.signal.core.util.logging.Log
 import org.signal.donations.StripeApi
+import org.signal.storage.protos.RestoreDecisionState
 import org.thoughtcrime.securesms.backup.v2.ArchiveRestoreProgress
 import org.thoughtcrime.securesms.backup.v2.ArchiveRestoreProgressState
 import org.thoughtcrime.securesms.backup.v2.ui.CouldNotCompleteBackupRestoreSheet
@@ -144,7 +145,7 @@ import org.thoughtcrime.securesms.conversationlist.model.UnreadPaymentsLiveData
 import org.thoughtcrime.securesms.devicetransfer.olddevice.OldDeviceExitActivity
 import org.thoughtcrime.securesms.groups.ui.creategroup.CreateGroupActivity
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.keyvalue.isDecisionPending
+import org.signal.storage.keyvalue.isDecisionPending
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity
 import org.thoughtcrime.securesms.main.EmptyDetailScreen
 import org.thoughtcrime.securesms.main.MainBottomChrome
@@ -216,6 +217,15 @@ class MainActivity :
     fun clearTop(context: Context): Intent {
       return Intent(context, MainActivity::class.java)
         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+    }
+
+    /** Radar: set on the intent registration hands off to after a NEW registration (not re-registration or linking). */
+    const val EXTRA_OFFER_PAYMENTS_ONBOARDING = "radar_offer_payments_onboarding"
+
+    /** Radar: [clearTop] for the end of a new registration, which offers the payments onboarding once. */
+    @JvmStatic
+    fun clearTopAfterNewRegistration(context: Context): Intent {
+      return clearTop(context).putExtra(EXTRA_OFFER_PAYMENTS_ONBOARDING, true)
     }
 
     @JvmStatic
@@ -782,6 +792,16 @@ class MainActivity :
    * so the user is already looking at onboarding while the seed lands instead of at the chat list.
    */
   private fun maybeLaunchDeferredPaymentsOnboarding() {
+    // New registrations enter the payments onboarding once (mirrors iOS PaymentsOnboardingCoordinator);
+    // re-registration and linked devices go straight to the app. Registration hands off here, so queue it
+    // and let the checks below wait for any restore / "Enter your PIN" step to finish first.
+    if (intent?.getBooleanExtra(EXTRA_OFFER_PAYMENTS_ONBOARDING, false) == true) {
+      intent.removeExtra(EXTRA_OFFER_PAYMENTS_ONBOARDING)
+      if (!SignalStore.payments.paymentsOnboardingShown && SignalStore.account.isPrimaryDevice) {
+        SignalStore.payments.paymentsOnboardingPendingAfterRestore = true
+      }
+    }
+
     if (launchingDeferredPaymentsOnboarding || !SignalStore.payments.paymentsOnboardingPendingAfterRestore) {
       return
     }
@@ -798,7 +818,10 @@ class MainActivity :
     launchingDeferredPaymentsOnboarding = true
     SignalStore.payments.paymentsOnboardingPendingAfterRestore = false
     SignalStore.payments.paymentsOnboardingShown = true
-    startActivity(PaymentsOnboardingActivity.createIntent(this, awaitRestoredSeed = true))
+    // After a restore the payments seed arrives asynchronously (storage service), so onboarding waits for it.
+    // A brand new account has no seed to wait for.
+    val restored = SignalStore.registration.restoreDecisionState.decisionState == RestoreDecisionState.State.COMPLETED
+    startActivity(PaymentsOnboardingActivity.createIntent(this, awaitRestoredSeed = restored && SignalStore.payments.paymentsEntropy == null))
   }
 
   @Suppress("OVERRIDE_DEPRECATION")

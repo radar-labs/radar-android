@@ -832,4 +832,5 @@
     <string name="PasskeyVerificationScreen__cancel">Hủy</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Đã xảy ra lỗi với khóa truy cập của bạn. Vui lòng thử lại.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Điều khoản &amp; Quyền riêng tư</string>
 </resources>

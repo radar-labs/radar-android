@@ -74,6 +74,8 @@ class WelcomeScreenViewModel(
         }
       }
       WelcomeScreenEvents.ViewTermsAndPrivacy -> _actions.trySend(WelcomeScreenActions.ViewTermsAndPrivacy)
+      WelcomeScreenEvents.SignUp -> parentEventEmitter.navigateTo(RegistrationRoute.RadarSignUp)
+      WelcomeScreenEvents.MigrateFromSignal -> parentEventEmitter.navigateTo(RegistrationRoute.MigrateFromSignal)
     }
   }
 

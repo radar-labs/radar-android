@@ -273,11 +273,13 @@ public abstract class PassphraseRequiredActivity extends BaseActivity implements
   }
 
   private Intent getTransferOrRestoreIntent() {
-    return RegistrationActivity.createIntent(this, MainActivity.clearTop(this));
+    // Radar: still part of a new registration, so it ends in the payments onboarding.
+    return RegistrationActivity.createIntent(this, MainActivity.clearTopAfterNewRegistration(this));
   }
 
   private Intent getResumeRegistrationIntent() {
-    return RegistrationActivity.createIntent(this, MainActivity.clearTop(this));
+    // Radar: resuming a new registration, so it ends in the payments onboarding.
+    return RegistrationActivity.createIntent(this, MainActivity.clearTopAfterNewRegistration(this));
   }
 
   private Intent getResumeLinkedRegistrationIntent() {

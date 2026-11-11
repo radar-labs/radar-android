@@ -832,4 +832,5 @@
     <string name="PasskeyVerificationScreen__cancel">取消</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">你的通行密鑰出了一些問題。請重試。</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">條款及私隱條例</string>
 </resources>

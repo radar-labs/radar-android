@@ -834,4 +834,5 @@
     <string name="PasskeyVerificationScreen__cancel">Annuleren</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Er ging iets mis met je passkey. Probeer het opnieuw.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Voorwaarden en privacybeleid</string>
 </resources>

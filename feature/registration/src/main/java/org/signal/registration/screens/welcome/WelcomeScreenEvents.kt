@@ -20,4 +20,10 @@ sealed class WelcomeScreenEvents {
   data object DoesNotHaveOldPhone : WelcomeScreenEvents()
 
   data object ViewTermsAndPrivacy : WelcomeScreenEvents()
+
+  /** Radar: "I'm new to Radar" — open Radar's sign-up screen. */
+  data object SignUp : WelcomeScreenEvents()
+
+  /** Radar: "Migrate from Signal" — explain what to do in Signal, then restore from the Signal backup. */
+  data object MigrateFromSignal : WelcomeScreenEvents()
 }

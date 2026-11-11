@@ -832,4 +832,5 @@
     <string name="PasskeyVerificationScreen__cancel">បោះបង់</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">មានអ្វីមួយមិនប្រក្រតីជាមួយសោសម្ងាត់របស់អ្នក។ សូមព្យាយាមម្តងទៀត។</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">លក្ខខណ្ឌ &amp; គោលនយោបាយឯកជនភាព</string>
 </resources>

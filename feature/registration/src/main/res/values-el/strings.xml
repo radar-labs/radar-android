@@ -834,4 +834,5 @@
     <string name="PasskeyVerificationScreen__cancel">Ακύρωση</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Κάτι πήγε στραβά με το κλειδί πρόσβασής σου. Δοκίμασε ξανά.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Όροι &amp; Πολιτική Απορρήτου</string>
 </resources>

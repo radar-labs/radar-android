@@ -838,4 +838,5 @@
     <string name="PasskeyVerificationScreen__cancel">Zrušiť</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Vyskytol sa problém s vaším prístupovým kľúčom. Skúste to znova.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Podmienky a Zásady ochrany osobných údajov</string>
 </resources>

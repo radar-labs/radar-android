@@ -834,4 +834,5 @@
     <string name="PasskeyVerificationScreen__cancel">ರದ್ದುಮಾಡಿ</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">ನಿಮ್ಮ ಪಾಸ್‌ಕೀಯಲ್ಲಿ ಏನೋ ತಪ್ಪಾಗಿದೆ. ಮತ್ತೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">ನಿಯಮಗಳು &amp; ಖಾಸಗಿತನ ನೀತಿ</string>
 </resources>

@@ -838,4 +838,5 @@
     <string name="PasskeyVerificationScreen__cancel">Otkaži</string>
     <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
     <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Nešto nije u redu s vašim pristupnim ključem. Molimo pokušajte ponovno.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Sporazum o korištenju i privatnosti</string>
 </resources>
