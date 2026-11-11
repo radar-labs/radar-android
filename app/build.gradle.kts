@@ -31,8 +31,24 @@ plugins {
 val staticIps = Properties().apply { file("static-ips.properties").reader().use { load(it) } }
 staticIps.stringPropertyNames().forEach { rootProject.extra[it] = staticIps.getProperty(it) }
 
-val canonicalVersionCode = 1778
-val canonicalVersionName = "8.35.2"
+// NOTE: `canonicalVersionCode` is an INTERNAL monotonic version signal, not the user-facing version
+// (that's `canonicalVersionName`). It must stay high enough that the resulting BuildConfig.VERSION_CODE
+// (= canonicalVersionCode * maxHotfixVersions + hotfix) is >= ApplicationMigrations.LEGACY_CANONICAL_VERSION (455);
+// i.e. canonicalVersionCode >= 5. Below that, the app treats every launch as a pre-2018 "legacy update"
+// and runs LegacyMigrationJob, which crashes on the modern DB schema ("no such column: color"). Setting
+// this to 1 (VERSION_CODE 100) is what caused the launch crash — keep it >= the prior 1633.
+// `canonicalVersionName` is Radar's own product version; it diverged from upstream Signal's
+// 7.68.x at Radar 1.0.4 and must match the vX.Y.Z git tag of each GitHub release exactly
+// (Obtainium detects updates by comparing the release tag against the installed versionName).
+val canonicalVersionCode = 1651
+val canonicalVersionName = "1.0.9"
+// Version string Radar reports to Signal's servers in the "Signal-Android/<version>" User-Agent.
+// Signal's infra rejects unrecognized/deprecated client versions with HTTP 499 (DeprecatedVersionException),
+// which blocks registration ("Could not create valid session for confirming the entered E164"). It must
+// therefore stay a real, currently-supported upstream Signal Android version (the upstream release this
+// fork is synced to) and be kept SEPARATE from Radar's product versionName above. Bump when syncing with
+// upstream or if 499 returns.
+val signalUpstreamVersionName = "8.35.2"
 val currentHotfixVersion = 0
 val maxHotfixVersions = 100
 
@@ -44,6 +60,11 @@ val nightlyTagRegex = Regex("^v\\d+\\.\\d+\\.\\d+-nightly-(\\d+)-(\\d)$")
 
 val debugKeystorePropertiesProvider: Provider<Properties> = providers.of(PropertiesFileValueSource::class.java) {
   parameters.file.set(rootProject.layout.projectDirectory.file("keystore.debug.properties"))
+}
+
+// Radar: release signing for the GitHub/Play builds (keystore.release.properties is gitignored).
+val releaseKeystorePropertiesProvider: Provider<Properties> = providers.of(PropertiesFileValueSource::class.java) {
+  parameters.file.set(rootProject.layout.projectDirectory.file("keystore.release.properties"))
 }
 
 val languagesProvider: Provider<List<String>> = providers.of(LanguageListValueSource::class.java) {
@@ -176,6 +197,15 @@ android {
     }
   }
 
+  releaseKeystorePropertiesProvider.get().takeIf { it.isNotEmpty() }?.let { properties ->
+    signingConfigs.create("release").apply {
+      storeFile = file("${project.rootDir}/${properties.getProperty("storeFile")}")
+      storePassword = properties.getProperty("storePassword")
+      keyAlias = properties.getProperty("keyAlias")
+      keyPassword = properties.getProperty("keyPassword")
+    }
+  }
+
   testOptions {
     execution = "ANDROIDX_TEST_ORCHESTRATOR"
 
@@ -244,6 +274,7 @@ android {
   }
 
   defaultConfig {
+    applicationId = "com.radarlabs.radar"
     if (currentHotfixVersion >= maxHotfixVersions) {
       throw AssertionError("Hotfix version offset is too large!")
     }
@@ -288,6 +319,7 @@ android {
     buildConfigField("String[]", "SIGNAL_CDSI_IPS", rootProject.extra["cdsi_ips"] as String)
     buildConfigField("String[]", "SIGNAL_SVR2_IPS", rootProject.extra["svr2_ips"] as String)
     buildConfigField("String", "SIGNAL_AGENT", "\"OWA\"")
+    buildConfigField("String", "SIGNAL_CLIENT_VERSION", "\"$signalUpstreamVersionName\"")
     buildConfigField("String", "SVR2_MRENCLAVE_LEGACY", "\"ced8217b26228e4b210c985786999d095c4958a94faf37b14acaf25c4cbb02a4\"")
     buildConfigField("String", "SVR2_MRENCLAVE", "\"fdbbacdc0c043d0d53fe1440f62728de0386f45ab0a275bd8f99e03a02af355e\"")
     buildConfigField("String[]", "UNIDENTIFIED_SENDER_TRUST_ROOTS", "new String[]{ \"BXu6QIKVz5MA8gstzfOgRQGqyLqOwNKHL6INkv3IHWMF\", \"BUkY0I+9+oPgDCn4+Ac6Iu813yvqkDr/ga8DzLxFxuk6\"}")
@@ -296,7 +328,9 @@ android {
     buildConfigField("String", "BACKUP_SERVER_PUBLIC_PARAMS", "\"AZwNSU55fsFCbgaxGRD11wO1juAs8Yr5GF8FPlGzzvdJJIKH5/4CC7ZJSOe3yL2vturVaRU2Cx0n751Vt8wkj1Y4pyiScu0/S10n647ipo+iq97JZQv+UOlwH8ThyNlGT5DfxXCwTqivxHuXvZpuezPgHk5Gxl5aC6xuNxOnwmFlmu4CeSgdhW8+Pp0vAJOQ1MsU2D0+/kzI+tU94nB3tybY/Ao1AcGW2q41uKQbnOJUWwmQaFT6s+xTISgzsg7CPox6oORGX8rnyk/9lic3DbGsUHctIVpMAl/ogJBb4aYC\"")
     buildConfigField("String[]", "LANGUAGES", "new String[]{ ${languagesForBuildConfigProvider.get()} }")
     buildConfigField("int", "CANONICAL_VERSION_CODE", "$canonicalVersionCode")
-    buildConfigField("String", "DEFAULT_CURRENCIES", "\"EUR,AUD,GBP,CAD,CNY\"")
+    // Preferred fiat conversions for Radar payments. Mirrors iOS `Stripe.preferredCurrencyInfos`
+    // after commit 37007fe8e8 (removed AUD/CAD; added USD/JPY).
+    buildConfigField("String", "DEFAULT_CURRENCIES", "\"USD,EUR,GBP,JPY,CNY\"")
     buildConfigField("String", "GIPHY_API_KEY", "\"3o6ZsYH6U6Eri53TXy\"")
     buildConfigField("String", "SIGNAL_CAPTCHA_URL", "\"https://signalcaptchas.org/registration/generate.html\"")
     buildConfigField("String", "RECAPTCHA_PROOF_URL", "\"https://signalcaptchas.org/challenge/generate.html\"")
@@ -311,7 +345,14 @@ android {
     buildConfigField("String", "STRIPE_BASE_URL", "\"https://api.stripe.com/v1\"")
     buildConfigField("String", "STRIPE_PUBLISHABLE_KEY", "\"pk_live_6cmGZopuTsV8novGgJJW9JpC00vLIgtQ1D\"")
     buildConfigField("boolean", "TRACING_ENABLED", "false")
-    buildConfigField("boolean", "LINK_DEVICE_UX_ENABLED", "false")
+    buildConfigField("boolean", "LINK_DEVICE_UX_ENABLED", "true")
+    // Radar does not take donations; donating routes to Signal's infrastructure. Mirrors iOS
+    // BuildFlags.donations = false, which hides the Donate entry in app settings.
+    buildConfigField("boolean", "DONATIONS_ENABLED", "false")
+    // Radar does not sell the paid Backups tier. Mirrors iOS
+    // BuildFlags.Backups.showPaidPlan = false: hides the paid tier in the plan chooser and the
+    // free-tier upgrade button, while leaving manage/cancel reachable for existing subscribers.
+    buildConfigField("boolean", "PAID_BACKUPS_ENABLED", "false")
 
     ndk {
       abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
@@ -359,6 +400,7 @@ android {
         "proguard/proguard-okhttp.pro",
         "proguard/proguard-ez-vcard.pro",
         "proguard/proguard-dnsjava.pro",
+        "proguard/proguard-breez-jna.pro",
         "proguard/proguard.cfg"
       )
       testProguardFiles(
@@ -373,6 +415,9 @@ android {
     }
 
     getByName("release") {
+      if (releaseKeystorePropertiesProvider.get().isNotEmpty()) {
+        signingConfig = signingConfigs["release"]
+      }
       isMinifyEnabled = true
       proguardFiles(*buildTypes["debug"].proguardFiles.toTypedArray())
       buildConfigField("String", "BUILD_VARIANT_TYPE", "\"Release\"")
@@ -820,6 +865,7 @@ dependencies {
   implementation(libs.rxjava3.rxkotlin)
   implementation(libs.rxdogtag)
   implementation(libs.kotlinx.serialization.json)
+  implementation(libs.breezsdk)
 
   implementation(project(":lib:billing"))
   implementation(project(":feature:media-send"))

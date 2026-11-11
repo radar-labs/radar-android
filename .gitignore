@@ -3,6 +3,7 @@ captures/
 project.properties
 keystore.debug.properties
 keystore.staging.properties
+keystore.release.properties
 nightly-url.txt
 .project
 .settings
@@ -34,3 +35,4 @@ kls_database.db
 .kotlin
 lefthook-local.yml
 sample-videos/
+radar-release.jks

@@ -20,7 +20,8 @@
     <!-- Permissions                             -->
     <!-- ======================================= -->
     <permission android:name="${applicationId}.ACCESS_SECRETS" android:label="Access to TextSecure Secrets" android:protectionLevel="signature" />
-    <uses-permission android:name="org.thoughtcrime.securesms.ACCESS_SECRETS" />
+    <!-- Radar: our own signature permission (the app ID differs from Signal's), or screen lock can't read secrets. -->
+    <uses-permission android:name="${applicationId}.ACCESS_SECRETS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -97,9 +98,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.gms.car.application"
-            android:resource="@xml/automotive_app_desc" />
+        <!-- Radar: Android Auto is disabled (no com.google.android.gms.car.application meta-data). -->
         <meta-data
             android:name="firebase_analytics_collection_deactivated"
             android:value="true" />
@@ -775,6 +774,12 @@
 
         <activity
             android:name=".payments.preferences.PaymentsActivity"
+            android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"
+            android:exported="false"
+            android:theme="@style/TextSecure.LightRegistrationTheme" />
+
+        <activity
+            android:name=".payments.onboarding.PaymentsOnboardingActivity"
             android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"
             android:exported="false"
             android:theme="@style/TextSecure.LightRegistrationTheme" />
