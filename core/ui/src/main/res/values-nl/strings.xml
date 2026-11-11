@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Tik op doorgaan en ontgrendel met je telefoonvergrendeling om te bevestigen. Voer niet je Signal-pincode in.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Tik op doorgaan en ontgrendel met je telefoonvergrendeling om te bevestigen. Voer niet je Radar-pincode in.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Doorgaan</string>
 

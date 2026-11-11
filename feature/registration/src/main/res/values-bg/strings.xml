@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Позволяване на разрешения</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">За да ви помага да изпращате съобщения до хората, които познавате, Signal ще поиска тези разрешения. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">За да ви помага да изпращате съобщения до хората, които познавате, Radar ще поиска тези разрешения. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Не сега</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Контакти</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Намирайте хора, които познавате. Вашите контакти са криптирани и не се виждат от услугата Signal.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Намирайте хора, които познавате. Вашите контакти са криптирани и не се виждат от услугата Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Телефонни повиквания</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Старият ми телефон е подръка</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">За бързо започване сканирайте QR код от текущия си акаунт в Signal</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">За бързо започване сканирайте QR код от текущия си акаунт в Radar</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Старият ми телефон не е подръка</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Или инсталирате Signal отново на същото устройство</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Или инсталирате Radar отново на същото устройство</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Изберете как искате да възстановите своята история на съобщенията и данните за акаунта.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">От Резервни копия на Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">От Резервни копия на Radar</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Вашият безплатен или платен план за Резервни копия на Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Вашият безплатен или платен план за Резервни копия на Radar</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Възстановяване на резервното копие на устройството</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Не е открито резервно копие</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">В избраната папка не е открито резервно копие на Signal. Моля, опитайте с друга папка.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">В избраната папка не е открито резервно копие на Radar. Моля, опитайте с друга папка.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Опитайте с друга папка</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Възстановяване в нов акаунт?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Резервното копие, което възстановявате, е създадено с различен акаунт за Signal. Можете да възстановите това резервно копие в нов акаунт, но вече няма да сте член на нито една от възстановените групи.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Резервното копие, което възстановявате, е създадено с различен акаунт за Radar. Можете да възстановите това резервно копие в нов акаунт, но вече няма да сте член на нито една от възстановените групи.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Възстановяване</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Не е открито резервно копие</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Вашият ключ за възстановяване е правилен, но за този акаунт няма резервно копие в Signal. Върнете се назад, за да изберете друг начин да възстановите, или продължете без възстановяване.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Вашият ключ за възстановяване е правилен, но за този акаунт няма резервно копие в Radar. Върнете се назад, за да изберете друг начин да възстановите, или продължете без възстановяване.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Неправилен ключ за възстановяване</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Уверете се, че се регистрирате със същия телефонен номер и ключа за възстановяване от 64 знака, които сте запазили при активирането на „Резервни копия в Signal“. Резервните копия не могат да се възстановяват без този ключ.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Уверете се, че се регистрирате със същия телефонен номер и ключа за възстановяване от 64 знака, които сте запазили при активирането на „Резервни копия в Radar“. Резервните копия не могат да се възстановяват без този ключ.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Опитайте отново</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Потвърждаване с код от SMS?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Можете да регистрирате своя акаунт, като потвърдите чрез код от SMS, който Signal ще ви изпрати. След като въведете кода, можете отново да опитате да възстановите резервното си копие със своя ключ за възстановяване.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Можете да регистрирате своя акаунт, като потвърдите чрез код от SMS, който Radar ще ви изпрати. След като въведете кода, можете отново да опитате да възстановите резервното си копие със своя ключ за възстановяване.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Изпращане на код</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Свържете акаунта си</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Още нямате Signal?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Още нямате Radar?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Създаване на акаунт</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Неуспешно възстановяване на резервно копие</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Тази версия на Signal не може да възстанови вашето резервно копие. Актуализирайте до най-новата версия и опитайте отново.</string>
+    <string name="RemoteRestoreScreen__update_latest">Тази версия на Radar не може да възстанови вашето резервно копие. Актуализирайте до най-новата версия и опитайте отново.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Актуализиране на Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Актуализиране на Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Не сега</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Вашият акаунт е заключен, за да защити вашата поверителност и сигурност. След %1$d дни на неактивност във вашия акаунт ще можете да пререгистрирате този телефонен номер, без да се нуждаете от своя ПИН. Цялото съдържание ще бъде изтрито.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Отворете Signal на старото ви устройство</string>
+    <string name="QuickRestoreQRScreen__step_1">Отворете Radar на старото ви устройство</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Докоснете иконата с камера </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Изберете по-силен ПИН</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Отново въведохте кода, който вече е бил използван за потвърждаване на вашия телефонен номер. Изберете нов и уникален ПИН за Signal.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Отново въведохте кода, който вече е бил използван за потвърждаване на вашия телефонен номер. Изберете нов и уникален ПИН за Radar.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Научете повече за ПИН-овете</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Внимание</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Ако деактивирате ПИН кода, ще загубите всички данни, когато пререгистрирате Signal, освен ако не направите ръчно архивиране и възстановяване. Не можете да включите „Заключване на регистрацията“, докато ПИН кодът е деактивиран.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Ако деактивирате ПИН кода, ще загубите всички данни, когато пререгистрирате Radar, освен ако не направите ръчно архивиране и възстановяване. Не можете да включите „Заключване на регистрацията“, докато ПИН кодът е деактивиран.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Деактивиране на ПИН</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Въведете своя ПИН</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Въведете ПИН кода, който сте създали при първоначалното инсталиране на Signal</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Въведете ПИН кода, който сте създали при първоначалното инсталиране на Radar</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Отново въведохте кода, който вече е бил използван за потвърждаване на вашия телефонен номер. Въведете уникалния ПИН за Signal, който преди това сте избрали за своя акаунт.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Отново въведохте кода, който вече е бил използван за потвърждаване на вашия телефонен номер. Въведете уникалния ПИН за Radar, който преди това сте избрали за своя акаунт.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">Грешен ПИН. Остава ви %1$d опит.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Разрешете известията</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal иска разрешението за известия. Това позволява на вашето устройство да се показват предупреждения, когато пристигат нови съобщения.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar иска разрешението за известия. Това позволява на вашето устройство да се показват предупреждения, когато пристигат нови съобщения.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Не сега</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Сканирайте този код, за да свържете акаунта си</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Отворете Signal на телефона си</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Отворете Radar на телефона си</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Докоснете профилната си снимка, за да отворите настройките на Signal</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Докоснете профилната си снимка, за да отворите настройките на Radar</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Докоснете „Свързани устройства“ и „Свързване на ново устройство“</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Неуспешно генериране на код</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Нямате Signal на друго устройство?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Нямате Radar на друго устройство?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Създаване на акаунт</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Изтриване на данните на приложението?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Опитвате се да свържете различен акаунт за Signal. Ако продължите, всички данни от Signal, които в момента са на това устройство, ще бъдат изтрити.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Опитвате се да свържете различен акаунт за Radar. Ако продължите, всички данни от Radar, които в момента са на това устройство, ще бъдат изтрити.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Изтриване и рестартиране</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Прехвърляне на акаунта</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">За да прехвърлите акаунта си, отворете Signal на старото си устройство с Android и изберете „Прехвърляне на акаунт“.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">За да прехвърлите акаунта си, отворете Radar на старото си устройство с Android и изберете „Прехвърляне на акаунт“.</string>
     <string name="DeviceTransferInstructions__continue">Продължаване</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Да, числата съвпадат</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Числата не съвпадат</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Изчакване на старото ви устройство да потвърди…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal се нуждае от разрешението за местоположение, за да открие и да се свърже със старото ви устройство.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar се нуждае от разрешението за местоположение, за да открие и да се свърже със старото ви устройство.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Предоставяне на разрешение</string>
-    <string name="DeviceTransferSetup__location_services_required">За Signal е необходимо услугите за местоположение да са включени, за да открие и да се свърже със старото ви устройство.</string>
+    <string name="DeviceTransferSetup__location_services_required">За Radar е необходимо услугите за местоположение да са включени, за да открие и да се свърже със старото ви устройство.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Включи услуга за местоположение</string>
-    <string name="DeviceTransferSetup__wifi_required">За Signal е необходимо да включите Wi-Fi, за да открие и да се свърже със старото ви устройство.</string>
+    <string name="DeviceTransferSetup__wifi_required">За Radar е необходимо да включите Wi-Fi, за да открие и да се свърже със старото ви устройство.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Включи Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Съжаляваме, изглежда, че вашето устройство не поддържа Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Възстановяване на резервно копие вместо това</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Прехвърляне на данни</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d съобщения до тук</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Не можахме да прехвърлим</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Не можете да прехвърляте от по-нова версия на Signal.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Не можете да прехвърляте от по-нова версия на Radar.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Някои данни не бяха прехвърлени успешно поради ограничение в базата данни.</string>
     <string name="DeviceTransferProgress__transfer_failed">Прехвърлянето е неуспешно. Моля, опитайте отново.</string>
     <string name="DeviceTransferProgress__try_again">Опитайте отново</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Сигурни ли сте?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Без потребителско име хората няма да могат да ви намират в Signal.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Без потребителско име хората няма да могат да ви намират в Radar.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Отказ</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Eiti į kamerą</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">„Signal“ reikia leidimo rodyti jūsų nuotraukas ir vaizdo įrašus</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">„Radar“ reikia leidimo rodyti jūsų nuotraukas ir vaizdo įrašus</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Leisti prieigą</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Nerasta jokių nuotraukų ar vaizdo įrašų. „Signal“ turi prieigą tik prie jūsų pasirinktų nuotraukų ir vaizdo įrašų.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Nerasta jokių nuotraukų ar vaizdo įrašų. „Radar“ turi prieigą tik prie jūsų pasirinktų nuotraukų ir vaizdo įrašų.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">„Signal“ prieiga prie nuotraukų ir vaizdo įrašų yra ribojama</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">„Radar“ prieiga prie nuotraukų ir vaizdo įrašų yra ribojama</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Tvarkyti</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Jei norite, kad būtų rodomos nuotraukos ir vaizdo įrašai:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">„Signal“ reikia prieigos, kad galėtų rodyti jūsų nuotraukas ir vaizdo įrašus.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">„Radar“ reikia prieigos, kad galėtų rodyti jūsų nuotraukas ir vaizdo įrašus.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Nuotrauka</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Leisti prieigą prie mikrofono</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Norėdami fotografuoti ir filmuoti vaizdo įrašus, leiskite Signal prieigą prie kameros.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Norėdami fotografuoti ir filmuoti vaizdo įrašus, leiskite Radar prieigą prie kameros.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Jei norite fotografuoti ir filmuoti, leiskite „Signal“ prieigą prie kameros ir mikrofono.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Jei norite fotografuoti ir filmuoti, leiskite „Radar“ prieigą prie kameros ir mikrofono.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Jei norite filmuoti su garsu, leiskite „Signal“ prieigą prie mikrofono.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Jei norite filmuoti su garsu, leiskite „Radar“ prieigą prie mikrofono.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Jei norite nuskenuoti QR kodą, leiskite „Signal“ prieigą prie kameros.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Jei norite nuskenuoti QR kodą, leiskite „Radar“ prieigą prie kameros.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Kad būtų galima fotografuoti, „Signal“ reikalinga prieiga prie kameros</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Kad būtų galima fotografuoti, „Radar“ reikalinga prieiga prie kameros</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Kad būtų galima nuskaityti QR kodus, „Signal“ reikalinga prieiga prie kameros</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Kad būtų galima nuskaityti QR kodus, „Radar“ reikalinga prieiga prie kameros</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Kad būtų galima filmuoti, „Signal“ reikalinga prieiga prie mikrofono</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Kad būtų galima filmuoti, „Radar“ reikalinga prieiga prie mikrofono</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Jei norite fotografuoti per „Signal“:</string>
+  <string name="CameraXFragment_to_capture_photos">Jei norite fotografuoti per „Radar“:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Jei norite fotografuoti ir filmuoti per „Signal“:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Jei norite fotografuoti ir filmuoti per „Radar“:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Jei norite filmuoti vaizdo įrašus su garsu:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Fotografuoti kelias nuotraukas</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Norint įrašinėti vaizdo įrašus, Signal reikia mikrofono leidimo, tačiau jis buvo uždraustas. Pereikite į programėlės nustatymus, pasirinkite „Leidimai“ ir įjunkite „Mikrofoną“ ir „Kamerą“.</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Norint įrašinėti vaizdo įrašus, Radar reikia mikrofono leidimo, tačiau jis buvo uždraustas. Pereikite į programėlės nustatymus, pasirinkite „Leidimai“ ir įjunkite „Mikrofoną“ ir „Kamerą“.</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Klaida filmuojant</string>
@@ -215,7 +215,7 @@
         <item quantity="other">Nustatyta standartinė %1$d elementų kokybė</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Norint įrašyti į išorinę saugyklą, Signal reikia saugyklos leidimo, tačiau jis buvo visam laikui uždraustas. Pereikite į programėlės nustatymus, pasirinkite „Leidimai“ ir įjunkite „Saugyklą“.</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Norint įrašyti į išorinę saugyklą, Radar reikia saugyklos leidimo, tačiau jis buvo visam laikui uždraustas. Pereikite į programėlės nustatymus, pasirinkite „Leidimai“ ir įjunkite „Saugyklą“.</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Vaizdo įrašas bus išsiųstas be garso</string>
 
@@ -229,14 +229,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Susieti įrenginį?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Atrodo, kad bandote susieti „Signal“ įrenginį. Bakstelėkite „Tęsti“, tada bakstelėkite „Susieti naują įrenginį“ ir nuskaitykite QR kodą dar kartą.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Atrodo, kad bandote susieti „Radar“ įrenginį. Bakstelėkite „Tęsti“, tada bakstelėkite „Susieti naują įrenginį“ ir nuskaitykite QR kodą dar kartą.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Tęsti</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Paskyros perkelti neįmanoma</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Įrenginys, į kurį bandote perkelti, yra pasenęs. Atnaujinkite „Signal“ tame įrenginyje ir bandykite vėl.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Įrenginys, į kurį bandote perkelti, yra pasenęs. Atnaujinkite „Radar“ tame įrenginyje ir bandykite vėl.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

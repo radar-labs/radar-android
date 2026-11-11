@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Mine kaamerasse</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal vajab sinu fotode ja videote näitamiseks luba</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar vajab sinu fotode ja videote näitamiseks luba</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Luba ligipääs</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Fotosid ega videoid ei leitud. Signalil on ligipääs ainult sinu valitud fotodele ja videotele.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Fotosid ega videoid ei leitud. Radaril on ligipääs ainult sinu valitud fotodele ja videotele.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signalil on fotodele või videotele piiratud ligipääs</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radaril on fotodele või videotele piiratud ligipääs</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Halda</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Fotode ja videote näitamiseks:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal vajab su fotode ja videote näitamiseks ligipääsu.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar vajab su fotode ja videote näitamiseks ligipääsu.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Foto</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Anna ligipääs oma mikrofonile</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Luba Signalile ligipääs kaamerale fotode ja videote salvestamiseks.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Luba Radarile ligipääs kaamerale fotode ja videote salvestamiseks.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Anna Signalile ligipääs kaamerale ja mikrofonile fotode ja videote salvestamiseks.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Anna Radarile ligipääs kaamerale ja mikrofonile fotode ja videote salvestamiseks.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Heliga videote salvestamiseks anna Signalile ligipääs mikrofonile.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Heliga videote salvestamiseks anna Radarile ligipääs mikrofonile.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR-koodi skannimiseks vajab Signal ligipääsu kaamerale.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR-koodi skannimiseks vajab Radar ligipääsu kaamerale.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signalil on fotode tegemiseks vaja ligipääsu kaamerale</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radaril on fotode tegemiseks vaja ligipääsu kaamerale</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal vajab QR-koodide skannimiseks ligipääsu kaamerale</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar vajab QR-koodide skannimiseks ligipääsu kaamerale</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal vajab video salvestamiseks ligipääsu mikrofonile</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar vajab video salvestamiseks ligipääsu mikrofonile</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Fotode tegemiseks Signalis:</string>
+  <string name="CameraXFragment_to_capture_photos">Fotode tegemiseks Radaris:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Fotode ja videote tegemiseks Signalis:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Fotode ja videote tegemiseks Radaris:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Heliga videote tegemiseks:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Mitmikvõte</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal vajab videote salvestamiseks mikrofoni luba, kuid see on keelatud. Palun järka rakenduse seadetes, vali \"Load\" ning luba \"Mikrofon\" ja \"Kaamera\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar vajab videote salvestamiseks mikrofoni luba, kuid see on keelatud. Palun järka rakenduse seadetes, vali \"Load\" ning luba \"Mikrofon\" ja \"Kaamera\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Viga video salvestamisel</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d üksusel valitud standardne kvaliteet</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal vajab mäluruumi luba, et salvestada välismällu, ent see on püsivalt keelatud. Palun jätka rakenduse seadetes, vali \"Load\" ja luba \"Mäluruum\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar vajab mäluruumi luba, et salvestada välismällu, ent see on püsivalt keelatud. Palun jätka rakenduse seadetes, vali \"Load\" ja luba \"Mäluruum\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Video saadetakse ilma helita</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Kas linkida seade?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Tundub, et üritad Signali seadet linkida. Toksa, et jätkata, seejärel toksa „Lingi uus seade“ ning skanni QR-kood uuesti.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Tundub, et üritad Radari seadet linkida. Toksa, et jätkata, seejärel toksa „Lingi uus seade“ ning skanni QR-kood uuesti.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Jätka</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Kontot ei saa edastada</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Seade, millele püüad edastada, on aegunud. Uuenda selles seadmes Signalit ja proovi uuesti.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Seade, millele püüad edastada, on aegunud. Uuenda selles seadmes Radarit ja proovi uuesti.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

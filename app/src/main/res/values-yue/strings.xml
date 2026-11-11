@@ -34,7 +34,7 @@
   <!-- Removed by excludeNonTranslatables <string name="AlbumThumbnailView_plus" translatable="false">\+%d</string> -->
 
     <!-- ApplicationMigrationActivity -->
-    <string name="ApplicationMigrationActivity__signal_is_updating">Signal 更新緊…</string>
+    <string name="ApplicationMigrationActivity__signal_is_updating">Radar 更新緊…</string>
 
     <!-- ApplicationPreferencesActivity -->
     <string name="ApplicationPreferencesActivity_error_connecting_to_server">連唔到伺服器！</string>
@@ -80,7 +80,7 @@
     <string name="AttachmentKeyboard_location">位置</string>
     <!-- Text for a button that will allow users to create a poll -->
     <string name="AttachmentKeyboard_poll">投票</string>
-    <string name="AttachmentKeyboard_Signal_needs_permission_to_show_your_photos_and_videos">Signal 要有權限先可以顯示你嘅相片同影片</string>
+    <string name="AttachmentKeyboard_Signal_needs_permission_to_show_your_photos_and_videos">Radar 要有權限先可以顯示你嘅相片同影片</string>
     <!-- Text for a button prompting users to allow Signal access to their gallery storage -->
     <string name="AttachmentKeyboard_allow_access">允許存取</string>
     <string name="AttachmentKeyboard_payment">付款</string>
@@ -91,34 +91,34 @@
     <!-- Option in menu to go to settings -->
     <string name="AttachmentKeyboard_go_to_settings">跳去「設定」</string>
     <!-- Text explaining that Signal has limited access to photos -->
-    <string name="AttachmentKeyboard_signal_has_limited_access">Signal 得有限存取權用你嘅相或者影片</string>
+    <string name="AttachmentKeyboard_signal_has_limited_access">Radar 得有限存取權用你嘅相或者影片</string>
     <!-- Text shown when user has given no photos for Signal to access and an explanation on how to change those permissions -->
     <string name="AttachmentKeyboard_no_photos_found">搵唔到任何相。請揀選要喺呢度顯示嘅相片同埋影片，或者更改權限</string>
 
     <!-- MediaGalleryFragment -->
     <!-- Text describing that no photos or videos are currently found in the gallery and that Signal can only access media that the user allows -->
-    <string name="MediaGalleryFragment__no_photos_found">搵唔到任何相或者影片。Signal 只可以用你揀咗嘅相片同影片。</string>
+    <string name="MediaGalleryFragment__no_photos_found">搵唔到任何相或者影片。Radar 只可以用你揀咗嘅相片同影片。</string>
 
     <!-- AttachmentManager -->
     <string name="AttachmentManager_cant_open_media_selection">搵唔到俾你揀多媒體嘅 app。</string>
-    <string name="AttachmentManager_signal_requires_the_external_storage_permission_in_order_to_attach_photos_videos_or_audio">Signal 要有「儲存空間」嘅權限，先可以附加相片、影片或者語音檔案，但權限已經被永久拒絕。請去 app 嘅設定選單度，揀選「權限」，然後啟用「儲存空間」。</string>
-    <string name="AttachmentManager_signal_requires_contacts_permission_in_order_to_attach_contact_information">Signal 要有「聯絡人」嘅權限，先可以附加聯絡人資訊，但權限已經被永久拒絕。請去 app 嘅設定選單度，揀選「權限」，然後啟用「聯絡人」。</string>
-    <string name="AttachmentManager_signal_requires_location_information_in_order_to_attach_a_location">Signal 要有「位置」嘅權限，先可以附加位置，但權限已經被永久拒絕。請去 app 嘅設定選單度，揀選「權限」，然後啟用「位置」。</string>
+    <string name="AttachmentManager_signal_requires_the_external_storage_permission_in_order_to_attach_photos_videos_or_audio">Radar 要有「儲存空間」嘅權限，先可以附加相片、影片或者語音檔案，但權限已經被永久拒絕。請去 app 嘅設定選單度，揀選「權限」，然後啟用「儲存空間」。</string>
+    <string name="AttachmentManager_signal_requires_contacts_permission_in_order_to_attach_contact_information">Radar 要有「聯絡人」嘅權限，先可以附加聯絡人資訊，但權限已經被永久拒絕。請去 app 嘅設定選單度，揀選「權限」，然後啟用「聯絡人」。</string>
+    <string name="AttachmentManager_signal_requires_location_information_in_order_to_attach_a_location">Radar 要有「位置」嘅權限，先可以附加位置，但權限已經被永久拒絕。請去 app 嘅設定選單度，揀選「權限」，然後啟用「位置」。</string>
 
     <!-- Dialog title asking users for location permission -->
     <string name="AttachmentManager_signal_allow_access_location">允許存取你嘅位置</string>
     <!-- Dialog description that will explain the steps needed to give location permission -->
     <string name="AttachmentManager_signal_to_send_location">要傳送你嘅位置：</string>
     <!-- Alert dialog description asking for location permission -->
-    <string name="AttachmentManager_signal_allow_signal_access_location">如果想傳送位置，請允許 Signal 存取你嘅位置。</string>
+    <string name="AttachmentManager_signal_allow_signal_access_location">如果想傳送位置，請允許 Radar 存取你嘅位置。</string>
     <!-- Toast text explaining Signal\'s need for location access -->
-    <string name="AttachmentManager_signal_needs_location_access">Signal 需要位置存取權，先可以傳送你嘅位置。</string>
+    <string name="AttachmentManager_signal_needs_location_access">Radar 需要位置存取權，先可以傳送你嘅位置。</string>
     <!-- Dialog title asking users for gallery storage permission -->
     <string name="AttachmentManager_signal_allow_storage">允許存取儲存空間</string>
     <!-- Dialog description that will explain the steps needed to give gallery storage permission -->
     <string name="AttachmentManager_signal_to_show_photos">顯示相片同影片：</string>
     <!-- Toast text explaining Signal\'s need for storage access -->
-    <string name="AttachmentManager_signal_needs_storage_access">Signal 要有存取權先可以顯示你啲相同影片。</string>
+    <string name="AttachmentManager_signal_needs_storage_access">Radar 要有存取權先可以顯示你啲相同影片。</string>
 
     <!-- Alert dialog title to show the recipient has not activated payments -->
     <string name="AttachmentManager__not_activated_payments">%1$s 未啟動付款 </string>
@@ -160,7 +160,7 @@
     <!-- Title of fragment -->
     <string name="CreditCardFragment__credit_or_debit_card">信用卡或扣帳卡</string>
     <!-- Explanation of how to fill in the form and a note about pii, displayed above the credit card text fields -->
-    <string name="CreditCardFragment__enter_your_card_details">請輸入你嘅付款卡資料。Signal 唔會收集或者保存你嘅個人資料。</string>
+    <string name="CreditCardFragment__enter_your_card_details">請輸入你嘅付款卡資料。Radar 唔會收集或者保存你嘅個人資料。</string>
     <!-- Displayed as a hint in the card number text field -->
     <string name="CreditCardFragment__card_number">付款卡號碼</string>
     <!-- Displayed as a hint in the card expiry text field -->
@@ -211,9 +211,9 @@
     <string name="BlockUnblockDialog_blocked_people_wont_be_able_to_call_you_or_send_you_messages">被封鎖嘅人唔可以打俾你或者傳送訊息俾你。</string>
     <string name="BlockUnblockDialog_blocked_people_wont_be_able_to_send_you_messages">被封鎖嘅人唔可以傳送訊息俾你。</string>
     <!-- Message shown on block dialog when blocking the Signal release notes recipient -->
-    <string name="BlockUnblockDialog_block_getting_signal_updates_and_news">封鎖接收 Signal 嘅最新消息同資訊。</string>
+    <string name="BlockUnblockDialog_block_getting_signal_updates_and_news">封鎖接收 Radar 嘅最新消息同資訊。</string>
     <!-- Message shown on unblock dialog when unblocking the Signal release notes recipient -->
-    <string name="BlockUnblockDialog_resume_getting_signal_updates_and_news">恢復接收 Signal 嘅最新消息同資訊。</string>
+    <string name="BlockUnblockDialog_resume_getting_signal_updates_and_news">恢復接收 Radar 嘅最新消息同資訊。</string>
     <string name="BlockUnblockDialog_unblock_s">係咪要解除封鎖 %1$s？</string>
     <string name="BlockUnblockDialog_block">封鎖</string>
     <string name="BlockUnblockDialog_block_and_leave">封鎖同退出</string>
@@ -224,11 +224,11 @@
     <!-- Dialog button to report as spam only -->
     <string name="BlockUnblockDialog_report_spam">舉報垃圾訊息</string>
     <!-- Dialog message when reporting spam of an individual (1:1 conversation) -->
-    <string name="BlockUnblockDialog_report_spam_description">Signal 將會收到通知，指呢個人可能發送垃圾訊息。Signal 睇唔到任何聊天內容。</string>
+    <string name="BlockUnblockDialog_report_spam_description">Radar 將會收到通知，指呢個人可能發送垃圾訊息。Radar 睇唔到任何聊天內容。</string>
     <!-- Dialog message when reporting spam of a group and we can determine the group member that invited you, placeholder is a name -->
-    <string name="BlockUnblockDialog_report_spam_group_named_adder">Signal 將會收到通知，指邀請你加入呢個群組嘅 %1$s 可能發送垃圾訊息。Signal 睇唔到任何聊天內容。</string>
+    <string name="BlockUnblockDialog_report_spam_group_named_adder">Radar 將會收到通知，指邀請你加入呢個群組嘅 %1$s 可能發送垃圾訊息。Radar 睇唔到任何聊天內容。</string>
     <!-- Dialog message when reporting spam of a group and we cannot determine the group member that invited you -->
-    <string name="BlockUnblockDialog_report_spam_group_unknown_adder">Signal 將會收到通知，指邀請你加入呢個群組嘅人可能發送垃圾訊息。Signal 睇唔到任何聊天內容。</string>
+    <string name="BlockUnblockDialog_report_spam_group_unknown_adder">Radar 將會收到通知，指邀請你加入呢個群組嘅人可能發送垃圾訊息。Radar 睇唔到任何聊天內容。</string>
 
     <!-- BucketedThreadMedia -->
     <string name="BucketedThreadMedia_Today">今日</string>
@@ -262,19 +262,19 @@
     <!-- Title for an alert that shows at the bottom of the chat list letting people know that circumvention is no longer needed -->
     <string name="CensorshipCircumventionMegaphone_turn_off_censorship_circumvention">封網迴避使唔使閂咗佢？</string>
     <!-- Body for an alert that shows at the bottom of the chat list letting people know that circumvention is no longer needed -->
-    <string name="CensorshipCircumventionMegaphone_you_can_now_connect_to_the_signal_service">您而家可以同 Signal 服務直接連線，可能會更加暢順。</string>
+    <string name="CensorshipCircumventionMegaphone_you_can_now_connect_to_the_signal_service">您而家可以同 Radar 服務直接連線，可能會更加暢順。</string>
     <!-- Action to prompt the user to disable circumvention since it is no longer needed -->
     <string name="CensorshipCircumventionMegaphone_turn_off">閂咗佢</string>
     <!-- Action to prompt the user to dismiss the alert at the bottom of the chat list -->
     <string name="CensorshipCircumventionMegaphone_no_thanks">唔使喇，唔該晒</string>
 
     <!-- ClientDeprecatedActivity -->
-    <string name="ClientDeprecatedActivity_update_signal">更新 Signal</string>
+    <string name="ClientDeprecatedActivity_update_signal">更新 Radar</string>
     <string name="ClientDeprecatedActivity_this_version_of_the_app_is_no_longer_supported">呢個版本嘅 app 已經唔支援喇。麻煩您升級到最新版本吖，咁先可以繼續收發訊息。</string>
     <string name="ClientDeprecatedActivity_update">更新</string>
     <string name="ClientDeprecatedActivity_dont_update">唔更新</string>
     <string name="ClientDeprecatedActivity_warning">警告</string>
-    <string name="ClientDeprecatedActivity_your_version_of_signal_has_expired_you_can_view_your_message_history">呢個版本嘅 Signal 已經 out 咗喇。您可以睇返先前嘅訊息記錄，但係要升咗級先至可以收發訊息。</string>
+    <string name="ClientDeprecatedActivity_your_version_of_signal_has_expired_you_can_view_your_message_history">呢個版本嘅 Radar 已經 out 咗喇。您可以睇返先前嘅訊息記錄，但係要升咗級先至可以收發訊息。</string>
 
     <!-- ClockSkewActivity -->
     <!-- Title of the full-screen dialog shown when the device clock is too far off from the real time -->
@@ -294,7 +294,7 @@
     <string name="CommunicationActions_cancel">取消</string>
     <string name="CommunicationActions_call">通話</string>
     <string name="CommunicationActions_insecure_call">唔安全嘅通話</string>
-    <string name="CommunicationActions_carrier_charges_may_apply">電訊商可能會收費。因為呢個冧把未有喺 Signal 註冊，呢則通話會係由您嘅流動網絡打出嘅電話，唔會用到上網。</string>
+    <string name="CommunicationActions_carrier_charges_may_apply">電訊商可能會收費。因為呢個冧把未有喺 Radar 註冊，呢則通話會係由您嘅流動網絡打出嘅電話，唔會用到上網。</string>
     <string name="CommunicationActions_cant_join_call">加入唔到通話</string>
     <string name="CommunicationActions_this_call_link_is_no_longer_valid">呢條通話連結已經失效。</string>
     <!-- Title on dialog when call link url cannot be parsed -->
@@ -306,7 +306,7 @@
     <!-- Title on dialog when quick restore qr code is scanned in system camera -->
     <string name="CommunicationActions__transfer_dialog_title">係咪要將帳戶轉移去新裝置？</string>
     <!-- Message on dialog when quick restore qr code is scanned in system camera -->
-    <string name="CommunicationActions__transfer_dialog_message">要將呢個帳戶轉移去新裝置，請你㩒一下「繼續」，然後用 Signal 相機再掃描二維碼。請確保你掃瞄嘅二維碼係直接喺 Signal 開嘅。</string>
+    <string name="CommunicationActions__transfer_dialog_message">要將呢個帳戶轉移去新裝置，請你㩒一下「繼續」，然後用 Radar 相機再掃描二維碼。請確保你掃瞄嘅二維碼係直接喺 Radar 開嘅。</string>
     <string name="CommunicationActions__dont_transfer">唔好轉移</string>
 
     <!-- ConfirmIdentityDialog -->
@@ -330,8 +330,8 @@
 
     <!-- ContactsDatabase -->
     <string name="ContactsDatabase_message_s">寫個訊息畀 %1$s</string>
-    <string name="ContactsDatabase_signal_call_s">Signal 語音通話 %1$s</string>
-    <string name="ContactsDatabase_signal_video_call_s">Signal 視像通話 %1$s</string>
+    <string name="ContactsDatabase_signal_call_s">Radar 語音通話 %1$s</string>
+    <string name="ContactsDatabase_signal_video_call_s">Radar 視像通話 %1$s</string>
 
     <!-- ContactNameEditActivity -->
     <!-- Toolbar title for contact name edit activity -->
@@ -440,10 +440,10 @@
     <!-- Dialog description that will explain the steps needed to give microphone permissions -->
     <string name="ConversationActivity_signal_to_send_audio_messages">傳送語音訊息：</string>
     <!-- Alert dialog description asking for microphone permission in order to send voice messages -->
-    <string name="ConversationActivity_to_send_voice_messages_allow_signal_access_to_your_microphone">如果想傳送語音訊息，請允許 Signal 存取你個咪。</string>
+    <string name="ConversationActivity_to_send_voice_messages_allow_signal_access_to_your_microphone">如果想傳送語音訊息，請允許 Radar 存取你個咪。</string>
     <!-- Toast text explaining Signal\'s need for microphone access -->
-    <string name="ConversationActivity_signal_needs_microphone_access_voice_message">Signal 需要咪高風存取權，先可以錄語音訊息。</string>
-    <string name="ConversationActivity_signal_requires_the_microphone_permission_in_order_to_send_audio_messages">Signal 要攞「麥克風」權限，先可以傳送語音訊息，但權限已被永久拒絕。請到呢個 app 嘅應用程式設定，揀選「權限」，然後啟用「麥克風」。</string>
+    <string name="ConversationActivity_signal_needs_microphone_access_voice_message">Radar 需要咪高風存取權，先可以錄語音訊息。</string>
+    <string name="ConversationActivity_signal_requires_the_microphone_permission_in_order_to_send_audio_messages">Radar 要攞「麥克風」權限，先可以傳送語音訊息，但權限已被永久拒絕。請到呢個 app 嘅應用程式設定，揀選「權限」，然後啟用「麥克風」。</string>
 
     <string name="ConversationActivity_quoted_contact_message">%1$s %2$s</string>
     <string name="ConversationActivity_search_position">%1$d / %2$d</string>
@@ -463,9 +463,9 @@
     <!-- Dialog description that will explain the steps needed to give microphone permissions for a voice call -->
     <string name="ConversationActivity__to_start_call">要開始通話：</string>
     <!-- Alert dialog description asking for microphone permission in order to start a voice call -->
-    <string name="ConversationActivity__to_call_signal_needs_access_to_your_microphone">如果想開始通話，請允許 Signal 存取你個咪。</string>
+    <string name="ConversationActivity__to_call_signal_needs_access_to_your_microphone">如果想開始通話，請允許 Radar 存取你個咪。</string>
     <!-- Toast text explaining Signal\'s need for microphone access for a voice call -->
-    <string name="ConversationActivity_signal_needs_microphone_access_voice_call">Signal 需要咪高風存取權，先可以開始通話。</string>
+    <string name="ConversationActivity_signal_needs_microphone_access_voice_call">Radar 需要咪高風存取權，先可以開始通話。</string>
 
 
     <string name="ConversationActivity_join">摻埋我</string>
@@ -475,15 +475,15 @@
     <string name="ConversationActivity_error_sending_media">多媒體檔案傳送唔到</string>
 
     <!-- Message shown when opening an MMS group conversation with SMS disabled and there are no exported messages -->
-    <string name="ConversationActivity__sms_messaging_is_no_longer_supported">Signal 唔會再支援短訊功能。</string>
+    <string name="ConversationActivity__sms_messaging_is_no_longer_supported">Radar 唔會再支援短訊功能。</string>
     <!-- Message shown when opening an SMS conversation with SMS disabled and there are no exported messages -->
-    <string name="ConversationActivity__sms_messaging_is_no_longer_supported_in_signal_invite_s_to_to_signal_to_keep_the_conversation_here">Signal 唔會再支援短訊功能。邀請 %1$s 加入 Signal 繼續你哋嘅對話。</string>
+    <string name="ConversationActivity__sms_messaging_is_no_longer_supported_in_signal_invite_s_to_to_signal_to_keep_the_conversation_here">Radar 唔會再支援短訊功能。邀請 %1$s 加入 Radar 繼續你哋嘅對話。</string>
     <!-- Message shown when opening a conversation with an unregistered user who used to be on Signal -->
-    <string name="ConversationActivity__this_person_is_no_longer_using_signal">呢個人冇再用 Signal 喇。邀請佢加入 Signal 繼續對話啦。</string>
+    <string name="ConversationActivity__this_person_is_no_longer_using_signal">呢個人冇再用 Radar 喇。邀請佢加入 Radar 繼續對話啦。</string>
     <!-- Message shown when opening a conversation with an unregistered user who is not on Signal -->
-    <string name="ConversationActivity__this_person_is_not_using_signal">呢個人冇用緊 Signal 喎。邀請佢加入繼續對話啦。</string>
+    <string name="ConversationActivity__this_person_is_not_using_signal">呢個人冇用緊 Radar 喎。邀請佢加入繼續對話啦。</string>
     <!-- Action button shown when opening an SMS conversation with SMS disabled and there are no exported messages -->
-    <string name="ConversationActivity__invite_to_signal">拉隊嚟 Signal</string>
+    <string name="ConversationActivity__invite_to_signal">拉隊嚟 Radar</string>
     <!-- Toast message shown when trying to record a voice message during an ongoing call -->
     <string name="ConversationFragment_cannot_record_voice_message_during_call">通話嗰陣錄唔到語音訊息。</string>
 
@@ -515,7 +515,7 @@
     <string name="ConversationFragment_dont_show_again">唔使再彈出嚟提我喇</string>
     <string name="ConversationFragment_pending">仲要等等…</string>
     <!-- Describes how the message was sent when looking at a message detail. Previously, messages could be through other means like SMS -->
-    <string name="ConversationFragment_push">數據 (Signal)</string>
+    <string name="ConversationFragment_push">數據 (Radar)</string>
     <string name="ConversationFragment_mms">多媒體短訊</string>
     <string name="ConversationFragment_sms">短訊</string>
     <string name="ConversationFragment_deleting">刪除緊</string>
@@ -534,7 +534,7 @@
     <string name="ConversationFragment_delete_for_everyone_title">係咪喺所有人部機度刪除？</string>
     <!-- Body of dialog explaining what happens during deletion -->
     <plurals name="ConversationFragment_delete_for_everyone_body">
-        <item quantity="other">用最新版本 Signal 嘅谷友會見到你刪除咗呢啲訊息。</item>
+        <item quantity="other">用最新版本 Radar 嘅谷友會見到你刪除咗呢啲訊息。</item>
     </plurals>
     <!-- Dialog button for deleting one or more note-to-self messages that will be sync\'d to other devices -->
     <string name="ConversationFragment_delete">刪除</string>
@@ -557,7 +557,7 @@
     <string name="ConversationFragment_verify">驗證</string>
     <string name="ConversationFragment_not_now">遲啲先啦</string>
     <string name="ConversationFragment_your_safety_number_with_s_changed">您同 %1$s 之間嘅安全碼已經郁動過</string>
-    <string name="ConversationFragment_your_safety_number_with_s_changed_likey_because_they_reinstalled_signal">你同 %1$s 之間嘅安全碼已經改咗，可能係因為佢重新裝過 Signal 或者換咗部機。你可以㩒一下「驗證」嚟確認新嘅安全碼。呢個操作係選擇性嘅。</string>
+    <string name="ConversationFragment_your_safety_number_with_s_changed_likey_because_they_reinstalled_signal">你同 %1$s 之間嘅安全碼已經改咗，可能係因為佢重新裝過 Radar 或者換咗部機。你可以㩒一下「驗證」嚟確認新嘅安全碼。呢個操作係選擇性嘅。</string>
     <!-- Dialog title for block group link join requests -->
     <string name="ConversationFragment__block_request">係咪要封鎖請求？</string>
     <!-- Dialog message for block group link join requests -->
@@ -569,15 +569,15 @@
     <!-- Message shown after successfully blocking join requests for a user -->
     <string name="ConversationFragment__blocked">封鎖咗</string>
     <!-- Action shown to allow a user to update their application because it has expired -->
-    <string name="ConversationFragment__update_build">更新 Signal</string>
+    <string name="ConversationFragment__update_build">更新 Radar</string>
     <!-- Action shown to allow a user to re-register as they are no longer registered -->
-    <string name="ConversationFragment__reregister_signal">重新註冊 Signal</string>
+    <string name="ConversationFragment__reregister_signal">重新註冊 Radar</string>
     <!-- Action shown in the conversation input area to allow a user to re-link this device as it is no longer linked -->
     <string name="ConversationFragment__relink_signal">重新連結</string>
     <!-- Label for a button displayed in the conversation toolbar to return to the previous screen. -->
     <string name="ConversationFragment__content_description_back_button">返去上一頁。</string>
     <!-- Label for a button displayed in the conversation toolbar to open the main screen of the app. -->
-    <string name="ConversationFragment__content_description_launch_signal_button">開啟 Signal</string>
+    <string name="ConversationFragment__content_description_launch_signal_button">開啟 Radar</string>
     <!-- Dialog title shown when more than one contact in a group conversation is no longer verified -->
     <string name="ConversationFragment__no_longer_verified">唔再經驗證</string>
     <!-- Button shown in conversation header when in a message request state and no groups in common to show new message safety tips -->
@@ -595,7 +595,7 @@
     <!-- Dialog title shown after reporting spam and tapping the conversation item -->
     <string name="ConversationFragment_reported_spam">已舉報垃圾訊息</string>
     <!-- Dialog message shown after reporting spam and tapping the conversation item -->
-    <string name="ConversationFragment_reported_spam_message">Signal 收到通知，指呢個人可能發送垃圾訊息。Signal 睇唔到任何聊天內容。</string>
+    <string name="ConversationFragment_reported_spam_message">Radar 收到通知，指呢個人可能發送垃圾訊息。Radar 睇唔到任何聊天內容。</string>
     <!-- Toast shown after reporting spam and tapping the conversation item -->
     <string name="ConversationFragment_reported_as_spam">已舉報垃圾訊息</string>
     <!-- Toast shown after reporting and blocking a conversation -->
@@ -623,7 +623,7 @@
     <!-- Title of the dialog shown when re-requesting an expired attachment from your primary device fails -->
     <string name="ConversationFragment_attachment_backfill_failed_title">下載唔到媒體</string>
     <!-- Body of the dialog shown when your phone didn\'t respond to a request to re-send an expired attachment -->
-    <string name="ConversationFragment_attachment_backfill_timeout">請檢查呢個裝置同埋手機嘅網絡連線。喺你部舊機度打開 Signal，然後再嘗試下載一次。</string>
+    <string name="ConversationFragment_attachment_backfill_timeout">請檢查呢個裝置同埋手機嘅網絡連線。喺你部舊機度打開 Radar，然後再嘗試下載一次。</string>
     <!-- Body of the dialog shown when your phone no longer has the attachment you tried to download -->
     <string name="ConversationFragment_attachment_backfill_not_found">你部手機已經睇唔到呢個媒體，亦都冇得下載。</string>
     <!-- Dialog for how to long to keep a messaged pinned for -->
@@ -653,26 +653,26 @@
     <string name="SafetyTips_next_tip">下一個貼士</string>
 
     <!-- Summary tip 0 title: Don\'t respond to chats from Signal -->
-    <string name="SafetyTips_summary_tip0_title">千祈唔好回覆嚟自 Signal 嘅聊天訊息</string>
+    <string name="SafetyTips_summary_tip0_title">千祈唔好回覆嚟自 Radar 嘅聊天訊息</string>
     <!-- Summary tip 0 message -->
-    <string name="SafetyTips_summary_tip0_message">Signal 從來都唔會傳訊息問你攞註冊碼、PIN 碼或者恢復金鑰。千祈唔好回覆任何假扮 Signal 嘅聊天訊息。</string>
+    <string name="SafetyTips_summary_tip0_message">Radar 從來都唔會傳訊息問你攞註冊碼、PIN 碼或者恢復金鑰。千祈唔好回覆任何假扮 Radar 嘅聊天訊息。</string>
     <!-- Summary tip 1 title: Review names and photos -->
     <string name="SafetyTips_summary_tip1_title">檢查下個名同張相</string>
     <!-- Summary tip 1 message -->
-    <string name="SafetyTips_summary_tip1_message">留意「個名冇經過驗證」嘅提示。每個用戶都係自己喺 Signal 度設定自己個名。</string>
+    <string name="SafetyTips_summary_tip1_message">留意「個名冇經過驗證」嘅提示。每個用戶都係自己喺 Radar 度設定自己個名。</string>
     <!-- Summary tip 2 title: Look out for scams -->
     <string name="SafetyTips_summary_tip2_title">小心詐騙</string>
     <!-- Summary tip 2 message -->
     <string name="SafetyTips_summary_tip2_message">唔好理嗰啲引你回覆嘅模糊訊息。要對理財貼士同埋可疑嘅網站連結提高警覺。</string>
 
     <!-- Detail tip 0 title -->
-    <string name="SafetyTips_detail_tip0_title">千祈唔好回覆嚟自 Signal 嘅聊天訊息</string>
+    <string name="SafetyTips_detail_tip0_title">千祈唔好回覆嚟自 Radar 嘅聊天訊息</string>
     <!-- Detail tip 0 message -->
-    <string name="SafetyTips_detail_tip0_message">Signal 從來都唔會傳訊息問你攞註冊碼、PIN 碼或者恢復金鑰。千祈唔好回覆任何假扮 Signal 同 Signal 支援嘅聊天訊息。不法分子會用假名試圖盜用你嘅帳戶。</string>
+    <string name="SafetyTips_detail_tip0_message">Radar 從來都唔會傳訊息問你攞註冊碼、PIN 碼或者恢復金鑰。千祈唔好回覆任何假扮 Radar 同 Radar 支援嘅聊天訊息。不法分子會用假名試圖盜用你嘅帳戶。</string>
     <!-- Detail tip 1 title -->
     <string name="SafetyTips_detail_tip1_title">檢查下啲名同相</string>
     <!-- Detail tip 1 message -->
-    <string name="SafetyTips_detail_tip1_message">留意「個名冇經過驗證」嘅提示。每個用戶都係自己喺 Signal 度設定個人檔名同頭像。如果你唔確定邊個提出新請求，最好唔好理佢。</string>
+    <string name="SafetyTips_detail_tip1_message">留意「個名冇經過驗證」嘅提示。每個用戶都係自己喺 Radar 度設定個人檔名同頭像。如果你唔確定邊個提出新請求，最好唔好理佢。</string>
     <!-- Detail tip 2 title -->
     <string name="SafetyTips_detail_tip2_title">內容含糊或者唔關事嘅訊息</string>
     <!-- Detail tip 2 message -->
@@ -691,11 +691,11 @@
     <string name="SafetyTips_detail_tip5_message">收到嚟自商戶、公司或者政府機構嘅訊息時要小心。涉及稅務機關、快遞公司嘅訊息可能係垃圾訊息。</string>
 
     <!-- Bottom sheet text explaining that profile names are chosen by the account holder. Placeholder will be \'Profile names\' -->
-    <string name="ProfileNameBottomSheet__profile_names_on_signal">Signal 嘅%1$s係由帳戶持有人自己揀嘅。</string>
+    <string name="ProfileNameBottomSheet__profile_names_on_signal">Radar 嘅%1$s係由帳戶持有人自己揀嘅。</string>
     <!-- Bottom sheet text explaining that Signal can\'t verify names and photos -->
-    <string name="ProfileNameBottomSheet__signal_cant_verify">Signal 驗證唔到啲名同相</string>
+    <string name="ProfileNameBottomSheet__signal_cant_verify">Radar 驗證唔到啲名同相</string>
     <!-- Bottom sheet text explaining that Signal will never contact you for registration code, PIN, or recovery key -->
-    <string name="ProfileNameBottomSheet__signal_will_never_contact">Signal 從來都唔會聯絡你攞註冊碼、PIN 碼或者恢復金鑰</string>
+    <string name="ProfileNameBottomSheet__signal_will_never_contact">Radar 從來都唔會聯絡你攞註冊碼、PIN 碼或者恢復金鑰</string>
     <!-- Bottom sheet text explaining that accounts can impersonate other people and to be cautious -->
     <string name="ProfileNameBottomSheet__be_cautious_of_accounts">請小心防範冒充他人嘅帳戶</string>
     <!-- Bottom sheet text explaining that personal information should not be shared with strangers -->
@@ -823,9 +823,9 @@
     <!-- Toolbar title for this screen -->
     <string name="WhoCanSeeMyPhoneNumberFragment__who_can_find_me_by_number">邊個可以用電話號碼搵到我？</string>
     <!-- Description for radio item stating anyone can see your phone number -->
-    <string name="WhoCanSeeMyPhoneNumberFragment__anyone_who_has_your">任何有你電話冧把嘅人都會睇到你用緊 Signal，同埋可以開始聊天。</string>
+    <string name="WhoCanSeeMyPhoneNumberFragment__anyone_who_has_your">任何有你電話冧把嘅人都會睇到你用緊 Radar，同埋可以開始聊天。</string>
     <!-- Description for radio item stating no one will be able to see your phone number -->
-    <string name="WhoCanSeeMyPhoneNumberFragment__nobody_will_be_able">除非你向對方傳送訊息或者雙方已經有聊天紀錄，如果唔係冇人會睇到你用緊 Signal。</string>
+    <string name="WhoCanSeeMyPhoneNumberFragment__nobody_will_be_able">除非你向對方傳送訊息或者雙方已經有聊天紀錄，如果唔係冇人會睇到你用緊 Radar。</string>
 
     <!-- ChooseBackupFragment -->
 
@@ -851,7 +851,7 @@
     <string name="BackupsPreferenceFragment__test_your_backup_passphrase">測試下您備份嘅密碼，睇下啱唔啱</string>
     <string name="BackupsPreferenceFragment__turn_on">啟用備份</string>
     <string name="BackupsPreferenceFragment__turn_off">關閉</string>
-    <string name="BackupsPreferenceFragment__to_restore_a_backup">"要還原一個備份嘅話，首先請重新裝過 Signal。開返個 app 出嚟，撳一下「還原備份」，然後揀返嗰一個備份檔。%1$s"</string>
+    <string name="BackupsPreferenceFragment__to_restore_a_backup">"要還原一個備份嘅話，首先請重新裝過 Radar。開返個 app 出嚟，撳一下「還原備份」，然後揀返嗰一個備份檔。%1$s"</string>
     <string name="BackupsPreferenceFragment__learn_more">講多啲畀我聽</string>
     <string name="BackupsPreferenceFragment__in_progress">幫緊您幫緊您…</string>
     <!-- Status text shown in backup preferences when verifying a backup -->
@@ -860,7 +860,7 @@
     <string name="BackupsPreferenceFragment__d_so_far">暫時去到 %1$d…</string>
     <!-- Show percentage of completion of backup -->
     <string name="BackupsPreferenceFragment__s_so_far">暫時去到 %1$s%%…</string>
-    <string name="BackupsPreferenceFragment_signal_requires_external_storage_permission_in_order_to_create_backups">Signal 要攞外部儲存裝置權限，先可以建立備份，但權限已被永久拒絕。請到呢個 app 嘅應用程式設定，揀選「權限」，然後啟用「儲存裝置」。</string>
+    <string name="BackupsPreferenceFragment_signal_requires_external_storage_permission_in_order_to_create_backups">Radar 要攞外部儲存裝置權限，先可以建立備份，但權限已被永久拒絕。請到呢個 app 嘅應用程式設定，揀選「權限」，然後啟用「儲存裝置」。</string>
     <!-- Title of dialog shown when picking the time to perform a chat backup -->
     <string name="BackupsPreferenceFragment__set_backup_time">設定備份時間</string>
 
@@ -935,23 +935,23 @@
 
     <!-- DecryptionFailedDialog -->
     <string name="DecryptionFailedDialog_chat_session_refreshed">傾偈階段已經重新整理</string>
-    <string name="DecryptionFailedDialog_signal_uses_end_to_end_encryption">Signal 採用端對端加密，間唔中都需要重新整理下您嘅傾偈階段嘅。咁唔會影響您傾偈嘅安全性，只不過就話，您可能錯失咗呢位聯絡人畀您嘅一個訊息，您可以請佢再傳送一次畀您。</string>
+    <string name="DecryptionFailedDialog_signal_uses_end_to_end_encryption">Radar 採用端對端加密，間唔中都需要重新整理下您嘅傾偈階段嘅。咁唔會影響您傾偈嘅安全性，只不過就話，您可能錯失咗呢位聯絡人畀您嘅一個訊息，您可以請佢再傳送一次畀您。</string>
 
     <!-- LinkDeviceFragment -->
     <!-- Description for how Signal will work with a linked device (eg desktop, iPad) -->
-    <string name="LinkDeviceFragment__use_signal_on_desktop_ipad">喺另一部裝置度用呢個 Signal 帳戶。</string>
+    <string name="LinkDeviceFragment__use_signal_on_desktop_ipad">喺另一部裝置度用呢個 Radar 帳戶。</string>
     <!-- Button prompting users to link a new device to their account -->
     <string name="LinkDeviceFragment__link_a_new_device">連結新裝置</string>
     <!-- Text explaining that on linked devices, messages will be encrypted where %s will be replaced with an image-->
     <string name="LinkDeviceFragment__messages_and_chat_info_are_protected">%1$s 所有裝置上嘅訊息同聊天資料都有端對端加密保護</string>
     <!-- Bottom sheet title explaining how Signal works on a linked device -->
-    <string name="LinkDeviceFragment__signal_on_desktop_ipad">連結咗嘅裝置上面嘅 Signal</string>
+    <string name="LinkDeviceFragment__signal_on_desktop_ipad">連結咗嘅裝置上面嘅 Radar</string>
     <!-- Bottom sheet description explaining that messages on linked devices are private -->
     <string name="LinkDeviceFragment__all_messaging_is_private">所有連結裝置上面嘅訊息都係私密嘅</string>
     <!-- Bottom sheet description explaining that future messages on linked devices will be in sync with your phone but previous messages will not appear -->
-    <string name="LinkDeviceFragment__signal_messages_are_synchronized">連結之後，Signal 訊息會同手機上嘅 Signal 同步。</string>
+    <string name="LinkDeviceFragment__signal_messages_are_synchronized">連結之後，Radar 訊息會同手機上嘅 Radar 同步。</string>
     <!-- Bottom sheet description explaining that for non-desktop/iPad devices, they should go to %s to download Signal where %s is Signal\'s website -->
-    <string name="LinkDeviceFragment__on_other_device_visit_signal">喺你想連嗰部機度，㩒入 %1$s 安裝 Signal</string>
+    <string name="LinkDeviceFragment__on_other_device_visit_signal">喺你想連嗰部機度，㩒入 %1$s 安裝 Radar</string>
   <!-- Removed by excludeNonTranslatables <string name="LinkDeviceFragment__signal_download_url" translatable="false">signal.org/download</string> -->
     <!-- Header title listing out current linked devices -->
     <string name="LinkDeviceFragment__my_linked_devices">我連結咗嘅裝置</string>
@@ -1044,7 +1044,7 @@
     <!-- Bottom sheet title telling users to complete the linking process on the other device  -->
     <string name="AddLinkDeviceFragment__finish_linking_on_other_device">喺另一部機度攪掂埋連結</string>
     <!-- Bottom sheet description telling users to complete the linking process -->
-    <string name="AddLinkDeviceFragment__finish_linking_signal">喺另一部機度攪掂埋 Signal 連結。</string>
+    <string name="AddLinkDeviceFragment__finish_linking_signal">喺另一部機度攪掂埋 Radar 連結。</string>
     <!-- Title of dialog when the QR code being scanned is invalid -->
     <string name="AddLinkDeviceFragment__linking_device_failed">裝置連結失敗</string>
     <!-- Text shown in a dialog when the QR code being scanned is invalid -->
@@ -1089,19 +1089,19 @@
 
     <!-- DozeReminder -->
     <string name="DozeReminder_optimize_for_missing_play_services">針對無 Play 服務嘅優化</string>
-    <string name="DozeReminder_this_device_does_not_support_play_services_tap_to_disable_system_battery">呢部機唔支援 Play 服務。撳一下以停用系統嘅電量優化，以免 Signal 喺部機閒置嘅時候冇得去攞訊息。</string>
+    <string name="DozeReminder_this_device_does_not_support_play_services_tap_to_disable_system_battery">呢部機唔支援 Play 服務。撳一下以停用系統嘅電量優化，以免 Radar 喺部機閒置嘅時候冇得去攞訊息。</string>
 
     <!-- ExpiredBuildReminder -->
-    <string name="ExpiredBuildReminder_this_version_of_signal_has_expired">呢個版本嘅 Signal 已經過期喇。即刻更新以傳送同接收訊息。</string>
+    <string name="ExpiredBuildReminder_this_version_of_signal_has_expired">呢個版本嘅 Radar 已經過期喇。即刻更新以傳送同接收訊息。</string>
     <string name="ExpiredBuildReminder_update_now">即刻更新</string>
 
     <!-- A message in a banner shown at the top of the screen indicating that the user must upgrade their device to use signal. -->
-    <string name="DeprecatedSdkBanner_body">呢部裝置已經用唔到 Signal 喇。想用返 Signal 嘅話，請你將裝置更新去新啲嘅 Android 版本，或者換個新啲嘅裝置。</string>
+    <string name="DeprecatedSdkBanner_body">呢部裝置已經用唔到 Radar 喇。想用返 Radar 嘅話，請你將裝置更新去新啲嘅 Android 版本，或者換個新啲嘅裝置。</string>
 
     <!-- Title of notification telling users to update Signal -->
-    <string name="DeprecatedNotificationJob_update_signal">更新 Signal</string>
+    <string name="DeprecatedNotificationJob_update_signal">更新 Radar</string>
     <!-- Message body of notification telling users that this current version of Signal has expired. If pressed, we will direct them to the website APK or PlayStore page -->
-    <string name="DeprecatedNotificationJob_this_version_of_signal_has_expired">呢個 Signal 版本已經過咗期。㩒一下更新嚟收發訊息。</string>
+    <string name="DeprecatedNotificationJob_this_version_of_signal_has_expired">呢個 Radar 版本已經過咗期。㩒一下更新嚟收發訊息。</string>
 
     <!-- PendingGroupJoinRequestsReminder -->
     <plurals name="PendingGroupJoinRequestsReminder_d_pending_member_requests">
@@ -1207,7 +1207,7 @@
     <string name="LinkPreviewView_this_group_link_is_not_active">呢條谷拎未有生效</string>
     <string name="LinkPreviewView_domain_date">%1$s · %2$s</string>
     <!-- Description for Call Link url previews -->
-    <string name="LinkPreviewView__use_this_link_to_join_a_signal_call">用呢條連結嚟加入 Signal 通話</string>
+    <string name="LinkPreviewView__use_this_link_to_join_a_signal_call">用呢條連結嚟加入 Radar 通話</string>
 
     <!-- LinkPreviewRepository -->
     <plurals name="LinkPreviewRepository_d_members">
@@ -1223,7 +1223,7 @@
     <!-- Message for dialog asking user to submit logs for debugging a crash -->
     <string name="PromptLogsSlowNotificationsDialog__message">除錯紀錄可以幫我哋診斷同修正問題，當中唔會包含任何識別資料。</string>
     <!-- Title for dialog asking user to submit logs for debugging slow notification issues -->
-    <string name="PromptLogsSlowNotificationsDialog__title_crash">Signal 遇到問題。提交除錯紀錄？</string>
+    <string name="PromptLogsSlowNotificationsDialog__title_crash">Radar 遇到問題。提交除錯紀錄？</string>
     <!-- Title for dialog asking user to submit logs for a situation where they\'re not able to connect to the signal service -->
     <string name="PromptLogsSlowNotificationsDialog__title_connectivity_warning">你可能收唔到訊息。係咪要提交除錯記錄？</string>
 
@@ -1231,12 +1231,12 @@
     <!-- Title for dialog asking user to submit logs for debugging slow notification issues -->
     <string name="PromptBatterySaverBottomSheet__title">由於電池最佳化，通知可能會延遲</string>
     <!-- Message explaining that battery saver may delay notifications -->
-    <string name="PromptBatterySaverBottomSheet__message">你可以停用 Signal 嘅電池最佳化設定，確保訊息通知唔會延遲。</string>
+    <string name="PromptBatterySaverBottomSheet__message">你可以停用 Radar 嘅電池最佳化設定，確保訊息通知唔會延遲。</string>
 
     <!-- Title in bottom sheet that states that notifications for this device could be delayed -->
     <string name="DeviceSpecificNotificationBottomSheet__notifications_may_be_delayed">由於電池最佳化，通知可能會延遲</string>
     <!-- Message in bottom sheet prompting users to fix potential issues by disabling battery optimizations -->
-    <string name="DeviceSpecificNotificationBottomSheet__disable_battery_optimizations">停用 Signal 嘅電池最佳化設定，確保訊息通知唔會延遲。㩒一吓「繼續」睇睇特定裝置嘅說明。</string>
+    <string name="DeviceSpecificNotificationBottomSheet__disable_battery_optimizations">停用 Radar 嘅電池最佳化設定，確保訊息通知唔會延遲。㩒一吓「繼續」睇睇特定裝置嘅說明。</string>
     <!-- Button to dismiss notification help prompt -->
     <string name="DeviceSpecificNotificationBottomSheet__no_thanks">唔使喇，唔該</string>
     <!-- Button to continue and go to Signal support website -->
@@ -1245,7 +1245,7 @@
     <!-- Title of a bottom sheet that is shown when the user is having connectivity issues -->
     <string name="ConnectivityWarningBottomSheet_title">你可能收唔到訊息</string>
     <!-- Body of a bottom sheet that is shown when the user is having connectivity issues -->
-    <string name="ConnectivityWarningBottomSheet_body">再開過部機可能解決到訊息傳送問題。如果問題持續，請聯絡 Signal 支援團隊。</string>
+    <string name="ConnectivityWarningBottomSheet_body">再開過部機可能解決到訊息傳送問題。如果問題持續，請聯絡 Radar 支援團隊。</string>
     <!-- Text for a button in a bottom sheet that is shown when the user is having connectivity issues. Clicking it will dismiss the bottom sheet. -->
     <string name="ConnectivityWarningBottomSheet_dismiss_button">明白</string>
 
@@ -1324,8 +1324,8 @@
     <!-- Shown when a change to a group is rejected because the group has ended. -->
     <string name="GroupErrors__the_group_was_terminated">個谷解散咗啦。</string>
     <string name="GroupErrors__you_dont_have_the_rights_to_do_this">你冇得咁樣做</string>
-    <string name="GroupErrors__not_capable">你加嘅某個人唔支援新版谷，佢需要更新 Signal</string>
-    <string name="GroupErrors__not_announcement_capable">你加嘅某個人唔支援佈告谷，佢需要更新 Signal</string>
+    <string name="GroupErrors__not_capable">你加嘅某個人唔支援新版谷，佢需要更新 Radar</string>
+    <string name="GroupErrors__not_announcement_capable">你加嘅某個人唔支援佈告谷，佢需要更新 Radar</string>
     <string name="GroupErrors__failed_to_update_the_group">更新唔到個谷</string>
     <string name="GroupErrors__youre_not_a_member_of_the_group">你唔係呢個谷嘅成員。</string>
     <string name="GroupErrors__failed_to_update_the_group_please_retry_later">更新唔到個谷，麻煩陣間再試</string>
@@ -1335,7 +1335,7 @@
     <string name="ManageGroupActivity_legacy_group">舊版谷</string>
     <!-- This is placed inside a "Learn More" text view, which automatically appends LearnMoreTextView_learn_more in code -->
     <string name="ManageGroupActivity_legacy_group_learn_more">呢個係舊版谷。個谷嘅話事人等功能只有新版谷先用得。</string>
-    <string name="ManageGroupActivity_this_is_an_insecure_mms_group">呢個係唔安全嘅多媒體短訊谷。若果要私密傾偈，請邀請您嘅聯絡人轉用 Signal。</string>
+    <string name="ManageGroupActivity_this_is_an_insecure_mms_group">呢個係唔安全嘅多媒體短訊谷。若果要私密傾偈，請邀請您嘅聯絡人轉用 Radar。</string>
     <string name="ManageGroupActivity_invite_now">即刻邀請</string>
     <string name="ManageGroupActivity_more">更多</string>
     <string name="ManageGroupActivity_add_group_description">加返個谷嘅描述…</string>
@@ -1424,9 +1424,9 @@
     </plurals>
 
     <!-- GroupJoinUpdateRequiredBottomSheetDialogFragment -->
-    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal_to_use_group_links">更新 Signal 以使用谷拎</string>
-    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_message">您用緊嘅 Signal 版本唔支援呢條谷拎。請更新去最新版本以透過條拎加入呢個谷。</string>
-    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal">更新 Signal</string>
+    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal_to_use_group_links">更新 Radar 以使用谷拎</string>
+    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_message">您用緊嘅 Radar 版本唔支援呢條谷拎。請更新去最新版本以透過條拎加入呢個谷。</string>
+    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal">更新 Radar</string>
     <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_group_link_is_not_valid">谷拎無效</string>
 
     <!-- GroupInviteLinkEnableAndShareBottomSheetDialogFragment -->
@@ -1472,7 +1472,7 @@
     <string name="LongMessageActivity_your_message">您嘅訊息</string>
 
     <!-- MessageRetrievalService -->
-    <string name="MessageRetrievalService_signal">Signal</string>
+    <string name="MessageRetrievalService_signal">Radar</string>
     <string name="MessageRetrievalService_background_connection_enabled">背景連線已啟用</string>
 
     <!-- MediaOverviewActivity -->
@@ -1526,7 +1526,7 @@
     <string name="MediaOverviewActivity_this_media_is_not_sent_yet">仲未發送呢個媒體。</string>
     <string name="MediaOverviewActivity_jump_to_message">跳去訊息</string>
 
-    <string name="Megaphones_verify_your_signal_pin">驗證您嘅 Signal PIN 碼</string>
+    <string name="Megaphones_verify_your_signal_pin">驗證您嘅 Radar PIN 碼</string>
     <string name="Megaphones_well_occasionally_ask_you_to_verify_your_pin">我哋間唔中會問下您個 PIN 碼，等您唔使唔記得。</string>
     <string name="Megaphones_verify_pin">驗證 PIN 碼</string>
     <string name="Megaphones_get_started">開始使用</string>
@@ -1559,10 +1559,10 @@
   <!-- Removed by excludeNonTranslatables <string name="StarredMessages__s_chevron_s" translatable="false">%1$s \u203A %2$s</string> -->
 
     <!-- NotificationBarManager -->
-    <string name="NotificationBarManager__establishing_signal_call">籌備緊 Signal 通話</string>
+    <string name="NotificationBarManager__establishing_signal_call">籌備緊 Radar 通話</string>
     <!-- Temporary notification shown when starting the calling service -->
-    <string name="NotificationBarManager__starting_signal_call_service">開始 Signal 通話服務</string>
-    <string name="NotificationBarManager__stopping_signal_call_service">停止緊 Signal 通話服務</string>
+    <string name="NotificationBarManager__starting_signal_call_service">開始 Radar 通話服務</string>
+    <string name="NotificationBarManager__stopping_signal_call_service">停止緊 Radar 通話服務</string>
     <string name="NotificationBarManager__cancel_call">取消通話</string>
 
     <!-- NotificationsMegaphone -->
@@ -1616,7 +1616,7 @@
     <!-- Call update formatter string to place the update message next to a time stamp. e.g., \'Incoming voice call · 11:11am\' -->
     <string name="MessageRecord_call_message_with_date">%1$s · %2$s</string>
     <string name="MessageRecord_s_updated_group">%1$s 已更新呢個谷。</string>
-    <string name="MessageRecord_s_joined_signal">%1$s 開咗 Signal 喇！</string>
+    <string name="MessageRecord_s_joined_signal">%1$s 開咗 Radar 喇！</string>
     <string name="MessageRecord_you_disabled_disappearing_messages">您已停用過眼雲煙訊息。</string>
     <string name="MessageRecord_s_disabled_disappearing_messages">%1$s 已停用過眼雲煙訊息。</string>
     <string name="MessageRecord_you_set_disappearing_message_time_to_s">您已將過眼雲煙訊息倒數限期設定為 %1$s。</string>
@@ -1883,7 +1883,7 @@
     </plurals>
 
     <!-- In-conversation update message to indicate that the current contact is sms only and will need to migrate to signal to continue the conversation in signal. -->
-    <string name="MessageRecord__you_can_no_longer_send_sms_messages_in_signal">你冇得再喺 Signal 傳送短訊喇。邀請 %1$s 加入 Signal 繼續你哋嘅對話。</string>
+    <string name="MessageRecord__you_can_no_longer_send_sms_messages_in_signal">你冇得再喺 Radar 傳送短訊喇。邀請 %1$s 加入 Radar 繼續你哋嘅對話。</string>
     <!-- Body for quote when message being quoted is an in-app payment message -->
     <string name="MessageRecord__payment_s">付款：%1$s</string>
     <!-- Body for quote when message being quoted is an in-app payment message tombstone without an amount -->
@@ -1903,7 +1903,7 @@
     <!-- Update message shown in chat after you unblock a group -->
     <string name="MessageRecord_you_unblocked_this_group">你解除封鎖咗呢個群組</string>
     <!-- Update message shown when you receive a message that cannot be processed because your Signal version is too old. %1$s is the sender\'s name -->
-    <string name="MessageRecord_unsupported_feature">%1$s 傳送咗一個訊息俾你。呢個訊息用咗 Signal 嘅全新功能，所以冇辦法處理或者顯示出嚟。</string>
+    <string name="MessageRecord_unsupported_feature">%1$s 傳送咗一個訊息俾你。呢個訊息用咗 Radar 嘅全新功能，所以冇辦法處理或者顯示出嚟。</string>
     <!-- Update message shown when someone ends the poll. %1$s is the person who ended the poll and %2$s is the poll question. -->
     <string name="MessageRecord_ended_the_poll">%1$s 摺咗個投票：「%2$s」</string>
     <!-- Update message shown when you end the poll. %1$s is the poll question. -->
@@ -1967,7 +1967,7 @@
     <!-- Alert dialog body for accepting a message request. Contains bold substring placeholder -->
     <string name="MessageRequestBottomView_accept_request_body">淨係接受你信任嘅人嘅請求。%1$s傳訊息問你攞註冊碼、PIN 碼或者恢復金鑰。</string>
     <!-- Bold substring used in accept request body: "Signal will never" -->
-    <string name="MessageRequestBottomView_signal_will_never">Signal 從來都唔會</string>
+    <string name="MessageRequestBottomView_signal_will_never">Radar 從來都唔會</string>
     <!-- Alert dialog title to accept a message request to join a group -->
     <string name="MessageRequestBottomView_join_group">係咪加入群組？</string>
     <!-- Alert dialog body to review the message request for a group carefully -->
@@ -1990,22 +1990,22 @@
     <!-- Toast message shown when a user has too many linked devices and needs to remove one before linking another -->
     <string name="DeviceProvisioningActivity_sorry_you_have_too_many_devices_linked_already">抱歉，您已經連結咗太多部機喇，您剷咁啲先啦</string>
     <string name="DeviceActivity_sorry_this_is_not_a_valid_device_link_qr_code">抱歉，呢個唔係有效嘅裝置連結二維碼。</string>
-    <string name="DeviceProvisioningActivity_link_a_signal_device">係咪要連結一部 Signal 嘅機？</string>
-    <string name="DeviceProvisioningActivity_to_link_a_desktop_or_ipad_to_this_signal_account">如果想將桌面電腦或者 iPad 連去呢個 Signal 帳戶，請你去「連結咗嘅裝置」度㩒一下「連結新裝置」，然後再掃描二維碼。請確保你掃瞄嘅二維碼係直接嚟自 Signal 嘅。</string>
+    <string name="DeviceProvisioningActivity_link_a_signal_device">係咪要連結一部 Radar 嘅機？</string>
+    <string name="DeviceProvisioningActivity_to_link_a_desktop_or_ipad_to_this_signal_account">如果想將桌面電腦或者 iPad 連去呢個 Radar 帳戶，請你去「連結咗嘅裝置」度㩒一下「連結新裝置」，然後再掃描二維碼。請確保你掃瞄嘅二維碼係直接嚟自 Radar 嘅。</string>
 
-    <string name="OutdatedBuildReminder_your_version_of_signal_will_expire_today">呢個版本嘅 Signal 今日到期㗎喇。請更新去最新嘅版本。</string>
+    <string name="OutdatedBuildReminder_your_version_of_signal_will_expire_today">呢個版本嘅 Radar 今日到期㗎喇。請更新去最新嘅版本。</string>
     <plurals name="OutdatedBuildReminder_your_version_of_signal_will_expire_in_n_days">
-        <item quantity="other">呢個版本嘅 Signal %1$d 日後到期㗎喇。請更新去最新嘅版本。</item>
+        <item quantity="other">呢個版本嘅 Radar %1$d 日後到期㗎喇。請更新去最新嘅版本。</item>
     </plurals>
 
     <!-- PassphrasePromptActivity -->
     <string name="PassphrasePromptActivity_enter_passphrase">輸入密碼</string>
-    <string name="PassphrasePromptActivity_watermark_content_description">Signal 嘜頭</string>
+    <string name="PassphrasePromptActivity_watermark_content_description">Radar 嘜頭</string>
     <string name="PassphrasePromptActivity_ok_button_content_description">提交密碼</string>
     <string name="PassphrasePromptActivity_invalid_passphrase_exclamation">密碼無效！</string>
-    <string name="PassphrasePromptActivity_unlock_signal">解鎖 Signal</string>
+    <string name="PassphrasePromptActivity_unlock_signal">解鎖 Radar</string>
     <!-- This is the subject line for the email that is sent to support -->
-    <string name="PassphrasePromptActivity_signal_android_lock_screen">Signal Android - 鎖定畫面</string>
+    <string name="PassphrasePromptActivity_signal_android_lock_screen">Radar Android - 鎖定畫面</string>
 
     <!-- PlacePickerActivity -->
     <string name="PlacePickerActivity_title">地圖</string>
@@ -2030,17 +2030,17 @@
     <plurals name="PinRestoreEntryFragment_you_have_d_attempt_remaining">
         <item quantity="other">您仲可以試多 %1$d 次。如果用晒畀您嘅機會，都撞唔啱您先前整落嗰個 PIN 碼，您整過個新嘅都得。咁您就可以註冊同使用您嘅帳戶，但係您就會冇咗先前儲存落嘅一啲設定，例如話您嘅個人資料資訊。</item>
     </plurals>
-    <string name="PinRestoreEntryFragment_signal_registration_need_help_with_pin">Signal 註冊 - Android 版 PIN 碼需要幫手</string>
+    <string name="PinRestoreEntryFragment_signal_registration_need_help_with_pin">Radar 註冊 - Android 版 PIN 碼需要幫手</string>
 
     <!-- PinRestoreLockedFragment -->
     <string name="PinRestoreLockedFragment_create_your_pin">建立您嘅 PIN 碼</string>
-    <string name="PinRestoreLockedFragment_youve_run_out_of_pin_guesses">撞返啱個 PIN 碼嘅機會畀您用晒喇，但係您仍然可以整過個新嘅，以便繼續用返您個 Signal 帳戶。為確保您嘅私隱同保安，您嘅帳戶會新簇簇咁還原，先前儲存落嘅任何個人資料資訊或者設定將會冇得留低。</string>
+    <string name="PinRestoreLockedFragment_youve_run_out_of_pin_guesses">撞返啱個 PIN 碼嘅機會畀您用晒喇，但係您仍然可以整過個新嘅，以便繼續用返您個 Radar 帳戶。為確保您嘅私隱同保安，您嘅帳戶會新簇簇咁還原，先前儲存落嘅任何個人資料資訊或者設定將會冇得留低。</string>
     <string name="PinRestoreLockedFragment_create_new_pin">建立新嘅 PIN 碼</string>
   <!-- Removed by excludeNonTranslatables <string name="PinRestoreLockedFragment_learn_more_url" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
 
     <!-- PinOptOutDialog -->
     <string name="PinOptOutDialog_warning">警告</string>
-    <string name="PinOptOutDialog_if_you_disable_the_pin_you_will_lose_all_data">如果你停用 PIN 碼，當你重新註冊 Signal 而又冇手動備份同還原嘅話，所有資料就會冇晒。停用 PIN 期間唔可以開啟註冊鎖定。</string>
+    <string name="PinOptOutDialog_if_you_disable_the_pin_you_will_lose_all_data">如果你停用 PIN 碼，當你重新註冊 Radar 而又冇手動備份同還原嘅話，所有資料就會冇晒。停用 PIN 期間唔可以開啟註冊鎖定。</string>
     <string name="PinOptOutDialog_disable_pin">停用 PIN 碼</string>
 
     <!-- RatingManager -->
@@ -2062,7 +2062,7 @@
 
     <!-- RecaptchaRequiredBottomSheetFragment -->
     <string name="RecaptchaRequiredBottomSheetFragment_verify_to_continue_messaging">驗證完先再繼續發訊息</string>
-    <string name="RecaptchaRequiredBottomSheetFragment_to_help_prevent_spam_on_signal">為協助 Signal 打擊垃圾訊息，請先完成驗證。</string>
+    <string name="RecaptchaRequiredBottomSheetFragment_to_help_prevent_spam_on_signal">為協助 Radar 打擊垃圾訊息，請先完成驗證。</string>
     <string name="RecaptchaRequiredBottomSheetFragment_after_verifying_you_can_continue_messaging">驗證完之後，您就可以繼續發訊息。先前閘住嘅訊息會自動發送返出去。</string>
 
     <!-- Recipient -->
@@ -2070,7 +2070,7 @@
     <!-- Name of recipient representing user\'s \'My Story\' -->
     <string name="Recipient_my_story">我嘅是日花生</string>
     <!-- Name of recipient for a call link without a name -->
-    <string name="Recipient_signal_call">Signal 通話</string>
+    <string name="Recipient_signal_call">Radar 通話</string>
 
     <!-- RecipientPreferencesActivity -->
     <string name="RecipientPreferenceActivity_block">封鎖</string>
@@ -2107,7 +2107,7 @@
     <!-- WebRtcCallActivity -->
     <string name="WebRtcCallActivity__tap_here_to_turn_on_your_video">撳一下呢度去開啟您嘅視像</string>
     <!-- Subtitle shown at top of call where %s is the elapsed time of the call -->
-    <string name="WebRtcCallActivity__signal_s">Signal %1$s</string>
+    <string name="WebRtcCallActivity__signal_s">Radar %1$s</string>
     <string name="WebRtcCallActivity__calling">打緊出去…</string>
     <!-- Title for dialog warning about lacking bluetooth permissions during a call -->
     <string name="WebRtcCallActivity__bluetooth_permission_denied">藍牙權限被拒</string>
@@ -2122,7 +2122,7 @@
     <!-- Title for dialog shown when returning to a call after the system muted the microphone because Signal\'s battery setting is "Restricted" -->
     <string name="WebRtcCallActivity__others_couldnt_hear_you">其他人聽唔到你講嘢</string>
     <!-- Message for dialog shown when returning to a call after the system muted the microphone because Signal\'s battery setting is "Restricted" -->
-    <string name="WebRtcCallActivity__your_microphone_was_muted_while_signal_was_in_the_background">頭先 Signal 喺背景做嘢嗰陣，你個咪係靜音咗嘅。要攪返好佢，㩒一下「設定」然後喺「電量」設定啟用背景活動。</string>
+    <string name="WebRtcCallActivity__your_microphone_was_muted_while_signal_was_in_the_background">頭先 Radar 喺背景做嘢嗰陣，你個咪係靜音咗嘅。要攪返好佢，㩒一下「設定」然後喺「電量」設定啟用背景活動。</string>
     <!-- Title for dialog to approve all requests -->
     <plurals name="WebRtcCallActivity__approve_d_requests">
         <item quantity="other">批准 %1$d 個請求？</item>
@@ -2166,15 +2166,15 @@
     <!-- Dialog title asking users for camera permission -->
     <string name="WebRtcCallActivity__allow_access_camera">允許存取你嘅相機</string>
     <!-- Dialog description explaining why camera and microphone permissions are needed to start or join a call -->
-    <string name="WebRtcCallActivity__to_start_call_camera_microphone">要開始或者加入通話嘅話，請允許 Signal 存取你嘅相機同咪。</string>
+    <string name="WebRtcCallActivity__to_start_call_camera_microphone">要開始或者加入通話嘅話，請允許 Radar 存取你嘅相機同咪。</string>
     <!-- Dialog description explaining why microphone permissions are needed to start or join a call -->
-    <string name="WebRtcCallActivity__to_start_call_microphone">要開始或者加入通話嘅話，請允許 Signal 存取你個咪。</string>
+    <string name="WebRtcCallActivity__to_start_call_microphone">要開始或者加入通話嘅話，請允許 Radar 存取你個咪。</string>
     <!-- Dialog description explaining why camera permissions are needed to enable a user\'s video in a call -->
-    <string name="WebRtcCallActivity__to_enable_video_allow_camera">要用視像通話嘅話，請允許 Signal 存取您嘅相機。</string>
+    <string name="WebRtcCallActivity__to_enable_video_allow_camera">要用視像通話嘅話，請允許 Radar 存取您嘅相機。</string>
     <!-- Toast describing why microphone permissions are needed to start or join a call -->
-    <string name="WebRtcCallActivity__signal_needs_microphone_start_call">Signal 需要你個咪嘅存取權先可以開始或者加入通話。</string>
+    <string name="WebRtcCallActivity__signal_needs_microphone_start_call">Radar 需要你個咪嘅存取權先可以開始或者加入通話。</string>
     <!-- Toast describing why camera permissions are needed to enable a video in a call -->
-    <string name="WebRtcCallActivity__signal_needs_camera_access_enable_video">Signal 需要相機嘅存取權先可以用你嘅視像通話</string>
+    <string name="WebRtcCallActivity__signal_needs_camera_access_enable_video">Radar 需要相機嘅存取權先可以用你嘅視像通話</string>
     <!-- Dialog description that will explain the steps needed to give microphone permissions -->
     <string name="WebRtcCallActivity__to_start_call">要開始或者加入通話：</string>
     <!-- Dialog description that will explain the steps needed to give camera permissions -->
@@ -2187,8 +2187,8 @@
     <string name="MoveableLocalVideoRenderer__expand_local_video">放大本機影片</string>
 
     <!-- WebRtcCallView -->
-    <string name="WebRtcCallView__signal_call">Signal 通話</string>
-    <string name="WebRtcCallView__signal_video_call">Signal 視像通話</string>
+    <string name="WebRtcCallView__signal_call">Radar 通話</string>
+    <string name="WebRtcCallView__signal_video_call">Radar 視像通話</string>
     <string name="WebRtcCallView__start_call">開始通話</string>
     <string name="WebRtcCallView__join_call">加入通話</string>
     <string name="WebRtcCallView__call_is_full">通話已滿座</string>
@@ -2197,7 +2197,7 @@
     <string name="WebRtcCallView__joining">加入緊…</string>
     <string name="WebRtcCallView__disconnected">線已斷</string>
     <!-- Utilized in the lobby before joining a call link -->
-    <string name="WebRtcCallView__signal_call_link">Signal 通話連結</string>
+    <string name="WebRtcCallView__signal_call_link">Radar 通話連結</string>
     <!-- Warning displayed when entering a call via a link and you have Phone Number Privacy disabled-->
     <string name="WebRtcCallView__anyone_who_joins_pnp_disabled">透過連結加入呢個通話嘅人都會睇到你個名、相同電話冧把。</string>
     <!-- Warning displayed when entering a call via a link and you have Phone Number Privacy enabled-->
@@ -2205,10 +2205,10 @@
     <!-- Displayed on the call screen as the status when waiting to be let into a call link by an admin -->
     <string name="WebRtcCallView__waiting_to_be_let_in">等緊入去…</string>
 
-    <string name="WebRtcCallView__signal_will_ring_s">Signal 將會向 %1$s 唥鐘</string>
-    <string name="WebRtcCallView__signal_will_ring_s_and_s">Signal 將會向 %1$s 同 %2$s 唥鐘</string>
+    <string name="WebRtcCallView__signal_will_ring_s">Radar 將會向 %1$s 唥鐘</string>
+    <string name="WebRtcCallView__signal_will_ring_s_and_s">Radar 將會向 %1$s 同 %2$s 唥鐘</string>
     <plurals name="WebRtcCallView__signal_will_ring_s_s_and_d_others">
-        <item quantity="other">Signal 將會向 %1$s、%2$s 同其餘 %3$d 人唥鐘</item>
+        <item quantity="other">Radar 將會向 %1$s、%2$s 同其餘 %3$d 人唥鐘</item>
     </plurals>
 
     <string name="WebRtcCallView__s_will_be_notified">%1$s 將會收到通知</string>
@@ -2331,7 +2331,7 @@
 
     <!-- AboutSheet -->
     <!-- Displayed in a sheet row and allows user to open signal connection explanation on tap -->
-    <string name="AboutSheet__signal_connection">Signal 人脈</string>
+    <string name="AboutSheet__signal_connection">Radar 人脈</string>
     <!-- Displayed in a sheet row describing that the user has marked this contact as \'verified\' from within the app -->
     <string name="AboutSheet__verified">驗證咗</string>
     <!-- Displayed in a sheet row that tells users that profile names are not verified -->
@@ -2369,11 +2369,11 @@
         <item quantity="other">喺呢個通話入面 (%1$d)</item>
     </plurals>
     <plurals name="CallParticipantsListDialog__signal_will_ring">
-        <item quantity="other">Signal 會打俾 (%1$d)</item>
+        <item quantity="other">Radar 會打俾 (%1$d)</item>
     </plurals>
     <!-- Header text shown in a bottom sheet that indicates how many people will be notified about an outgoing call -->
     <plurals name="CallParticipantsListDialog__signal_will_notify">
-        <item quantity="other">Signal 會通知 (%1$d)</item>
+        <item quantity="other">Radar 會通知 (%1$d)</item>
     </plurals>
     <plurals name="CallParticipantsListDialog__raised_hands">
         <item quantity="other">舉咗手 (%1$d)</item>
@@ -2481,7 +2481,7 @@
 
     <!-- SharedContactView -->
     <string name="SharedContactView_add_to_contacts">加入去聯絡人</string>
-    <string name="SharedContactView_invite_to_signal">拉隊嚟 Signal</string>
+    <string name="SharedContactView_invite_to_signal">拉隊嚟 Radar</string>
     <!-- Button on a shared contact card that opens a chat with that contact. It can share a row with other buttons, so a short label is preferred -->
     <string name="SharedContactView_message_button">訊息</string>
     <!-- Button on a contact card shared in a group chat that adds the person on the card to that group -->
@@ -2540,7 +2540,7 @@
     <!-- Sticker pack description for packs that have been sent to you -->
     <string name="StickerManagement_when_you_receive">當你收到其他人送嘅貼圖，嗰啲貼圖包會顯示喺呢度。</string>
     <!-- Sticker pack list section header for highlighted/"blessed" packs. -->
-    <string name="StickerManagement_signal_artist_series_header">Signal 畫家系列</string>
+    <string name="StickerManagement_signal_artist_series_header">Radar 畫家系列</string>
     <!-- Title shown when sharing a sticker pack with another user. -->
     <string name="StickerManagement_share_sheet_title">轉寄畀</string>
     <!-- Bottom action bar option to select all sticker packs in the list. -->
@@ -2603,7 +2603,7 @@
     <!-- Shown when no stickers match the search. The placeholder what was searched. -->
     <string name="StickerManagement_search_no_results_s">搵唔到同「%1$s」相關嘅嘢</string>
     <!-- Sticker pack button for forwarding a sticker link. -->
-    <string name="StickerManagement_menu_send_signal_pack">透過 Signal 發送</string>
+    <string name="StickerManagement_menu_send_signal_pack">透過 Radar 發送</string>
     <!-- Sticker pack button that opens a bottom sheet with more share options. -->
     <string name="StickerManagement_menu_link_pack">連結</string>
     <!-- Sticker pack sheet option for sharing a sticker pack link using the system share sheet. -->
@@ -2727,7 +2727,7 @@
     <string name="ThreadRecord_you_activated_payments">你已經啟動咗付款</string>
     <!-- Displayed in the notification when the recipient can accept payments -->
     <string name="ThreadRecord_can_accept_payments">%1$s 而家可以接受付款</string>
-    <string name="ThreadRecord_s_is_on_signal">%1$s 開咗 Signal 喇！</string>
+    <string name="ThreadRecord_s_is_on_signal">%1$s 開咗 Radar 喇！</string>
     <string name="ThreadRecord_disappearing_messages_disabled">過眼雲煙訊息已停用</string>
     <string name="ThreadRecord_disappearing_message_time_updated_to_s">過眼雲煙訊息倒數已設定為 %1$s</string>
     <string name="ThreadRecord_safety_number_changed">安全碼已經郁動過</string>
@@ -2769,11 +2769,11 @@
     <string name="ThreadRecord_blocked_group">封鎖咗</string>
 
     <!-- ApkUpdateNotifications -->
-    <string name="ApkUpdateNotifications_prompt_install_title">Signal 更新</string>
-    <string name="ApkUpdateNotifications_prompt_install_body">Signal 出咗新版本喇。 㩒一下就可以更新。</string>
-    <string name="ApkUpdateNotifications_failed_general_title">Signal 更新失敗</string>
+    <string name="ApkUpdateNotifications_prompt_install_title">Radar 更新</string>
+    <string name="ApkUpdateNotifications_prompt_install_body">Radar 出咗新版本喇。 㩒一下就可以更新。</string>
+    <string name="ApkUpdateNotifications_failed_general_title">Radar 更新失敗</string>
     <string name="ApkUpdateNotifications_failed_general_body">我哋遲啲再試過啦。</string>
-    <string name="ApkUpdateNotifications_auto_update_success_title">Signal 已經成功更新</string>
+    <string name="ApkUpdateNotifications_auto_update_success_title">Radar 已經成功更新</string>
     <string name="ApkUpdateNotifications_auto_update_success_body">已經自動更新到 %1$s 版本。</string>
     <string name="ApkUpdateNotifications_manual_update_success_body">你已經更新至 %1$s 版本。</string>
 
@@ -2790,16 +2790,16 @@
     <string name="UsernameEditFragment_successfully_removed_username">成功移除咗用戶名稱。</string>
 
     <plurals name="UserNotificationMigrationJob_d_contacts_are_on_signal">
-        <item quantity="other">%1$d 位聯絡人開咗 Signal 喇！</item>
+        <item quantity="other">%1$d 位聯絡人開咗 Radar 喇！</item>
     </plurals>
 
 
     <string name="VerifyIdentityActivity_the_scanned_qr_code_is_not_a_correctly_formatted_safety_number">掃描嘅二維碼唔係正確格式嘅安全碼驗證碼。請試下再掃一次啦。</string>
     <string name="VerifyIdentityActivity_share_safety_number_via">將安全碼分享去…</string>
-    <string name="VerifyIdentityActivity_our_signal_safety_number">我哋嘅 Signal 安全碼：</string>
+    <string name="VerifyIdentityActivity_our_signal_safety_number">我哋嘅 Radar 安全碼：</string>
     <string name="VerifyIdentityActivity_no_app_to_share_to">似乎您無 app 用嚟去分享噃。</string>
     <string name="VerifyIdentityActivity_no_safety_number_to_compare_was_found_in_the_clipboard">喺剪貼簿入面搵唔到安全碼去做比較</string>
-    <string name="VerifyIdentityActivity_signal_needs_the_camera_permission_in_order_to_scan_a_qr_code_but_it_has_been_permanently_denied">Signal 要攞「相機」權限，先可以掃到二維碼，但權限已被永久拒絕。請到呢個 app 嘅應用程式設定，揀選「權限」，然後啟用「相機」。</string>
+    <string name="VerifyIdentityActivity_signal_needs_the_camera_permission_in_order_to_scan_a_qr_code_but_it_has_been_permanently_denied">Radar 要攞「相機」權限，先可以掃到二維碼，但權限已被永久拒絕。請到呢個 app 嘅應用程式設定，揀選「權限」，然後啟用「相機」。</string>
     <string name="VerifyIdentityActivity_you_must_first_exchange_messages_in_order_to_view">您要先交流過訊息，先可以睇到 %1$s 嘅安全碼。</string>
     <!-- Dialog message explaining to user they must exchange messages first to create a safety number -->
     <string name="VerifyIdentityActivity_dialog_exchange_messages_to_create_safety_number_message">你同對方互相傳送訊息之後，系統就會幫你建立一個同佢嘅安全碼。</string>
@@ -2836,8 +2836,8 @@
 
     <!-- KeyCachingService -->
     <string name="KeyCachingService_signal_passphrase_cached">撳一下開啟。</string>
-    <string name="KeyCachingService_passphrase_cached">Signal 已經解鎖</string>
-    <string name="KeyCachingService_lock">鎖定 Signal</string>
+    <string name="KeyCachingService_passphrase_cached">Radar 已經解鎖</string>
+    <string name="KeyCachingService_lock">鎖定 Radar</string>
 
     <!-- MediaPreviewActivity -->
     <string name="MediaPreviewActivity_you">您</string>
@@ -2888,14 +2888,14 @@
     <string name="MessageNotifier_failed_to_deliver_message">送遞唔到訊息。</string>
     <string name="MessageNotifier_error_delivering_message">送遞訊息嘅時候發生錯誤。</string>
     <string name="MessageNotifier_message_delivery_paused">訊息送遞已暫止。</string>
-    <string name="MessageNotifier_verify_to_continue_messaging_on_signal">驗證完先再繼續喺 Signal 發訊息。</string>
+    <string name="MessageNotifier_verify_to_continue_messaging_on_signal">驗證完先再繼續喺 Radar 發訊息。</string>
     <string name="MessageNotifier_mark_all_as_read">全部剔低話睇咗</string>
     <string name="MessageNotifier_mark_read">剔低話睇咗</string>
     <string name="MessageNotifier_turn_off_these_notifications">閂咗呢啲通知</string>
     <string name="MessageNotifier_view_once_photo">流聲掠影相片</string>
     <string name="MessageNotifier_view_once_video">流聲掠影影片</string>
     <string name="MessageNotifier_reply">回覆</string>
-    <string name="MessageNotifier_signal_message">Signal 訊息</string>
+    <string name="MessageNotifier_signal_message">Radar 訊息</string>
     <string name="MessageNotifier_contact_message">%1$s %2$s</string>
     <string name="MessageNotifier_unknown_contact_message">聯絡人</string>
     <string name="MessageNotifier_reacted_s_to_s">傳送咗 %1$s 心情回應：「%2$s」。</string>
@@ -2912,7 +2912,7 @@
     <!-- Body of a notification when someone votes in a poll. First placeholder is the poll emoji, second placeholder is the name of the voter and third is the poll question -->
     <string name="MessageNotifier_s_voted_in_poll">%1$s %2$s 已經喺「%3$s」投咗票</string>
 
-    <string name="TurnOffContactJoinedNotificationsActivity__turn_off_contact_joined_signal">係咪要閂咗聯絡人加入 Signal 嘅通知？您可以喺 Signal &gt; 設定 &gt; 通知 度再啟用返。</string>
+    <string name="TurnOffContactJoinedNotificationsActivity__turn_off_contact_joined_signal">係咪要閂咗聯絡人加入 Radar 嘅通知？您可以喺 Radar &gt; 設定 &gt; 通知 度再啟用返。</string>
 
     <!-- TurnOnNotificationsBottomSheet -->
     <!-- Title for sheet explaining how to turn on app notifications -->
@@ -2940,7 +2940,7 @@
     <string name="NotificationChannel_group_chats">傾偈</string>
     <string name="NotificationChannel_missing_display_name">未知</string>
     <string name="NotificationChannel_voice_notes">語音筆記</string>
-    <string name="NotificationChannel_contact_joined_signal">聯絡人開咗 Signal</string>
+    <string name="NotificationChannel_contact_joined_signal">聯絡人開咗 Radar</string>
     <!-- Toast shown when there is no application available to open the settings -->
     <string name="NotificationChannels__no_activity_available_to_open_notification_channel_settings">無可用嘅活動去開啟通知類別設定。</string>
     <!-- Notification channel name for showing persistent background connection on devices without push notifications -->
@@ -2984,7 +2984,7 @@
     </plurals>
 
     <!-- Message shown when the app requests permission to save media to the device storage, but that permission has been permanently denied by the user. -->
-    <string name="AttachmentSaver__signal_needs_the_storage_permission_in_order_to_write_to_external_storage_but_it_has_been_permanently_denied">Signal 要攞「儲存裝置」權限先可以儲存到外置儲存裝置，但權限已被永久拒絕。請到呢個 app 嘅設定版面，揀選「權限」，然後啟用「儲存裝置」。</string>
+    <string name="AttachmentSaver__signal_needs_the_storage_permission_in_order_to_write_to_external_storage_but_it_has_been_permanently_denied">Radar 要攞「儲存裝置」權限先可以儲存到外置儲存裝置，但權限已被永久拒絕。請到呢個 app 嘅設定版面，揀選「權限」，然後啟用「儲存裝置」。</string>
 
     <!-- Message explaining that it is not possible to save media to the device storage after the user denied the system save to storage permission. -->
     <string name="AttachmentSaver__unable_to_write_to_external_storage_without_permission">冇權限冇得儲存到外置儲存裝置</string>
@@ -2994,11 +2994,11 @@
     <!-- Dialog title shown when attempting to save media that has been offloaded from the device by the storage optimization feature. -->
     <string name="AttachmentSaver__cant_save_media">儲存唔到媒體</string>
     <!-- Dialog message explaining that media cannot be saved because it has been offloaded from the device by the storage optimization feature. -->
-    <string name="AttachmentSaver__media_offloaded_message">因為部機開咗「優化 Signal 儲存空間」功能，呢個媒體已經由你部機度卸載咗。你可以逐個逐個咁去下載，或者閂咗「優化 Signal 儲存空間」功能，將全部媒體下載去你部機。</string>
+    <string name="AttachmentSaver__media_offloaded_message">因為部機開咗「優化 Radar 儲存空間」功能，呢個媒體已經由你部機度卸載咗。你可以逐個逐個咁去下載，或者閂咗「優化 Radar 儲存空間」功能，將全部媒體下載去你部機。</string>
     <!-- Dialog title shown when attempting to save multiple media items, some of which have been offloaded from the device by the storage optimization feature. -->
     <string name="AttachmentSaver__cant_save_all_items">儲存唔到全部媒體</string>
     <!-- Dialog message explaining that some selected media cannot be saved because it has been offloaded from the device by the storage optimization feature. -->
-    <string name="AttachmentSaver__some_media_offloaded_message">因為部機開咗「優化 Signal 儲存空間」功能，你揀咗嘅媒體已經由你部機度卸載咗。你可以逐個逐個咁去儲存，或者閂咗「優化 Signal 儲存空間」功能，將全部媒體下載去你部機度。</string>
+    <string name="AttachmentSaver__some_media_offloaded_message">因為部機開咗「優化 Radar 儲存空間」功能，你揀咗嘅媒體已經由你部機度卸載咗。你可以逐個逐個咁去儲存，或者閂咗「優化 Radar 儲存空間」功能，將全部媒體下載去你部機度。</string>
     <!-- Button label in the offloaded media dialog that navigates to the storage settings screen. -->
     <string name="AttachmentSaver__view_storage_settings">睇吓儲存空間設定</string>
 
@@ -3011,7 +3011,7 @@
     <string name="ShortcutLauncherActivity_invalid_shortcut">捷徑無效</string>
 
     <!-- SingleRecipientNotificationBuilder -->
-    <string name="SingleRecipientNotificationBuilder_signal">Signal</string>
+    <string name="SingleRecipientNotificationBuilder_signal">Radar</string>
     <string name="SingleRecipientNotificationBuilder_new_message">新訊息</string>
     <string name="SingleRecipientNotificationBuilder_message_request">訊息請求</string>
     <string name="SingleRecipientNotificationBuilder_you">您</string>
@@ -3086,20 +3086,20 @@
 
     <!-- UnauthorizedReminder -->
     <!-- Message shown in a reminder banner when the user\'s device is no longer registered -->
-    <string name="UnauthorizedReminder_this_is_likely_because_you_registered_your_phone_number_with_Signal_on_a_different_device">呢部裝置嘅註冊已經失效。原因好可能係你喺另一部裝置度用咗同一個電話號碼註冊 Signal。</string>
+    <string name="UnauthorizedReminder_this_is_likely_because_you_registered_your_phone_number_with_Signal_on_a_different_device">呢部裝置嘅註冊已經失效。原因好可能係你喺另一部裝置度用咗同一個電話號碼註冊 Radar。</string>
     <!-- Action in reminder banner that will take user to re-register -->
     <string name="UnauthorizedReminder_reregister_action">重新用呢部裝置註冊</string>
     <!-- Message shown in a reminder banner when this linked device is no longer linked to a primary device -->
-    <string name="UnauthorizedReminder_this_device_is_no_longer_linked_relink_to_continue_messaging">呢部裝置嘅連結已經失效。請將 Signal 重新連結去你部手機，方便繼續通訊。</string>
+    <string name="UnauthorizedReminder_this_device_is_no_longer_linked_relink_to_continue_messaging">呢部裝置嘅連結已經失效。請將 Radar 重新連結去你部手機，方便繼續通訊。</string>
     <!-- Action in reminder banner that will take the user to re-link this device -->
     <string name="UnauthorizedReminder_relink_action">重新連結裝置</string>
 
     <!-- Push notification when the app is forcibly logged out by the server. -->
-    <string name="LoggedOutNotification_you_have_been_logged_out">你已經喺呢部裝置度被登出咗 Signal。</string>
+    <string name="LoggedOutNotification_you_have_been_logged_out">你已經喺呢部裝置度被登出咗 Radar。</string>
 
     <!-- EnclaveFailureReminder -->
     <!-- Banner message to update app to use payments -->
-    <string name="EnclaveFailureReminder_update_signal">請更新 Signal，方便繼續使用付款功能。你嘅餘額可能仲未更新。</string>
+    <string name="EnclaveFailureReminder_update_signal">請更新 Radar，方便繼續使用付款功能。你嘅餘額可能仲未更新。</string>
     <!-- Banner button to update now -->
 
     <string name="WebRtcCallActivity__answered_on_a_linked_device">已用連結咗嘅機接聽。</string>
@@ -3141,14 +3141,14 @@
     <string name="change_passphrase_activity__repeat_new_passphrase">打多次個新密碼</string>
 
     <!-- contact_selection_activity -->
-    <string name="contact_selection_activity__invite_to_signal">拉隊嚟 Signal</string>
+    <string name="contact_selection_activity__invite_to_signal">拉隊嚟 Radar</string>
     <string name="contact_selection_activity__new_group">開個新谷</string>
     <!-- Row item title for refreshing contacts -->
     <string name="contact_selection_activity__refresh_contacts">重新整理聯絡人</string>
     <!-- Row item description for refreshing contacts -->
     <string name="contact_selection_activity__missing_someone">揾唔到某個人？試下重新整理</string>
     <!-- Row item title for finding people on Signal via your contacts -->
-    <string name="contact_selection_activity__find_people_you_know">喺 Signal 搵你識嘅人</string>
+    <string name="contact_selection_activity__find_people_you_know">喺 Radar 搵你識嘅人</string>
     <!-- Row item description asking users for access to their contacts to find people they know -->
     <string name="contact_selection_activity__allow_access_to_contacts">允許存取你嘅通訊錄</string>
     <!-- Row header title for more section -->
@@ -3167,15 +3167,15 @@
     <string name="SingleContactSelectionActivity_contact_photo">聯絡人相片</string>
 
     <!-- ContactSelectionListFragment-->
-    <string name="ContactSelectionListFragment_signal_requires_the_contacts_permission_in_order_to_display_your_contacts">Signal 要攞「聯絡人」權限，先可以羅列您啲聯絡人出嚟，但權限已被永久拒絕。請到呢個 app 嘅設定功能表，揀選「權限」，然後啟用「聯絡人」。</string>
+    <string name="ContactSelectionListFragment_signal_requires_the_contacts_permission_in_order_to_display_your_contacts">Radar 要攞「聯絡人」權限，先可以羅列您啲聯絡人出嚟，但權限已被永久拒絕。請到呢個 app 嘅設定功能表，揀選「權限」，然後啟用「聯絡人」。</string>
     <string name="ContactSelectionListFragment_error_retrieving_contacts_check_your_network_connection">提取聯絡人嘅時候發生錯誤，請檢查您嘅網絡連線</string>
     <string name="ContactSelectionListFragment_username_not_found">搵唔到用戶名稱</string>
-    <string name="ContactSelectionListFragment_s_is_not_a_signal_user">"「%1$s」唔係 Signal 用戶。請檢查用戶名稱，然後再試過啦。"</string>
+    <string name="ContactSelectionListFragment_s_is_not_a_signal_user">"「%1$s」唔係 Radar 用戶。請檢查用戶名稱，然後再試過啦。"</string>
     <string name="ContactSelectionListFragment_you_do_not_need_to_add_yourself_to_the_group">您唔使加自己入個谷度</string>
     <string name="ContactSelectionListFragment_maximum_group_size_reached">谷嘅人數已經到頂</string>
-    <string name="ContactSelectionListFragment_signal_groups_can_have_a_maximum_of_s_members">Signal 嘅谷最多可以有 %1$s 位成員。</string>
+    <string name="ContactSelectionListFragment_signal_groups_can_have_a_maximum_of_s_members">Radar 嘅谷最多可以有 %1$s 位成員。</string>
     <string name="ContactSelectionListFragment_recommended_member_limit_reached">夠晒建議嘅成員人數喇</string>
-    <string name="ContactSelectionListFragment_signal_groups_perform_best_with_s_members_or_fewer">Signal 谷頂櫳 %1$s 位成員就佮佮冚㗎嘞。再加多啲成員嘅話，收發訊息就可能會有延遲。</string>
+    <string name="ContactSelectionListFragment_signal_groups_perform_best_with_s_members_or_fewer">Radar 谷頂櫳 %1$s 位成員就佮佮冚㗎嘞。再加多啲成員嘅話，收發訊息就可能會有延遲。</string>
     <plurals name="ContactSelectionListFragment_d_members">
         <item quantity="other">%1$d 位成員</item>
     </plurals>
@@ -3186,16 +3186,16 @@
     <!-- Dialog title asking users for contact permission -->
     <string name="ContactSelectionListFragment_allow_access_contacts">允許存取通訊錄</string>
     <!-- Dialog description that will explain the steps needed to give contact permissions -->
-    <string name="ContactSelectionListFragment_to_find_people">要喺 Signal 搵你識嘅人：</string>
+    <string name="ContactSelectionListFragment_to_find_people">要喺 Radar 搵你識嘅人：</string>
     <!-- Text on button prompting users to give Signal contact permissions -->
     <string name="ContactSelectionListFragment__allow_access">允許存取</string>
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">唔使喇，唔該晒</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">請允許存取你嘅通訊錄。你嘅通訊錄資料已經加密，Signal 唔會睇到。</string>
+    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">請允許存取你嘅通訊錄。你嘅通訊錄資料已經加密，Radar 唔會睇到。</string>
 
     <!-- conversation_activity -->
-    <string name="conversation_activity__type_message_push">Signal 訊息</string>
+    <string name="conversation_activity__type_message_push">Radar 訊息</string>
     <!-- Option in send button context menu to schedule the message instead of sending it directly -->
     <string name="conversation_activity__sim_n">SIM 卡 %1$d</string>
     <string name="conversation_activity__send">傳送</string>
@@ -3312,7 +3312,7 @@
 
     <!-- BubbleOptOutTooltip -->
     <!-- Message to inform the user of what Android chat bubbles are -->
-    <string name="BubbleOptOutTooltip__description">氣泡係一項 Android 功能，Signal 傾偈用唔用氣泡就由得您揀。</string>
+    <string name="BubbleOptOutTooltip__description">氣泡係一項 Android 功能，Radar 傾偈用唔用氣泡就由得您揀。</string>
     <!-- Button to dismiss the tooltip for opting out of using Android bubbles -->
     <string name="BubbleOptOutTooltip__not_now">遲啲先啦</string>
     <!-- Button to move to the system settings to control the use of Android bubbles -->
@@ -3329,7 +3329,7 @@
     <string name="safety_number_change_dialog__join_call">加入通話</string>
     <string name="safety_number_change_dialog__continue_call">繼續通話</string>
     <string name="safety_number_change_dialog__leave_call">退出通話</string>
-    <string name="safety_number_change_dialog__the_following_people_may_have_reinstalled_or_changed_devices">下列嘅人可能已重新裝過 Signal 或者換咗部機。同佢哋驗證下您嘅安全碼，可以確保私隱。</string>
+    <string name="safety_number_change_dialog__the_following_people_may_have_reinstalled_or_changed_devices">下列嘅人可能已重新裝過 Radar 或者換咗部機。同佢哋驗證下您嘅安全碼，可以確保私隱。</string>
     <string name="safety_number_change_dialog__view">睇下</string>
     <!-- Subtitle shown for a single contact and that their safety number was previously verified and is now no longer verified. -->
     <string name="safety_number_change_dialog__previous_verified">先前驗證咗</string>
@@ -3357,9 +3357,9 @@
     <string name="IdentityUtil_unverified_banner_two">您同 %1$s 同埋 %2$s 之間嘅安全碼已經郁動過，唔再算係驗證咗</string>
     <string name="IdentityUtil_unverified_banner_many">您同 %1$s、%2$s 同埋 %3$s 之間嘅安全碼已經郁動過，唔再算係驗證咗</string>
 
-    <string name="IdentityUtil_unverified_dialog_one">您同 %1$s 之間嘅安全碼已經郁動過，唔再算係驗證咗。話唔埋係有人企圖截取您嘅通訊，但又或者，只係 %1$s 重新裝過 Signal。</string>
-    <string name="IdentityUtil_unverified_dialog_two">您同 %1$s 同埋 %2$s 之間嘅安全碼，唔再算係驗證咗。話唔埋係有人企圖截取您嘅通訊，但又或者，只係佢哋重新裝過 Signal。</string>
-    <string name="IdentityUtil_unverified_dialog_many">您同 %1$s、%2$s 同埋 %3$s 之間嘅安全碼，唔再算係驗證咗。話唔埋係有人企圖截取您嘅通訊，但又或者，只係佢哋重新裝過 Signal。</string>
+    <string name="IdentityUtil_unverified_dialog_one">您同 %1$s 之間嘅安全碼已經郁動過，唔再算係驗證咗。話唔埋係有人企圖截取您嘅通訊，但又或者，只係 %1$s 重新裝過 Radar。</string>
+    <string name="IdentityUtil_unverified_dialog_two">您同 %1$s 同埋 %2$s 之間嘅安全碼，唔再算係驗證咗。話唔埋係有人企圖截取您嘅通訊，但又或者，只係佢哋重新裝過 Radar。</string>
+    <string name="IdentityUtil_unverified_dialog_many">您同 %1$s、%2$s 同埋 %3$s 之間嘅安全碼，唔再算係驗證咗。話唔埋係有人企圖截取您嘅通訊，但又或者，只係佢哋重新裝過 Radar。</string>
 
     <string name="IdentityUtil_untrusted_dialog_one">您同 %1$s 之間嘅安全碼冇耐之前郁動過。</string>
     <string name="IdentityUtil_untrusted_dialog_two">您同 %1$s 同埋 %2$s 之間嘅安全碼冇耐之前郁動過。</string>
@@ -3451,20 +3451,20 @@
     <!-- Bottom sheet title when encryption is auto-verified -->
     <string name="EncryptionVerifiedSheet__title_success">系統已經為呢個聊天做緊自動加密驗證</string>
     <!-- Bottom sheet body when encryption is auto-verified -->
-    <string name="EncryptionVerifiedSheet__body_success">對於用電話冧把聯絡嘅人，Signal 會進行一個叫「金鑰透明度」嘅程序，自動確認聯絡對象係咪安全。如果想更加保險，你可以比較上一個畫面嘅數字，或者掃瞄佢部機嘅二維碼嚟手動驗證端對端加密。</string>
+    <string name="EncryptionVerifiedSheet__body_success">對於用電話冧把聯絡嘅人，Radar 會進行一個叫「金鑰透明度」嘅程序，自動確認聯絡對象係咪安全。如果想更加保險，你可以比較上一個畫面嘅數字，或者掃瞄佢部機嘅二維碼嚟手動驗證端對端加密。</string>
     <!-- Bottom sheet title when encryption is no longer auto-verified -->
     <string name="EncryptionVerifiedSheet__title_no_longer_unavailable">呢個聊天未有自動驗證功能</string>
     <!-- Bottom sheet body when encryption is no longer auto-verified. Placeholder is the name of the person. -->
-    <string name="EncryptionVerifiedSheet__body_no_longer_unavailable">Signal 唔可以自動驗證呢個聊天嘅加密。原因可能係 %1$s 轉咗新電話冧把，或者改咗電話冧把嘅私隱設定。如果想手動驗證端對端加密，你可以比較上一個畫面嘅數字，或者掃瞄佢部機嘅二維碼。</string>
+    <string name="EncryptionVerifiedSheet__body_no_longer_unavailable">Radar 唔可以自動驗證呢個聊天嘅加密。原因可能係 %1$s 轉咗新電話冧把，或者改咗電話冧把嘅私隱設定。如果想手動驗證端對端加密，你可以比較上一個畫面嘅數字，或者掃瞄佢部機嘅二維碼。</string>
     <!-- Bottom sheet title when encryption cannot be auto-verified -->
     <string name="EncryptionVerifiedSheet__title_unavailable">呢個聊天未有自動驗證功能</string>
     <!-- Bottom sheet body when encryption cannot be auto-verified -->
-    <string name="EncryptionVerifiedSheet__body_unavailable">只有用電話冧把同對方聯絡嘅聊天，Signal 先可以自動做加密驗證。如果個聊天係由用戶名稱或者經聊天谷建立，你可以比較上一個畫面嘅數字，或者掃瞄佢部機嘅二維碼嚟驗證端對端加密。</string>
+    <string name="EncryptionVerifiedSheet__body_unavailable">只有用電話冧把同對方聯絡嘅聊天，Radar 先可以自動做加密驗證。如果個聊天係由用戶名稱或者經聊天谷建立，你可以比較上一個畫面嘅數字，或者掃瞄佢部機嘅二維碼嚟驗證端對端加密。</string>
 
     <!-- Title for auto verification education sheet -->
-    <string name="VerifyAutomaticallyEducationSheet__title">Signal 而家可以自動驗證加密</string>
+    <string name="VerifyAutomaticallyEducationSheet__title">Radar 而家可以自動驗證加密</string>
     <!-- Body for auto verification education sheet -->
-    <string name="VerifyAutomaticallyEducationSheet__body">對於用電話冧把聯絡嘅聯絡人，Signal 會進行一個叫「金鑰透明度」嘅程序，自動確認聯絡對象係咪安全。如果想更加保險，你可以繼續用返二維碼或者安全碼人手驗證聯絡人。</string>
+    <string name="VerifyAutomaticallyEducationSheet__body">對於用電話冧把聯絡嘅聯絡人，Radar 會進行一個叫「金鑰透明度」嘅程序，自動確認聯絡對象係咪安全。如果想更加保險，你可以繼續用返二維碼或者安全碼人手驗證聯絡人。</string>
     <!-- Button to learn more about automatic verification -->
     <string name="VerifyAutomaticallyEducationSheet__learn_more">了解詳情</string>
     <!-- Button to go to verification page -->
@@ -3538,7 +3538,7 @@
   <!-- Removed by excludeNonTranslatables <string name="HelpFragment__link__faq" translatable="false">https://support.signal.org</string> -->
     <!-- Heading used within support email that lists additional information to help with debugging -->
     <string name="HelpFragment__support_info">支援資訊</string>
-    <string name="HelpFragment__signal_android_support_request">Signal Android 支援請求</string>
+    <string name="HelpFragment__signal_android_support_request">Radar Android 支援請求</string>
   <!-- Removed by excludeNonTranslatables <string name="HelpFragment__debug_log" translatable="false">Debug Log:</string> -->
     <string name="HelpFragment__could_not_upload_logs">上載唔到記錄檔</string>
     <string name="HelpFragment__please_be_as_descriptive_as_possible">請您儘可能具體說明，幫我哋了解個問題。</string>
@@ -3552,13 +3552,13 @@
         <item>功能請求</item>
         <item>發問</item>
         <item>意見</item>
-        <item>付款（MobileCoin）</item>
+        <item>付款（Bitcoin over Lightning）</item>
         <item>課金與襟章</item>
-        <item>Signal Android 備份</item>
+        <item>Radar Android 備份</item>
         <item>其他</item>
     </string-array>
     <!-- Subject of email when submitting debug logs to help debug slow notifications -->
-    <string name="DebugLogsPromptDialogFragment__signal_android_support_request">提交 Signal Android 除錯紀錄</string>
+    <string name="DebugLogsPromptDialogFragment__signal_android_support_request">提交 Radar Android 除錯紀錄</string>
     <!-- Action to submit logs and take user to send an e-mail -->
     <string name="DebugLogsPromptDialogFragment__submit">提交</string>
     <!-- Action to decline to submit logs -->
@@ -3592,7 +3592,7 @@
     </plurals>
 
     <!-- Bottom sheet message shown after an assistant app requested the contents of the screen, explaining that screenshots were automatically disabled -->
-    <string name="AssistantScreenSecurityBottomSheet__body">Gemini 之類嘅 AI 助理 APP 可以掃描你個 Signal 入面嘅內容。為咗防止呢個情況發生，我哋已經啟用咗遮掩畫面功能。咁仲會停用埋畫面截圖。</string>
+    <string name="AssistantScreenSecurityBottomSheet__body">Gemini 之類嘅 AI 助理 APP 可以掃描你個 Radar 入面嘅內容。為咗防止呢個情況發生，我哋已經啟用咗遮掩畫面功能。咁仲會停用埋畫面截圖。</string>
     <!-- Bottom sheet title shown after an assistant app requested the contents of the screen and screen security was automatically turned on -->
     <string name="AssistantScreenSecurityBottomSheet__title">遮掩畫面功能已經開返</string>
     <!-- Bottom sheet button that turns screen security back off -->
@@ -3600,7 +3600,7 @@
     <!-- Title of the dialog confirming that the user wants to turn off screen security -->
     <string name="AssistantScreenSecurityTurnOffDialog__title">係咪要閂咗遮掩畫面功能？</string>
     <!-- Body of the dialog confirming that the user wants to turn off screen security -->
-    <string name="AssistantScreenSecurityTurnOffDialog__body">如果閂咗呢個功能， Signal 入面嘅內容可能會俾 Google Gemini 等 AI 助理掃描，然後用咗去啲冇保護私隱嘅功能度。</string>
+    <string name="AssistantScreenSecurityTurnOffDialog__body">如果閂咗呢個功能， Radar 入面嘅內容可能會俾 Google Gemini 等 AI 助理掃描，然後用咗去啲冇保護私隱嘅功能度。</string>
     <!-- Dialog button that confirms turning off screen security -->
     <string name="AssistantScreenSecurityTurnOffDialog__turn_off">關閉</string>
     <!-- Snackbar shown after the user turns off screen security -->
@@ -3616,13 +3616,13 @@
     <string name="preferences__linked_devices">連結咗嘅機</string>
     <string name="preferences__disable_pin">停用 PIN 碼</string>
     <string name="preferences__enable_pin">啟用 PIN 碼</string>
-    <string name="preferences__if_you_disable_the_pin_you_will_lose_all_data">若然您停用 PIN 碼，咁當您重新註冊 Signal 嘅時候，除非話您自己手動備份同還原啦，否則您將會遺失所有資料。當 PIN 碼停用嘅時候，冇得開啟註冊鎖。</string>
-    <string name="preferences__pins_keep_information_stored_with_signal_encrypted_so_only_you_can_access_it">有 PIN 碼，儲存喺 Signal 嘅資訊就安心加密，淨係得您先接觸到。當您重新裝過 Signal 嘅時候，您嘅個人資料、設定同埋聯絡人亦都可以還原。平時開啟個 app 就唔需要用到您個 PIN 碼。</string>
+    <string name="preferences__if_you_disable_the_pin_you_will_lose_all_data">若然您停用 PIN 碼，咁當您重新註冊 Radar 嘅時候，除非話您自己手動備份同還原啦，否則您將會遺失所有資料。當 PIN 碼停用嘅時候，冇得開啟註冊鎖。</string>
+    <string name="preferences__pins_keep_information_stored_with_signal_encrypted_so_only_you_can_access_it">有 PIN 碼，儲存喺 Radar 嘅資訊就安心加密，淨係得您先接觸到。當您重新裝過 Radar 嘅時候，您嘅個人資料、設定同埋聯絡人亦都可以還原。平時開啟個 app 就唔需要用到您個 PIN 碼。</string>
     <!-- Title of toolbar for the advanced pin settings screen -->
     <string name="preferences__advanced_pin_settings_title">進階 PIN 碼設定</string>
     <string name="preferences__submit_debug_log">提交除錯記錄檔</string>
 
-    <string name="preferences_advanced__relay_all_calls_through_the_signal_server_to_avoid_revealing_your_ip_address">將所有通話中轉 Signal 伺服器，以避免向您嘅聯絡人透露您嘅 IP 位址。啟用嘅時候會犧牲通話質素。</string>
+    <string name="preferences_advanced__relay_all_calls_through_the_signal_server_to_avoid_revealing_your_ip_address">將所有通話中轉 Radar 伺服器，以避免向您嘅聯絡人透露您嘅 IP 位址。啟用嘅時候會犧牲通話質素。</string>
     <string name="preferences_advanced__always_relay_calls">一律轉駁通話</string>
     <!-- Option in settings to turn on unread reminders -->
     <string name="preferences_notifications__unread">未睇嘅提醒</string>
@@ -3630,20 +3630,20 @@
     <string name="preferences_communication__category_censorship_circumvention">封網迴避</string>
     <!-- Title of the \'censorship circumvention\' toggle switch -->
     <string name="preferences_communication__censorship_circumvention">封網迴避</string>
-    <string name="preferences_communication__censorship_circumvention_if_enabled_signal_will_attempt_to_circumvent_censorship">啟用嘅時候，Signal 會嘗試迴避封網。除非您身處會審查 Signal 嘅地方，否則唔使啟用呢個功能。</string>
+    <string name="preferences_communication__censorship_circumvention_if_enabled_signal_will_attempt_to_circumvent_censorship">啟用嘅時候，Radar 會嘗試迴避封網。除非您身處會審查 Radar 嘅地方，否則唔使啟用呢個功能。</string>
     <!-- Summary text for \'censorship circumvention\' toggle. Indicates that we automatically enabled it because we believe you\'re in a censored country -->
     <string name="preferences_communication__censorship_circumvention_has_been_activated_based_on_your_accounts_phone_number">鑑於您帳戶嘅電話冧把，已啟用封網迴避。</string>
     <!-- Summary text for \'censorship circumvention\' toggle. Indicates that you disabled it even though we believe you\'re in a censored country -->
     <string name="preferences_communication__censorship_circumvention_you_have_manually_disabled">您已經手動停用封網迴避。</string>
     <!-- Summary text for \'censorship circumvention\' toggle. Indicates that you cannot use it because you\'re already connected to the Signal service -->
-    <string name="preferences_communication__censorship_circumvention_is_not_necessary_you_are_already_connected">您同 Signal 服務已經連線，毋需封網迴避。</string>
+    <string name="preferences_communication__censorship_circumvention_is_not_necessary_you_are_already_connected">您同 Radar 服務已經連線，毋需封網迴避。</string>
     <!-- Summary text for \'censorship circumvention\' toggle. Indicates that you cannot use it because you\'re not connected to the internet -->
     <string name="preferences_communication__censorship_circumvention_can_only_be_activated_when_connected_to_the_internet">封網迴避要連咗上網先可以啟用。</string>
     <string name="preferences_communication__category_sealed_sender">封密發送人</string>
     <string name="preferences_communication__sealed_sender_allow_from_anyone">不拘任何人</string>
     <string name="preferences_communication__sealed_sender_allow_from_anyone_description">就算佢唔係您嘅聯絡人，又或您未有同佢分享個人資料，都俾人哋用封密發送人傳入訊息。</string>
     <string name="preferences_proxy_address">代理伺服器位址</string>
-    <string name="preferences_only_use_a_proxy_if">萬一您用流動數據或 Wi-Fi 都連接唔到 Signal 嘅時候先使用代理伺服器。</string>
+    <string name="preferences_only_use_a_proxy_if">萬一您用流動數據或 Wi-Fi 都連接唔到 Radar 嘅時候先使用代理伺服器。</string>
     <string name="preferences_share">分享</string>
     <string name="preferences_save">儲存</string>
     <string name="preferences_connecting_to_proxy">連緊線去代理伺服器…</string>
@@ -3658,7 +3658,7 @@
     <!-- Preference title for automatic key verification -->
     <string name="preferences_automatic_key_verification">自動金鑰驗證</string>
     <!-- Preference summary for automatic key verification -->
-    <string name="preferences_automatic_key_verification_body">啟用嗰陣，Signal 會嘗試自動驗證 1 對 1 聊天嘅加密。</string>
+    <string name="preferences_automatic_key_verification_body">啟用嗰陣，Radar 會嘗試自動驗證 1 對 1 聊天嘅加密。</string>
 
 
     <!-- Internal only preferences -->
@@ -3675,7 +3675,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">隆重推出：付款功能</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">用 Signal 去傳送同接收 MobileCoin：佢係一種新嘅兼著重私隱嘅電子貨幣。啟用開始使用。</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">用 Radar 去傳送同接收 Bitcoin over Lightning：佢係一種新嘅兼著重私隱嘅電子貨幣。啟用開始使用。</string>
     <string name="PaymentsHomeFragment__activate_payments">啟用付款</string>
     <string name="PaymentsHomeFragment__activating_payments">啟用緊付款…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">恢復付款帳戶</string>
@@ -3701,7 +3701,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">付款未有喺您嘅地區提供。</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">啟用唔到付款。陣間再試下啦。</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">係咪要停用付款？</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">停用付款嘅話，您將唔能夠喺 Signal 度收發 MobileCoin 㗎喇。</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">停用付款嘅話，您將唔能夠喺 Radar 度收發 Bitcoin over Lightning 㗎喇。</string>
     <string name="PaymentsHomeFragment__deactivate">停用</string>
     <string name="PaymentsHomeFragment__continue">繼續</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">餘額目前未能提供。</string>
@@ -3710,12 +3710,12 @@
     <string name="PaymentsHomeFragment__details">詳情</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">你可以用 Signal 傳送同接收 MobileCoin。所有付款均受 MobileCoins 同 MobileCoin Wallet 嘅使用條款約束。你可能會遇到問題，當中損失嘅付款或者結餘將會冇辦法攞返。 </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">你可以用 Radar 傳送同接收 Bitcoin over Lightning。所有付款均受 MobileCoins 同 Bitcoin over Lightning Wallet 嘅使用條款約束。你可能會遇到問題，當中損失嘅付款或者結餘將會冇辦法攞返。 </string>
     <string name="PaymentsHomeFragment__activate">啟用</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">檢視 MobileCoin 條款</string>
-    <string name="PaymentsHomeFragment__payments_not_available">Signal 付款已經曲終人散。您仍然可以將款項轉移去交易平台，但唔再能夠傳送或接收付款，又或增加款項。</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">檢視 Bitcoin over Lightning 條款</string>
+    <string name="PaymentsHomeFragment__payments_not_available">Radar 付款已經曲終人散。您仍然可以將款項轉移去交易平台，但唔再能夠傳送或接收付款，又或增加款項。</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">係咪要為日後嘅付款開啟付款鎖定？</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -3759,7 +3759,7 @@
     <string name="PaymentsAddMoneyFragment__your_wallet_address">您嘅銀包位址</string>
     <string name="PaymentsAddMoneyFragment__copy">複製</string>
     <string name="PaymentsAddMoneyFragment__copied_to_clipboard">複製咗去剪貼簿</string>
-    <string name="PaymentsAddMoneyFragment__to_add_funds">如要增加款項，請將 MobileCoin 傳送到您嘅銀包位址。揀一個支援 MobileCoin 嘅交易平台，開咗帳戶之後開始一筆交易，然後掃描二維碼或者複製您嘅銀包位址。</string>
+    <string name="PaymentsAddMoneyFragment__to_add_funds">如要增加款項，請將 Bitcoin over Lightning 傳送到您嘅銀包位址。揀一個支援 Bitcoin over Lightning 嘅交易平台，開咗帳戶之後開始一筆交易，然後掃描二維碼或者複製您嘅銀包位址。</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsAddMoneyFragment__learn_more__information" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_transfer_from_exchange</string> -->
 
     <!-- PaymentsDetailsFragment -->
@@ -3777,7 +3777,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">收款人：</string>
     <string name="PaymentsDetailsFragment__from">付款人：</string>
-    <string name="PaymentsDetailsFragment__information">交易詳情包括付款金額同交易時間，係 MobileCoin Ledger 嘅一部份。</string>
+    <string name="PaymentsDetailsFragment__information">交易詳情包括付款金額同交易時間，係 Bitcoin over Lightning Ledger 嘅一部份。</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">金幣清理費</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">當您手頭上有嘅金幣太過濕碎，湊唔埋欄去完成一筆交易嘅時候，就會徵收一項「金幣清理費」。佢會執掂個架步等您繼續傳送付款。</string>
     <string name="PaymentsDetailsFragment__no_details_available">呢筆交易未有進一步嘅詳情提供</string>
@@ -3792,13 +3792,13 @@
     <string name="PaymentsTransferFragment__transfer">轉移</string>
     <string name="PaymentsTransferFragment__scan_qr_code">掃描二維碼</string>
     <string name="PaymentsTransferFragment__to_scan_or_enter_wallet_address">收款人：掃描或輸入銀包位址</string>
-    <string name="PaymentsTransferFragment__you_can_transfer">您可以完成一筆轉移去由交易平台提供嘅銀包位址，從而轉移 MobileCoin。銀包位址係由一堆數目字同英文字母組成，通常寫喺二維碼下低。</string>
+    <string name="PaymentsTransferFragment__you_can_transfer">您可以完成一筆轉移去由交易平台提供嘅銀包位址，從而轉移 Bitcoin over Lightning。銀包位址係由一堆數目字同英文字母組成，通常寫喺二維碼下低。</string>
     <string name="PaymentsTransferFragment__next">下一步</string>
     <string name="PaymentsTransferFragment__invalid_address">位址唔啱</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">請檢查您嘗試轉移去嗰度嘅銀包位址，然後再試下啦。</string>
-    <string name="PaymentsTransferFragment__you_cant_transfer_to_your_own_signal_wallet_address">您冇得轉移返去自己嘅 Signal 銀包位址度㗎。請輸入喺支援嘅交易平台上面您所屬帳戶嘅銀包位址。</string>
-    <string name="PaymentsTransferFragment__to_scan_a_qr_code_signal_needs">要掃二維碼嘅話，Signal 需要存取您部機嘅相機。</string>
-    <string name="PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera">要掃二維碼嘅話，Signal 需要存取您部機嘅相機。</string>
+    <string name="PaymentsTransferFragment__you_cant_transfer_to_your_own_signal_wallet_address">您冇得轉移返去自己嘅 Radar 銀包位址度㗎。請輸入喺支援嘅交易平台上面您所屬帳戶嘅銀包位址。</string>
+    <string name="PaymentsTransferFragment__to_scan_a_qr_code_signal_needs">要掃二維碼嘅話，Radar 需要存取您部機嘅相機。</string>
+    <string name="PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera">要掃二維碼嘅話，Radar 需要存取您部機嘅相機。</string>
 
     <!-- PaymentsTransferQrScanFragment -->
     <string name="PaymentsTransferQrScanFragment__scan_address_qr_code">掃描位址二維碼</string>
@@ -3857,7 +3857,7 @@
 
     <!-- BiometricDeviceAuthentication -->
     <!-- Biometric/Device authentication prompt title -->
-    <string name="BiometricDeviceAuthentication__signal">Signal</string>
+    <string name="BiometricDeviceAuthentication__signal">Radar</string>
 
 
     <!-- CurrencyAmountFormatter_s_at_s -->
@@ -3878,8 +3878,8 @@
     <string name="contact_selection_list__unknown_contact_add_to_group">加入去個谷度</string>
 
     <!-- conversation_callable_secure -->
-    <string name="conversation_callable_secure__menu_call">Signal 通話</string>
-    <string name="conversation_callable_secure__menu_video">Signal 視像通話</string>
+    <string name="conversation_callable_secure__menu_call">Radar 通話</string>
+    <string name="conversation_callable_secure__menu_video">Radar 視像通話</string>
 
     <!-- conversation_context -->
 
@@ -4027,13 +4027,13 @@
     <string name="verify_display_fragment_context_menu__compare_with_clipboard">同剪貼簿比較下</string>
 
     <!-- reminder_header -->
-    <string name="reminder_header_service_outage_text">Signal 發生技術問題。我哋現正搶修，務求儘快回復服務。</string>
+    <string name="reminder_header_service_outage_text">Radar 發生技術問題。我哋現正搶修，務求儘快回復服務。</string>
     <!-- Body text of a banner that will show at the top of the chat list when we temporarily cannot process the user\'s contacts -->
-    <string name="reminder_cds_warning_body">Signal 嘅個人聯絡人搜尋服務暫時處理唔到你手機入面嘅聯絡人資料。</string>
+    <string name="reminder_cds_warning_body">Radar 嘅個人聯絡人搜尋服務暫時處理唔到你手機入面嘅聯絡人資料。</string>
     <!-- Label for a button in a banner to learn more about why we temporarily can\'t process the user\'s contacts -->
     <string name="reminder_cds_warning_learn_more">講多啲畀我聽</string>
     <!-- Body text of a banner that will show at the top of the chat list when the user has so many contacts that we cannot ever process them -->
-    <string name="reminder_cds_permanent_error_body">Signal 嘅個人聯絡人搜尋服務處理唔到你手機入面嘅聯絡人資料。</string>
+    <string name="reminder_cds_permanent_error_body">Radar 嘅個人聯絡人搜尋服務處理唔到你手機入面嘅聯絡人資料。</string>
     <!-- Label for a button in a banner to learn more about why we cannot process the user\'s contacts -->
     <string name="reminder_cds_permanent_error_learn_more">講多啲畀我聽</string>
 
@@ -4070,7 +4070,7 @@
     <string name="CreateKbsPinFragment__create_a_new_pin">建立一個新嘅 PIN 碼</string>
     <string name="CreateKbsPinFragment__you_can_choose_a_new_pin_as_long_as_this_device_is_registered">呢部機維持註冊其間，您個 PIN 碼都係任改唔嬲。</string>
     <string name="CreateKbsPinFragment__create_your_pin">建立您嘅 PIN 碼</string>
-    <string name="CreateKbsPinFragment__pins_can_help_you_restore_your_account">PIN 碼可以幫你還原帳戶，同埋確保 Signal 入面嘅資料安全加密。 </string>
+    <string name="CreateKbsPinFragment__pins_can_help_you_restore_your_account">PIN 碼可以幫你還原帳戶，同埋確保 Radar 入面嘅資料安全加密。 </string>
     <string name="CreateKbsPinFragment__choose_a_stronger_pin">揀一個穩陣啲嘅 PIN 碼</string>
 
     <!-- ConfirmKbsPinFragment -->
@@ -4086,7 +4086,7 @@
 
     <!-- KbsSplashFragment -->
     <string name="KbsSplashFragment__introducing_pins">為您介紹 PIN 碼</string>
-    <string name="KbsSplashFragment__pins_keep_information_stored_with_signal_encrypted">有 PIN 碼，儲存喺 Signal 嘅資訊就安心加密，淨係得您先接觸到。當您重新裝過 Signal 嘅時候，您嘅個人資料、設定同埋聯絡人亦都可以還原。平時開啟個 app 就唔需要用到您個 PIN 碼。</string>
+    <string name="KbsSplashFragment__pins_keep_information_stored_with_signal_encrypted">有 PIN 碼，儲存喺 Radar 嘅資訊就安心加密，淨係得您先接觸到。當您重新裝過 Radar 嘅時候，您嘅個人資料、設定同埋聯絡人亦都可以還原。平時開啟個 app 就唔需要用到您個 PIN 碼。</string>
     <string name="KbsSplashFragment__learn_more">講多啲畀我聽</string>
   <!-- Removed by excludeNonTranslatables <string name="KbsSplashFragment__learn_more_link" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
     <string name="KbsSplashFragment__registration_lock_equals_pin">註冊鎖已納入成 PIN 碼</string>
@@ -4097,7 +4097,7 @@
     <string name="KbsSplashFragment__disable_pin">停用 PIN 碼</string>
 
     <!-- KBS Reminder Dialog -->
-    <string name="KbsReminderDialog__enter_your_signal_pin">輸入您嘅 Signal PIN 碼</string>
+    <string name="KbsReminderDialog__enter_your_signal_pin">輸入您嘅 Radar PIN 碼</string>
     <string name="KbsReminderDialog__to_help_you_memorize_your_pin">為咗幫您記住您個 PIN 碼，我哋定時定候會叫您打一次。慢慢就唔會問得您咁密㗎喇。</string>
     <string name="KbsReminderDialog__skip">飛過</string>
     <string name="KbsReminderDialog__submit">提交</string>
@@ -4145,22 +4145,22 @@
 
     <!-- KBS Megaphone -->
     <string name="KbsMegaphone__create_a_pin">建立一個 PIN 碼</string>
-    <string name="KbsMegaphone__pins_keep_information_thats_stored_with_signal_encrytped">有 PIN 碼，儲存喺 Signal 嘅資訊就安心加密。</string>
+    <string name="KbsMegaphone__pins_keep_information_thats_stored_with_signal_encrytped">有 PIN 碼，儲存喺 Radar 嘅資訊就安心加密。</string>
     <string name="KbsMegaphone__create_pin">建立 PIN 碼</string>
 
     <!-- CallNotificationBuilder -->
     <!-- Displayed in a notification when a Signal voice call is ringing -->
-    <string name="CallNotificationBuilder__incoming_signal_voice_call">打入嚟嘅 Signal 語音通話</string>
+    <string name="CallNotificationBuilder__incoming_signal_voice_call">打入嚟嘅 Radar 語音通話</string>
     <!-- Displayed in a notification when a Signal video call is ringing -->
-    <string name="CallNotificationBuilder__incoming_signal_video_call">打入嚟嘅 Signal 視像通話</string>
+    <string name="CallNotificationBuilder__incoming_signal_video_call">打入嚟嘅 Radar 視像通話</string>
     <!-- Displayed in a notification when a Signal group call is ringing -->
-    <string name="CallNotificationBuilder__incoming_signal_group_call">打入嚟嘅 Signal 成谷通話</string>
+    <string name="CallNotificationBuilder__incoming_signal_group_call">打入嚟嘅 Radar 成谷通話</string>
     <!-- Displayed in a notification when a Signal voice call is in progress -->
-    <string name="CallNotificationBuilder__ongoing_signal_voice_call">傾緊 Signal 語音通話</string>
+    <string name="CallNotificationBuilder__ongoing_signal_voice_call">傾緊 Radar 語音通話</string>
     <!-- Displayed in a notification when a Signal video call is in progress -->
-    <string name="CallNotificationBuilder__ongoing_signal_video_call">傾緊 Signal 視像通話</string>
+    <string name="CallNotificationBuilder__ongoing_signal_video_call">傾緊 Radar 視像通話</string>
     <!-- Displayed in a notification when a Signal group call is in progress -->
-    <string name="CallNotificationBuilder__ongoing_signal_group_call">傾緊 Signal 群組通話</string>
+    <string name="CallNotificationBuilder__ongoing_signal_group_call">傾緊 Radar 群組通話</string>
 
     <string name="CallNotificationBuilder_connecting">連緊線…</string>
     <string name="enter_backup_passphrase_dialog__backup_passphrase">備份密碼</string>
@@ -4186,9 +4186,9 @@
     <string name="BackupDialog_verify">驗證</string>
     <string name="BackupDialog_you_successfully_entered_your_backup_passphrase">您輸入嘅備份密碼正確無誤</string>
     <string name="BackupDialog_passphrase_was_not_correct">密碼有誤</string>
-    <string name="LocalBackupJob_creating_signal_backup">建立緊 Signal 備份…</string>
+    <string name="LocalBackupJob_creating_signal_backup">建立緊 Radar 備份…</string>
     <!-- Title for progress notification shown in a system notification while verifying a recent backup. -->
-    <string name="LocalBackupJob_verifying_signal_backup">驗證緊 Signal 備份…</string>
+    <string name="LocalBackupJob_verifying_signal_backup">驗證緊 Radar 備份…</string>
     <string name="LocalBackupJobApi29_backup_failed">備份唔到</string>
     <string name="LocalBackupJobApi29_your_backup_directory_has_been_deleted_or_moved">你嘅備份目錄已經刪除或者轉移。</string>
     <string name="LocalBackupJobApi29_your_backup_file_is_too_large">您個備份檔案大得滯，裝唔落呢一度喎。</string>
@@ -4203,7 +4203,7 @@
     <string name="RegistrationActivity_call_me_instead_available_in">打俾我 (%1$02d:%2$02d)</string>
     <!--    Countdown to when the user can request a new SMS code during registration.-->
     <string name="RegistrationActivity_resend_sms_available_in">重新傳送驗證碼 (%1$02d:%2$02d)</string>
-    <string name="RegistrationActivity_code_support_subject">Signal 註冊 - Android 版驗證碼</string>
+    <string name="RegistrationActivity_code_support_subject">Radar 註冊 - Android 版驗證碼</string>
     <string name="RegistrationActivity_incorrect_code">個碼唔啱</string>
     <string name="BackupUtil_never">唔使喇</string>
     <!-- Subtext below last backup time when we do not know when the last backup was -->
@@ -4219,11 +4219,11 @@
     <string name="preferences_chats__backups">備份</string>
 
     <!-- Title text shown when Signal is locked and needs to be unlocked -->
-    <string name="prompt_passphrase_activity__unlock_signal">解鎖 Signal</string>
+    <string name="prompt_passphrase_activity__unlock_signal">解鎖 Radar</string>
     <!-- Description text explaining how to unlock Signal -->
-    <string name="prompt_passphrase_activity__use_your_android_device">用你部 Android 機嘅鎖定設定嚟解鎖 Signal。</string>
+    <string name="prompt_passphrase_activity__use_your_android_device">用你部 Android 機嘅鎖定設定嚟解鎖 Radar。</string>
     <!-- Text shown in a dialog that further explains how to unlock Signal by using the same unlocking methods that are used to unlock their own device -->
-    <string name="prompt_passphrase_activity__screen_lock_is_on">螢幕鎖定已經開咗，系統會用你部機嘅鎖定設定嚟保障 Signal 安全。解鎖 Signal 嘅方法同平時解鎖手機一樣，可以用臉部解鎖、指紋解鎖、PIN 碼、密碼或者圖案。</string>
+    <string name="prompt_passphrase_activity__screen_lock_is_on">螢幕鎖定已經開咗，系統會用你部機嘅鎖定設定嚟保障 Radar 安全。解鎖 Radar 嘅方法同平時解鎖手機一樣，可以用臉部解鎖、指紋解鎖、PIN 碼、密碼或者圖案。</string>
     <!-- Button in a dialog that will contact Signal support if pressed -->
     <string name="prompt_passphrase_activity__contact_support">聯絡支援團隊</string>
     <!-- Button text to try again after unlocking has previously failed -->
@@ -4242,21 +4242,21 @@
     <!-- Title of an informational card shown on the account settings screen of a linked device -->
     <string name="LinkedDeviceAccountSettingsFragment__this_is_a_linked_device">呢部係連結咗嘅裝置</string>
     <!-- Body of an informational card explaining that account settings must be managed from the primary device -->
-    <string name="LinkedDeviceAccountSettingsFragment__to_manage_your_account_settings">要管理帳戶設定，請喺主要裝置度打開 Signal。</string>
+    <string name="LinkedDeviceAccountSettingsFragment__to_manage_your_account_settings">要管理帳戶設定，請喺主要裝置度打開 Radar。</string>
     <!-- Title of a settings row that deletes all Signal data from this linked device -->
     <string name="LinkedDeviceAccountSettingsFragment__delete_app_data">刪除 APP 嘅資料</string>
     <!-- Subtitle of the delete app data row explaining what it does -->
-    <string name="LinkedDeviceAccountSettingsFragment__this_will_remove_all_data">咁樣做會移除呢部機上面 Signal APP 嘅全部資料。</string>
+    <string name="LinkedDeviceAccountSettingsFragment__this_will_remove_all_data">咁樣做會移除呢部機上面 Radar APP 嘅全部資料。</string>
     <!-- Title of the confirmation dialog shown when deleting app data from a linked device -->
     <string name="LinkedDeviceAccountSettingsFragment__delete_app_data_question">係咪要刪除 APP 嘅資料？</string>
     <!-- Message of the confirmation dialog explaining that only this device\'s data is deleted, not the account -->
-    <string name="LinkedDeviceAccountSettingsFragment__this_will_delete_all_data_and_messages">咁樣做會刪除呢部機上面 Signal APP 嘅全部資料同訊息。你嘅 Signal 帳戶，同埋主要裝置或者其他連結咗嘅裝置上面嘅資料，係唔會刪除嘅。完成程序之後，個 APP 會自動關閉。</string>
+    <string name="LinkedDeviceAccountSettingsFragment__this_will_delete_all_data_and_messages">咁樣做會刪除呢部機上面 Radar APP 嘅全部資料同訊息。你嘅 Radar 帳戶，同埋主要裝置或者其他連結咗嘅裝置上面嘅資料，係唔會刪除嘅。完成程序之後，個 APP 會自動關閉。</string>
 
     <!-- LinkedDeviceAccountLearnMoreBottomSheet -->
     <!-- Emphasized lead-in phrase shown in bold at the start of the learn more sheet body. Must appear verbatim within LinkedDeviceAccountLearnMoreBottomSheet__linked_devices_let_you_access. -->
     <string name="LinkedDeviceAccountLearnMoreBottomSheet__linked_devices">連結咗嘅裝置</string>
     <!-- Body text of the linked devices learn more sheet. The leading \"Linked Devices\" is shown in bold. -->
-    <string name="LinkedDeviceAccountLearnMoreBottomSheet__linked_devices_let_you_access">「連結咗嘅裝置」俾你喺任何其他裝置上面安全咁存取 Signal 帳戶同埋訊息。</string>
+    <string name="LinkedDeviceAccountLearnMoreBottomSheet__linked_devices_let_you_access">「連結咗嘅裝置」俾你喺任何其他裝置上面安全咁存取 Radar 帳戶同埋訊息。</string>
     <!-- Bullet point describing what devices can be linked -->
     <string name="LinkedDeviceAccountLearnMoreBottomSheet__you_can_link_a_desktop">你可以連結桌面電腦、平板電腦或者其他手機</string>
     <!-- Bullet point describing that the primary device manages linked devices -->
@@ -4266,7 +4266,7 @@
 
     <!-- TransferOrRestoreFragment -->
     <string name="TransferOrRestoreFragment__transfer_or_restore_account">轉移或還原帳戶</string>
-    <string name="TransferOrRestoreFragment__if_you_have_previously_registered_a_signal_account">若果您先前已經註冊咗 Signal 帳戶，您可以轉移或還原您嘅帳戶同訊息</string>
+    <string name="TransferOrRestoreFragment__if_you_have_previously_registered_a_signal_account">若果您先前已經註冊咗 Radar 帳戶，您可以轉移或還原您嘅帳戶同訊息</string>
     <string name="TransferOrRestoreFragment__transfer_from_android_device">由另一部 Android 機搬過嚟</string>
     <string name="TransferOrRestoreFragment__transfer_your_account_and_messages_from_your_old_android_device">由您部舊嘅 Android 機轉移您嘅帳戶同訊息過嚟。您部舊機要喺您手先得。</string>
     <string name="TransferOrRestoreFragment__restore_your_messages_from_a_local_backup">攞返本機備份嚟還原您嘅訊息。如果您而家唔做嘅話，遲啲就冇得再還原㗎喇。</string>
@@ -4278,10 +4278,10 @@
 
     <!-- OldDeviceTransferSetupFragment -->
     <string name="OldDeviceTransferSetup__searching_for_new_android_device">搵緊部新嘅 Android 機…</string>
-    <string name="OldDeviceTransferSetup__signal_needs_the_location_permission_to_discover_and_connect_with_your_new_device">Signal 要攞「位置」權限，先可以探索同連接您部新嘅 Android 機。</string>
-    <string name="OldDeviceTransferSetup__signal_needs_location_services_enabled_to_discover_and_connect_with_your_new_device">Signal 要啟用定位服務，先可以探索同連接您部新嘅 Android 機。</string>
-    <string name="OldDeviceTransferSetup__signal_needs_wifi_on_to_discover_and_connect_with_your_new_device">Signal 要開啟 Wi-Fi，先可以探索同連接您部新嘅 Android 機。Wi-Fi 著咗就得，唔需要連接到 Wi-Fi 網絡。</string>
-    <string name="OldDeviceTransferSetup__sorry_it_appears_your_device_does_not_support_wifi_direct">抱歉，呢部機似乎唔支援 Wi-Fi Direct。Signal 會用到 Wi-Fi Direct 嚟探索同連接您部新嘅 Android 機。您仍然可以建立一個備份，用嚟喺您部新嘅 Android 機度還原返您個帳戶。</string>
+    <string name="OldDeviceTransferSetup__signal_needs_the_location_permission_to_discover_and_connect_with_your_new_device">Radar 要攞「位置」權限，先可以探索同連接您部新嘅 Android 機。</string>
+    <string name="OldDeviceTransferSetup__signal_needs_location_services_enabled_to_discover_and_connect_with_your_new_device">Radar 要啟用定位服務，先可以探索同連接您部新嘅 Android 機。</string>
+    <string name="OldDeviceTransferSetup__signal_needs_wifi_on_to_discover_and_connect_with_your_new_device">Radar 要開啟 Wi-Fi，先可以探索同連接您部新嘅 Android 機。Wi-Fi 著咗就得，唔需要連接到 Wi-Fi 網絡。</string>
+    <string name="OldDeviceTransferSetup__sorry_it_appears_your_device_does_not_support_wifi_direct">抱歉，呢部機似乎唔支援 Wi-Fi Direct。Radar 會用到 Wi-Fi Direct 嚟探索同連接您部新嘅 Android 機。您仍然可以建立一個備份，用嚟喺您部新嘅 Android 機度還原返您個帳戶。</string>
     <string name="OldDeviceTransferSetup__create_a_backup">建立一個備份</string>
     <string name="OldDeviceTransferSetup__an_unexpected_error_occurred_while_attempting_to_connect_to_your_old_device">嘗試同您部新嘅 Android 機連線嘅時候，發生未預期嘅錯誤。</string>
 
@@ -4321,7 +4321,7 @@
 
     <!-- DeviceTransferFragment -->
     <string name="DeviceTransfer__transferring_data">轉移緊資料</string>
-    <string name="DeviceTransfer__keep_both_devices_near_each_other">將兩部機保持靠近。唔好熄機，並且開住 Signal。轉移係經端對端加密。</string>
+    <string name="DeviceTransfer__keep_both_devices_near_each_other">將兩部機保持靠近。唔好熄機，並且開住 Radar。轉移係經端對端加密。</string>
     <string name="DeviceTransfer__d_messages_so_far">目前為止 %1$d 個訊息…</string>
     <!-- Filled in with total percentage of messages transferred -->
     <string name="DeviceTransfer__s_of_messages_so_far">啲訊息暫時整咗 %1$s%%…</string>
@@ -4335,7 +4335,7 @@
     <!-- OldDeviceTransferInstructionsFragment -->
     <string name="OldDeviceTransferInstructions__transfer_account">轉移帳戶</string>
     <string name="OldDeviceTransferInstructions__first_bullet">一、</string>
-    <string name="OldDeviceTransferInstructions__download_signal_on_your_new_android_device">喺您部新嘅 Android 機度下載 Signal</string>
+    <string name="OldDeviceTransferInstructions__download_signal_on_your_new_android_device">喺您部新嘅 Android 機度下載 Radar</string>
     <string name="OldDeviceTransferInstructions__second_bullet">二、</string>
     <string name="OldDeviceTransferInstructions__tap_on_transfer_or_restore_account">"撳一下「轉移或還原帳戶」"</string>
     <string name="OldDeviceTransferInstructions__third_bullet">三、</string>
@@ -4352,7 +4352,7 @@
 
     <!-- OldDeviceTransferComplete -->
     <string name="OldDeviceTransferComplete__go_to_your_new_device">跟住拎返起您部新機</string>
-    <string name="OldDeviceTransferComplete__your_signal_data_has_Been_transferred_to_your_new_device">您嘅 Signal 資料已經轉移到您部新機度。您要喺新機繼續搞掂埋註冊，成個轉移程序先算功德圓滿。</string>
+    <string name="OldDeviceTransferComplete__your_signal_data_has_Been_transferred_to_your_new_device">您嘅 Radar 資料已經轉移到您部新機度。您要喺新機繼續搞掂埋註冊，成個轉移程序先算功德圓滿。</string>
     <string name="OldDeviceTransferComplete__close">關閉</string>
 
     <!-- NewDeviceTransferComplete -->
@@ -4368,7 +4368,7 @@
 
     <!-- OldDeviceTransferLockedDialog -->
     <string name="OldDeviceTransferLockedDialog__complete_registration_on_your_new_device">喺您部新機度完成註冊</string>
-    <string name="OldDeviceTransferLockedDialog__your_signal_account_has_been_transferred_to_your_new_device">您嘅 Signal 帳戶已經轉移到您部新機度，但您要喺新機完成埋註冊先可以繼續。呢部機嘅 Signal 將會停用。</string>
+    <string name="OldDeviceTransferLockedDialog__your_signal_account_has_been_transferred_to_your_new_device">您嘅 Radar 帳戶已經轉移到您部新機度，但您要喺新機完成埋註冊先可以繼續。呢部機嘅 Radar 將會停用。</string>
     <string name="OldDeviceTransferLockedDialog__done">搞掂</string>
     <string name="OldDeviceTransferLockedDialog__cancel_and_activate_this_device">取消並啟用呢部機</string>
 
@@ -4410,13 +4410,13 @@
     <string name="GroupsLearnMore_what_are_legacy_groups">乜嘢係「舊版谷」？</string>
     <string name="GroupsLearnMore_paragraph_1">新版谷有新特色，好似係話事人同埋個谷嘅更新有更具體嘅描述，舊版谷泛指欠奉呢啲功能嘅谷。</string>
     <string name="GroupsLearnMore_can_i_upgrade_a_legacy_group">我可唔可以將舊版谷升級？</string>
-    <string name="GroupsLearnMore_paragraph_2">舊版谷暫時仲未可以升級得做新版谷住，但係您可以建立一個新版谷，並且加返晒一樣嘅成員入去，若果大家都用緊最新版本嘅 Signal。</string>
-    <string name="GroupsLearnMore_paragraph_3">Signal 日後將會提供升級舊版谷嘅方法。</string>
+    <string name="GroupsLearnMore_paragraph_2">舊版谷暫時仲未可以升級得做新版谷住，但係您可以建立一個新版谷，並且加返晒一樣嘅成員入去，若果大家都用緊最新版本嘅 Radar。</string>
+    <string name="GroupsLearnMore_paragraph_3">Radar 日後將會提供升級舊版谷嘅方法。</string>
 
     <!-- GroupLinkBottomSheetDialogFragment -->
     <string name="GroupLinkBottomSheet_share_hint_requiring_approval">條拎任何人揸住都可以睇到個谷嘅名同相，亦可以請求加入。分享條拎嘅時候請謹慎，以免所託非人。</string>
     <string name="GroupLinkBottomSheet_share_hint_not_requiring_approval">條拎任何人揸住都可以睇到個谷嘅名同相，亦可以加入埋個谷。分享條拎嘅時候請謹慎，以免所託非人。</string>
-    <string name="GroupLinkBottomSheet_share_via_signal">透過 Signal 分享</string>
+    <string name="GroupLinkBottomSheet_share_via_signal">透過 Radar 分享</string>
     <string name="GroupLinkBottomSheet_copy">複製</string>
     <string name="GroupLinkBottomSheet_qr_code">二維碼</string>
     <string name="GroupLinkBottomSheet_share">分享</string>
@@ -4564,12 +4564,12 @@
     <string name="WallpaperCropActivity__blur_photo">模糊化幅相</string>
 
     <!-- InfoCard -->
-    <string name="payment_info_card_about_mobilecoin">關於 MobileCoin</string>
-    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin 係一種新嘅兼著重私隱嘅數碼貨幣。</string>
+    <string name="payment_info_card_about_mobilecoin">關於 Bitcoin over Lightning</string>
+    <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">Bitcoin over Lightning 係一種新嘅兼著重私隱嘅數碼貨幣。</string>
     <string name="payment_info_card_adding_funds">增加款項</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">您可以傳送 MobileCoin 去您嘅銀包位址，以增加款項喺 Signal 度用。</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">您可以傳送 Bitcoin over Lightning 去您嘅銀包位址，以增加款項喺 Radar 度用。</string>
     <string name="payment_info_card_cashing_out">提取款項</string>
-    <string name="payment_info_card_you_can_cash_out_mobilecoin">您隨時可以喺支援 MobileCoin 嘅交易平台上面提取 MobileCoin。只要完成一筆轉移去您喺交易平台上嘅帳戶就得。</string>
+    <string name="payment_info_card_you_can_cash_out_mobilecoin">您隨時可以喺支援 Bitcoin over Lightning 嘅交易平台上面提取 Bitcoin over Lightning。只要完成一筆轉移去您喺交易平台上嘅帳戶就得。</string>
     <string name="payment_info_card_hide_this_card">收起呢張咭？</string>
     <string name="payment_info_card_hide">隱藏</string>
     <!-- Title of save recovery phrase card -->
@@ -4588,12 +4588,12 @@
     <!-- DeactivateWalletFragment -->
     <string name="DeactivateWalletFragment__deactivate_wallet">停用銀包</string>
     <string name="DeactivateWalletFragment__your_balance">您嘅結餘</string>
-    <string name="DeactivateWalletFragment__its_recommended_that_you">我哋建議你喺停用付款功能之前，先將你嘅資金轉移到另一個錢包位址。如果你而家唔轉移資金，當你重新啟用付款功能嗰陣，你嘅資金到時仍然會留喺連結咗 Signal 嘅錢包入面。</string>
+    <string name="DeactivateWalletFragment__its_recommended_that_you">我哋建議你喺停用付款功能之前，先將你嘅資金轉移到另一個錢包位址。如果你而家唔轉移資金，當你重新啟用付款功能嗰陣，你嘅資金到時仍然會留喺連結咗 Radar 嘅錢包入面。</string>
     <string name="DeactivateWalletFragment__transfer_remaining_balance">轉移剩返嘅結餘</string>
     <string name="DeactivateWalletFragment__deactivate_without_transferring">唔轉移就停用</string>
     <string name="DeactivateWalletFragment__deactivate">停用</string>
     <string name="DeactivateWalletFragment__deactivate_without_transferring_question">係咪要唔轉移就停用？</string>
-    <string name="DeactivateWalletFragment__your_balance_will_remain">如果你重新啟用付款功能，你嘅餘額到時仍然會留喺連結咗 Signal 嘅錢包入面。</string>
+    <string name="DeactivateWalletFragment__your_balance_will_remain">如果你重新啟用付款功能，你嘅餘額到時仍然會留喺連結咗 Radar 嘅錢包入面。</string>
     <string name="DeactivateWalletFragment__error_deactivating_wallet">停用銀包嘅時候發生錯誤。</string>
   <!-- Removed by excludeNonTranslatables <string name="DeactivateWalletFragment__learn_more__we_recommend_transferring_your_funds" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_deactivate</string> -->
 
@@ -4604,12 +4604,12 @@
     <string name="PaymentsRecoveryStartFragment__save_recovery_phrase">儲存恢復片語</string>
     <string name="PaymentsRecoveryStartFragment__enter_recovery_phrase">輸入恢復口訣</string>
     <plurals name="PaymentsRecoveryStartFragment__your_balance_will_automatically_restore">
-        <item quantity="other">當你確認 Signal PIN 碼，系統就會喺你重新安裝 Signal 嗰陣自動還原你嘅餘額。你亦可以利用恢復片語還原你嘅餘額。恢復片語係一組獨一無二嘅片語，當中包含 %1$d 個字。請你將佢記低，儲存喺安全嘅地方。</item>
+        <item quantity="other">當你確認 Radar PIN 碼，系統就會喺你重新安裝 Radar 嗰陣自動還原你嘅餘額。你亦可以利用恢復片語還原你嘅餘額。恢復片語係一組獨一無二嘅片語，當中包含 %1$d 個字。請你將佢記低，儲存喺安全嘅地方。</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">你仲有餘額！係時候儲存你嘅恢復片語喇—佢係一組 24 個字嘅密鑰，可以用嚟恢復你嘅餘額。</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">你仲有餘額！係時候儲存你嘅恢復片語喇—佢係一組 12 個字嘅密鑰，可以用嚟恢復你嘅餘額。</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">係時候儲存你嘅恢復片語喇—佢係一組 24 個字嘅密鑰，可以用嚟恢復你嘅餘額。</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">係時候儲存你嘅恢復片語喇—佢係一組 12 個字嘅密鑰，可以用嚟恢復你嘅餘額。</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">您嘅恢復口訣係您專屬嘅 %1$d 組字，獨一無二。呢個口訣係用嚟還原您嘅結餘。</string>
     <string name="PaymentsRecoveryStartFragment__start">開始</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">人手輸入</string>
@@ -4736,7 +4736,7 @@
     <string name="ChangeNumberConfirmFragment__edit_number">改過個冧把</string>
 
     <!-- ChangeNumberRegistrationLockFragment -->
-    <string name="ChangeNumberRegistrationLockFragment__signal_change_number_need_help_with_pin_for_android_v2_pin">Signal 轉冧把 - Android 版 PIN 碼需要幫手 (v2 PIN)</string>
+    <string name="ChangeNumberRegistrationLockFragment__signal_change_number_need_help_with_pin_for_android_v2_pin">Radar 轉冧把 - Android 版 PIN 碼需要幫手 (v2 PIN)</string>
 
     <!-- ChangeNumberPinDiffersFragment -->
     <string name="ChangeNumberPinDiffersFragment__pins_do_not_match">PIN 碼有出入</string>
@@ -4880,7 +4880,7 @@
     <!-- Title for toggle row to control replies settings while muted -->
     <string name="MutedNotificationsFragment__replies">回覆</string>
     <!-- Description for toggle row to control unread reminders while muted -->
-    <string name="MutedNotificationsFragment__unread_body">當呢個聊天設做靜音嗰陣，Signal 會間中通知你有未睇訊息。</string>
+    <string name="MutedNotificationsFragment__unread_body">當呢個聊天設做靜音嗰陣，Radar 會間中通知你有未睇訊息。</string>
 
     <!-- NotificationProfilesFragment -->
     <!-- Title for notification profiles screen that shows all existing profiles; Title with hyphenation. Translation can use soft hyphen - Unicode U+00AD -->
@@ -5080,12 +5080,12 @@
     <!-- Snackbar message after blocking a contact -->
     <string name="NewConversationActivity__s_has_been_blocked">%1$s 已經被封鎖</string>
     <!-- Error message shown when looking up a person by phone number and that phone number is not associated with a signal account -->
-    <string name="RecipientLookup_error__s_is_not_a_signal_user">%1$s 唔係 Signal 嘅用戶</string>
+    <string name="RecipientLookup_error__s_is_not_a_signal_user">%1$s 唔係 Radar 嘅用戶</string>
     <!-- Accessibility label for opening the screen specific dropdown menu. -->
     <string name="NewConversationActivity__accessibility_open_top_bar_menu">打開選單</string>
     <!-- Error message shown in a dialog when trying to create a new group with non-signal users (e.g., unregistered or phone number only contacts) -->
     <plurals name="RecipientLookup_error__not_signal_users">
-        <item quantity="other">%1$s 唔係 Signal 嘅用戶</item>
+        <item quantity="other">%1$s 唔係 Radar 嘅用戶</item>
     </plurals>
 
     <!-- Hint text that shows in the recipient search bar when no text is entered yet. -->
@@ -5294,9 +5294,9 @@
     <string name="MySupportPreference__checking_subscription">檢查緊課金計劃…</string>
 
     <!-- Title of dialog telling user they need to update signal as it expired -->
-    <string name="UpdateSignalExpiredDialog__title">更新 Signal</string>
+    <string name="UpdateSignalExpiredDialog__title">更新 Radar</string>
     <!-- Message of dialog telling user they need to update signal as it expired -->
-    <string name="UpdateSignalExpiredDialog__message">呢個 Signal 版本已經過咗期。即刻更新嚟繼續用 Signal 啦。</string>
+    <string name="UpdateSignalExpiredDialog__message">呢個 Radar 版本已經過咗期。即刻更新嚟繼續用 Radar 啦。</string>
     <!-- Button text of expiration dialog, will take user to update the app -->
     <string name="UpdateSignalExpiredDialog__update_action">更新</string>
     <!-- Button text of expiration dialog to cancel the dialog.  -->
@@ -5305,7 +5305,7 @@
     <!-- Title of dialog telling user they need to re-register signal -->
     <string name="ReregisterSignalDialog__title">部機未註冊</string>
     <!-- Message of dialog telling user they need to re-register signal as it is no longer registered -->
-    <string name="ReregisterSignalDialog__message">呢部機嘅註冊已經失效。重新註冊嚟喺呢部機度繼續用 Signal 啦。</string>
+    <string name="ReregisterSignalDialog__message">呢部機嘅註冊已經失效。重新註冊嚟喺呢部機度繼續用 Radar 啦。</string>
     <!-- Button text of re-registration dialog to re-register the device.  -->
     <string name="ReregisterSignalDialog__reregister_action">重新註冊</string>
     <!-- Button text of re-registration dialog to cancel the dialog.  -->
@@ -5319,7 +5319,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__your_boost_badge_has_expired_and">您個「集氣」襟章已經褪色夠鐘換喇，因此已經喺您嘅個人資料度除返落嚟唔再睇到。</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_reactivate">你可以透過單次捐款重新啟動你嘅捐款徽章，將佢延長 30 日。</string>
     <!-- Displayed when we do not think the user is a subscriber when their boost expires -->
-    <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_keep">Signal 一切如常運作，並讓您自由使用。假如您想力撐為您而設嘅科技，請考慮做我哋每月捐款計劃嘅後援金主。</string>
+    <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_keep">Radar 一切如常運作，並讓您自由使用。假如您想力撐為您而設嘅科技，請考慮做我哋每月捐款計劃嘅後援金主。</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__become_a_sustainer">擔當後援</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__add_a_boost">買多支旗</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__not_now">遲啲先啦</string>
@@ -5370,7 +5370,7 @@
     <!-- Displayed as title when some generic error happens during sending donation on behalf of another user -->
     <string name="DonationsErrors__donation_failed">捐款失敗</string>
     <!-- Displayed as message when some generic error happens during sending donation on behalf of another user -->
-    <string name="DonationsErrors__your_payment_was_processed_but">系統已經處理咗你嘅捐款，但係 Signal 傳送唔到你嘅捐款訊息。請聯絡支援團隊。</string>
+    <string name="DonationsErrors__your_payment_was_processed_but">系統已經處理咗你嘅捐款，但係 Radar 傳送唔到你嘅捐款訊息。請聯絡支援團隊。</string>
     <string name="DonationsErrors__your_badge_could_not">您個襟章加唔到落去您個帳戶度，但有可能已經扣咗您數。請聯絡支援。</string>
     <string name="DonationsErrors__your_payment_is_still">仲處理緊你嘅捐款。視乎你嘅上網速度，過程可能需時幾分鐘。</string>
     <string name="DonationsErrors__failed_to_cancel_subscription">取消唔到課金計劃</string>
@@ -5381,7 +5381,7 @@
     <!-- Displayed as a dialog title when the selected recipient for a gift doesn\'t support gifting -->
     <string name="DonationsErrors__cannot_send_donation">發送唔到捐款</string>
     <!-- Displayed as a dialog message when the selected recipient for a gift doesn\'t support gifting -->
-    <string name="DonationsErrors__this_user_cant_receive_donations_until">呢位用戶要更新 Signal 先可以接收捐款。</string>
+    <string name="DonationsErrors__this_user_cant_receive_donations_until">呢位用戶要更新 Radar 先可以接收捐款。</string>
     <!-- Displayed as a dialog message when the user encounters an error during an iDEAL donation -->
     <string name="DonationsErrors__your_ideal_wero_couldnt_be_processed">處理唔到你 iDEAL | Wero 嘅捐款。試下轉用另一種付款方式，又或者聯絡返你間銀行問清楚。</string>
 
@@ -5583,7 +5583,7 @@
 
 
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
-    <string name="ReleaseNotes__this_is_official_chat">呢個係 Signal 官方同唯一嘅聊天</string>
+    <string name="ReleaseNotes__this_is_official_chat">呢個係 Radar 官方同唯一嘅聊天</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
     <string name="ReleaseNotes__keep_up_to_date">緊貼最新消息同版本資訊</string>
 
@@ -5606,7 +5606,7 @@
     <!-- Donation receipts share PNG -->
     <string name="DonationReceiptDetailsFragment__share_receipt">分享收據</string>
     <!-- Donation receipts list end note -->
-    <string name="DonationReceiptListFragment__if_you_have">若然您重新裝過 Signal，先前嘅捐款恕未能提供收據。</string>
+    <string name="DonationReceiptListFragment__if_you_have">若然您重新裝過 Radar，先前嘅捐款恕未能提供收據。</string>
     <!-- Donation receipts document title -->
     <string name="DonationReceiptDetailsFragment__donation_receipt">捐款收據</string>
     <!-- Donation receipts amount title -->
@@ -5804,7 +5804,7 @@
     <string name="MyStorySettingsFragment__who_can_view_this_story">邊個可以睇到呢個限時動態</string>
     <!-- Clickable option for selecting people to hide your story from -->
     <!-- Privacy setting title for sending stories to all your signal connections -->
-    <string name="MyStorySettingsFragment__all_signal_connections">所有 Signal 人脈</string>
+    <string name="MyStorySettingsFragment__all_signal_connections">所有 Radar 人脈</string>
     <!-- Privacy setting description for sending stories to all your signal connections -->
     <!-- Privacy setting title for sending stories to all except the specified connections -->
     <string name="MyStorySettingsFragment__all_except">所有人，除咗…</string>
@@ -5831,9 +5831,9 @@
     <!-- Summary for switchable option allowing replies and reactions on your story -->
     <string name="MyStorySettingsFragment__let_people_who_can_view_your_story_react_and_reply">睇到你限時動態嘅人都可以俾心情回應同回覆</string>
     <!-- Signal connections bolded text in the Signal Connections sheet -->
-    <string name="SignalConnectionsBottomSheet___signal_connections">Signal 人脈</string>
+    <string name="SignalConnectionsBottomSheet___signal_connections">Radar 人脈</string>
     <!-- Displayed at the top of the signal connections sheet. Please remember to insert strong tag as required. -->
-    <string name="SignalConnectionsBottomSheet__signal_connections_are_people">Signal 人脈係你透過以下方式揀過而值得信任嘅人：</string>
+    <string name="SignalConnectionsBottomSheet__signal_connections_are_people">Radar 人脈係你透過以下方式揀過而值得信任嘅人：</string>
     <!-- Signal connections sheet bullet point 1 -->
     <string name="SignalConnectionsBottomSheet__starting_a_conversation">開始聊天</string>
     <!-- Signal connections sheet bullet point 2 -->
@@ -5991,7 +5991,7 @@
     <string name="GiftFlowStartFragment__donate_for_a_friend">代表朋友捐款</string>
     <!-- Description text on start fragment for gifting a badge -->
     <plurals name="GiftFlowStartFragment__support_signal_by">
-        <item quantity="other">代表使用 Signal 嘅家人朋友捐款支持 Signal。對方可以喺個人檔案度展示徽章 %1$d 日。</item>
+        <item quantity="other">代表使用 Radar 嘅家人朋友捐款支持 Signal。對方可以喺個人檔案度展示徽章 %1$d 日。</item>
     </plurals>
     <!-- Action button label for start fragment for gifting a badge -->
     <string name="GiftFlowStartFragment__next">下一步</string>
@@ -6111,7 +6111,7 @@
     <!-- Title of safety number changes bottom sheet when showing individual records -->
     <string name="SafetyNumberBottomSheetFragment__safety_number_changes">安全碼變更</string>
     <!-- Message of safety number changes bottom sheet when showing individual records -->
-    <string name="SafetyNumberBottomSheetFragment__the_following_people">以下嘅聯絡人可能重新安裝咗 Signal 或者更換咗裝置。你可以㩒一吓接收者嚟確認新安全碼。呢個操作係選擇性嘅。</string>
+    <string name="SafetyNumberBottomSheetFragment__the_following_people">以下嘅聯絡人可能重新安裝咗 Radar 或者更換咗裝置。你可以㩒一吓接收者嚟確認新安全碼。呢個操作係選擇性嘅。</string>
     <!-- Title of safety number changes bottom sheet when not showing individual records -->
     <string name="SafetyNumberBottomSheetFragment__safety_number_checkup">檢查安全碼</string>
     <!-- Title of safety number changes bottom sheet when not showing individual records and user has seen review screen -->
@@ -6120,7 +6120,7 @@
     <string name="SafetyNumberBottomSheetFragment__all_connections_have_been_reviewed">已經審查晒所有人脈，㩒一吓傳送就可以繼續。</string>
     <!-- Message of safety number changes bottom sheet when not showing individual records -->
     <plurals name="SafetyNumberBottomSheetFragment__you_have_d_connections_plural">
-        <item quantity="other">%1$d 個人脈可能重新安裝咗 Signal 或者更換咗裝置。你可以檢查佢哋嘅安全碼或者繼續傳送訊息。</item>
+        <item quantity="other">%1$d 個人脈可能重新安裝咗 Radar 或者更換咗裝置。你可以檢查佢哋嘅安全碼或者繼續傳送訊息。</item>
     </plurals>
     <!-- Menu action to launch safety number verification screen -->
     <string name="SafetyNumberBottomSheetFragment__verify_safety_number">驗證安全碼</string>
@@ -6138,7 +6138,7 @@
     <string name="SafetyNumberReviewConnectionsFragment__safety_number_changes">安全碼變更</string>
     <!-- Message of safety number review fragment -->
     <plurals name="SafetyNumberReviewConnectionsFragment__d_recipients_may_have">
-        <item quantity="other">有 %1$d 個接收者可能重新安裝咗 Signal 或者更換咗裝置。你可以㩒一吓接收者嚟確認新安全碼。呢個操作係選擇性嘅。</item>
+        <item quantity="other">有 %1$d 個接收者可能重新安裝咗 Radar 或者更換咗裝置。你可以㩒一吓接收者嚟確認新安全碼。呢個操作係選擇性嘅。</item>
     </plurals>
     <!-- Section header for 1:1 contacts in review fragment -->
     <string name="SafetyNumberBucketRowItem__contacts">聯絡人</string>
@@ -6152,7 +6152,7 @@
     <!-- Subtitle of initial My Story settings configuration shown when sending to My Story for the first time -->
     <string name="ChooseInitialMyStoryMembershipFragment__choose_who_can_see_posts_to_my_story_you_can_always_make_changes_in_settings">選擇邊個可以睇到「我嘅限時動態」貼文。你隨時可以喺設定入面更改。</string>
     <!-- All connections option for initial My Story settings configuration shown when sending to My Story for the first time -->
-    <string name="ChooseInitialMyStoryMembershipFragment__all_signal_connections">所有 Signal 人脈</string>
+    <string name="ChooseInitialMyStoryMembershipFragment__all_signal_connections">所有 Radar 人脈</string>
     <!-- All connections except option for initial My Story settings configuration shown when sending to My Story for the first time -->
     <string name="ChooseInitialMyStoryMembershipFragment__all_except">所有人，除咗…</string>
     <!-- Only with selected connections option for initial My Story settings configuration shown when sending to My Story for the first time -->
@@ -6280,8 +6280,8 @@
     <string name="GatewaySelectorBottomSheet__ideal_wero">iDEAL | Wero</string>
 
     <!-- Dialog title for launching external intent -->
-    <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">係咪想離開 Signal 去確認捐款呀？</string>
-    <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">確認之後，請返去 Signal 完成埋你嘅捐款。</string>
+    <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">係咪想離開 Radar 去確認捐款呀？</string>
+    <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">確認之後，請返去 Radar 完成埋你嘅捐款。</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
     <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">你將會被帶去 %1$s 度。確認之後，請返去 Signal 完成埋你嘅捐款。</string>
 
@@ -6333,7 +6333,7 @@
     <!-- Subtitle of the screen, displayed below the toolbar. Placeholder is for \'learn more\' -->
     <string name="IdealTransferDetailsFragment__enter_your_bank">請輸入你嘅姓名同電郵地址。Stripe 會用呢個電郵地址向你發送有關捐款嘅最新消息。%1$s</string>
     <!-- Subtitle of the screen, displayed below the toolbar. Placeholder is for \'learn more\' -->
-    <string name="IdealTransferDetailsFragment__enter_your_bank_details_one_time">請輸入你嘅銀行資料。 Signal 唔會收集或者儲存你嘅個人資料。%1$s</string>
+    <string name="IdealTransferDetailsFragment__enter_your_bank_details_one_time">請輸入你嘅銀行資料。 Radar 唔會收集或者儲存你嘅個人資料。%1$s</string>
     <!-- Subtitle learn-more button displayed inline with the subtitle text -->
     <string name="IdealTransferDetailsFragment__learn_more">了解詳情</string>
     <!-- Hint label for text entry box for name on bank account -->
@@ -6398,7 +6398,7 @@
     <!-- The title of a bottom sheet dialog that tells the user we can\'t process their contacts. -->
     <string name="CdsPermanentErrorBottomSheet_title">系統處理唔到你嘅聯絡人</string>
     <!-- The first part of the body text in a bottom sheet dialog that tells the user we can\'t process their contacts. -->
-    <string name="CdsPermanentErrorBottomSheet_body">你手機入面嘅聯絡人超出咗 Signal 可以處理嘅數量。如果要喺 Signal 度尋找聯絡人，請考慮喺同步大量聯絡人嘅手機度刪除一啲聯絡人或者帳戶。</string>
+    <string name="CdsPermanentErrorBottomSheet_body">你手機入面嘅聯絡人超出咗 Radar 可以處理嘅數量。如果要喺 Radar 度尋找聯絡人，請考慮喺同步大量聯絡人嘅手機度刪除一啲聯絡人或者帳戶。</string>
     <!-- The first part of the body text in a bottom sheet dialog that tells the user we can\'t process their contacts. -->
     <string name="CdsPermanentErrorBottomSheet_learn_more">講多啲畀我聽</string>
     <!-- A button label in a bottom sheet that will navigate the user to their contacts settings. -->
@@ -6416,7 +6416,7 @@
     <string name="YourInformationIsPrivateBottomSheet__your_information_is_private">你嘅資料已經保密</string>
     <string name="YourInformationIsPrivateBottomSheet__signal_does_not_collect">Signal 唔會喺你捐款嗰陣收集或者儲存任何個人資料。</string>
     <string name="YourInformationIsPrivateBottomSheet__we_use_stripe">我哋用 Stripe 作為接收捐款嘅付款處理商。我哋唔會存取、保存或者儲存你向佢哋提供嘅任何資料。</string>
-    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal 唔會亦冇辦法將你嘅捐款連結至你嘅 Signal 帳戶。</string>
+    <string name="YourInformationIsPrivateBottomSheet__signal_does_not_and_cannot">Signal 唔會亦冇辦法將你嘅捐款連結至你嘅 Radar 帳戶。</string>
     <string name="YourInformationIsPrivateBottomSheet__thank_you">多謝你嘅支持！</string>
 
     <!-- GroupStoryEducationSheet -->
@@ -6612,9 +6612,9 @@
     <!-- Call link creation item title on calls tab -->
     <string name="CreateCallLink__create_a_call_link">建立通話連結</string>
     <!-- Call link creation item description on calls tab -->
-    <string name="CreateCallLink__share_a_link_for">分享 Signal 通話連結</string>
+    <string name="CreateCallLink__share_a_link_for">分享 Radar 通話連結</string>
     <!-- Text inserted when sharing a call link within Signal. Placeholder is a call link url. -->
-    <string name="CreateCallLink__use_this_link_to_join_a_signal_call">用呢條連結加入 Signal 通話：%1$s</string>
+    <string name="CreateCallLink__use_this_link_to_join_a_signal_call">用呢條連結加入 Radar 通話：%1$s</string>
 
     <!-- CallLinkInfoSheet -->
     <!-- Sheet title -->
@@ -6638,7 +6638,7 @@
     <!-- Fragment title -->
     <string name="CreateCallLinkBottomSheetDialogFragment__create_call_link">建立通話連結</string>
     <!-- Displayed as a default name for the signal call -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Signal 通話</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Radar 通話</string>
     <!-- Displayed on a small button to allow user to instantly join call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__join">加入</string>
     <!-- Option to open a full screen dialog to add a call name -->
@@ -6648,7 +6648,7 @@
     <!-- Toggle to require approval for all members before joining -->
     <string name="CreateCallLinkBottomSheetDialogFragment__require_admin_approval">需要管理員核准</string>
     <!-- Row label to share the link via Signal -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">透過 Signal 分享連結</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">透過 Radar 分享連結</string>
     <!-- Row label to copy the link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copy_link">複製連結</string>
     <!-- Row label to share the link with the external share sheet -->
@@ -6706,7 +6706,7 @@
     <!-- Body of a dialog that is displayed when the username we looked up could not be found and we also could not parse the username. -->
     <string name="UsernameLinkSettings_qr_result_not_found_no_username">搵唔到呢個用戶。</string>
     <!-- Shown on the generated username qr code image to explain how to use it. -->
-    <string name="UsernameLinkSettings_scan_this_qr_code">用電話掃描呢個二維碼，就開始喺 Signal 同我聊天喇。</string>
+    <string name="UsernameLinkSettings_scan_this_qr_code">用電話掃描呢個二維碼，就開始喺 Radar 同我聊天喇。</string>
 
 
     <!-- PendingParticipantsView -->
@@ -6734,9 +6734,9 @@
     <string name="PendingParticipantsBottomSheet__deny_all">全部拒絕</string>
 
     <!-- Title of a megaphone shown at the bottom of the chat list to prompt the user to enable message backups -->
-    <string name="TurnOnSignalBackups__title">啟用「Signal 安全備份」</string>
+    <string name="TurnOnSignalBackups__title">啟用「Radar 安全備份」</string>
     <!-- Body of a megaphone shown at the bottom of the chat list to prompt the user to enable message backups -->
-    <string name="TurnOnSignalBackups__body">當你換新手機或者重新安裝 Signal 嗰陣，就唔會冇哂啲訊息。</string>
+    <string name="TurnOnSignalBackups__body">當你換新手機或者重新安裝 Radar 嗰陣，就唔會冇哂啲訊息。</string>
     <!-- Button of a megaphone shown at the bottom of the chat list to prompt the user to enable message backups that will take the user to the flow to enable backups -->
     <string name="TurnOnSignalBackups__turn_on">開啟</string>
     <!-- Button of a megaphone shown at the bottom of the chat list to prompt the user to enable message backups that will simply dismiss the megaphone -->
@@ -6747,7 +6747,7 @@
     <!-- Title of Megaphone B: upsell to enable backups when user has many messages -->
     <string name="BackupMessagesUpsell__title">唔駛驚冇咗啲訊息</string>
     <!-- Body of Megaphone B: upsell to enable backups when user has many messages -->
-    <string name="BackupMessagesUpsell__body">打開 Signal 安全備份保存你嘅訊息同埋媒體。</string>
+    <string name="BackupMessagesUpsell__body">打開 Radar 安全備份保存你嘅訊息同埋媒體。</string>
     <!-- Primary button of Megaphone B -->
     <string name="BackupMessagesUpsell__turn_on">開啟</string>
     <!-- Secondary button of Megaphone B -->
@@ -6756,7 +6756,7 @@
     <!-- Title of Megaphone C: upsell to upgrade backups when user has lots of media -->
     <string name="BackupMediaUpsell__title">備份全部媒體</string>
     <!-- Body of Megaphone C: upsell to upgrade backups when user has lots of media -->
-    <string name="BackupMediaUpsell__body">課金 Signal 安全備份計劃保存你所有媒體，最盡去到 100GB。</string>
+    <string name="BackupMediaUpsell__body">課金 Radar 安全備份計劃保存你所有媒體，最盡去到 100GB。</string>
     <!-- Primary button of Megaphone C -->
     <string name="BackupMediaUpsell__upgrade">升級</string>
     <!-- Secondary button of Megaphone C -->
@@ -6776,7 +6776,7 @@
     <!-- Title of the backup upsell bottom sheet promoting paid backup plans -->
     <string name="BackupUpsellBottomSheet__title">升級去備份全部媒體</string>
     <!-- Body of the backup upsell bottom sheet -->
-    <string name="BackupUpsellBottomSheet__body">課金 Signal 安全備份計劃儲存你收發嘅全部媒體，最盡去到 100GB。當你換新手機或者重新安裝 Signal 嗰陣，就唔會冇哂啲相或影片。</string>
+    <string name="BackupUpsellBottomSheet__body">課金 Radar 安全備份計劃儲存你收發嘅全部媒體，最盡去到 100GB。當你換新手機或者重新安裝 Radar 嗰陣，就唔會冇哂啲相或影片。</string>
     <!-- Label for the paid plan price shown in the feature card, e.g. "$1.99/month" -->
     <string name="BackupUpsellBottomSheet__price_per_month">每月 %1$s</string>
     <!-- Subtitle for the paid plan feature card -->
@@ -6797,27 +6797,27 @@
     <!-- Title of the backup setup complete bottom sheet -->
     <string name="BackupSetupCompleteBottomSheet__title">搞掂晒。你可以即刻開始備份喇。</string>
     <!-- Body of the backup setup complete bottom sheet -->
-    <string name="BackupSetupCompleteBottomSheet__body">呢個過程可能需要一啲時間。備份嗰陣，你可以好似平時咁用 Signal。</string>
+    <string name="BackupSetupCompleteBottomSheet__body">呢個過程可能需要一啲時間。備份嗰陣，你可以好似平時咁用 Radar。</string>
     <!-- Label for the optimize storage toggle -->
-    <string name="BackupSetupCompleteBottomSheet__optimize_storage">優化 Signal 儲存空間</string>
+    <string name="BackupSetupCompleteBottomSheet__optimize_storage">優化 Radar 儲存空間</string>
     <!-- Subtitle for the optimize storage toggle -->
     <string name="BackupSetupCompleteBottomSheet__optimize_subtitle">舊啲嘅媒體會卸載，但可以隨時喺備份度下載返。</string>
     <!-- Primary button on the setup complete bottom sheet -->
     <string name="BackupSetupCompleteBottomSheet__back_up_now">即刻備份</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">喺手機度打開 Signal</string>
+    <string name="InactivePrimary__title">喺手機度打開 Radar</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__body">要你個帳戶保持活躍，請喺主要裝置度打開 Signal。</string>
+    <string name="InactivePrimary__body">要你個帳戶保持活躍，請喺主要裝置度打開 Radar。</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
     <string name="InactivePrimary__learn_more">了解詳情</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
     <string name="InactivePrimary__got_it">明白</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
-    <string name="OnDeviceBackupsScreen__to_restore_a_backup">"要還原一個備份嘅話，請首先重新裝過 Signal。開返個 APP 出嚟，㩒一下「還原備份」，然後揀返嗰一個備份檔案。"</string>
+    <string name="OnDeviceBackupsScreen__to_restore_a_backup">"要還原一個備份嘅話，請首先重新裝過 Radar。開返個 APP 出嚟，㩒一下「還原備份」，然後揀返嗰一個備份檔案。"</string>
     <!-- Body of a dialog shown when turning on on-device backups while "Optimize Signal storage" is enabled, warning that optimized media won\'t be included -->
-    <string name="OnDeviceBackupsScreen__you_have_optimize_signal_storage_on">你開咗「優化 Signal 儲存空間」。如果你想將全部媒體加晒喺裝置上備份，請閂咗呢個設定。</string>
+    <string name="OnDeviceBackupsScreen__you_have_optimize_signal_storage_on">你開咗「優化 Radar 儲存空間」。如果你想將全部媒體加晒喺裝置上備份，請閂咗呢個設定。</string>
     <!-- Dialog action that takes the user to the "Optimize Signal storage" setting -->
     <string name="OnDeviceBackupsScreen__view_setting">睇下設定</string>
     <!-- Dialog action to proceed with turning on on-device backups without turning off "Optimize Signal storage" -->
@@ -6906,7 +6906,7 @@
     <!-- Dialog title for invalid phone number -->
     <string name="FindByActivity__invalid_phone_number">電話冧把無效</string>
     <!-- Dialog title when phone number is not a registered signal user -->
-    <string name="FindByActivity__invite_to_signal">拉隊嚟 Signal</string>
+    <string name="FindByActivity__invite_to_signal">拉隊嚟 Radar</string>
     <!-- Dialog title when username is not found -->
     <string name="FindByActivity__username_not_found">用戶名稱搵唔到</string>
     <!-- Dialog body for invalid username. Placeholder is the entered username. -->
@@ -6914,9 +6914,9 @@
     <!-- Dialog body for an invalid phone number. Placeholder is the entered phone number. -->
     <string name="FindByActivity__s_is_not_a_valid_phone_number">%1$s 唔係有效嘅電話冧把。請使用有效嘅電話冧把再試一次</string>
     <!-- Dialog body for not found username -->
-    <string name="FindByActivity__s_is_not_a_signal_user">「%1$s」唔係 Signal 使用者。請檢查用戶名稱，然後再試下啦。</string>
+    <string name="FindByActivity__s_is_not_a_signal_user">「%1$s」唔係 Radar 使用者。請檢查用戶名稱，然後再試下啦。</string>
     <!-- Dialog body for not found phone number -->
-    <string name="FindByActivity__s_is_not_a_signal_user_would">%1$s 唔係 Signal 嘅用戶。你想唔想向呢個號碼發出邀請？</string>
+    <string name="FindByActivity__s_is_not_a_signal_user_would">%1$s 唔係 Radar 嘅用戶。你想唔想向呢個號碼發出邀請？</string>
     <!-- Dialog action to invite the phone number to Signal -->
     <string name="FindByActivity__invite">邀請</string>
     <!-- Button label for a button that will launch a camera to scan a username QR code -->
@@ -6928,7 +6928,7 @@
     <string name="LinkedDeviceInactiveMegaphone_title">連結咗嘅閒置裝置</string>
     <!-- Body for an alert letting someone know that one of their linked devices is inactive. The string placeholder is the name of the device, and the number placeholder is the number of days before device is unlinked. -->
     <plurals name="LinkedDeviceInactiveMegaphone_body">
-        <item quantity="other">如果想保留「 %1$s 」嘅連結，請喺 %2$d 日之內係嗰部裝置度打開 Signal。</item>
+        <item quantity="other">如果想保留「 %1$s 」嘅連結，請喺 %2$d 日之內係嗰部裝置度打開 Radar。</item>
     </plurals>
     <!-- Button label for an alert letting someone know that one of their linked devices is inactive. When clicked, the user will opt out of all future alerts. -->
     <string name="LinkedDeviceInactiveMegaphone_dont_remind_button_label">唔使提醒我</string>
@@ -6939,7 +6939,7 @@
     <!-- Title displayed at the top of the screen -->
     <string name="NicknameActivity__nickname">綽號</string>
     <!-- Subtitle displayed under title -->
-    <string name="NicknameActivity__nicknames_amp_notes">綽號同備註都係用 Signal 嘅端對端加密功能儲存。只有你先睇到。</string>
+    <string name="NicknameActivity__nicknames_amp_notes">綽號同備註都係用 Radar 嘅端對端加密功能儲存。只有你先睇到。</string>
     <!-- Field label for given name -->
     <string name="NicknameActivity__first_name">名</string>
     <!-- Content description for first name clear button -->
@@ -6987,7 +6987,7 @@
     <!-- Sheet title when user does not have enough space to download their backup. Placeholder is formatted byte size, for example 12GB. -->
     <string name="BackupAlertBottomSheet__free_up_s_on_this_device">要喺呢部機度搵多 %1$s 空間</string>
     <!-- Sheet body part 1 when user does not have enough space to download their backup. Placeholder is the amount of space needed. -->
-    <string name="BackupAlertBottomSheet__to_finish_downloading_your_signal_backup">要搞掂埋下載 Signal 備份，你部機要 %1$s 嘅儲存空間。</string>
+    <string name="BackupAlertBottomSheet__to_finish_downloading_your_signal_backup">要搞掂埋下載 Radar 備份，你部機要 %1$s 嘅儲存空間。</string>
     <!-- Sheet body part 2 when user does not have enough space to download their backup. -->
     <string name="BackupAlertBottomSheet__to_free_up_space_offload">要搵多啲儲存空間，請卸載或者刪除已經唔用嘅 app 或者檔案比較大嘅內容。</string>
     <!-- Sheet title when user payment failed to process -->
@@ -6999,7 +6999,7 @@
     <!-- Sheet body part 1 for when user falls out of grace period -->
     <string name="BackupAlertBottomSheet__your_subscription_couldnt_be_renewed">無得用你嘅付款方法幫課金計劃續期。要繼續備份媒體，你需要有效嘅課金計劃。</string>
     <!-- Sheet body part 2 for when user falls out of grace period -->
-    <string name="BackupAlertBottomSheet__youll_continue_to_have_access_to_the_free">你可以繼續用免費嘅「Signal 安全備份」計劃。</string>
+    <string name="BackupAlertBottomSheet__youll_continue_to_have_access_to_the_free">你可以繼續用免費嘅「Radar 安全備份」計劃。</string>
     <!-- Sheet title for generic backup error -->
     <string name="BackupAlertBottomSheet__couldnt_complete_backup">完成唔到備份</string>
     <!-- Sheet body for generic backup error. Placeholder is days since last backup. -->
@@ -7041,7 +7041,7 @@
     <!-- Dialog title when a backup redemption fails -->
     <string name="BackupAlertBottomSheet__couldnt_redeem_your_backups_subscription">換領唔到備份課金計劃</string>
     <!-- Dialog text for when a backup fails to be created and ways to fix it -->
-    <string name="BackupAlertBottomSheet__an_error_occurred">發生錯誤，完成唔到備份。請確保你用緊最新版本嘅 Signal，然後再試。如果問題持續，請聯絡支援團隊。</string>
+    <string name="BackupAlertBottomSheet__an_error_occurred">發生錯誤，完成唔到備份。請確保你用緊最新版本嘅 Radar，然後再試。如果問題持續，請聯絡支援團隊。</string>
     <!-- Dialog text for when a backup fails to be created and ways to fix it. Used for out of remote storage space error. -->
     <string name="BackupAlertBottomSheet__an_error_occurred_and">發生錯誤，完成唔到備份。如果問題持續，請聯絡支援團隊。</string>
     <!-- Dialog action button that will allow you to check for any Signal version updates -->
@@ -7049,7 +7049,7 @@
     <!-- Backup redemption error sheet text line 1 -->
     <string name="BackupAlertBottomSheet__too_many_devices_have_tried">今個月已經有太多部機試過換領你嘅課金計劃。你可能：</string>
     <!-- Backup redemption error sheet bullet point 1 -->
-    <string name="BackupAlertBottomSheet__reregistered_your_signal_account">重新註冊 Signal 帳戶太多次。</string>
+    <string name="BackupAlertBottomSheet__reregistered_your_signal_account">重新註冊 Radar 帳戶太多次。</string>
     <!-- Backup redemption error sheet bullet point 2 -->
     <string name="BackupAlertBottomSheet__have_too_many_devices_using_the_same_subscription">有太多部機用緊同一個課金計劃。</string>
 
@@ -7123,7 +7123,7 @@
     <!-- Text displayed when a backup could not be completed -->
     <string name="BackupStatusRow__your_last_backup">完成唔到你上次嘅備份。請確保你部手機已經連咗 Wi-Fi，然後㩒「即刻備份」再試。</string>
     <!-- Text displayed when a backup could not be completed and to check that they are on the latest version of Signal -->
-    <string name="BackupStatusRow__your_last_backup_latest_version">完成唔到你上次嘅備份。請確保你用緊最新版本嘅 Signal，然後再試。</string>
+    <string name="BackupStatusRow__your_last_backup_latest_version">完成唔到你上次嘅備份。請確保你用緊最新版本嘅 Radar，然後再試。</string>
     <!-- Text displayed when a backup file exceeds the storage limit during upload. -->
     <string name="BackupStatusRow__backup_file_too_large">你嘅訊息數量超過儲存空間上限。刪除一啲訊息然後再試一次。</string>
     <!-- Text displayed when we\'re not backing up all messages. The placeholder represents the cutoff date for the messages we\'re backing up. -->
@@ -7155,33 +7155,33 @@
     <!-- Dialog title when Google Play services are missing from the device -->
     <string name="GooglePlayServicesAvailability__service_missing_title">搵唔到 Google Play 服務</string>
     <!-- Dialog message explaining that Google Play services are required for Signal Secure backups subscription -->
-    <string name="GooglePlayServicesAvailability__service_missing_message">想課金用 Signal 安全備份嘅話，你要喺手機度安裝 Google Play 服務。</string>
+    <string name="GooglePlayServicesAvailability__service_missing_message">想課金用 Radar 安全備份嘅話，你要喺手機度安裝 Google Play 服務。</string>
     <!-- Dialog button text to install Google Play services -->
     <string name="GooglePlayServicesAvailability__install_play_services">安裝 Google Play 服務</string>
     <!-- Dialog title when Google Play services are currently updating -->
     <string name="GooglePlayServicesAvailability__service_updating_title">Google Play 服務更新緊</string>
     <!-- Dialog message asking user to wait while Google Play services finish updating -->
-    <string name="GooglePlayServicesAvailability__service_updating_message">想課金用 Signal 安全備份嘅話，請你等 Google Play 服務更新完先。</string>
+    <string name="GooglePlayServicesAvailability__service_updating_message">想課金用 Radar 安全備份嘅話，請你等 Google Play 服務更新完先。</string>
     <!-- Dialog title when Google Play services need to be updated -->
     <string name="GooglePlayServicesAvailability__service_update_required_title">更新 Google Play 服務</string>
     <!-- Dialog message explaining that Google Play services need to be updated for Signal Secure backups -->
-    <string name="GooglePlayServicesAvailability__service_update_required_message">想課金用 Signal 安全備份嘅話，請你喺手機度更新 Google Play 服務。</string>
+    <string name="GooglePlayServicesAvailability__service_update_required_message">想課金用 Radar 安全備份嘅話，請你喺手機度更新 Google Play 服務。</string>
     <!-- Dialog button text to update Google Play services -->
     <string name="GooglePlayServicesAvailability__update">更新</string>
     <!-- Dialog title when Google Play services are disabled -->
     <string name="GooglePlayServicesAvailability__service_disabled_title">課金計劃需要 Google Play</string>
     <!-- Dialog message explaining that Google Play services must be enabled for subscriptions -->
-    <string name="GooglePlayServicesAvailability__service_disabled_message">想課金用 Signal 安全備份嘅話，請你喺手機度啟用 Google Play 服務，同埋登入 Google Play 商店。 </string>
+    <string name="GooglePlayServicesAvailability__service_disabled_message">想課金用 Radar 安全備份嘅話，請你喺手機度啟用 Google Play 服務，同埋登入 Google Play 商店。 </string>
     <!-- Dialog button text to learn more about enabling Google Play services -->
     <string name="GooglePlayServicesAvailability__learn_more">了解詳情</string>
     <!-- Dialog message shown when Google Play services is invalid and subscriptions are not available -->
-    <string name="GooglePlayServicesAvailability__service_invalid_message">你部手機唔支援 Google Play 服務，所以你無得課金用 Signal 安全備份。請聯絡手機製造商幫手。</string>
+    <string name="GooglePlayServicesAvailability__service_invalid_message">你部手機唔支援 Google Play 服務，所以你無得課金用 Radar 安全備份。請聯絡手機製造商幫手。</string>
 
     <!-- UpgradeToEnableOptimizedStorageSheet -->
     <!-- Title on a bottom sheet, detailing that the user must upgrade to enable storage optimization -->
     <string name="UpgradeToEnableOptimizedStorageSheet__upgrade_to_enable_this_feature">升級使用呢個功能</string>
     <!-- Subtitle of bottom sheet detailing that the user must upgrade to enable storage optimization -->
-    <string name="UpgradeToEnableOptimizedStorageSheet__storage_optimization_can_only_be_used">淨係得有課金「Signal 安全備份」嘅帳戶先用到「優化儲存空間」功能。如果想用呢個功能，就升級備份計劃。</string>
+    <string name="UpgradeToEnableOptimizedStorageSheet__storage_optimization_can_only_be_used">淨係得有課金「Radar 安全備份」嘅帳戶先用到「優化儲存空間」功能。如果想用呢個功能，就升級備份計劃。</string>
     <!-- Primary action to launch upgrade flow. Placeholder is formatted price. -->
     <string name="UpgradeToEnableOptimizedStorageSheet__subscribe_for_s_month">每月課金 %1$s</string>
 
@@ -7190,7 +7190,7 @@
     <string name="UpgradeToStartMediaBackupSheet__this_media_is_no_longer_available">呢個媒體已經冇咗</string>
     <!-- Subtitle of bottom sheet detailing that with their current plan, there is a limitation to how many days media is stored for. Placeholder is number of days. -->
     <plurals name="UpgradeToStartMediaBackupSheet__your_current_signal_backup_plan_includes">
-        <item quantity="other">你而家嘅 Signal 備份計劃包括最近 %1$d 日嘅媒體。如果要開始備份所有媒體，請即刻升級。</item>
+        <item quantity="other">你而家嘅 Radar 備份計劃包括最近 %1$d 日嘅媒體。如果要開始備份所有媒體，請即刻升級。</item>
     </plurals>
     <!-- Primary action to launch upgrade flow. Placeholder is formatted price. -->
     <string name="UpgradeToStartMediaBackupSheet__subscribe_for_s_month">每月課金 %1$s</string>
@@ -7199,7 +7199,7 @@
     <!-- Title on a bottom sheet explaining that the given media is no longer available. -->
     <string name="MediaNoLongerAvailableSheet__this_media_is_no_longer_available">呢個媒體已經冇咗</string>
     <!-- Body on a bottom sheet explaining that the user can enable backups -->
-    <string name="MediaNoLongerAvailableSheet__to_start_backing_up_all_your_media">要開始備份全部媒體，請啟用「Signal 安全備份」同埋選擇付款級別。</string>
+    <string name="MediaNoLongerAvailableSheet__to_start_backing_up_all_your_media">要開始備份全部媒體，請啟用「Radar 安全備份」同埋選擇付款級別。</string>
     <!-- Primary action button on bottom sheet -->
     <string name="MediaNoLongerAvailableSheet__continue">繼續</string>
     <!-- Secondary action button on bottom sheet -->
@@ -7247,9 +7247,9 @@
     <!-- Subtitle for row for canceled backup -->
     <string name="BackupsSettingsFragment__subscription_canceled">取消咗課金計劃</string>
     <!-- Subtitle for row for no backup ever created -->
-    <string name="BackupsSettingsFragment_automatic_backups_with_signals">用 Signal 嘅端對端加密儲存服務安全自動備份。</string>
+    <string name="BackupsSettingsFragment_automatic_backups_with_signals">用 Radar 嘅端對端加密儲存服務安全自動備份。</string>
     <!-- Subtitle shown on a linked device when backups are off, directing the user to set them up on their phone -->
-    <string name="BackupsSettingsFragment__automatic_backups_get_started_on_your_phone">用 Signal 嘅端對端加密儲存服務安全自動備份。 拎部你部手機出嚟開始備份。</string>
+    <string name="BackupsSettingsFragment__automatic_backups_get_started_on_your_phone">用 Radar 嘅端對端加密儲存服務安全自動備份。 拎部你部手機出嚟開始備份。</string>
     <!-- Subtitle for row for backups that are active but subscription not found -->
     <string name="BackupsSettingsFragment_subscription_not_found_on_this_device">"喺呢部機度搵唔到課金計劃。"</string>
     <!-- Action button label to set up backups -->
@@ -7263,7 +7263,7 @@
     <!-- Displayed on the title bar for Signal Secure Backups -->
     <string name="RemoteBackupsSettingsFragment__secure_backups">安全備份</string>
     <!-- Displayed on the title bar -->
-    <string name="RemoteBackupsSettingsFragment__signal_backups">Signal 安全備份</string>
+    <string name="RemoteBackupsSettingsFragment__signal_backups">Radar 安全備份</string>
     <!-- Displayed as a label when remote backups are off -->
     <string name="RemoteBackupsSettingsFragment__off">閂咗</string>
     <!-- Text shown in a popup indicating that the user needs to enter their screen lock -->
@@ -7327,7 +7327,7 @@
     <!-- Displays the date the subscription expired. Placeholder is the date. -->
     <string name="RemoteBackupsSettingsFragment__expired_on_s">%1$s 到期</string>
     <!-- Displayed at the top of the screen when no backup is currently enabled -->
-    <string name="RemoteBackupsSettingsFragment__back_up_your_message_history">備份你嘅訊息紀錄，當你換新手機或者重新安裝 Signal 嗰陣，就唔會冇咗啲資料啦。</string>
+    <string name="RemoteBackupsSettingsFragment__back_up_your_message_history">備份你嘅訊息紀錄，當你換新手機或者重新安裝 Radar 嗰陣，就唔會冇咗啲資料啦。</string>
     <!-- Section header for other ways to back up -->
     <string name="RemoteBackupsSettingsFragment__other_ways_to_backup">其他備份方式</string>
     <!-- Row title for performing on-device backup -->
@@ -7347,13 +7347,13 @@
     <!-- Subtext on a linked device describing when the primary device last backed up. Placeholder is the formatted date and time. -->
     <string name="RemoteBackupsSettingsFragment__your_phone_s">你部手機 · %1$s</string>
     <!-- Message shown on a linked device with a free backup plan explaining that the subscription is managed on the primary device -->
-    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_upgrade_your_subscription_on_your_primary_device">你可以喺主要裝置度管理或者升級「Signal 安全備份」課金計劃。</string>
+    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_upgrade_your_subscription_on_your_primary_device">你可以喺主要裝置度管理或者升級「Radar 安全備份」課金計劃。</string>
     <!-- Message shown on a linked device with a paid backup plan explaining that the subscription is managed on the primary device -->
-    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_cancel_your_subscription_on_your_primary_device">你可以喺主要裝置度管理或者取消「Signal 安全備份」課金計劃。</string>
+    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_cancel_your_subscription_on_your_primary_device">你可以喺主要裝置度管理或者取消「Radar 安全備份」課金計劃。</string>
     <!-- Message shown on a linked device with a canceled backup subscription explaining that the subscription is managed on the primary device -->
-    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_renew_your_subscription_on_your_primary_device">你可以喺主要裝置度管理「Signal 安全備份」課金計劃或者續期。</string>
+    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_renew_your_subscription_on_your_primary_device">你可以喺主要裝置度管理「Radar 安全備份」課金計劃或者續期。</string>
     <!-- Message shown on a linked device when backups are off or the subscription was not found, explaining that backups are managed on the primary device -->
-    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_upgrade_backups_on_your_primary_device">你可以喺主要裝置度管理或者升級「Signal 安全備份」課金計劃。</string>
+    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_upgrade_backups_on_your_primary_device">你可以喺主要裝置度管理或者升級「Radar 安全備份」課金計劃。</string>
     <!-- Button label to perform a backup immediately -->
     <string name="RemoteBackupsSettingsFragment__back_up_now">即刻備份</string>
     <!-- Dialog title when confirming whether to turn off and deleting backups -->
@@ -7369,16 +7369,16 @@
     <!-- Button label to re-enable backups (launches into checkout flow) -->
     <string name="RemoteBackupsSettingsFragment__reenable_backups">重新啟用備份</string>
     <!-- Notice displayed when backups have been disabled and deleted -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off">備份已經閂咗，同埋你嘅資料已經喺 Signal 嘅安全儲存服務入面刪除。</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off">備份已經閂咗，同埋你嘅資料已經喺 Radar 嘅安全儲存服務入面刪除。</string>
     <!-- Dialog title for dialog which alerts user their optimized media will be downloaded -->
     <string name="RemoteBackupsSettingsFragment__downloading_your_backup">下載緊你嘅備份</string>
     <!-- Dialog message for dialog which alerts user their optimized media will be downloaded -->
     <string name="RemoteBackupsSettingsFragment__depending_on_the_size">視乎備份嘅大細而定，過程可能要好耐。下載嗰陣，你可以好似平時咁用電話。</string>
     <!-- Displayed in card when user has backups enabled but there is otherwise no subscription available. This can happen for example after a device transfer. -->
-    <string name="RemoteBackupsSettingsFragment__your_subscription_was_not_found">喺呢部機度搵唔到你嘅課金計劃。即刻續期嚟繼續用「Signal 安全備份」。</string>
+    <string name="RemoteBackupsSettingsFragment__your_subscription_was_not_found">喺呢部機度搵唔到你嘅課金計劃。即刻續期嚟繼續用「Radar 安全備份」。</string>
     <!-- Displayed in card when user has a signal subscription but the device doesn\'t see a google play billing subscription. Placeholder is days until subscription expiration. -->
     <plurals name="RemoteBackupsSettingsFragment__your_subscription_on_this_device_is_valid">
-        <item quantity="other">呢部機嘅「Signal 安全備份」課金計劃喺嚟緊 %1$d 日之內有效。之後續期就可以繼續用㗎喇</item>
+        <item quantity="other">呢部機嘅「Radar 安全備份」課金計劃喺嚟緊 %1$d 日之內有效。之後續期就可以繼續用㗎喇</item>
     </plurals>
     <!-- Button label to start subscription resubscribe after cancellation -->
     <string name="RemoteBackupsSettingsFragment__resubscribe">重新課金</string>
@@ -7431,17 +7431,17 @@
     <!-- Button label to see more details about redemption error -->
     <string name="RemoteBackupsSettingsFragment__details">詳情</string>
     <!-- Text displayed when there was an error deleting backup -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_but_there_was_an_error">備份功能已經閂咗，但喺 Signal 嘅安全儲存服務入面刪除資料嗰陣發生錯誤。</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_but_there_was_an_error">備份功能已經閂咗，但喺 Radar 嘅安全儲存服務入面刪除資料嗰陣發生錯誤。</string>
     <!-- Text displayed as the title in a card when backup fails to delete -->
     <string name="RemoteBackupsSettingsFragment__failed_to_delete_backup">刪除唔到備份</string>
     <!-- Text displayed as the body in a card when backup fails to delete -->
     <string name="RemoteBackupsSettingsFragment__an_error_occurred_please_contact_support">發生錯誤。請聯絡支援團隊。</string>
     <!-- Text displayed while we are processing a backup delete but are or need to download optimized media -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_your_data_will_be">備份功能已經閂咗，資料將會下載去你部機度，而喺 Signal 安全儲存服務入面嘅資料將會刪除。</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_your_data_will_be">備份功能已經閂咗，資料將會下載去你部機度，而喺 Radar 安全儲存服務入面嘅資料將會刪除。</string>
     <!-- Text displayed while we are processing a backup delete -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_and_your_data">備份功能已經閂咗，你嘅資料將會喺 Signal 嘅安全儲存服務入面刪除。</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_and_your_data">備份功能已經閂咗，你嘅資料將會喺 Radar 嘅安全儲存服務入面刪除。</string>
     <!-- Text displayed after we have deleted a user\'s backup -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_and_your_data_has_been_deleted">備份功能已經閂咗，同埋你嘅資料已經喺 Signal 嘅安全儲存服務入面刪除。</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_and_your_data_has_been_deleted">備份功能已經閂咗，同埋你嘅資料已經喺 Radar 嘅安全儲存服務入面刪除。</string>
     <!-- Text displayed when user is out of storage space. Placeholder is storage limit in human readable form (ex. 1GB) -->
     <string name="RemoteBackupsSettingsFragment__youve_reached_the_s_storage_limit">你備份計劃包嘅 %1$s 儲存空間已經頂晒櫳喇。要備份新聊天同埋媒體就要揾多啲空間。</string>
     <!-- Button label to open storage management screen -->
@@ -7526,7 +7526,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">備份你嘅訊息同媒體，並且用 Signal 嘅安全端對端加密服務嚟儲存。當你換新手機或者重新安裝 Signal 嗰陣，就唔會冇咗啲訊息。</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">備份你嘅訊息同媒體，並且用 Radar 嘅安全端對端加密服務嚟儲存。當你換新手機或者重新安裝 Radar 嗰陣，就唔會冇咗啲訊息。</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">端對端加密</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->
@@ -7556,19 +7556,19 @@
     <!-- Screen body shown when upgrading on-device backups to a new recovery key (part 2, bolded). -->
     <string name="MessageBackupsKeyEducationScreen__local_backup_upgrade_description_bold">呢個金鑰會取代你裝置上備份嘅金鑰。</string>
     <!-- Screen body shown when enabling Signal Secure Backups while on-device backups are already enabled (part 1). -->
-    <string name="MessageBackupsKeyEducationScreen__remote_backup_with_local_enabled_description">你嘅恢復金鑰係一個 64 個字元嘅代碼，方便你喺重新安裝 Signal 之後還原備份。</string>
+    <string name="MessageBackupsKeyEducationScreen__remote_backup_with_local_enabled_description">你嘅恢復金鑰係一個 64 個字元嘅代碼，方便你喺重新安裝 Radar 之後還原備份。</string>
     <!-- Screen body shown when enabling Signal Secure Backups while on-device backups are already enabled (part 2, bolded). -->
     <string name="MessageBackupsKeyEducationScreen__remote_backup_with_local_enabled_description_bold">佢同你裝置上嘅恢復金鑰一樣。</string>
     <!-- Screen body shown when enabling on-device backups while Signal Secure Backups are already enabled (part 2, bolded). -->
-    <string name="MessageBackupsKeyEducationScreen__local_backup_with_remote_enabled_description_bold">佢同你嘅 Signal 安全備份嘅恢復金鑰一樣。</string>
+    <string name="MessageBackupsKeyEducationScreen__local_backup_with_remote_enabled_description_bold">佢同你嘅 Radar 安全備份嘅恢復金鑰一樣。</string>
     <!-- Label shown above a list of actions that the recovery key can be used for. -->
     <string name="MessageBackupsKeyEducationScreen__use_this_key_to">用呢個金鑰嚟：</string>
     <!-- Row label indicating that the recovery key can be used to restore an on-device backup. -->
     <string name="MessageBackupsKeyEducationScreen__restore_on_device_backup">攞返你嘅裝置上備份嚟還原</string>
     <!-- Row label indicating that the recovery key can be used to restore a Signal Secure Backup. -->
-    <string name="MessageBackupsKeyEducationScreen__restore_a_signal_secure_backup">還原 Signal 安全備份</string>
+    <string name="MessageBackupsKeyEducationScreen__restore_a_signal_secure_backup">還原 Radar 安全備份</string>
     <!-- Row label indicating that the recovery key can be used to restore a Signal Secure Backup. -->
-    <string name="MessageBackupsKeyEducationScreen__restore_your_signal_secure_backup">還原你嘅 Signal 安全備份</string>
+    <string name="MessageBackupsKeyEducationScreen__restore_your_signal_secure_backup">還原你嘅 Radar 安全備份</string>
     <!-- Action button label -->
     <string name="MessageBackupsKeyEducationScreen__view_recovery_key">睇吓恢復金鑰</string>
 
@@ -7584,9 +7584,9 @@
     <!-- Label for the button to save a recovery key to the device password manager. -->
     <string name="MessageBackupsKeyRecordScreen__save_to_password_manager">儲存去密碼管理器</string>
     <!-- Dialog message confirming that the user wants to save a recovery key to the device password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__confirm_save_to_password_manager_body">請將恢復金鑰儲存喺你信得過嘅安全密碼管理器入面。Signal 唔會推薦最啱你嘅密碼管理器。</string>
+    <string name="MessageBackupsKeyRecordScreen__confirm_save_to_password_manager_body">請將恢復金鑰儲存喺你信得過嘅安全密碼管理器入面。Radar 唔會推薦最啱你嘅密碼管理器。</string>
     <!-- ID used when saving the recovery key to the device password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__backup_key_password_manager_id">Signal 安全備份</string>
+    <string name="MessageBackupsKeyRecordScreen__backup_key_password_manager_id">Radar 安全備份</string>
     <!-- Message shown after the recovery key is successfully saved to the device password manager. -->
     <string name="MessageBackupsKeyRecordScreen__save_to_password_manager_success">已經儲存咗去密碼管理器</string>
     <!-- Dialog title shown when there is an error saving the recovery key to the device password manager. -->
@@ -7594,7 +7594,7 @@
     <!-- Dialog message shown when there is an error saving the recovery key because no compatible password manager was detected. -->
     <string name="MessageBackupsKeyRecordScreen__missing_password_manager_message">你冇設定密碼管理器，或者你用緊嘅密碼管理器唔支援。</string>
     <!-- Dialog message shown when there is an error saving the recovery key because the user previously chose not to save Signal passwords to their password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__password_save_prompt_disabled_message">你之前揀咗唔將 Signal 密碼儲存到 Google 密碼管理工具。喺 Google 密碼管理工具嘅設定嗰度，喺「已拒絕的網站和應用程式」下面移除 Signal，然後再試一次。</string>
+    <string name="MessageBackupsKeyRecordScreen__password_save_prompt_disabled_message">你之前揀咗唔將 Radar 密碼儲存到 Google 密碼管理工具。喺 Google 密碼管理工具嘅設定嗰度，喺「已拒絕的網站和應用程式」下面移除 Radar，然後再試一次。</string>
     <!-- Label for a button that navigates to the device settings -->
     <string name="MessageBackupsKeyRecordScreen__go_to_settings">前往設定</string>
     <!-- Action button label -->
@@ -7602,7 +7602,7 @@
     <!-- Bottom sheet title -->
     <string name="MessageBackupsKeyRecordScreen__keep_your_key_safe">安全儲存你嘅金鑰</string>
     <!-- Bottom sheet subtitle -->
-    <string name="MessageBackupsKeyRecordScreen__signal_will_not">如果你整唔見咗個金鑰，Signal 就冇辦法幫你還原備份喇。請將佢儲存喺安全嘅地方，千祈唔好同人分享。</string>
+    <string name="MessageBackupsKeyRecordScreen__signal_will_not">如果你整唔見咗個金鑰，Radar 就冇辦法幫你還原備份喇。請將佢儲存喺安全嘅地方，千祈唔好同人分享。</string>
     <!-- Sheet action button label -->
     <string name="MessageBackupsKeyRecordScreen__continue">繼續</string>
     <!-- Sheet secondary action button label -->
@@ -7612,13 +7612,13 @@
     <!-- Dialog title for confirming you need to disable optimized storage and download media to rotate AEP key -->
     <string name="MessageBackupsKeyRecordScreen__download_media">下載媒體</string>
     <!-- Dialog body for confirming you need to disable optimized storage and download media to rotate AEP key -->
-    <string name="MessageBackupsKeyRecordScreen__to_create_a_new_backup_key">要建立新嘅恢復金鑰，你一定要閂咗「優化 Signal 儲存空間」功能，同埋要等下載媒體完成。下載完成之後，你就可以建立新金鑰。</string>
+    <string name="MessageBackupsKeyRecordScreen__to_create_a_new_backup_key">要建立新嘅恢復金鑰，你一定要閂咗「優化 Radar 儲存空間」功能，同埋要等下載媒體完成。下載完成之後，你就可以建立新金鑰。</string>
     <!-- Action label to turn off optimized storage and download media -->
     <string name="MessageBackupsKeyRecordScreen__turn_off_and_download">關閉功能然後下載</string>
     <!-- Bottom Sheet title for creating a new AEP key -->
     <string name="MessageBackupsKeyRecordScreen__create_a_new_backup_key">建立新嘅恢復金鑰</string>
     <!-- Bottom Sheet body for creating a new AEP key -->
-    <string name="MessageBackupsKeyRecordScreen__creating_a_new_key_is_only_necessary">只有當其他人知道咗你嘅金鑰嗰陣，先要建立新嘅金鑰。你一定要重新上載備份，包括媒體。如果你用緊「優化 Signal 儲存空間」功能，咁就一定要先下載已卸載嘅媒體。</string>
+    <string name="MessageBackupsKeyRecordScreen__creating_a_new_key_is_only_necessary">只有當其他人知道咗你嘅金鑰嗰陣，先要建立新嘅金鑰。你一定要重新上載備份，包括媒體。如果你用緊「優化 Radar 儲存空間」功能，咁就一定要先下載已卸載嘅媒體。</string>
     <!-- Dialog title shown when user attempts to exit backup setup before completion -->
     <string name="MessageBackupsKeyRecordScreen__exit_backup_setup">係咪退出備份設定？</string>
     <!-- Dialog body warning user that backup setup is incomplete -->
@@ -7739,7 +7739,7 @@
     <!-- ConfirmBackupCancellationDialog -->
 
     <!-- Email subject when contacting support on a create backup failure -->
-    <string name="BackupAlertBottomSheet_network_failure_support_email">匯出 Signal Android 備份嗰陣網絡有問題</string>
+    <string name="BackupAlertBottomSheet_network_failure_support_email">匯出 Radar Android 備份嗰陣網絡有問題</string>
     <!-- Email filter when contacting support on a create backup failure -->
   <!-- Removed by excludeNonTranslatables <string name="BackupAlertBottomSheet_export_failure_filter" translatable="false">Android SignalBackups Export Failed</string> -->
 
@@ -7769,7 +7769,7 @@
     <!-- Old device Transfer account bottom sheet dialog body -->
     <string name="TransferAccount_continue_on_your_other_device_details">喺另一部機繼續轉移你嘅帳戶。</string>
     <!-- Old device Transfer account error dialog body shown when the new device is too old to accept an account that has no phone number -->
-    <string name="TransferAccount_the_device_you_are_transferring_to_is_out_of_date">你轉移緊去嘅裝置已經過時。喺嗰部裝置更新 Signal 然後再試。</string>
+    <string name="TransferAccount_the_device_you_are_transferring_to_is_out_of_date">你轉移緊去嘅裝置已經過時。喺嗰部裝置更新 Radar 然後再試。</string>
 
     <!-- Prepare Device screen title for quick restore flow -->
     <string name="PrepareDevice_title">準備緊你部裝置</string>
@@ -7785,11 +7785,11 @@
     <!-- Restore Complete bottom sheet dialog title -->
     <string name="RestoreCompleteBottomSheet_restore_complete">喺另一部機度完成</string>
     <!-- Restore Complete bottom sheet dialog message -->
-    <string name="RestoreCompleteBottomSheet_restore_complete_message">你嘅 Signal 帳戶同訊息已經準備好喺另一部機度還原。呢部機嘅 Signal 已經停用。</string>
+    <string name="RestoreCompleteBottomSheet_restore_complete_message">你嘅 Radar 帳戶同訊息已經準備好喺另一部機度還原。呢部機嘅 Radar 已經停用。</string>
     <!-- Restore Complete bottom sheet dialog title after device transfer -->
     <string name="RestoreCompleteBottomSheet_transfer_complete">轉移完成</string>
     <!-- Restore Complete bottom sheet dialog message after device transfer -->
-    <string name="RestoreCompleteBottomSheet_transfer_complete_message">你嘅 Signal 帳戶同訊息已經轉移咗去另一部機。呢部機嘅 Signal 將會暫停使用。</string>
+    <string name="RestoreCompleteBottomSheet_transfer_complete_message">你嘅 Radar 帳戶同訊息已經轉移咗去另一部機。呢部機嘅 Radar 將會暫停使用。</string>
     <!-- Restore Complete bottom sheet dialog button text to dismiss sheet -->
     <string name="RestoreCompleteBottomSheet_button">確定</string>
 
@@ -7847,7 +7847,7 @@
     <!-- Notification title for when user is out of remote storage -->
     <string name="Notification_backup_storage_full">備份儲存空間爆哂棚</string>
     <!-- Notification body for when user is out of remote storage -->
-    <string name="Notification_youve_reached_your_backup_storage_limit">你嘅備份儲存空間頂晒櫳喇。喺 Signal 度搵多啲位嚟繼續備份聊天同媒體。</string>
+    <string name="Notification_youve_reached_your_backup_storage_limit">你嘅備份儲存空間頂晒櫳喇。喺 Radar 度搵多啲位嚟繼續備份聊天同媒體。</string>
     <!-- Notification title for when initial backup failed -->
     <string name="Notification_backup_failed">備份唔到</string>
     <!-- Notification body for when initial backup failed -->
@@ -7960,7 +7960,7 @@
     <!-- Label for text field where user describes their call quality issue -->
     <string name="CallQualitySomethingElseScreen__describe_your_issue">講吓你遇到嘅問題</string>
     <!-- Privacy notice explaining that issue details will be kept private and used to improve Signal calls -->
-    <string name="CallQualitySomethingElseScreen__privacy_notice">請提供同問題有關嘅任何詳細資料。你喺度分享嘅所有內容都會保密，同埋只會用喺協助改善 Signal 嘅通話。</string>
+    <string name="CallQualitySomethingElseScreen__privacy_notice">請提供同問題有關嘅任何詳細資料。你喺度分享嘅所有內容都會保密，同埋只會用喺協助改善 Radar 嘅通話。</string>
     <!-- Button to save the call quality issue description -->
     <string name="CallQualitySomethingElseScreen__save">儲存</string>
     <!-- Content description for the back navigation button -->
@@ -7970,7 +7970,7 @@
     <!-- Title asking user how their call was -->
     <string name="CallQualitySheet__how_was_your_call">通話順利嗎？</string>
     <!-- Subtitle explaining that feedback helps improve Signal and no PII is stored -->
-    <string name="CallQualitySheet__how_was_your_call_subtitle">你嘅回應可以幫到我哋改善 Signal 嘅通話。我哋唔會儲存個人識別資料。</string>
+    <string name="CallQualitySheet__how_was_your_call_subtitle">你嘅回應可以幫到我哋改善 Radar 嘅通話。我哋唔會儲存個人識別資料。</string>
     <!-- Button label indicating the call had issues -->
     <string name="CallQualitySheet__had_issues">有問題</string>
     <!-- Button label indicating the call was great -->
@@ -8131,7 +8131,7 @@
     <string name="CouldNotCompleteBackupRestoreSheet__body_error">發生錯誤，還原唔到你個備份。咁可能因為喺還原備份嗰陣，你嘅備份資料夾喺部機度被人搬咗位。</string>
 
     <!-- Body of the sheet shown when a local backup restore could not be completed, explaining how to try again -->
-    <string name="CouldNotCompleteBackupRestoreSheet__body_retry">要再試過嘅話，請喺呢部裝置上面解除安裝 Signal 再重新安裝，然後揀「還原或者轉移」。</string>
+    <string name="CouldNotCompleteBackupRestoreSheet__body_retry">要再試過嘅話，請喺呢部裝置上面解除安裝 Radar 再重新安裝，然後揀「還原或者轉移」。</string>
 
     <!-- Button on the sheet shown when a local backup restore could not be completed, opening a support article about it -->
     <string name="CouldNotCompleteBackupRestoreSheet__learn_more">了解詳情</string>
@@ -8139,7 +8139,7 @@
     <!-- Title of the sheet shown when the server reports a verification code was requested for the user\'s phone number -->
     <string name="VerificationCodeRequestedBottomSheet__title">已經要求驗證碼</string>
     <!-- First paragraph of the body of the verification code requested sheet -->
-    <string name="VerificationCodeRequestedBottomSheet__body_1">千祈唔好將驗證碼俾任何人。Signal 從來都唔會傳訊息問你攞嘅。如果你收到有人假扮 Signal 嘅訊息，咁實係詐騙。</string>
+    <string name="VerificationCodeRequestedBottomSheet__body_1">千祈唔好將驗證碼俾任何人。Radar 從來都唔會傳訊息問你攞嘅。如果你收到有人假扮 Radar 嘅訊息，咁實係詐騙。</string>
     <!-- Second paragraph of the body of the verification code requested sheet -->
     <string name="VerificationCodeRequestedBottomSheet__body_2">如果係你自己要求攞驗證碼，就可以唔使理呢個訊息。</string>
     <!-- Button on the verification code requested sheet that opens the safety tips screen -->
@@ -8152,9 +8152,9 @@
     <!-- Title of the safety tips screen within the verification code requested sheet -->
     <string name="SafetyTipsBottomSheet__title">安全貼士</string>
     <!-- Title of the first safety tip: don\'t respond to chats claiming to be Signal -->
-    <string name="SafetyTipsBottomSheet__tip_1_title">千祈唔好回覆嚟自 Signal 嘅聊天訊息</string>
+    <string name="SafetyTipsBottomSheet__tip_1_title">千祈唔好回覆嚟自 Radar 嘅聊天訊息</string>
     <!-- Body of the first safety tip -->
-    <string name="SafetyTipsBottomSheet__tip_1_body">Signal 從來都唔會傳訊息問你攞註冊碼、PIN 碼或者恢復金鑰。千祈唔好回覆任何假扮 Signal 嘅聊天訊息。</string>
+    <string name="SafetyTipsBottomSheet__tip_1_body">Radar 從來都唔會傳訊息問你攞註冊碼、PIN 碼或者恢復金鑰。千祈唔好回覆任何假扮 Radar 嘅聊天訊息。</string>
     <!-- Title of the second safety tip: keep your verification code safe -->
     <string name="SafetyTipsBottomSheet__tip_2_title">安全儲存你嘅驗證碼</string>
     <!-- Body of the second safety tip -->
@@ -8162,16 +8162,16 @@
     <!-- Title of the third safety tip: enable registration lock -->
     <string name="SafetyTipsBottomSheet__tip_3_title">喺帳戶設定度開啟註冊鎖</string>
     <!-- Body of the third safety tip -->
-    <string name="SafetyTipsBottomSheet__tip_3_body">喺註冊 Signal 時，除咗驗證碼之外，仲需要輸入 Signal PIN 碼，嚟保護你嘅帳戶安全。</string>
+    <string name="SafetyTipsBottomSheet__tip_3_body">喺註冊 Radar 時，除咗驗證碼之外，仲需要輸入 Radar PIN 碼，嚟保護你嘅帳戶安全。</string>
     <!-- Button on the safety tips screen that opens account settings -->
     <string name="SafetyTipsBottomSheet__open_account_settings">打開帳戶設定</string>
 
     <!-- Title of a warning sheet shown when the user copies or pastes their recovery key, urging them not to share it -->
     <string name="RecoveryKeyWarningSheetContent__do_not_share_your_recovery_key">唔好分享你嘅恢復金鑰</string>
     <!-- Bolded lead-in to the warning sheet body; combined with RecoveryKeyWarningSheetContent__for_your_recovery_key_never_respond to form a full sentence -->
-    <string name="RecoveryKeyWarningSheetContent__signal_will_never_message_you">Signal 從來都唔會傳訊息俾你</string>
+    <string name="RecoveryKeyWarningSheetContent__signal_will_never_message_you">Radar 從來都唔會傳訊息俾你</string>
     <!-- Remainder of the warning sheet body following the bolded lead-in RecoveryKeyWarningSheetContent__signal_will_never_message_you -->
-    <string name="RecoveryKeyWarningSheetContent__for_your_recovery_key_never_respond">問你攞恢復金鑰。千祈唔好回覆任何假扮 Signal 嘅聊天訊息。請將恢復金鑰保存喺安全嘅地方，同埋千祈唔好講俾任何人知。</string>
+    <string name="RecoveryKeyWarningSheetContent__for_your_recovery_key_never_respond">問你攞恢復金鑰。千祈唔好回覆任何假扮 Radar 嘅聊天訊息。請將恢復金鑰保存喺安全嘅地方，同埋千祈唔好講俾任何人知。</string>
     <!-- Button dismissing the recovery key warning sheet after the user has copied their key -->
     <string name="RecoveryKeyWarningSheetContent__got_it">明白</string>
     <!-- Button opening a help article with more information about recovery key safety -->
@@ -8231,9 +8231,9 @@
     <!-- Content description for the badge shown next to a contact that is in the phone\'s address book -->
     <string name="SelectContactScreen__in_your_contacts">你嘅聯絡人入面</string>
     <!-- Title of the prompt asking for permission to read the user\'s phone contacts -->
-    <string name="SelectContactScreen__find_people_you_know_on_signal">喺 Signal 搵你識嘅人</string>
+    <string name="SelectContactScreen__find_people_you_know_on_signal">喺 Radar 搵你識嘅人</string>
     <!-- Explanation shown when Signal does not have permission to read the user\'s phone contacts -->
-    <string name="SelectContactScreen__allow_access_to_your_contacts">請允許存取你嘅通訊錄。你嘅聯絡人清單已經加密，Signal 唔會睇到。</string>
+    <string name="SelectContactScreen__allow_access_to_your_contacts">請允許存取你嘅通訊錄。你嘅聯絡人清單已經加密，Radar 唔會睇到。</string>
     <!-- Button that asks the system for permission to read the user\'s phone contacts -->
     <string name="SelectContactScreen__allow_access">允許存取</string>
     <!-- Button that dismisses the request for permission to read the user\'s phone contacts -->
@@ -8247,7 +8247,7 @@
     <!-- Title of the sheet explaining how to grant contacts permission from the device settings -->
     <string name="SelectContactScreen__allow_access_to_contacts">允許存取通訊錄</string>
     <!-- Subtitle of the sheet explaining how to grant contacts permission from the device settings -->
-    <string name="SelectContactScreen__to_find_people_you_know_on_signal">要喺 Signal 搵你識嘅人：</string>
+    <string name="SelectContactScreen__to_find_people_you_know_on_signal">要喺 Radar 搵你識嘅人：</string>
     <!-- Toast shown when a selected contact can no longer be read -->
     <string name="SelectContactScreen__couldnt_open_contact">開唔到嗰個聯絡人</string>
 
@@ -8290,7 +8290,7 @@
     <!-- Context menu entry that copies a shared contact detail to the clipboard -->
     <string name="SharedContactDetailsScreen__copy">複製</string>
     <!-- Row that invites a shared contact who is not yet on Signal -->
-    <string name="SharedContactDetailsScreen__invite_to_signal">拉隊嚟 Signal</string>
+    <string name="SharedContactDetailsScreen__invite_to_signal">拉隊嚟 Radar</string>
     <!-- Row that saves a shared contact into the device address book -->
     <string name="SharedContactDetailsScreen__add_to_phone_contacts">加入電話通訊錄</string>
     <!-- Row that adds a shared contact to a Signal group -->
@@ -8302,14 +8302,14 @@
     <!-- Toast shown when there is no map app to open a shared address in -->
     <string name="SharedContactDetailsScreen__couldnt_open_maps">開唔到地圖</string>
     <!-- Subject line of an email invitation to Signal -->
-    <string name="SharedContactDetailsScreen__join_me_on_signal">跟我加入 Signal</string>
+    <string name="SharedContactDetailsScreen__join_me_on_signal">跟我加入 Radar</string>
 
     <!-- Title of the bottom sheet that confirms the user wants a brand new recovery key. -->
     <string name="ResetRecoveryKeyBottomSheet__reset_your_recovery_key">重設你嘅恢復金鑰</string>
     <!-- First paragraph of the bottom sheet body, explaining what a reset does. -->
     <string name="ResetRecoveryKeyBottomSheet__resetting_your_recovery_key_will_create_a_new_key">重設恢復金鑰會為你嘅 Signal Login 建立新金鑰。只有當其他人知道咗你嘅金鑰嗰陣先至需要重設金鑰。</string>
     <!-- Second paragraph of the bottom sheet body, explaining what a reset means for backups. -->
-    <string name="ResetRecoveryKeyBottomSheet__if_backups_are_enabled_you_will_have_to_re_upload">如果啟用咗備份，你就要重新上載你嘅備份，包括媒體。如果你用緊「優化 Signal 儲存空間」功能，咁就一定要先下載已卸載嘅媒體。</string>
+    <string name="ResetRecoveryKeyBottomSheet__if_backups_are_enabled_you_will_have_to_re_upload">如果啟用咗備份，你就要重新上載你嘅備份，包括媒體。如果你用緊「優化 Radar 儲存空間」功能，咁就一定要先下載已卸載嘅媒體。</string>
     <!-- Bottom sheet action that continues on to reset the recovery key. -->
     <string name="ResetRecoveryKeyBottomSheet__continue">繼續</string>
     <!-- Dialog body shown when the recovery key change limit is exhausted and the user does not have backups enabled. -->

@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Gå till kamera</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal behöver behörighet för att visa dina foton och videor</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar behöver behörighet för att visa dina foton och videor</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Tillåt åtkomst</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Inga foton eller videor hittades. Signal har endast tillgång till foton och videor som du valt.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Inga foton eller videor hittades. Radar har endast tillgång till foton och videor som du valt.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal har begränsad åtkomst till foton eller videor</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar har begränsad åtkomst till foton eller videor</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Hantera</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">För att visa foton och videor:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal behöver åtkomst för att visa dina foton och videor.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar behöver åtkomst för att visa dina foton och videor.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Foto</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Tillåt åtkomst till din mikrofon</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">För att fånga fotografier och video, tillåt Signal att tillgå kameran.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">För att fånga fotografier och video, tillåt Radar att tillgå kameran.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">För att kunna ta bilder och spela in video måste Signal ha åtkomst till kameran och mikrofonen.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">För att kunna ta bilder och spela in video måste Radar ha åtkomst till kameran och mikrofonen.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Ge Signal åtkomst till mikrofonen för att spela in videor med ljud.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Ge Radar åtkomst till mikrofonen för att spela in videor med ljud.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Ge Signal åtkomst till kameran för att skanna en QR-kod.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Ge Radar åtkomst till kameran för att skanna en QR-kod.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal behöver åtkomst till kameran för att ta bilder</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar behöver åtkomst till kameran för att ta bilder</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal behöver åtkomst till kameran för att skanna QR-koder</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar behöver åtkomst till kameran för att skanna QR-koder</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal behöver åtkomst till mikrofonen för att spela in video</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar behöver åtkomst till mikrofonen för att spela in video</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">För att ta bilder i Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">För att ta bilder i Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">För att ta bilder och spela in videor i Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">För att ta bilder och spela in videor i Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">För att spela in videor med ljud:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Flerbildsläge</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal behöver mikrofonbehörigheter för att spela in videor men de har avfärdats. Fortsätt till inställningar för appar, välj \"Behörigheter\" och aktivera \"Mikrofon\" och \"Kamera\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar behöver mikrofonbehörigheter för att spela in videor men de har avfärdats. Fortsätt till inställningar för appar, välj \"Behörigheter\" och aktivera \"Mikrofon\" och \"Kamera\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Det gick inte att spela in videon</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d objekt inställda på standardkvalitet</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal behöver behörigheten Lagring för att spara i extern lagring men det har avfärdats permanent. Fortsätt till inställningar för appar, välj \"Behörigheter\" och aktivera \"Lagring\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar behöver behörigheten Lagring för att spara i extern lagring men det har avfärdats permanent. Fortsätt till inställningar för appar, välj \"Behörigheter\" och aktivera \"Lagring\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Videon kommer skickas utan ljud</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Länka enhet?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Det verkar som om du försöker länka en Signal-enhet. Tryck på fortsätt och tryck sedan på Länka en ny enhet och skanna QR-koden igen.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Det verkar som om du försöker länka en Radar-enhet. Tryck på fortsätt och tryck sedan på Länka en ny enhet och skanna QR-koden igen.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Fortsätt</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Det går inte att överföra konto</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Enheten du överför till är en föråldrad version. Uppdatera Signal på den enheten och försök igen.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Enheten du överför till är en föråldrad version. Uppdatera Radar på den enheten och försök igen.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

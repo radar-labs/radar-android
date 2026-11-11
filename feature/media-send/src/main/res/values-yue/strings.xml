@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">去影相</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal 要有權限先可以顯示你嘅相片同影片</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar 要有權限先可以顯示你嘅相片同影片</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">允許存取</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">搵唔到任何相或者影片。Signal 只可以用你揀咗嘅相片同影片。</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">搵唔到任何相或者影片。Radar 只可以用你揀咗嘅相片同影片。</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal 得有限存取權用你嘅相或者影片</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar 得有限存取權用你嘅相或者影片</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">管理</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">顯示相片同影片：</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal 要有存取權先可以顯示你啲相同影片。</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar 要有存取權先可以顯示你啲相同影片。</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">揀相</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">允許存取咪高風</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">要影相同拍片嘅話，Signal 需要存取您部機嘅相機。</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">要影相同拍片嘅話，Radar 需要存取您部機嘅相機。</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">要影相同拍片嘅話，Signal 需要存取你嘅相機同咪。</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">要影相同拍片嘅話，Radar 需要存取你嘅相機同咪。</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">要拍有聲片嘅話，Signal 需要存取你個咪。</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">要拍有聲片嘅話，Radar 需要存取你個咪。</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">要掃二維碼嘅話，Signal 需要存取你嘅相機。</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">要掃二維碼嘅話，Radar 需要存取你嘅相機。</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal 需要相機嘅存取權先可以影相</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar 需要相機嘅存取權先可以影相</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal 需要相機嘅存取權先可以掃描二維碼</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar 需要相機嘅存取權先可以掃描二維碼</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal 需要咪嘅存取權先可以拍片</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar 需要咪嘅存取權先可以拍片</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">要喺 Signal 影相：</string>
+  <string name="CameraXFragment_to_capture_photos">要喺 Radar 影相：</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">要喺 Signal 影相同拍片：</string>
+  <string name="CameraXFragment_to_capture_photos_videos">要喺 Radar 影相同拍片：</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">要拍有聲片：</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">多重捕捉</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal 要攞「麥克風」權限，先可以拍片，但權限已被永久拒絕。請到呢個 app 嘅應用程式設定，揀選「權限」，然後啟用「麥克風」同「相機」。</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar 要攞「麥克風」權限，先可以拍片，但權限已被永久拒絕。請到呢個 app 嘅應用程式設定，揀選「權限」，然後啟用「麥克風」同「相機」。</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">錄片嗰陣出錯</string>
@@ -209,7 +209,7 @@
         <item quantity="other">%1$d 個項目設定咗做標準品質</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal 要攞「儲存裝置」權限先可以儲存到外置儲存裝置，但權限已被永久拒絕。請到呢個 app 嘅設定版面，揀選「權限」，然後啟用「儲存裝置」。</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar 要攞「儲存裝置」權限先可以儲存到外置儲存裝置，但權限已被永久拒絕。請到呢個 app 嘅設定版面，揀選「權限」，然後啟用「儲存裝置」。</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">影片會冇聲效咁發送</string>
 
@@ -223,14 +223,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">係咪要連結裝置？</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">你似乎嘗試緊連結一部裝咗 Signal 嘅裝置。㩒一下繼續，然後㩒一下「連結新裝置」再掃描二維碼。</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">你似乎嘗試緊連結一部裝咗 Radar 嘅裝置。㩒一下繼續，然後㩒一下「連結新裝置」再掃描二維碼。</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">繼續</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">轉移唔到帳戶</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">你轉移緊去嘅裝置已經過時。喺嗰部裝置更新 Signal 然後再試。</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">你轉移緊去嘅裝置已經過時。喺嗰部裝置更新 Radar 然後再試。</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

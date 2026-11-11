@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Tabhair ceadanna</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Chun cabhrú leat teachtaireacht a sheoladh chuig daoine a bhfuil aithne agat orthu, iarrfaidh Signal na ceadanna sin. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Chun cabhrú leat teachtaireacht a sheoladh chuig daoine a bhfuil aithne agat orthu, iarrfaidh Radar na ceadanna sin. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Ní anois</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Teagmhálaithe</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Aimsigh daoine a bhfuil aithne agat orthu. Tá do theagmhálaithe criptithe agus tá siad dofheicthe ag seirbhís Signal.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Aimsigh daoine a bhfuil aithne agat orthu. Tá do theagmhálaithe criptithe agus tá siad dofheicthe ag seirbhís Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Glaonna gutháin</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Tá mo sheanghuthán agam</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Scan cód QR ó do chuntas reatha Signal chun tosú air go tapa</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Scan cód QR ó do chuntas reatha Radar chun tosú air go tapa</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Níl mo sheanghuthán agam</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Nó tá tú ag athshuiteáil Signal ar an ngléas céanna</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Nó tá tú ag athshuiteáil Radar ar an ngléas céanna</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Roghnaigh conas ba mhaith leat stair do theachtaireachtaí agus sonraí an chuntais a aischur.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Ó Chúltacaí Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Ó Chúltacaí Radar</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Plean cúltacaí saor in aisce nó íoctha de chuid Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Plean cúltacaí saor in aisce nó íoctha de chuid Radar</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Cúltaca ar ghléas a aischur</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Níor aimsíodh cúltaca</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Níor aimsíodh cúltaca Signal san fhillteán roghnaithe. Triail fillteán difriúil.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Níor aimsíodh cúltaca Radar san fhillteán roghnaithe. Triail fillteán difriúil.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Triail fillteán difriúil</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Aischuir chuig cuntas nua?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Cruthaíodh an cúltaca atá á aischur agat agus cuntas Signal eile in úsáid. Is féidir leat an cúltaca seo a aischur chuig cuntas nua, ach ní bheidh tú i do bhall d\'aon ghrúpa a aischuireadh a thuilleadh.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Cruthaíodh an cúltaca atá á aischur agat agus cuntas Radar eile in úsáid. Is féidir leat an cúltaca seo a aischur chuig cuntas nua, ach ní bheidh tú i do bhall d\'aon ghrúpa a aischuireadh a thuilleadh.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Aischuir</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Níor aimsíodh cúltaca</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Tá d\'eochair athshlánaithe ceart, ach níl aon Cúltaca Signal ann don chuntas seo. Téigh siar chun bealach eile a roghnú lena aischur, nó lean leis gan aischur.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Tá d\'eochair athshlánaithe ceart, ach níl aon Cúltaca Radar ann don chuntas seo. Téigh siar chun bealach eile a roghnú lena aischur, nó lean leis gan aischur.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Eochair athshlánaithe mhícheart</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Cinntigh go bhfuil tú ag clárú leis an uimhir ghutháin agus an eochair athshlánaithe 64 carachtar chéanna a shábháil tú agus cúltacaí Signal á gcumasú agat. Ní féidir cúltacaí a athshlánú gan an eochair sin.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Cinntigh go bhfuil tú ag clárú leis an uimhir ghutháin agus an eochair athshlánaithe 64 carachtar chéanna a shábháil tú agus cúltacaí Radar á gcumasú agat. Ní féidir cúltacaí a athshlánú gan an eochair sin.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Triail arís</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Fíoraigh le cód SMS?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Is féidir leat do chuntas a chlárú tríd an gcód SMS, a sheolfaidh Signal chugat, a fhíorú. Tar éis an cód a chur isteach, is féidir leat aischur do chúltaca a thriail le d\'eochair athshlánaithe arís.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Is féidir leat do chuntas a chlárú tríd an gcód SMS, a sheolfaidh Radar chugat, a fhíorú. Tar éis an cód a chur isteach, is féidir leat aischur do chúltaca a thriail le d\'eochair athshlánaithe arís.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Seol cód</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Nasc do chuntas</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Nach bhfuil tú ar Signal fós?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Nach bhfuil tú ar Radar fós?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Cruthaigh cuntas</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Níorbh fhéidir an cúltaca seo a aischur</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Ní féidir leis an leagan seo de Signal do chúltaca a aischur. Nuashonraigh chuig an leagan is déanaí agus triail arís é.</string>
+    <string name="RemoteRestoreScreen__update_latest">Ní féidir leis an leagan seo de Radar do chúltaca a aischur. Nuashonraigh chuig an leagan is déanaí agus triail arís é.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Nuashonraigh Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Nuashonraigh Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Ní anois</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Glasáladh do chuntas chun do phríobháideachas agus slándáil a chosaint. Tar éis %1$d lá neamhghníomhaíochta i do chuntas beidh tú in ann an uimhir ghutháin seo a athchlárú gan do UAP a bheith de dhíth ort. Scriosfar an t-ábhar ar fad atá ann.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Oscail Signal ar do sheanghléas</string>
+    <string name="QuickRestoreQRScreen__step_1">Oscail Radar ar do sheanghléas</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Tapáil deilbhín an cheamara </string>
     <!-- Step 3 to quick restore -->
@@ -401,13 +401,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Ba chóir duit UAP níos láidre a roghnú</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Chuir tú an cód isteach athuair, a úsáideadh cheana féin chun d\'uimhir ghutháin a fhíorú. Roghnaigh UAP Signal nua uathúil.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Chuir tú an cód isteach athuair, a úsáideadh cheana féin chun d\'uimhir ghutháin a fhíorú. Roghnaigh UAP Radar nua uathúil.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Tuilleadh faisnéise faoi UAPanna</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Rabhadh</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Má dhíchumasaíonn tú an UAP, caillfidh tú na sonraí go léir nuair a athchláraíonn tú Signal mura ndéanann tú cúltacú agus aischur de láimh. Ní féidir Glas Cláraithe a chasadh air agus an UAP díchumasaithe.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Má dhíchumasaíonn tú an UAP, caillfidh tú na sonraí go léir nuair a athchláraíonn tú Radar mura ndéanann tú cúltacú agus aischur de láimh. Ní féidir Glas Cláraithe a chasadh air agus an UAP díchumasaithe.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Díchumasaigh an UAP</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -424,9 +424,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Cuir isteach do UAP</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Cuir isteach an UAP a chruthaigh tú nuair a shuiteáil tú Signal den chéad uair</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Cuir isteach an UAP a chruthaigh tú nuair a shuiteáil tú Radar den chéad uair</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Chuir tú an cód isteach athuair, a úsáideadh cheana féin chun d\'uimhir ghutháin a fhíorú. Cuir isteach an UAP uathúil Signal a roghnaigh tú roimhe do do chuntas.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Chuir tú an cód isteach athuair, a úsáideadh cheana féin chun d\'uimhir ghutháin a fhíorú. Cuir isteach an UAP uathúil Radar a roghnaigh tú roimhe do do chuntas.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">UAP mícheart. %1$d iarracht fágtha.</item>
@@ -463,7 +463,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Ceadaigh Fógraí</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Ba mhaith le Signal an cead fógraí a iarraidh. Ceadaíonn sé sin do do ghléas foláirimh a thaispeáint ar theacht teachtaireachtaí nua.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Ba mhaith le Radar an cead fógraí a iarraidh. Ceadaíonn sé sin do do ghléas foláirimh a thaispeáint ar theacht teachtaireachtaí nua.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Ní anois</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -499,9 +499,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Scan an cód seo le do chuntas a nascadh</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Oscail Signal ar do ghuthán</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Oscail Radar ar do ghuthán</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Tapáil do phictiúr próifíle le Socruithe Signal a oscailt</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Tapáil do phictiúr próifíle le Socruithe Radar a oscailt</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Tapáil \"Gléasanna nasctha\" agus \"Nasc gléas nua\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -513,7 +513,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Theip ar ghiniúint cóid</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Nach bhfuil Signal agat ar ghléas eile?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Nach bhfuil Radar agat ar ghléas eile?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Cruthaigh cuntas</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -527,7 +527,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Scrios sonraí na haipe?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Tá tú ag iarraidh cuntas difriúil Signal a nascadh. Má leanann tú leis, scriosfar na sonraí uile Signal atá ar an ngléas seo faoi láthair.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Tá tú ag iarraidh cuntas difriúil Radar a nascadh. Má leanann tú leis, scriosfar na sonraí uile Radar atá ar an ngléas seo faoi láthair.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Scrios agus atosaigh</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -535,7 +535,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Aistrigh do chuntas</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Chun do chuntas a aistriú, oscail Signal ar do sheanghléas Android agus roghnaigh Aistrigh Cuntas.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Chun do chuntas a aistriú, oscail Radar ar do sheanghléas Android agus roghnaigh Aistrigh Cuntas.</string>
     <string name="DeviceTransferInstructions__continue">Lean ar aghaidh</string>
 
     <!-- Device transfer: Setup screen -->
@@ -546,11 +546,11 @@
     <string name="DeviceTransferSetup__numbers_match">Is ionann na huimhreacha</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Ní hionann na huimhreacha</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Ag fanacht le do sheanghléas fíorú…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Tá cead suímh ag teastáil ó Signal chun do sheanghléas a aimsiú agus ceangal leis.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Tá cead suímh ag teastáil ó Radar chun do sheanghléas a aimsiú agus ceangal leis.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Tabhair cead</string>
-    <string name="DeviceTransferSetup__location_services_required">Tá cumasú seirbhísí suímh ag teastáil ó Signal chun do sheanghléas a aimsiú agus ceangal leis.</string>
+    <string name="DeviceTransferSetup__location_services_required">Tá cumasú seirbhísí suímh ag teastáil ó Radar chun do sheanghléas a aimsiú agus ceangal leis.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Cas air seirbhísí suímh</string>
-    <string name="DeviceTransferSetup__wifi_required">Ní mór go mbeadh Wi-Fi casta air ionas gur féidir le Signal do sheanghléas a aimsiú agus ceangal leis.</string>
+    <string name="DeviceTransferSetup__wifi_required">Ní mór go mbeadh Wi-Fi casta air ionas gur féidir le Radar do sheanghléas a aimsiú agus ceangal leis.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Cas Wi-Fi air</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Ár leithscéal, is cosúil nach dtacaíonn do gléas le Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Aischuir cúltaca ina ionad sin</string>
@@ -567,7 +567,7 @@
     <string name="DeviceTransferProgress__transferring_data">Sonraí á n-aistriú</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d de theachtaireachtaí go nuige seo</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Ní féidir aistriú</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Ní féidir aistriú ó leagan níos nuaí de Signal.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Ní féidir aistriú ó leagan níos nuaí de Radar.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Níorbh fhéidir roinnt sonraí a aistriú de dheasca srian bunachar sonraí.</string>
     <string name="DeviceTransferProgress__transfer_failed">Theip ar an aistriú. Triail arís.</string>
     <string name="DeviceTransferProgress__try_again">Triail arís</string>
@@ -787,7 +787,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">An bhfuil tú cinnte?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Ní bheidh daoine in ann thú a aimsiú ar Signal gan ainm úsáideora.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Ní bheidh daoine in ann thú a aimsiú ar Radar gan ainm úsáideora.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Cuir ar ceal</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

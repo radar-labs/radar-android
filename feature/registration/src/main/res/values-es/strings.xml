@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Activar permisos</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Para ayudarte a enviar mensajes a personas que conoces, Signal solicitará estos permisos. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Para ayudarte a enviar mensajes a personas que conoces, Radar solicitará estos permisos. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Ahora no</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Contactos</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Encuentra a personas que ya conoces. Tus contactos están protegidos mediante cifrado y no son visibles para Signal.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Encuentra a personas que ya conoces. Tus contactos están protegidos mediante cifrado y no son visibles para Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Llamadas telefónicas</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Tengo mi teléfono anterior</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Para empezar, escanea el código QR que se muestra en tu cuenta de Signal actual</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Para empezar, escanea el código QR que se muestra en tu cuenta de Radar actual</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">No tengo mi teléfono anterior</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">O estás reinstalando Signal en el mismo dispositivo</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">O estás reinstalando Radar en el mismo dispositivo</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Elige cómo quieres restaurar tu historial de mensajes y los datos de tu cuenta.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Desde una copia de seguridad de Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Desde una copia de seguridad de Radar</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Tu plan gratuito o de pago de copias de seguridad de Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Tu plan gratuito o de pago de copias de seguridad de Radar</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Restaurar copia de seguridad local</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -170,7 +170,7 @@
     <!-- Title for the skip restore confirmation dialog -->
     <string name="ArchiveRestoreSelectionScreen__skip_restore_dialog_title">¿Omitir restauración?</string>
     <!-- Warning body text for the skip restore confirmation dialog -->
-    <string name="ArchiveRestoreSelectionScreen__skip_restore_dialog_warning">Si no restauras tu copia de seguridad ahora, no podrás hacerlo más adelante. Si decides omitir la restauración y luego vuelves a habilitar las copias de seguridad, Signal eliminará tu copia de seguridad actual y creará una nueva que no incluirá tus mensajes anteriores.</string>
+    <string name="ArchiveRestoreSelectionScreen__skip_restore_dialog_warning">Si no restauras tu copia de seguridad ahora, no podrás hacerlo más adelante. Si decides omitir la restauración y luego vuelves a habilitar las copias de seguridad, Radar eliminará tu copia de seguridad actual y creará una nueva que no incluirá tus mensajes anteriores.</string>
     <!-- Confirm button text for the skip restore dialog -->
     <string name="ArchiveRestoreSelectionScreen__skip_restore_dialog_confirm_button">Omitir restauración</string>
 
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">No hay ninguna copia de seguridad</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">No se ha encontrado ninguna copia de seguridad de Signal en la carpeta seleccionada. Busca en otra carpeta.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">No se ha encontrado ninguna copia de seguridad de Radar en la carpeta seleccionada. Busca en otra carpeta.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Buscar en otra carpeta</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">¿Restaurar a la nueva cuenta?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">La copia de seguridad que estás restaurando se creó usando otra cuenta de Signal. Puedes restaurar esta copia de seguridad a una nueva cuenta, pero ya no serás estarás en ninguno de los grupos que restaures.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">La copia de seguridad que estás restaurando se creó usando otra cuenta de Radar. Puedes restaurar esta copia de seguridad a una nueva cuenta, pero ya no serás estarás en ninguno de los grupos que restaures.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Restaurar</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">No hay ninguna copia de seguridad</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Tu clave de recuperación es correcta, pero no hay ninguna copia de seguridad de Signal asociada a esta cuenta. Regresa y selecciona otra opción de restauración o continúa sin restaurar tus datos.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Tu clave de recuperación es correcta, pero no hay ninguna copia de seguridad de Radar asociada a esta cuenta. Regresa y selecciona otra opción de restauración o continúa sin restaurar tus datos.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Clave de recuperación incorrecta</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Asegúrate de registrarte con el mismo número de teléfono y la misma clave de recuperación de 64 caracteres que guardaste al activar las copias de seguridad de Signal. Sin esta clave, no es posible recuperar las copias de seguridad.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Asegúrate de registrarte con el mismo número de teléfono y la misma clave de recuperación de 64 caracteres que guardaste al activar las copias de seguridad de Radar. Sin esta clave, no es posible recuperar las copias de seguridad.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Reintentar</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">¿Verificar con código SMS?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Para registrar tu cuenta, puedes solicitar con un código de verificación que Signal te enviará por SMS. Luego de introducir el código, podrás volver a intentar restaurar tu copia de seguridad con tu clave de recuperación.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Para registrar tu cuenta, puedes solicitar con un código de verificación que Radar te enviará por SMS. Luego de introducir el código, podrás volver a intentar restaurar tu copia de seguridad con tu clave de recuperación.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Enviar código</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Vincular mi cuenta</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">¿Aún no tienes una cuenta en Signal?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">¿Aún no tienes una cuenta en Radar?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Crear una cuenta</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Copia de seguridad no restaurada</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Esta versión de Signal no puede restaurar tu copia de seguridad. Actualiza a la última versión e inténtalo de nuevo.</string>
+    <string name="RemoteRestoreScreen__update_latest">Esta versión de Radar no puede restaurar tu copia de seguridad. Actualiza a la última versión e inténtalo de nuevo.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Actualizar Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Actualizar Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Ahora no</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Se ha bloqueado tu cuenta para proteger tu privacidad y seguridad. Después de %1$d días con tu cuenta inactiva, podrás volver a registrarte con este número de teléfono sin necesidad de introducir tu PIN. Se eliminará todo tu contenido.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Abre Signal en tu dispositivo anterior</string>
+    <string name="QuickRestoreQRScreen__step_1">Abre Radar en tu dispositivo anterior</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Toca el icono de la cámara </string>
     <!-- Step 3 to quick restore -->
@@ -398,19 +398,19 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Elige un PIN más seguro</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Has vuelto a introducir el código que ya habías usado para verificar tu número de teléfono. Elige un nuevo PIN de Signal.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Has vuelto a introducir el código que ya habías usado para verificar tu número de teléfono. Elige un nuevo PIN de Radar.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Más información sobre los PIN</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Aviso importante</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Si desactivas el PIN, perderás todos los datos de tu cuenta en caso de volver a registrarte en Signal, a menos que hagas una copia de seguridad manual y la restaures. No se puede activar el bloqueo de registro mientras el PIN esté desactivado.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Si desactivas el PIN, perderás todos los datos de tu cuenta en caso de volver a registrarte en Radar, a menos que hagas una copia de seguridad manual y la restaures. No se puede activar el bloqueo de registro mientras el PIN esté desactivado.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Desactivar PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
     <string name="PinCreationScreen__cancel">Cancelar</string>
     <!-- Dialog message shown when the PIN could not be created because of a problem reaching the service. -->
-    <string name="PinCreationScreen__service_error">Se ha producido un error de conexión con el servicio de Signal.</string>
+    <string name="PinCreationScreen__service_error">Se ha producido un error de conexión con el servicio de Radar.</string>
     <!-- Dialog message shown when the PIN could not be created because of a network error. -->
     <string name="PinCreationScreen__network_error">Se ha producido un error de red.</string>
     <!-- Dialog message shown when the PIN could not be created because of a network error, and the user may retry after a delay. Placeholder is the wait duration. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Introduce tu PIN</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Introduce el PIN que creaste cuando instalaste Signal por primera vez.</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Introduce el PIN que creaste cuando instalaste Radar por primera vez.</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Has vuelto a introducir el código que ya habías usado para verificar tu número de teléfono. Introduce el PIN único de Signal que creaste para tu cuenta.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Has vuelto a introducir el código que ya habías usado para verificar tu número de teléfono. Introduce el PIN único de Radar que creaste para tu cuenta.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">PIN incorrecto. Te queda %1$d intento.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Permitir notificaciones</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal necesita permiso para mostrarte notificaciones. Así podrás recibir avisos en tu dispositivo cuando te lleguen mensajes nuevos.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar necesita permiso para mostrarte notificaciones. Así podrás recibir avisos en tu dispositivo cuando te lleguen mensajes nuevos.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Ahora no</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Escanea este código para vincular tu cuenta</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Abre Signal en tu teléfono</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Abre Radar en tu teléfono</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Toca tu foto de perfil para abrir los Ajustes de Signal</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Toca tu foto de perfil para abrir los Ajustes de Radar</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Toca \"Dispositivos vinculados\" &gt; \"Vincular nuevo dispositivo\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">No se ha podido generar el código</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">¿No tienes Signal en otro dispositivo?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">¿No tienes Radar en otro dispositivo?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Crear una cuenta</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">¿Eliminar los datos de la aplicación?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Estás intentando vincular una cuenta diferente de Signal. Si continúas, se eliminarán todos los datos de Signal almacenados actualmente en este dispositivo.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Estás intentando vincular una cuenta diferente de Radar. Si continúas, se eliminarán todos los datos de Radar almacenados actualmente en este dispositivo.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Eliminar y reiniciar</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Transfiere tu cuenta</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Para transferir tu cuenta, abre Signal en tu dispositivo Android anterior y selecciona Transferir cuenta.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Para transferir tu cuenta, abre Radar en tu dispositivo Android anterior y selecciona Transferir cuenta.</string>
     <string name="DeviceTransferInstructions__continue">Continuar</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Sí, los números coinciden</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Los números no coinciden</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Esperando a la verificación de tu dispositivo anterior…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal necesita acceso a la ubicación para encontrar y conectarse a tu dispositivo anterior.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar necesita acceso a la ubicación para encontrar y conectarse a tu dispositivo anterior.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Habilitar permiso</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal necesita acceso a los servicios de ubicación para encontrar y conectarse con tu dispositivo anterior.</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar necesita acceso a los servicios de ubicación para encontrar y conectarse con tu dispositivo anterior.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Activar servicios de ubicación</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal necesita que el Wi-Fi esté activado para encontrar y conectarse a tu dispositivo anterior.</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar necesita que el Wi-Fi esté activado para encontrar y conectarse a tu dispositivo anterior.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Activar Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">¡Vaya! Parece que tu dispositivo no es compatible con Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Restaurar copia de seguridad</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Transfiriendo datos</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d mensajes transferidos</string>
     <string name="DeviceTransferProgress__unable_to_transfer">No se puede completar la transferencia</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">No se puede transferir la cuenta desde una versión más nueva de Signal.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">No se puede transferir la cuenta desde una versión más nueva de Radar.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">No se han podido transferir algunos datos debido a un problema con la base de datos.</string>
     <string name="DeviceTransferProgress__transfer_failed">No se ha podido completar la transferencia. Inténtalo de nuevo.</string>
     <string name="DeviceTransferProgress__try_again">Reintentar</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">¿Seguro que quieres hacer esto?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Si no tienes un alias, las personas no podrán encontrarte en Signal.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Si no tienes un alias, las personas no podrán encontrarte en Radar.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Cancelar</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

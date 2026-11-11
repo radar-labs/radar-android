@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">カメラを開く</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signalで写真や動画を表示するためには、許可が必要です</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radarで写真や動画を表示するためには、許可が必要です</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">アクセスを許可</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">写真や動画が見つかりませんでした。Signalはユーザーが選択した写真と動画にのみアクセスできます。</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">写真や動画が見つかりませんでした。Radarはユーザーが選択した写真と動画にのみアクセスできます。</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signalの、写真や動画へのアクセスが制限されています</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radarの、写真や動画へのアクセスが制限されています</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">管理</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">写真や動画を表示するには：</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">写真や動画を表示するには、Signalにアクセス権が必要です。</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">写真や動画を表示するには、Radarにアクセス権が必要です。</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">写真</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">マイクへのアクセスの許可</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">写真や動画を撮るには、Signalにカメラへのアクセスを許可してください。</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">写真や動画を撮るには、Radarにカメラへのアクセスを許可してください。</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">写真や動画を撮るには、Signalにカメラとマイクへのアクセスを許可してください。</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">写真や動画を撮るには、Radarにカメラとマイクへのアクセスを許可してください。</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">音声付きの動画を撮るには、Signalにマイクへのアクセスを許可してください。</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">音声付きの動画を撮るには、Radarにマイクへのアクセスを許可してください。</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QRコードをスキャンするには、Signalにカメラへのアクセスを許可してください。</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QRコードをスキャンするには、Radarにカメラへのアクセスを許可してください。</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signalは、写真を撮るためにカメラへのアクセスが必要です</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radarは、写真を撮るためにカメラへのアクセスが必要です</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signalは、QRコードをスキャンするためにカメラへのアクセスが必要です</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radarは、QRコードをスキャンするためにカメラへのアクセスが必要です</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signalは、動画を撮るためにマイクへのアクセスが必要です</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radarは、動画を撮るためにマイクへのアクセスが必要です</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Signalで写真を撮るには：</string>
+  <string name="CameraXFragment_to_capture_photos">Radarで写真を撮るには：</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Signalで写真や動画を撮るには：</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Radarで写真や動画を撮るには：</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">音声付きの動画を撮るには：</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">複数撮影</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">動画を撮るには、Signalにマイクへのアクセス許可が必要ですが、無効になっています。アプリ設定メニューの「アプリの権限」で「マイク」と「カメラ」を有効にしてください。</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">動画を撮るには、Radarにマイクへのアクセス許可が必要ですが、無効になっています。アプリ設定メニューの「アプリの権限」で「マイク」と「カメラ」を有効にしてください。</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">動画の録画中にエラーが発生しました</string>
@@ -209,7 +209,7 @@
         <item quantity="other">%1$dアイテムが標準画質に設定されています</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">外部ストレージにデータを保存するには、Signalにストレージへのアクセス許可が必要ですが、無効になっています。アプリ設定メニューの「アプリの権限」で「ストレージ」を有効にしてください。</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">外部ストレージにデータを保存するには、Radarにストレージへのアクセス許可が必要ですが、無効になっています。アプリ設定メニューの「アプリの権限」で「ストレージ」を有効にしてください。</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">ビデオが音声なしで送信されます</string>
 
@@ -223,14 +223,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">端末をリンクしますか？</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Signal端末をリンクしようとしていますか？［続ける］→［新しい端末をリンクする］をタップし、もう一度QRコードをスキャンしてください。</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Radar端末をリンクしようとしていますか？［続ける］→［新しい端末をリンクする］をタップし、もう一度QRコードをスキャンしてください。</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">続行</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">アカウントを移行できません</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">移行しようとした端末のバージョンが古すぎます。その端末でSignalをアップデートしてからもう一度お試しください。</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">移行しようとした端末のバージョンが古すぎます。その端末でRadarをアップデートしてからもう一度お試しください。</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Téigh chuig an gceamara</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Teastaíonn cead ó Signal chun do ghrianghraif agus físeáin a thaispeáint</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Teastaíonn cead ó Radar chun do ghrianghraif agus físeáin a thaispeáint</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Ceadaigh Rochtain</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Níor aimsíodh aon ghrianghraf ná físeán. Níl rochtain ag Signal ach ar ghrianghraif agus físeáin a roghnaigh tú.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Níor aimsíodh aon ghrianghraf ná físeán. Níl rochtain ag Radar ach ar ghrianghraif agus físeáin a roghnaigh tú.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Tá rochtain theoranta ag Signal ar ghrianghraif nó físeáin</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Tá rochtain theoranta ag Radar ar ghrianghraif nó físeáin</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Bainistigh</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Chun grianghraif agus físeáin a thaispeáint:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Teastaíonn rochtain ó Signal chun do ghrianghraif agus físeáin a thaispeáint.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Teastaíonn rochtain ó Radar chun do ghrianghraif agus físeáin a thaispeáint.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Grianghraf</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Ceadaigh rochtain ar do mhicreafón</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Ceadaigh do Signal rochtain a fháil ar an gceamara chun grianghraif agus físeáin a ghabháil.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Ceadaigh do Radar rochtain a fháil ar an gceamara chun grianghraif agus físeáin a ghabháil.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Ceadaigh do Signal rochtain a fháil ar an gceamara agus ar an micreafón chun grianghraif agus físeáin a ghabháil.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Ceadaigh do Radar rochtain a fháil ar an gceamara agus ar an micreafón chun grianghraif agus físeáin a ghabháil.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Ceadaigh do Signal rochtain a fháil ar do mhicreafón chun físeáin le fuaim a ghabháil.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Ceadaigh do Radar rochtain a fháil ar do mhicreafón chun físeáin le fuaim a ghabháil.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Ceadaigh do Signal rochtain a fháil ar an gceamara chun cód QR a scanadh.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Ceadaigh do Radar rochtain a fháil ar an gceamara chun cód QR a scanadh.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Teastaíonn rochtain ar an gceamara ó Signal chun grianghraif a ghabháil</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Teastaíonn rochtain ar an gceamara ó Radar chun grianghraif a ghabháil</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Teastaíonn rochtain ar an gceamara ó Signal chun cóid QR a scanadh</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Teastaíonn rochtain ar an gceamara ó Radar chun cóid QR a scanadh</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Teastaíonn rochtain ar an micreafón ó Signal chun físeáin a ghabháil</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Teastaíonn rochtain ar an micreafón ó Radar chun físeáin a ghabháil</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Chun grianghraif a ghabháil in Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Chun grianghraif a ghabháil in Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Chun grianghraif agus físeáin a ghabháil in Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Chun grianghraif agus físeáin a ghabháil in Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Chun físeáin le fuaim a ghabháil:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Ilghabháil</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Tá ceadanna micreafóin de dhíth ar Signal chun físeáin a thaifeadadh, ach diúltaíodh dóibh. Lean ar aghaidh chuig socruithe na haipe, roghnaigh \"Ceadanna\", agus cumasaigh \"Micreafón\" agus \"Ceamara\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Tá ceadanna micreafóin de dhíth ar Radar chun físeáin a thaifeadadh, ach diúltaíodh dóibh. Lean ar aghaidh chuig socruithe na haipe, roghnaigh \"Ceadanna\", agus cumasaigh \"Micreafón\" agus \"Ceamara\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Earráid le físeán a thaifeadadh</string>
@@ -217,7 +217,7 @@
         <item quantity="other">%1$d mír socraithe ag gnáthchaighdeán</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Tá Cead stórála ag teastáil ó Signal chun sábháil chuig stóras seachtrach, ach diúltaíodh go buan dó. Lean ar aghaidh chuig socruithe na haipe, roghnaigh \"Ceadanna\" agus cumasaigh \"Stóras\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Tá Cead stórála ag teastáil ó Radar chun sábháil chuig stóras seachtrach, ach diúltaíodh go buan dó. Lean ar aghaidh chuig socruithe na haipe, roghnaigh \"Ceadanna\" agus cumasaigh \"Stóras\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Seolfar an físeán gan an fhuaim</string>
 
@@ -231,14 +231,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Nasc gléas?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Is cosúil go bhfuil tú ag iarraidh gléas Signal a nascadh. Tapáil \"Ar aghaidh\" agus ansin tapáil \"Nasc Gléas Nua\" agus scan an cód QR athuair.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Is cosúil go bhfuil tú ag iarraidh gléas Radar a nascadh. Tapáil \"Ar aghaidh\" agus ansin tapáil \"Nasc Gléas Nua\" agus scan an cód QR athuair.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Lean ar aghaidh</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Ní féidir an cuntas a aistriú</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">An gléas a bhfuil tú ag aistriú chuige, tá sé as dáta. Nuashonraigh Signal ar an ngléas sin agus triail arís.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">An gléas a bhfuil tú ag aistriú chuige, tá sé as dáta. Nuashonraigh Radar ar an ngléas sin agus triail arís.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

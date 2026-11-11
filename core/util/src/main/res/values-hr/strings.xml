@@ -9,9 +9,9 @@
   <!-- Removed by excludeNonTranslatables <string name="install_url" translatable="false">https://signal.org/install</string> -->
     
     <!-- Title of the system share sheet shown when sharing an invite -->
-    <string name="Invite__invite_to_signal">Pozovi u Signal</string>
+    <string name="Invite__invite_to_signal">Pozovi u Radar</string>
     <!-- Default invite message shown in invite flows, to send in email or SMS. -->
-    <string name="Invite__lets_switch_to_signal">Prebacimo se na Signal: %1$s</string>
+    <string name="Invite__lets_switch_to_signal">Prebacimo se na Radar: %1$s</string>
     <!-- Toast shown when Signal is unable to find an external app to share the Invite text string to -->
     <string name="Invite__no_app_to_share_to">Izgleda da nemate nijednu aplikaciju za dijeljenje.</string>
 

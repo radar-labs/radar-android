@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Nastaviť povolenia</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Signal si vyžiada tieto povolenia, aby vám pomohol posielať správy ľuďom, ktorých poznáte. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Radar si vyžiada tieto povolenia, aby vám pomohol posielať správy ľuďom, ktorých poznáte. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Teraz nie</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakty</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Nájdite ľudí, ktorých poznáte. Vaše kontakty sú šifrované a nie sú viditeľné pre službu Signal.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Nájdite ľudí, ktorých poznáte. Vaše kontakty sú šifrované a nie sú viditeľné pre službu Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Hovory</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Mám svoj starý telefón</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Pre rýchle nastavenie naskenujte QR kód zo svojho aktuálneho Signal účtu</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Pre rýchle nastavenie naskenujte QR kód zo svojho aktuálneho Radar účtu</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Nemám svoj starý telefón</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Alebo znova inštalujete Signal na rovnakom zariadení</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Alebo znova inštalujete Radar na rovnakom zariadení</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Vyberte, ako chcete obnoviť históriu správ a údaje účtu.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Zo Záloh Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Zo Záloh Radar</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Váš bezplatný alebo platený plán Záloh Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Váš bezplatný alebo platený plán Záloh Radar</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Obnoviť zálohu na zariadení</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Nenašla sa žiadna záloha</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Vo vybranom priečinku sa nenašla žiadna záloha Signal. Skúste iný priečinok.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Vo vybranom priečinku sa nenašla žiadna záloha Radar. Skúste iný priečinok.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Skúsiť iný priečinok</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Obnoviť do nového účtu?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Záloha, ktorú obnovujete, bola vytvorená pomocou iného Signal účtu. Túto zálohu môžete obnoviť do nového účtu, ale už nebudete členom žiadnej zo skupín, ktoré boli obnovené.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Záloha, ktorú obnovujete, bola vytvorená pomocou iného Radar účtu. Túto zálohu môžete obnoviť do nového účtu, ale už nebudete členom žiadnej zo skupín, ktoré boli obnovené.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Obnoviť</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Nenašla sa žiadna záloha</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Váš kľúč na obnovenie je správny, ale pre tento účet neexistuje žiadna záloha Signal. Vráťte sa späť a vyberte si iný spôsob obnovenia alebo pokračujte bez obnovenia.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Váš kľúč na obnovenie je správny, ale pre tento účet neexistuje žiadna záloha Radar. Vráťte sa späť a vyberte si iný spôsob obnovenia alebo pokračujte bez obnovenia.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Nesprávny kľúč na obnovenie</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Uistite sa, že sa registrujete pomocou rovnakého telefónneho čísla a 64-miestneho záložného kľúča, ktoré ste si uložili pri povolení Záloh Signal. Zálohy nie je možné obnoviť bez tohto kľúča.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Uistite sa, že sa registrujete pomocou rovnakého telefónneho čísla a 64-miestneho záložného kľúča, ktoré ste si uložili pri povolení Záloh Radar. Zálohy nie je možné obnoviť bez tohto kľúča.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Skúsiť znova</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Overiť pomocou SMS kódu?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Svoj účet si môžete zaregistrovať overením pomocou SMS kódu, ktorý vám Signal pošle. Po zadaní kódu môžete znova skúsiť obnoviť zálohu pomocou kľúča na obnovenie.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Svoj účet si môžete zaregistrovať overením pomocou SMS kódu, ktorý vám Radar pošle. Po zadaní kódu môžete znova skúsiť obnoviť zálohu pomocou kľúča na obnovenie.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Odoslať kód</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Prepojte svoj účet</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Ešte nepoužívate Signal?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Ešte nepoužívate Radar?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Vytvorte si účet</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Túto zálohu sa nepodarilo obnoviť</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Táto verzia Signalu nedokáže obnoviť vašu zálohu. Aktualizujte na najnovšiu verziu a skúste to znova.</string>
+    <string name="RemoteRestoreScreen__update_latest">Táto verzia Radaru nedokáže obnoviť vašu zálohu. Aktualizujte na najnovšiu verziu a skúste to znova.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Aktualizujte Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Aktualizujte Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Teraz nie</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Váš účet sa uzamkol z dôvodu ochrany vášho súkromia a zabezpečenia. Po %1$d dňoch nečinnosti vo vašom účte budete môcť opätovne zaregistrovať toto telefónne číslo bez potreby PIN kódu. Všetok obsah sa odstráni.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Otvorte Signal na svojom starom zariadení</string>
+    <string name="QuickRestoreQRScreen__step_1">Otvorte Radar na svojom starom zariadení</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Ťuknite na ikonu fotoaparátu </string>
     <!-- Step 3 to quick restore -->
@@ -400,13 +400,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Zvoľte si silnejší PIN</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Znova ste zadali kód, ktorý ste už použili na overenie vášho telefónneho čísla. Vyberte si nový a unikátny Signal PIN.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Znova ste zadali kód, ktorý ste už použili na overenie vášho telefónneho čísla. Vyberte si nový a unikátny Radar PIN.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Zistiť viac o PINoch</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Varovanie</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Ak vypnete PIN, opätovnou registráciou Signalu prídete o všetky svoje údaje, pokiaľ ich manuálne nezálohujete a neobnovíte. Kým bude PIN vypnutý, nebudete môcť zapnúť registračný zámok.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Ak vypnete PIN, opätovnou registráciou Radaru prídete o všetky svoje údaje, pokiaľ ich manuálne nezálohujete a neobnovíte. Kým bude PIN vypnutý, nebudete môcť zapnúť registračný zámok.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Vypnúť PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -423,9 +423,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Zadajte svoj PIN</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Zadajte PIN kód, ktorý ste vytvorili pri prvej inštalácii Signalu</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Zadajte PIN kód, ktorý ste vytvorili pri prvej inštalácii Radaru</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Znova ste zadali kód, ktorý ste už použili na overenie vášho telefónneho čísla. Zadajte unikátny Signal PIN, ktorý ste si predtým vybrali pre svoj účet.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Znova ste zadali kód, ktorý ste už použili na overenie vášho telefónneho čísla. Zadajte unikátny Radar PIN, ktorý ste si predtým vybrali pre svoj účet.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">Nesprávny PIN kód. Zostáva %1$d pokus.</item>
@@ -461,7 +461,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Povoľte upozornenia</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal žiada o povolenie na odosielanie upozornení. Vďaka tomu môže vaše zariadenie zobrazovať upozornenia, keď vám prídu nové správy.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar žiada o povolenie na odosielanie upozornení. Vďaka tomu môže vaše zariadenie zobrazovať upozornenia, keď vám prídu nové správy.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Teraz nie</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -497,9 +497,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Naskenujte tento kód a prepojte svoj účet</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Otvorte Signal na svojom telefóne</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Otvorte Radar na svojom telefóne</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Ťuknutím na svoju profilovú fotku otvoríte Signal nastavenia</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Ťuknutím na svoju profilovú fotku otvoríte Radar nastavenia</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Ťuknite na „Prepojené zariadenia“ a „Prepojiť nové zariadenie“</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -511,7 +511,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Nepodarilo sa vygenerovať kód</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Nemáte Signal na inom zariadení?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Nemáte Radar na inom zariadení?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Vytvorte si účet</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -525,7 +525,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Vymazať údaje aplikácie?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Pokúšate sa prepojiť iný Signal účet. Ak budete pokračovať, všetky údaje Signalu, ktoré sa aktuálne nachádzajú na tomto zariadení, budú vymazané.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Pokúšate sa prepojiť iný Radar účet. Ak budete pokračovať, všetky údaje Radaru, ktoré sa aktuálne nachádzajú na tomto zariadení, budú vymazané.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Vymazať a reštartovať</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -533,7 +533,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Preneste si účet</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Ak chcete preniesť svoj účet, otvorte Signal na svojom starom Android zariadení a vyberte možnosť Preniesť účet.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Ak chcete preniesť svoj účet, otvorte Radar na svojom starom Android zariadení a vyberte možnosť Preniesť účet.</string>
     <string name="DeviceTransferInstructions__continue">Pokračovať</string>
 
     <!-- Device transfer: Setup screen -->
@@ -544,11 +544,11 @@
     <string name="DeviceTransferSetup__numbers_match">Áno, čísla sa zhodujú</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Čísla sa nezhodujú</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Čaká sa na overenie vášho starého zariadenia…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Aby Signal mohol objaviť vaše staré zariadenie a pripojiť sa k nemu, potrebuje prístup k polohe.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Aby Radar mohol objaviť vaše staré zariadenie a pripojiť sa k nemu, potrebuje prístup k polohe.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Udeliť povolenie</string>
-    <string name="DeviceTransferSetup__location_services_required">Aby Signal mohol objaviť vaše staré zariadenie a pripojiť sa k nemu, musia byť zapnuté služby polohy.</string>
+    <string name="DeviceTransferSetup__location_services_required">Aby Radar mohol objaviť vaše staré zariadenie a pripojiť sa k nemu, musia byť zapnuté služby polohy.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Zapnúť služby polohy</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal potrebuje zapnuté Wi-Fi, aby mohol objaviť vaše staré zariadenie a pripojiť sa k nemu.</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar potrebuje zapnuté Wi-Fi, aby mohol objaviť vaše staré zariadenie a pripojiť sa k nemu.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Zapnúť Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Ľutujeme, zdá sa, že vaše zariadenie nepodporuje Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Obnoviť namiesto toho zálohu</string>
@@ -565,7 +565,7 @@
     <string name="DeviceTransferProgress__transferring_data">Prenášajú sa dáta</string>
     <string name="DeviceTransferProgress__d_messages_so_far">Zatiaľ %1$d správ</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Nemožno presunúť</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Prenos nie je možný z novšej verzie aplikácie Signal.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Prenos nie je možný z novšej verzie aplikácie Radar.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Niektoré údaje sa nepodarilo preniesť z dôvodu obmedzenia databázy.</string>
     <string name="DeviceTransferProgress__transfer_failed">Prenos zlyhal. Skúste to znova.</string>
     <string name="DeviceTransferProgress__try_again">Skúsiť znova</string>
@@ -785,7 +785,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Naozaj chcete pokračovať?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Bez používateľského mena vás ľudia nebudú môcť nájsť v službe Signal.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Bez používateľského mena vás ľudia nebudú môcť nájsť v službe Radar.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Zrušiť</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

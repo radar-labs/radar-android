@@ -3,7 +3,7 @@
     <!-- RegistrationLockV2Dialog -->
     <string name="RegistrationLockV2Dialog_turn_on_registration_lock">రిజిస్ట్రేషన్ లాక్ ఆన్ చేయాలా?</string>
     <string name="RegistrationLockV2Dialog_turn_off_registration_lock">రిజిస్ట్రేషన్ లాక్ ఆఫ్ చేయాలా?</string>
-    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Signal ‌తో మళ్లీ నమోదు చేసేటప్పుడు మీరు మీ Signal పిన్‌ను మరచిపోతే, మీరు మీ ఖాతా నుండి 7 రోజులు లాక్ అవుతారు.</string>
+    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Radar ‌తో మళ్లీ నమోదు చేసేటప్పుడు మీరు మీ Radar పిన్‌ను మరచిపోతే, మీరు మీ ఖాతా నుండి 7 రోజులు లాక్ అవుతారు.</string>
     <string name="RegistrationLockV2Dialog_turn_on">ఆరంభించండి</string>
     <string name="RegistrationLockV2Dialog_turn_off">తీసివేయు</string>
     <string name="preferences__advanced_pin_settings">అధునాతన పిన్ సెట్టింగ్‌లు</string>
@@ -12,20 +12,20 @@
     <string name="RegistrationLockFragment__switch_keyboard">కీబోర్డ్ మారండి</string>
     <string name="preferences_chats__transfer_account">ఖాతాను బదిలీ చేయడం</string>
     <string name="preferences_chats__transfer_account_to_a_new_android_device">ఖాతాను కొత్త Android పరికరానికి బదిలీ చేయండి</string>
-    <string name="preferences_app_protection__signal_pin">Signal పిన్</string>
+    <string name="preferences_app_protection__signal_pin">Radar పిన్</string>
     <string name="preferences_app_protection__create_a_pin">పిన్ సృష్టించండి</string>
     <string name="preferences_app_protection__change_your_pin">మీ పిన్ మార్చండి</string>
     <string name="preferences_app_protection__pin_reminders">పిన్ రిమైండర్‌లు</string>
     <string name="preferences_app_protection__turn_off">తీసివేయు</string>
     <string name="preferences_app_protection__confirm_pin">పిన్ ని నిర్ధారించండి</string>
-    <string name="preferences_app_protection__confirm_your_signal_pin">మీ Signal పిన్ను నిర్ధారించండి</string>
-    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">మీ పిన్ను తిరిగి పొందలేనందున మీరు గుర్తుంచుకున్నారని లేదా సురక్షితంగా నిల్వ చేశారని నిర్ధారించుకోండి. మీరు మీ పిన్‌ను మరచిపోతే, మీ Signal ఖాతాను తిరిగి నమోదు చేసేటప్పుడు మీరు డేటాను కోల్పోవచ్చు.</string>
+    <string name="preferences_app_protection__confirm_your_signal_pin">మీ Radar పిన్ను నిర్ధారించండి</string>
+    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">మీ పిన్ను తిరిగి పొందలేనందున మీరు గుర్తుంచుకున్నారని లేదా సురక్షితంగా నిల్వ చేశారని నిర్ధారించుకోండి. మీరు మీ పిన్‌ను మరచిపోతే, మీ Radar ఖాతాను తిరిగి నమోదు చేసేటప్పుడు మీరు డేటాను కోల్పోవచ్చు.</string>
     <string name="preferences_app_protection__incorrect_pin_try_again">తప్పు పిన్. మళ్ళీ ప్రయత్నించండి.</string>
     <string name="preferences_app_protection__registration_lock">నమోదు లాక్</string>
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
     <string name="preferences_account_reregister">ఖాతాను తిరిగి నమోదు చేయండి</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
-    <string name="preferences_account_update_signal">Signal ను నవీకరించండి</string>
+    <string name="preferences_account_update_signal">Radar ను నవీకరించండి</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
     <string name="preferences_account_delete_all_data">మొత్తం సమాచారమును తొలగించండి</string>
     <!-- Title for confirmation dialog confirming user wants to delete all their data -->
@@ -40,7 +40,7 @@
     <!-- AccountSettingsFragment -->
     <string name="AccountSettingsFragment__account">ఖాతా</string>
     <string name="AccountSettingsFragment__youll_be_asked_less_frequently">క్రమేపీ మిమ్మల్ని తక్కువసార్లు అడుగుతారు</string>
-    <string name="AccountSettingsFragment__require_your_signal_pin">మళ్లీ Signal తో మీ ఫోన్ నెంబర్‌ను రిజిస్టర్ చేసుకోవడానికి మీ Signal PIN అవసరం</string>
+    <string name="AccountSettingsFragment__require_your_signal_pin">మళ్లీ Radar తో మీ ఫోన్ నెంబర్‌ను రిజిస్టర్ చేసుకోవడానికి మీ Radar PIN అవసరం</string>
     <string name="AccountSettingsFragment__change_phone_number">ఫోన్ నెంబరు మార్చండి</string>
     <!-- Account setting that allows user to request and export their signal account data -->
     <string name="AccountSettingsFragment__request_account_data">మీ ఖాతా డేటా</string>
@@ -140,7 +140,7 @@
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">మీ ఖాతా డేటా</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
-    <string name="ExportAccountDataFragment__export_explanation">మీ Signal ఖాతా డేటా యొక్క నివేదికను ఎగుమతి చేయండి. ఈ నివేదికలో ఎలాంటి మీడియా లేదా సందేశాలు ఉండవు. %1$s</string>
+    <string name="ExportAccountDataFragment__export_explanation">మీ Radar ఖాతా డేటా యొక్క నివేదికను ఎగుమతి చేయండి. ఈ నివేదికలో ఎలాంటి మీడియా లేదా సందేశాలు ఉండవు. %1$s</string>
     <!-- Learn more link to more information about requesting account data -->
     <string name="ExportAccountDataFragment__learn_more">మరింత తెలుసుకోండి</string>
     <!-- Button action to export the report data to another app (e.g. email) -->
@@ -168,14 +168,14 @@
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">డేటా ఎగుమతి చేసేదా?</string>
     <!-- Message for export confirmation dialog -->
-    <string name="ExportAccountDataFragment__export_report_confirmation_message">మీరు విశ్వసించే వ్యక్తులు లేదా యాప్‌లతో మాత్రమే మీ Signal ఖాతా డేటాను పంచుకోండి.</string>
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">మీరు విశ్వసించే వ్యక్తులు లేదా యాప్‌లతో మాత్రమే మీ Radar ఖాతా డేటాను పంచుకోండి.</string>
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">ఎగుమతి చేయండి</string>
 
     <!-- Shown in a dialog with a spinner while the report is downloading -->
     <string name="ExportAccountDataFragment__download_progress">నివేదికను రూపొందిస్తోంది…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
-    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">ఎగుమతి సమయంలో మాత్రమే మీ నివేదిక రూపొందించ బడుతుంది మరియు మీ పరికరంలో Signal ద్వారా నిల్వచేయబడదు.</string>
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">ఎగుమతి సమయంలో మాత్రమే మీ నివేదిక రూపొందించ బడుతుంది మరియు మీ పరికరంలో Radar ద్వారా నిల్వచేయబడదు.</string>
 
     <!-- TotpSetupScreen -->
     <!-- Title of the screen that walks the user through setting up an authenticator app -->
@@ -191,7 +191,7 @@
     <!-- Header of the second step of authenticator app setup -->
     <string name="TotpSetupScreen__step_2">దశ 2</string>
     <!-- Body of the second step of authenticator app setup -->
-    <string name="TotpSetupScreen__open_your_authenticator_app">మీ Signal ఖాతాను జోడించడానికి, కింద ఉన్న బటన్‌ను తట్టడం ద్వారా మీ అథెంటికేటర్ యాప్‌ను తెరవండి.</string>
+    <string name="TotpSetupScreen__open_your_authenticator_app">మీ Radar ఖాతాను జోడించడానికి, కింద ఉన్న బటన్‌ను తట్టడం ద్వారా మీ అథెంటికేటర్ యాప్‌ను తెరవండి.</string>
     <!-- Button that opens the user\'s authenticator app -->
     <string name="TotpSetupScreen__open">తెరవండి</string>
     <!-- Text above the setup key explaining that it can be entered by hand instead -->
@@ -205,7 +205,7 @@
     <!-- Dialog message shown when the account already has as many authenticator apps as it\'s allowed -->
     <string name="TotpSetupScreen__you_cant_add_more_than_d">మీరు %1$d కంటే ఎక్కువ అథెంటికేటర్ యాప్‌లను జోడించలేరు. ముందుగా ఒకదాన్ని తీసివేయడానికి ప్రయత్నించండి.</string>
     <!-- Dialog message shown when we couldn\'t reach the service to start setting up an authenticator app -->
-    <string name="TotpSetupScreen__couldnt_reach_signal">Signal‌ను చేరుకోలేకపోయాము. మీ కనెక్షన్‌ను తనిఖీ చేసి, మళ్ళీ ప్రయత్నించండి.</string>
+    <string name="TotpSetupScreen__couldnt_reach_signal">Radar‌ను చేరుకోలేకపోయాము. మీ కనెక్షన్‌ను తనిఖీ చేసి, మళ్ళీ ప్రయత్నించండి.</string>
     <!-- Header of the third step of authenticator app setup -->
     <string name="TotpSetupScreen__step_3">దశ 3</string>
     <!-- Body of the third step of authenticator app setup -->
@@ -243,7 +243,7 @@
     <!-- Error shown under the code field when the code the user entered was rejected -->
     <string name="TotpCodeEntryScreen__incorrect_code">తప్పు కోడ్. ఇప్పుడు మీ ఆథెంటికేటర్ యాప్‌లో ప్రస్తుతం కనిపిస్తున్న కోడ్‌ను నమోదు చేయండి.</string>
     <!-- Error shown under the code field when we couldn\'t reach the service to check the code -->
-    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Signal‌ను చేరుకోలేకపోయాము. మీ కనెక్షన్‌ను తనిఖీ చేసి, మళ్ళీ ప్రయత్నించండి.</string>
+    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Radar‌ను చేరుకోలేకపోయాము. మీ కనెక్షన్‌ను తనిఖీ చేసి, మళ్ళీ ప్రయత్నించండి.</string>
 
     <!-- Default name given to an authenticator app the moment it\'s set up, before the user chooses their own name for it -->
     <string name="TotpRepository__authenticator">అథెంటికేటర్</string>
@@ -294,7 +294,7 @@
     <string name="DeleteAccountFragment__no_number">సంఖ్య పేర్కొనబడలేదు</string>
     <string name="DeleteAccountFragment__the_phone_number">మీరు నమోదు చేసిన ఫోన్ నంబర్ మీ ఖాతాతో సరిపోలలేదు.</string>
     <string name="DeleteAccountFragment__are_you_sure">మీరు ఖచ్చితంగా మీ ఖాతాను తొలగించాలనుకుంటున్నారా?</string>
-    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">ఇది మీ Signal ఖాతాను తొలగిస్తుంది మరియు అప్లికేషన్‌ను రీసెట్ చేస్తుంది. ప్రక్రియ పూర్తయిన తర్వాత యాప్ మూసివేయబడుతుంది.</string>
+    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">ఇది మీ Radar ఖాతాను తొలగిస్తుంది మరియు అప్లికేషన్‌ను రీసెట్ చేస్తుంది. ప్రక్రియ పూర్తయిన తర్వాత యాప్ మూసివేయబడుతుంది.</string>
     <string name="DeleteAccountFragment__failed_to_delete_local_data">స్థానిక డేటాను తొలగించడంలో విఫలమైంది. మీరు దీన్ని సిస్టమ్ అప్లికేషన్ సెట్టింగులలో మాన్యువల్‌గా క్లియర్ చేయవచ్చు.</string>
     <string name="DeleteAccountFragment__launch_app_settings">అనువర్తన సెట్టింగ్‌లను ప్రారంభించండి</string>
     <!-- Title of progress dialog shown when a user deletes their account and the process is leaving all groups -->
@@ -322,7 +322,7 @@
     <!-- Bullet point on the delete account screen warning the user that the deletion is permanent -->
     <string name="DeleteAccountScreen__this_action_can_not_be_undone">ఈ చర్య రద్దు చేయబడదు</string>
     <!-- Message of the deletion confirmation dialog, shown when the account has a username. Placeholder is the username. -->
-    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">ఇది యూజర్‌నేమ్ \"%1$s\" తో ఉన్న మీ Signal ఖాతాను తొలగించి, అప్లికేషన్‌ను రీసెట్ చేస్తుంది. ఈ ప్రక్రియ పూర్తయిన తరువాత యాప్ మూసివేయబడుతుంది.</string>
+    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">ఇది యూజర్‌నేమ్ \"%1$s\" తో ఉన్న మీ Radar ఖాతాను తొలగించి, అప్లికేషన్‌ను రీసెట్ చేస్తుంది. ఈ ప్రక్రియ పూర్తయిన తరువాత యాప్ మూసివేయబడుతుంది.</string>
     <!-- Label of the checkbox the user has to tick in the confirmation dialog before they can delete their account -->
     <string name="DeleteAccountScreen__yes_delete_my_account">అవును, నా ఖాతాను తొలగించండి</string>
 
@@ -455,15 +455,15 @@
     <!-- Section title above two radio buttons for enabling and disabling whether users can find me by my phone number  -->
     <string name="PhoneNumberPrivacySettingsFragment_who_can_find_me_by_number_heading">నంబర్ ద్వారా నన్ను ఎవరు కనుగొనగలరు</string>
     <!-- Subtext below radio buttons when who can find me by number is set to everyone -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">మీ ఫోన్ నంబర్‌ను కలిగి ఉన్న ఎవరైనా మీరు Signal లో ఉన్నట్లు చూస్తారు మరియు మీతో చాట్‌లను ప్రారంభించగలరు.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">మీ ఫోన్ నంబర్‌ను కలిగి ఉన్న ఎవరైనా మీరు Radar లో ఉన్నట్లు చూస్తారు మరియు మీతో చాట్‌లను ప్రారంభించగలరు.</string>
     <!-- Subtext below radio buttons when who can find me by number is set to nobody -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">మీరు వారికి సందేశం పంపితే లేదా వారితో ఇప్పటికే చాట్ చేస్తే తప్ప మీరు Signal లో ఉన్నారని ఎవరూ చూడలేరు.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">మీరు వారికి సందేశం పంపితే లేదా వారితో ఇప్పటికే చాట్ చేస్తే తప్ప మీరు Radar లో ఉన్నారని ఎవరూ చూడలేరు.</string>
     <!-- Snackbar text when pressing invalid radio item -->
     <string name="PhoneNumberPrivacySettingsFragment__to_change_this_setting">"ఈ సెట్టింగ్‌ను మార్చడానికి, నా నంబర్‌ను ఎవరు చూడగలరు అనే దానిని ఎవరూ చూడలేరుకు సెట్ చేయండి."</string>
     <!-- Dialog title shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
     <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_title">ఖచ్చితంగా చేయాలా?</string>
     <!-- Dialog warning message shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
-    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">\"నంబరు ద్వారా నన్ను ఎవరు కనుగొనగలరు\" అనే సెట్టింగ్‌ను \"ఎవరూ లేరు\" కు సెట్ చేయడం వలన వ్యక్తులు మిమ్మల్ని Signal లో కనుగొనడం కష్టతరం చేస్తుంది.</string>
+    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">\"నంబరు ద్వారా నన్ను ఎవరు కనుగొనగలరు\" అనే సెట్టింగ్‌ను \"ఎవరూ లేరు\" కు సెట్ చేయడం వలన వ్యక్తులు మిమ్మల్ని Radar లో కనుగొనడం కష్టతరం చేస్తుంది.</string>
     <!-- Dialog button text for canceling change action -->
     <string name="PhoneNumberPrivacySettingsFragment__cancel">రద్దు చేయండి</string>
     <string name="PhoneNumberPrivacy_everyone">ప్రతి ఒక్కరూ</string>
@@ -509,7 +509,7 @@
     <!-- Text shown with toggle that when switched on will enable screen lock -->
     <string name="ScreenLockSettingsFragment__use_screen_lock">స్క్రీన్ లాక్ ఉపయోగించండి</string>
     <!-- Description of what screen locking will do and how notification content will not be shown when screen is locked -->
-    <string name="ScreenLockSettingsFragment__your_android_device">మీరు యాప్‌లను విడిచిపెట్టినప్పుడు లేదా యాప్‌ల మధ్య మారినప్పుడు Signal ను అన్‌లాక్ చేయడానికి మీ ఆండ్రాయిడ్ పరికరం లాక్ సెట్టింగ్‌లు అవసరం. లాక్ చేయబడినప్పుడు, నోటిఫికేషన్ ప్రివ్యూలు సందేశ కంటెంట్‌ను చూపవు.</string>
+    <string name="ScreenLockSettingsFragment__your_android_device">మీరు యాప్‌లను విడిచిపెట్టినప్పుడు లేదా యాప్‌ల మధ్య మారినప్పుడు Radar ను అన్‌లాక్ చేయడానికి మీ ఆండ్రాయిడ్ పరికరం లాక్ సెట్టింగ్‌లు అవసరం. లాక్ చేయబడినప్పుడు, నోటిఫికేషన్ ప్రివ్యూలు సందేశ కంటెంట్‌ను చూపవు.</string>
     <!-- Title text explaining when users should start the screen lock -->
     <string name="ScreenLockSettingsFragment__start_screen_lock">స్క్రీన్ లాక్‌ను ప్రారంభించండి</string>
     <!-- Option text explaining that screen lock should start after 1 minute of inactivity -->
@@ -521,9 +521,9 @@
     <!-- Option text explaining that screen lock should start at a custom time set by the user -->
     <string name="ScreenLockSettingsFragment__custom_time">అనుకూల సమయం</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn on screen lock -->
-    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Signal స్క్రీన్ లాక్ ఉపయోగించండి</string>
+    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Radar స్క్రీన్ లాక్ ఉపయోగించండి</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn off screen lock -->
-    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">Signal స్క్రీన్ లాక్ ఆఫ్ చేయండి</string>
+    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">Radar స్క్రీన్ లాక్ ఆఫ్ చేయండి</string>
 
     <!-- HelpSettingsFragment -->
     <string name="preferences__help">సహాయం</string>
@@ -545,7 +545,7 @@
     <!-- Visible warning label for the limitations of changing the app icon. -->
     <string name="preferences__app_icon_warning">యాప్ ఐకాన్స్ మరియు పేర్లు హోమ్ స్క్రీన్ మరియు యాప్ డ్రాయర్‌పై కనిపిస్తాయి.</string>
     <!-- Visible warning label explaining that changing the app icon and name does not affect notifications. -->
-    <string name="preferences__app_icon_notification_warning">నోటిఫికేషన్లు ఎల్లప్పుడూ డిఫాల్ట్ Signal ఐకాన్ మరియు పేరును ప్రదర్శిస్తాయి.</string>
+    <string name="preferences__app_icon_notification_warning">నోటిఫికేషన్లు ఎల్లప్పుడూ డిఫాల్ట్ Radar ఐకాన్ మరియు పేరును ప్రదర్శిస్తాయి.</string>
     <!--Text description of a graphic illustrating the limitations of the app icon change. -->
     <string name="preferences__graphic_illustrating_where_the_replacement_app_icon_will_be_visible">రీప్లేస్‌మెంట్ యాప్ ఐకాన్ ఎక్కడ కనిపిస్తుందో వివరించే గ్రాఫిక్.</string>
 
@@ -565,9 +565,9 @@
     <!-- Title for the confirmation dialog of changing the app icon. -->
     <string name="preferences__app_icon_dialog_title">యాప్ ఐకాన్ మరియు పేరును \"%1$s\"కు మార్చండి</string>
     <!-- Description for the confirmation dialog of changing the app icon. -->
-    <string name="preferences__app_icon_dialog_description">యాప్ ఐకాన్ మరియు పేరును మార్చడానికి Signal ను మూసివేయాల్సి ఉంటుంది. నోటిఫికేషన్లు ఎల్లప్పుడూ డిఫాల్ట్ Signal ఐకాన్ మరియు పేరును ప్రదర్శిస్తాయి.</string>
+    <string name="preferences__app_icon_dialog_description">యాప్ ఐకాన్ మరియు పేరును మార్చడానికి Radar ను మూసివేయాల్సి ఉంటుంది. నోటిఫికేషన్లు ఎల్లప్పుడూ డిఫాల్ట్ Radar ఐకాన్ మరియు పేరును ప్రదర్శిస్తాయి.</string>
     <!-- Visible warning label for the limitations of changing the app icon with learn more call to action. -->
-    <string name="preferences__app_icon_warning_learn_more">యాప్ ఐకాన్ మరియు పేరును ఎంచుకోండి, ఇది మీ ఫోన్ యొక్క హోమ్ స్క్రీన్ మరియు యాప్ డ్రాయర్‌పై కనిపిస్తుంది. నోటిఫికేషన్లు ఎల్లప్పుడూ డిఫాల్ట్ Signal ఐకాన్ మరియు పేరును ప్రదర్శిస్తాయి. మరింత తెలుసుకోండి</string>
+    <string name="preferences__app_icon_warning_learn_more">యాప్ ఐకాన్ మరియు పేరును ఎంచుకోండి, ఇది మీ ఫోన్ యొక్క హోమ్ స్క్రీన్ మరియు యాప్ డ్రాయర్‌పై కనిపిస్తుంది. నోటిఫికేషన్లు ఎల్లప్పుడూ డిఫాల్ట్ Radar ఐకాన్ మరియు పేరును ప్రదర్శిస్తాయి. మరింత తెలుసుకోండి</string>
     <!--Call to action to get more information about the limitations of the change app icon functionality. -->
     <string name="preferences__app_icon_learn_more">మరింత తెలుసుకోండి</string>
 
@@ -597,7 +597,7 @@
     <string name="ApplicationPreferenceActivity_you_havent_set_a_passphrase_yet">మీరింకా సంకేతపదమును సెట్ చేయలేదు!</string>
     <string name="ApplicationPreferencesActivity_disable">అచేతనించు</string>
     <string name="ApplicationPreferencesActivity_disable_passphrase">సంకేతపదమును ఆపివేయాలా?</string>
-    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">ఇది శాశ్వతంగా Signal మరియు సందేశ ప్రకటనలను అన్లాక్ చేస్తుంది</string>
+    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">ఇది శాశ్వతంగా Radar మరియు సందేశ ప్రకటనలను అన్లాక్ చేస్తుంది</string>
     <string name="PrivacySettingsFragment__app_security">యాప్ సెక్యూరిటీ</string>
     <!-- This refers to the multi-tasking overview (recent apps) from the Android operating system.-->
     <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">ఇటీవలి జాబితాలో మరియు యాప్ లోపల స్క్రీన్‌షాట్‌లను బ్లాక్ చేయండి</string>
@@ -618,10 +618,10 @@
     <!-- Description for the payment lock toggle in privacy settings -->
     <string name="PrivacySettingsFragment__payment_lock_require_lock">నిధులు బదిలీ చేయడానికి Android స్క్రీన్ లాక్ లేదా వేలిముద్ర అవసరం</string>
     <string name="PrivacySettingsFragment__set_a_default_disappearing_message_timer_for_all_new_chats_started_by_you">మీచే ప్రారంభించబడిన అన్ని కొత్త చాట్‌ల కోసం డిఫాల్ట్‌గా అదృశ్యమయ్యే సందేశ టైమర్‌ను సెట్ చేయండి.</string>
-    <string name="PrivacySettingsFragment__signal_message_and_calls">Signal సందేశాలు మరియు కాల్స్, ఎల్లప్పుడూ రిలే కాల్స్, మరియు సీల్ చేయబడ్డ సెండర్</string>
+    <string name="PrivacySettingsFragment__signal_message_and_calls">Radar సందేశాలు మరియు కాల్స్, ఎల్లప్పుడూ రిలే కాల్స్, మరియు సీల్ చేయబడ్డ సెండర్</string>
     <!-- Text shown when screen lock is not enabled -->
     <string name="ScreenLockSettingsFragment__off">ఆఫ్</string>
-    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">తనంతట తానే తాళంవేసుకొను Signal తరువాత ఒక పేర్కొన్నసమయం విరామం ఆఫ్ సోమరితనము</string>
+    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">తనంతట తానే తాళంవేసుకొను Radar తరువాత ఒక పేర్కొన్నసమయం విరామం ఆఫ్ సోమరితనము</string>
     <string name="preferences__change_passphrase">సంకేతపదమును మార్చు</string>
     <string name="preferences__change_your_passphrase">మీ సంకేతపదమును మార్చండి</string>
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
@@ -643,7 +643,7 @@
     <string name="preferences__this_setting_is_not_a_guarantee">ఈ సెట్టింగ్‌కు గ్యారెంటీ లేదు, మీ కీబోర్డ్ దానిని నిరాకరించవచ్చు.</string>
     <string name="preferences__typing_indicators">టైపింగ్ సూచికలు</string>
     <!-- Subtext below option to launch into phone number privacy settings screen -->
-    <string name="preferences_app_protection__choose_who_can_see">మీ ఫోన్ నంబర్‌ను ఎవరు చూడగలరు మరియు దానితో Signal లో మిమ్మల్ని ఎవరు సంప్రదించగలరో ఎంచుకోండి.</string>
+    <string name="preferences_app_protection__choose_who_can_see">మీ ఫోన్ నంబర్‌ను ఎవరు చూడగలరు మరియు దానితో Radar లో మిమ్మల్ని ఎవరు సంప్రదించగలరో ఎంచుకోండి.</string>
     <!-- Privacy settings payments section title -->
     <string name="preferences_app_protection__payments">చెల్లింపులు</string>
     <!-- Snackbar text shown when trying to enable screen lock but the user does not have a password or biometrics enabled -->
@@ -659,7 +659,7 @@
     <!-- Dismiss button on the dialog explaining payment lock needs a device screen lock -->
     <string name="PrivacySettingsScreen__not_now">ఇప్పుడు కాదు</string>
     <!-- Title of the authentication prompt shown when turning off payment lock -->
-    <string name="PrivacySettingsScreen__signal">Signal</string>
+    <string name="PrivacySettingsScreen__signal">Radar</string>
     <!-- Link after the incognito keyboard disclaimer that opens a support article -->
     <string name="PrivacySettingsScreen__learn_more">మరింత తెలుసుకోండి</string>
 
@@ -675,7 +675,7 @@
     <!-- String displayed telling user to invite their friends to Signal -->
     <string name="AppSettingsFragment__invite_your_friends">మీ స్నేహితులను ఆహ్వానించండి</string>
     <!-- String alerting user that something is wrong with their backups subscription -->
-    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">మీ Signal సురక్షిత బ్యాకప్‌ల సబ్‌స్క్రిప్షన్‌ను పునరుద్ధరించండి</string>
+    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">మీ Radar సురక్షిత బ్యాకప్‌ల సబ్‌స్క్రిప్షన్‌ను పునరుద్ధరించండి</string>
     <!-- App settings row that opens privacy settings -->
     <string name="preferences__privacy">గోప్యత</string>
     <!-- Title of the top level app settings screen -->
@@ -745,7 +745,7 @@
     <!-- Error shown under the code field when the service rejected the code -->
     <string name="TwoFactorVerifyScreen__incorrect_code">తప్పు కోడ్. ఇప్పుడు మీ ఆథెంటికేటర్ యాప్‌లో ప్రస్తుతం కనిపిస్తున్న కోడ్‌ను నమోదు చేయండి.</string>
     <!-- Error shown when the service could not be reached -->
-    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Signal‌ను చేరుకోలేకపోయాము. మీ కనెక్షన్‌ను తనిఖీ చేయండి మరియు మళ్ళీ ప్రయత్నించండి.</string>
+    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Radar‌ను చేరుకోలేకపోయాము. మీ కనెక్షన్‌ను తనిఖీ చేయండి మరియు మళ్ళీ ప్రయత్నించండి.</string>
     <!-- Dialog shown when verifying with a passkey failed -->
     <string name="TwoFactorVerifyScreen__something_went_wrong_with_your_passkey">మీ పాస్ కీ తో ఏదో సమస్య ఏర్పడింది. దయచేసి మళ్ళీ ప్రయత్నించండి లేదా మరొక పద్ధతిని ఉపయోగించండి.</string>
 
@@ -873,9 +873,9 @@
     <!-- Explanation below the name, about and badges rows on the profile screen, saying who can see your profile -->
     <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">మీ ప్రొఫైల్ మరియు దానికి మార్పులు మీరు సందేశాన్ని పంపే వ్యక్తులు, పరిచయాలు మరియు గ్రూప్‌లకు కనిపిస్తాయి.</string>
     <!-- The title of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_title">Signal ను నవీకరించండి</string>
+    <string name="EditProfileFragment_deprecated_dialog_title">Radar ను నవీకరించండి</string>
     <!-- The body of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_body">Signal యొక్క ఈ వెర్షన్ గడువు తీరింది. Signal ఉపయోగించడం కొనసాగించడానికి ఇప్పుడు అప్‌డేట్ చేయండి.</string>
+    <string name="EditProfileFragment_deprecated_dialog_body">Radar యొక్క ఈ వెర్షన్ గడువు తీరింది. Radar ఉపయోగించడం కొనసాగించడానికి ఇప్పుడు అప్‌డేట్ చేయండి.</string>
     <!-- The button on a dialog prompting user to update to the latest version of Signal. When clicked, the user will be taken to the store to update their app. -->
     <string name="EditProfileFragment_deprecated_dialog_update_button">నవీకరణ</string>
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
@@ -1007,7 +1007,7 @@
     <!-- Dialog title shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
     <string name="UsernameLinkSettings_qr_code_not_found">QR కోడ్ కనుగొనబడలేదు</string>
     <!-- Dialog message shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
-    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Signal QR కోడ్ ఉన్న మరొక చిత్రాన్ని స్కాన్ చేయడానికి ప్రయత్నించండి.</string>
+    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Radar QR కోడ్ ఉన్న మరొక చిత్రాన్ని స్కాన్ చేయడానికి ప్రయత్నించండి.</string>
     <!-- Body of a dialog that is displayed when the username we looked up could not be found. -->
     <string name="UsernameLinkSettings_qr_result_not_found">%1$s యూజర్‌నేమ్‌తో ఒక యూజర్ కనుగొనబడలేదు.</string>
     <!-- Description text shown underneath the username QR code scanner -->
@@ -1015,19 +1015,19 @@
     <!-- Shown when the QR code you scanned leads to a username link that no one has -->
     <string name="UsernameLinkSettingsScreen__qr_result_not_found_no_username">ఈ యూజర్ కనుగొనబడలేదు.</string>
     <!-- Shown in place of the camera on the scan tab when the camera permission hasn\'t been granted -->
-    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">QR కోడ్‌ను స్కాన్ చేయడానికి, కెమెరాకు Signal యాక్సెస్‌ను అనుమతించండి.</string>
+    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">QR కోడ్‌ను స్కాన్ చేయడానికి, కెమెరాకు Radar యాక్సెస్‌ను అనుమతించండి.</string>
     <!-- Button on the scan tab that asks for the camera permission -->
     <string name="UsernameLinkSettingsScreen__allow_access">ప్రాప్యతను అనుమతించు</string>
     <!-- Shown when the camera permission was denied, or permanently denied, and a QR code can\'t be scanned -->
-    <string name="UsernameLinkSettingsScreen__camera_needed">QR కోడ్‌లను స్కాన్ చేయడానికి Signal కు కెమెరా యాక్సెస్ అవసరం</string>
+    <string name="UsernameLinkSettingsScreen__camera_needed">QR కోడ్‌లను స్కాన్ చేయడానికి Radar కు కెమెరా యాక్సెస్ అవసరం</string>
 
     <!-- ManageStorageSettingsScreen -->
     <string name="preferences__storage">నిల్వ</string>
     <string name="preferences_storage__storage_usage">నిల్వ వినియోగం</string>
     <!-- Setting section title header for storage optimization -->
-    <string name="ManageStorageSettingsFragment__on_device_storage">Signal నిల్వ</string>
+    <string name="ManageStorageSettingsFragment__on_device_storage">Radar నిల్వ</string>
     <!-- Setting row title for storage optimization -->
-    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Signal నిల్వను అనుకూలపరచండి</string>
+    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Radar నిల్వను అనుకూలపరచండి</string>
     <!-- Setting row explanation for storage optimization -->
     <string name="ManageStorageSettingsFragment__unused_media_will_be_offloaded">ఉపయోగించని మీడియా తొలగించబడుతుంది, కానీ అవసరమైనప్పుడు మీ బ్యాకప్ నుండి దానిని తిరిగి డౌన్‌లోడ్ చేసుకోవచ్చు.</string>
     <!-- Settings section title header show above manage settings options for automatic chat history management (deleting) -->
@@ -1049,11 +1049,11 @@
     <string name="preferences_storage__all_message_history_will_be_permanently_removed_this_action_cannot_be_undone_linked_device">అన్ని పరికరాల నుండి మొత్తం సందేశ చరిత్ర శాశ్వతంగా తొలగించబడుతుంది. ఈ చర్య రద్దు చేయబడదు.</string>
     <string name="preferences_storage__delete_all_now">ఇప్పుడు అన్నీ తొలిగించండి</string>
     <!-- Dialog message for paid tier pending dialog -->
-    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">నిల్వ అనుకూలీకరణ Signal సురక్షిత బ్యాకప్‌ల చెల్లింపు శ్రేణితో మాత్రమే ఉపయోగించబడుతుంది. మీ బ్యాకప్‌ల సబ్‌స్క్రిప్షన్ ఇప్పటికీ ప్రాసెస్ చేయబడుతోంది మరియు ఇంకా యాక్టివ్‌గా లేదు. దయచేసి తర్వాత మళ్ళీ ప్రయత్నించండి.</string>
+    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">నిల్వ అనుకూలీకరణ Radar సురక్షిత బ్యాకప్‌ల చెల్లింపు శ్రేణితో మాత్రమే ఉపయోగించబడుతుంది. మీ బ్యాకప్‌ల సబ్‌స్క్రిప్షన్ ఇప్పటికీ ప్రాసెస్ చేయబడుతోంది మరియు ఇంకా యాక్టివ్‌గా లేదు. దయచేసి తర్వాత మళ్ళీ ప్రయత్నించండి.</string>
     <!-- Title of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
     <string name="ManageStorageSettingsFragment__media_will_be_removed_from_your_on_device_backup">మీ పరికరంలోని బ్యాకప్ నుండి మీడియా తొలగించబడుతుంది.</string>
     <!-- Body of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
-    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">\"Signal నిల్వను ఆప్టిమైజ్ చేయండి\"ని ఆన్ చేయడం ద్వారా, పాత మీడియా మీ పరికరం నుండి తొలగించబడుతుంది. మీరు దీన్ని ఎప్పుడైనా మళ్ళీ డౌన్‌లోడ్ చేసుకోవచ్చు. ఇది మీ పరికరంలోని బ్యాకప్ నుండి పాత మీడియాను కూడా తొలగిస్తుంది.</string>
+    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">\"Radar నిల్వను ఆప్టిమైజ్ చేయండి\"ని ఆన్ చేయడం ద్వారా, పాత మీడియా మీ పరికరం నుండి తొలగించబడుతుంది. మీరు దీన్ని ఎప్పుడైనా మళ్ళీ డౌన్‌లోడ్ చేసుకోవచ్చు. ఇది మీ పరికరంలోని బ్యాకప్ నుండి పాత మీడియాను కూడా తొలగిస్తుంది.</string>
     <!-- Dialog action to confirm turning on "Optimize Signal storage" -->
     <string name="ManageStorageSettingsFragment__turn_on">ఆన్ చేయండి</string>
 
@@ -1083,15 +1083,15 @@
     <!-- Displayed in a toast when we fail to open the ringtone picker -->
     <string name="NotificationSettingsFragment__failed_to_open_picker">పికర్ ఓపెన్ చేయడం విఫలమైంది</string>
     <!-- Banner title when notification permission is disabled -->
-    <string name="NotificationSettingsFragment__to_enable_notifications">నోటిఫికేషన్‌లను ప్రారంభించడానికి, వాటిని ప్రదర్శించడానికి Signal కు అనుమతి అవసరం.</string>
+    <string name="NotificationSettingsFragment__to_enable_notifications">నోటిఫికేషన్‌లను ప్రారంభించడానికి, వాటిని ప్రదర్శించడానికి Radar కు అనుమతి అవసరం.</string>
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">ఆన్ చేయండి</string>
     <string name="NotificationsSettingsFragment__calls">కాల్స్</string>
-    <string name="NotificationsSettingsFragment__contact_joins_signal">కాంటాక్ట్ Signal లో చేరారు.</string>
+    <string name="NotificationsSettingsFragment__contact_joins_signal">కాంటాక్ట్ Radar లో చేరారు.</string>
     <!-- Notification preference summary text -->
     <string name="NotificationsSettingsFragment__create_a_profile_to_receive_notifications_only_from_people_and_groups_you_choose">మీరు ఎంచుకున్న వ్యక్తులు మరియు గ్రూపుల నుండి మాత్రమే నోటిఫికేషన్‌లను పొందడానికి ఒక ప్రొఫైల్‌ను సృష్టించండి.</string>
     <!-- Notification body to get notified when someone joins Signal -->
-    <string name="NotificationsSettingsFragment__notify_contact">ఫోన్ కాంటాక్ట్ Signal‌లో చేరినప్పుడు నోటిఫికేషన్ చూపించండి</string>
+    <string name="NotificationsSettingsFragment__notify_contact">ఫోన్ కాంటాక్ట్ Radar‌లో చేరినప్పుడు నోటిఫికేషన్ చూపించండి</string>
     <!-- Option to reset their notification settings -->
     <string name="NotificationsSettingsFragment__reset">నోటిఫికేషన్ సెట్టింగ్‌లను రీసెట్ చేయండి</string>
     <!-- Dialog to reset their notification settings -->

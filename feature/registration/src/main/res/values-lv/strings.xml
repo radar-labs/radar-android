@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Sniegt atļaujas</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Lai jūs varētu nosūtīt ziņas cilvēkiem, kurus pazīstat, Signal pieprasīs šīs atļaujas. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Lai jūs varētu nosūtīt ziņas cilvēkiem, kurus pazīstat, Radar pieprasīs šīs atļaujas. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Ne tagad</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakti</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Atrodiet pazīstamus cilvēkus. Jūsu kontakti ir šifrēti un nav redzami pakalpojumam Signal.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Atrodiet pazīstamus cilvēkus. Jūsu kontakti ir šifrēti un nav redzami pakalpojumam Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Tālruņa zvani</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Man ir iepriekšējais tālrunis</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Lai ātri sāktu darbu, skenējiet QR kodu no pašreizējā Signal konta</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Lai ātri sāktu darbu, skenējiet QR kodu no pašreizējā Radar konta</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Man nav iepriekšējā tālruņa</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Vai arī jūs atkārtoti instalējat Signal tajā pašā ierīcē</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Vai arī jūs atkārtoti instalējat Radar tajā pašā ierīcē</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Izvēlieties veidu, kā atjaunot ziņu vēsturi un konta datus.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">No Signal rezerves kopijām</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">No Radar rezerves kopijām</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Jūsu bezmaksas vai maksas Signal rezerves kopiju plāns</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Jūsu bezmaksas vai maksas Radar rezerves kopiju plāns</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Ierīces rezerves kopijas atjaunošana</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Rezerves kopija nav atrasta</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Atlasītajā mapē nav nevienas Signal rezerves kopijas. Lūdzu, mēģiniet izvēlēties citu mapi.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Atlasītajā mapē nav nevienas Radar rezerves kopijas. Lūdzu, mēģiniet izvēlēties citu mapi.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Mēģināt citu mapi</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Atjaunot uz jaunu kontu?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Rezerves kopija, kuru atjaunojat, tika izveidota, izmantojot citu Signal kontu. Varat atjaunot šo rezerves kopiju jaunā kontā, taču jūsu dalība atjaunotajās grupās netiks pārnesta.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Rezerves kopija, kuru atjaunojat, tika izveidota, izmantojot citu Radar kontu. Varat atjaunot šo rezerves kopiju jaunā kontā, taču jūsu dalība atjaunotajās grupās netiks pārnesta.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Atjaunot</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Rezerves kopija nav atrasta</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Jūsu atkopšanas atslēga ir pareiza, taču šim kontam nav Signal rezerves kopijas. Atgriezieties, lai izvēlētos citu atjaunošanas veidu, vai turpiniet bez atjaunošanas.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Jūsu atkopšanas atslēga ir pareiza, taču šim kontam nav Radar rezerves kopijas. Atgriezieties, lai izvēlētos citu atjaunošanas veidu, vai turpiniet bez atjaunošanas.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Nepareiza atkopšanas atslēga</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Pārliecinieties, ka reģistrējaties, izmantojot to pašu tālruņa numuru un 64 rakstzīmju atkopšanas atslēgu, ko saglabājāt, kad iespējojāt Signal rezerves kopiju izveidi. Atjaunot rezerves kopijas bez šīs atslēgas nav iespējams.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Pārliecinieties, ka reģistrējaties, izmantojot to pašu tālruņa numuru un 64 rakstzīmju atkopšanas atslēgu, ko saglabājāt, kad iespējojāt Radar rezerves kopiju izveidi. Atjaunot rezerves kopijas bez šīs atslēgas nav iespējams.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Mēģiniet vēlreiz</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Verificēt ar SMS kodu?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Varat reģistrēt savu kontu, veicot verifikāciju ar Signal atsūtīto SMS kodu. Pēc koda ievadīšanas varat vēlreiz mēģināt atjaunot savu rezerves kopiju, izmantojot atkopšanas atslēgu.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Varat reģistrēt savu kontu, veicot verifikāciju ar Radar atsūtīto SMS kodu. Pēc koda ievadīšanas varat vēlreiz mēģināt atjaunot savu rezerves kopiju, izmantojot atkopšanas atslēgu.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Nosūtīt kodu</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Sasaistiet savu kontu</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Vēl nelietojat Signal?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Vēl nelietojat Radar?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Izveidot kontu</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Neizdevās atjaunot šo rezerves kopiju</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Šī Signal versija nevar atjaunot rezerves kopiju. Atjauniniet uz jaunāko versiju un mēģiniet vēlreiz.</string>
+    <string name="RemoteRestoreScreen__update_latest">Šī Radar versija nevar atjaunot rezerves kopiju. Atjauniniet uz jaunāko versiju un mēģiniet vēlreiz.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Atjaunināt Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Atjaunināt Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Ne tagad</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Lai aizsargātu jūsu privātumu un drošību, jūsu konts tika bloķēts. Pēc %1$d dienu ilga jūsu konta iesaldēšanas perioda varēsiet pārreģistrēt šo tālruņa numuru, neievadot PIN. Tomēr viss tā saturs tiks dzēsts.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Atveriet Signal savā iepriekšējā ierīcē.</string>
+    <string name="QuickRestoreQRScreen__step_1">Atveriet Radar savā iepriekšējā ierīcē.</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Pieskarieties kameras ikonai. </string>
     <!-- Step 3 to quick restore -->
@@ -399,13 +399,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Izveidojiet sarežģītāku PIN</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Jūs atkārtoti ievadījāt kodu, kas jau tika izmantots jūsu tālruņa numura verifikācijai. Izvēlieties jaunu un unikālu Signal PIN.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Jūs atkārtoti ievadījāt kodu, kas jau tika izmantots jūsu tālruņa numura verifikācijai. Izvēlieties jaunu un unikālu Radar PIN.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Uzzināt vairāk par PIN kodiem</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Brīdinājums</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Ja atspējosiet PIN, jūs zaudēsiet visus datus, atkārtoti reģistrējoties lietotnē Signal, ja vien manuāli tos nedublēsiet un neatjaunosiet. Reģistrācijas bloķēšanu nevar ieslēgt, kamēr PIN ir atspējots.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Ja atspējosiet PIN, jūs zaudēsiet visus datus, atkārtoti reģistrējoties lietotnē Radar, ja vien manuāli tos nedublēsiet un neatjaunosiet. Reģistrācijas bloķēšanu nevar ieslēgt, kamēr PIN ir atspējots.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Atspējot PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -422,9 +422,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Ievadiet jūsu PIN</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Ievadiet PIN, kuru izveidojāt, kad pirmo reizi instalējāt Signal</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Ievadiet PIN, kuru izveidojāt, kad pirmo reizi instalējāt Radar</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Jūs atkārtoti ievadījāt kodu, kas jau tika izmantots jūsu tālruņa numura verifikācijai. Ievadiet unikālo Signal PIN kodu, kuru iepriekš izvēlējāties savam kontam.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Jūs atkārtoti ievadījāt kodu, kas jau tika izmantots jūsu tālruņa numura verifikācijai. Ievadiet unikālo Radar PIN kodu, kuru iepriekš izvēlējāties savam kontam.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="zero">Nepareizs PIN. Atlicis %1$d mēģinājums.</item>
@@ -459,7 +459,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Atļaut paziņojumus</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal ir nepieciešama paziņojumu atļauja. Tas ļauj ierīcei rādīt jaunu ziņu paziņojumus.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar ir nepieciešama paziņojumu atļauja. Tas ļauj ierīcei rādīt jaunu ziņu paziņojumus.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Ne tagad</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -495,9 +495,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Skenējiet šo kodu, lai piesaistītu jūsu kontu</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Atveriet Signal tālrunī</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Atveriet Radar tālrunī</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Lai atvērtu Signal iestatījumus, pieskarieties sava profila fotoattēlam</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Lai atvērtu Radar iestatījumus, pieskarieties sava profila fotoattēlam</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Pieskarieties \"Saistītās ierīces\" un tad \"Piesaistīt jaunu ierīci\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -509,7 +509,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Neizdevās ģenerēt kodu</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Signal nav pieejams citā ierīcē?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Radar nav pieejams citā ierīcē?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Izveidot kontu</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -523,7 +523,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Dzēst lietotnes datus?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Jūs mēģināt piesaistīt citu Signal kontu. Ja turpināsiet, visi esošie Signal dati šajā ierīcē tiks dzēsti.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Jūs mēģināt piesaistīt citu Radar kontu. Ja turpināsiet, visi esošie Radar dati šajā ierīcē tiks dzēsti.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Dzēst un atsākt</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -531,7 +531,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Pārsūtīt kontu</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Lai pārsūtītu savu kontu, atveriet Signal savā vecajā Android ierīcē un atlasiet \"Pārsūtīt kontu\".</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Lai pārsūtītu savu kontu, atveriet Radar savā vecajā Android ierīcē un atlasiet \"Pārsūtīt kontu\".</string>
     <string name="DeviceTransferInstructions__continue">Turpināt</string>
 
     <!-- Device transfer: Setup screen -->
@@ -542,11 +542,11 @@
     <string name="DeviceTransferSetup__numbers_match">Jā, cipari sakrīt</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Numuri nesakrīt</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Gaida vecās ierīces verifikāciju…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Lietotnei Signal ir nepieciešama atrašanās vietas noteikšanas atļauja, lai atrastu veco ierīci un izveidotu ar to savienojumu.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Lietotnei Radar ir nepieciešama atrašanās vietas noteikšanas atļauja, lai atrastu veco ierīci un izveidotu ar to savienojumu.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Piešķirt piekļuvi</string>
-    <string name="DeviceTransferSetup__location_services_required">Lietotnē Signal ir jābūt iespējotiem atrašanās vietas pakalpojumiem, lai atrastu veco ierīci un izveidotu ar to savienojumu.</string>
+    <string name="DeviceTransferSetup__location_services_required">Lietotnē Radar ir jābūt iespējotiem atrašanās vietas pakalpojumiem, lai atrastu veco ierīci un izveidotu ar to savienojumu.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Ieslēgt atrašanās vietas pakalpojumus</string>
-    <string name="DeviceTransferSetup__wifi_required">Lai Signal varētu atrast veco ierīci un izveidot ar to savienojumu, ir jābūt ieslēgtam Wi-Fi.</string>
+    <string name="DeviceTransferSetup__wifi_required">Lai Radar varētu atrast veco ierīci un izveidot ar to savienojumu, ir jābūt ieslēgtam Wi-Fi.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Ieslēgt Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Atvainojiet, izskatās, ka jūsu ierīce neatbalsta Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Tā vietā atjaunojiet rezerves kopiju</string>
@@ -563,7 +563,7 @@
     <string name="DeviceTransferProgress__transferring_data">Notiek datu pārsūtīšana</string>
     <string name="DeviceTransferProgress__d_messages_so_far">pagaidām %1$d ziņas</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Nevar pārsūtīt</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Nevar pārsūtīt no jaunākas Signal versijas.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Nevar pārsūtīt no jaunākas Radar versijas.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Dažus datus nevarēja pārsūtīt datubāzes ierobežojumu dēļ.</string>
     <string name="DeviceTransferProgress__transfer_failed">Pārsūtīšana neizdevās. Lūdzu, mēģiniet vēlreiz.</string>
     <string name="DeviceTransferProgress__try_again">Mēģināt vēlreiz</string>
@@ -783,7 +783,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Vai tiešām turpināt?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Bez lietotājvārda Signal lietotnē jūs nevarēs atrast.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Bez lietotājvārda Radar lietotnē jūs nevarēs atrast.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Atcelt</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

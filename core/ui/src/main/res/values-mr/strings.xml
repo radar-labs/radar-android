@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">सुरू ठेवा वर टॅप करा आणि पुष्टी करण्यासाठी आपल्या फोनचे लॉक प्रविष्ट करा. आपले Signal पिन प्रविष्ट करू नका.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">सुरू ठेवा वर टॅप करा आणि पुष्टी करण्यासाठी आपल्या फोनचे लॉक प्रविष्ट करा. आपले Radar पिन प्रविष्ट करू नका.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">सुरू ठेवा</string>
 

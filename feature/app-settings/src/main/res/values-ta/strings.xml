@@ -3,29 +3,29 @@
     <!-- RegistrationLockV2Dialog -->
     <string name="RegistrationLockV2Dialog_turn_on_registration_lock">பதிவு பூட்டை இயக்கவா?</string>
     <string name="RegistrationLockV2Dialog_turn_off_registration_lock">பதிவு பூட்டை அணைக்கவா?</string>
-    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Signal உடன் மீண்டும் பதிவுசெய்யும்போது உங்கள் Signal PIN-ஐ மறந்துவிட்டால், உங்கள் கணக்கிலிருந்து 7 நாட்களுக்கு பூட்டப்படுவீர்கள்.</string>
+    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Radar உடன் மீண்டும் பதிவுசெய்யும்போது உங்கள் Radar PIN-ஐ மறந்துவிட்டால், உங்கள் கணக்கிலிருந்து 7 நாட்களுக்கு பூட்டப்படுவீர்கள்.</string>
     <string name="RegistrationLockV2Dialog_turn_on">இயக்கவும்</string>
     <string name="RegistrationLockV2Dialog_turn_off">அணைக்க</string>
     <string name="preferences__advanced_pin_settings">மேம்பட்ட பின் அமைப்புகள்</string>
     <string name="preferences__delete_account">கணக்கை நீக்கு</string>
     <!-- Button label to prompt the user to switch between an alphanumeric and numeric-only keyboards -->
     <string name="RegistrationLockFragment__switch_keyboard">கீபோர்டை மாற்றுக</string>
-    <string name="preferences_chats__transfer_account">Signal கணக்கை நகர்த்தவும்</string>
+    <string name="preferences_chats__transfer_account">Radar கணக்கை நகர்த்தவும்</string>
     <string name="preferences_chats__transfer_account_to_a_new_android_device">கணக்கை புதிய சாதனத்திற்கு நகர்த்தவும்</string>
-    <string name="preferences_app_protection__signal_pin">Signal பின்</string>
+    <string name="preferences_app_protection__signal_pin">Radar பின்</string>
     <string name="preferences_app_protection__create_a_pin">பின்னை உருவாக்கவும்</string>
     <string name="preferences_app_protection__change_your_pin">உங்கள் பின்னை மாற்றவும்</string>
     <string name="preferences_app_protection__pin_reminders">கடவுஎண் பின் நினைவூட்டல்கள்</string>
     <string name="preferences_app_protection__turn_off">அணைக்க</string>
     <string name="preferences_app_protection__confirm_pin">பின்னை உறுதிப்படுத்தவும்</string>
-    <string name="preferences_app_protection__confirm_your_signal_pin">உறுதிப்படுத்தவும் உங்கள் Signal பின்</string>
+    <string name="preferences_app_protection__confirm_your_signal_pin">உறுதிப்படுத்தவும் உங்கள் Radar பின்</string>
     <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">உங்கள் PIN ஐ மீட்டெடுக்க முடியாததால் அதை நினைவில் வைத்துக் கொள்ளுங்கள் அல்லது பாதுகாப்பாக சேமித்து வைக்கவும். உங்கள் பின்னை மறந்துவிட்டால், உங்கள் சிக்னல் கணக்கை மீண்டும் பதிவு செய்யும் போது தரவை இழக்க நேரிடும்.</string>
     <string name="preferences_app_protection__incorrect_pin_try_again">தவறான பின். மீண்டும் முயலவும்.</string>
     <string name="preferences_app_protection__registration_lock">பதிவு பூட்டு</string>
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
     <string name="preferences_account_reregister">கணக்கை மீண்டும் பதிவு செய்க</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
-    <string name="preferences_account_update_signal">Signal லைப் புதுப்பிக்கவும்</string>
+    <string name="preferences_account_update_signal">Radar லைப் புதுப்பிக்கவும்</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
     <string name="preferences_account_delete_all_data">எல்லா தரவையும் நீக்கு</string>
     <!-- Title for confirmation dialog confirming user wants to delete all their data -->
@@ -40,7 +40,7 @@
     <!-- AccountSettingsFragment -->
     <string name="AccountSettingsFragment__account">பயனர் கணக்கு</string>
     <string name="AccountSettingsFragment__youll_be_asked_less_frequently">காலப்போக்கில் உங்களிடம் குறைவாகக் கேட்கப்படும்</string>
-    <string name="AccountSettingsFragment__require_your_signal_pin">உங்கள் தேவை Signal பின் பதிவு செய்ய தொலைபேசி உடன் எண் Signal மீண்டும்</string>
+    <string name="AccountSettingsFragment__require_your_signal_pin">உங்கள் தேவை Radar பின் பதிவு செய்ய தொலைபேசி உடன் எண் Radar மீண்டும்</string>
     <string name="AccountSettingsFragment__change_phone_number">தொலைபேசி எண்ணை மாற்றவும்</string>
     <!-- Account setting that allows user to request and export their signal account data -->
     <string name="AccountSettingsFragment__request_account_data">உங்கள் கணக்குத் தரவு</string>
@@ -140,7 +140,7 @@
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">உங்கள் கணக்குத் தரவு</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
-    <string name="ExportAccountDataFragment__export_explanation">உங்கள் Signal கணக்குத் தரவின் அறிக்கையை ஏற்றுமதி செய்க. இந்த அறிக்கையில் செய்திகள் அல்லது ஊடகம் எதுவும் இல்லை. %1$s</string>
+    <string name="ExportAccountDataFragment__export_explanation">உங்கள் Radar கணக்குத் தரவின் அறிக்கையை ஏற்றுமதி செய்க. இந்த அறிக்கையில் செய்திகள் அல்லது ஊடகம் எதுவும் இல்லை. %1$s</string>
     <!-- Learn more link to more information about requesting account data -->
     <string name="ExportAccountDataFragment__learn_more">மேலும் அறிக</string>
     <!-- Button action to export the report data to another app (e.g. email) -->
@@ -168,14 +168,14 @@
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">தரவை ஏற்றுமதி செய்ய வேண்டுமா?</string>
     <!-- Message for export confirmation dialog -->
-    <string name="ExportAccountDataFragment__export_report_confirmation_message">உங்கள் Signal கணக்குத் தரவை நீங்கள் நம்பும் நபர்கள் அல்லது ஆப்ஸ்களுடன் மட்டும் பகிரவும்.</string>
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">உங்கள் Radar கணக்குத் தரவை நீங்கள் நம்பும் நபர்கள் அல்லது ஆப்ஸ்களுடன் மட்டும் பகிரவும்.</string>
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">ஏற்றுமதி செய்க</string>
 
     <!-- Shown in a dialog with a spinner while the report is downloading -->
     <string name="ExportAccountDataFragment__download_progress">அறிக்கையை உருவாக்குகிறது…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
-    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">உங்கள் அறிக்கை ஏற்றுமதியின் போது மட்டுமே உருவாக்கப்படும் மற்றும் உங்கள் டிவைஸில் Signal மூலம் சேமிக்கப்படாது.</string>
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">உங்கள் அறிக்கை ஏற்றுமதியின் போது மட்டுமே உருவாக்கப்படும் மற்றும் உங்கள் டிவைஸில் Radar மூலம் சேமிக்கப்படாது.</string>
 
     <!-- TotpSetupScreen -->
     <!-- Title of the screen that walks the user through setting up an authenticator app -->
@@ -205,7 +205,7 @@
     <!-- Dialog message shown when the account already has as many authenticator apps as it\'s allowed -->
     <string name="TotpSetupScreen__you_cant_add_more_than_d">%1$d அங்கீகரிப்புச் செயலிகளுக்கு மேல் உங்களால் சேர்க்க முடியாது. முதலில் ஒன்றை அகற்றிவிட்டு முயலவும்.</string>
     <!-- Dialog message shown when we couldn\'t reach the service to start setting up an authenticator app -->
-    <string name="TotpSetupScreen__couldnt_reach_signal">Signal-ஐத் தொடர்புகொள்ள முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்த்துவிட்டு மீண்டும் முயலவும்.</string>
+    <string name="TotpSetupScreen__couldnt_reach_signal">Radar-ஐத் தொடர்புகொள்ள முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்த்துவிட்டு மீண்டும் முயலவும்.</string>
     <!-- Header of the third step of authenticator app setup -->
     <string name="TotpSetupScreen__step_3">படி 3</string>
     <!-- Body of the third step of authenticator app setup -->
@@ -243,7 +243,7 @@
     <!-- Error shown under the code field when the code the user entered was rejected -->
     <string name="TotpCodeEntryScreen__incorrect_code">தவறான குறியீடு. உங்கள் அங்கீகரிப்புச் செயலியில் இப்போது காட்டப்படும் குறியீட்டை உள்ளிடவும்.</string>
     <!-- Error shown under the code field when we couldn\'t reach the service to check the code -->
-    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Signal-ஐத் தொடர்புகொள்ள முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்த்துவிட்டு மீண்டும் முயலவும்.</string>
+    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Radar-ஐத் தொடர்புகொள்ள முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்த்துவிட்டு மீண்டும் முயலவும்.</string>
 
     <!-- Default name given to an authenticator app the moment it\'s set up, before the user chooses their own name for it -->
     <string name="TotpRepository__authenticator">அங்கீகரிப்பு</string>
@@ -294,7 +294,7 @@
     <string name="DeleteAccountFragment__no_number">இல்லை எண் குறிப்பிடப்பட்டுள்ளது</string>
     <string name="DeleteAccountFragment__the_phone_number">தி தொலைபேசி நீங்கள் உள்ளிட்ட எண் உங்களுடன் பொருந்தவில்லை கணக்கு.</string>
     <string name="DeleteAccountFragment__are_you_sure">உங்கள் கணக்கை நிச்சயமாக நீக்க வேண்டுமா?</string>
-    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">இது உங்களது Signal கணக்கை நீக்கி செயலியை மீட்டமைக்கும். செயல்பாடு நிறைவடைந்ததும் செயலி மூடப்படும்.</string>
+    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">இது உங்களது Radar கணக்கை நீக்கி செயலியை மீட்டமைக்கும். செயல்பாடு நிறைவடைந்ததும் செயலி மூடப்படும்.</string>
     <string name="DeleteAccountFragment__failed_to_delete_local_data">உள்ளே சேமிக்கப்பட்டிருக்கும் தரவை நீக்க முடியவில்லை. சிஸ்டம் அப்ளிகேஷன் செட்டிங்ஸில் அதை நீங்கள் நேரடியாக அழிக்கலாம்.</string>
     <string name="DeleteAccountFragment__launch_app_settings">பயன்பாட்டு அமைப்புகளை தொடங்கு</string>
     <!-- Title of progress dialog shown when a user deletes their account and the process is leaving all groups -->
@@ -322,7 +322,7 @@
     <!-- Bullet point on the delete account screen warning the user that the deletion is permanent -->
     <string name="DeleteAccountScreen__this_action_can_not_be_undone">இந்தச் செயலைச் செயல்தவிர்க்க முடியாது</string>
     <!-- Message of the deletion confirmation dialog, shown when the account has a username. Placeholder is the username. -->
-    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">இது \"%1$s\" என்ற பயனர்பெயர் கொண்ட உங்களது Signal கணக்கை நீக்கி செயலியை மீட்டமைக்கும். செயல்பாடு நிறைவடைந்ததும் செயலி மூடப்படும். இந்தச் செயல்முறை முடிந்ததும் செயலி மூடப்படும்.</string>
+    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">இது \"%1$s\" என்ற பயனர்பெயர் கொண்ட உங்களது Radar கணக்கை நீக்கி செயலியை மீட்டமைக்கும். செயல்பாடு நிறைவடைந்ததும் செயலி மூடப்படும். இந்தச் செயல்முறை முடிந்ததும் செயலி மூடப்படும்.</string>
     <!-- Label of the checkbox the user has to tick in the confirmation dialog before they can delete their account -->
     <string name="DeleteAccountScreen__yes_delete_my_account">ஆம், எனது கணக்கை நீக்கு</string>
 
@@ -545,7 +545,7 @@
     <!-- Visible warning label for the limitations of changing the app icon. -->
     <string name="preferences__app_icon_warning">செயலி ஐகான்கள் மற்றும் பெயர்கள் முகப்புத் திரை மற்றும் செயலி டிராயரில் தெரிகிறது.</string>
     <!-- Visible warning label explaining that changing the app icon and name does not affect notifications. -->
-    <string name="preferences__app_icon_notification_warning">அறிவிப்புகள் எப்போதும் இயல்புநிலை Signal ஐகானையும் பெயரையும் காண்பிக்கும்.</string>
+    <string name="preferences__app_icon_notification_warning">அறிவிப்புகள் எப்போதும் இயல்புநிலை Radar ஐகானையும் பெயரையும் காண்பிக்கும்.</string>
     <!--Text description of a graphic illustrating the limitations of the app icon change. -->
     <string name="preferences__graphic_illustrating_where_the_replacement_app_icon_will_be_visible">மாற்று செயலி ஐகான் எங்கு தெரியும் என்பதை கிராஃபிக் விளக்குகிறது.</string>
 
@@ -565,9 +565,9 @@
     <!-- Title for the confirmation dialog of changing the app icon. -->
     <string name="preferences__app_icon_dialog_title">செயலி ஐகானையும் பெயரையும் \"%1$s\" என மாற்றவும்</string>
     <!-- Description for the confirmation dialog of changing the app icon. -->
-    <string name="preferences__app_icon_dialog_description">செயலியின் ஐகானையும் பெயரையும் மாற்ற Signal மூடப்பட வேண்டும். அறிவிப்புகள் எப்போதும் இயல்புநிலை Signal ஐகானையும் பெயரையும் காண்பிக்கும்.</string>
+    <string name="preferences__app_icon_dialog_description">செயலியின் ஐகானையும் பெயரையும் மாற்ற Radar மூடப்பட வேண்டும். அறிவிப்புகள் எப்போதும் இயல்புநிலை Radar ஐகானையும் பெயரையும் காண்பிக்கும்.</string>
     <!-- Visible warning label for the limitations of changing the app icon with learn more call to action. -->
-    <string name="preferences__app_icon_warning_learn_more">செயலி ஐகானையும் பெயரையும் தேர்ந்தெடுக்கவும், இது உங்கள் மொபைலின் முகப்புத் திரை மற்றும் ஆப் டிராயரில் தெரியும். அறிவிப்புகள் எப்போதும் இயல்புநிலை Signal ஐகானையும் பெயரையும் காண்பிக்கும். மேலும் அறிக</string>
+    <string name="preferences__app_icon_warning_learn_more">செயலி ஐகானையும் பெயரையும் தேர்ந்தெடுக்கவும், இது உங்கள் மொபைலின் முகப்புத் திரை மற்றும் ஆப் டிராயரில் தெரியும். அறிவிப்புகள் எப்போதும் இயல்புநிலை Radar ஐகானையும் பெயரையும் காண்பிக்கும். மேலும் அறிக</string>
     <!--Call to action to get more information about the limitations of the change app icon functionality. -->
     <string name="preferences__app_icon_learn_more">மேலும் அறிக</string>
 
@@ -597,7 +597,7 @@
     <string name="ApplicationPreferenceActivity_you_havent_set_a_passphrase_yet">நீங்கள் இன்னும் ஒரு கடவுச்சொல்லை அமைக்கவில்லை!</string>
     <string name="ApplicationPreferencesActivity_disable">முடக்கு</string>
     <string name="ApplicationPreferencesActivity_disable_passphrase">கடவுச்சொல்லை முடக்கு?</string>
-    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">இது நிரந்தரமாக Signal செய்தி அறிவிப்புகளைத் திறக்கும்.</string>
+    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">இது நிரந்தரமாக Radar செய்தி அறிவிப்புகளைத் திறக்கும்.</string>
     <string name="PrivacySettingsFragment__app_security">பயன்பாட்டு பாதுகாப்பு</string>
     <!-- This refers to the multi-tasking overview (recent apps) from the Android operating system.-->
     <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">சமீபத்தியவை பட்டியல் மற்றும் செயலிக்கு உள்ளே ஸ்கிரீன்ஷாட் எடுப்பதைத் தடுக்கவும்</string>
@@ -618,10 +618,10 @@
     <!-- Description for the payment lock toggle in privacy settings -->
     <string name="PrivacySettingsFragment__payment_lock_require_lock">நிதியை மாற்ற ஆண்ட்ராய்டு திரைப் பூட்டு அல்லது கைரேகை தேவை</string>
     <string name="PrivacySettingsFragment__set_a_default_disappearing_message_timer_for_all_new_chats_started_by_you">நீங்கள் தொடங்கும் அனைத்து புதிய சாட்களுக்கும் இயல்புநிலை மறைந்து போகும் மெசேஜ்கள் டைமரை அமைக்கவும்.</string>
-    <string name="PrivacySettingsFragment__signal_message_and_calls">Signal செய்திகள் மற்றும் அழைப்புகள், எப்போதும் ரிலே அழைப்புகள் மற்றும் சீல் அனுப்பியவர்</string>
+    <string name="PrivacySettingsFragment__signal_message_and_calls">Radar செய்திகள் மற்றும் அழைப்புகள், எப்போதும் ரிலே அழைப்புகள் மற்றும் சீல் அனுப்பியவர்</string>
     <!-- Text shown when screen lock is not enabled -->
     <string name="ScreenLockSettingsFragment__off">ஆஃப்</string>
-    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">செயலற்ற ஒரு குறிப்பிட்ட நேர இடைவெளிக்குப் பிறகு தானாக Signal ஐ பூட்டு</string>
+    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">செயலற்ற ஒரு குறிப்பிட்ட நேர இடைவெளிக்குப் பிறகு தானாக Radar ஐ பூட்டு</string>
     <string name="preferences__change_passphrase">கடவுச்சொல்லை மாற்று</string>
     <string name="preferences__change_your_passphrase">உன்னுடய கடவுச்சொல்லை மாற்று</string>
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
@@ -659,7 +659,7 @@
     <!-- Dismiss button on the dialog explaining payment lock needs a device screen lock -->
     <string name="PrivacySettingsScreen__not_now">இப்போது வேண்டாம்</string>
     <!-- Title of the authentication prompt shown when turning off payment lock -->
-    <string name="PrivacySettingsScreen__signal">Signal</string>
+    <string name="PrivacySettingsScreen__signal">Radar</string>
     <!-- Link after the incognito keyboard disclaimer that opens a support article -->
     <string name="PrivacySettingsScreen__learn_more">மேலும் அறிக</string>
 
@@ -745,7 +745,7 @@
     <!-- Error shown under the code field when the service rejected the code -->
     <string name="TwoFactorVerifyScreen__incorrect_code">தவறான குறியீடு. உங்கள் அங்கீகரிப்புச் செயலியில் இப்போது காட்டப்படும் குறியீட்டை உள்ளிடவும்.</string>
     <!-- Error shown when the service could not be reached -->
-    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Signal-ஐத் தொடர்புகொள்ள முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்த்து மீண்டும் முயலவும்.</string>
+    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Radar-ஐத் தொடர்புகொள்ள முடியவில்லை. உங்கள் இணைப்பைச் சரிபார்த்து மீண்டும் முயலவும்.</string>
     <!-- Dialog shown when verifying with a passkey failed -->
     <string name="TwoFactorVerifyScreen__something_went_wrong_with_your_passkey">உங்கள் கடவுக்குறியீட்டில் ஏதோ தவறு ஏற்பட்டுள்ளது. மீண்டும் முயலவும் அல்லது வேறொரு முறையைத் தேர்வுசெய்யவும்.</string>
 
@@ -873,9 +873,9 @@
     <!-- Explanation below the name, about and badges rows on the profile screen, saying who can see your profile -->
     <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">உங்கள் ப்ரொஃபைல் மற்றும் அதில் செய்த மாற்றங்கள் நீங்கள் செய்தி அனுப்புபவர்களுக்கு, தொடர்புகளுக்கு மற்றும் குழுக்களுக்குத் தெரிய வரும்.</string>
     <!-- The title of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_title">Signal லைப் புதுப்பிக்கவும்</string>
+    <string name="EditProfileFragment_deprecated_dialog_title">Radar லைப் புதுப்பிக்கவும்</string>
     <!-- The body of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_body">சிக்னலின் இந்தப் பதிப்பு காலாவதியானது. தொடர்ந்து Signalஐப் பயன்படுத்த, இப்போதே புதுப்பிக்கவும்.</string>
+    <string name="EditProfileFragment_deprecated_dialog_body">சிக்னலின் இந்தப் பதிப்பு காலாவதியானது. தொடர்ந்து Radarஐப் பயன்படுத்த, இப்போதே புதுப்பிக்கவும்.</string>
     <!-- The button on a dialog prompting user to update to the latest version of Signal. When clicked, the user will be taken to the store to update their app. -->
     <string name="EditProfileFragment_deprecated_dialog_update_button">புதுப்பிக்கப்பட்டது</string>
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
@@ -1083,11 +1083,11 @@
     <!-- Displayed in a toast when we fail to open the ringtone picker -->
     <string name="NotificationSettingsFragment__failed_to_open_picker">பிக்கரைத் திறக்க முடியவில்லை.</string>
     <!-- Banner title when notification permission is disabled -->
-    <string name="NotificationSettingsFragment__to_enable_notifications">அறிவிப்புகளை இயக்க, Signalக்கு அவற்றைக் காண்பிக்க அனுமதி தேவை.</string>
+    <string name="NotificationSettingsFragment__to_enable_notifications">அறிவிப்புகளை இயக்க, Radarக்கு அவற்றைக் காண்பிக்க அனுமதி தேவை.</string>
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">இயக்கு</string>
     <string name="NotificationsSettingsFragment__calls">அழைப்புகள்</string>
-    <string name="NotificationsSettingsFragment__contact_joins_signal">தொடர்பு இணைகிறது Signal</string>
+    <string name="NotificationsSettingsFragment__contact_joins_signal">தொடர்பு இணைகிறது Radar</string>
     <!-- Notification preference summary text -->
     <string name="NotificationsSettingsFragment__create_a_profile_to_receive_notifications_only_from_people_and_groups_you_choose">நீங்கள் தேர்ந்தெடுக்கும் நபர்கள் மற்றும் குழுக்களிடமிருந்து மட்டும் அறிவிப்புகளைப் பெற சுயவிவரத்தை உருவாக்கவும்.</string>
     <!-- Notification body to get notified when someone joins Signal -->

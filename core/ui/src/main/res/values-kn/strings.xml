@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">ಮುಂದುವರಿಸಿ ಎಂಬುದನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು ದೃಢೀಕರಿಸಲು ನಿಮ್ಮ ಫೋನ್‌ನ ಲಾಕ್ ನಮೂದಿಸಿ. ನಿಮ್ಮ Signal PIN ಅನ್ನು ನಮೂದಿಸಬೇಡಿ.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">ಮುಂದುವರಿಸಿ ಎಂಬುದನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ ಮತ್ತು ದೃಢೀಕರಿಸಲು ನಿಮ್ಮ ಫೋನ್‌ನ ಲಾಕ್ ನಮೂದಿಸಿ. ನಿಮ್ಮ Radar PIN ಅನ್ನು ನಮೂದಿಸಬೇಡಿ.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">ಮುಂದುವರಿಸಿ</string>
 

@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Tapnite Nadaljuj in za potrditev vnesite kodo telefona. Ne vnašajte Signalove PIN kode.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Tapnite Nadaljuj in za potrditev vnesite kodo telefona. Ne vnašajte Radarove PIN kode.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Nadaljuj</string>
 

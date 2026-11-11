@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Να δοθούν δικαιώματα</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Η Signal θα ζητήσει αυτές τις άδειες, για να σε βοηθήσει να στέλνεις μηνύματα σε άτομα που γνωρίζεις. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Η Radar θα ζητήσει αυτές τις άδειες, για να σε βοηθήσει να στέλνεις μηνύματα σε άτομα που γνωρίζεις. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Όχι τώρα</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Επαφές</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Βρες άτομα που γνωρίζεις. Οι επαφές σου είναι κρυπτογραφημένες και δεν είναι ορατές στην υπηρεσία Signal.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Βρες άτομα που γνωρίζεις. Οι επαφές σου είναι κρυπτογραφημένες και δεν είναι ορατές στην υπηρεσία Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Τηλεφωνικές κλήσεις</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Έχω το παλιό μου τηλέφωνο</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Σάρωσε έναν κωδικό QR από τον τρέχοντα λογαριασμό σου στο Signal για να ξεκινήσεις γρήγορα</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Σάρωσε έναν κωδικό QR από τον τρέχοντα λογαριασμό σου στο Radar για να ξεκινήσεις γρήγορα</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Δεν έχω το παλιό μου τηλέφωνο</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Ή επανεγκαθιστάς το Signal στην ίδια συσκευή</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Ή επανεγκαθιστάς το Radar στην ίδια συσκευή</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Επίλεξε πώς θέλεις να επαναφέρεις το ιστορικό μηνυμάτων και τα δεδομένα του λογαριασμού σου.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Από τα αντίγραφα ασφαλείας Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Από τα αντίγραφα ασφαλείας Radar</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Το δωρεάν ή επί πληρωμή πρόγραμμα Signal Backup</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Το δωρεάν ή επί πληρωμή πρόγραμμα Radar Backup</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Επαναφορά αντιγράφων ασφαλείας στη συσκευή</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Δεν βρέθηκε αντίγραφο ασφαλείας</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Δεν βρέθηκε αντίγραφο ασφαλείας Signal στον επιλεγμένο φάκελο. Επίλεξε διαφορετικό φάκελο.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Δεν βρέθηκε αντίγραφο ασφαλείας Radar στον επιλεγμένο φάκελο. Επίλεξε διαφορετικό φάκελο.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Δοκίμασε έναν διαφορετικό φάκελο</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Επαναφορά σε νέο λογαριασμό;</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Το αντίγραφο ασφαλείας που επαναφέρεις δημιουργήθηκε χρησιμοποιώντας διαφορετικό λογαριασμό Signal. Μπορείς να επαναφέρεις αυτό το αντίγραφο ασφαλείας σε έναν νέο λογαριασμό, αλλά δεν θα είσαι πλέον μέλος των ομάδων που ανακτήθηκαν.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Το αντίγραφο ασφαλείας που επαναφέρεις δημιουργήθηκε χρησιμοποιώντας διαφορετικό λογαριασμό Radar. Μπορείς να επαναφέρεις αυτό το αντίγραφο ασφαλείας σε έναν νέο λογαριασμό, αλλά δεν θα είσαι πλέον μέλος των ομάδων που ανακτήθηκαν.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Επαναφορά</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Δεν βρέθηκε αντίγραφο ασφαλείας</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Το κλειδί ανάκτησης που έγραψες είναι σωστό, αλλά δεν υπάρχει αντίγραφο ασφαλείας Signal για αυτόν τον λογαριασμό. Επίστρεψε για να επιλέξεις έναν άλλο τρόπο επαναφοράς ή συνέχισε χωρίς επαναφορά.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Το κλειδί ανάκτησης που έγραψες είναι σωστό, αλλά δεν υπάρχει αντίγραφο ασφαλείας Radar για αυτόν τον λογαριασμό. Επίστρεψε για να επιλέξεις έναν άλλο τρόπο επαναφοράς ή συνέχισε χωρίς επαναφορά.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Λανθασμένο κλειδί ανάκτησης</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Βεβαιώσου ότι εγγράφεσαι με τον ίδιο αριθμό τηλεφώνου και κλειδί ανάκτησης 64 χαρακτήρων που αποθήκευσες κατά την ενεργοποίηση των αντιγράφων ασφαλείας Signal. Τα Αντίγραφα ασφαλείας δεν μπορούν να ανακτηθούν χωρίς αυτό το κλειδί.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Βεβαιώσου ότι εγγράφεσαι με τον ίδιο αριθμό τηλεφώνου και κλειδί ανάκτησης 64 χαρακτήρων που αποθήκευσες κατά την ενεργοποίηση των αντιγράφων ασφαλείας Radar. Τα Αντίγραφα ασφαλείας δεν μπορούν να ανακτηθούν χωρίς αυτό το κλειδί.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Ξαναπροσπάθησε</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Επιβεβαίωση με κωδικό SMS;</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Μπορείς να ενεργοποιήσεις τον λογαριασμό σου επαληθεύοντας τον μέσω ενός κωδικού SMS που θα σου στείλει η εφαρμογή Signal. Αφού εισαγάγεις τον κωδικό, μπορείς να δοκιμάσεις ξανά να επαναφέρεις το αντίγραφο ασφαλείας σου χρησιμοποιώντας το κλειδί ανάκτησης.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Μπορείς να ενεργοποιήσεις τον λογαριασμό σου επαληθεύοντας τον μέσω ενός κωδικού SMS που θα σου στείλει η εφαρμογή Radar. Αφού εισαγάγεις τον κωδικό, μπορείς να δοκιμάσεις ξανά να επαναφέρεις το αντίγραφο ασφαλείας σου χρησιμοποιώντας το κλειδί ανάκτησης.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Αποστολή κωδικού</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Σύνδεσε τον λογαριασμό σου</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Δεν είσαι ακόμα στο Signal;</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Δεν είσαι ακόμα στο Radar;</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Δημιουργία λογαριασμού</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Δεν ήταν δυνατή η επαναφορά αυτού του αντιγράφου ασφαλείας</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Αυτή η έκδοση του Signal δεν μπορεί να επαναφέρει το αντίγραφο ασφαλείας σου. Ενημέρωσε το Signal στην τελευταία έκδοση και δοκίμασε ξανά.</string>
+    <string name="RemoteRestoreScreen__update_latest">Αυτή η έκδοση του Radar δεν μπορεί να επαναφέρει το αντίγραφο ασφαλείας σου. Ενημέρωσε το Radar στην τελευταία έκδοση και δοκίμασε ξανά.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Αναβάθμισε το Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Αναβάθμισε το Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Όχι τώρα</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Ο λογαριασμός σου έχει κλειδωθεί για να προστατεύσουμε το απόρρητο και την ασφάλειά σου. Μετά από %1$d ημέρες αδράνειας του λογαριασμού σου, θα μπορείς να επανεγγράψεις αυτό τον αριθμό τηλεφώνου χωρίς να χρειάζεται το PIN σου. Όλα τα περιεχόμενα θα διαγραφούν.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Άνοιξε το Signal στην παλιά σου συσκευή</string>
+    <string name="QuickRestoreQRScreen__step_1">Άνοιξε το Radar στην παλιά σου συσκευή</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Πάτα το εικονίδιο της κάμερας </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Επίλεξε ένα ισχυρότερο PIN</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Πληκτρολόγησες ξανά τον κωδικό που είχε ήδη χρησιμοποιηθεί για την επαλήθευση του αριθμού τηλεφώνου σου. Επίλεξε ένα νέο και μοναδικό Signal PIN.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Πληκτρολόγησες ξανά τον κωδικό που είχε ήδη χρησιμοποιηθεί για την επαλήθευση του αριθμού τηλεφώνου σου. Επίλεξε ένα νέο και μοναδικό Radar PIN.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Μάθε περισσότερα για τα PIN</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Προσοχή</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Αν απενεργοποιήσεις το PIN, θα χάσεις όλα τα δεδομένα όταν επανεγγραφείς στο Signal, εκτός εάν δημιουργήσεις χειροκίνητα αντίγραφο ασφαλείας και το ανακτήσεις. Δεν μπορείς να ενεργοποιήσεις το Κλείδωμα Εγγραφής όσο το PIN είναι απενεργοποιημένο.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Αν απενεργοποιήσεις το PIN, θα χάσεις όλα τα δεδομένα όταν επανεγγραφείς στο Radar, εκτός εάν δημιουργήσεις χειροκίνητα αντίγραφο ασφαλείας και το ανακτήσεις. Δεν μπορείς να ενεργοποιήσεις το Κλείδωμα Εγγραφής όσο το PIN είναι απενεργοποιημένο.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Απενεργοποίηση PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Γράψε το PIN σου</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Συμπλήρωσε το PIN που δημιούργησες όταν εγκατέστησες το Signal για πρώτη φορά</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Συμπλήρωσε το PIN που δημιούργησες όταν εγκατέστησες το Radar για πρώτη φορά</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Πληκτρολόγησες ξανά τον κωδικό που είχε ήδη χρησιμοποιηθεί για την επαλήθευση του αριθμού τηλεφώνου σου. Πληκτρολόγησε τον μοναδικό κωδικό PIN Signal που είχες επιλέξει προηγουμένως για τον λογαριασμό σου.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Πληκτρολόγησες ξανά τον κωδικό που είχε ήδη χρησιμοποιηθεί για την επαλήθευση του αριθμού τηλεφώνου σου. Πληκτρολόγησε τον μοναδικό κωδικό PIN Radar που είχες επιλέξει προηγουμένως για τον λογαριασμό σου.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">Λάθος PIN. Απομένει %1$d προσπάθεια.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Να επιτρέπονται οι ειδοποιήσεις</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Το Signal θέλει να ζητήσει την άδεια ειδοποιήσεων. Αυτό επιτρέπει στη συσκευή σου να εμφανίζει ειδοποιήσεις όταν λαμβάνεις νέα μηνύματα.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Το Radar θέλει να ζητήσει την άδεια ειδοποιήσεων. Αυτό επιτρέπει στη συσκευή σου να εμφανίζει ειδοποιήσεις όταν λαμβάνεις νέα μηνύματα.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Όχι τώρα</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Σάρωσε αυτόν τον κωδικό για να συνδέσεις τον λογαριασμό σου</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Άνοιξε το Signal στο κινητό σου</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Άνοιξε το Radar στο κινητό σου</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Πάτα στη φωτογραφία προφίλ για να ανοίξεις τις Ρυθμίσεις Signal</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Πάτα στη φωτογραφία προφίλ για να ανοίξεις τις Ρυθμίσεις Radar</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Πάτα «Συνδεδεμένες συσκευές» και «Σύνδεση νέας συσκευής»</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Αποτυχία δημιουργίας κωδικού</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Δεν έχεις το Signal σε άλλη συσκευή;</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Δεν έχεις το Radar σε άλλη συσκευή;</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Δημιουργία λογαριασμού</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Διαγραφή δεδομένων εφαρμογής;</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Προσπαθείς να συνδέσεις έναν άλλο λογαριασμό Signal. Αν συνεχίσεις, όλα τα δεδομένα Signal που υπάρχουν αυτή τη στιγμή στη συσκευή θα διαγραφούν.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Προσπαθείς να συνδέσεις έναν άλλο λογαριασμό Radar. Αν συνεχίσεις, όλα τα δεδομένα Radar που υπάρχουν αυτή τη στιγμή στη συσκευή θα διαγραφούν.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Διαγραφή και επανεκκίνηση</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Μεταφορά του λογαριασμού σου</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Για να μεταφέρεις τον λογαριασμό σου, άνοιξε την εφαρμογή Signal στην παλιά σου συσκευή Android και επίλεξε «Μεταφορά λογαριασμού».</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Για να μεταφέρεις τον λογαριασμό σου, άνοιξε την εφαρμογή Radar στην παλιά σου συσκευή Android και επίλεξε «Μεταφορά λογαριασμού».</string>
     <string name="DeviceTransferInstructions__continue">Συνέχεια</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Ναι, οι αριθμοί ταιριάζουν</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Οι αριθμοί δεν ταιριάζουν.</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Αναμονή για την επαλήθευση της παλιάς σου συσκευής…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Το Signal χρειάζεται δικαιώματα τοποθεσίας για να ανακαλύψει και να συνδεθεί με την παλιά σου συσκευή.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Το Radar χρειάζεται δικαιώματα τοποθεσίας για να ανακαλύψει και να συνδεθεί με την παλιά σου συσκευή.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Χορήγηση άδειας</string>
-    <string name="DeviceTransferSetup__location_services_required">Το Signal χρειάζεται να έχεις την τοποθεσία ενεργοποιημένη για να ανακαλύψει και να συνδεθεί στη παλιά σου συσκευή.</string>
+    <string name="DeviceTransferSetup__location_services_required">Το Radar χρειάζεται να έχεις την τοποθεσία ενεργοποιημένη για να ανακαλύψει και να συνδεθεί στη παλιά σου συσκευή.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Ενεργοποίηση υπηρεσιών τοποθεσίας</string>
-    <string name="DeviceTransferSetup__wifi_required">Το Signal χρειάζεται Wi-Fi για να ανακαλύψει και να συνδεθεί με την παλιά σου συσκευή.</string>
+    <string name="DeviceTransferSetup__wifi_required">Το Radar χρειάζεται Wi-Fi για να ανακαλύψει και να συνδεθεί με την παλιά σου συσκευή.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Ενεργοποίηση Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Συγγνώμη, φαίνεται ότι η συσκευή σου δεν υποστηρίζει το Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Επαναφορά αντίγραφου ασφαλείας αντ\'αυτού</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Μεταφορά δεδομένων</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d μηνύματα μέχρι τώρα</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Αδυναμία μεταφοράς</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Δεν μπορεί να γίνει μεταφορά από νεότερη έκδοση του Signal.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Δεν μπορεί να γίνει μεταφορά από νεότερη έκδοση του Radar.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Ορισμένα δεδομένα δεν μπόρεσαν να μεταφερθούν λόγω περιορισμού της βάσης δεδομένων.</string>
     <string name="DeviceTransferProgress__transfer_failed">Η μεταφορά απέτυχε. Δοκίμασε ξανά.</string>
     <string name="DeviceTransferProgress__try_again">Δοκίμασε ξανά</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Σίγουρα;</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Χωρίς όνομα χρήστη, οι άλλοι δεν θα μπορούν να σε βρουν στο Signal.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Χωρίς όνομα χρήστη, οι άλλοι δεν θα μπορούν να σε βρουν στο Radar.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Ακύρωση</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

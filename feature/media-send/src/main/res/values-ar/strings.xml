@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">الانتقال إلى الكاميرا</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">يحتاج سيجنال إلى إذن لإظهار الصور ومقاطع الفيديو الخاصة بك.</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">يحتاج رادار إلى إذن لإظهار الصور ومقاطع الفيديو الخاصة بك.</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">منح الصلاحية</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">لم يتم العثور على صور أو مقاطع فيديو. لدى سيجنال إمكانية الوصول للصور ومقاطع الفيديو التي حدَّدتها فقط.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">لم يتم العثور على صور أو مقاطع فيديو. لدى رادار إمكانية الوصول للصور ومقاطع الفيديو التي حدَّدتها فقط.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">لدى سيجنال وصول محدود للصور ومقاطع الفيديو.</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">لدى رادار وصول محدود للصور ومقاطع الفيديو.</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">إدارة</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">لإظهار الصور ومقاطع الفيديو:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">يحتاج سيجنال إلى الوصول إلى الصور ومقاطع الفيديو الخاصة بك.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">يحتاج رادار إلى الوصول إلى الصور ومقاطع الفيديو الخاصة بك.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">صورة</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">اسمح بالوصول إلى الميكروفون</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">لالتقاط الصور والفيديوهات، اسمح لسيجنال بالوصول إلى الكاميرا.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">لالتقاط الصور والفيديوهات، اسمح لرادار بالوصول إلى الكاميرا.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">لالتقاط الصور والفيديوهات، اسمح لسيجنال بالوصول إلى الكاميرا والميكروفون.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">لالتقاط الصور والفيديوهات، اسمح لرادار بالوصول إلى الكاميرا والميكروفون.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">لالتقاط الفيديوهات بالصوت، اسمح لسيجنال بالوصول إلى الميكروفون.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">لالتقاط الفيديوهات بالصوت، اسمح لرادار بالوصول إلى الميكروفون.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">لقراءة كود الـ QR، امنح سيجنال صلاحية الوصول إلى الكاميرا.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">لقراءة كود الـ QR، امنح رادار صلاحية الوصول إلى الكاميرا.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">يحتاج سيجنال إلى الوصول إلى الكاميرا لالتقاط الصور</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">يحتاج رادار إلى الوصول إلى الكاميرا لالتقاط الصور</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
   <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">يحتاج سيجال إلى الوصول إلى الكاميرا لقراءة كودات الـ QR.</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">يحتاج سيجنال إلى الوصول للميكروفون لالتقاط الفيديو</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">يحتاج رادار إلى الوصول للميكروفون لالتقاط الفيديو</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">لالتقاط الصور في سيجنال:</string>
+  <string name="CameraXFragment_to_capture_photos">لالتقاط الصور في رادار:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">لالتقاط الصور والفيديوهات في سيجنال:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">لالتقاط الصور والفيديوهات في رادار:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">لالتقاط الفيديوهات بالصوت:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">التقاط مُتعدِّد</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">يحتاج سيجنال إلى أذونات الوصول إلى الميكروفون لتسجيل مقاطع الفيديو، لكنه لم يُمنَح الإذن. يُرجى الذهاب إلى إعدادات التطبيق ثم اختيار \"الأذونات\" وتفعيل \"الميكروفون\" و \"الكاميرا\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">يحتاج رادار إلى أذونات الوصول إلى الميكروفون لتسجيل مقاطع الفيديو، لكنه لم يُمنَح الإذن. يُرجى الذهاب إلى إعدادات التطبيق ثم اختيار \"الأذونات\" وتفعيل \"الميكروفون\" و \"الكاميرا\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">حدث خطأ أثناء تسجيل الفيديو</string>
@@ -219,7 +219,7 @@
         <item quantity="other">تمَّ تحديد جودة %1$d عنصر للجودة القياسية</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">يحتاج سيجنال إلى إذن الوصول إلى مساحة التخزين من أجل استخدام الذاكرة الخارجية، ولكن تمَّ إيقاف الإذن بشكلٍ دائم. يُرجى زيارة إعدادات التطبيق، وتحديد \"الأذونات\"، ثم تفعيل \"مساحة التخزين\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">يحتاج رادار إلى إذن الوصول إلى مساحة التخزين من أجل استخدام الذاكرة الخارجية، ولكن تمَّ إيقاف الإذن بشكلٍ دائم. يُرجى زيارة إعدادات التطبيق، وتحديد \"الأذونات\"، ثم تفعيل \"مساحة التخزين\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">سيتم إرسال الفيديو دون صوت</string>
 
@@ -233,14 +233,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">هل ترغبُ بربط الجهاز؟</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">يَبدو أنك تُحاول ربط جهاز يستخدم سيجنال. انقر على \"متابعة\" ثم انقر على \"ربط جهاز جديد\" وامسح كود الـ QR من جديد.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">يَبدو أنك تُحاول ربط جهاز يستخدم رادار. انقر على \"متابعة\" ثم انقر على \"ربط جهاز جديد\" وامسح كود الـ QR من جديد.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">متابعة</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">تعذّر نقل الحساب</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">الجهاز الذي تحاول النقل إليه قديم. قم بتحديث سيجنال على هذا الجهاز وحاول من جديد.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">الجهاز الذي تحاول النقل إليه قديم. قم بتحديث رادار على هذا الجهاز وحاول من جديد.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

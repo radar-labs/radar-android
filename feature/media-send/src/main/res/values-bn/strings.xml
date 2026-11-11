@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">ক্যামেরা-তে যান</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">আপনার ছবি ও ভিডিও দেখানোর জন্য Signal-এর অনুমতি প্রয়োজন</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">আপনার ছবি ও ভিডিও দেখানোর জন্য Radar-এর অনুমতি প্রয়োজন</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">অ্যাক্সেসের অনুমতি দিন</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">কোনো ছবি বা ভিডিও পাওয়া যায়নি। শুধুমাত্র আপনার নির্বাচিত কিছু ছবি ও ভিডিওতে Signal-এর অ্যাক্সেস রয়েছে।</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">কোনো ছবি বা ভিডিও পাওয়া যায়নি। শুধুমাত্র আপনার নির্বাচিত কিছু ছবি ও ভিডিওতে Radar-এর অ্যাক্সেস রয়েছে।</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">ছবি বা ভিডিওতে Signal-এর সীমিত অ্যাক্সেস রয়েছে</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">ছবি বা ভিডিওতে Radar-এর সীমিত অ্যাক্সেস রয়েছে</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">নিয়ন্ত্রণ করুন</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">ছবি ও ভিডিও দেখাতে:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">আপনার ছবি এবং ভিডিও দেখানোর জন্য Signal-এর অ্যাক্সেস প্রয়োজন।</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">আপনার ছবি এবং ভিডিও দেখানোর জন্য Radar-এর অ্যাক্সেস প্রয়োজন।</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">ছবি</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">আপনার মাইক্রোফোনে অ্যাক্সেসের অনুমতি দিন</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">ছবি ও ভিডিও তুলতে Signal কে ক্যামেরা ব্যাবহারের অনুমতি দিন।</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">ছবি ও ভিডিও তুলতে Radar কে ক্যামেরা ব্যাবহারের অনুমতি দিন।</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">ছবি তুলতে ও ভিডিও ধারণ করতে, ক্যামেরা ও মাইক্রোফোনে Signal-কে অ্যাক্সেসের অনুমতি দিন।</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">ছবি তুলতে ও ভিডিও ধারণ করতে, ক্যামেরা ও মাইক্রোফোনে Radar-কে অ্যাক্সেসের অনুমতি দিন।</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">শব্দ সহ ভিডিও ধারণ করতে, আপনার মাইক্রোফোনে Signal-কে অ্যাক্সেসের অনুমতি দিন।</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">শব্দ সহ ভিডিও ধারণ করতে, আপনার মাইক্রোফোনে Radar-কে অ্যাক্সেসের অনুমতি দিন।</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR কোড স্ক্যান করতে, ক্যামেরায় Signal-কে অ্যাক্সেসের অনুমতি দিন।</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR কোড স্ক্যান করতে, ক্যামেরায় Radar-কে অ্যাক্সেসের অনুমতি দিন।</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">ছবি তোলার জন্য ক্যামেরায় Signal-এর অ্যাক্সেস প্রয়োজন</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">ছবি তোলার জন্য ক্যামেরায় Radar-এর অ্যাক্সেস প্রয়োজন</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR কোড স্ক্যান করার জন্য ক্যামেরায় Signal-এর অ্যাক্সেস প্রয়োজন</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR কোড স্ক্যান করার জন্য ক্যামেরায় Radar-এর অ্যাক্সেস প্রয়োজন</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">ভিডিও ধারণ করতে Signal-এর মাইক্রোফোন অ্যাক্সেসের প্রয়োজন</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">ভিডিও ধারণ করতে Radar-এর মাইক্রোফোন অ্যাক্সেসের প্রয়োজন</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Signal-এ ছবি তুলতে:</string>
+  <string name="CameraXFragment_to_capture_photos">Radar-এ ছবি তুলতে:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Signal-এ ছবি তুলতে এবং ভিডিও ধারণ করতে:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Radar-এ ছবি তুলতে এবং ভিডিও ধারণ করতে:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">শব্দ সহ ভিডিও ধারণ করতে:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">মাল্টি-ক্যাপচার</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">ভিডিও রেকর্ড করতে Signal এর মাইক্রোফোনের অনুমতি প্রয়োজন, তবে সেগুলি অস্বীকার করা হয়েছে। দয়া করে অ্যাপ্লিকেশন সেটিংসে যান এবং, \"অনুমতিগুলি\" নির্বাচন করুন এবং \"মাইক্রোফোন\" এবং \"ক্যামেরা\" সক্ষম করুন|</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">ভিডিও রেকর্ড করতে Radar এর মাইক্রোফোনের অনুমতি প্রয়োজন, তবে সেগুলি অস্বীকার করা হয়েছে। দয়া করে অ্যাপ্লিকেশন সেটিংসে যান এবং, \"অনুমতিগুলি\" নির্বাচন করুন এবং \"মাইক্রোফোন\" এবং \"ক্যামেরা\" সক্ষম করুন|</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">ভিডিও রেকর্ডিং সফল হয়নি</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d-টি আইটেম স্ট্যান্ডার্ড মানে সেট করা হয়েছে</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">বাহ্যিক স্টোরেজে সংরক্ষণের জন্য Signalএর স্টোরেজের অনুমতি প্রয়োজন তবে এটি স্থায়ীভাবে অস্বীকার করা হয়েছে। দয়া করে অ্যাপ্লিকেশন সেটিংসে যান, \"অনুমতিগুলি\" নির্বাচন করুন এবং \"স্টোরেজ\" সক্ষম করুন।</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">বাহ্যিক স্টোরেজে সংরক্ষণের জন্য Radarএর স্টোরেজের অনুমতি প্রয়োজন তবে এটি স্থায়ীভাবে অস্বীকার করা হয়েছে। দয়া করে অ্যাপ্লিকেশন সেটিংসে যান, \"অনুমতিগুলি\" নির্বাচন করুন এবং \"স্টোরেজ\" সক্ষম করুন।</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">অডিও ছাড়া ভিডিও পাঠানো হবে</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">ডিভাইস লিংক করবেন?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">মনে হচ্ছে আপনি একটি Signal ডিভাইস লিংক করার চেষ্টা করছেন। \"এগিয়ে যান\"-এ ট্যাপ করুন এবং তারপর \"একটি নতুন ডিভাইস লিংক করুন\"-এ ট্যাপ করুন এবং আবারো QR কোডটি স্ক্যান করুন।</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">মনে হচ্ছে আপনি একটি Radar ডিভাইস লিংক করার চেষ্টা করছেন। \"এগিয়ে যান\"-এ ট্যাপ করুন এবং তারপর \"একটি নতুন ডিভাইস লিংক করুন\"-এ ট্যাপ করুন এবং আবারো QR কোডটি স্ক্যান করুন।</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">চলতে থাকুন</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">অ্যাকাউন্ট ট্রান্সফার করা যাচ্ছে না</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">যে ডিভাইসে আপনি ট্রান্সফার করছেন, সেটি পুরোনো সংস্করণের। সেই ডিভাইসে Signal আপডেট করুন এবং আবার চেষ্টা করুন।</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">যে ডিভাইসে আপনি ট্রান্সফার করছেন, সেটি পুরোনো সংস্করণের। সেই ডিভাইসে Radar আপডেট করুন এবং আবার চেষ্টা করুন।</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

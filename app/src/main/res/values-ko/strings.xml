@@ -34,7 +34,7 @@
   <!-- Removed by excludeNonTranslatables <string name="AlbumThumbnailView_plus" translatable="false">\+%d</string> -->
 
     <!-- ApplicationMigrationActivity -->
-    <string name="ApplicationMigrationActivity__signal_is_updating">Signal 업데이트 중…</string>
+    <string name="ApplicationMigrationActivity__signal_is_updating">Radar 업데이트 중…</string>
 
     <!-- ApplicationPreferencesActivity -->
     <string name="ApplicationPreferencesActivity_error_connecting_to_server">서버에 연결할 수 없습니다</string>
@@ -80,7 +80,7 @@
     <string name="AttachmentKeyboard_location">위치</string>
     <!-- Text for a button that will allow users to create a poll -->
     <string name="AttachmentKeyboard_poll">투표</string>
-    <string name="AttachmentKeyboard_Signal_needs_permission_to_show_your_photos_and_videos">사진과 동영상을 표시하려면 Signal에 권한이 필요합니다.</string>
+    <string name="AttachmentKeyboard_Signal_needs_permission_to_show_your_photos_and_videos">사진과 동영상을 표시하려면 Radar에 권한이 필요합니다.</string>
     <!-- Text for a button prompting users to allow Signal access to their gallery storage -->
     <string name="AttachmentKeyboard_allow_access">권한 허용</string>
     <string name="AttachmentKeyboard_payment">결제</string>
@@ -91,34 +91,34 @@
     <!-- Option in menu to go to settings -->
     <string name="AttachmentKeyboard_go_to_settings">설정으로 이동</string>
     <!-- Text explaining that Signal has limited access to photos -->
-    <string name="AttachmentKeyboard_signal_has_limited_access">Signal의 사진 또는 동영상에 대한 액세스 권한이 제한됩니다.</string>
+    <string name="AttachmentKeyboard_signal_has_limited_access">Radar의 사진 또는 동영상에 대한 액세스 권한이 제한됩니다.</string>
     <!-- Text shown when user has given no photos for Signal to access and an explanation on how to change those permissions -->
     <string name="AttachmentKeyboard_no_photos_found">사진을 찾을 수 없습니다. 여기에 표시할 사진이나 동영상을 선택하거나 접근 권한을 변경하세요.</string>
 
     <!-- MediaGalleryFragment -->
     <!-- Text describing that no photos or videos are currently found in the gallery and that Signal can only access media that the user allows -->
-    <string name="MediaGalleryFragment__no_photos_found">사진 또는 동영상을 찾을 수 없습니다. Signal에는 사용자가 선택한 사진과 동영상에 대해서만 액세스 권한이 부여됩니다.</string>
+    <string name="MediaGalleryFragment__no_photos_found">사진 또는 동영상을 찾을 수 없습니다. Radar에는 사용자가 선택한 사진과 동영상에 대해서만 액세스 권한이 부여됩니다.</string>
 
     <!-- AttachmentManager -->
     <string name="AttachmentManager_cant_open_media_selection">미디어를 선택할 수 있는 앱이 없습니다.</string>
-    <string name="AttachmentManager_signal_requires_the_external_storage_permission_in_order_to_attach_photos_videos_or_audio">Signal에서 사진, 동영상 또는 오디오를 첨부하려면 저장 공간 접근 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'저장 공간\' 항목을 허용해 주세요.</string>
-    <string name="AttachmentManager_signal_requires_contacts_permission_in_order_to_attach_contact_information">Signal에서 연락처 정보를 첨부하려면 연락처 접근 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'연락처\' 항목을 허용해 주세요.</string>
-    <string name="AttachmentManager_signal_requires_location_information_in_order_to_attach_a_location">Signal에서 위치 정보를 첨부하려면 위치 접근 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'위치\' 항목을 허용해 주세요.</string>
+    <string name="AttachmentManager_signal_requires_the_external_storage_permission_in_order_to_attach_photos_videos_or_audio">Radar에서 사진, 동영상 또는 오디오를 첨부하려면 저장 공간 접근 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'저장 공간\' 항목을 허용해 주세요.</string>
+    <string name="AttachmentManager_signal_requires_contacts_permission_in_order_to_attach_contact_information">Radar에서 연락처 정보를 첨부하려면 연락처 접근 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'연락처\' 항목을 허용해 주세요.</string>
+    <string name="AttachmentManager_signal_requires_location_information_in_order_to_attach_a_location">Radar에서 위치 정보를 첨부하려면 위치 접근 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'위치\' 항목을 허용해 주세요.</string>
 
     <!-- Dialog title asking users for location permission -->
     <string name="AttachmentManager_signal_allow_access_location">내 위치를 사용하도록 허용하세요</string>
     <!-- Dialog description that will explain the steps needed to give location permission -->
     <string name="AttachmentManager_signal_to_send_location">위치를 보내려면 다음을 수행하세요.</string>
     <!-- Alert dialog description asking for location permission -->
-    <string name="AttachmentManager_signal_allow_signal_access_location">위치를 보내려면 Signal에서 내 위치를 사용할 수 있도록 허용하세요.</string>
+    <string name="AttachmentManager_signal_allow_signal_access_location">위치를 보내려면 Radar에서 내 위치를 사용할 수 있도록 허용하세요.</string>
     <!-- Toast text explaining Signal\'s need for location access -->
-    <string name="AttachmentManager_signal_needs_location_access">위치를 보내려면 Signal에서 내 위치를 사용할 수 있어야 합니다.</string>
+    <string name="AttachmentManager_signal_needs_location_access">위치를 보내려면 Radar에서 내 위치를 사용할 수 있어야 합니다.</string>
     <!-- Dialog title asking users for gallery storage permission -->
     <string name="AttachmentManager_signal_allow_storage">저장 공간 권한 허용</string>
     <!-- Dialog description that will explain the steps needed to give gallery storage permission -->
     <string name="AttachmentManager_signal_to_show_photos">사진과 동영상 표시 방법:</string>
     <!-- Toast text explaining Signal\'s need for storage access -->
-    <string name="AttachmentManager_signal_needs_storage_access">사진과 동영상을 표시하려면 Signal에 액세스 권한이 필요합니다.</string>
+    <string name="AttachmentManager_signal_needs_storage_access">사진과 동영상을 표시하려면 Radar에 액세스 권한이 필요합니다.</string>
 
     <!-- Alert dialog title to show the recipient has not activated payments -->
     <string name="AttachmentManager__not_activated_payments">%1$s 님이 결제 기능을 아직 활성화하지 않았습니다. </string>
@@ -160,7 +160,7 @@
     <!-- Title of fragment -->
     <string name="CreditCardFragment__credit_or_debit_card">신용카드 또는 체크카드</string>
     <!-- Explanation of how to fill in the form and a note about pii, displayed above the credit card text fields -->
-    <string name="CreditCardFragment__enter_your_card_details">카드 세부 정보를 입력하세요. Signal은 개인정보를 수집하거나 저장하지 않습니다.</string>
+    <string name="CreditCardFragment__enter_your_card_details">카드 세부 정보를 입력하세요. Radar는 개인정보를 수집하거나 저장하지 않습니다.</string>
     <!-- Displayed as a hint in the card number text field -->
     <string name="CreditCardFragment__card_number">카드 번호</string>
     <!-- Displayed as a hint in the card expiry text field -->
@@ -211,9 +211,9 @@
     <string name="BlockUnblockDialog_blocked_people_wont_be_able_to_call_you_or_send_you_messages">차단한 사용자는 나에게 전화를 걸거나 메시지를 보낼 수 없습니다.</string>
     <string name="BlockUnblockDialog_blocked_people_wont_be_able_to_send_you_messages">차단한 사용자는 나에게 메시지를 보낼 수 없습니다.</string>
     <!-- Message shown on block dialog when blocking the Signal release notes recipient -->
-    <string name="BlockUnblockDialog_block_getting_signal_updates_and_news">Signal의 업데이트와 새로운 소식을 차단합니다.</string>
+    <string name="BlockUnblockDialog_block_getting_signal_updates_and_news">Radar의 업데이트와 새로운 소식을 차단합니다.</string>
     <!-- Message shown on unblock dialog when unblocking the Signal release notes recipient -->
-    <string name="BlockUnblockDialog_resume_getting_signal_updates_and_news">Signal의 업데이트와 새로운 소식 다시 받기</string>
+    <string name="BlockUnblockDialog_resume_getting_signal_updates_and_news">Radar의 업데이트와 새로운 소식 다시 받기</string>
     <string name="BlockUnblockDialog_unblock_s">%1$s 그룹을 차단 해제할까요?</string>
     <string name="BlockUnblockDialog_block">차단</string>
     <string name="BlockUnblockDialog_block_and_leave">차단하고 나가기</string>
@@ -224,11 +224,11 @@
     <!-- Dialog button to report as spam only -->
     <string name="BlockUnblockDialog_report_spam">스팸 신고</string>
     <!-- Dialog message when reporting spam of an individual (1:1 conversation) -->
-    <string name="BlockUnblockDialog_report_spam_description">해당 사용자에 대한 스팸 신고가 Signal에 전달됩니다. Signal은 대화 내용을 확인할 수 없습니다.</string>
+    <string name="BlockUnblockDialog_report_spam_description">해당 사용자에 대한 스팸 신고가 Radar에 전달됩니다. Radar는 대화 내용을 확인할 수 없습니다.</string>
     <!-- Dialog message when reporting spam of a group and we can determine the group member that invited you, placeholder is a name -->
-    <string name="BlockUnblockDialog_report_spam_group_named_adder">그룹 초대를 보낸 %1$s 님에 대한 스팸 신고가 Signal에 전달됩니다. Signal은 대화 내용을 확인할 수 없습니다.</string>
+    <string name="BlockUnblockDialog_report_spam_group_named_adder">그룹 초대를 보낸 %1$s 님에 대한 스팸 신고가 Radar에 전달됩니다. Radar는 대화 내용을 확인할 수 없습니다.</string>
     <!-- Dialog message when reporting spam of a group and we cannot determine the group member that invited you -->
-    <string name="BlockUnblockDialog_report_spam_group_unknown_adder">그룹 초대를 보낸 해당 사용자에 대한 스팸 신고가 Signal에 전달됩니다. Signal은 대화 내용을 확인할 수 없습니다.</string>
+    <string name="BlockUnblockDialog_report_spam_group_unknown_adder">그룹 초대를 보낸 해당 사용자에 대한 스팸 신고가 Radar에 전달됩니다. Radar는 대화 내용을 확인할 수 없습니다.</string>
 
     <!-- BucketedThreadMedia -->
     <string name="BucketedThreadMedia_Today">오늘</string>
@@ -262,19 +262,19 @@
     <!-- Title for an alert that shows at the bottom of the chat list letting people know that circumvention is no longer needed -->
     <string name="CensorshipCircumventionMegaphone_turn_off_censorship_circumvention">검열 우회를 끄시겠어요?</string>
     <!-- Body for an alert that shows at the bottom of the chat list letting people know that circumvention is no longer needed -->
-    <string name="CensorshipCircumventionMegaphone_you_can_now_connect_to_the_signal_service">이제 Signal 서비스에 직접 연결하여 편리하게 이용하실 수 있어요.</string>
+    <string name="CensorshipCircumventionMegaphone_you_can_now_connect_to_the_signal_service">이제 Radar 서비스에 직접 연결하여 편리하게 이용하실 수 있어요.</string>
     <!-- Action to prompt the user to disable circumvention since it is no longer needed -->
     <string name="CensorshipCircumventionMegaphone_turn_off">끄기</string>
     <!-- Action to prompt the user to dismiss the alert at the bottom of the chat list -->
     <string name="CensorshipCircumventionMegaphone_no_thanks">괜찮아요</string>
 
     <!-- ClientDeprecatedActivity -->
-    <string name="ClientDeprecatedActivity_update_signal">Signal 업데이트</string>
+    <string name="ClientDeprecatedActivity_update_signal">Radar 업데이트</string>
     <string name="ClientDeprecatedActivity_this_version_of_the_app_is_no_longer_supported">이 앱 버전은 더 이상 지원되지 않습니다. 메시지를 주고받으려면 최신 버전으로 업데이트해 주세요.</string>
     <string name="ClientDeprecatedActivity_update">업데이트</string>
     <string name="ClientDeprecatedActivity_dont_update">업데이트하지 않음</string>
     <string name="ClientDeprecatedActivity_warning">경고</string>
-    <string name="ClientDeprecatedActivity_your_version_of_signal_has_expired_you_can_view_your_message_history">현재 사용 중인 Signal 버전이 만료되었습니다. 메시지 기록은 확인할 수 있지만, 업데이트하기 전까지는 메시지를 주고받을 수 없습니다.</string>
+    <string name="ClientDeprecatedActivity_your_version_of_signal_has_expired_you_can_view_your_message_history">현재 사용 중인 Radar 버전이 만료되었습니다. 메시지 기록은 확인할 수 있지만, 업데이트하기 전까지는 메시지를 주고받을 수 없습니다.</string>
 
     <!-- ClockSkewActivity -->
     <!-- Title of the full-screen dialog shown when the device clock is too far off from the real time -->
@@ -294,7 +294,7 @@
     <string name="CommunicationActions_cancel">취소</string>
     <string name="CommunicationActions_call">전화</string>
     <string name="CommunicationActions_insecure_call">비보안 통화</string>
-    <string name="CommunicationActions_carrier_charges_may_apply">통신사 요금이 부과될 수 있습니다. 현재 통화하려는 번호는 Signal에 등록되어 있지 않아, 인터넷이 아닌 모바일 통신사를 통해 연결됩니다.</string>
+    <string name="CommunicationActions_carrier_charges_may_apply">통신사 요금이 부과될 수 있습니다. 현재 통화하려는 번호는 Radar에 등록되어 있지 않아, 인터넷이 아닌 모바일 통신사를 통해 연결됩니다.</string>
     <string name="CommunicationActions_cant_join_call">통화에 참여할 수 없어요</string>
     <string name="CommunicationActions_this_call_link_is_no_longer_valid">통화 링크가 더 이상 유효하지 않습니다.</string>
     <!-- Title on dialog when call link url cannot be parsed -->
@@ -306,7 +306,7 @@
     <!-- Title on dialog when quick restore qr code is scanned in system camera -->
     <string name="CommunicationActions__transfer_dialog_title">계정을 새 기기로 이전할까요?</string>
     <!-- Message on dialog when quick restore qr code is scanned in system camera -->
-    <string name="CommunicationActions__transfer_dialog_message">이 계정을 새로운 기기로 이전하려면 \'계속\'을 탭한 다음 Signal 카메라로 QR 코드를 다시 스캔하세요. Signal에서 직접 제공한 QR 코드만 스캔하세요.</string>
+    <string name="CommunicationActions__transfer_dialog_message">이 계정을 새로운 기기로 이전하려면 \'계속\'을 탭한 다음 Radar 카메라로 QR 코드를 다시 스캔하세요. Radar에서 직접 제공한 QR 코드만 스캔하세요.</string>
     <string name="CommunicationActions__dont_transfer">이전 안 함</string>
 
     <!-- ConfirmIdentityDialog -->
@@ -330,8 +330,8 @@
 
     <!-- ContactsDatabase -->
     <string name="ContactsDatabase_message_s">메시지 %1$s</string>
-    <string name="ContactsDatabase_signal_call_s">Signal 음성 통화 %1$s</string>
-    <string name="ContactsDatabase_signal_video_call_s">Signal 영상 통화 %1$s</string>
+    <string name="ContactsDatabase_signal_call_s">Radar 음성 통화 %1$s</string>
+    <string name="ContactsDatabase_signal_video_call_s">Radar 영상 통화 %1$s</string>
 
     <!-- ContactNameEditActivity -->
     <!-- Toolbar title for contact name edit activity -->
@@ -440,10 +440,10 @@
     <!-- Dialog description that will explain the steps needed to give microphone permissions -->
     <string name="ConversationActivity_signal_to_send_audio_messages">음성 메시지를 보내는 방법:</string>
     <!-- Alert dialog description asking for microphone permission in order to send voice messages -->
-    <string name="ConversationActivity_to_send_voice_messages_allow_signal_access_to_your_microphone">음성 메시지를 보내려면 Signal에서 마이크를 사용할 수 있도록 허용하세요.</string>
+    <string name="ConversationActivity_to_send_voice_messages_allow_signal_access_to_your_microphone">음성 메시지를 보내려면 Radar에서 마이크를 사용할 수 있도록 허용하세요.</string>
     <!-- Toast text explaining Signal\'s need for microphone access -->
-    <string name="ConversationActivity_signal_needs_microphone_access_voice_message">음성 메시지를 녹음하려면 Signal에서 마이크를 사용할 수 있어야 합니다.</string>
-    <string name="ConversationActivity_signal_requires_the_microphone_permission_in_order_to_send_audio_messages">Signal에서 음성 메시지를 보내려면 마이크 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'마이크\' 항목을 허용해 주세요.</string>
+    <string name="ConversationActivity_signal_needs_microphone_access_voice_message">음성 메시지를 녹음하려면 Radar에서 마이크를 사용할 수 있어야 합니다.</string>
+    <string name="ConversationActivity_signal_requires_the_microphone_permission_in_order_to_send_audio_messages">Radar에서 음성 메시지를 보내려면 마이크 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'마이크\' 항목을 허용해 주세요.</string>
 
     <string name="ConversationActivity_quoted_contact_message">%1$s %2$s</string>
     <string name="ConversationActivity_search_position">%2$d 중 %1$d</string>
@@ -463,9 +463,9 @@
     <!-- Dialog description that will explain the steps needed to give microphone permissions for a voice call -->
     <string name="ConversationActivity__to_start_call">통화를 시작하려면 다음 단계를 따라주세요.</string>
     <!-- Alert dialog description asking for microphone permission in order to start a voice call -->
-    <string name="ConversationActivity__to_call_signal_needs_access_to_your_microphone">통화를 시작하려면 Signal에서 마이크를 사용할 수 있도록 허용하세요.</string>
+    <string name="ConversationActivity__to_call_signal_needs_access_to_your_microphone">통화를 시작하려면 Radar에서 마이크를 사용할 수 있도록 허용하세요.</string>
     <!-- Toast text explaining Signal\'s need for microphone access for a voice call -->
-    <string name="ConversationActivity_signal_needs_microphone_access_voice_call">통화를 시작하려면 Signal에 마이크 접근 권한이 필요합니다.</string>
+    <string name="ConversationActivity_signal_needs_microphone_access_voice_call">통화를 시작하려면 Radar에 마이크 접근 권한이 필요합니다.</string>
 
 
     <string name="ConversationActivity_join">참가</string>
@@ -475,15 +475,15 @@
     <string name="ConversationActivity_error_sending_media">미디어 전송 오류</string>
 
     <!-- Message shown when opening an MMS group conversation with SMS disabled and there are no exported messages -->
-    <string name="ConversationActivity__sms_messaging_is_no_longer_supported">Signal에서 더 이상 SMS 메시지를 지원하지 않습니다.</string>
+    <string name="ConversationActivity__sms_messaging_is_no_longer_supported">Radar에서 더 이상 SMS 메시지를 지원하지 않습니다.</string>
     <!-- Message shown when opening an SMS conversation with SMS disabled and there are no exported messages -->
-    <string name="ConversationActivity__sms_messaging_is_no_longer_supported_in_signal_invite_s_to_to_signal_to_keep_the_conversation_here">Signal에서 더 이상 SMS 메시지를 지원하지 않습니다. %1$s 님을 Signal로 초대하여 대화를 이어가세요.</string>
+    <string name="ConversationActivity__sms_messaging_is_no_longer_supported_in_signal_invite_s_to_to_signal_to_keep_the_conversation_here">Radar에서 더 이상 SMS 메시지를 지원하지 않습니다. %1$s 님을 Radar로 초대하여 대화를 이어가세요.</string>
     <!-- Message shown when opening a conversation with an unregistered user who used to be on Signal -->
-    <string name="ConversationActivity__this_person_is_no_longer_using_signal">이 사용자는 더 이상 Signal을 사용하지 않습니다. Signal로 초대하여 대화를 이어가세요.</string>
+    <string name="ConversationActivity__this_person_is_no_longer_using_signal">이 사용자는 더 이상 Radar를 사용하지 않습니다. Radar로 초대하여 대화를 이어가세요.</string>
     <!-- Message shown when opening a conversation with an unregistered user who is not on Signal -->
-    <string name="ConversationActivity__this_person_is_not_using_signal">상대방이 Signal을 사용하지 않습니다. Signal로 초대하여 대화를 이어가세요.</string>
+    <string name="ConversationActivity__this_person_is_not_using_signal">상대방이 Radar를 사용하지 않습니다. Radar로 초대하여 대화를 이어가세요.</string>
     <!-- Action button shown when opening an SMS conversation with SMS disabled and there are no exported messages -->
-    <string name="ConversationActivity__invite_to_signal">Signal로 초대하기</string>
+    <string name="ConversationActivity__invite_to_signal">Radar로 초대하기</string>
     <!-- Toast message shown when trying to record a voice message during an ongoing call -->
     <string name="ConversationFragment_cannot_record_voice_message_during_call">통화 중에는 음성 메시지를 녹음할 수 없습니다.</string>
 
@@ -515,7 +515,7 @@
     <string name="ConversationFragment_dont_show_again">다시 표시 안 함</string>
     <string name="ConversationFragment_pending">대기 중…</string>
     <!-- Describes how the message was sent when looking at a message detail. Previously, messages could be through other means like SMS -->
-    <string name="ConversationFragment_push">데이터(Signal)</string>
+    <string name="ConversationFragment_push">데이터(Radar)</string>
     <string name="ConversationFragment_mms">MMS</string>
     <string name="ConversationFragment_sms">SMS</string>
     <string name="ConversationFragment_deleting">삭제 중</string>
@@ -534,7 +534,7 @@
     <string name="ConversationFragment_delete_for_everyone_title">모두에게서 삭제할까요?</string>
     <!-- Body of dialog explaining what happens during deletion -->
     <plurals name="ConversationFragment_delete_for_everyone_body">
-        <item quantity="other">Signal 최신 버전을 사용 중인 그룹 멤버에게는 내가 해당 메시지를 삭제했다는 메시지가 표시됩니다.</item>
+        <item quantity="other">Radar 최신 버전을 사용 중인 그룹 멤버에게는 내가 해당 메시지를 삭제했다는 메시지가 표시됩니다.</item>
     </plurals>
     <!-- Dialog button for deleting one or more note-to-self messages that will be sync\'d to other devices -->
     <string name="ConversationFragment_delete">삭제</string>
@@ -557,7 +557,7 @@
     <string name="ConversationFragment_verify">확인</string>
     <string name="ConversationFragment_not_now">나중에 하기</string>
     <string name="ConversationFragment_your_safety_number_with_s_changed">%1$s 님과의 안전 번호가 변경됐어요</string>
-    <string name="ConversationFragment_your_safety_number_with_s_changed_likey_because_they_reinstalled_signal">%1$s 님과의 안전 번호가 변경되었습니다. 상대방이 Signal을 다시 설치했거나 기기를 변경했을 가능성이 있습니다. 새 안전 번호를 확인하려면 \'인증\'을 탭하세요. 이 단계는 선택 사항입니다.</string>
+    <string name="ConversationFragment_your_safety_number_with_s_changed_likey_because_they_reinstalled_signal">%1$s 님과의 안전 번호가 변경되었습니다. 상대방이 Radar를 다시 설치했거나 기기를 변경했을 가능성이 있습니다. 새 안전 번호를 확인하려면 \'인증\'을 탭하세요. 이 단계는 선택 사항입니다.</string>
     <!-- Dialog title for block group link join requests -->
     <string name="ConversationFragment__block_request">요청을 차단할까요?</string>
     <!-- Dialog message for block group link join requests -->
@@ -569,15 +569,15 @@
     <!-- Message shown after successfully blocking join requests for a user -->
     <string name="ConversationFragment__blocked">차단 목록</string>
     <!-- Action shown to allow a user to update their application because it has expired -->
-    <string name="ConversationFragment__update_build">Signal 업데이트</string>
+    <string name="ConversationFragment__update_build">Radar 업데이트</string>
     <!-- Action shown to allow a user to re-register as they are no longer registered -->
-    <string name="ConversationFragment__reregister_signal">Signal 다시 등록</string>
+    <string name="ConversationFragment__reregister_signal">Radar 다시 등록</string>
     <!-- Action shown in the conversation input area to allow a user to re-link this device as it is no longer linked -->
     <string name="ConversationFragment__relink_signal">다시 연동</string>
     <!-- Label for a button displayed in the conversation toolbar to return to the previous screen. -->
     <string name="ConversationFragment__content_description_back_button">돌아가기</string>
     <!-- Label for a button displayed in the conversation toolbar to open the main screen of the app. -->
-    <string name="ConversationFragment__content_description_launch_signal_button">Signal 열기</string>
+    <string name="ConversationFragment__content_description_launch_signal_button">Radar 열기</string>
     <!-- Dialog title shown when more than one contact in a group conversation is no longer verified -->
     <string name="ConversationFragment__no_longer_verified">인증이 해제되었어요</string>
     <!-- Button shown in conversation header when in a message request state and no groups in common to show new message safety tips -->
@@ -595,7 +595,7 @@
     <!-- Dialog title shown after reporting spam and tapping the conversation item -->
     <string name="ConversationFragment_reported_spam">스팸으로 신고함</string>
     <!-- Dialog message shown after reporting spam and tapping the conversation item -->
-    <string name="ConversationFragment_reported_spam_message">해당 사용자에 대한 스팸 신고가 Signal에 전달되었습니다. Signal은 대화 내용을 확인할 수 없습니다.</string>
+    <string name="ConversationFragment_reported_spam_message">해당 사용자에 대한 스팸 신고가 Radar에 전달되었습니다. Radar는 대화 내용을 확인할 수 없습니다.</string>
     <!-- Toast shown after reporting spam and tapping the conversation item -->
     <string name="ConversationFragment_reported_as_spam">스팸으로 신고함</string>
     <!-- Toast shown after reporting and blocking a conversation -->
@@ -623,7 +623,7 @@
     <!-- Title of the dialog shown when re-requesting an expired attachment from your primary device fails -->
     <string name="ConversationFragment_attachment_backfill_failed_title">미디어를 다운로드할 수 없음</string>
     <!-- Body of the dialog shown when your phone didn\'t respond to a request to re-send an expired attachment -->
-    <string name="ConversationFragment_attachment_backfill_timeout">현재 기기와 휴대폰의 인터넷 연결을 확인하세요. 휴대폰에서 Signal을 실행한 후 다시 다운로드해 보세요.</string>
+    <string name="ConversationFragment_attachment_backfill_timeout">현재 기기와 휴대폰의 인터넷 연결을 확인하세요. 휴대폰에서 Radar를 실행한 후 다시 다운로드해 보세요.</string>
     <!-- Body of the dialog shown when your phone no longer has the attachment you tried to download -->
     <string name="ConversationFragment_attachment_backfill_not_found">해당 미디어가 휴대폰에 더 이상 존재하지 않아 다운로드할 수 없습니다.</string>
     <!-- Dialog for how to long to keep a messaged pinned for -->
@@ -653,26 +653,26 @@
     <string name="SafetyTips_next_tip">다음 팁</string>
 
     <!-- Summary tip 0 title: Don\'t respond to chats from Signal -->
-    <string name="SafetyTips_summary_tip0_title">Signal이 보낸 채팅에 답하지 마세요</string>
+    <string name="SafetyTips_summary_tip0_title">Radar가 보낸 채팅에 답하지 마세요</string>
     <!-- Summary tip 0 message -->
-    <string name="SafetyTips_summary_tip0_message">Signal은 절대 사용자의 등록 코드나 PIN, 복구 키를 요청하는 메시지를 보내지 않습니다. Signal을 사칭하는 채팅에 절대 답장하지 마세요.</string>
+    <string name="SafetyTips_summary_tip0_message">Radar는 절대 사용자의 등록 코드나 PIN, 복구 키를 요청하는 메시지를 보내지 않습니다. Radar를 사칭하는 채팅에 절대 답장하지 마세요.</string>
     <!-- Summary tip 1 title: Review names and photos -->
     <string name="SafetyTips_summary_tip1_title">이름과 사진 검토</string>
     <!-- Summary tip 1 message -->
-    <string name="SafetyTips_summary_tip1_message">\'이름이 인증되지 않음\'과 같은 경고 메시지에 주의하세요. Signal의 프로필 이름은 각 사용자가 직접 설정합니다.</string>
+    <string name="SafetyTips_summary_tip1_message">\'이름이 인증되지 않음\'과 같은 경고 메시지에 주의하세요. Radar의 프로필 이름은 각 사용자가 직접 설정합니다.</string>
     <!-- Summary tip 2 title: Look out for scams -->
     <string name="SafetyTips_summary_tip2_title">사기 주의</string>
     <!-- Summary tip 2 message -->
     <string name="SafetyTips_summary_tip2_message">답장을 유도하려는 모호한 메시지에는 응답하지 마시고, 금전 관련 제안이나 의심스러운 웹 링크에 유의하세요.</string>
 
     <!-- Detail tip 0 title -->
-    <string name="SafetyTips_detail_tip0_title">Signal이 보낸 채팅에 답하지 마세요</string>
+    <string name="SafetyTips_detail_tip0_title">Radar가 보낸 채팅에 답하지 마세요</string>
     <!-- Detail tip 0 message -->
-    <string name="SafetyTips_detail_tip0_message">Signal은 절대 사용자의 등록 코드나 PIN, 복구 키를 요청하는 메시지를 보내지 않습니다. Signal 또는 Signal 지원팀을 사칭하는 채팅에 답장하지 마세요. 악의적인 사용자가 허위 채팅을 통해 계정 해킹을 시도할 수 있습니다.</string>
+    <string name="SafetyTips_detail_tip0_message">Radar는 절대 사용자의 등록 코드나 PIN, 복구 키를 요청하는 메시지를 보내지 않습니다. Radar 또는 Radar 지원팀을 사칭하는 채팅에 답장하지 마세요. 악의적인 사용자가 허위 채팅을 통해 계정 해킹을 시도할 수 있습니다.</string>
     <!-- Detail tip 1 title -->
     <string name="SafetyTips_detail_tip1_title">이름과 사진 검토</string>
     <!-- Detail tip 1 message -->
-    <string name="SafetyTips_detail_tip1_message">\'이름이 인증되지 않음\'과 같은 경고 메시지에 주의하세요. Signal의 프로필 이름은 각 사용자가 직접 설정합니다. 새 요청을 보낸 사람이 누구인지 확실하지 않다면, 무시하는 편이 더 안전합니다.</string>
+    <string name="SafetyTips_detail_tip1_message">\'이름이 인증되지 않음\'과 같은 경고 메시지에 주의하세요. Radar의 프로필 이름은 각 사용자가 직접 설정합니다. 새 요청을 보낸 사람이 누구인지 확실하지 않다면, 무시하는 편이 더 안전합니다.</string>
     <!-- Detail tip 2 title -->
     <string name="SafetyTips_detail_tip2_title">모호하거나 관련이 없는 메시지</string>
     <!-- Detail tip 2 message -->
@@ -691,11 +691,11 @@
     <string name="SafetyTips_detail_tip5_message">기업이나 정부 기관을 사칭한 연락에 주의하세요. 국세청 등의 공공기관이나 배송 업체와 관련된 메시지는 스팸일 가능성이 높습니다.</string>
 
     <!-- Bottom sheet text explaining that profile names are chosen by the account holder. Placeholder will be \'Profile names\' -->
-    <string name="ProfileNameBottomSheet__profile_names_on_signal">Signal의 %1$s은 해당 계정 보유자가 선택합니다.</string>
+    <string name="ProfileNameBottomSheet__profile_names_on_signal">Radar의 %1$s은 해당 계정 보유자가 선택합니다.</string>
     <!-- Bottom sheet text explaining that Signal can\'t verify names and photos -->
-    <string name="ProfileNameBottomSheet__signal_cant_verify">Signal은 프로필 이름과 사진을 별도로 검증할 수 없습니다.</string>
+    <string name="ProfileNameBottomSheet__signal_cant_verify">Radar는 프로필 이름과 사진을 별도로 검증할 수 없습니다.</string>
     <!-- Bottom sheet text explaining that Signal will never contact you for registration code, PIN, or recovery key -->
-    <string name="ProfileNameBottomSheet__signal_will_never_contact">Signal은 사용자에게 먼저 연락하여 등록 코드나 PIN, 복구 키를 요구하지 않습니다.</string>
+    <string name="ProfileNameBottomSheet__signal_will_never_contact">Radar는 사용자에게 먼저 연락하여 등록 코드나 PIN, 복구 키를 요구하지 않습니다.</string>
     <!-- Bottom sheet text explaining that accounts can impersonate other people and to be cautious -->
     <string name="ProfileNameBottomSheet__be_cautious_of_accounts">사칭 계정에 유의하세요</string>
     <!-- Bottom sheet text explaining that personal information should not be shared with strangers -->
@@ -823,9 +823,9 @@
     <!-- Toolbar title for this screen -->
     <string name="WhoCanSeeMyPhoneNumberFragment__who_can_find_me_by_number">전화번호로 나를 찾을 수 있는 사람은 누구인가요?</string>
     <!-- Description for radio item stating anyone can see your phone number -->
-    <string name="WhoCanSeeMyPhoneNumberFragment__anyone_who_has_your">내 전화번호가 있는 사람은 내가 Signal을 사용 중임을 알 수 있으며, 나와 대화를 시작할 수 있습니다.</string>
+    <string name="WhoCanSeeMyPhoneNumberFragment__anyone_who_has_your">내 전화번호가 있는 사람은 내가 Radar를 사용 중임을 알 수 있으며, 나와 대화를 시작할 수 있습니다.</string>
     <!-- Description for radio item stating no one will be able to see your phone number -->
-    <string name="WhoCanSeeMyPhoneNumberFragment__nobody_will_be_able">내가 메시지를 보내는 사용자 또는 기존 대화 기록이 있는 사용자를 제외하고는 아무도 Signal에서 나를 볼 수 없습니다.</string>
+    <string name="WhoCanSeeMyPhoneNumberFragment__nobody_will_be_able">내가 메시지를 보내는 사용자 또는 기존 대화 기록이 있는 사용자를 제외하고는 아무도 Radar에서 나를 볼 수 없습니다.</string>
 
     <!-- ChooseBackupFragment -->
 
@@ -851,7 +851,7 @@
     <string name="BackupsPreferenceFragment__test_your_backup_passphrase">백업 암호 문구를 테스트하고, 일치하는지 확인하세요.</string>
     <string name="BackupsPreferenceFragment__turn_on">백업 켜기</string>
     <string name="BackupsPreferenceFragment__turn_off">끄기</string>
-    <string name="BackupsPreferenceFragment__to_restore_a_backup">"백업을 복원하려면 Signal의 새 사본을 설치하세요. 앱을 열고 \'백업 복원\'을 탭한 후 백업 파일을 찾으세요. %1$s"</string>
+    <string name="BackupsPreferenceFragment__to_restore_a_backup">"백업을 복원하려면 Radar의 새 사본을 설치하세요. 앱을 열고 \'백업 복원\'을 탭한 후 백업 파일을 찾으세요. %1$s"</string>
     <string name="BackupsPreferenceFragment__learn_more">더 알아보기</string>
     <string name="BackupsPreferenceFragment__in_progress">진행 중…</string>
     <!-- Status text shown in backup preferences when verifying a backup -->
@@ -860,7 +860,7 @@
     <string name="BackupsPreferenceFragment__d_so_far">%1$d개 완료</string>
     <!-- Show percentage of completion of backup -->
     <string name="BackupsPreferenceFragment__s_so_far">%1$s%% 완료</string>
-    <string name="BackupsPreferenceFragment_signal_requires_external_storage_permission_in_order_to_create_backups">Signal에서 백업을 저장하려면 저장 공간 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'저장 공간\' 항목을 허용해 주세요.</string>
+    <string name="BackupsPreferenceFragment_signal_requires_external_storage_permission_in_order_to_create_backups">Radar에서 백업을 저장하려면 저장 공간 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'저장 공간\' 항목을 허용해 주세요.</string>
     <!-- Title of dialog shown when picking the time to perform a chat backup -->
     <string name="BackupsPreferenceFragment__set_backup_time">백업 시간 설정</string>
 
@@ -935,23 +935,23 @@
 
     <!-- DecryptionFailedDialog -->
     <string name="DecryptionFailedDialog_chat_session_refreshed">대화 세션이 새로고침되었습니다</string>
-    <string name="DecryptionFailedDialog_signal_uses_end_to_end_encryption">Signal은 종단간 암호화를 사용하며, 때에 따라 대화 세션을 새로고침해야 할 수 있습니다. 이 과정은 보안에 영향을 주지 않지만, 간혹 메시지가 수신되지 않을 수 있습니다. 이런 경우 상대방에게 메시지 재전송을 요청해 주세요.</string>
+    <string name="DecryptionFailedDialog_signal_uses_end_to_end_encryption">Radar는 종단간 암호화를 사용하며, 때에 따라 대화 세션을 새로고침해야 할 수 있습니다. 이 과정은 보안에 영향을 주지 않지만, 간혹 메시지가 수신되지 않을 수 있습니다. 이런 경우 상대방에게 메시지 재전송을 요청해 주세요.</string>
 
     <!-- LinkDeviceFragment -->
     <!-- Description for how Signal will work with a linked device (eg desktop, iPad) -->
-    <string name="LinkDeviceFragment__use_signal_on_desktop_ipad">다른 기기에서도 Signal 계정을 사용해 보세요.</string>
+    <string name="LinkDeviceFragment__use_signal_on_desktop_ipad">다른 기기에서도 Radar 계정을 사용해 보세요.</string>
     <!-- Button prompting users to link a new device to their account -->
     <string name="LinkDeviceFragment__link_a_new_device">새 기기 연동</string>
     <!-- Text explaining that on linked devices, messages will be encrypted where %s will be replaced with an image-->
     <string name="LinkDeviceFragment__messages_and_chat_info_are_protected">%1$s 메시지와 대화 정보는 모든 기기에서 종단간 암호화로 보호됩니다.</string>
     <!-- Bottom sheet title explaining how Signal works on a linked device -->
-    <string name="LinkDeviceFragment__signal_on_desktop_ipad">연동 기기에서의 Signal</string>
+    <string name="LinkDeviceFragment__signal_on_desktop_ipad">연동 기기에서의 Radar</string>
     <!-- Bottom sheet description explaining that messages on linked devices are private -->
     <string name="LinkDeviceFragment__all_messaging_is_private">연동 기기에서 주고받는 모든 메시지는 안전하게 보호됩니다.</string>
     <!-- Bottom sheet description explaining that future messages on linked devices will be in sync with your phone but previous messages will not appear -->
-    <string name="LinkDeviceFragment__signal_messages_are_synchronized">기기가 연동되면 휴대폰의 Signal 메시지와 자동으로 동기화됩니다.</string>
+    <string name="LinkDeviceFragment__signal_messages_are_synchronized">기기가 연동되면 휴대폰의 Radar 메시지와 자동으로 동기화됩니다.</string>
     <!-- Bottom sheet description explaining that for non-desktop/iPad devices, they should go to %s to download Signal where %s is Signal\'s website -->
-    <string name="LinkDeviceFragment__on_other_device_visit_signal">연동하려는 기기에서 %1$s 링크를 방문하여 Signal을 설치하세요.</string>
+    <string name="LinkDeviceFragment__on_other_device_visit_signal">연동하려는 기기에서 %1$s 링크를 방문하여 Radar를 설치하세요.</string>
   <!-- Removed by excludeNonTranslatables <string name="LinkDeviceFragment__signal_download_url" translatable="false">signal.org/download</string> -->
     <!-- Header title listing out current linked devices -->
     <string name="LinkDeviceFragment__my_linked_devices">내 연동 기기</string>
@@ -1044,7 +1044,7 @@
     <!-- Bottom sheet title telling users to complete the linking process on the other device  -->
     <string name="AddLinkDeviceFragment__finish_linking_on_other_device">다른 기기에서 연동 완료하기</string>
     <!-- Bottom sheet description telling users to complete the linking process -->
-    <string name="AddLinkDeviceFragment__finish_linking_signal">다른 기기에서 Signal 연동을 완료해 주세요.</string>
+    <string name="AddLinkDeviceFragment__finish_linking_signal">다른 기기에서 Radar 연동을 완료해 주세요.</string>
     <!-- Title of dialog when the QR code being scanned is invalid -->
     <string name="AddLinkDeviceFragment__linking_device_failed">기기 연동 실패</string>
     <!-- Text shown in a dialog when the QR code being scanned is invalid -->
@@ -1092,16 +1092,16 @@
     <string name="DozeReminder_this_device_does_not_support_play_services_tap_to_disable_system_battery">이 기기는 Play Services를 지원하지 않습니다. 백그라운드 상태에서도 메시지를 정상적으로 가져오려면 탭하여 배터리 최적화를 비활성화하세요.</string>
 
     <!-- ExpiredBuildReminder -->
-    <string name="ExpiredBuildReminder_this_version_of_signal_has_expired">Signal 버전이 만료되었습니다. 메시지를 주고받으려면 지금 업데이트하세요.</string>
+    <string name="ExpiredBuildReminder_this_version_of_signal_has_expired">Radar 버전이 만료되었습니다. 메시지를 주고받으려면 지금 업데이트하세요.</string>
     <string name="ExpiredBuildReminder_update_now">지금 업데이트하세요</string>
 
     <!-- A message in a banner shown at the top of the screen indicating that the user must upgrade their device to use signal. -->
-    <string name="DeprecatedSdkBanner_body">Signal이 이 기기에서는 더 이상 작동하지 않습니다. Signal을 다시 사용하려면 기기를 최신 Android 버전으로 업데이트하거나 최신 기기로 업데이트하세요.</string>
+    <string name="DeprecatedSdkBanner_body">Radar가 이 기기에서는 더 이상 작동하지 않습니다. Radar를 다시 사용하려면 기기를 최신 Android 버전으로 업데이트하거나 최신 기기로 업데이트하세요.</string>
 
     <!-- Title of notification telling users to update Signal -->
-    <string name="DeprecatedNotificationJob_update_signal">Signal 업데이트</string>
+    <string name="DeprecatedNotificationJob_update_signal">Radar 업데이트</string>
     <!-- Message body of notification telling users that this current version of Signal has expired. If pressed, we will direct them to the website APK or PlayStore page -->
-    <string name="DeprecatedNotificationJob_this_version_of_signal_has_expired">이 Signal 버전은 만료되었습니다. 메시지를 주고받으려면 탭하여 업데이트하세요.</string>
+    <string name="DeprecatedNotificationJob_this_version_of_signal_has_expired">이 Radar 버전은 만료되었습니다. 메시지를 주고받으려면 탭하여 업데이트하세요.</string>
 
     <!-- PendingGroupJoinRequestsReminder -->
     <plurals name="PendingGroupJoinRequestsReminder_d_pending_member_requests">
@@ -1207,7 +1207,7 @@
     <string name="LinkPreviewView_this_group_link_is_not_active">그룹 링크가 비활성화되어 있습니다</string>
     <string name="LinkPreviewView_domain_date">%1$s · %2$s</string>
     <!-- Description for Call Link url previews -->
-    <string name="LinkPreviewView__use_this_link_to_join_a_signal_call">이 링크를 사용하여 Signal 통화에 참여하세요.</string>
+    <string name="LinkPreviewView__use_this_link_to_join_a_signal_call">이 링크를 사용하여 Radar 통화에 참여하세요.</string>
 
     <!-- LinkPreviewRepository -->
     <plurals name="LinkPreviewRepository_d_members">
@@ -1223,7 +1223,7 @@
     <!-- Message for dialog asking user to submit logs for debugging a crash -->
     <string name="PromptLogsSlowNotificationsDialog__message">디버그 로그를 제출하면 문제를 진단하고 수정하는 데 도움이 됩니다. 디버그 로그에는 식별 정보가 포함되지 않습니다.</string>
     <!-- Title for dialog asking user to submit logs for debugging slow notification issues -->
-    <string name="PromptLogsSlowNotificationsDialog__title_crash">Signal에 오류가 발생했습니다. 디버그 로그를 제출할까요?</string>
+    <string name="PromptLogsSlowNotificationsDialog__title_crash">Radar에 오류가 발생했습니다. 디버그 로그를 제출할까요?</string>
     <!-- Title for dialog asking user to submit logs for a situation where they\'re not able to connect to the signal service -->
     <string name="PromptLogsSlowNotificationsDialog__title_connectivity_warning">메시지 수신에 문제가 있을 수 있어요. 디버그 로그를 제출할까요?</string>
 
@@ -1231,12 +1231,12 @@
     <!-- Title for dialog asking user to submit logs for debugging slow notification issues -->
     <string name="PromptBatterySaverBottomSheet__title">배터리 최적화로 인해 알림이 지연될 수 있습니다.</string>
     <!-- Message explaining that battery saver may delay notifications -->
-    <string name="PromptBatterySaverBottomSheet__message">메시지 알림이 지연되지 않도록 Signal 앱의 배터리 최적화를 비활성화할 수 있습니다.</string>
+    <string name="PromptBatterySaverBottomSheet__message">메시지 알림이 지연되지 않도록 Radar 앱의 배터리 최적화를 비활성화할 수 있습니다.</string>
 
     <!-- Title in bottom sheet that states that notifications for this device could be delayed -->
     <string name="DeviceSpecificNotificationBottomSheet__notifications_may_be_delayed">배터리 최적화로 인해 알림이 지연될 수 있습니다.</string>
     <!-- Message in bottom sheet prompting users to fix potential issues by disabling battery optimizations -->
-    <string name="DeviceSpecificNotificationBottomSheet__disable_battery_optimizations">Signal 배터리 최적화를 비활성화하여 메시지 알림이 지연되지 않도록 하세요. \'계속\'을 탭하면 기기별 지침을 확인할 수 있습니다.</string>
+    <string name="DeviceSpecificNotificationBottomSheet__disable_battery_optimizations">Radar 배터리 최적화를 비활성화하여 메시지 알림이 지연되지 않도록 하세요. \'계속\'을 탭하면 기기별 지침을 확인할 수 있습니다.</string>
     <!-- Button to dismiss notification help prompt -->
     <string name="DeviceSpecificNotificationBottomSheet__no_thanks">아니요</string>
     <!-- Button to continue and go to Signal support website -->
@@ -1245,7 +1245,7 @@
     <!-- Title of a bottom sheet that is shown when the user is having connectivity issues -->
     <string name="ConnectivityWarningBottomSheet_title">메시지 수신에 문제가 있을 수 있어요</string>
     <!-- Body of a bottom sheet that is shown when the user is having connectivity issues -->
-    <string name="ConnectivityWarningBottomSheet_body">기기를 다시 시작하면 메시지 전송 문제를 해결하는 데 도움이 될 수 있습니다. 문제가 계속되면 Signal 지원팀에 문의해 주세요.</string>
+    <string name="ConnectivityWarningBottomSheet_body">기기를 다시 시작하면 메시지 전송 문제를 해결하는 데 도움이 될 수 있습니다. 문제가 계속되면 Radar 지원팀에 문의해 주세요.</string>
     <!-- Text for a button in a bottom sheet that is shown when the user is having connectivity issues. Clicking it will dismiss the bottom sheet. -->
     <string name="ConnectivityWarningBottomSheet_dismiss_button">확인</string>
 
@@ -1324,8 +1324,8 @@
     <!-- Shown when a change to a group is rejected because the group has ended. -->
     <string name="GroupErrors__the_group_was_terminated">그룹이 종료되었습니다.</string>
     <string name="GroupErrors__you_dont_have_the_rights_to_do_this">이 작업을 수행할 권한이 없습니다.</string>
-    <string name="GroupErrors__not_capable">추가한 사용자가 새 그룹 기능을 지원하지 않아 Signal을 업데이트해야 합니다.</string>
-    <string name="GroupErrors__not_announcement_capable">추가한 사용자가 알림 그룹 기능을 지원하지 않아 Signal을 업데이트해야 합니다.</string>
+    <string name="GroupErrors__not_capable">추가한 사용자가 새 그룹 기능을 지원하지 않아 Radar를 업데이트해야 합니다.</string>
+    <string name="GroupErrors__not_announcement_capable">추가한 사용자가 알림 그룹 기능을 지원하지 않아 Radar를 업데이트해야 합니다.</string>
     <string name="GroupErrors__failed_to_update_the_group">그룹을 업데이트하지 못했습니다</string>
     <string name="GroupErrors__youre_not_a_member_of_the_group">그룹의 멤버가 아닙니다.</string>
     <string name="GroupErrors__failed_to_update_the_group_please_retry_later">그룹을 업데이트하지 못했습니다. 나중에 다시 시도해 주세요.</string>
@@ -1335,7 +1335,7 @@
     <string name="ManageGroupActivity_legacy_group">레거시 그룹</string>
     <!-- This is placed inside a "Learn More" text view, which automatically appends LearnMoreTextView_learn_more in code -->
     <string name="ManageGroupActivity_legacy_group_learn_more">레거시 그룹입니다. 그룹 관리자와 같은 기능은 새 그룹에서만 사용할 수 있습니다.</string>
-    <string name="ManageGroupActivity_this_is_an_insecure_mms_group">보안이 적용되지 않은 MMS 그룹입니다. 비공개로 대화하려면 연락처를 Signal에 초대하세요.</string>
+    <string name="ManageGroupActivity_this_is_an_insecure_mms_group">보안이 적용되지 않은 MMS 그룹입니다. 비공개로 대화하려면 연락처를 Radar에 초대하세요.</string>
     <string name="ManageGroupActivity_invite_now">지금 초대하기</string>
     <string name="ManageGroupActivity_more">더 보기</string>
     <string name="ManageGroupActivity_add_group_description">그룹 설명 추가하기</string>
@@ -1424,9 +1424,9 @@
     </plurals>
 
     <!-- GroupJoinUpdateRequiredBottomSheetDialogFragment -->
-    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal_to_use_group_links">그룹 링크를 사용하려면 Signal을 업데이트하세요</string>
-    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_message">사용 중인 Signal 버전에서는 이 그룹 링크를 지원하지 않습니다. 링크를 통해 그룹에 가입하려면 최신 버전으로 업데이트하세요.</string>
-    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal">Signal 업데이트</string>
+    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal_to_use_group_links">그룹 링크를 사용하려면 Radar를 업데이트하세요</string>
+    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_message">사용 중인 Radar 버전에서는 이 그룹 링크를 지원하지 않습니다. 링크를 통해 그룹에 가입하려면 최신 버전으로 업데이트하세요.</string>
+    <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_update_signal">Radar 업데이트</string>
     <string name="GroupJoinUpdateRequiredBottomSheetDialogFragment_group_link_is_not_valid">그룹 링크가 유효하지 않습니다.</string>
 
     <!-- GroupInviteLinkEnableAndShareBottomSheetDialogFragment -->
@@ -1472,7 +1472,7 @@
     <string name="LongMessageActivity_your_message">내 메시지</string>
 
     <!-- MessageRetrievalService -->
-    <string name="MessageRetrievalService_signal">Signal</string>
+    <string name="MessageRetrievalService_signal">Radar</string>
     <string name="MessageRetrievalService_background_connection_enabled">백그라운드 연결이 활성화됨</string>
 
     <!-- MediaOverviewActivity -->
@@ -1526,7 +1526,7 @@
     <string name="MediaOverviewActivity_this_media_is_not_sent_yet">아직 전송하지 않은 미디어입니다.</string>
     <string name="MediaOverviewActivity_jump_to_message">메시지로 이동하기</string>
 
-    <string name="Megaphones_verify_your_signal_pin">Signal PIN을 인증하세요</string>
+    <string name="Megaphones_verify_your_signal_pin">Radar PIN을 인증하세요</string>
     <string name="Megaphones_well_occasionally_ask_you_to_verify_your_pin">PIN을 잊어버리지 않도록 주기적으로 확인을 요청드릴게요.</string>
     <string name="Megaphones_verify_pin">PIN 인증</string>
     <string name="Megaphones_get_started">시작하기</string>
@@ -1559,10 +1559,10 @@
   <!-- Removed by excludeNonTranslatables <string name="StarredMessages__s_chevron_s" translatable="false">%1$s \u203A %2$s</string> -->
 
     <!-- NotificationBarManager -->
-    <string name="NotificationBarManager__establishing_signal_call">Signal 전화 연결 중</string>
+    <string name="NotificationBarManager__establishing_signal_call">Radar 전화 연결 중</string>
     <!-- Temporary notification shown when starting the calling service -->
-    <string name="NotificationBarManager__starting_signal_call_service">Signal 통화 서비스 시작</string>
-    <string name="NotificationBarManager__stopping_signal_call_service">Signal 통화 서비스 중지</string>
+    <string name="NotificationBarManager__starting_signal_call_service">Radar 통화 서비스 시작</string>
+    <string name="NotificationBarManager__stopping_signal_call_service">Radar 통화 서비스 중지</string>
     <string name="NotificationBarManager__cancel_call">통화 취소</string>
 
     <!-- NotificationsMegaphone -->
@@ -1616,7 +1616,7 @@
     <!-- Call update formatter string to place the update message next to a time stamp. e.g., \'Incoming voice call · 11:11am\' -->
     <string name="MessageRecord_call_message_with_date">%1$s · %2$s</string>
     <string name="MessageRecord_s_updated_group">%1$s 님이 그룹을 업데이트했습니다.</string>
-    <string name="MessageRecord_s_joined_signal">%1$s 님이 Signal에 가입했어요!</string>
+    <string name="MessageRecord_s_joined_signal">%1$s 님이 Radar에 가입했어요!</string>
     <string name="MessageRecord_you_disabled_disappearing_messages">자동 삭제 메시지 기능을 비활성화했습니다.</string>
     <string name="MessageRecord_s_disabled_disappearing_messages">%1$s 님이 자동 삭제 메시지 기능을 비활성화했습니다.</string>
     <string name="MessageRecord_you_set_disappearing_message_time_to_s">자동 삭제 메시지 시간을 %1$s(으)로 설정했습니다.</string>
@@ -1883,7 +1883,7 @@
     </plurals>
 
     <!-- In-conversation update message to indicate that the current contact is sms only and will need to migrate to signal to continue the conversation in signal. -->
-    <string name="MessageRecord__you_can_no_longer_send_sms_messages_in_signal">Signal에서 더 이상 SMS 메시지를 보낼 수 없습니다. %1$s 님을 Signal로 초대하여 대화를 이어가세요.</string>
+    <string name="MessageRecord__you_can_no_longer_send_sms_messages_in_signal">Radar에서 더 이상 SMS 메시지를 보낼 수 없습니다. %1$s 님을 Radar로 초대하여 대화를 이어가세요.</string>
     <!-- Body for quote when message being quoted is an in-app payment message -->
     <string name="MessageRecord__payment_s">송금 메시지: %1$s</string>
     <!-- Body for quote when message being quoted is an in-app payment message tombstone without an amount -->
@@ -1903,7 +1903,7 @@
     <!-- Update message shown in chat after you unblock a group -->
     <string name="MessageRecord_you_unblocked_this_group">이 그룹에 대한 차단을 해제했습니다.</string>
     <!-- Update message shown when you receive a message that cannot be processed because your Signal version is too old. %1$s is the sender\'s name -->
-    <string name="MessageRecord_unsupported_feature">%1$s 님이 보낸 메시지는 새로운 Signal 기능을 포함하고 있어 이 버전에서 처리하거나 표시할 수 없습니다.</string>
+    <string name="MessageRecord_unsupported_feature">%1$s 님이 보낸 메시지는 새로운 Radar 기능을 포함하고 있어 이 버전에서 처리하거나 표시할 수 없습니다.</string>
     <!-- Update message shown when someone ends the poll. %1$s is the person who ended the poll and %2$s is the poll question. -->
     <string name="MessageRecord_ended_the_poll">%1$s 님이 \"%2$s\" 투표를 종료했습니다.</string>
     <!-- Update message shown when you end the poll. %1$s is the poll question. -->
@@ -1967,7 +1967,7 @@
     <!-- Alert dialog body for accepting a message request. Contains bold substring placeholder -->
     <string name="MessageRequestBottomView_accept_request_body">신뢰할 수 있는 사람의 요청만 수락하세요. %1$s 사용자의 등록 코드나 PIN, 복구 키를 요청하는 메시지를 보내지 않습니다.</string>
     <!-- Bold substring used in accept request body: "Signal will never" -->
-    <string name="MessageRequestBottomView_signal_will_never">Signal은 절대</string>
+    <string name="MessageRequestBottomView_signal_will_never">Radar는 절대</string>
     <!-- Alert dialog title to accept a message request to join a group -->
     <string name="MessageRequestBottomView_join_group">그룹에 참가할까요?</string>
     <!-- Alert dialog body to review the message request for a group carefully -->
@@ -1990,22 +1990,22 @@
     <!-- Toast message shown when a user has too many linked devices and needs to remove one before linking another -->
     <string name="DeviceProvisioningActivity_sorry_you_have_too_many_devices_linked_already">현재 연동된 기기 수가 한도를 초과했습니다. 일부 기기를 해제한 후 다시 시도해 주세요.</string>
     <string name="DeviceActivity_sorry_this_is_not_a_valid_device_link_qr_code">올바른 기기 연동 QR 코드가 아닙니다.</string>
-    <string name="DeviceProvisioningActivity_link_a_signal_device">Signal 기기를 연동할까요?</string>
-    <string name="DeviceProvisioningActivity_to_link_a_desktop_or_ipad_to_this_signal_account">이 Signal 계정에 데스크톱이나 iPad를 연동하려면 \'연동 기기\'로 이동하여 \'새 기기 연동\'을 탭한 다음 QR 코드를 다시 스캔하세요. Signal에서 직접 제공한 QR 코드만 스캔하세요.</string>
+    <string name="DeviceProvisioningActivity_link_a_signal_device">Radar 기기를 연동할까요?</string>
+    <string name="DeviceProvisioningActivity_to_link_a_desktop_or_ipad_to_this_signal_account">이 Radar 계정에 데스크톱이나 iPad를 연동하려면 \'연동 기기\'로 이동하여 \'새 기기 연동\'을 탭한 다음 QR 코드를 다시 스캔하세요. Radar에서 직접 제공한 QR 코드만 스캔하세요.</string>
 
-    <string name="OutdatedBuildReminder_your_version_of_signal_will_expire_today">이 Signal 버전은 오늘 만료됩니다. 최신 버전으로 업데이트하세요.</string>
+    <string name="OutdatedBuildReminder_your_version_of_signal_will_expire_today">이 Radar 버전은 오늘 만료됩니다. 최신 버전으로 업데이트하세요.</string>
     <plurals name="OutdatedBuildReminder_your_version_of_signal_will_expire_in_n_days">
-        <item quantity="other">이 Signal 버전은 %1$d일 후에 만료됩니다. 최신 버전으로 업데이트하세요.</item>
+        <item quantity="other">이 Radar 버전은 %1$d일 후에 만료됩니다. 최신 버전으로 업데이트하세요.</item>
     </plurals>
 
     <!-- PassphrasePromptActivity -->
     <string name="PassphrasePromptActivity_enter_passphrase">암호 문구 입력</string>
-    <string name="PassphrasePromptActivity_watermark_content_description">Signal 아이콘</string>
+    <string name="PassphrasePromptActivity_watermark_content_description">Radar 아이콘</string>
     <string name="PassphrasePromptActivity_ok_button_content_description">암호 문구 제출</string>
     <string name="PassphrasePromptActivity_invalid_passphrase_exclamation">암호 문구가 유효하지 않습니다.</string>
-    <string name="PassphrasePromptActivity_unlock_signal">Signal 잠금 해제</string>
+    <string name="PassphrasePromptActivity_unlock_signal">Radar 잠금 해제</string>
     <!-- This is the subject line for the email that is sent to support -->
-    <string name="PassphrasePromptActivity_signal_android_lock_screen">Signal Android - 잠금 화면</string>
+    <string name="PassphrasePromptActivity_signal_android_lock_screen">Radar Android - 잠금 화면</string>
 
     <!-- PlacePickerActivity -->
     <string name="PlacePickerActivity_title">지도</string>
@@ -2030,17 +2030,17 @@
     <plurals name="PinRestoreEntryFragment_you_have_d_attempt_remaining">
         <item quantity="other">입력 가능한 횟수가 %1$d회 남았습니다. 남은 횟수를 모두 사용하면 PIN을 새로 만들어야 합니다. 이 경우 계정 등록 및 사용은 가능하지만, 프로필 정보 등 저장된 일부 설정은 삭제됩니다.</item>
     </plurals>
-    <string name="PinRestoreEntryFragment_signal_registration_need_help_with_pin">Signal 등록 - Android용 PIN 설정과 관련해 도움이 필요합니다</string>
+    <string name="PinRestoreEntryFragment_signal_registration_need_help_with_pin">Radar 등록 - Android용 PIN 설정과 관련해 도움이 필요합니다</string>
 
     <!-- PinRestoreLockedFragment -->
     <string name="PinRestoreLockedFragment_create_your_pin">PIN을 생성하세요</string>
-    <string name="PinRestoreLockedFragment_youve_run_out_of_pin_guesses">PIN 입력 횟수를 모두 초과했습니다. PIN을 새로 만들면 Signal 계정을 계속 사용할 수 있습니다. 보안 및 개인정보 보호를 위해 프로필 정보나 설정 등 저장된 데이터 없이 계정이 복원됩니다.</string>
+    <string name="PinRestoreLockedFragment_youve_run_out_of_pin_guesses">PIN 입력 횟수를 모두 초과했습니다. PIN을 새로 만들면 Radar 계정을 계속 사용할 수 있습니다. 보안 및 개인정보 보호를 위해 프로필 정보나 설정 등 저장된 데이터 없이 계정이 복원됩니다.</string>
     <string name="PinRestoreLockedFragment_create_new_pin">새로운 PIN 만들기</string>
   <!-- Removed by excludeNonTranslatables <string name="PinRestoreLockedFragment_learn_more_url" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
 
     <!-- PinOptOutDialog -->
     <string name="PinOptOutDialog_warning">경고</string>
-    <string name="PinOptOutDialog_if_you_disable_the_pin_you_will_lose_all_data">PIN을 비활성화하면 수동으로 백업 및 복원하지 않는 한, Signal 재등록 시 모든 데이터가 삭제됩니다. PIN이 비활성화된 상태에서는 등록 잠금 기능을 사용할 수 없습니다.</string>
+    <string name="PinOptOutDialog_if_you_disable_the_pin_you_will_lose_all_data">PIN을 비활성화하면 수동으로 백업 및 복원하지 않는 한, Radar 재등록 시 모든 데이터가 삭제됩니다. PIN이 비활성화된 상태에서는 등록 잠금 기능을 사용할 수 없습니다.</string>
     <string name="PinOptOutDialog_disable_pin">PIN 비활성화</string>
 
     <!-- RatingManager -->
@@ -2062,7 +2062,7 @@
 
     <!-- RecaptchaRequiredBottomSheetFragment -->
     <string name="RecaptchaRequiredBottomSheetFragment_verify_to_continue_messaging">메시지를 계속 보내려면 인증해 주세요</string>
-    <string name="RecaptchaRequiredBottomSheetFragment_to_help_prevent_spam_on_signal">Signal 서비스 내 스팸 방지를 위해 인증을 완료해 주세요.</string>
+    <string name="RecaptchaRequiredBottomSheetFragment_to_help_prevent_spam_on_signal">Radar 서비스 내 스팸 방지를 위해 인증을 완료해 주세요.</string>
     <string name="RecaptchaRequiredBottomSheetFragment_after_verifying_you_can_continue_messaging">인증 완료 후 메시지를 계속 전송할 수 있습니다. 일시 중지된 메시지는 인증 후 자동으로 전송됩니다.</string>
 
     <!-- Recipient -->
@@ -2070,7 +2070,7 @@
     <!-- Name of recipient representing user\'s \'My Story\' -->
     <string name="Recipient_my_story">내 스토리</string>
     <!-- Name of recipient for a call link without a name -->
-    <string name="Recipient_signal_call">Signal 통화</string>
+    <string name="Recipient_signal_call">Radar 통화</string>
 
     <!-- RecipientPreferencesActivity -->
     <string name="RecipientPreferenceActivity_block">차단</string>
@@ -2107,7 +2107,7 @@
     <!-- WebRtcCallActivity -->
     <string name="WebRtcCallActivity__tap_here_to_turn_on_your_video">영상 통화 화면을 켜려면 여기를 탭하세요</string>
     <!-- Subtitle shown at top of call where %s is the elapsed time of the call -->
-    <string name="WebRtcCallActivity__signal_s">Signal %1$s</string>
+    <string name="WebRtcCallActivity__signal_s">Radar %1$s</string>
     <string name="WebRtcCallActivity__calling">전화 거는 중…</string>
     <!-- Title for dialog warning about lacking bluetooth permissions during a call -->
     <string name="WebRtcCallActivity__bluetooth_permission_denied">Bluetooth 사용 권한이 거부됨</string>
@@ -2122,7 +2122,7 @@
     <!-- Title for dialog shown when returning to a call after the system muted the microphone because Signal\'s battery setting is "Restricted" -->
     <string name="WebRtcCallActivity__others_couldnt_hear_you">상대방이 내 소리를 들을 수 없어요</string>
     <!-- Message for dialog shown when returning to a call after the system muted the microphone because Signal\'s battery setting is "Restricted" -->
-    <string name="WebRtcCallActivity__your_microphone_was_muted_while_signal_was_in_the_background">Signal이 백그라운드에서 실행되는 동안 마이크가 차단되었습니다. 이 문제를 해결하려면 여기를 눌러 \'배터리\' 설정에서 백그라운드 활동을 활성화하세요.</string>
+    <string name="WebRtcCallActivity__your_microphone_was_muted_while_signal_was_in_the_background">Radar가 백그라운드에서 실행되는 동안 마이크가 차단되었습니다. 이 문제를 해결하려면 여기를 눌러 \'배터리\' 설정에서 백그라운드 활동을 활성화하세요.</string>
     <!-- Title for dialog to approve all requests -->
     <plurals name="WebRtcCallActivity__approve_d_requests">
         <item quantity="other">요청 %1$d개를 승인할까요?</item>
@@ -2166,15 +2166,15 @@
     <!-- Dialog title asking users for camera permission -->
     <string name="WebRtcCallActivity__allow_access_camera">카메라 접근을 허용해 주세요</string>
     <!-- Dialog description explaining why camera and microphone permissions are needed to start or join a call -->
-    <string name="WebRtcCallActivity__to_start_call_camera_microphone">통화를 시작하거나 통화에 참여하려면 Signal에 카메라와 마이크 접근을 허용해 주세요.</string>
+    <string name="WebRtcCallActivity__to_start_call_camera_microphone">통화를 시작하거나 통화에 참여하려면 Radar에 카메라와 마이크 접근을 허용해 주세요.</string>
     <!-- Dialog description explaining why microphone permissions are needed to start or join a call -->
-    <string name="WebRtcCallActivity__to_start_call_microphone">통화를 시작하거나 통화에 참여하려면 Signal에 마이크 접근을 허용해 주세요.</string>
+    <string name="WebRtcCallActivity__to_start_call_microphone">통화를 시작하거나 통화에 참여하려면 Radar에 마이크 접근을 허용해 주세요.</string>
     <!-- Dialog description explaining why camera permissions are needed to enable a user\'s video in a call -->
-    <string name="WebRtcCallActivity__to_enable_video_allow_camera">영상 통화를 켜려면 Signal에 카메라 접근을 허용해 주세요.</string>
+    <string name="WebRtcCallActivity__to_enable_video_allow_camera">영상 통화를 켜려면 Radar에 카메라 접근을 허용해 주세요.</string>
     <!-- Toast describing why microphone permissions are needed to start or join a call -->
-    <string name="WebRtcCallActivity__signal_needs_microphone_start_call">통화를 시작하거나 통화에 참여하려면 Signal에 마이크 사용 권한이 필요합니다.</string>
+    <string name="WebRtcCallActivity__signal_needs_microphone_start_call">통화를 시작하거나 통화에 참여하려면 Radar에 마이크 사용 권한이 필요합니다.</string>
     <!-- Toast describing why camera permissions are needed to enable a video in a call -->
-    <string name="WebRtcCallActivity__signal_needs_camera_access_enable_video">영상 통화 화면을 켜려면 Signal에 카메라 접근 권한이 필요합니다.</string>
+    <string name="WebRtcCallActivity__signal_needs_camera_access_enable_video">영상 통화 화면을 켜려면 Radar에 카메라 접근 권한이 필요합니다.</string>
     <!-- Dialog description that will explain the steps needed to give microphone permissions -->
     <string name="WebRtcCallActivity__to_start_call">통화 시작 또는 참여 방법:</string>
     <!-- Dialog description that will explain the steps needed to give camera permissions -->
@@ -2187,8 +2187,8 @@
     <string name="MoveableLocalVideoRenderer__expand_local_video">로컬 동영상 확대</string>
 
     <!-- WebRtcCallView -->
-    <string name="WebRtcCallView__signal_call">Signal 통화</string>
-    <string name="WebRtcCallView__signal_video_call">Signal 영상 통화</string>
+    <string name="WebRtcCallView__signal_call">Radar 통화</string>
+    <string name="WebRtcCallView__signal_video_call">Radar 영상 통화</string>
     <string name="WebRtcCallView__start_call">통화 시작하기</string>
     <string name="WebRtcCallView__join_call">통화 참여하기</string>
     <string name="WebRtcCallView__call_is_full">통화 정원 도달</string>
@@ -2197,7 +2197,7 @@
     <string name="WebRtcCallView__joining">참여하는 중…</string>
     <string name="WebRtcCallView__disconnected">연결 끊김</string>
     <!-- Utilized in the lobby before joining a call link -->
-    <string name="WebRtcCallView__signal_call_link">Signal 통화 링크</string>
+    <string name="WebRtcCallView__signal_call_link">Radar 통화 링크</string>
     <!-- Warning displayed when entering a call via a link and you have Phone Number Privacy disabled-->
     <string name="WebRtcCallView__anyone_who_joins_pnp_disabled">링크를 통해 통화에 참여하는 모든 사용자에게 내 이름, 사진, 전화번호가 표시됩니다.</string>
     <!-- Warning displayed when entering a call via a link and you have Phone Number Privacy enabled-->
@@ -2205,10 +2205,10 @@
     <!-- Displayed on the call screen as the status when waiting to be let into a call link by an admin -->
     <string name="WebRtcCallView__waiting_to_be_let_in">승인을 기다리는 중…</string>
 
-    <string name="WebRtcCallView__signal_will_ring_s">Signal에서 %1$s 님에게 전화를 겁니다</string>
-    <string name="WebRtcCallView__signal_will_ring_s_and_s">Signal에서 %1$s 님과 %2$s 님에게 전화를 겁니다</string>
+    <string name="WebRtcCallView__signal_will_ring_s">Radar에서 %1$s 님에게 전화를 겁니다</string>
+    <string name="WebRtcCallView__signal_will_ring_s_and_s">Radar에서 %1$s 님과 %2$s 님에게 전화를 겁니다</string>
     <plurals name="WebRtcCallView__signal_will_ring_s_s_and_d_others">
-        <item quantity="other">Signal에서 %1$s 님, %2$s 님 외 %3$d명에게 전화를 겁니다.</item>
+        <item quantity="other">Radar에서 %1$s 님, %2$s 님 외 %3$d명에게 전화를 겁니다.</item>
     </plurals>
 
     <string name="WebRtcCallView__s_will_be_notified">%1$s 님에게 알림이 갑니다.</string>
@@ -2331,7 +2331,7 @@
 
     <!-- AboutSheet -->
     <!-- Displayed in a sheet row and allows user to open signal connection explanation on tap -->
-    <string name="AboutSheet__signal_connection">Signal 친구</string>
+    <string name="AboutSheet__signal_connection">Radar 친구</string>
     <!-- Displayed in a sheet row describing that the user has marked this contact as \'verified\' from within the app -->
     <string name="AboutSheet__verified">인증 완료</string>
     <!-- Displayed in a sheet row that tells users that profile names are not verified -->
@@ -2369,11 +2369,11 @@
         <item quantity="other">통화 참가자(%1$d명)</item>
     </plurals>
     <plurals name="CallParticipantsListDialog__signal_will_ring">
-        <item quantity="other">Signal에서 전화를 겁니다(%1$d)</item>
+        <item quantity="other">Radar에서 전화를 겁니다(%1$d)</item>
     </plurals>
     <!-- Header text shown in a bottom sheet that indicates how many people will be notified about an outgoing call -->
     <plurals name="CallParticipantsListDialog__signal_will_notify">
-        <item quantity="other">Signal에서 알림을 보냅니다(%1$d).</item>
+        <item quantity="other">Radar에서 알림을 보냅니다(%1$d).</item>
     </plurals>
     <plurals name="CallParticipantsListDialog__raised_hands">
         <item quantity="other">손 든 사람(%1$d명)</item>
@@ -2481,7 +2481,7 @@
 
     <!-- SharedContactView -->
     <string name="SharedContactView_add_to_contacts">연락처에 추가하기</string>
-    <string name="SharedContactView_invite_to_signal">Signal로 초대하기</string>
+    <string name="SharedContactView_invite_to_signal">Radar로 초대하기</string>
     <!-- Button on a shared contact card that opens a chat with that contact. It can share a row with other buttons, so a short label is preferred -->
     <string name="SharedContactView_message_button">메시지</string>
     <!-- Button on a contact card shared in a group chat that adds the person on the card to that group -->
@@ -2540,7 +2540,7 @@
     <!-- Sticker pack description for packs that have been sent to you -->
     <string name="StickerManagement_when_you_receive">누군가로부터 스티커 팩을 받으면 스티커 팩이 여기에 표시됩니다.</string>
     <!-- Sticker pack list section header for highlighted/"blessed" packs. -->
-    <string name="StickerManagement_signal_artist_series_header">Signal 아티스트 시리즈</string>
+    <string name="StickerManagement_signal_artist_series_header">Radar 아티스트 시리즈</string>
     <!-- Title shown when sharing a sticker pack with another user. -->
     <string name="StickerManagement_share_sheet_title">스티커 팩 전달하기</string>
     <!-- Bottom action bar option to select all sticker packs in the list. -->
@@ -2603,7 +2603,7 @@
     <!-- Shown when no stickers match the search. The placeholder what was searched. -->
     <string name="StickerManagement_search_no_results_s">\'%1$s\'에 대한 검색 결과 없음</string>
     <!-- Sticker pack button for forwarding a sticker link. -->
-    <string name="StickerManagement_menu_send_signal_pack">Signal로 링크 전송하기</string>
+    <string name="StickerManagement_menu_send_signal_pack">Radar로 링크 전송하기</string>
     <!-- Sticker pack button that opens a bottom sheet with more share options. -->
     <string name="StickerManagement_menu_link_pack">링크</string>
     <!-- Sticker pack sheet option for sharing a sticker pack link using the system share sheet. -->
@@ -2727,7 +2727,7 @@
     <string name="ThreadRecord_you_activated_payments">결제를 활성화했습니다</string>
     <!-- Displayed in the notification when the recipient can accept payments -->
     <string name="ThreadRecord_can_accept_payments">%1$s 님이 이제 결제를 수락할 수 있습니다</string>
-    <string name="ThreadRecord_s_is_on_signal">%1$s 님이 Signal에 가입했어요!</string>
+    <string name="ThreadRecord_s_is_on_signal">%1$s 님이 Radar에 가입했어요!</string>
     <string name="ThreadRecord_disappearing_messages_disabled">자동 삭제 메시지 기능이 비활성화됨</string>
     <string name="ThreadRecord_disappearing_message_time_updated_to_s">자동 삭제 메시지 시간을 %1$s(으)로 설정했습니다.</string>
     <string name="ThreadRecord_safety_number_changed">안전 번호가 변경됨</string>
@@ -2769,11 +2769,11 @@
     <string name="ThreadRecord_blocked_group">차단한 그룹</string>
 
     <!-- ApkUpdateNotifications -->
-    <string name="ApkUpdateNotifications_prompt_install_title">Signal 업데이트</string>
-    <string name="ApkUpdateNotifications_prompt_install_body">새 Signal 버전을 이용할 수 있습니다. 탭하여 업데이트하세요.</string>
-    <string name="ApkUpdateNotifications_failed_general_title">Signal 업데이트 실패</string>
+    <string name="ApkUpdateNotifications_prompt_install_title">Radar 업데이트</string>
+    <string name="ApkUpdateNotifications_prompt_install_body">새 Radar 버전을 이용할 수 있습니다. 탭하여 업데이트하세요.</string>
+    <string name="ApkUpdateNotifications_failed_general_title">Radar 업데이트 실패</string>
     <string name="ApkUpdateNotifications_failed_general_body">나중에 다시 시도할게요.</string>
-    <string name="ApkUpdateNotifications_auto_update_success_title">Signal 업데이트 완료</string>
+    <string name="ApkUpdateNotifications_auto_update_success_title">Radar 업데이트 완료</string>
     <string name="ApkUpdateNotifications_auto_update_success_body">%1$s 버전으로 자동 업데이트되었습니다.</string>
     <string name="ApkUpdateNotifications_manual_update_success_body">%1$s 버전으로 업데이트했습니다.</string>
 
@@ -2790,16 +2790,16 @@
     <string name="UsernameEditFragment_successfully_removed_username">사용자 이름이 삭제되었습니다.</string>
 
     <plurals name="UserNotificationMigrationJob_d_contacts_are_on_signal">
-        <item quantity="other">%1$d개의 연락처가 Signal을 이용 중이에요!</item>
+        <item quantity="other">%1$d개의 연락처가 Radar를 이용 중이에요!</item>
     </plurals>
 
 
     <string name="VerifyIdentityActivity_the_scanned_qr_code_is_not_a_correctly_formatted_safety_number">QR 코드가 올바른 안전 번호 인증 코드 형식이 아닙니다. 다시 스캔해 주세요.</string>
     <string name="VerifyIdentityActivity_share_safety_number_via">다음으로 안전 번호 공유:</string>
-    <string name="VerifyIdentityActivity_our_signal_safety_number">우리의 Signal 안전 번호:</string>
+    <string name="VerifyIdentityActivity_our_signal_safety_number">우리의 Radar 안전 번호:</string>
     <string name="VerifyIdentityActivity_no_app_to_share_to">공유에 사용할 수 있는 앱이 없습니다.</string>
     <string name="VerifyIdentityActivity_no_safety_number_to_compare_was_found_in_the_clipboard">클립보드에서 대조할 안전 번호를 찾을 수 없습니다</string>
-    <string name="VerifyIdentityActivity_signal_needs_the_camera_permission_in_order_to_scan_a_qr_code_but_it_has_been_permanently_denied">Signal에서 QR 코드를 읽으려면 카메라 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'카메라\' 항목을 허용해 주세요.</string>
+    <string name="VerifyIdentityActivity_signal_needs_the_camera_permission_in_order_to_scan_a_qr_code_but_it_has_been_permanently_denied">Radar에서 QR 코드를 읽으려면 카메라 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'카메라\' 항목을 허용해 주세요.</string>
     <string name="VerifyIdentityActivity_you_must_first_exchange_messages_in_order_to_view">%1$s 님의 안전 번호를 보려면 먼저 메시지를 주고받아야 합니다.</string>
     <!-- Dialog message explaining to user they must exchange messages first to create a safety number -->
     <string name="VerifyIdentityActivity_dialog_exchange_messages_to_create_safety_number_message">상대방과 메시지를 주고받으면 안전 번호가 생성됩니다.</string>
@@ -2836,8 +2836,8 @@
 
     <!-- KeyCachingService -->
     <string name="KeyCachingService_signal_passphrase_cached">앱을 열려면 터치하세요.</string>
-    <string name="KeyCachingService_passphrase_cached">Signal이 잠금 해제됨</string>
-    <string name="KeyCachingService_lock">Signal 잠금 걸기</string>
+    <string name="KeyCachingService_passphrase_cached">Radar가 잠금 해제됨</string>
+    <string name="KeyCachingService_lock">Radar 잠금 걸기</string>
 
     <!-- MediaPreviewActivity -->
     <string name="MediaPreviewActivity_you">나</string>
@@ -2888,14 +2888,14 @@
     <string name="MessageNotifier_failed_to_deliver_message">메시지 전송에 실패했습니다.</string>
     <string name="MessageNotifier_error_delivering_message">메시지 전송 중 오류가 발생했습니다.</string>
     <string name="MessageNotifier_message_delivery_paused">메시지 전송이 일시 중지되었습니다.</string>
-    <string name="MessageNotifier_verify_to_continue_messaging_on_signal">Signal에서 메시지를 계속 보내려면 인증해 주세요.</string>
+    <string name="MessageNotifier_verify_to_continue_messaging_on_signal">Radar에서 메시지를 계속 보내려면 인증해 주세요.</string>
     <string name="MessageNotifier_mark_all_as_read">모두 읽음으로 표시</string>
     <string name="MessageNotifier_mark_read">읽음으로 표시</string>
     <string name="MessageNotifier_turn_off_these_notifications">이 알림 끄기</string>
     <string name="MessageNotifier_view_once_photo">한 번만 볼 수 있는 사진</string>
     <string name="MessageNotifier_view_once_video">한 번만 볼 수 있는 동영상</string>
     <string name="MessageNotifier_reply">답장</string>
-    <string name="MessageNotifier_signal_message">Signal 메시지</string>
+    <string name="MessageNotifier_signal_message">Radar 메시지</string>
     <string name="MessageNotifier_contact_message">%1$s %2$s</string>
     <string name="MessageNotifier_unknown_contact_message">연락처</string>
     <string name="MessageNotifier_reacted_s_to_s">다음 메시지에 %1$s 이모지로 공감했어요: \"%2$s\"</string>
@@ -2912,7 +2912,7 @@
     <!-- Body of a notification when someone votes in a poll. First placeholder is the poll emoji, second placeholder is the name of the voter and third is the poll question -->
     <string name="MessageNotifier_s_voted_in_poll">%1$s %2$s 님이 \"%3$s\" 투표에 참여했습니다.</string>
 
-    <string name="TurnOffContactJoinedNotificationsActivity__turn_off_contact_joined_signal">연락처에 있는 사용자가 Signal에 가입할 때 발송되는 알림을 끄시겠어요? Signal &gt; 설정 &gt; 알림에서 다시 활성화하실 수 있습니다.</string>
+    <string name="TurnOffContactJoinedNotificationsActivity__turn_off_contact_joined_signal">연락처에 있는 사용자가 Radar에 가입할 때 발송되는 알림을 끄시겠어요? Radar &gt; 설정 &gt; 알림에서 다시 활성화하실 수 있습니다.</string>
 
     <!-- TurnOnNotificationsBottomSheet -->
     <!-- Title for sheet explaining how to turn on app notifications -->
@@ -2940,7 +2940,7 @@
     <string name="NotificationChannel_group_chats">대화</string>
     <string name="NotificationChannel_missing_display_name">알 수 없음</string>
     <string name="NotificationChannel_voice_notes">음성 노트</string>
-    <string name="NotificationChannel_contact_joined_signal">연락처에 있는 사용자가 Signal에 가입함</string>
+    <string name="NotificationChannel_contact_joined_signal">연락처에 있는 사용자가 Radar에 가입함</string>
     <!-- Toast shown when there is no application available to open the settings -->
     <string name="NotificationChannels__no_activity_available_to_open_notification_channel_settings">알림 채널 설정을 열 수 있는 활동이 없습니다.</string>
     <!-- Notification channel name for showing persistent background connection on devices without push notifications -->
@@ -2984,7 +2984,7 @@
     </plurals>
 
     <!-- Message shown when the app requests permission to save media to the device storage, but that permission has been permanently denied by the user. -->
-    <string name="AttachmentSaver__signal_needs_the_storage_permission_in_order_to_write_to_external_storage_but_it_has_been_permanently_denied">Signal에서 외부 저장 공간에 저장하려면 저장 공간 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'저장 공간\' 항목을 허용해 주세요.</string>
+    <string name="AttachmentSaver__signal_needs_the_storage_permission_in_order_to_write_to_external_storage_but_it_has_been_permanently_denied">Radar에서 외부 저장 공간에 저장하려면 저장 공간 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'저장 공간\' 항목을 허용해 주세요.</string>
 
     <!-- Message explaining that it is not possible to save media to the device storage after the user denied the system save to storage permission. -->
     <string name="AttachmentSaver__unable_to_write_to_external_storage_without_permission">권한이 허용되지 않아 외부 저장 공간에 저장할 수 없습니다</string>
@@ -2994,11 +2994,11 @@
     <!-- Dialog title shown when attempting to save media that has been offloaded from the device by the storage optimization feature. -->
     <string name="AttachmentSaver__cant_save_media">미디어를 저장할 수 없음</string>
     <!-- Dialog message explaining that media cannot be saved because it has been offloaded from the device by the storage optimization feature. -->
-    <string name="AttachmentSaver__media_offloaded_message">\'Signal 저장 공간 최적화\' 기능이 켜져 있어, 이 미디어가 기기에서 오프로드되었습니다. 항목을 한 번에 하나씩 저장하거나, \'Signal 저장 공간 최적화\' 기능을 해제하여 모든 미디어를 한꺼번에 기기에 다운로드하세요.</string>
+    <string name="AttachmentSaver__media_offloaded_message">\'Radar 저장 공간 최적화\' 기능이 켜져 있어, 이 미디어가 기기에서 오프로드되었습니다. 항목을 한 번에 하나씩 저장하거나, \'Radar 저장 공간 최적화\' 기능을 해제하여 모든 미디어를 한꺼번에 기기에 다운로드하세요.</string>
     <!-- Dialog title shown when attempting to save multiple media items, some of which have been offloaded from the device by the storage optimization feature. -->
     <string name="AttachmentSaver__cant_save_all_items">모든 항목을 저장할 수 없음</string>
     <!-- Dialog message explaining that some selected media cannot be saved because it has been offloaded from the device by the storage optimization feature. -->
-    <string name="AttachmentSaver__some_media_offloaded_message">\'Signal 저장 공간 최적화\' 기능이 켜져 있어, 선택한 미디어 중 일부가 기기에서 오프로드되었습니다. 항목을 한 번에 하나씩 저장하거나, \'Signal 저장 공간 최적화\' 기능을 해제하여 모든 미디어를 한꺼번에 기기에 다운로드하세요.</string>
+    <string name="AttachmentSaver__some_media_offloaded_message">\'Radar 저장 공간 최적화\' 기능이 켜져 있어, 선택한 미디어 중 일부가 기기에서 오프로드되었습니다. 항목을 한 번에 하나씩 저장하거나, \'Radar 저장 공간 최적화\' 기능을 해제하여 모든 미디어를 한꺼번에 기기에 다운로드하세요.</string>
     <!-- Button label in the offloaded media dialog that navigates to the storage settings screen. -->
     <string name="AttachmentSaver__view_storage_settings">저장 공간 설정 보기</string>
 
@@ -3011,7 +3011,7 @@
     <string name="ShortcutLauncherActivity_invalid_shortcut">잘못된 단축키</string>
 
     <!-- SingleRecipientNotificationBuilder -->
-    <string name="SingleRecipientNotificationBuilder_signal">Signal</string>
+    <string name="SingleRecipientNotificationBuilder_signal">Radar</string>
     <string name="SingleRecipientNotificationBuilder_new_message">새 메시지</string>
     <string name="SingleRecipientNotificationBuilder_message_request">메시지 요청</string>
     <string name="SingleRecipientNotificationBuilder_you">나</string>
@@ -3086,20 +3086,20 @@
 
     <!-- UnauthorizedReminder -->
     <!-- Message shown in a reminder banner when the user\'s device is no longer registered -->
-    <string name="UnauthorizedReminder_this_is_likely_because_you_registered_your_phone_number_with_Signal_on_a_different_device">등록이 해제된 기기입니다. 다른 기기에서 Signal에 동일한 전화번호로 등록한 경우, 기존 기기의 등록이 해제될 수 있습니다.</string>
+    <string name="UnauthorizedReminder_this_is_likely_because_you_registered_your_phone_number_with_Signal_on_a_different_device">등록이 해제된 기기입니다. 다른 기기에서 Radar에 동일한 전화번호로 등록한 경우, 기존 기기의 등록이 해제될 수 있습니다.</string>
     <!-- Action in reminder banner that will take user to re-register -->
     <string name="UnauthorizedReminder_reregister_action">기기 다시 등록하기</string>
     <!-- Message shown in a reminder banner when this linked device is no longer linked to a primary device -->
-    <string name="UnauthorizedReminder_this_device_is_no_longer_linked_relink_to_continue_messaging">이 기기는 연동이 해제되었습니다. 메시지를 계속 이용하려면 Signal에 휴대폰을 다시 연동하세요.</string>
+    <string name="UnauthorizedReminder_this_device_is_no_longer_linked_relink_to_continue_messaging">이 기기는 연동이 해제되었습니다. 메시지를 계속 이용하려면 Radar에 휴대폰을 다시 연동하세요.</string>
     <!-- Action in reminder banner that will take the user to re-link this device -->
     <string name="UnauthorizedReminder_relink_action">기기 다시 연동</string>
 
     <!-- Push notification when the app is forcibly logged out by the server. -->
-    <string name="LoggedOutNotification_you_have_been_logged_out">이 기기의 Signal에서 로그아웃했습니다.</string>
+    <string name="LoggedOutNotification_you_have_been_logged_out">이 기기의 Radar에서 로그아웃했습니다.</string>
 
     <!-- EnclaveFailureReminder -->
     <!-- Banner message to update app to use payments -->
-    <string name="EnclaveFailureReminder_update_signal">결제 기능을 계속 이용하려면 Signal을 업데이트해 주세요. 현재 표시된 잔액이 최신 상태가 아닐 수 있습니다.</string>
+    <string name="EnclaveFailureReminder_update_signal">결제 기능을 계속 이용하려면 Radar를 업데이트해 주세요. 현재 표시된 잔액이 최신 상태가 아닐 수 있습니다.</string>
     <!-- Banner button to update now -->
 
     <string name="WebRtcCallActivity__answered_on_a_linked_device">연동 기기에서 응답했습니다.</string>
@@ -3141,14 +3141,14 @@
     <string name="change_passphrase_activity__repeat_new_passphrase">새 암호 문구 다시 입력</string>
 
     <!-- contact_selection_activity -->
-    <string name="contact_selection_activity__invite_to_signal">Signal로 초대하기</string>
+    <string name="contact_selection_activity__invite_to_signal">Radar로 초대하기</string>
     <string name="contact_selection_activity__new_group">새 그룹</string>
     <!-- Row item title for refreshing contacts -->
     <string name="contact_selection_activity__refresh_contacts">연락처 새로고침하기</string>
     <!-- Row item description for refreshing contacts -->
     <string name="contact_selection_activity__missing_someone">안 보이는 사람이 있나요? 페이지를 새로고침해 보세요.</string>
     <!-- Row item title for finding people on Signal via your contacts -->
-    <string name="contact_selection_activity__find_people_you_know">Signal에서 내가 아는 사람을 찾아보세요.</string>
+    <string name="contact_selection_activity__find_people_you_know">Radar에서 내가 아는 사람을 찾아보세요.</string>
     <!-- Row item description asking users for access to their contacts to find people they know -->
     <string name="contact_selection_activity__allow_access_to_contacts">연락처 접근을 허용해 주세요.</string>
     <!-- Row header title for more section -->
@@ -3167,15 +3167,15 @@
     <string name="SingleContactSelectionActivity_contact_photo">연락처 사진</string>
 
     <!-- ContactSelectionListFragment-->
-    <string name="ContactSelectionListFragment_signal_requires_the_contacts_permission_in_order_to_display_your_contacts">Signal에서 연락처 정보를 표시하려면 연락처 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'연락처\' 항목을 허용해 주세요.</string>
+    <string name="ContactSelectionListFragment_signal_requires_the_contacts_permission_in_order_to_display_your_contacts">Radar에서 연락처 정보를 표시하려면 연락처 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'연락처\' 항목을 허용해 주세요.</string>
     <string name="ContactSelectionListFragment_error_retrieving_contacts_check_your_network_connection">연락처 가져오기 오류: 네트워크 연결을 확인해 주세요</string>
     <string name="ContactSelectionListFragment_username_not_found">사용자 이름을 찾을 수 없음</string>
-    <string name="ContactSelectionListFragment_s_is_not_a_signal_user">"\'%1$s\' 님은 Signal 사용자가 아닙니다. 사용자 이름을 확인하고 다시 시도해 주세요."</string>
+    <string name="ContactSelectionListFragment_s_is_not_a_signal_user">"\'%1$s\' 님은 Radar 사용자가 아닙니다. 사용자 이름을 확인하고 다시 시도해 주세요."</string>
     <string name="ContactSelectionListFragment_you_do_not_need_to_add_yourself_to_the_group">본인은 그룹에 추가하지 않으셔도 됩니다.</string>
     <string name="ContactSelectionListFragment_maximum_group_size_reached">그룹 정원 한도에 도달했어요</string>
-    <string name="ContactSelectionListFragment_signal_groups_can_have_a_maximum_of_s_members">Signal 그룹의 최대 인원은 %1$s명입니다.</string>
+    <string name="ContactSelectionListFragment_signal_groups_can_have_a_maximum_of_s_members">Radar 그룹의 최대 인원은 %1$s명입니다.</string>
     <string name="ContactSelectionListFragment_recommended_member_limit_reached">권장 멤버 수 한도에 도달했어요</string>
-    <string name="ContactSelectionListFragment_signal_groups_perform_best_with_s_members_or_fewer">Signal 그룹은 멤버 수가 %1$s명 이하일 때 가장 원활하게 작동합니다. 멤버를 더 추가하면 메시지 송수신이 지연될 수 있습니다.</string>
+    <string name="ContactSelectionListFragment_signal_groups_perform_best_with_s_members_or_fewer">Radar 그룹은 멤버 수가 %1$s명 이하일 때 가장 원활하게 작동합니다. 멤버를 더 추가하면 메시지 송수신이 지연될 수 있습니다.</string>
     <plurals name="ContactSelectionListFragment_d_members">
         <item quantity="other">멤버 %1$d명</item>
     </plurals>
@@ -3186,16 +3186,16 @@
     <!-- Dialog title asking users for contact permission -->
     <string name="ContactSelectionListFragment_allow_access_contacts">연락처 접근 허용</string>
     <!-- Dialog description that will explain the steps needed to give contact permissions -->
-    <string name="ContactSelectionListFragment_to_find_people">Signal에서 내가 아는 사람을 찾으려면 다음을 수행하세요.</string>
+    <string name="ContactSelectionListFragment_to_find_people">Radar에서 내가 아는 사람을 찾으려면 다음을 수행하세요.</string>
     <!-- Text on button prompting users to give Signal contact permissions -->
     <string name="ContactSelectionListFragment__allow_access">권한 허용</string>
     <!-- Text on button to dismiss Signal\'s request for contact permissions -->
     <string name="ContactSelectionListFragment__no_thanks">안 할래요</string>
     <!-- Text asking for user\'s contact permission -->
-    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">연락처 접근을 허용해 주세요. 연락처 정보는 암호화되며 Signal도 확인할 수 없습니다.</string>
+    <string name="ContactSelectionListFragment__allow_access_to_your_contacts_encrypted">연락처 접근을 허용해 주세요. 연락처 정보는 암호화되며 Radar도 확인할 수 없습니다.</string>
 
     <!-- conversation_activity -->
-    <string name="conversation_activity__type_message_push">Signal 메시지</string>
+    <string name="conversation_activity__type_message_push">Radar 메시지</string>
     <!-- Option in send button context menu to schedule the message instead of sending it directly -->
     <string name="conversation_activity__sim_n">SIM %1$d</string>
     <string name="conversation_activity__send">전송</string>
@@ -3312,7 +3312,7 @@
 
     <!-- BubbleOptOutTooltip -->
     <!-- Message to inform the user of what Android chat bubbles are -->
-    <string name="BubbleOptOutTooltip__description">말풍선은 Signal 대화에서 끌 수 있는 Android 기능입니다.</string>
+    <string name="BubbleOptOutTooltip__description">말풍선은 Radar 대화에서 끌 수 있는 Android 기능입니다.</string>
     <!-- Button to dismiss the tooltip for opting out of using Android bubbles -->
     <string name="BubbleOptOutTooltip__not_now">나중에</string>
     <!-- Button to move to the system settings to control the use of Android bubbles -->
@@ -3357,9 +3357,9 @@
     <string name="IdentityUtil_unverified_banner_two">%1$s, %2$s 님과의 안전 번호가 변경되었으며 인증이 해제되었습니다.</string>
     <string name="IdentityUtil_unverified_banner_many">%1$s, %2$s, %3$s 님과의 안전 번호가 변경되었으며 인증이 해제되었습니다.</string>
 
-    <string name="IdentityUtil_unverified_dialog_one">%1$s 님과의 안전 번호가 변경되었으며 인증이 해제되었습니다. 이는 누군가 연결을 가로채려는 시도일 수도 있으나, 단순히 %1$s 님이 Signal을 재설치한 경우에도 발생할 수 있습니다.</string>
-    <string name="IdentityUtil_unverified_dialog_two">%1$s, %2$s 님과의 안전 번호가 변경되었으며 인증이 해제되었습니다. 이는 누군가 연결을 가로채려는 시도일 수도 있으나, 단순히 해당 사용자가 Signal을 재설치한 경우에도 발생할 수 있습니다.</string>
-    <string name="IdentityUtil_unverified_dialog_many">%1$s, %2$s, %3$s 님과의 안전 번호가 변경되었으며 인증이 해제되었습니다. 이는 누군가 연결을 가로채려는 시도일 수도 있으나, 단순히 해당 사용자가 Signal을 재설치한 경우에도 발생할 수 있습니다.</string>
+    <string name="IdentityUtil_unverified_dialog_one">%1$s 님과의 안전 번호가 변경되었으며 인증이 해제되었습니다. 이는 누군가 연결을 가로채려는 시도일 수도 있으나, 단순히 %1$s 님이 Radar를 재설치한 경우에도 발생할 수 있습니다.</string>
+    <string name="IdentityUtil_unverified_dialog_two">%1$s, %2$s 님과의 안전 번호가 변경되었으며 인증이 해제되었습니다. 이는 누군가 연결을 가로채려는 시도일 수도 있으나, 단순히 해당 사용자가 Radar를 재설치한 경우에도 발생할 수 있습니다.</string>
+    <string name="IdentityUtil_unverified_dialog_many">%1$s, %2$s, %3$s 님과의 안전 번호가 변경되었으며 인증이 해제되었습니다. 이는 누군가 연결을 가로채려는 시도일 수도 있으나, 단순히 해당 사용자가 Radar를 재설치한 경우에도 발생할 수 있습니다.</string>
 
     <string name="IdentityUtil_untrusted_dialog_one">%1$s 님과의 안전 번호가 방금 변경되었습니다.</string>
     <string name="IdentityUtil_untrusted_dialog_two">%1$s, %2$s 님과의 안전 번호가 방금 변경되었습니다.</string>
@@ -3451,20 +3451,20 @@
     <!-- Bottom sheet title when encryption is auto-verified -->
     <string name="EncryptionVerifiedSheet__title_success">이 채팅에 대한 암호화가 자동 인증되었습니다</string>
     <!-- Bottom sheet body when encryption is auto-verified -->
-    <string name="EncryptionVerifiedSheet__body_success">전화번호를 통해 연결된 사용자의 경우, Signal은 키 투명성이라는 프로세스를 사용하여 연결이 안전한지 자동으로 확인할 수 있습니다. 보안을 강화하려면 이전 화면의 숫자를 대조하거나, 상대방 기기의 코드를 스캔하여 종단간 암호화를 수동으로 인증해 주세요.</string>
+    <string name="EncryptionVerifiedSheet__body_success">전화번호를 통해 연결된 사용자의 경우, Radar는 키 투명성이라는 프로세스를 사용하여 연결이 안전한지 자동으로 확인할 수 있습니다. 보안을 강화하려면 이전 화면의 숫자를 대조하거나, 상대방 기기의 코드를 스캔하여 종단간 암호화를 수동으로 인증해 주세요.</string>
     <!-- Bottom sheet title when encryption is no longer auto-verified -->
     <string name="EncryptionVerifiedSheet__title_no_longer_unavailable">이 채팅에 자동 인증을 사용할 수 없습니다</string>
     <!-- Bottom sheet body when encryption is no longer auto-verified. Placeholder is the name of the person. -->
-    <string name="EncryptionVerifiedSheet__body_no_longer_unavailable">Signal이 이 채팅의 암호화를 자동으로 인증할 수 없습니다. %1$s 님이 전화번호 또는 전화번호 개인정보보호 설정을 변경하여 발생한 문제일 수 있습니다. 이전 화면의 숫자를 대조하거나, 상대방 기기의 코드를 스캔하여 종단간 암호화를 수동으로 인증해 주세요.</string>
+    <string name="EncryptionVerifiedSheet__body_no_longer_unavailable">Radar가 이 채팅의 암호화를 자동으로 인증할 수 없습니다. %1$s 님이 전화번호 또는 전화번호 개인정보보호 설정을 변경하여 발생한 문제일 수 있습니다. 이전 화면의 숫자를 대조하거나, 상대방 기기의 코드를 스캔하여 종단간 암호화를 수동으로 인증해 주세요.</string>
     <!-- Bottom sheet title when encryption cannot be auto-verified -->
     <string name="EncryptionVerifiedSheet__title_unavailable">이 채팅에 자동 인증을 사용할 수 없습니다</string>
     <!-- Bottom sheet body when encryption cannot be auto-verified -->
-    <string name="EncryptionVerifiedSheet__body_unavailable">Signal은 상대방과 전화번호를 통해 연결한 채팅에서만 자동으로 암호화를 인증할 수 있습니다. 사용자 이름이나 공통으로 속한 그룹을 통해 채팅을 시작한 경우, 이전 화면의 숫자를 대조하거나 상대방 기기의 코드를 스캔하여 종단간 암호화를 인증해 주세요.</string>
+    <string name="EncryptionVerifiedSheet__body_unavailable">Radar는 상대방과 전화번호를 통해 연결한 채팅에서만 자동으로 암호화를 인증할 수 있습니다. 사용자 이름이나 공통으로 속한 그룹을 통해 채팅을 시작한 경우, 이전 화면의 숫자를 대조하거나 상대방 기기의 코드를 스캔하여 종단간 암호화를 인증해 주세요.</string>
 
     <!-- Title for auto verification education sheet -->
     <string name="VerifyAutomaticallyEducationSheet__title">이제 암호화를 자동 인증할 수 있어요</string>
     <!-- Body for auto verification education sheet -->
-    <string name="VerifyAutomaticallyEducationSheet__body">전화번호를 통해 연결된 연락처의 경우, Signal은 키 투명성이라는 프로세스를 사용하여 연결이 안전한지 자동으로 확인할 수 있습니다. 하지만 더 강력한 보안을 원한다면, QR 코드를 사용하거나 안전 번호를 사용하여 수동으로 연결을 인증하는 것도 가능합니다.</string>
+    <string name="VerifyAutomaticallyEducationSheet__body">전화번호를 통해 연결된 연락처의 경우, Radar는 키 투명성이라는 프로세스를 사용하여 연결이 안전한지 자동으로 확인할 수 있습니다. 하지만 더 강력한 보안을 원한다면, QR 코드를 사용하거나 안전 번호를 사용하여 수동으로 연결을 인증하는 것도 가능합니다.</string>
     <!-- Button to learn more about automatic verification -->
     <string name="VerifyAutomaticallyEducationSheet__learn_more">자세히 알아보기</string>
     <!-- Button to go to verification page -->
@@ -3538,7 +3538,7 @@
   <!-- Removed by excludeNonTranslatables <string name="HelpFragment__link__faq" translatable="false">https://support.signal.org</string> -->
     <!-- Heading used within support email that lists additional information to help with debugging -->
     <string name="HelpFragment__support_info">지원 정보</string>
-    <string name="HelpFragment__signal_android_support_request">Signal Android 지원 요청</string>
+    <string name="HelpFragment__signal_android_support_request">Radar Android 지원 요청</string>
   <!-- Removed by excludeNonTranslatables <string name="HelpFragment__debug_log" translatable="false">Debug Log:</string> -->
     <string name="HelpFragment__could_not_upload_logs">로그를 업로드하지 못했습니다</string>
     <string name="HelpFragment__please_be_as_descriptive_as_possible">원인 파악을 위해 문제 상황을 최대한 상세히 기록해 주세요.</string>
@@ -3547,18 +3547,18 @@
         <item quantity="other">최소 %1$d자 이상이어야 합니다.</item>
     </plurals>
     <string-array name="HelpFragment__categories_6">
-        <item>옵션을 선택하세요</item>
+        <item>옵션을 선택하세요.</item>
         <item>오류 발생</item>
         <item>기능 요청</item>
         <item>질문</item>
         <item>피드백</item>
-        <item>결제(MobileCoin)</item>
-        <item>후원 및 배지</item>
-        <item>Signal Android 백업</item>
+        <item>결제(Bitcoin over Lightning)</item>
+        <item>기부 및 배지</item>
+        <item>Radar Android 백업</item>
         <item>기타</item>
     </string-array>
     <!-- Subject of email when submitting debug logs to help debug slow notifications -->
-    <string name="DebugLogsPromptDialogFragment__signal_android_support_request">Signal Android 디버그 로그 제출</string>
+    <string name="DebugLogsPromptDialogFragment__signal_android_support_request">Radar Android 디버그 로그 제출</string>
     <!-- Action to submit logs and take user to send an e-mail -->
     <string name="DebugLogsPromptDialogFragment__submit">제출</string>
     <!-- Action to decline to submit logs -->
@@ -3592,7 +3592,7 @@
     </plurals>
 
     <!-- Bottom sheet message shown after an assistant app requested the contents of the screen, explaining that screenshots were automatically disabled -->
-    <string name="AssistantScreenSecurityBottomSheet__body">Gemini와 같은 AI 어시스턴트 앱이 Signal 화면의 내용을 스캔할 수 있어, 이를 방지하기 위해 화면 보안이 활성화되었습니다. 이에 따라 스크린샷 기능도 함께 차단됩니다.</string>
+    <string name="AssistantScreenSecurityBottomSheet__body">Gemini와 같은 AI 어시스턴트 앱이 Radar 화면의 내용을 스캔할 수 있어, 이를 방지하기 위해 화면 보안이 활성화되었습니다. 이에 따라 스크린샷 기능도 함께 차단됩니다.</string>
     <!-- Bottom sheet title shown after an assistant app requested the contents of the screen and screen security was automatically turned on -->
     <string name="AssistantScreenSecurityBottomSheet__title">화면 보안 켜짐</string>
     <!-- Bottom sheet button that turns screen security back off -->
@@ -3600,7 +3600,7 @@
     <!-- Title of the dialog confirming that the user wants to turn off screen security -->
     <string name="AssistantScreenSecurityTurnOffDialog__title">화면 보안을 끌까요?</string>
     <!-- Body of the dialog confirming that the user wants to turn off screen security -->
-    <string name="AssistantScreenSecurityTurnOffDialog__body">이 설정을 끄면 Google Gemini 등의 AI 어시스턴트가 Signal 화면을 스캔하여 개인정보가 보호되지 않는 기능에 사용할 위험이 있습니다.</string>
+    <string name="AssistantScreenSecurityTurnOffDialog__body">이 설정을 끄면 Google Gemini 등의 AI 어시스턴트가 Radar 화면을 스캔하여 개인정보가 보호되지 않는 기능에 사용할 위험이 있습니다.</string>
     <!-- Dialog button that confirms turning off screen security -->
     <string name="AssistantScreenSecurityTurnOffDialog__turn_off">끄기</string>
     <!-- Snackbar shown after the user turns off screen security -->
@@ -3616,13 +3616,13 @@
     <string name="preferences__linked_devices">연동 기기</string>
     <string name="preferences__disable_pin">PIN 비활성화</string>
     <string name="preferences__enable_pin">PIN 활성화</string>
-    <string name="preferences__if_you_disable_the_pin_you_will_lose_all_data">PIN을 비활성화하면 수동으로 백업 및 복원하지 않는 한, Signal 재가입 시 모든 데이터가 삭제됩니다. PIN이 비활성화된 상태에서는 등록 잠금 기능을 사용할 수 없습니다.</string>
-    <string name="preferences__pins_keep_information_stored_with_signal_encrypted_so_only_you_can_access_it">PIN은 Signal에 저장된 정보를 암호화하여 본인만 접근할 수 있도록 보호합니다. 앱을 재설치해도 프로필, 설정, 연락처가 자동으로 복원되며, 평소 앱을 열 때는 PIN을 입력하지 않아도 됩니다.</string>
+    <string name="preferences__if_you_disable_the_pin_you_will_lose_all_data">PIN을 비활성화하면 수동으로 백업 및 복원하지 않는 한, Radar 재가입 시 모든 데이터가 삭제됩니다. PIN이 비활성화된 상태에서는 등록 잠금 기능을 사용할 수 없습니다.</string>
+    <string name="preferences__pins_keep_information_stored_with_signal_encrypted_so_only_you_can_access_it">PIN은 Radar에 저장된 정보를 암호화하여 본인만 접근할 수 있도록 보호합니다. 앱을 재설치해도 프로필, 설정, 연락처가 자동으로 복원되며, 평소 앱을 열 때는 PIN을 입력하지 않아도 됩니다.</string>
     <!-- Title of toolbar for the advanced pin settings screen -->
     <string name="preferences__advanced_pin_settings_title">PIN 고급 설정</string>
     <string name="preferences__submit_debug_log">디버그 로그 제출</string>
 
-    <string name="preferences_advanced__relay_all_calls_through_the_signal_server_to_avoid_revealing_your_ip_address">상대방에게 IP 주소가 노출되지 않도록 모든 통화를 Signal 서버로 경유합니다. 통화 품질이 다소 저하될 수 있습니다.</string>
+    <string name="preferences_advanced__relay_all_calls_through_the_signal_server_to_avoid_revealing_your_ip_address">상대방에게 IP 주소가 노출되지 않도록 모든 통화를 Radar 서버로 경유합니다. 통화 품질이 다소 저하될 수 있습니다.</string>
     <string name="preferences_advanced__always_relay_calls">통화 시 항상 서버 경유</string>
     <!-- Option in settings to turn on unread reminders -->
     <string name="preferences_notifications__unread">읽지 않은 메시지 알림</string>
@@ -3630,20 +3630,20 @@
     <string name="preferences_communication__category_censorship_circumvention">검열 우회</string>
     <!-- Title of the \'censorship circumvention\' toggle switch -->
     <string name="preferences_communication__censorship_circumvention">검열 우회</string>
-    <string name="preferences_communication__censorship_circumvention_if_enabled_signal_will_attempt_to_circumvent_censorship">이 기능을 활성화하면 Signal이 검열을 우회하려고 시도합니다. Signal이 차단된 지역에 있는 경우에만 이 기능을 사용하세요.</string>
+    <string name="preferences_communication__censorship_circumvention_if_enabled_signal_will_attempt_to_circumvent_censorship">이 기능을 활성화하면 Radar가 검열을 우회하려고 시도합니다. Radar가 차단된 지역에 있는 경우에만 이 기능을 사용하세요.</string>
     <!-- Summary text for \'censorship circumvention\' toggle. Indicates that we automatically enabled it because we believe you\'re in a censored country -->
     <string name="preferences_communication__censorship_circumvention_has_been_activated_based_on_your_accounts_phone_number">계정의 전화번호를 기반으로 검열 우회 기능이 활성화되었습니다.</string>
     <!-- Summary text for \'censorship circumvention\' toggle. Indicates that you disabled it even though we believe you\'re in a censored country -->
     <string name="preferences_communication__censorship_circumvention_you_have_manually_disabled">검열 우회 기능을 직접 비활성화했습니다.</string>
     <!-- Summary text for \'censorship circumvention\' toggle. Indicates that you cannot use it because you\'re already connected to the Signal service -->
-    <string name="preferences_communication__censorship_circumvention_is_not_necessary_you_are_already_connected">이미 Signal에 연결되어 있어 검열 우회 설정을 켤 필요가 없습니다.</string>
+    <string name="preferences_communication__censorship_circumvention_is_not_necessary_you_are_already_connected">이미 Radar에 연결되어 있어 검열 우회 설정을 켤 필요가 없습니다.</string>
     <!-- Summary text for \'censorship circumvention\' toggle. Indicates that you cannot use it because you\'re not connected to the internet -->
     <string name="preferences_communication__censorship_circumvention_can_only_be_activated_when_connected_to_the_internet">검열 우회는 인터넷에 연결되었을 때만 활성화할 수 있습니다.</string>
     <string name="preferences_communication__category_sealed_sender">발신자 암호화</string>
     <string name="preferences_communication__sealed_sender_allow_from_anyone">모두에게 허용</string>
     <string name="preferences_communication__sealed_sender_allow_from_anyone_description">연락처에 없거나 프로필을 공유하지 않은 상대가 보내는 메시지에 발신자 암호화 기능을 적용합니다.</string>
     <string name="preferences_proxy_address">프록시 주소</string>
-    <string name="preferences_only_use_a_proxy_if">모바일 데이터 또는 Wi-Fi에서 Signal에 연결할 수 없는 경우에만 프록시를 사용하세요.</string>
+    <string name="preferences_only_use_a_proxy_if">모바일 데이터 또는 Wi-Fi에서 Radar에 연결할 수 없는 경우에만 프록시를 사용하세요.</string>
     <string name="preferences_share">공유</string>
     <string name="preferences_save">저장</string>
     <string name="preferences_connecting_to_proxy">프록시에 연결 중…</string>
@@ -3658,7 +3658,7 @@
     <!-- Preference title for automatic key verification -->
     <string name="preferences_automatic_key_verification">자동 키 인증</string>
     <!-- Preference summary for automatic key verification -->
-    <string name="preferences_automatic_key_verification_body">이 기능을 활성화하면 Signal이 1:1 대화의 암호화를 자동으로 인증하려고 시도합니다.</string>
+    <string name="preferences_automatic_key_verification_body">이 기능을 활성화하면 Radar가 1:1 대화의 암호화를 자동으로 인증하려고 시도합니다.</string>
 
 
     <!-- Internal only preferences -->
@@ -3675,7 +3675,7 @@
 
     <!-- Displayed on a welcome screen for payments -->
     <string name="PaymentsHomeFragment_introducing_payments">결제 소개</string>
-    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">개인정보 보호에 특화된 새로운 디지털 통화, MobileCoin을 Signal에서 주고받아 보세요. 지금 활성화하여 시작할 수 있습니다.</string>
+    <string name="PaymentsHomeFragment__use_signal_to_send_and_receive">개인정보 보호에 특화된 새로운 디지털 통화, MobileCoin을 Radar에서 주고받아 보세요. 지금 활성화하여 시작할 수 있습니다.</string>
     <string name="PaymentsHomeFragment__activate_payments">결제 활성화</string>
     <string name="PaymentsHomeFragment__activating_payments">결제 활성화 중…</string>
     <string name="PaymentsHomeFragment__restore_payments_account">결제 계정 복원</string>
@@ -3701,7 +3701,7 @@
     <string name="PaymentsHomeFragment__payments_is_not_available_in_your_region">해당 지역에서는 결제가 불가능합니다.</string>
     <string name="PaymentsHomeFragment__could_not_enable_payments">결제를 활성화할 수 없습니다. 나중에 다시 시도하세요.</string>
     <string name="PaymentsHomeFragment__deactivate_payments_question">결제를 비활성화할까요?</string>
-    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">결제를 비활성화하면 Signal에서 MobileCoin을 보내거나 받을 수 없습니다.</string>
+    <string name="PaymentsHomeFragment__you_will_not_be_able_to_send">결제를 비활성화하면 Radar에서 MobileCoin을 보내거나 받을 수 없습니다.</string>
     <string name="PaymentsHomeFragment__deactivate">비활성화하기</string>
     <string name="PaymentsHomeFragment__continue">계속</string>
     <string name="PaymentsHomeFragment__balance_is_not_currently_available">현재 잔액을 사용할 수 없습니다.</string>
@@ -3710,12 +3710,12 @@
     <string name="PaymentsHomeFragment__details">세부 정보</string>
   <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__learn_more__activate_payments" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_activate</string> -->
     <!-- Displayed as a description in a dialog when the user tries to activate payments -->
-    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Signal을 사용하여 MobileCoin을 주고받으세요. 모든 결제에는 MobileCoins와 MobileCoin Wallet의 사용 약관이 적용됩니다. 일부 문제가 발생할 수 있으며, 손실된 결제나 잔액은 복구할 수 없습니다. </string>
+    <string name="PaymentsHomeFragment__you_can_use_signal_to_send_and">Radar를 사용하여 MobileCoin을 주고받으세요. 모든 결제에는 MobileCoins와 Bitcoin over Lightning Wallet의 사용 약관이 적용됩니다. 일부 문제가 발생할 수 있으며, 손실된 결제나 잔액은 복구할 수 없습니다. </string>
     <string name="PaymentsHomeFragment__activate">활성화하기</string>
-    <string name="PaymentsHomeFragment__view_mobile_coin_terms">MobileCoin 약관 보기</string>
-    <string name="PaymentsHomeFragment__payments_not_available">Signal 결제 서비스를 더 이상 이용할 수 없습니다. 기존 자금을 거래소로 보내는 것은 가능하지만, 새로운 결제나 송금, 금액 충전은 제한됩니다.</string>
+    <string name="PaymentsHomeFragment__view_mobile_coin_terms">Bitcoin over Lightning 용어 보기</string>
+    <string name="PaymentsHomeFragment__payments_not_available">Radar 결제 서비스를 더 이상 이용할 수 없습니다. 기존 자금을 거래소로 보내는 것은 가능하지만, 새로운 결제나 송금, 금액 충전은 제한됩니다.</string>
 
-  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.mobilecoin.com/terms-of-use.html</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="PaymentsHomeFragment__mobile_coin_terms_url" translatable="false">https://www.Bitcoin over Lightning.com/terms-of-use.html</string> -->
     <!-- Alert dialog title which shows up after a payment to turn on payment lock -->
     <string name="PaymentsHomeFragment__turn_on">지금부터 결제 잠금을 켤까요?</string>
     <!-- Alert dialog description for why payment lock should be enabled before sending payments -->
@@ -3777,7 +3777,7 @@
     <!-- Prefix to a name to indicate who a payment was sent to -->
     <string name="PaymentsDetailsFragment__to">받는 사람:</string>
     <string name="PaymentsDetailsFragment__from">보낸 사람:</string>
-    <string name="PaymentsDetailsFragment__information">지불 금액과 거래 시간을 비롯한 거래 내역은 MobileCoin Ledger의 일부입니다.</string>
+    <string name="PaymentsDetailsFragment__information">지불 금액 및 거래 시간을 비롯한 거래 세부 정보는 Bitcoin over Lightning Ledger의 일부입니다.</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_fee">코인 정리 수수료</string>
     <string name="PaymentsDetailsFragment__coin_cleanup_information">보유하고 있는 코인을 합산하여 거래를 완료할 수 없는 경우 \'코인 정리 수수료\'가 부과됩니다. 코인을 정리하면 송금 기능을 계속 이용하실 수 있습니다.</string>
     <string name="PaymentsDetailsFragment__no_details_available">이 거래의 상세 정보가 없습니다.</string>
@@ -3796,9 +3796,9 @@
     <string name="PaymentsTransferFragment__next">다음</string>
     <string name="PaymentsTransferFragment__invalid_address">유효하지 않은 주소</string>
     <string name="PaymentsTransferFragment__check_the_wallet_address">이체하려는 지갑 주소를 확인하고 다시 시도하세요.</string>
-    <string name="PaymentsTransferFragment__you_cant_transfer_to_your_own_signal_wallet_address">본인의 Signal 지갑 주소로는 이체할 수 없습니다. 지원되는 거래소 계정에서 발급된 지갑 주소를 입력해 주세요.</string>
-    <string name="PaymentsTransferFragment__to_scan_a_qr_code_signal_needs">QR 코드를 스캔하려면 Signal이 카메라에 액세스할 수 있어야 합니다.</string>
-    <string name="PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera">QR 코드를 스캔하려면 Signal이 카메라에 액세스할 수 있어야 합니다.</string>
+    <string name="PaymentsTransferFragment__you_cant_transfer_to_your_own_signal_wallet_address">본인의 Radar 지갑 주소로는 이체할 수 없습니다. 지원되는 거래소 계정에서 발급된 지갑 주소를 입력해 주세요.</string>
+    <string name="PaymentsTransferFragment__to_scan_a_qr_code_signal_needs">QR 코드를 스캔하려면 Radar가 카메라에 액세스할 수 있어야 합니다.</string>
+    <string name="PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera">QR 코드를 스캔하려면 Radar가 카메라에 액세스할 수 있어야 합니다.</string>
 
     <!-- PaymentsTransferQrScanFragment -->
     <string name="PaymentsTransferQrScanFragment__scan_address_qr_code">주소 QR 코드 스캔</string>
@@ -3857,7 +3857,7 @@
 
     <!-- BiometricDeviceAuthentication -->
     <!-- Biometric/Device authentication prompt title -->
-    <string name="BiometricDeviceAuthentication__signal">Signal</string>
+    <string name="BiometricDeviceAuthentication__signal">Radar</string>
 
 
     <!-- CurrencyAmountFormatter_s_at_s -->
@@ -3878,8 +3878,8 @@
     <string name="contact_selection_list__unknown_contact_add_to_group">그룹에 추가하기</string>
 
     <!-- conversation_callable_secure -->
-    <string name="conversation_callable_secure__menu_call">Signal 통화</string>
-    <string name="conversation_callable_secure__menu_video">Signal 영상 통화</string>
+    <string name="conversation_callable_secure__menu_call">Radar 통화</string>
+    <string name="conversation_callable_secure__menu_video">Radar 영상 통화</string>
 
     <!-- conversation_context -->
 
@@ -4027,13 +4027,13 @@
     <string name="verify_display_fragment_context_menu__compare_with_clipboard">클립보드 번호와 대조</string>
 
     <!-- reminder_header -->
-    <string name="reminder_header_service_outage_text">현재 Signal 서비스에 일시적인 장애가 발생했습니다. 빠르게 복구 작업을 진행하고 있으니 잠시만 기다려 주세요.</string>
+    <string name="reminder_header_service_outage_text">현재 Radar 서비스에 일시적인 장애가 발생했습니다. 빠르게 복구 작업을 진행하고 있으니 잠시만 기다려 주세요.</string>
     <!-- Body text of a banner that will show at the top of the chat list when we temporarily cannot process the user\'s contacts -->
-    <string name="reminder_cds_warning_body">Signal의 연락처 검색 기능이 일시적으로 휴대폰 연락처를 처리할 수 없습니다.</string>
+    <string name="reminder_cds_warning_body">Radar의 연락처 검색 기능이 일시적으로 휴대폰 연락처를 처리할 수 없습니다.</string>
     <!-- Label for a button in a banner to learn more about why we temporarily can\'t process the user\'s contacts -->
     <string name="reminder_cds_warning_learn_more">자세히 알아보기</string>
     <!-- Body text of a banner that will show at the top of the chat list when the user has so many contacts that we cannot ever process them -->
-    <string name="reminder_cds_permanent_error_body">Signal의 연락처 검색 기능이 휴대폰 연락처를 처리할 수 없습니다.</string>
+    <string name="reminder_cds_permanent_error_body">Radar의 연락처 검색 기능이 휴대폰 연락처를 처리할 수 없습니다.</string>
     <!-- Label for a button in a banner to learn more about why we cannot process the user\'s contacts -->
     <string name="reminder_cds_permanent_error_learn_more">자세히 알아보기</string>
 
@@ -4070,7 +4070,7 @@
     <string name="CreateKbsPinFragment__create_a_new_pin">새 번호 생성</string>
     <string name="CreateKbsPinFragment__you_can_choose_a_new_pin_as_long_as_this_device_is_registered">기기가 등록된 동안은 PIN 번호를 언제든지 변경할 수 있습니다</string>
     <string name="CreateKbsPinFragment__create_your_pin">PIN을 생성하세요</string>
-    <string name="CreateKbsPinFragment__pins_can_help_you_restore_your_account">PIN을 사용하면 계정을 간편하게 복원하고, Signal에 저장된 정보를 안전하게 암호화하여 보호할 수 있습니다. </string>
+    <string name="CreateKbsPinFragment__pins_can_help_you_restore_your_account">PIN을 사용하면 계정을 간편하게 복원하고, Radar에 저장된 정보를 안전하게 암호화하여 보호할 수 있습니다. </string>
     <string name="CreateKbsPinFragment__choose_a_stronger_pin">더 강력한 PIN을 설정하세요</string>
 
     <!-- ConfirmKbsPinFragment -->
@@ -4086,7 +4086,7 @@
 
     <!-- KbsSplashFragment -->
     <string name="KbsSplashFragment__introducing_pins">PIN 기능 안내</string>
-    <string name="KbsSplashFragment__pins_keep_information_stored_with_signal_encrypted">PIN은 Signal에 저장된 정보를 암호화하여 본인만 접근할 수 있도록 보호합니다. 앱을 재설치해도 프로필, 설정, 연락처가 자동으로 복원되며, 평소 앱을 열 때는 PIN을 입력하지 않아도 됩니다.</string>
+    <string name="KbsSplashFragment__pins_keep_information_stored_with_signal_encrypted">PIN은 Radar에 저장된 정보를 암호화하여 본인만 접근할 수 있도록 보호합니다. 앱을 재설치해도 프로필, 설정, 연락처가 자동으로 복원되며, 평소 앱을 열 때는 PIN을 입력하지 않아도 됩니다.</string>
     <string name="KbsSplashFragment__learn_more">더 알아보기</string>
   <!-- Removed by excludeNonTranslatables <string name="KbsSplashFragment__learn_more_link" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
     <string name="KbsSplashFragment__registration_lock_equals_pin">등록 잠금 = PIN</string>
@@ -4097,7 +4097,7 @@
     <string name="KbsSplashFragment__disable_pin">PIN 비활성화</string>
 
     <!-- KBS Reminder Dialog -->
-    <string name="KbsReminderDialog__enter_your_signal_pin">Signal PIN을 입력하세요</string>
+    <string name="KbsReminderDialog__enter_your_signal_pin">Radar PIN을 입력하세요</string>
     <string name="KbsReminderDialog__to_help_you_memorize_your_pin">PIN을 잊어버리지 않도록 주기적으로 확인을 요청드릴게요. 입력에 익숙해질수록 요청 횟수는 점차 줄어듭니다.</string>
     <string name="KbsReminderDialog__skip">건너뛰기</string>
     <string name="KbsReminderDialog__submit">제출</string>
@@ -4145,22 +4145,22 @@
 
     <!-- KBS Megaphone -->
     <string name="KbsMegaphone__create_a_pin">PIN 생성</string>
-    <string name="KbsMegaphone__pins_keep_information_thats_stored_with_signal_encrytped">PIN은 Signal에 저장된 정보를 암호화하여 보관합니다.</string>
+    <string name="KbsMegaphone__pins_keep_information_thats_stored_with_signal_encrytped">PIN은 Radar에 저장된 정보를 암호화하여 보관합니다.</string>
     <string name="KbsMegaphone__create_pin">PIN 생성</string>
 
     <!-- CallNotificationBuilder -->
     <!-- Displayed in a notification when a Signal voice call is ringing -->
-    <string name="CallNotificationBuilder__incoming_signal_voice_call">Signal 음성 통화 수신 중</string>
+    <string name="CallNotificationBuilder__incoming_signal_voice_call">Radar 음성 통화 수신 중</string>
     <!-- Displayed in a notification when a Signal video call is ringing -->
-    <string name="CallNotificationBuilder__incoming_signal_video_call">Signal 영상 통화 수신 중</string>
+    <string name="CallNotificationBuilder__incoming_signal_video_call">Radar 영상 통화 수신 중</string>
     <!-- Displayed in a notification when a Signal group call is ringing -->
-    <string name="CallNotificationBuilder__incoming_signal_group_call">Signal 그룹 통화 수신 중</string>
+    <string name="CallNotificationBuilder__incoming_signal_group_call">Radar 그룹 통화 수신 중</string>
     <!-- Displayed in a notification when a Signal voice call is in progress -->
-    <string name="CallNotificationBuilder__ongoing_signal_voice_call">Signal 음성 통화 진행 중</string>
+    <string name="CallNotificationBuilder__ongoing_signal_voice_call">Radar 음성 통화 진행 중</string>
     <!-- Displayed in a notification when a Signal video call is in progress -->
-    <string name="CallNotificationBuilder__ongoing_signal_video_call">Signal 영상 통화 진행 중</string>
+    <string name="CallNotificationBuilder__ongoing_signal_video_call">Radar 영상 통화 진행 중</string>
     <!-- Displayed in a notification when a Signal group call is in progress -->
-    <string name="CallNotificationBuilder__ongoing_signal_group_call">Signal 그룹 통화 진행 중</string>
+    <string name="CallNotificationBuilder__ongoing_signal_group_call">Radar 그룹 통화 진행 중</string>
 
     <string name="CallNotificationBuilder_connecting">연결 중…</string>
     <string name="enter_backup_passphrase_dialog__backup_passphrase">백업 암호</string>
@@ -4186,9 +4186,9 @@
     <string name="BackupDialog_verify">인증</string>
     <string name="BackupDialog_you_successfully_entered_your_backup_passphrase">백업 암호를 성공적으로 입력했습니다</string>
     <string name="BackupDialog_passphrase_was_not_correct">암호 문구가 올바르지 않습니다</string>
-    <string name="LocalBackupJob_creating_signal_backup">Signal 백업 생성 중…</string>
+    <string name="LocalBackupJob_creating_signal_backup">Radar 백업 생성 중…</string>
     <!-- Title for progress notification shown in a system notification while verifying a recent backup. -->
-    <string name="LocalBackupJob_verifying_signal_backup">Signal 백업 확인 중…</string>
+    <string name="LocalBackupJob_verifying_signal_backup">Radar 백업 확인 중…</string>
     <string name="LocalBackupJobApi29_backup_failed">백업 실패</string>
     <string name="LocalBackupJobApi29_your_backup_directory_has_been_deleted_or_moved">백업 디렉터리가 삭제되었거나 이동했습니다.</string>
     <string name="LocalBackupJobApi29_your_backup_file_is_too_large">백업 파일의 용량이 너무 커서 이 저장 공간에 저장할 수 없습니다.</string>
@@ -4203,7 +4203,7 @@
     <string name="RegistrationActivity_call_me_instead_available_in">전화로 받기(%1$02d:%2$02d)</string>
     <!--    Countdown to when the user can request a new SMS code during registration.-->
     <string name="RegistrationActivity_resend_sms_available_in">코드 다시 보내기(%1$02d:%2$02d)</string>
-    <string name="RegistrationActivity_code_support_subject">Signal 등록 - Android용 인증 코드</string>
+    <string name="RegistrationActivity_code_support_subject">Radar 등록 - Android용 인증 코드</string>
     <string name="RegistrationActivity_incorrect_code">올바르지 않은 코드</string>
     <string name="BackupUtil_never">없음</string>
     <!-- Subtext below last backup time when we do not know when the last backup was -->
@@ -4219,11 +4219,11 @@
     <string name="preferences_chats__backups">백업</string>
 
     <!-- Title text shown when Signal is locked and needs to be unlocked -->
-    <string name="prompt_passphrase_activity__unlock_signal">Signal 잠금 해제</string>
+    <string name="prompt_passphrase_activity__unlock_signal">Radar 잠금 해제</string>
     <!-- Description text explaining how to unlock Signal -->
-    <string name="prompt_passphrase_activity__use_your_android_device">Signal을 잠금 해제하려면 Android 기기 잠금 설정을 사용하세요.</string>
+    <string name="prompt_passphrase_activity__use_your_android_device">Radar를 잠금 해제하려면 Android 기기 잠금 설정을 사용하세요.</string>
     <!-- Text shown in a dialog that further explains how to unlock Signal by using the same unlocking methods that are used to unlock their own device -->
-    <string name="prompt_passphrase_activity__screen_lock_is_on">화면 잠금이 켜져 있으며 Signal이 기기 잠금 설정으로 안전하게 보호되고 있습니다. 얼굴 잠금 해제, 지문 잠금 해제, PIN, 비밀번호, 패턴 등 평소 휴대폰을 잠금 해제하는 것과 같은 방식으로 Signal을 잠금 해제하세요.</string>
+    <string name="prompt_passphrase_activity__screen_lock_is_on">화면 잠금이 켜져 있으며 Radar가 기기 잠금 설정으로 안전하게 보호되고 있습니다. 얼굴 잠금 해제, 지문 잠금 해제, PIN, 비밀번호, 패턴 등 평소 휴대폰을 잠금 해제하는 것과 같은 방식으로 Radar를 잠금 해제하세요.</string>
     <!-- Button in a dialog that will contact Signal support if pressed -->
     <string name="prompt_passphrase_activity__contact_support">지원팀에 문의</string>
     <!-- Button text to try again after unlocking has previously failed -->
@@ -4242,21 +4242,21 @@
     <!-- Title of an informational card shown on the account settings screen of a linked device -->
     <string name="LinkedDeviceAccountSettingsFragment__this_is_a_linked_device">이 기기는 연동 기기입니다</string>
     <!-- Body of an informational card explaining that account settings must be managed from the primary device -->
-    <string name="LinkedDeviceAccountSettingsFragment__to_manage_your_account_settings">계정 설정을 관리하려면 기본 사용 기기에서 Signal을 열어 주세요.</string>
+    <string name="LinkedDeviceAccountSettingsFragment__to_manage_your_account_settings">계정 설정을 관리하려면 기본 사용 기기에서 Radar를 열어 주세요.</string>
     <!-- Title of a settings row that deletes all Signal data from this linked device -->
     <string name="LinkedDeviceAccountSettingsFragment__delete_app_data">앱 데이터 삭제</string>
     <!-- Subtitle of the delete app data row explaining what it does -->
-    <string name="LinkedDeviceAccountSettingsFragment__this_will_remove_all_data">기기에 저장된 Signal 앱의 모든 데이터가 삭제됩니다.</string>
+    <string name="LinkedDeviceAccountSettingsFragment__this_will_remove_all_data">기기에 저장된 Radar 앱의 모든 데이터가 삭제됩니다.</string>
     <!-- Title of the confirmation dialog shown when deleting app data from a linked device -->
     <string name="LinkedDeviceAccountSettingsFragment__delete_app_data_question">앱 데이터를 삭제할까요?</string>
     <!-- Message of the confirmation dialog explaining that only this device\'s data is deleted, not the account -->
-    <string name="LinkedDeviceAccountSettingsFragment__this_will_delete_all_data_and_messages">이 기기에 저장된 Signal 앱의 모든 데이터와 메시지가 삭제됩니다. 기본 사용 기기 또는 다른 연동 기기에 저장된 Signal 계정과 데이터는 삭제되지 않습니다. 이 절차가 완료되면 자동으로 앱이 종료됩니다.</string>
+    <string name="LinkedDeviceAccountSettingsFragment__this_will_delete_all_data_and_messages">이 기기에 저장된 Radar 앱의 모든 데이터와 메시지가 삭제됩니다. 기본 사용 기기 또는 다른 연동 기기에 저장된 Radar 계정과 데이터는 삭제되지 않습니다. 이 절차가 완료되면 자동으로 앱이 종료됩니다.</string>
 
     <!-- LinkedDeviceAccountLearnMoreBottomSheet -->
     <!-- Emphasized lead-in phrase shown in bold at the start of the learn more sheet body. Must appear verbatim within LinkedDeviceAccountLearnMoreBottomSheet__linked_devices_let_you_access. -->
     <string name="LinkedDeviceAccountLearnMoreBottomSheet__linked_devices">연동 기기</string>
     <!-- Body text of the linked devices learn more sheet. The leading \"Linked Devices\" is shown in bold. -->
-    <string name="LinkedDeviceAccountLearnMoreBottomSheet__linked_devices_let_you_access">연동 기기 기능을 사용하면 다른 추가 기기에서도 Signal 계정과 메시지를 안전하게 이용할 수 있습니다.</string>
+    <string name="LinkedDeviceAccountLearnMoreBottomSheet__linked_devices_let_you_access">연동 기기 기능을 사용하면 다른 추가 기기에서도 Radar 계정과 메시지를 안전하게 이용할 수 있습니다.</string>
     <!-- Bullet point describing what devices can be linked -->
     <string name="LinkedDeviceAccountLearnMoreBottomSheet__you_can_link_a_desktop">데스크톱, 태블릿 또는 추가 휴대폰을 연동할 수 있습니다.</string>
     <!-- Bullet point describing that the primary device manages linked devices -->
@@ -4266,7 +4266,7 @@
 
     <!-- TransferOrRestoreFragment -->
     <string name="TransferOrRestoreFragment__transfer_or_restore_account">계정 이전 또는 복원</string>
-    <string name="TransferOrRestoreFragment__if_you_have_previously_registered_a_signal_account">기존에 등록한 Signal 계정이 있는 경우, 해당 계정과 메시지를 이전하거나 복원할 수 있습니다.</string>
+    <string name="TransferOrRestoreFragment__if_you_have_previously_registered_a_signal_account">기존에 등록한 Radar 계정이 있는 경우, 해당 계정과 메시지를 이전하거나 복원할 수 있습니다.</string>
     <string name="TransferOrRestoreFragment__transfer_from_android_device">Android 기기에서 이전</string>
     <string name="TransferOrRestoreFragment__transfer_your_account_and_messages_from_your_old_android_device">기존 Android 기기에서 계정과 메시지를 옮겨옵니다. 단, 기존 기기에 접근이 필요합니다.</string>
     <string name="TransferOrRestoreFragment__restore_your_messages_from_a_local_backup">로컬 백업에서 메시지를 복원합니다. 지금 복원하지 않으면 나중에는 복원할 수 없습니다.</string>
@@ -4278,10 +4278,10 @@
 
     <!-- OldDeviceTransferSetupFragment -->
     <string name="OldDeviceTransferSetup__searching_for_new_android_device">새 Android 기기 검색 중…</string>
-    <string name="OldDeviceTransferSetup__signal_needs_the_location_permission_to_discover_and_connect_with_your_new_device">Signal이 새 Android 기기를 검색하고 연결하려면 위치 권한이 필요합니다.</string>
-    <string name="OldDeviceTransferSetup__signal_needs_location_services_enabled_to_discover_and_connect_with_your_new_device">Signal에서 새 Android 기기를 검색하고 연결하려면 위치 서비스를 활성화해야 합니다.</string>
-    <string name="OldDeviceTransferSetup__signal_needs_wifi_on_to_discover_and_connect_with_your_new_device">Signal이 새 Android 기기를 검색하고 연결하려면 Wi-Fi가 켜져 있어야 합니다. Wi-Fi만 켜져 있으면 되며, 특정 Wi-Fi 네트워크에 연결되어 있을 필요는 없습니다.</string>
-    <string name="OldDeviceTransferSetup__sorry_it_appears_your_device_does_not_support_wifi_direct">죄송하지만, 현재 기기에서는 Wi-Fi Direct 기능을 지원하지 않습니다. Signal은 Wi-Fi Direct를 사용하여 새 Android 장치를 검색하고 연결합니다. 새 Android 기기에 계정을 가져오려면 백업을 생성하세요.</string>
+    <string name="OldDeviceTransferSetup__signal_needs_the_location_permission_to_discover_and_connect_with_your_new_device">Radar가 새 Android 기기를 검색하고 연결하려면 위치 권한이 필요합니다.</string>
+    <string name="OldDeviceTransferSetup__signal_needs_location_services_enabled_to_discover_and_connect_with_your_new_device">Radar에서 새 Android 기기를 검색하고 연결하려면 위치 서비스를 활성화해야 합니다.</string>
+    <string name="OldDeviceTransferSetup__signal_needs_wifi_on_to_discover_and_connect_with_your_new_device">Radar가 새 Android 기기를 검색하고 연결하려면 Wi-Fi가 켜져 있어야 합니다. Wi-Fi만 켜져 있으면 되며, 특정 Wi-Fi 네트워크에 연결되어 있을 필요는 없습니다.</string>
+    <string name="OldDeviceTransferSetup__sorry_it_appears_your_device_does_not_support_wifi_direct">죄송하지만, 현재 기기에서는 Wi-Fi Direct 기능을 지원하지 않습니다. Radar는 Wi-Fi Direct를 사용하여 새 Android 장치를 검색하고 연결합니다. 새 Android 기기에 계정을 가져오려면 백업을 생성하세요.</string>
     <string name="OldDeviceTransferSetup__create_a_backup">백업 생성하기</string>
     <string name="OldDeviceTransferSetup__an_unexpected_error_occurred_while_attempting_to_connect_to_your_old_device">새 Android 장치에 연결하는 동안 예기치 않은 오류가 발생했습니다.</string>
 
@@ -4321,7 +4321,7 @@
 
     <!-- DeviceTransferFragment -->
     <string name="DeviceTransfer__transferring_data">데이터 이전 중</string>
-    <string name="DeviceTransfer__keep_both_devices_near_each_other">두 기기를 서로 가까이 두고 Signal을 계속 열어 두세요. 모든 과정은 종단간 암호화로 안전하게 보호됩니다.</string>
+    <string name="DeviceTransfer__keep_both_devices_near_each_other">두 기기를 서로 가까이 두고 Radar를 계속 열어 두세요. 모든 과정은 종단간 암호화로 안전하게 보호됩니다.</string>
     <string name="DeviceTransfer__d_messages_so_far">현재 메시지 %1$d개 이전 완료</string>
     <!-- Filled in with total percentage of messages transferred -->
     <string name="DeviceTransfer__s_of_messages_so_far">현재 메시지 %1$s%% 이전 완료</string>
@@ -4335,7 +4335,7 @@
     <!-- OldDeviceTransferInstructionsFragment -->
     <string name="OldDeviceTransferInstructions__transfer_account">계정 이전</string>
     <string name="OldDeviceTransferInstructions__first_bullet">1.</string>
-    <string name="OldDeviceTransferInstructions__download_signal_on_your_new_android_device">새 Android 기기에서 Signal 다운로드하기</string>
+    <string name="OldDeviceTransferInstructions__download_signal_on_your_new_android_device">새 Android 기기에서 Radar 다운로드하기</string>
     <string name="OldDeviceTransferInstructions__second_bullet">2.</string>
     <string name="OldDeviceTransferInstructions__tap_on_transfer_or_restore_account">"계정 이전 또는 복원을 탭하세요."</string>
     <string name="OldDeviceTransferInstructions__third_bullet">3.</string>
@@ -4352,7 +4352,7 @@
 
     <!-- OldDeviceTransferComplete -->
     <string name="OldDeviceTransferComplete__go_to_your_new_device">새 기기로 이동하기</string>
-    <string name="OldDeviceTransferComplete__your_signal_data_has_Been_transferred_to_your_new_device">Signal 데이터가 새 기기로 이전되었습니다. 이전 절차를 완료하려면 새 기기에서 등록을 완료해 주세요.</string>
+    <string name="OldDeviceTransferComplete__your_signal_data_has_Been_transferred_to_your_new_device">Radar 데이터가 새 기기로 이전되었습니다. 이전 절차를 완료하려면 새 기기에서 등록을 완료해 주세요.</string>
     <string name="OldDeviceTransferComplete__close">닫기</string>
 
     <!-- NewDeviceTransferComplete -->
@@ -4368,7 +4368,7 @@
 
     <!-- OldDeviceTransferLockedDialog -->
     <string name="OldDeviceTransferLockedDialog__complete_registration_on_your_new_device">새 기기에서 등록 완료하기</string>
-    <string name="OldDeviceTransferLockedDialog__your_signal_account_has_been_transferred_to_your_new_device">Signal 계정이 새 기기로 이전되었으나, 계속 사용하려면 새 기기에서 등록을 완료해야 합니다. 이 기기에서는 Signal이 더 이상 활성화되지 않습니다.</string>
+    <string name="OldDeviceTransferLockedDialog__your_signal_account_has_been_transferred_to_your_new_device">Radar 계정이 새 기기로 이전되었으나, 계속 사용하려면 새 기기에서 등록을 완료해야 합니다. 이 기기에서는 Radar가 더 이상 활성화되지 않습니다.</string>
     <string name="OldDeviceTransferLockedDialog__done">확인</string>
     <string name="OldDeviceTransferLockedDialog__cancel_and_activate_this_device">취소하고 이 기기 활성화하기</string>
 
@@ -4410,13 +4410,13 @@
     <string name="GroupsLearnMore_what_are_legacy_groups">레거시 그룹은 무엇인가요?</string>
     <string name="GroupsLearnMore_paragraph_1">레거시 그룹은 관리자 기능이나 상세 그룹 관리 같은 새로운 그룹 기능을 이용할 수 없습니다.</string>
     <string name="GroupsLearnMore_can_i_upgrade_a_legacy_group">레거시 그룹을 업그레이드할 수 있나요?</string>
-    <string name="GroupsLearnMore_paragraph_2">레거시 그룹은 아직 새 그룹으로 업그레이드할 수 없습니다. 하지만 모든 멤버가 최신 버전의 Signal을 사용 중이라면 동일한 멤버로 새 그룹을 만들 수 있습니다.</string>
-    <string name="GroupsLearnMore_paragraph_3">Signal은 앞으로 레거시 그룹을 업그레이드할 수 있는 방법을 제공할 예정입니다.</string>
+    <string name="GroupsLearnMore_paragraph_2">레거시 그룹은 아직 새 그룹으로 업그레이드할 수 없습니다. 하지만 모든 멤버가 최신 버전의 Radar를 사용 중이라면 동일한 멤버로 새 그룹을 만들 수 있습니다.</string>
+    <string name="GroupsLearnMore_paragraph_3">Radar는 앞으로 레거시 그룹을 업그레이드할 수 있는 방법을 제공할 예정입니다.</string>
 
     <!-- GroupLinkBottomSheetDialogFragment -->
     <string name="GroupLinkBottomSheet_share_hint_requiring_approval">이 링크를 가진 사람은 누구나 이 그룹의 이름과 사진을 확인하고 그룹에 참가할 수 있습니다. 신뢰할 수 있는 사람에게만 링크를 공유하세요.</string>
     <string name="GroupLinkBottomSheet_share_hint_not_requiring_approval">이 링크를 가진 사람은 누구나 이 그룹의 이름과 사진을 확인하고 그룹에 참가할 수 있습니다. 신뢰할 수 있는 사람에게만 링크를 공유하세요.</string>
-    <string name="GroupLinkBottomSheet_share_via_signal">Signal로 공유하기</string>
+    <string name="GroupLinkBottomSheet_share_via_signal">Radar로 공유하기</string>
     <string name="GroupLinkBottomSheet_copy">복사</string>
     <string name="GroupLinkBottomSheet_qr_code">QR 코드</string>
     <string name="GroupLinkBottomSheet_share">공유</string>
@@ -4567,7 +4567,7 @@
     <string name="payment_info_card_about_mobilecoin">MobileCoin 소개</string>
     <string name="payment_info_card_mobilecoin_is_a_new_privacy_focused_digital_currency">MobileCoin은 개인정보 보호에 특화된 새로운 디지털 통화입니다.</string>
     <string name="payment_info_card_adding_funds">자금 추가</string>
-    <string name="payment_info_card_you_can_add_funds_for_use_in">내 지갑 주소로 MobileCoin을 보내 Signal에서 사용할 금액을 충전할 수 있습니다.</string>
+    <string name="payment_info_card_you_can_add_funds_for_use_in">내 지갑 주소로 MobileCoin을 보내 Radar에서 사용할 금액을 충전할 수 있습니다.</string>
     <string name="payment_info_card_cashing_out">현금화</string>
     <string name="payment_info_card_you_can_cash_out_mobilecoin">MobileCoin을 지원하는 거래소에서 언제든 현금화할 수 있습니다. 해당 거래소에서 본인 계좌로 출금 이체만 진행해 주세요.</string>
     <string name="payment_info_card_hide_this_card">이 카드를 숨길까요?</string>
@@ -4588,12 +4588,12 @@
     <!-- DeactivateWalletFragment -->
     <string name="DeactivateWalletFragment__deactivate_wallet">지갑 비활성화</string>
     <string name="DeactivateWalletFragment__your_balance">잔액</string>
-    <string name="DeactivateWalletFragment__its_recommended_that_you">결제를 비활성화하기 전에 다른 지갑 주소로 자금을 이전하는 것이 좋습니다. 지금 이전하지 않더라도, 나중에 결제 기능을 다시 활성화하면 Signal에 연동된 지갑 내 잔액을 그대로 이용하실 수 있습니다.</string>
+    <string name="DeactivateWalletFragment__its_recommended_that_you">결제를 비활성화하기 전에 다른 지갑 주소로 자금을 이전하는 것이 좋습니다. 지금 이전하지 않더라도, 나중에 결제 기능을 다시 활성화하면 Radar에 연동된 지갑 내 잔액을 그대로 이용하실 수 있습니다.</string>
     <string name="DeactivateWalletFragment__transfer_remaining_balance">잔액 이전하기</string>
     <string name="DeactivateWalletFragment__deactivate_without_transferring">이전하지 않고 비활성화</string>
     <string name="DeactivateWalletFragment__deactivate">비활성화</string>
     <string name="DeactivateWalletFragment__deactivate_without_transferring_question">이전하지 않고 비활성화할까요?</string>
-    <string name="DeactivateWalletFragment__your_balance_will_remain">결제를 다시 활성화하기로 선택할 경우 잔액이 Signal에 연동된 지갑에 남아 있게 됩니다.</string>
+    <string name="DeactivateWalletFragment__your_balance_will_remain">결제를 다시 활성화하기로 선택할 경우 잔액이 Radar에 연동된 지갑에 남아 있게 됩니다.</string>
     <string name="DeactivateWalletFragment__error_deactivating_wallet">지갑을 비활성화하는 동안 오류가 발생했습니다.</string>
   <!-- Removed by excludeNonTranslatables <string name="DeactivateWalletFragment__learn_more__we_recommend_transferring_your_funds" translatable="false">https://support.signal.org/hc/articles/360057625692#payments_deactivate</string> -->
 
@@ -4604,12 +4604,12 @@
     <string name="PaymentsRecoveryStartFragment__save_recovery_phrase">복원 문구 저장</string>
     <string name="PaymentsRecoveryStartFragment__enter_recovery_phrase">복원 문구 입력</string>
     <plurals name="PaymentsRecoveryStartFragment__your_balance_will_automatically_restore">
-        <item quantity="other">Signal을 재설치할 때 PIN 번호를 입력하면 잔액이 자동으로 복구됩니다. 또한 %1$d개 단어로 구성된 복원 문구를 사용하여 복구할 수도 있습니다. 복원 문구는 종이에 적어 안전한 곳에 보관하세요.</item>
+        <item quantity="other">Radar를 재설치할 때 PIN 번호를 입력하면 잔액이 자동으로 복구됩니다. 또한 %1$d개 단어로 구성된 복원 문구를 사용하여 복구할 수도 있습니다. 복원 문구는 종이에 적어 안전한 곳에 보관하세요.</item>
     </plurals>
     <!-- Description in save recovery phrase screen which shows up when user has non zero balance -->
-    <string name="PaymentsRecoveryStartFragment__got_balance">잔액이 있어요! 잔액을 복원할 때 사용할 복원 문구(24단어)를 지금 저장해 두세요.</string>
+    <string name="PaymentsRecoveryStartFragment__got_balance">잔액이 있습니다! 12개 단어 키인 복구 문구를 저장하세요. 해당 문구를 사용하여 잔액을 복구할 수 있습니다.</string>
     <!-- Description in save recovery phrase screen which shows up when user navigates from info card -->
-    <string name="PaymentsRecoveryStartFragment__time_to_save">잔액을 복원할 때 사용할 복원 문구(24단어)를 지금 저장해 두세요.</string>
+    <string name="PaymentsRecoveryStartFragment__time_to_save">12개 단어 키인 복구 문구를 저장하세요. 해당 문구를 사용하여 잔액을 복구할 수 있습니다.</string>
     <string name="PaymentsRecoveryStartFragment__your_recovery_phrase_is_a">복원 문구는 %1$d개 단어로 구성되어 있으며, 회원마다 다르게 제공됩니다. 이 문구를 사용하여 잔액을 복원하세요.</string>
     <string name="PaymentsRecoveryStartFragment__start">시작</string>
     <string name="PaymentsRecoveryStartFragment__enter_manually">수동으로 입력</string>
@@ -4736,7 +4736,7 @@
     <string name="ChangeNumberConfirmFragment__edit_number">전화번호 수정</string>
 
     <!-- ChangeNumberRegistrationLockFragment -->
-    <string name="ChangeNumberRegistrationLockFragment__signal_change_number_need_help_with_pin_for_android_v2_pin">Signal 번호 변경 - Android용 PIN에 대한 도움이 필요합니다(v2 PIN)</string>
+    <string name="ChangeNumberRegistrationLockFragment__signal_change_number_need_help_with_pin_for_android_v2_pin">Radar 번호 변경 - Android용 PIN에 대한 도움이 필요합니다(v2 PIN)</string>
 
     <!-- ChangeNumberPinDiffersFragment -->
     <string name="ChangeNumberPinDiffersFragment__pins_do_not_match">PIN이 일치하지 않음</string>
@@ -5080,12 +5080,12 @@
     <!-- Snackbar message after blocking a contact -->
     <string name="NewConversationActivity__s_has_been_blocked">%1$s 님을 차단했습니다</string>
     <!-- Error message shown when looking up a person by phone number and that phone number is not associated with a signal account -->
-    <string name="RecipientLookup_error__s_is_not_a_signal_user">%1$s번은 Signal 사용자가 아닙니다.</string>
+    <string name="RecipientLookup_error__s_is_not_a_signal_user">%1$s번은 Radar 사용자가 아닙니다.</string>
     <!-- Accessibility label for opening the screen specific dropdown menu. -->
     <string name="NewConversationActivity__accessibility_open_top_bar_menu">메뉴 열기</string>
     <!-- Error message shown in a dialog when trying to create a new group with non-signal users (e.g., unregistered or phone number only contacts) -->
     <plurals name="RecipientLookup_error__not_signal_users">
-        <item quantity="other">%1$s 님은 Signal 사용자가 아닙니다.</item>
+        <item quantity="other">%1$s 님은 Radar 사용자가 아닙니다.</item>
     </plurals>
 
     <!-- Hint text that shows in the recipient search bar when no text is entered yet. -->
@@ -5294,9 +5294,9 @@
     <string name="MySupportPreference__checking_subscription">구독을 확인하는 중…</string>
 
     <!-- Title of dialog telling user they need to update signal as it expired -->
-    <string name="UpdateSignalExpiredDialog__title">Signal 업데이트</string>
+    <string name="UpdateSignalExpiredDialog__title">Radar 업데이트</string>
     <!-- Message of dialog telling user they need to update signal as it expired -->
-    <string name="UpdateSignalExpiredDialog__message">이 Signal 버전은 만료되었습니다. Signal을 계속 사용하려면 지금 업데이트하세요.</string>
+    <string name="UpdateSignalExpiredDialog__message">이 Radar 버전은 만료되었습니다. Radar를 계속 사용하려면 지금 업데이트하세요.</string>
     <!-- Button text of expiration dialog, will take user to update the app -->
     <string name="UpdateSignalExpiredDialog__update_action">업데이트</string>
     <!-- Button text of expiration dialog to cancel the dialog.  -->
@@ -5305,7 +5305,7 @@
     <!-- Title of dialog telling user they need to re-register signal -->
     <string name="ReregisterSignalDialog__title">등록되지 않은 기기입니다</string>
     <!-- Message of dialog telling user they need to re-register signal as it is no longer registered -->
-    <string name="ReregisterSignalDialog__message">이 기기의 등록이 해제됐습니다. 이 기기에서 Signal을 계속 사용하려면 다시 등록하세요.</string>
+    <string name="ReregisterSignalDialog__message">이 기기의 등록이 해제됐습니다. 이 기기에서 Radar를 계속 사용하려면 다시 등록하세요.</string>
     <!-- Button text of re-registration dialog to re-register the device.  -->
     <string name="ReregisterSignalDialog__reregister_action">재등록</string>
     <!-- Button text of re-registration dialog to cancel the dialog.  -->
@@ -5319,7 +5319,7 @@
     <string name="ExpiredBadgeBottomSheetDialogFragment__your_boost_badge_has_expired_and">부스트 배지가 만료되어 더 이상 프로필에 표시되지 않습니다.</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_reactivate">일회성 후원을 통해 부스트 배지를 30일 더 활성화할 수 있습니다.</string>
     <!-- Displayed when we do not think the user is a subscriber when their boost expires -->
-    <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_keep">Signal은 계속 이용하실 수 있지만, 매월 소액의 후원으로 함께해 주시면 Signal의 지속적인 운영에 큰 힘이 될 수 있어요.</string>
+    <string name="ExpiredBadgeBottomSheetDialogFragment__you_can_keep">Radar는 계속 이용하실 수 있지만, 매월 소액의 후원으로 함께해 주시면 Radar의 지속적인 운영에 큰 힘이 될 수 있어요.</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__become_a_sustainer">후원자 되기</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__add_a_boost">부스트 추가</string>
     <string name="ExpiredBadgeBottomSheetDialogFragment__not_now">나중에</string>
@@ -5583,7 +5583,7 @@
 
 
     <!-- Text description in Signal Release channel details explaining that it is the only chat from Signal -->
-    <string name="ReleaseNotes__this_is_official_chat">Signal이 운영하는 유일한 공식 채널입니다.</string>
+    <string name="ReleaseNotes__this_is_official_chat">Radar가 운영하는 유일한 공식 채널입니다.</string>
     <!-- Text description in Signal Release channel details explaining what the channel is for -->
     <string name="ReleaseNotes__keep_up_to_date">최신 소식과 릴리스 노트를 확인하세요</string>
 
@@ -5804,7 +5804,7 @@
     <string name="MyStorySettingsFragment__who_can_view_this_story">이 스토리를 볼 수 있는 사람</string>
     <!-- Clickable option for selecting people to hide your story from -->
     <!-- Privacy setting title for sending stories to all your signal connections -->
-    <string name="MyStorySettingsFragment__all_signal_connections">모든 Signal 친구</string>
+    <string name="MyStorySettingsFragment__all_signal_connections">모든 Radar 친구</string>
     <!-- Privacy setting description for sending stories to all your signal connections -->
     <!-- Privacy setting title for sending stories to all except the specified connections -->
     <string name="MyStorySettingsFragment__all_except">일부를 제외한 모든 사용자</string>
@@ -5831,9 +5831,9 @@
     <!-- Summary for switchable option allowing replies and reactions on your story -->
     <string name="MyStorySettingsFragment__let_people_who_can_view_your_story_react_and_reply">내 스토리를 볼 수 있는 사용자의 반응 및 답장 허용</string>
     <!-- Signal connections bolded text in the Signal Connections sheet -->
-    <string name="SignalConnectionsBottomSheet___signal_connections">Signal 친구</string>
+    <string name="SignalConnectionsBottomSheet___signal_connections">Radar 친구</string>
     <!-- Displayed at the top of the signal connections sheet. Please remember to insert strong tag as required. -->
-    <string name="SignalConnectionsBottomSheet__signal_connections_are_people">Signal 친구는 다음과 같은 방법을 통해 신뢰하는 사용자로 지정된 사람들입니다.</string>
+    <string name="SignalConnectionsBottomSheet__signal_connections_are_people">Radar 친구는 다음과 같은 방법을 통해 신뢰하는 사용자로 지정된 사람들입니다.</string>
     <!-- Signal connections sheet bullet point 1 -->
     <string name="SignalConnectionsBottomSheet__starting_a_conversation">대화 시작</string>
     <!-- Signal connections sheet bullet point 2 -->
@@ -5841,7 +5841,7 @@
     <!-- Signal connections sheet bullet point 3 -->
     <string name="SignalConnectionsBottomSheet__having_them_in_your_system_contacts">내 휴대폰 연락처에 저장</string>
     <!-- Note at the bottom of the Signal connections sheet -->
-    <string name="SignalConnectionsBottomSheet__your_connections_can_see_your_name">"Signal 친구는 나의 이름과 사진을 볼 수 있고 스토리를 따로 숨기지 않는 한 \'내 스토리\'의 게시물을 볼 수 있습니다."</string>
+    <string name="SignalConnectionsBottomSheet__your_connections_can_see_your_name">"Radar 친구는 나의 이름과 사진을 볼 수 있고 스토리를 따로 숨기지 않는 한 \'내 스토리\'의 게시물을 볼 수 있습니다."</string>
     <!-- Clickable option to add a viewer to a custom story -->
     <string name="PrivateStorySettingsFragment__add_viewer">볼 수 있는 사람 추가</string>
     <!-- Clickable option to delete a custom story -->
@@ -6032,7 +6032,7 @@
     <!-- Expired gift sheet top description text -->
     <string name="ExpiredGiftSheetConfiguration__your_badge_has_expired_and_is">배지가 만료되어 더 이상 프로필에 표시되지 않습니다.</string>
     <!-- Expired gift sheet bottom description text -->
-    <string name="ExpiredGiftSheetConfiguration__to_continue">매월 소액의 후원으로 함께해 주시면 Signal의 지속적인 운영에 큰 힘이 될 수 있어요.</string>
+    <string name="ExpiredGiftSheetConfiguration__to_continue">매월 소액의 후원으로 함께해 주시면 Radar의 지속적인 운영에 큰 힘이 될 수 있어요.</string>
     <!-- Expired gift sheet make a monthly donation button -->
     <string name="ExpiredGiftSheetConfiguration__make_a_monthly_donation">월 정기후원하기</string>
     <!-- Expired gift sheet not now button -->
@@ -6111,7 +6111,7 @@
     <!-- Title of safety number changes bottom sheet when showing individual records -->
     <string name="SafetyNumberBottomSheetFragment__safety_number_changes">안전 번호 변경 기록</string>
     <!-- Message of safety number changes bottom sheet when showing individual records -->
-    <string name="SafetyNumberBottomSheetFragment__the_following_people">다음 사용자는 Signal을 재설치했거나 기기를 변경했을 수 있습니다. 새 안전 번호를 확인하려면 해당 사용자를 탭하세요. (선택 사항)</string>
+    <string name="SafetyNumberBottomSheetFragment__the_following_people">다음 사용자는 Radar를 재설치했거나 기기를 변경했을 수 있습니다. 새 안전 번호를 확인하려면 해당 사용자를 탭하세요. (선택 사항)</string>
     <!-- Title of safety number changes bottom sheet when not showing individual records -->
     <string name="SafetyNumberBottomSheetFragment__safety_number_checkup">안전 번호 확인</string>
     <!-- Title of safety number changes bottom sheet when not showing individual records and user has seen review screen -->
@@ -6120,7 +6120,7 @@
     <string name="SafetyNumberBottomSheetFragment__all_connections_have_been_reviewed">모든 친구를 검토했습니다. 전송을 탭하여 계속하세요.</string>
     <!-- Message of safety number changes bottom sheet when not showing individual records -->
     <plurals name="SafetyNumberBottomSheetFragment__you_have_d_connections_plural">
-        <item quantity="other">%1$d명의 Signal 친구가 앱을 재설치했거나 기기를 변경했을 수 있습니다. 안전 번호를 다시 확인하거나 이대로 메시지를 전송할 수 있습니다.</item>
+        <item quantity="other">%1$d명의 Radar 친구가 앱을 재설치했거나 기기를 변경했을 수 있습니다. 안전 번호를 다시 확인하거나 이대로 메시지를 전송할 수 있습니다.</item>
     </plurals>
     <!-- Menu action to launch safety number verification screen -->
     <string name="SafetyNumberBottomSheetFragment__verify_safety_number">안전 번호 인증</string>
@@ -6138,7 +6138,7 @@
     <string name="SafetyNumberReviewConnectionsFragment__safety_number_changes">안전 번호 변경 기록</string>
     <!-- Message of safety number review fragment -->
     <plurals name="SafetyNumberReviewConnectionsFragment__d_recipients_may_have">
-        <item quantity="other">받는 사람 %1$d명이 Signal을 다시 설치했거나 기기를 변경했을 수 있습니다. 새 안전 번호를 확인하려면 해당 사용자를 탭하세요. (선택 사항)</item>
+        <item quantity="other">받는 사람 %1$d명이 Radar를 다시 설치했거나 기기를 변경했을 수 있습니다. 새 안전 번호를 확인하려면 해당 사용자를 탭하세요. (선택 사항)</item>
     </plurals>
     <!-- Section header for 1:1 contacts in review fragment -->
     <string name="SafetyNumberBucketRowItem__contacts">연락처</string>
@@ -6152,7 +6152,7 @@
     <!-- Subtitle of initial My Story settings configuration shown when sending to My Story for the first time -->
     <string name="ChooseInitialMyStoryMembershipFragment__choose_who_can_see_posts_to_my_story_you_can_always_make_changes_in_settings">내 스토리 게시물을 볼 수 있는 사람을 선택하세요. 설정에서 언제든지 변경할 수 있습니다.</string>
     <!-- All connections option for initial My Story settings configuration shown when sending to My Story for the first time -->
-    <string name="ChooseInitialMyStoryMembershipFragment__all_signal_connections">모든 Signal 친구</string>
+    <string name="ChooseInitialMyStoryMembershipFragment__all_signal_connections">모든 Radar 친구</string>
     <!-- All connections except option for initial My Story settings configuration shown when sending to My Story for the first time -->
     <string name="ChooseInitialMyStoryMembershipFragment__all_except">일부를 제외한 모든 사용자</string>
     <!-- Only with selected connections option for initial My Story settings configuration shown when sending to My Story for the first time -->
@@ -6280,8 +6280,8 @@
     <string name="GatewaySelectorBottomSheet__ideal_wero">iDEAL | Wero</string>
 
     <!-- Dialog title for launching external intent -->
-    <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">후원 확인을 위해 Signal에서 나가시겠어요?</string>
-    <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">확인이 완료되면 Signal로 돌아와 후원을 마무리해 주세요.</string>
+    <string name="ExternalNavigationHelper__leave_signal_to_confirm_payment">후원 확인을 위해 Radar에서 나가시겠어요?</string>
+    <string name="ExternalNavigationHelper__once_this_payment_is_confirmed">확인이 완료되면 Radar로 돌아와 후원을 마무리해 주세요.</string>
     <!-- Dialog message shown when leaving Signal to complete a donation in an external app. Placeholder is the resolved app name (e.g. a banking app). -->
     <string name="ExternalNavigationHelper__once_payment_confirmed_in_app">%1$s 앱으로 이동합니다. 확인이 완료되면 Signal로 돌아와 후원을 마무리해 주세요.</string>
 
@@ -6333,7 +6333,7 @@
     <!-- Subtitle of the screen, displayed below the toolbar. Placeholder is for \'learn more\' -->
     <string name="IdealTransferDetailsFragment__enter_your_bank">이름과 이메일을 입력하세요. Stripe에서 후원 관련 업데이트를 이메일로 보내드립니다. %1$s</string>
     <!-- Subtitle of the screen, displayed below the toolbar. Placeholder is for \'learn more\' -->
-    <string name="IdealTransferDetailsFragment__enter_your_bank_details_one_time">은행 세부 정보를 입력하세요. Signal은 개인정보를 수집하거나 저장하지 않습니다. %1$s</string>
+    <string name="IdealTransferDetailsFragment__enter_your_bank_details_one_time">은행 세부 정보를 입력하세요. Radar는 개인정보를 수집하거나 저장하지 않습니다. %1$s</string>
     <!-- Subtitle learn-more button displayed inline with the subtitle text -->
     <string name="IdealTransferDetailsFragment__learn_more">자세히 알아보기</string>
     <!-- Hint label for text entry box for name on bank account -->
@@ -6398,7 +6398,7 @@
     <!-- The title of a bottom sheet dialog that tells the user we can\'t process their contacts. -->
     <string name="CdsPermanentErrorBottomSheet_title">연락처를 처리할 수 없습니다.</string>
     <!-- The first part of the body text in a bottom sheet dialog that tells the user we can\'t process their contacts. -->
-    <string name="CdsPermanentErrorBottomSheet_body">기기에 저장된 연락처 수가 Signal에서 처리할 수 있는 한도를 초과했습니다. Signal에서 연락처를 찾으려면 불필요한 연락처를 삭제하거나, 많은 연락처가 동기화된 계정을 기기에서 연결 해제해 보세요.</string>
+    <string name="CdsPermanentErrorBottomSheet_body">기기에 저장된 연락처 수가 Radar에서 처리할 수 있는 한도를 초과했습니다. Radar에서 연락처를 찾으려면 불필요한 연락처를 삭제하거나, 많은 연락처가 동기화된 계정을 기기에서 연결 해제해 보세요.</string>
     <!-- The first part of the body text in a bottom sheet dialog that tells the user we can\'t process their contacts. -->
     <string name="CdsPermanentErrorBottomSheet_learn_more">자세히 알아보기</string>
     <!-- A button label in a bottom sheet that will navigate the user to their contacts settings. -->
@@ -6612,9 +6612,9 @@
     <!-- Call link creation item title on calls tab -->
     <string name="CreateCallLink__create_a_call_link">통화 링크 만들기</string>
     <!-- Call link creation item description on calls tab -->
-    <string name="CreateCallLink__share_a_link_for">Signal 통화 링크 공유</string>
+    <string name="CreateCallLink__share_a_link_for">Radar 통화 링크 공유</string>
     <!-- Text inserted when sharing a call link within Signal. Placeholder is a call link url. -->
-    <string name="CreateCallLink__use_this_link_to_join_a_signal_call">이 링크를 눌러 Signal 통화에 참여하세요. %1$s</string>
+    <string name="CreateCallLink__use_this_link_to_join_a_signal_call">이 링크를 눌러 Radar 통화에 참여하세요. %1$s</string>
 
     <!-- CallLinkInfoSheet -->
     <!-- Sheet title -->
@@ -6638,7 +6638,7 @@
     <!-- Fragment title -->
     <string name="CreateCallLinkBottomSheetDialogFragment__create_call_link">통화 링크 만들기</string>
     <!-- Displayed as a default name for the signal call -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Signal 통화</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__signal_call">Radar 통화</string>
     <!-- Displayed on a small button to allow user to instantly join call -->
     <string name="CreateCallLinkBottomSheetDialogFragment__join">참가</string>
     <!-- Option to open a full screen dialog to add a call name -->
@@ -6648,7 +6648,7 @@
     <!-- Toggle to require approval for all members before joining -->
     <string name="CreateCallLinkBottomSheetDialogFragment__require_admin_approval">관리자 승인 필요</string>
     <!-- Row label to share the link via Signal -->
-    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">Signal을 통해 링크 공유</string>
+    <string name="CreateCallLinkBottomSheetDialogFragment__share_link_via_signal">Radar를 통해 링크 공유</string>
     <!-- Row label to copy the link to the clipboard -->
     <string name="CreateCallLinkBottomSheetDialogFragment__copy_link">링크 복사</string>
     <!-- Row label to share the link with the external share sheet -->
@@ -6706,7 +6706,7 @@
     <!-- Body of a dialog that is displayed when the username we looked up could not be found and we also could not parse the username. -->
     <string name="UsernameLinkSettings_qr_result_not_found_no_username">이 사용자를 찾을 수 없습니다.</string>
     <!-- Shown on the generated username qr code image to explain how to use it. -->
-    <string name="UsernameLinkSettings_scan_this_qr_code">휴대폰으로 이 QR 코드를 스캔하면 Signal에서 저와 대화를 시작하실 수 있어요.</string>
+    <string name="UsernameLinkSettings_scan_this_qr_code">휴대폰으로 이 QR 코드를 스캔하면 Radar에서 저와 대화를 시작하실 수 있어요.</string>
 
 
     <!-- PendingParticipantsView -->
@@ -6734,9 +6734,9 @@
     <string name="PendingParticipantsBottomSheet__deny_all">모두 거부</string>
 
     <!-- Title of a megaphone shown at the bottom of the chat list to prompt the user to enable message backups -->
-    <string name="TurnOnSignalBackups__title">Signal 안전 백업 켜기</string>
+    <string name="TurnOnSignalBackups__title">Radar 안전 백업 켜기</string>
     <!-- Body of a megaphone shown at the bottom of the chat list to prompt the user to enable message backups -->
-    <string name="TurnOnSignalBackups__body">새 휴대폰을 구매하거나 Signal을 다시 설치하는 경우에도 메시지를 손실할 염려가 없습니다.</string>
+    <string name="TurnOnSignalBackups__body">새 휴대폰을 구매하거나 Radar를 다시 설치하는 경우에도 메시지를 손실할 염려가 없습니다.</string>
     <!-- Button of a megaphone shown at the bottom of the chat list to prompt the user to enable message backups that will take the user to the flow to enable backups -->
     <string name="TurnOnSignalBackups__turn_on">켜기</string>
     <!-- Button of a megaphone shown at the bottom of the chat list to prompt the user to enable message backups that will simply dismiss the megaphone -->
@@ -6747,7 +6747,7 @@
     <!-- Title of Megaphone B: upsell to enable backups when user has many messages -->
     <string name="BackupMessagesUpsell__title">대화 내용을 안전하게 보관하세요</string>
     <!-- Body of Megaphone B: upsell to enable backups when user has many messages -->
-    <string name="BackupMessagesUpsell__body">Signal 안전 백업을 켜서 메시지와 미디어를 보존하세요.</string>
+    <string name="BackupMessagesUpsell__body">Radar 안전 백업을 켜서 메시지와 미디어를 보존하세요.</string>
     <!-- Primary button of Megaphone B -->
     <string name="BackupMessagesUpsell__turn_on">켜기</string>
     <!-- Secondary button of Megaphone B -->
@@ -6756,7 +6756,7 @@
     <!-- Title of Megaphone C: upsell to upgrade backups when user has lots of media -->
     <string name="BackupMediaUpsell__title">모든 미디어를 백업하세요</string>
     <!-- Body of Megaphone C: upsell to upgrade backups when user has lots of media -->
-    <string name="BackupMediaUpsell__body">유료 Signal 안전 백업 플랜은 최대 100GB까지 모든 미디어를 보존합니다.</string>
+    <string name="BackupMediaUpsell__body">유료 Radar 안전 백업 플랜은 최대 100GB까지 모든 미디어를 보존합니다.</string>
     <!-- Primary button of Megaphone C -->
     <string name="BackupMediaUpsell__upgrade">업그레이드</string>
     <!-- Secondary button of Megaphone C -->
@@ -6776,7 +6776,7 @@
     <!-- Title of the backup upsell bottom sheet promoting paid backup plans -->
     <string name="BackupUpsellBottomSheet__title">업그레이드하고 모든 미디어 백업하기</string>
     <!-- Body of the backup upsell bottom sheet -->
-    <string name="BackupUpsellBottomSheet__body">유료 Signal 안전 백업 플랜은 송수신하는 모든 미디어를 최대 100GB까지 저장합니다. 새 휴대폰을 구매하거나 Signal을 다시 설치하는 경우에도 사진이나 동영상을 손실할 염려가 없습니다.</string>
+    <string name="BackupUpsellBottomSheet__body">유료 Radar 안전 백업 플랜은 송수신하는 모든 미디어를 최대 100GB까지 저장합니다. 새 휴대폰을 구매하거나 Radar를 다시 설치하는 경우에도 사진이나 동영상을 손실할 염려가 없습니다.</string>
     <!-- Label for the paid plan price shown in the feature card, e.g. "$1.99/month" -->
     <string name="BackupUpsellBottomSheet__price_per_month">%1$s/월</string>
     <!-- Subtitle for the paid plan feature card -->
@@ -6797,27 +6797,27 @@
     <!-- Title of the backup setup complete bottom sheet -->
     <string name="BackupSetupCompleteBottomSheet__title">준비 완료! 지금 백업을 시작하세요.</string>
     <!-- Body of the backup setup complete bottom sheet -->
-    <string name="BackupSetupCompleteBottomSheet__body">완료하는 데 다소 시간이 걸릴 수 있어요. 백업하는 동안에도 Signal은 정상적으로 사용할 수 있습니다.</string>
+    <string name="BackupSetupCompleteBottomSheet__body">완료하는 데 다소 시간이 걸릴 수 있어요. 백업하는 동안에도 Radar는 정상적으로 사용할 수 있습니다.</string>
     <!-- Label for the optimize storage toggle -->
-    <string name="BackupSetupCompleteBottomSheet__optimize_storage">Signal 저장 공간 최적화</string>
+    <string name="BackupSetupCompleteBottomSheet__optimize_storage">Radar 저장 공간 최적화</string>
     <!-- Subtitle for the optimize storage toggle -->
     <string name="BackupSetupCompleteBottomSheet__optimize_subtitle">오래된 미디어 파일은 오프로드되지만, 언제든지 백업에서 다운로드할 수 있습니다.</string>
     <!-- Primary button on the setup complete bottom sheet -->
     <string name="BackupSetupCompleteBottomSheet__back_up_now">지금 백업</string>
 
     <!-- Title of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__title">휴대전화에서 Signal을 열어주세요</string>
+    <string name="InactivePrimary__title">휴대전화에서 Radar를 열어주세요</string>
     <!-- Body of a megaphone shown to prompt the user to open Signal on their primary device -->
-    <string name="InactivePrimary__body">계정을 활성화 상태로 유지하려면 내가 주로 사용하는 기기에서 Signal을 열어주세요.</string>
+    <string name="InactivePrimary__body">계정을 활성화 상태로 유지하려면 내가 주로 사용하는 기기에서 Radar를 열어주세요.</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will navigate to a support page -->
     <string name="InactivePrimary__learn_more">자세히 알아보기</string>
     <!-- Button of a megaphone shown to prompt the user to open Signal on their primary device that will snooze the megaphone -->
     <string name="InactivePrimary__got_it">확인</string>
 
     <!-- Text describing how to restore a backup displayed on the on-device backups screen -->
-    <string name="OnDeviceBackupsScreen__to_restore_a_backup">"백업을 복원하려면 Signal을 다시 설치해 주세요. 설치한 후에는 앱을 열고 \'백업 복원\'을 탭한 다음, 백업 폴더를 확인하세요."</string>
+    <string name="OnDeviceBackupsScreen__to_restore_a_backup">"백업을 복원하려면 Radar를 다시 설치해 주세요. 설치한 후에는 앱을 열고 \'백업 복원\'을 탭한 다음, 백업 폴더를 확인하세요."</string>
     <!-- Body of a dialog shown when turning on on-device backups while "Optimize Signal storage" is enabled, warning that optimized media won\'t be included -->
-    <string name="OnDeviceBackupsScreen__you_have_optimize_signal_storage_on">\"Signal 저장 공간 최적화\" 기능이 켜져 있습니다. 기기 백업에 모든 미디어를 포함하려면 이 설정을 끄세요.</string>
+    <string name="OnDeviceBackupsScreen__you_have_optimize_signal_storage_on">\"Radar 저장 공간 최적화\" 기능이 켜져 있습니다. 기기 백업에 모든 미디어를 포함하려면 이 설정을 끄세요.</string>
     <!-- Dialog action that takes the user to the "Optimize Signal storage" setting -->
     <string name="OnDeviceBackupsScreen__view_setting">설정 보기</string>
     <!-- Dialog action to proceed with turning on on-device backups without turning off "Optimize Signal storage" -->
@@ -6906,7 +6906,7 @@
     <!-- Dialog title for invalid phone number -->
     <string name="FindByActivity__invalid_phone_number">전화번호가 올바르지 않습니다</string>
     <!-- Dialog title when phone number is not a registered signal user -->
-    <string name="FindByActivity__invite_to_signal">Signal로 초대하기</string>
+    <string name="FindByActivity__invite_to_signal">Radar로 초대하기</string>
     <!-- Dialog title when username is not found -->
     <string name="FindByActivity__username_not_found">사용자 이름을 찾을 수 없음</string>
     <!-- Dialog body for invalid username. Placeholder is the entered username. -->
@@ -6914,9 +6914,9 @@
     <!-- Dialog body for an invalid phone number. Placeholder is the entered phone number. -->
     <string name="FindByActivity__s_is_not_a_valid_phone_number">%1$s번은 유효하지 않은 전화번호입니다. 확인 후 다시 시도해 주세요.</string>
     <!-- Dialog body for not found username -->
-    <string name="FindByActivity__s_is_not_a_signal_user">\'%1$s\' 님은 Signal 사용자가 아닙니다. 사용자 이름을 확인하고 다시 시도해 주세요.</string>
+    <string name="FindByActivity__s_is_not_a_signal_user">\'%1$s\' 님은 Radar 사용자가 아닙니다. 사용자 이름을 확인하고 다시 시도해 주세요.</string>
     <!-- Dialog body for not found phone number -->
-    <string name="FindByActivity__s_is_not_a_signal_user_would">%1$s 님은 Signal 사용자가 아닙니다. 이 전화번호를 초대할까요?</string>
+    <string name="FindByActivity__s_is_not_a_signal_user_would">%1$s 님은 Radar 사용자가 아닙니다. 이 전화번호를 초대할까요?</string>
     <!-- Dialog action to invite the phone number to Signal -->
     <string name="FindByActivity__invite">초대</string>
     <!-- Button label for a button that will launch a camera to scan a username QR code -->
@@ -6928,7 +6928,7 @@
     <string name="LinkedDeviceInactiveMegaphone_title">미사용 연동 기기</string>
     <!-- Body for an alert letting someone know that one of their linked devices is inactive. The string placeholder is the name of the device, and the number placeholder is the number of days before device is unlinked. -->
     <plurals name="LinkedDeviceInactiveMegaphone_body">
-        <item quantity="other">\'%1$s\'의 연동 상태를 유지하려면 해당 기기에서 %2$d일 이내에 Signal을 열어주세요.</item>
+        <item quantity="other">\'%1$s\'의 연동 상태를 유지하려면 해당 기기에서 %2$d일 이내에 Radar를 열어주세요.</item>
     </plurals>
     <!-- Button label for an alert letting someone know that one of their linked devices is inactive. When clicked, the user will opt out of all future alerts. -->
     <string name="LinkedDeviceInactiveMegaphone_dont_remind_button_label">알림 해제</string>
@@ -6939,7 +6939,7 @@
     <!-- Title displayed at the top of the screen -->
     <string name="NicknameActivity__nickname">별칭</string>
     <!-- Subtitle displayed under title -->
-    <string name="NicknameActivity__nicknames_amp_notes">별칭과 메모는 Signal에 종단간 암호화되어 저장되며, 나에게만 표시됩니다.</string>
+    <string name="NicknameActivity__nicknames_amp_notes">별칭과 메모는 Radar에 종단간 암호화되어 저장되며, 나에게만 표시됩니다.</string>
     <!-- Field label for given name -->
     <string name="NicknameActivity__first_name">이름</string>
     <!-- Content description for first name clear button -->
@@ -6987,7 +6987,7 @@
     <!-- Sheet title when user does not have enough space to download their backup. Placeholder is formatted byte size, for example 12GB. -->
     <string name="BackupAlertBottomSheet__free_up_s_on_this_device">기기에서 %1$s의 공간을 확보하세요</string>
     <!-- Sheet body part 1 when user does not have enough space to download their backup. Placeholder is the amount of space needed. -->
-    <string name="BackupAlertBottomSheet__to_finish_downloading_your_signal_backup">Signal 백업 다운로드를 완료하려면 기기에 %1$s의 여유 저장 공간이 필요합니다.</string>
+    <string name="BackupAlertBottomSheet__to_finish_downloading_your_signal_backup">Radar 백업 다운로드를 완료하려면 기기에 %1$s의 여유 저장 공간이 필요합니다.</string>
     <!-- Sheet body part 2 when user does not have enough space to download their backup. -->
     <string name="BackupAlertBottomSheet__to_free_up_space_offload">공간을 확보하려면 사용하지 않는 앱이나 파일 용량이 큰 콘텐츠를 오프로드하거나 삭제하세요.</string>
     <!-- Sheet title when user payment failed to process -->
@@ -6999,7 +6999,7 @@
     <!-- Sheet body part 1 for when user falls out of grace period -->
     <string name="BackupAlertBottomSheet__your_subscription_couldnt_be_renewed">등록된 결제 수단으로 구독을 갱신하지 못했습니다. 미디어 백업을 계속하려면 유효한 구독이 필요합니다.</string>
     <!-- Sheet body part 2 for when user falls out of grace period -->
-    <string name="BackupAlertBottomSheet__youll_continue_to_have_access_to_the_free">무료 Signal 안전 백업 플랜은 앞으로도 계속 이용하실 수 있습니다.</string>
+    <string name="BackupAlertBottomSheet__youll_continue_to_have_access_to_the_free">무료 Radar 안전 백업 플랜은 앞으로도 계속 이용하실 수 있습니다.</string>
     <!-- Sheet title for generic backup error -->
     <string name="BackupAlertBottomSheet__couldnt_complete_backup">백업을 완료할 수 없음</string>
     <!-- Sheet body for generic backup error. Placeholder is days since last backup. -->
@@ -7041,7 +7041,7 @@
     <!-- Dialog title when a backup redemption fails -->
     <string name="BackupAlertBottomSheet__couldnt_redeem_your_backups_subscription">백업 구독을 사용하지 못했습니다</string>
     <!-- Dialog text for when a backup fails to be created and ways to fix it -->
-    <string name="BackupAlertBottomSheet__an_error_occurred">오류가 발생하여 백업을 완료하지 못했습니다. 최신 버전 Signal을 사용 중인지 확인하고 다시 시도하세요. 문제가 계속되면 지원팀에 연락해 주세요.</string>
+    <string name="BackupAlertBottomSheet__an_error_occurred">오류가 발생하여 백업을 완료하지 못했습니다. 최신 버전 Radar를 사용 중인지 확인하고 다시 시도하세요. 문제가 계속되면 지원팀에 연락해 주세요.</string>
     <!-- Dialog text for when a backup fails to be created and ways to fix it. Used for out of remote storage space error. -->
     <string name="BackupAlertBottomSheet__an_error_occurred_and">오류가 발생하여 백업을 완료하지 못했습니다. 문제가 계속되면 지원팀에 연락해 주세요.</string>
     <!-- Dialog action button that will allow you to check for any Signal version updates -->
@@ -7049,7 +7049,7 @@
     <!-- Backup redemption error sheet text line 1 -->
     <string name="BackupAlertBottomSheet__too_many_devices_have_tried">이번 달 구독을 등록하려는 기기 수가 한도를 초과했습니다. 다음과 같은 경우가 여기에 해당합니다.</string>
     <!-- Backup redemption error sheet bullet point 1 -->
-    <string name="BackupAlertBottomSheet__reregistered_your_signal_account">Signal 계정을 너무 많이 재등록한 경우</string>
+    <string name="BackupAlertBottomSheet__reregistered_your_signal_account">Radar 계정을 너무 많이 재등록한 경우</string>
     <!-- Backup redemption error sheet bullet point 2 -->
     <string name="BackupAlertBottomSheet__have_too_many_devices_using_the_same_subscription">동일한 구독을 사용하는 기기가 너무 많은 경우</string>
 
@@ -7123,7 +7123,7 @@
     <!-- Text displayed when a backup could not be completed -->
     <string name="BackupStatusRow__your_last_backup">마지막 백업을 완료하지 못했습니다. 휴대폰이 Wi-Fi에 연결되어 있는지 확인하고 \'지금 백업\'을 탭하여 다시 시도하세요.</string>
     <!-- Text displayed when a backup could not be completed and to check that they are on the latest version of Signal -->
-    <string name="BackupStatusRow__your_last_backup_latest_version">마지막 백업을 완료하지 못했습니다. 최신 버전 Signal을 사용 중인지 확인하고 다시 시도하세요.</string>
+    <string name="BackupStatusRow__your_last_backup_latest_version">마지막 백업을 완료하지 못했습니다. 최신 버전 Radar를 사용 중인지 확인하고 다시 시도하세요.</string>
     <!-- Text displayed when a backup file exceeds the storage limit during upload. -->
     <string name="BackupStatusRow__backup_file_too_large">보유한 메시지 수가 저장 용량 한도를 초과했습니다. 일부 메시지를 삭제하고 다시 시도하세요.</string>
     <!-- Text displayed when we\'re not backing up all messages. The placeholder represents the cutoff date for the messages we\'re backing up. -->
@@ -7155,33 +7155,33 @@
     <!-- Dialog title when Google Play services are missing from the device -->
     <string name="GooglePlayServicesAvailability__service_missing_title">Google Play 서비스 설치 필요</string>
     <!-- Dialog message explaining that Google Play services are required for Signal Secure backups subscription -->
-    <string name="GooglePlayServicesAvailability__service_missing_message">Signal 안전 백업을 구독하려면 휴대폰에 Google Play 서비스를 설치해야 합니다.</string>
+    <string name="GooglePlayServicesAvailability__service_missing_message">Radar 안전 백업을 구독하려면 휴대폰에 Google Play 서비스를 설치해야 합니다.</string>
     <!-- Dialog button text to install Google Play services -->
     <string name="GooglePlayServicesAvailability__install_play_services">Play 서비스 설치</string>
     <!-- Dialog title when Google Play services are currently updating -->
     <string name="GooglePlayServicesAvailability__service_updating_title">Google Play 서비스 업데이트 중</string>
     <!-- Dialog message asking user to wait while Google Play services finish updating -->
-    <string name="GooglePlayServicesAvailability__service_updating_message">Signal 안전 백업을 구독하려면 Google Play 서비스의 업데이트가 완료될 때까지 기다려 주세요.</string>
+    <string name="GooglePlayServicesAvailability__service_updating_message">Radar 안전 백업을 구독하려면 Google Play 서비스의 업데이트가 완료될 때까지 기다려 주세요.</string>
     <!-- Dialog title when Google Play services need to be updated -->
     <string name="GooglePlayServicesAvailability__service_update_required_title">Google Play 서비스 업데이트</string>
     <!-- Dialog message explaining that Google Play services need to be updated for Signal Secure backups -->
-    <string name="GooglePlayServicesAvailability__service_update_required_message">Signal 안전 백업을 구독하려면 휴대폰에서 Google Play 서비스를 업데이트하세요.</string>
+    <string name="GooglePlayServicesAvailability__service_update_required_message">Radar 안전 백업을 구독하려면 휴대폰에서 Google Play 서비스를 업데이트하세요.</string>
     <!-- Dialog button text to update Google Play services -->
     <string name="GooglePlayServicesAvailability__update">업데이트</string>
     <!-- Dialog title when Google Play services are disabled -->
     <string name="GooglePlayServicesAvailability__service_disabled_title">유료 구독 이용 시 Google Play 필요</string>
     <!-- Dialog message explaining that Google Play services must be enabled for subscriptions -->
-    <string name="GooglePlayServicesAvailability__service_disabled_message">Signal 안전 백업을 구독하려면 휴대폰에서 Google Play 서비스를 활성화하고 Google Play 스토어에 로그인하세요. </string>
+    <string name="GooglePlayServicesAvailability__service_disabled_message">Radar 안전 백업을 구독하려면 휴대폰에서 Google Play 서비스를 활성화하고 Google Play 스토어에 로그인하세요. </string>
     <!-- Dialog button text to learn more about enabling Google Play services -->
     <string name="GooglePlayServicesAvailability__learn_more">자세히 알아보기</string>
     <!-- Dialog message shown when Google Play services is invalid and subscriptions are not available -->
-    <string name="GooglePlayServicesAvailability__service_invalid_message">휴대전화에서 Google Play 서비스를 지원하지 않아 Signal 안전 백업을 구독할 수 없습니다. 자세한 내용은 해당 휴대전화 제조사에 문의해 주세요.</string>
+    <string name="GooglePlayServicesAvailability__service_invalid_message">휴대전화에서 Google Play 서비스를 지원하지 않아 Radar 안전 백업을 구독할 수 없습니다. 자세한 내용은 해당 휴대전화 제조사에 문의해 주세요.</string>
 
     <!-- UpgradeToEnableOptimizedStorageSheet -->
     <!-- Title on a bottom sheet, detailing that the user must upgrade to enable storage optimization -->
     <string name="UpgradeToEnableOptimizedStorageSheet__upgrade_to_enable_this_feature">이 기능을 활성화하려면 업그레이드하세요</string>
     <!-- Subtitle of bottom sheet detailing that the user must upgrade to enable storage optimization -->
-    <string name="UpgradeToEnableOptimizedStorageSheet__storage_optimization_can_only_be_used">저장 공간 최적화는 유료 Signal 안전한 백업에서만 사용할 수 있습니다. 이 기능을 사용하려면 백업 플랜을 업그레이드하세요.</string>
+    <string name="UpgradeToEnableOptimizedStorageSheet__storage_optimization_can_only_be_used">저장 공간 최적화는 유료 Radar 안전한 백업에서만 사용할 수 있습니다. 이 기능을 사용하려면 백업 플랜을 업그레이드하세요.</string>
     <!-- Primary action to launch upgrade flow. Placeholder is formatted price. -->
     <string name="UpgradeToEnableOptimizedStorageSheet__subscribe_for_s_month">월 %1$s의 금액으로 구독</string>
 
@@ -7190,7 +7190,7 @@
     <string name="UpgradeToStartMediaBackupSheet__this_media_is_no_longer_available">이 미디어가 더 이상 존재하지 않습니다</string>
     <!-- Subtitle of bottom sheet detailing that with their current plan, there is a limitation to how many days media is stored for. Placeholder is number of days. -->
     <plurals name="UpgradeToStartMediaBackupSheet__your_current_signal_backup_plan_includes">
-        <item quantity="other">현재 이용 중인 Signal 백업 플랜에는 최근 %1$d일 동안의 미디어만 포함됩니다. 모든 미디어를 백업하려면 지금 업그레이드하세요.</item>
+        <item quantity="other">현재 이용 중인 Radar 백업 플랜에는 최근 %1$d일 동안의 미디어만 포함됩니다. 모든 미디어를 백업하려면 지금 업그레이드하세요.</item>
     </plurals>
     <!-- Primary action to launch upgrade flow. Placeholder is formatted price. -->
     <string name="UpgradeToStartMediaBackupSheet__subscribe_for_s_month">월 %1$s의 금액으로 구독</string>
@@ -7199,7 +7199,7 @@
     <!-- Title on a bottom sheet explaining that the given media is no longer available. -->
     <string name="MediaNoLongerAvailableSheet__this_media_is_no_longer_available">이 미디어가 더 이상 존재하지 않습니다</string>
     <!-- Body on a bottom sheet explaining that the user can enable backups -->
-    <string name="MediaNoLongerAvailableSheet__to_start_backing_up_all_your_media">모든 미디어를 백업하려면 Signal 안전한 백업을 활성화하고 유료 등급을 선택하세요.</string>
+    <string name="MediaNoLongerAvailableSheet__to_start_backing_up_all_your_media">모든 미디어를 백업하려면 Radar 안전한 백업을 활성화하고 유료 등급을 선택하세요.</string>
     <!-- Primary action button on bottom sheet -->
     <string name="MediaNoLongerAvailableSheet__continue">계속</string>
     <!-- Secondary action button on bottom sheet -->
@@ -7247,9 +7247,9 @@
     <!-- Subtitle for row for canceled backup -->
     <string name="BackupsSettingsFragment__subscription_canceled">구독을 취소했습니다.</string>
     <!-- Subtitle for row for no backup ever created -->
-    <string name="BackupsSettingsFragment_automatic_backups_with_signals">Signal의 안전한 종단간 암호화 저장 공간 서비스를 이용한 자동 백업</string>
+    <string name="BackupsSettingsFragment_automatic_backups_with_signals">Radar의 안전한 종단간 암호화 저장 공간 서비스를 이용한 자동 백업</string>
     <!-- Subtitle shown on a linked device when backups are off, directing the user to set them up on their phone -->
-    <string name="BackupsSettingsFragment__automatic_backups_get_started_on_your_phone">Signal의 안전한 종단간 암호화 저장 공간 서비스를 이용한 자동 백업. 휴대폰으로 시작해 보세요.</string>
+    <string name="BackupsSettingsFragment__automatic_backups_get_started_on_your_phone">Radar의 안전한 종단간 암호화 저장 공간 서비스를 이용한 자동 백업. 휴대폰으로 시작해 보세요.</string>
     <!-- Subtitle for row for backups that are active but subscription not found -->
     <string name="BackupsSettingsFragment_subscription_not_found_on_this_device">"이 기기에서 구독을 찾을 수 없습니다."</string>
     <!-- Action button label to set up backups -->
@@ -7263,7 +7263,7 @@
     <!-- Displayed on the title bar for Signal Secure Backups -->
     <string name="RemoteBackupsSettingsFragment__secure_backups">안전 백업</string>
     <!-- Displayed on the title bar -->
-    <string name="RemoteBackupsSettingsFragment__signal_backups">Signal 안전 백업</string>
+    <string name="RemoteBackupsSettingsFragment__signal_backups">Radar 안전 백업</string>
     <!-- Displayed as a label when remote backups are off -->
     <string name="RemoteBackupsSettingsFragment__off">꺼짐</string>
     <!-- Text shown in a popup indicating that the user needs to enter their screen lock -->
@@ -7327,7 +7327,7 @@
     <!-- Displays the date the subscription expired. Placeholder is the date. -->
     <string name="RemoteBackupsSettingsFragment__expired_on_s">%1$s에 만료됨</string>
     <!-- Displayed at the top of the screen when no backup is currently enabled -->
-    <string name="RemoteBackupsSettingsFragment__back_up_your_message_history">새 휴대폰을 사용하거나 Signal을 다시 설치할 때 데이터를 잃지 않도록 메시지 기록을 백업하세요.</string>
+    <string name="RemoteBackupsSettingsFragment__back_up_your_message_history">새 휴대폰을 사용하거나 Radar를 다시 설치할 때 데이터를 잃지 않도록 메시지 기록을 백업하세요.</string>
     <!-- Section header for other ways to back up -->
     <string name="RemoteBackupsSettingsFragment__other_ways_to_backup">다른 백업 방법</string>
     <!-- Row title for performing on-device backup -->
@@ -7347,13 +7347,13 @@
     <!-- Subtext on a linked device describing when the primary device last backed up. Placeholder is the formatted date and time. -->
     <string name="RemoteBackupsSettingsFragment__your_phone_s">내 휴대폰 최근 백업: %1$s</string>
     <!-- Message shown on a linked device with a free backup plan explaining that the subscription is managed on the primary device -->
-    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_upgrade_your_subscription_on_your_primary_device">기본 기기에서 Signal 안전 백업 구독을 관리하거나 갱신할 수 있습니다.</string>
+    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_upgrade_your_subscription_on_your_primary_device">기본 기기에서 Radar 안전 백업 구독을 관리하거나 갱신할 수 있습니다.</string>
     <!-- Message shown on a linked device with a paid backup plan explaining that the subscription is managed on the primary device -->
-    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_cancel_your_subscription_on_your_primary_device">기본 기기에서 Signal 안전 백업 구독을 관리하거나 취소할 수 있습니다.</string>
+    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_cancel_your_subscription_on_your_primary_device">기본 기기에서 Radar 안전 백업 구독을 관리하거나 취소할 수 있습니다.</string>
     <!-- Message shown on a linked device with a canceled backup subscription explaining that the subscription is managed on the primary device -->
-    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_renew_your_subscription_on_your_primary_device">기본 기기에서 Signal 안전 백업 구독을 관리하거나 갱신할 수 있습니다.</string>
+    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_renew_your_subscription_on_your_primary_device">기본 기기에서 Radar 안전 백업 구독을 관리하거나 갱신할 수 있습니다.</string>
     <!-- Message shown on a linked device when backups are off or the subscription was not found, explaining that backups are managed on the primary device -->
-    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_upgrade_backups_on_your_primary_device">Signal 안전 백업은 기본 기기에서 관리하거나 업그레이드할 수 있습니다.</string>
+    <string name="RemoteBackupsSettingsFragment__you_can_manage_or_upgrade_backups_on_your_primary_device">Radar 안전 백업은 기본 기기에서 관리하거나 업그레이드할 수 있습니다.</string>
     <!-- Button label to perform a backup immediately -->
     <string name="RemoteBackupsSettingsFragment__back_up_now">지금 백업</string>
     <!-- Dialog title when confirming whether to turn off and deleting backups -->
@@ -7369,16 +7369,16 @@
     <!-- Button label to re-enable backups (launches into checkout flow) -->
     <string name="RemoteBackupsSettingsFragment__reenable_backups">백업 재활성화</string>
     <!-- Notice displayed when backups have been disabled and deleted -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off">백업이 해제되었으며, Signal 보안 저장소 서비스에서 데이터가 삭제되었습니다.</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off">백업이 해제되었으며, Radar 보안 저장소 서비스에서 데이터가 삭제되었습니다.</string>
     <!-- Dialog title for dialog which alerts user their optimized media will be downloaded -->
     <string name="RemoteBackupsSettingsFragment__downloading_your_backup">백업을 다운로드하는 중</string>
     <!-- Dialog message for dialog which alerts user their optimized media will be downloaded -->
     <string name="RemoteBackupsSettingsFragment__depending_on_the_size">백업 용량에 따라 시간이 더 오래 걸릴 수 있습니다. 다운로드 중에도 휴대폰을 평소처럼 사용할 수 있습니다.</string>
     <!-- Displayed in card when user has backups enabled but there is otherwise no subscription available. This can happen for example after a device transfer. -->
-    <string name="RemoteBackupsSettingsFragment__your_subscription_was_not_found">이 기기에서 구독 정보를 찾지 못했습니다. Signal 안전 백업을 계속 사용하려면 갱신하세요.</string>
+    <string name="RemoteBackupsSettingsFragment__your_subscription_was_not_found">이 기기에서 구독 정보를 찾지 못했습니다. Radar 안전 백업을 계속 사용하려면 갱신하세요.</string>
     <!-- Displayed in card when user has a signal subscription but the device doesn\'t see a google play billing subscription. Placeholder is days until subscription expiration. -->
     <plurals name="RemoteBackupsSettingsFragment__your_subscription_on_this_device_is_valid">
-        <item quantity="other">이 기기의 구독은 다음 %1$d일 동안 유지됩니다. Signal 안전 백업을 계속 사용하려면 갱신하세요.</item>
+        <item quantity="other">이 기기의 구독은 다음 %1$d일 동안 유지됩니다. Radar 안전 백업을 계속 사용하려면 갱신하세요.</item>
     </plurals>
     <!-- Button label to start subscription resubscribe after cancellation -->
     <string name="RemoteBackupsSettingsFragment__resubscribe">다시 구독</string>
@@ -7431,17 +7431,17 @@
     <!-- Button label to see more details about redemption error -->
     <string name="RemoteBackupsSettingsFragment__details">세부 정보</string>
     <!-- Text displayed when there was an error deleting backup -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_but_there_was_an_error">백업이 해제되었지만, Signal 보안 저장소 서비스에서 데이터를 삭제하는 중 오류가 발생했습니다.</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_but_there_was_an_error">백업이 해제되었지만, Radar 보안 저장소 서비스에서 데이터를 삭제하는 중 오류가 발생했습니다.</string>
     <!-- Text displayed as the title in a card when backup fails to delete -->
     <string name="RemoteBackupsSettingsFragment__failed_to_delete_backup">백업 삭제 실패</string>
     <!-- Text displayed as the body in a card when backup fails to delete -->
     <string name="RemoteBackupsSettingsFragment__an_error_occurred_please_contact_support">오류가 발생했습니다. 고객 지원팀에 문의하세요.</string>
     <!-- Text displayed while we are processing a backup delete but are or need to download optimized media -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_your_data_will_be">백업이 해제되었으며, 데이터가 이 기기로 다운로드된 후 Signal 보안 저장소 서비스에서 삭제됩니다.</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_your_data_will_be">백업이 해제되었으며, 데이터가 이 기기로 다운로드된 후 Radar 보안 저장소 서비스에서 삭제됩니다.</string>
     <!-- Text displayed while we are processing a backup delete -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_and_your_data">백업이 해제되었으며, Signal 보안 저장소 서비스에서 데이터가 삭제됩니다.</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_and_your_data">백업이 해제되었으며, Radar 보안 저장소 서비스에서 데이터가 삭제됩니다.</string>
     <!-- Text displayed after we have deleted a user\'s backup -->
-    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_and_your_data_has_been_deleted">백업이 해제되었으며, Signal 보안 저장소 서비스에서 데이터가 삭제되었습니다.</string>
+    <string name="RemoteBackupsSettingsFragment__backups_have_been_turned_off_and_your_data_has_been_deleted">백업이 해제되었으며, Radar 보안 저장소 서비스에서 데이터가 삭제되었습니다.</string>
     <!-- Text displayed when user is out of storage space. Placeholder is storage limit in human readable form (ex. 1GB) -->
     <string name="RemoteBackupsSettingsFragment__youve_reached_the_s_storage_limit">백업 플랜에 포함된 %1$s 저장 용량 한도에 도달했습니다. 새 채팅과 미디어를 백업하여 여유 공간을 확보하세요.</string>
     <!-- Button label to open storage management screen -->
@@ -7526,7 +7526,7 @@
 
     <!-- MessageBackupsEducationScreen -->
     <!-- Screen subtitle underneath large headline title -->
-    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Signal의 안전한 종단간 암호화 저장 공간 서비스를 사용하여 메시지와 미디어를 백업하세요. 새 휴대폰을 구매하거나 Signal을 다시 설치하는 경우에도 메시지를 손실할 염려가 없습니다.</string>
+    <string name="MessageBackupsEducationScreen__backup_your_messages_and_media">Radar의 안전한 종단간 암호화 저장 공간 서비스를 사용하여 메시지와 미디어를 백업하세요. 새 휴대폰을 구매하거나 Radar를 다시 설치하는 경우에도 메시지를 손실할 염려가 없습니다.</string>
     <!-- Backups feature label for e2e encryption -->
     <string name="MessageBackupsEducationScreen__end_to_end_encrypted">종단간 암호화</string>
     <!-- Backups feature label for informing the user that this feature is completely optional -->
@@ -7556,19 +7556,19 @@
     <!-- Screen body shown when upgrading on-device backups to a new recovery key (part 2, bolded). -->
     <string name="MessageBackupsKeyEducationScreen__local_backup_upgrade_description_bold">이 키는 기존의 기기 백업 키를 대체합니다.</string>
     <!-- Screen body shown when enabling Signal Secure Backups while on-device backups are already enabled (part 1). -->
-    <string name="MessageBackupsKeyEducationScreen__remote_backup_with_local_enabled_description">복구 키는 Signal을 다시 설치할 경우 백업을 복원하는 데 사용할 수 있는 64자리 코드입니다.</string>
+    <string name="MessageBackupsKeyEducationScreen__remote_backup_with_local_enabled_description">복구 키는 Radar를 다시 설치할 경우 백업을 복원하는 데 사용할 수 있는 64자리 코드입니다.</string>
     <!-- Screen body shown when enabling Signal Secure Backups while on-device backups are already enabled (part 2, bolded). -->
     <string name="MessageBackupsKeyEducationScreen__remote_backup_with_local_enabled_description_bold">이 키는 기존의 기기 복구 키와 동일합니다.</string>
     <!-- Screen body shown when enabling on-device backups while Signal Secure Backups are already enabled (part 2, bolded). -->
-    <string name="MessageBackupsKeyEducationScreen__local_backup_with_remote_enabled_description_bold">이 키는 Signal 안전 백업 복구 키와 동일합니다.</string>
+    <string name="MessageBackupsKeyEducationScreen__local_backup_with_remote_enabled_description_bold">이 키는 Radar 안전 백업 복구 키와 동일합니다.</string>
     <!-- Label shown above a list of actions that the recovery key can be used for. -->
     <string name="MessageBackupsKeyEducationScreen__use_this_key_to">키 사용 용도:</string>
     <!-- Row label indicating that the recovery key can be used to restore an on-device backup. -->
     <string name="MessageBackupsKeyEducationScreen__restore_on_device_backup">기기 내 백업 복원</string>
     <!-- Row label indicating that the recovery key can be used to restore a Signal Secure Backup. -->
-    <string name="MessageBackupsKeyEducationScreen__restore_a_signal_secure_backup">Signal 안전 백업 복원</string>
+    <string name="MessageBackupsKeyEducationScreen__restore_a_signal_secure_backup">Radar 안전 백업 복원</string>
     <!-- Row label indicating that the recovery key can be used to restore a Signal Secure Backup. -->
-    <string name="MessageBackupsKeyEducationScreen__restore_your_signal_secure_backup">Signal 안전 백업 복원</string>
+    <string name="MessageBackupsKeyEducationScreen__restore_your_signal_secure_backup">Radar 안전 백업 복원</string>
     <!-- Action button label -->
     <string name="MessageBackupsKeyEducationScreen__view_recovery_key">복구 키 보기</string>
 
@@ -7584,9 +7584,9 @@
     <!-- Label for the button to save a recovery key to the device password manager. -->
     <string name="MessageBackupsKeyRecordScreen__save_to_password_manager">비밀번호 관리자에 저장</string>
     <!-- Dialog message confirming that the user wants to save a recovery key to the device password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__confirm_save_to_password_manager_body">복구 키는 안전하다고 신뢰할 수 있는 비밀번호 관리자에만 저장하세요. Signal은 특정 비밀번호 관리자를 별도로 추천하지 않습니다.</string>
+    <string name="MessageBackupsKeyRecordScreen__confirm_save_to_password_manager_body">복구 키는 안전하다고 신뢰할 수 있는 비밀번호 관리자에만 저장하세요. Radar는 특정 비밀번호 관리자를 별도로 추천하지 않습니다.</string>
     <!-- ID used when saving the recovery key to the device password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__backup_key_password_manager_id">Signal 안전 백업</string>
+    <string name="MessageBackupsKeyRecordScreen__backup_key_password_manager_id">Radar 안전 백업</string>
     <!-- Message shown after the recovery key is successfully saved to the device password manager. -->
     <string name="MessageBackupsKeyRecordScreen__save_to_password_manager_success">비밀번호 관리자에 저장함</string>
     <!-- Dialog title shown when there is an error saving the recovery key to the device password manager. -->
@@ -7594,7 +7594,7 @@
     <!-- Dialog message shown when there is an error saving the recovery key because no compatible password manager was detected. -->
     <string name="MessageBackupsKeyRecordScreen__missing_password_manager_message">비밀번호 관리자를 설정하지 않았거나, 사용 중인 비밀번호 관리자가 지원되지 않습니다.</string>
     <!-- Dialog message shown when there is an error saving the recovery key because the user previously chose not to save Signal passwords to their password manager. -->
-    <string name="MessageBackupsKeyRecordScreen__password_save_prompt_disabled_message">이전에 Google 비밀번호 관리자에 Signal 비밀번호를 저장하지 않도록 설정했습니다. Google 비밀번호 관리자 설정의 \'거부된 사이트 및 앱\'에서 Signal을 삭제한 후 다시 시도하세요.</string>
+    <string name="MessageBackupsKeyRecordScreen__password_save_prompt_disabled_message">이전에 Google 비밀번호 관리자에 Radar 비밀번호를 저장하지 않도록 설정했습니다. Google 비밀번호 관리자 설정의 \'거부된 사이트 및 앱\'에서 Radar를 삭제한 후 다시 시도하세요.</string>
     <!-- Label for a button that navigates to the device settings -->
     <string name="MessageBackupsKeyRecordScreen__go_to_settings">설정으로 이동</string>
     <!-- Action button label -->
@@ -7602,7 +7602,7 @@
     <!-- Bottom sheet title -->
     <string name="MessageBackupsKeyRecordScreen__keep_your_key_safe">키를 안전하게 보관하세요</string>
     <!-- Bottom sheet subtitle -->
-    <string name="MessageBackupsKeyRecordScreen__signal_will_not">키를 분실할 경우 Signal은 백업을 복원하도록 도와드릴 수 없습니다. 안전한 곳에 키를 보관해 두고, 다른 사람과 공유하지 마세요.</string>
+    <string name="MessageBackupsKeyRecordScreen__signal_will_not">키를 분실할 경우 Radar는 백업을 복원하도록 도와드릴 수 없습니다. 안전한 곳에 키를 보관해 두고, 다른 사람과 공유하지 마세요.</string>
     <!-- Sheet action button label -->
     <string name="MessageBackupsKeyRecordScreen__continue">계속</string>
     <!-- Sheet secondary action button label -->
@@ -7612,13 +7612,13 @@
     <!-- Dialog title for confirming you need to disable optimized storage and download media to rotate AEP key -->
     <string name="MessageBackupsKeyRecordScreen__download_media">미디어 다운로드</string>
     <!-- Dialog body for confirming you need to disable optimized storage and download media to rotate AEP key -->
-    <string name="MessageBackupsKeyRecordScreen__to_create_a_new_backup_key">새로운 복구 키를 생성하려면 \'Signal 저장 공간 최적화\'를 끈 후 미디어가 다운로드될 때까지 기다려야 합니다. 다운로드가 완료되면 새 키를 생성할 수 있습니다.</string>
+    <string name="MessageBackupsKeyRecordScreen__to_create_a_new_backup_key">새로운 복구 키를 생성하려면 \'Radar 저장 공간 최적화\'를 끈 후 미디어가 다운로드될 때까지 기다려야 합니다. 다운로드가 완료되면 새 키를 생성할 수 있습니다.</string>
     <!-- Action label to turn off optimized storage and download media -->
     <string name="MessageBackupsKeyRecordScreen__turn_off_and_download">끄기 및 다운로드</string>
     <!-- Bottom Sheet title for creating a new AEP key -->
     <string name="MessageBackupsKeyRecordScreen__create_a_new_backup_key">새 복구 키 만들기</string>
     <!-- Bottom Sheet body for creating a new AEP key -->
-    <string name="MessageBackupsKeyRecordScreen__creating_a_new_key_is_only_necessary">새 복구 키 생성은 다른 사람이 나의 키를 알고 있는 경우에만 필요한 작업입니다. 새 키를 만들면 미디어와 백업 파일을 다시 업로드해야 하며, \'Signal 저장 공간 최적화\'를 사용 중이라면 오프로드된 미디어를 먼저 다운로드해야 합니다.</string>
+    <string name="MessageBackupsKeyRecordScreen__creating_a_new_key_is_only_necessary">새 복구 키 생성은 다른 사람이 나의 키를 알고 있는 경우에만 필요한 작업입니다. 새 키를 만들면 미디어와 백업 파일을 다시 업로드해야 하며, \'Radar 저장 공간 최적화\'를 사용 중이라면 오프로드된 미디어를 먼저 다운로드해야 합니다.</string>
     <!-- Dialog title shown when user attempts to exit backup setup before completion -->
     <string name="MessageBackupsKeyRecordScreen__exit_backup_setup">백업 설정을 종료할까요?</string>
     <!-- Dialog body warning user that backup setup is incomplete -->
@@ -7739,7 +7739,7 @@
     <!-- ConfirmBackupCancellationDialog -->
 
     <!-- Email subject when contacting support on a create backup failure -->
-    <string name="BackupAlertBottomSheet_network_failure_support_email">Signal Android 백업 내보내기 네트워크 오류</string>
+    <string name="BackupAlertBottomSheet_network_failure_support_email">Radar Android 백업 내보내기 네트워크 오류</string>
     <!-- Email filter when contacting support on a create backup failure -->
   <!-- Removed by excludeNonTranslatables <string name="BackupAlertBottomSheet_export_failure_filter" translatable="false">Android SignalBackups Export Failed</string> -->
 
@@ -7769,7 +7769,7 @@
     <!-- Old device Transfer account bottom sheet dialog body -->
     <string name="TransferAccount_continue_on_your_other_device_details">다른 기기에서 계정 이전을 계속 진행해 주세요.</string>
     <!-- Old device Transfer account error dialog body shown when the new device is too old to accept an account that has no phone number -->
-    <string name="TransferAccount_the_device_you_are_transferring_to_is_out_of_date">데이터를 이전 받을 기기의 버전이 오래되었습니다. 기기의 Signal 앱을 업데이트한 후 다시 시도해 주세요.</string>
+    <string name="TransferAccount_the_device_you_are_transferring_to_is_out_of_date">데이터를 이전 받을 기기의 버전이 오래되었습니다. 기기의 Radar 앱을 업데이트한 후 다시 시도해 주세요.</string>
 
     <!-- Prepare Device screen title for quick restore flow -->
     <string name="PrepareDevice_title">기기 준비하기</string>
@@ -7785,11 +7785,11 @@
     <!-- Restore Complete bottom sheet dialog title -->
     <string name="RestoreCompleteBottomSheet_restore_complete">다른 기기에서 완료</string>
     <!-- Restore Complete bottom sheet dialog message -->
-    <string name="RestoreCompleteBottomSheet_restore_complete_message">Signal 계정과 메시지를 다른 기기에서 복구할 준비가 되었습니다. 이 기기의 Signal이 이제 비활성화됩니다.</string>
+    <string name="RestoreCompleteBottomSheet_restore_complete_message">Radar 계정과 메시지를 다른 기기에서 복구할 준비가 되었습니다. 이 기기의 Radar가 이제 비활성화됩니다.</string>
     <!-- Restore Complete bottom sheet dialog title after device transfer -->
     <string name="RestoreCompleteBottomSheet_transfer_complete">이전 완료</string>
     <!-- Restore Complete bottom sheet dialog message after device transfer -->
-    <string name="RestoreCompleteBottomSheet_transfer_complete_message">Signal 계정과 메시지를 다른 기기로 이전했습니다. 이제 이 기기의 Signal이 비활성화됩니다.</string>
+    <string name="RestoreCompleteBottomSheet_transfer_complete_message">Radar 계정과 메시지를 다른 기기로 이전했습니다. 이제 이 기기의 Radar가 비활성화됩니다.</string>
     <!-- Restore Complete bottom sheet dialog button text to dismiss sheet -->
     <string name="RestoreCompleteBottomSheet_button">확인</string>
 
@@ -7847,7 +7847,7 @@
     <!-- Notification title for when user is out of remote storage -->
     <string name="Notification_backup_storage_full">백업 저장 용량 부족</string>
     <!-- Notification body for when user is out of remote storage -->
-    <string name="Notification_youve_reached_your_backup_storage_limit">백업 저장 용량이 한도에 도달했습니다. 채팅과 미디어를 계속 백업하려면 Signal에 사용 가능한 공간을 확보하세요.</string>
+    <string name="Notification_youve_reached_your_backup_storage_limit">백업 저장 용량이 한도에 도달했습니다. 채팅과 미디어를 계속 백업하려면 Radar에 사용 가능한 공간을 확보하세요.</string>
     <!-- Notification title for when initial backup failed -->
     <string name="Notification_backup_failed">백업 실패</string>
     <!-- Notification body for when initial backup failed -->
@@ -7960,7 +7960,7 @@
     <!-- Label for text field where user describes their call quality issue -->
     <string name="CallQualitySomethingElseScreen__describe_your_issue">어떤 문제가 있었는지 알려주세요</string>
     <!-- Privacy notice explaining that issue details will be kept private and used to improve Signal calls -->
-    <string name="CallQualitySomethingElseScreen__privacy_notice">문제와 관련된 모든 세부 정보를 포함해 주세요. 여기에서 공유하는 모든 내용은 비공개로 유지되며 Signal의 통화를 개선하는 데에만 사용됩니다.</string>
+    <string name="CallQualitySomethingElseScreen__privacy_notice">문제와 관련된 모든 세부 정보를 포함해 주세요. 여기에서 공유하는 모든 내용은 비공개로 유지되며 Radar의 통화를 개선하는 데에만 사용됩니다.</string>
     <!-- Button to save the call quality issue description -->
     <string name="CallQualitySomethingElseScreen__save">저장</string>
     <!-- Content description for the back navigation button -->
@@ -7970,7 +7970,7 @@
     <!-- Title asking user how their call was -->
     <string name="CallQualitySheet__how_was_your_call">통화는 어땠나요?</string>
     <!-- Subtitle explaining that feedback helps improve Signal and no PII is stored -->
-    <string name="CallQualitySheet__how_was_your_call_subtitle">피드백을 주시면 Signal의 통화를 개선하는 데 도움이 됩니다. 개인 식별 정보는 저장되지 않습니다.</string>
+    <string name="CallQualitySheet__how_was_your_call_subtitle">피드백을 주시면 Radar의 통화를 개선하는 데 도움이 됩니다. 개인 식별 정보는 저장되지 않습니다.</string>
     <!-- Button label indicating the call had issues -->
     <string name="CallQualitySheet__had_issues">문제가 있었음</string>
     <!-- Button label indicating the call was great -->
@@ -7984,7 +7984,7 @@
     <!-- Button to continue to the next step -->
     <string name="CallQualitySheet__continue">계속</string>
     <!-- Title asking user to help improve Signal -->
-    <string name="CallQualitySheet__help_us_improve">더 나은 Signal을 만드는 데 동참해 주세요</string>
+    <string name="CallQualitySheet__help_us_improve">더 나은 Radar를 만드는 데 동참해 주세요</string>
     <!-- First part of description explaining diagnostics help improve call quality -->
     <string name="CallQualitySheet__help_us_improve_description_prefix">피드백을 제출하면</string>
     <!-- Clickable text to launch diagnostic fragment -->
@@ -7992,7 +7992,7 @@
     <!-- End of description explaining diagnostics help improve call quality -->
     <string name="CallQualitySheet__help_us_improve_description_suffix">통화 품질 개선을 위해 디버그 로그를 공유해 주셔도 좋습니다.</string>
     <!-- Text explaining the debug log -->
-    <string name="CallQualitySheet__information_shared_with_us">Signal에 공유되는 정보는 앱의 기본적인 사용 정보에 한하며, 통화 내용은 수집되지 않습니다.</string>
+    <string name="CallQualitySheet__information_shared_with_us">Radar에 공유되는 정보는 앱의 기본적인 사용 정보에 한하며, 통화 내용은 수집되지 않습니다.</string>
     <!-- Link text to view debug log -->
     <string name="CallQualitySheet__view_debug_log">디버그 로그 보기</string>
     <!-- Toggle label for sharing debug log -->
@@ -8131,7 +8131,7 @@
     <string name="CouldNotCompleteBackupRestoreSheet__body_error">오류가 발생하여 백업을 복원할 수 없습니다. 복원이 진행되는 동안 기기 내 백업 폴더의 위치가 변경되었을 수 있습니다.</string>
 
     <!-- Body of the sheet shown when a local backup restore could not be completed, explaining how to try again -->
-    <string name="CouldNotCompleteBackupRestoreSheet__body_retry">다시 시도하려면 이 기기에서 Signal을 삭제한 후 재설치하고, \'복원 또는 이전\'을 선택해 주세요.</string>
+    <string name="CouldNotCompleteBackupRestoreSheet__body_retry">다시 시도하려면 이 기기에서 Radar를 삭제한 후 재설치하고, \'복원 또는 이전\'을 선택해 주세요.</string>
 
     <!-- Button on the sheet shown when a local backup restore could not be completed, opening a support article about it -->
     <string name="CouldNotCompleteBackupRestoreSheet__learn_more">자세히 알아보기</string>
@@ -8139,7 +8139,7 @@
     <!-- Title of the sheet shown when the server reports a verification code was requested for the user\'s phone number -->
     <string name="VerificationCodeRequestedBottomSheet__title">인증 코드 요청됨</string>
     <!-- First paragraph of the body of the verification code requested sheet -->
-    <string name="VerificationCodeRequestedBottomSheet__body_1">인증 코드를 다른 사람과 공유하지 마세요. Signal은 절대 인증 코드를 요청하는 메시지를 보내지 않습니다. Signal을 사칭한 메시지를 받았다면 사기일 수 있으니, 유의해 주세요.</string>
+    <string name="VerificationCodeRequestedBottomSheet__body_1">인증 코드를 다른 사람과 공유하지 마세요. Radar는 절대 인증 코드를 요청하는 메시지를 보내지 않습니다. Radar를 사칭한 메시지를 받았다면 사기일 수 있으니, 유의해 주세요.</string>
     <!-- Second paragraph of the body of the verification code requested sheet -->
     <string name="VerificationCodeRequestedBottomSheet__body_2">본인이 직접 코드를 요청하신 경우, 이 메시지는 무시하셔도 됩니다.</string>
     <!-- Button on the verification code requested sheet that opens the safety tips screen -->
@@ -8152,9 +8152,9 @@
     <!-- Title of the safety tips screen within the verification code requested sheet -->
     <string name="SafetyTipsBottomSheet__title">안전 팁</string>
     <!-- Title of the first safety tip: don\'t respond to chats claiming to be Signal -->
-    <string name="SafetyTipsBottomSheet__tip_1_title">Signal에서 보낸 채팅에 답하지 마세요</string>
+    <string name="SafetyTipsBottomSheet__tip_1_title">Radar에서 보낸 채팅에 답하지 마세요</string>
     <!-- Body of the first safety tip -->
-    <string name="SafetyTipsBottomSheet__tip_1_body">Signal은 절대 사용자의 등록 코드나 PIN, 복구 키를 요청하는 메시지를 보내지 않습니다. Signal을 사칭하는 채팅에 절대 답장하지 마세요.</string>
+    <string name="SafetyTipsBottomSheet__tip_1_body">Radar는 절대 사용자의 등록 코드나 PIN, 복구 키를 요청하는 메시지를 보내지 않습니다. Radar를 사칭하는 채팅에 절대 답장하지 마세요.</string>
     <!-- Title of the second safety tip: keep your verification code safe -->
     <string name="SafetyTipsBottomSheet__tip_2_title">인증 코드를 안전하게 보관하세요</string>
     <!-- Body of the second safety tip -->
@@ -8162,16 +8162,16 @@
     <!-- Title of the third safety tip: enable registration lock -->
     <string name="SafetyTipsBottomSheet__tip_3_title">계정 설정에서 등록 잠금을 켜세요</string>
     <!-- Body of the third safety tip -->
-    <string name="SafetyTipsBottomSheet__tip_3_body">Signal 등록 시 인증 코드와 함께 Signal PIN 입력 단계를 추가하여 계정을 보호하세요.</string>
+    <string name="SafetyTipsBottomSheet__tip_3_body">Radar 등록 시 인증 코드와 함께 Radar PIN 입력 단계를 추가하여 계정을 보호하세요.</string>
     <!-- Button on the safety tips screen that opens account settings -->
     <string name="SafetyTipsBottomSheet__open_account_settings">계정 설정 열기</string>
 
     <!-- Title of a warning sheet shown when the user copies or pastes their recovery key, urging them not to share it -->
     <string name="RecoveryKeyWarningSheetContent__do_not_share_your_recovery_key">복구 키를 공유하지 마세요</string>
     <!-- Bolded lead-in to the warning sheet body; combined with RecoveryKeyWarningSheetContent__for_your_recovery_key_never_respond to form a full sentence -->
-    <string name="RecoveryKeyWarningSheetContent__signal_will_never_message_you">Signal은 사용자에게 복구 키를 요청하는 메시지를</string>
+    <string name="RecoveryKeyWarningSheetContent__signal_will_never_message_you">Radar는 사용자에게 복구 키를 요청하는 메시지를</string>
     <!-- Remainder of the warning sheet body following the bolded lead-in RecoveryKeyWarningSheetContent__signal_will_never_message_you -->
-    <string name="RecoveryKeyWarningSheetContent__for_your_recovery_key_never_respond">절대 보내지 않습니다. Signal을 사칭하는 대화에 절대 응답하지 마세요. 또한, 복구 키는 안전한 곳에 보관해 두고 다른 사람과 절대 공유하지 마세요.</string>
+    <string name="RecoveryKeyWarningSheetContent__for_your_recovery_key_never_respond">절대 보내지 않습니다. Radar를 사칭하는 대화에 절대 응답하지 마세요. 또한, 복구 키는 안전한 곳에 보관해 두고 다른 사람과 절대 공유하지 마세요.</string>
     <!-- Button dismissing the recovery key warning sheet after the user has copied their key -->
     <string name="RecoveryKeyWarningSheetContent__got_it">확인</string>
     <!-- Button opening a help article with more information about recovery key safety -->
@@ -8231,9 +8231,9 @@
     <!-- Content description for the badge shown next to a contact that is in the phone\'s address book -->
     <string name="SelectContactScreen__in_your_contacts">연락처에 있음</string>
     <!-- Title of the prompt asking for permission to read the user\'s phone contacts -->
-    <string name="SelectContactScreen__find_people_you_know_on_signal">Signal에서 내가 아는 사람을 찾아보세요.</string>
+    <string name="SelectContactScreen__find_people_you_know_on_signal">Radar에서 내가 아는 사람을 찾아보세요.</string>
     <!-- Explanation shown when Signal does not have permission to read the user\'s phone contacts -->
-    <string name="SelectContactScreen__allow_access_to_your_contacts">연락처 접근을 허용해 주세요. 연락처 정보는 암호화되며 Signal도 확인할 수 없습니다.</string>
+    <string name="SelectContactScreen__allow_access_to_your_contacts">연락처 접근을 허용해 주세요. 연락처 정보는 암호화되며 Radar도 확인할 수 없습니다.</string>
     <!-- Button that asks the system for permission to read the user\'s phone contacts -->
     <string name="SelectContactScreen__allow_access">권한 허용</string>
     <!-- Button that dismisses the request for permission to read the user\'s phone contacts -->
@@ -8247,7 +8247,7 @@
     <!-- Title of the sheet explaining how to grant contacts permission from the device settings -->
     <string name="SelectContactScreen__allow_access_to_contacts">연락처 접근 허용</string>
     <!-- Subtitle of the sheet explaining how to grant contacts permission from the device settings -->
-    <string name="SelectContactScreen__to_find_people_you_know_on_signal">Signal에서 내가 아는 사람을 찾으려면 다음을 수행하세요.</string>
+    <string name="SelectContactScreen__to_find_people_you_know_on_signal">Radar에서 내가 아는 사람을 찾으려면 다음을 수행하세요.</string>
     <!-- Toast shown when a selected contact can no longer be read -->
     <string name="SelectContactScreen__couldnt_open_contact">해당 연락처를 열 수 없음</string>
 
@@ -8290,7 +8290,7 @@
     <!-- Context menu entry that copies a shared contact detail to the clipboard -->
     <string name="SharedContactDetailsScreen__copy">복사</string>
     <!-- Row that invites a shared contact who is not yet on Signal -->
-    <string name="SharedContactDetailsScreen__invite_to_signal">Signal로 초대하기</string>
+    <string name="SharedContactDetailsScreen__invite_to_signal">Radar로 초대하기</string>
     <!-- Row that saves a shared contact into the device address book -->
     <string name="SharedContactDetailsScreen__add_to_phone_contacts">휴대폰 연락처에 추가</string>
     <!-- Row that adds a shared contact to a Signal group -->
@@ -8302,14 +8302,14 @@
     <!-- Toast shown when there is no map app to open a shared address in -->
     <string name="SharedContactDetailsScreen__couldnt_open_maps">지도 앱을 열 수 없음</string>
     <!-- Subject line of an email invitation to Signal -->
-    <string name="SharedContactDetailsScreen__join_me_on_signal">Signal에서 함께 대화해요</string>
+    <string name="SharedContactDetailsScreen__join_me_on_signal">Radar에서 함께 대화해요</string>
 
     <!-- Title of the bottom sheet that confirms the user wants a brand new recovery key. -->
     <string name="ResetRecoveryKeyBottomSheet__reset_your_recovery_key">복구 키 재설정하기</string>
     <!-- First paragraph of the bottom sheet body, explaining what a reset does. -->
     <string name="ResetRecoveryKeyBottomSheet__resetting_your_recovery_key_will_create_a_new_key">복구 키를 재설정하면 Signal Login을 위한 새로운 키가 생성됩니다. 이 작업은 다른 사람에게 기존 키가 노출되었을 때만 권장됩니다.</string>
     <!-- Second paragraph of the bottom sheet body, explaining what a reset means for backups. -->
-    <string name="ResetRecoveryKeyBottomSheet__if_backups_are_enabled_you_will_have_to_re_upload">백업 기능이 활성화되어 있는 경우 미디어와 백업 파일을 다시 업로드해야 합니다. \'Signal 저장 공간 최적화\'를 사용 중이라면 오프로드된 미디어를 먼저 다운로드해야 합니다.</string>
+    <string name="ResetRecoveryKeyBottomSheet__if_backups_are_enabled_you_will_have_to_re_upload">백업 기능이 활성화되어 있는 경우 미디어와 백업 파일을 다시 업로드해야 합니다. \'Radar 저장 공간 최적화\'를 사용 중이라면 오프로드된 미디어를 먼저 다운로드해야 합니다.</string>
     <!-- Bottom sheet action that continues on to reset the recovery key. -->
     <string name="ResetRecoveryKeyBottomSheet__continue">계속</string>
     <!-- Dialog body shown when the recovery key change limit is exhausted and the user does not have backups enabled. -->

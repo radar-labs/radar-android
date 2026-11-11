@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">เปิดกล้อง</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal จำเป็นต้องได้รับสิทธิ์เข้าถึงเพื่อแสดงรูปและวิดีโอของคุณ</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar จำเป็นต้องได้รับสิทธิ์เข้าถึงเพื่อแสดงรูปและวิดีโอของคุณ</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">อนุญาตให้เข้าถึง</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">ไม่พบรูปภาพหรือวิดีโอ Signal ได้รับสิทธิ์การเข้าถึงเฉพาะรูปภาพและวิดีโอที่คุณเลือกเท่านั้น</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">ไม่พบรูปภาพหรือวิดีโอ Radar ได้รับสิทธิ์การเข้าถึงเฉพาะรูปภาพและวิดีโอที่คุณเลือกเท่านั้น</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal ได้รับสิทธิ์จำกัดในการเข้าถึงรูปภาพหรือวิดีโอของคุณ</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar ได้รับสิทธิ์จำกัดในการเข้าถึงรูปภาพหรือวิดีโอของคุณ</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">จัดการ</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">ในการแสดงรูปและวิดีโอ:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal จำเป็นต้องได้รับสิทธิ์การเข้าถึงเพื่อแสดงรูปและวิดีโอของคุณ</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar จำเป็นต้องได้รับสิทธิ์การเข้าถึงเพื่อแสดงรูปและวิดีโอของคุณ</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">รูปภาพ</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">อนุญาตให้เข้าถึงไมโครโฟนของคุณ</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">อนุญาต Signal ให้ใช้กล้องเพื่อถ่ายรูปและวิดีโอ</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">อนุญาต Radar ให้ใช้กล้องเพื่อถ่ายรูปและวิดีโอ</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">อนุญาตให้ Signal เข้าถึงกล้องและไมโครโฟนเพื่อถ่ายภาพและบันทึกวิดีโอ</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">อนุญาตให้ Radar เข้าถึงกล้องและไมโครโฟนเพื่อถ่ายภาพและบันทึกวิดีโอ</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">อนุญาตให้ Signal เข้าถึงไมโครโฟนของคุณเพื่อบันทึกวิดีโอพร้อมเสียง</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">อนุญาตให้ Radar เข้าถึงไมโครโฟนของคุณเพื่อบันทึกวิดีโอพร้อมเสียง</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">อนุญาตให้ Signal เข้าถึงกล้องเพื่อสแกนคิวอาร์โค้ด</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">อนุญาตให้ Radar เข้าถึงกล้องเพื่อสแกนคิวอาร์โค้ด</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal จำเป็นต้องได้รับสิทธิ์เข้าถึงกล้องเพื่อถ่ายภาพ</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar จำเป็นต้องได้รับสิทธิ์เข้าถึงกล้องเพื่อถ่ายภาพ</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal จำเป็นต้องได้รับสิทธิ์เข้าถึงกล้องเพื่อสแกนคิวอาร์โค้ด</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar จำเป็นต้องได้รับสิทธิ์เข้าถึงกล้องเพื่อสแกนคิวอาร์โค้ด</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal จำเป็นต้องได้รับสิทธิ์เข้าถึงไมโครโฟนเพื่อบันทึกวิดีโอ</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar จำเป็นต้องได้รับสิทธิ์เข้าถึงไมโครโฟนเพื่อบันทึกวิดีโอ</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">เพื่อถ่ายภาพบน Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">เพื่อถ่ายภาพบน Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">เพื่อถ่ายภาพและบันทึกวิดีโอบน Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">เพื่อถ่ายภาพและบันทึกวิดีโอบน Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">เพื่อบันทึกวิดีโอพร้อมเสียง:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">บันทึกภาพหลายรูปแบบ</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">เพื่อจะอัดภาพวิดีโอ Signal ต้องได้รับอนุญาตให้เข้าถึงไมโครโฟน แต่คำขอนั้นถูกปฏิเสธอย่างถาวร กรุณาไปที่เมนูตั้งค่าแอป เลือก \"การอนุญาต\" และเปิดใช้งาน \"ไมโครโฟน\" และ \"กล้อง\"</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">เพื่อจะอัดภาพวิดีโอ Radar ต้องได้รับอนุญาตให้เข้าถึงไมโครโฟน แต่คำขอนั้นถูกปฏิเสธอย่างถาวร กรุณาไปที่เมนูตั้งค่าแอป เลือก \"การอนุญาต\" และเปิดใช้งาน \"ไมโครโฟน\" และ \"กล้อง\"</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">เกิดข้อผิดพลาดในการบันทึกวิดีโอ</string>
@@ -209,7 +209,7 @@
         <item quantity="other">%1$d ไฟล์ตั้งค่าที่ความละเอียดมาตรฐาน</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal ต้องได้รับอนุญาตให้เข้าถึงที่เก็บข้อมูลจึงจะบันทึกข้อมูลลงที่เก็บข้อมูลภายนอกได้ แต่คำขอนั้นถูกปฏิเสธอย่างถาวร โปรดไปที่เมนูตั้งค่าแอป เลือก \"การอนุญาต\" และเปิดใช้งาน \"ที่เก็บข้อมูล\"</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar ต้องได้รับอนุญาตให้เข้าถึงที่เก็บข้อมูลจึงจะบันทึกข้อมูลลงที่เก็บข้อมูลภายนอกได้ แต่คำขอนั้นถูกปฏิเสธอย่างถาวร โปรดไปที่เมนูตั้งค่าแอป เลือก \"การอนุญาต\" และเปิดใช้งาน \"ที่เก็บข้อมูล\"</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">วิดีโอที่ส่งจะไม่มีเสียง</string>
 
@@ -223,14 +223,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">เชื่อมโยงอุปกรณ์หรือไม่</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">ดูเหมือนว่าคุณพยายามจะเชื่อมโยงอุปกรณ์ Signal แตะดำเนินการต่อ จากนั้นให้แตะ \"เชื่อมโยงอุปกรณ์เครื่องใหม่\" แล้วสแกนคิวอาร์โค้ดอีกครั้ง</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">ดูเหมือนว่าคุณพยายามจะเชื่อมโยงอุปกรณ์ Radar แตะดำเนินการต่อ จากนั้นให้แตะ \"เชื่อมโยงอุปกรณ์เครื่องใหม่\" แล้วสแกนคิวอาร์โค้ดอีกครั้ง</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">ทำต่อ</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">ไม่สามารถถ่ายโอนบัญชีได้</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">อุปกรณ์ที่เป็นปลายทางของการถ่ายโอนมีเวอร์ชันเก่าเกินไป โปรดอัปเดต Signal บนอุปกรณ์เครื่องนั้นแล้วลองอีกครั้ง</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">อุปกรณ์ที่เป็นปลายทางของการถ่ายโอนมีเวอร์ชันเก่าเกินไป โปรดอัปเดต Radar บนอุปกรณ์เครื่องนั้นแล้วลองอีกครั้ง</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

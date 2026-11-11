@@ -3,7 +3,7 @@
     <!-- RegistrationLockV2Dialog -->
     <string name="RegistrationLockV2Dialog_turn_on_registration_lock">Bekapcsolod a regisztrációs zárat?</string>
     <string name="RegistrationLockV2Dialog_turn_off_registration_lock">Kikapcsolod a regisztrációs zárat?</string>
-    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Amennyiben elfelejted Signal PIN kódodat a következő Signal regisztáció alkalmával, 7 napra ki leszel zárva a fiókodból.</string>
+    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Amennyiben elfelejted Radar PIN kódodat a következő Radar regisztáció alkalmával, 7 napra ki leszel zárva a fiókodból.</string>
     <string name="RegistrationLockV2Dialog_turn_on">Bekapcsolás</string>
     <string name="RegistrationLockV2Dialog_turn_off">Kikapcsolás</string>
     <string name="preferences__advanced_pin_settings">További PIN beállítások</string>
@@ -12,20 +12,20 @@
     <string name="RegistrationLockFragment__switch_keyboard">Billentyűzet váltása</string>
     <string name="preferences_chats__transfer_account">Fiók átvitele</string>
     <string name="preferences_chats__transfer_account_to_a_new_android_device">Fiók átvitele egy másik Android eszközre</string>
-    <string name="preferences_app_protection__signal_pin">Signal PIN</string>
+    <string name="preferences_app_protection__signal_pin">Radar PIN</string>
     <string name="preferences_app_protection__create_a_pin">PIN létrehozása</string>
     <string name="preferences_app_protection__change_your_pin">PIN kód megváltoztatása</string>
     <string name="preferences_app_protection__pin_reminders">PIN emlékeztetők</string>
     <string name="preferences_app_protection__turn_off">Kikapcsolás</string>
     <string name="preferences_app_protection__confirm_pin">PIN megerősítése</string>
-    <string name="preferences_app_protection__confirm_your_signal_pin">Signal PIN kód megerősítése</string>
-    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">Bizonyosodj meg róla, hogy PIN kódodat megjegyezted vagy eltároltad egy biztonságos helyre, ugyanis a PIN kódot nem lehet visszaállítani. Amennyiben elfelejted PIN kódodat, úgy a Signal fiókod újraregisztrációja során adataid elveszhetnek.</string>
+    <string name="preferences_app_protection__confirm_your_signal_pin">Radar PIN kód megerősítése</string>
+    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">Bizonyosodj meg róla, hogy PIN kódodat megjegyezted vagy eltároltad egy biztonságos helyre, ugyanis a PIN kódot nem lehet visszaállítani. Amennyiben elfelejted PIN kódodat, úgy a Radar fiókod újraregisztrációja során adataid elveszhetnek.</string>
     <string name="preferences_app_protection__incorrect_pin_try_again">Hibás PIN-kód. Próbáld újra.</string>
     <string name="preferences_app_protection__registration_lock">Regisztrációs zár</string>
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
     <string name="preferences_account_reregister">Fiók újraregisztrálása</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
-    <string name="preferences_account_update_signal">Signal frissítése</string>
+    <string name="preferences_account_update_signal">Radar frissítése</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
     <string name="preferences_account_delete_all_data">Összes adat törlése</string>
     <!-- Title for confirmation dialog confirming user wants to delete all their data -->
@@ -40,7 +40,7 @@
     <!-- AccountSettingsFragment -->
     <string name="AccountSettingsFragment__account">Fiók</string>
     <string name="AccountSettingsFragment__youll_be_asked_less_frequently">Idővel egyre ritkábban kérünk meg rá</string>
-    <string name="AccountSettingsFragment__require_your_signal_pin">Telefonszámod újraregisztrációját Signal PIN-kódod megadásához kötheted</string>
+    <string name="AccountSettingsFragment__require_your_signal_pin">Telefonszámod újraregisztrációját Radar PIN-kódod megadásához kötheted</string>
     <string name="AccountSettingsFragment__change_phone_number">Telefonszám cseréje</string>
     <!-- Account setting that allows user to request and export their signal account data -->
     <string name="AccountSettingsFragment__request_account_data">Fiókadataid</string>
@@ -140,7 +140,7 @@
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">Fiókadataid</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
-    <string name="ExportAccountDataFragment__export_explanation">Töltsd le a Signal-fiókod adatait tartalmazó jelentést. A jelentés nem tartalmaz üzeneteket vagy médiafájlt. %1$s</string>
+    <string name="ExportAccountDataFragment__export_explanation">Töltsd le a Radar-fiókod adatait tartalmazó jelentést. A jelentés nem tartalmaz üzeneteket vagy médiafájlt. %1$s</string>
     <!-- Learn more link to more information about requesting account data -->
     <string name="ExportAccountDataFragment__learn_more">Tudj meg többet</string>
     <!-- Button action to export the report data to another app (e.g. email) -->
@@ -168,14 +168,14 @@
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Adatok exportálása?</string>
     <!-- Message for export confirmation dialog -->
-    <string name="ExportAccountDataFragment__export_report_confirmation_message">Csak olyan személyekkel vagy alkalmazásokkal oszd meg a Signal-fiókod adatait, akikben megbízol.</string>
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Csak olyan személyekkel vagy alkalmazásokkal oszd meg a Radar-fiókod adatait, akikben megbízol.</string>
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">Exportálás</string>
 
     <!-- Shown in a dialog with a spinner while the report is downloading -->
     <string name="ExportAccountDataFragment__download_progress">Jelentés generálása…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
-    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">A jelentés csak az exportáláskor jön létre, és a Signal nem tárolja az eszközödön.</string>
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">A jelentés csak az exportáláskor jön létre, és a Radar nem tárolja az eszközödön.</string>
 
     <!-- TotpSetupScreen -->
     <!-- Title of the screen that walks the user through setting up an authenticator app -->
@@ -191,7 +191,7 @@
     <!-- Header of the second step of authenticator app setup -->
     <string name="TotpSetupScreen__step_2">2. lépés</string>
     <!-- Body of the second step of authenticator app setup -->
-    <string name="TotpSetupScreen__open_your_authenticator_app">A Signal fiókod hozzáadásához nyisd meg a hitelesítő alkalmazást az alábbi gombra koppintva.</string>
+    <string name="TotpSetupScreen__open_your_authenticator_app">A Radar fiókod hozzáadásához nyisd meg a hitelesítő alkalmazást az alábbi gombra koppintva.</string>
     <!-- Button that opens the user\'s authenticator app -->
     <string name="TotpSetupScreen__open">Megnyitás</string>
     <!-- Text above the setup key explaining that it can be entered by hand instead -->
@@ -205,7 +205,7 @@
     <!-- Dialog message shown when the account already has as many authenticator apps as it\'s allowed -->
     <string name="TotpSetupScreen__you_cant_add_more_than_d">Legfeljebb %1$d hitelesítő alkalmazást adhatsz hozzá. Először próbálj egyet eltávolítani.</string>
     <!-- Dialog message shown when we couldn\'t reach the service to start setting up an authenticator app -->
-    <string name="TotpSetupScreen__couldnt_reach_signal">Nem sikerült elérni a Signalt. Ellenőrizd az internetkapcsolatodat, és próbáld újra!</string>
+    <string name="TotpSetupScreen__couldnt_reach_signal">Nem sikerült elérni a Radart. Ellenőrizd az internetkapcsolatodat, és próbáld újra!</string>
     <!-- Header of the third step of authenticator app setup -->
     <string name="TotpSetupScreen__step_3">3. lépés</string>
     <!-- Body of the third step of authenticator app setup -->
@@ -243,7 +243,7 @@
     <!-- Error shown under the code field when the code the user entered was rejected -->
     <string name="TotpCodeEntryScreen__incorrect_code">Helytelen kód! Add meg most a hitelesítő alkalmazásodban megjelenő kódot.</string>
     <!-- Error shown under the code field when we couldn\'t reach the service to check the code -->
-    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Nem sikerült elérni a Signalt. Ellenőrizd az internetkapcsolatodat, és próbáld újra!</string>
+    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Nem sikerült elérni a Radart. Ellenőrizd az internetkapcsolatodat, és próbáld újra!</string>
 
     <!-- Default name given to an authenticator app the moment it\'s set up, before the user chooses their own name for it -->
     <string name="TotpRepository__authenticator">Hitelesítő</string>
@@ -294,7 +294,7 @@
     <string name="DeleteAccountFragment__no_number">Nincs szám megadva</string>
     <string name="DeleteAccountFragment__the_phone_number">A megadott telefonszám nem egyezik a fiókodhoz tartozóval.</string>
     <string name="DeleteAccountFragment__are_you_sure">Biztosan törölni akarod a fiókod?</string>
-    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">Ez törölni fogja a Signal-fiókod, és alaphelyzetbe állítja az alkalmazást. Az alkalmazás bezárul a folyamat végeztével.</string>
+    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">Ez törölni fogja a Radar-fiókod, és alaphelyzetbe állítja az alkalmazást. Az alkalmazás bezárul a folyamat végeztével.</string>
     <string name="DeleteAccountFragment__failed_to_delete_local_data">Sikertelen a helyi adat törlése. Manuálisan törölheted a rendszer alkalmazás-beállításai alatt.</string>
     <string name="DeleteAccountFragment__launch_app_settings">App beállítások indítása</string>
     <!-- Title of progress dialog shown when a user deletes their account and the process is leaving all groups -->
@@ -322,7 +322,7 @@
     <!-- Bullet point on the delete account screen warning the user that the deletion is permanent -->
     <string name="DeleteAccountScreen__this_action_can_not_be_undone">Ez a művelet nem vonható vissza</string>
     <!-- Message of the deletion confirmation dialog, shown when the account has a username. Placeholder is the username. -->
-    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">Ez törli a(z) „%1$s” felhasználónévvel rendelkező Signal-fiókodat, és helyreállítja az alkalmazást. Az alkalmazás a folyamat befejezése után bezárul.</string>
+    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">Ez törli a(z) „%1$s” felhasználónévvel rendelkező Radar-fiókodat, és helyreállítja az alkalmazást. Az alkalmazás a folyamat befejezése után bezárul.</string>
     <!-- Label of the checkbox the user has to tick in the confirmation dialog before they can delete their account -->
     <string name="DeleteAccountScreen__yes_delete_my_account">Igen, fiókom törlése</string>
 
@@ -455,15 +455,15 @@
     <!-- Section title above two radio buttons for enabling and disabling whether users can find me by my phone number  -->
     <string name="PhoneNumberPrivacySettingsFragment_who_can_find_me_by_number_heading">Ki találhat meg a telefonszámom szerint?</string>
     <!-- Subtext below radio buttons when who can find me by number is set to everyone -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">Bárki, aki tudja a telefonszámodat, látni fogja, hogy használod a Signalt, és csevegést kezdeményezhet veled.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">Bárki, aki tudja a telefonszámodat, látni fogja, hogy használod a Radart, és csevegést kezdeményezhet veled.</string>
     <!-- Subtext below radio buttons when who can find me by number is set to nobody -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">Senki sem láthatja, hogy használod a Signalt, hacsak nem küldesz valakinek üzenetet, vagy nem folytatsz csevegést valakivel.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">Senki sem láthatja, hogy használod a Radart, hacsak nem küldesz valakinek üzenetet, vagy nem folytatsz csevegést valakivel.</string>
     <!-- Snackbar text when pressing invalid radio item -->
     <string name="PhoneNumberPrivacySettingsFragment__to_change_this_setting">"A beállítás módosításához állítsd a „Ki láthatja a telefonszámomat” „Senki” lehetőségre."</string>
     <!-- Dialog title shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
     <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_title">Biztos vagy benne?</string>
     <!-- Dialog warning message shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
-    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">A „Ki találhat meg a számom alapján” beállítása „Senki” opcióra nehezebbé teszi az emberek számára, hogy megtaláljanak téged a Signalon.</string>
+    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">A „Ki találhat meg a számom alapján” beállítása „Senki” opcióra nehezebbé teszi az emberek számára, hogy megtaláljanak téged a Radaron.</string>
     <!-- Dialog button text for canceling change action -->
     <string name="PhoneNumberPrivacySettingsFragment__cancel">Mégse</string>
     <string name="PhoneNumberPrivacy_everyone">Mindenki</string>
@@ -509,7 +509,7 @@
     <!-- Text shown with toggle that when switched on will enable screen lock -->
     <string name="ScreenLockSettingsFragment__use_screen_lock">Képernyőzár használata</string>
     <!-- Description of what screen locking will do and how notification content will not be shown when screen is locked -->
-    <string name="ScreenLockSettingsFragment__your_android_device">Az Android-készülék zárolási beállításai szükségesek a Signal feloldásához, amikor kilépsz, vagy alkalmazást váltasz. Ha az eszköz le van zárva, az értesítések előnézete nem jeleníti meg az üzenet tartalmát.</string>
+    <string name="ScreenLockSettingsFragment__your_android_device">Az Android-készülék zárolási beállításai szükségesek a Radar feloldásához, amikor kilépsz, vagy alkalmazást váltasz. Ha az eszköz le van zárva, az értesítések előnézete nem jeleníti meg az üzenet tartalmát.</string>
     <!-- Title text explaining when users should start the screen lock -->
     <string name="ScreenLockSettingsFragment__start_screen_lock">Képernyőzár bekapcsolása</string>
     <!-- Option text explaining that screen lock should start after 1 minute of inactivity -->
@@ -521,9 +521,9 @@
     <!-- Option text explaining that screen lock should start at a custom time set by the user -->
     <string name="ScreenLockSettingsFragment__custom_time">Egyedi érték</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn on screen lock -->
-    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Signal képernyőzár használata</string>
+    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Radar képernyőzár használata</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn off screen lock -->
-    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">A Signal képernyőzár kikapcsolása</string>
+    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">A Radar képernyőzár kikapcsolása</string>
 
     <!-- HelpSettingsFragment -->
     <string name="preferences__help">Súgó</string>
@@ -545,7 +545,7 @@
     <!-- Visible warning label for the limitations of changing the app icon. -->
     <string name="preferences__app_icon_warning">Az alkalmazások ikonjai és nevei a kezdőképernyőn és a telepített alkalmazásaid listájában láthatók.</string>
     <!-- Visible warning label explaining that changing the app icon and name does not affect notifications. -->
-    <string name="preferences__app_icon_notification_warning">Az Értesítések mindig az alapértelmezett Signal-ikont és nevet jelenítik meg.</string>
+    <string name="preferences__app_icon_notification_warning">Az Értesítések mindig az alapértelmezett Radar-ikont és nevet jelenítik meg.</string>
     <!--Text description of a graphic illustrating the limitations of the app icon change. -->
     <string name="preferences__graphic_illustrating_where_the_replacement_app_icon_will_be_visible">Grafika, amely bemutatja, hol lesz látható a helyettesítő alkalmazás ikonja.</string>
 
@@ -565,9 +565,9 @@
     <!-- Title for the confirmation dialog of changing the app icon. -->
     <string name="preferences__app_icon_dialog_title">Módosítsd az alkalmazás ikonját és nevét a következőre: „%1$s”</string>
     <!-- Description for the confirmation dialog of changing the app icon. -->
-    <string name="preferences__app_icon_dialog_description">Az alkalmazás ikonjának és nevének módosításához be kell zárni a Signalt. Az Értesítések mindig az alapértelmezett Signal-ikont és nevet jelenítik meg.</string>
+    <string name="preferences__app_icon_dialog_description">Az alkalmazás ikonjának és nevének módosításához be kell zárni a Radart. Az Értesítések mindig az alapértelmezett Radar-ikont és nevet jelenítik meg.</string>
     <!-- Visible warning label for the limitations of changing the app icon with learn more call to action. -->
-    <string name="preferences__app_icon_warning_learn_more">Válassz ki egy alkalmazásikont és -nevet, amely látható lesz a telefon kezdőképernyőjén és a telepített alkalmazásaid listájában. Az Értesítések mindig az alapértelmezett Signal-ikont és nevet jelenítik meg. Tudj meg többet</string>
+    <string name="preferences__app_icon_warning_learn_more">Válassz ki egy alkalmazásikont és -nevet, amely látható lesz a telefon kezdőképernyőjén és a telepített alkalmazásaid listájában. Az Értesítések mindig az alapértelmezett Radar-ikont és nevet jelenítik meg. Tudj meg többet</string>
     <!--Call to action to get more information about the limitations of the change app icon functionality. -->
     <string name="preferences__app_icon_learn_more">Tudj meg többet</string>
 
@@ -597,7 +597,7 @@
     <string name="ApplicationPreferenceActivity_you_havent_set_a_passphrase_yet">Még nem állítottál be jelmondatot!</string>
     <string name="ApplicationPreferencesActivity_disable">Letiltás</string>
     <string name="ApplicationPreferencesActivity_disable_passphrase">Jelmondat letiltása?</string>
-    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">Ez véglegesen fel fogja oldani a Signalt és az üzenet értesítéseket.</string>
+    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">Ez véglegesen fel fogja oldani a Radart és az üzenet értesítéseket.</string>
     <string name="PrivacySettingsFragment__app_security">App biztonság</string>
     <!-- This refers to the multi-tasking overview (recent apps) from the Android operating system.-->
     <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">Képernyőképek készítésének letiltása a futó alkalmazások listájában és az alkalmazáson belül</string>
@@ -618,10 +618,10 @@
     <!-- Description for the payment lock toggle in privacy settings -->
     <string name="PrivacySettingsFragment__payment_lock_require_lock">Android-képernyőzár vagy ujjlenyomat kérése átutaláshoz</string>
     <string name="PrivacySettingsFragment__set_a_default_disappearing_message_timer_for_all_new_chats_started_by_you">Állítsd be az alapértelmezett időzítőt újonnan indított csevegéseid eltűnő üzeneteihez.</string>
-    <string name="PrivacySettingsFragment__signal_message_and_calls">Signal üzenetek és hívások, átjátszási beállítások, rejtett feladó</string>
+    <string name="PrivacySettingsFragment__signal_message_and_calls">Radar üzenetek és hívások, átjátszási beállítások, rejtett feladó</string>
     <!-- Text shown when screen lock is not enabled -->
     <string name="ScreenLockSettingsFragment__off">Ki</string>
-    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">Signal automatikus zárolása meghatározott inaktivitási időszak után</string>
+    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">Radar automatikus zárolása meghatározott inaktivitási időszak után</string>
     <string name="preferences__change_passphrase">Jelmondat megváltoztatása</string>
     <string name="preferences__change_your_passphrase">Jelmondatod megváltoztatása</string>
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
@@ -643,7 +643,7 @@
     <string name="preferences__this_setting_is_not_a_guarantee">Nem lehet garantálni, hogy a billentyűzet figyelembe fogja venni ezt a beállítást.</string>
     <string name="preferences__typing_indicators">Gépelés-indikátorok</string>
     <!-- Subtext below option to launch into phone number privacy settings screen -->
-    <string name="preferences_app_protection__choose_who_can_see">Válaszd ki, hogy ki láthatja a telefonszámod, és ki léphet kapcsolatba veled a Signalon keresztül.</string>
+    <string name="preferences_app_protection__choose_who_can_see">Válaszd ki, hogy ki láthatja a telefonszámod, és ki léphet kapcsolatba veled a Radaron keresztül.</string>
     <!-- Privacy settings payments section title -->
     <string name="preferences_app_protection__payments">Fizetések</string>
     <!-- Snackbar text shown when trying to enable screen lock but the user does not have a password or biometrics enabled -->
@@ -659,7 +659,7 @@
     <!-- Dismiss button on the dialog explaining payment lock needs a device screen lock -->
     <string name="PrivacySettingsScreen__not_now">Később</string>
     <!-- Title of the authentication prompt shown when turning off payment lock -->
-    <string name="PrivacySettingsScreen__signal">Signal</string>
+    <string name="PrivacySettingsScreen__signal">Radar</string>
     <!-- Link after the incognito keyboard disclaimer that opens a support article -->
     <string name="PrivacySettingsScreen__learn_more">Tudj meg többet</string>
 
@@ -675,7 +675,7 @@
     <!-- String displayed telling user to invite their friends to Signal -->
     <string name="AppSettingsFragment__invite_your_friends">Hívd meg barátaidat!</string>
     <!-- String alerting user that something is wrong with their backups subscription -->
-    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">Újítsd meg Signal Biztonságos Biztonsági mentések visszaállítása előfizetésedet</string>
+    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">Újítsd meg Radar Biztonságos Biztonsági mentések visszaállítása előfizetésedet</string>
     <!-- App settings row that opens privacy settings -->
     <string name="preferences__privacy">Adatvédelem</string>
     <!-- Title of the top level app settings screen -->
@@ -745,7 +745,7 @@
     <!-- Error shown under the code field when the service rejected the code -->
     <string name="TwoFactorVerifyScreen__incorrect_code">Helytelen kód! Add meg most a hitelesítő alkalmazásodban megjelenő kódot.</string>
     <!-- Error shown when the service could not be reached -->
-    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Nem sikerült elérni a Signalt. Ellenőrizd az internetkapcsolatod, és próbáld újra!</string>
+    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Nem sikerült elérni a Radart. Ellenőrizd az internetkapcsolatod, és próbáld újra!</string>
     <!-- Dialog shown when verifying with a passkey failed -->
     <string name="TwoFactorVerifyScreen__something_went_wrong_with_your_passkey">Probléma merült fel a hozzáférési kulcsoddal. Kérjük, próbáld újra vagy válassz egy másik módot.</string>
 
@@ -873,9 +873,9 @@
     <!-- Explanation below the name, about and badges rows on the profile screen, saying who can see your profile -->
     <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">A profilod és a módosításai azok számára lesznek láthatók, akiknek üzenetet küldesz, valamint, akik a névjegyeid és a csoportjaid között vannak.</string>
     <!-- The title of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_title">Signal frissítése</string>
+    <string name="EditProfileFragment_deprecated_dialog_title">Radar frissítése</string>
     <!-- The body of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_body">A Signal jelenlegi verziója lejárt. A Signal használatának folytatásához frissítsd most.</string>
+    <string name="EditProfileFragment_deprecated_dialog_body">A Radar jelenlegi verziója lejárt. A Radar használatának folytatásához frissítsd most.</string>
     <!-- The button on a dialog prompting user to update to the latest version of Signal. When clicked, the user will be taken to the store to update their app. -->
     <string name="EditProfileFragment_deprecated_dialog_update_button">Frissítés</string>
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
@@ -1007,7 +1007,7 @@
     <!-- Dialog title shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
     <string name="UsernameLinkSettings_qr_code_not_found">QR-kód nem található</string>
     <!-- Dialog message shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
-    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Próbálj meg beolvasni egy másik képet, amely egy Signal QR-kódot tartalmaz.</string>
+    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Próbálj meg beolvasni egy másik képet, amely egy Radar QR-kódot tartalmaz.</string>
     <!-- Body of a dialog that is displayed when the username we looked up could not be found. -->
     <string name="UsernameLinkSettings_qr_result_not_found">A(z) %1$s felhasználónévvel rendelkező felhasználó nem található.</string>
     <!-- Description text shown underneath the username QR code scanner -->
@@ -1015,19 +1015,19 @@
     <!-- Shown when the QR code you scanned leads to a username link that no one has -->
     <string name="UsernameLinkSettingsScreen__qr_result_not_found_no_username">Ez a felhasználó nem található.</string>
     <!-- Shown in place of the camera on the scan tab when the camera permission hasn\'t been granted -->
-    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">QR-kód beolvasásához engedélyezd a Signalnak a kamerához való hozzáférést.</string>
+    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">QR-kód beolvasásához engedélyezd a Radarnak a kamerához való hozzáférést.</string>
     <!-- Button on the scan tab that asks for the camera permission -->
     <string name="UsernameLinkSettingsScreen__allow_access">Hozzáférés engedélyezése</string>
     <!-- Shown when the camera permission was denied, or permanently denied, and a QR code can\'t be scanned -->
-    <string name="UsernameLinkSettingsScreen__camera_needed">QR-kód beolvasásához a Signalnak hozzá kell férnie a kamerához</string>
+    <string name="UsernameLinkSettingsScreen__camera_needed">QR-kód beolvasásához a Radarnak hozzá kell férnie a kamerához</string>
 
     <!-- ManageStorageSettingsScreen -->
     <string name="preferences__storage">Tárolás</string>
     <string name="preferences_storage__storage_usage">Tárhelyhasználat</string>
     <!-- Setting section title header for storage optimization -->
-    <string name="ManageStorageSettingsFragment__on_device_storage">Signal tárhely</string>
+    <string name="ManageStorageSettingsFragment__on_device_storage">Radar tárhely</string>
     <!-- Setting row title for storage optimization -->
-    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Optimalizáld a Signal-tárhelyedet</string>
+    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Optimalizáld a Radar-tárhelyedet</string>
     <!-- Setting row explanation for storage optimization -->
     <string name="ManageStorageSettingsFragment__unused_media_will_be_offloaded">A fel nem használt médiafájlokat a rendszer eltávolítja, de bármikor letöltheted őket a biztonsági másolatból.</string>
     <!-- Settings section title header show above manage settings options for automatic chat history management (deleting) -->
@@ -1049,11 +1049,11 @@
     <string name="preferences_storage__all_message_history_will_be_permanently_removed_this_action_cannot_be_undone_linked_device">A teljes üzenetelőzmény véglegesen törlésre kerül minden eszközről. Ez a művelet nem vonható vissza.</string>
     <string name="preferences_storage__delete_all_now">Összes törlése most</string>
     <!-- Dialog message for paid tier pending dialog -->
-    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">A tárhely-optimalizálás csak a díj ellenében igénybe vehető Signal biztonsági mentésekkel használható. Biztonsági mentésre vonatkozó előfizetésed még feldolgozás alatt áll, és még nem aktív. Kérjük, próbáld újra később.</string>
+    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">A tárhely-optimalizálás csak a díj ellenében igénybe vehető Radar biztonsági mentésekkel használható. Biztonsági mentésre vonatkozó előfizetésed még feldolgozás alatt áll, és még nem aktív. Kérjük, próbáld újra később.</string>
     <!-- Title of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
     <string name="ManageStorageSettingsFragment__media_will_be_removed_from_your_on_device_backup">A médiafájlok eltávolításra kerülnek az eszközön lévő biztonsági mentésből.</string>
     <!-- Body of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
-    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">A „Signal tárhely-optimalizálás” funkció bekapcsolásával a régi médiafájlok áthelyezésre kerülnek az eszközről. Bármikor újra letöltheted. A régi médiafájlokat is eltávolítod az eszközön lévő biztonsági mentésből.</string>
+    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">A „Radar tárhely-optimalizálás” funkció bekapcsolásával a régi médiafájlok áthelyezésre kerülnek az eszközről. Bármikor újra letöltheted. A régi médiafájlokat is eltávolítod az eszközön lévő biztonsági mentésből.</string>
     <!-- Dialog action to confirm turning on "Optimize Signal storage" -->
     <string name="ManageStorageSettingsFragment__turn_on">Bekapcsolás</string>
 
@@ -1083,15 +1083,15 @@
     <!-- Displayed in a toast when we fail to open the ringtone picker -->
     <string name="NotificationSettingsFragment__failed_to_open_picker">Sikertelen tallózás.</string>
     <!-- Banner title when notification permission is disabled -->
-    <string name="NotificationSettingsFragment__to_enable_notifications">Az értesítések engedélyezéséhez a Signalnak engedélyre van szüksége azok megjelenítéséhez.</string>
+    <string name="NotificationSettingsFragment__to_enable_notifications">Az értesítések engedélyezéséhez a Radarnak engedélyre van szüksége azok megjelenítéséhez.</string>
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Bekapcsolás</string>
     <string name="NotificationsSettingsFragment__calls">Hívások</string>
-    <string name="NotificationsSettingsFragment__contact_joins_signal">Ismerős csatlakozott Signalra</string>
+    <string name="NotificationsSettingsFragment__contact_joins_signal">Ismerős csatlakozott Radarra</string>
     <!-- Notification preference summary text -->
     <string name="NotificationsSettingsFragment__create_a_profile_to_receive_notifications_only_from_people_and_groups_you_choose">Hozz létre egy profilt, hogy csak azoktól a személyektől és csoportoktól érkezzen értesítés, akiket kiválasztasz!</string>
     <!-- Notification body to get notified when someone joins Signal -->
-    <string name="NotificationsSettingsFragment__notify_contact">Értesítés megjelenítése, amikor egy telefonos névjegy csatlakozik a Signalhoz</string>
+    <string name="NotificationsSettingsFragment__notify_contact">Értesítés megjelenítése, amikor egy telefonos névjegy csatlakozik a Radarhoz</string>
     <!-- Option to reset their notification settings -->
     <string name="NotificationsSettingsFragment__reset">Értesítési beállítások visszaállítása</string>
     <!-- Dialog to reset their notification settings -->

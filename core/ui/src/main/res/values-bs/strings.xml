@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Dodirnite Nastavi i unesite šifru za otključavanje telefona da potvrdite. Nemojte unositi svoj PIN za Signal.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Dodirnite Nastavi i unesite šifru za otključavanje telefona da potvrdite. Nemojte unositi svoj PIN za Radar.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Nastavi</string>
 

@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">［Continue］をタップし、スマートフォンの解錠コードを入力して確認します。Signal PINを入力しないようにしてください。</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">［Continue］をタップし、スマートフォンの解錠コードを入力して確認します。Radar PINを入力しないようにしてください。</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">続行</string>
 

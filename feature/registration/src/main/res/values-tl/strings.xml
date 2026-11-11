@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Magbigay ng pahintulot</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Para matulungan kang i-message ang mga taong kilala mo, hihingi ng pahinuntulot ang Signal. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Para matulungan kang i-message ang mga taong kilala mo, hihingi ng pahinuntulot ang Radar. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Hindi na muna</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Contacts</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Hanapin ang mga taong kilala mo. Encrypted ang contacts mo at hindi ito makikita ng Signal service.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Hanapin ang mga taong kilala mo. Encrypted ang contacts mo at hindi ito makikita ng Radar service.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Phone calls</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Nasa akin ang lumang phone ko</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">I-scan ang QR code mula sa current Signal account mo para makapagsimula agad</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">I-scan ang QR code mula sa current Radar account mo para makapagsimula agad</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Wala sa akin ang lumang phone ko</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">O nag-iinstall ka ulit ng Signal sa parehong device</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">O nag-iinstall ka ulit ng Radar sa parehong device</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Piliin kung paano mo gustong i-restore ang message history at account data mo.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Mula sa Signal Backups</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Mula sa Radar Backups</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Ang free o paid na Signal Backup plan mo</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Ang free o paid na Radar Backup plan mo</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">I-restore ang on-device backup</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Walang mahanap na backup</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Walang makitang Signal backup sa napiling folder. Pumili ng ibang folder.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Walang makitang Radar backup sa napiling folder. Pumili ng ibang folder.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Pumili ng ibang folder</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">I-restore sa bagong account?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Ginawa sa ibang Signal account ang backup na nire-restore mo. Pwede mong i-restore ang backup na ito sa bagong account, pero hindi ka na magiging member ng anumang group na ni-restore.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Ginawa sa ibang Radar account ang backup na nire-restore mo. Pwede mong i-restore ang backup na ito sa bagong account, pero hindi ka na magiging member ng anumang group na ni-restore.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">I-restore</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Walang mahanap na backup</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Tama ang recovery key mo, ngunit walang Signal Backup para sa account na ito. Bumalik para pumili ng ibang paraan ng pag-restore, o magpatuloy nang hindi nagre-restore.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Tama ang recovery key mo, ngunit walang Radar Backup para sa account na ito. Bumalik para pumili ng ibang paraan ng pag-restore, o magpatuloy nang hindi nagre-restore.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Maling recovery key</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Siguraduhing nagre-register ka gamit ang parehong phone number at ang 64-character recovery key na naka-save sa \'yo noong in-enable mo ang Signal backups. Hindi maaaring i-recover ang backups kapag wala ang key na ito.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Siguraduhing nagre-register ka gamit ang parehong phone number at ang 64-character recovery key na naka-save sa \'yo noong in-enable mo ang Radar backups. Hindi maaaring i-recover ang backups kapag wala ang key na ito.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Subukan ulit</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Gusto mo bang mag-verify gamit ang SMS code?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Pwede mong i-register ang iyong account sa pamamagitan ng pag-verify via SMS code na ise-send ng Signal sa \'yo. Pagkatapos mong ilagay ang code, pwede mong subukan ulit na i-restore ang iyong backup gamit ang recovery key mo.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Pwede mong i-register ang iyong account sa pamamagitan ng pag-verify via SMS code na ise-send ng Radar sa \'yo. Pagkatapos mong ilagay ang code, pwede mong subukan ulit na i-restore ang iyong backup gamit ang recovery key mo.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">I-send ang code</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">I-link ang account mo</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Wala ka pa ba sa Signal?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Wala ka pa ba sa Radar?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Gumawa ng account</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Hindi ma-restore ang backup na ito</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Hindi ma-restore ng Signal version na ito ang backup mo. Mag-update sa latest version at subukan ulit.</string>
+    <string name="RemoteRestoreScreen__update_latest">Hindi ma-restore ng Radar version na ito ang backup mo. Mag-update sa latest version at subukan ulit.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">I-update ang Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">I-update ang Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Hindi na muna</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Ang iyong account ay ini-lock upang protektahan ang iyong privacy at seguridad. Makalipas ang %1$d araw ng inactivity sa iyong account ay maaari mong i-register ulit ang phone number na ito nang hindi kinakailangan ang iyong PIN. Ang lahat ng content ay mabubura.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Buksan ang Signal sa lumang device mo</string>
+    <string name="QuickRestoreQRScreen__step_1">Buksan ang Radar sa lumang device mo</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">I-tap ang camera icon </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Pumili ng mas malakas na PIN</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Naglagay ka ng code na dati mo nang ginamit para i-verify ang iyong phone number. Pumili ng bago at unique na Signal PIN.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Naglagay ka ng code na dati mo nang ginamit para i-verify ang iyong phone number. Pumili ng bago at unique na Radar PIN.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Magdagdag ng kaalaman tungkol sa mga PIN</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Babala</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Kapag dinisable mo ang iyong PIN, mawawala ang lahat ng data kapag nag-register ka ulit sa Signal maliban na lang kung manually kang nag-back up at restore. Hindi mo pwedeng i-on ang Registration Lock habang naka-disable ang PIN.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Kapag dinisable mo ang iyong PIN, mawawala ang lahat ng data kapag nag-register ka ulit sa Radar maliban na lang kung manually kang nag-back up at restore. Hindi mo pwedeng i-on ang Registration Lock habang naka-disable ang PIN.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">I-disable ang PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Ilagay ang iyong PIN</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Ilagay ang PIN na ginawa mo noong unang beses kang nag-install ng Signal</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Ilagay ang PIN na ginawa mo noong unang beses kang nag-install ng Radar</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Naglagay ka ng code na dati mo nang ginamit para i-verify ang iyong phone number. Ilagay ang unique Signal PIN na ginamit mo dati para sa iyong account.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Naglagay ka ng code na dati mo nang ginamit para i-verify ang iyong phone number. Ilagay ang unique Radar PIN na ginamit mo dati para sa iyong account.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">Hindi tama ang PIN. %1$d pagtatangka na lang.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Payagan ang notifications</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Humihingi ng notification permission ang Signal. Papayagan nito ang device mong magpakita ng alerts kapag may dumating na bagong messages.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Humihingi ng notification permission ang Radar. Papayagan nito ang device mong magpakita ng alerts kapag may dumating na bagong messages.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Hindi na muna</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">I-scan ang code na ito para i-link ang account mo</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">I-open ang Signal sa iyong phone</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">I-open ang Radar sa iyong phone</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">I-tap ang profile picture mo para buksan ang Signal Settings</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">I-tap ang profile picture mo para buksan ang Radar Settings</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">I-tap ang \"Linked devices\" at \"Mag-link ng bagong device\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Hindi ma-generate ang code</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Walang Signal sa ibang device?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Walang Radar sa ibang device?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Gumawa ng account</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Burahin ang app data?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Sinusubukan mong mag-link ng ibang Signal account. Kapag itinuloy mo ito, mabubura ang lahat ng Signal data na nasa device na ito.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Sinusubukan mong mag-link ng ibang Radar account. Kapag itinuloy mo ito, mabubura ang lahat ng Radar data na nasa device na ito.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Burahin at magsimula ulit</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Ilipat ang account mo</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Para mailipat ang account mo, buksan ang Signal sa lumang Android device mo at piliin ang Ilipat ang Account.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Para mailipat ang account mo, buksan ang Radar sa lumang Android device mo at piliin ang Ilipat ang Account.</string>
     <string name="DeviceTransferInstructions__continue">Magpatuloy</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Oo, magkapareho ang numbers</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Hindi magkapareho ang numbers</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Hinihintay mag-verify ang lumang device mo…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Kailangan ng Signal ang location permission para ma-discover at maka-connect sa lumang device mo.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Kailangan ng Radar ang location permission para ma-discover at maka-connect sa lumang device mo.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Bigyan ng pahintulot</string>
-    <string name="DeviceTransferSetup__location_services_required">Kailangang naka-enable ang location services para ma-discover at maka-connect sa lumang device mo ang Signal.</string>
+    <string name="DeviceTransferSetup__location_services_required">Kailangang naka-enable ang location services para ma-discover at maka-connect sa lumang device mo ang Radar.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">I-on ang location services</string>
-    <string name="DeviceTransferSetup__wifi_required">Kailangang naka-on ang Wi-Fi para ma-discover at maka-connect sa lumang device mo ang Signal.</string>
+    <string name="DeviceTransferSetup__wifi_required">Kailangang naka-on ang Wi-Fi para ma-discover at maka-connect sa lumang device mo ang Radar.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">I-on ang Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Paumanhin, ngunit lumalabas na hindi suportado ng device mo ang Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Mag-restore na lang ng backup</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Naglilipat ng data</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d messages sa ngayon</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Hindi makapaglipat ng data</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Hindi mailipat sa mas bagong version ng Signal.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Hindi mailipat sa mas bagong version ng Radar.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Hindi mailipat ang ibang data dahil sa limitasyon ng database.</string>
     <string name="DeviceTransferProgress__transfer_failed">Failed ang paglipat. Subukan ulit.</string>
     <string name="DeviceTransferProgress__try_again">Subukan ulit</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Sigurado ka na ba?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Kung wala kang username, hindi ka mahahanap ng mga tao sa Signal.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Kung wala kang username, hindi ka mahahanap ng mga tao sa Radar.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">I-cancel</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

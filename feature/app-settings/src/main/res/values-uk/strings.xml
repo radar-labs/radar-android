@@ -3,7 +3,7 @@
     <!-- RegistrationLockV2Dialog -->
     <string name="RegistrationLockV2Dialog_turn_on_registration_lock">Увімкнути блокування реєстрації?</string>
     <string name="RegistrationLockV2Dialog_turn_off_registration_lock">Вимкнути блокування реєстрації?</string>
-    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Якщо під час повторної реєстрації в Signal ви забудете PIN-код, то втратите доступ до свого акаунту на 7 днів.</string>
+    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Якщо під час повторної реєстрації в Radar ви забудете PIN-код, то втратите доступ до свого акаунту на 7 днів.</string>
     <string name="RegistrationLockV2Dialog_turn_on">Увімкнути</string>
     <string name="RegistrationLockV2Dialog_turn_off">Вимкнути</string>
     <string name="preferences__advanced_pin_settings">Керування PIN-кодом</string>
@@ -12,20 +12,20 @@
     <string name="RegistrationLockFragment__switch_keyboard">Перемкнути клавіатуру</string>
     <string name="preferences_chats__transfer_account">Перенести акаунт</string>
     <string name="preferences_chats__transfer_account_to_a_new_android_device">Перенесіть акаунт на новий пристрій з ОС Android</string>
-    <string name="preferences_app_protection__signal_pin">PIN-код Signal</string>
+    <string name="preferences_app_protection__signal_pin">PIN-код Radar</string>
     <string name="preferences_app_protection__create_a_pin">Створити PIN-код</string>
     <string name="preferences_app_protection__change_your_pin">Змінити PIN-код</string>
     <string name="preferences_app_protection__pin_reminders">Нагадувати PIN-код</string>
     <string name="preferences_app_protection__turn_off">Вимкнути</string>
     <string name="preferences_app_protection__confirm_pin">Підтвердьте PIN-код</string>
-    <string name="preferences_app_protection__confirm_your_signal_pin">Підтвердьте PIN-код Signal</string>
-    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">PIN-код необхідно запам’ятати або надійно зберегти, оскільки його неможливо відновити. Якщо ви забудете свій PIN-код, то можете втратити дані при повторній реєстрації акаунту в Signal.</string>
+    <string name="preferences_app_protection__confirm_your_signal_pin">Підтвердьте PIN-код Radar</string>
+    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">PIN-код необхідно запам’ятати або надійно зберегти, оскільки його неможливо відновити. Якщо ви забудете свій PIN-код, то можете втратити дані при повторній реєстрації акаунту в Radar.</string>
     <string name="preferences_app_protection__incorrect_pin_try_again">Неправильний PIN-код. Повторіть спробу.</string>
     <string name="preferences_app_protection__registration_lock">Блокувати реєстрацію</string>
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
     <string name="preferences_account_reregister">Перереєструвати акаунт</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
-    <string name="preferences_account_update_signal">Оновити Signal</string>
+    <string name="preferences_account_update_signal">Оновити Radar</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
     <string name="preferences_account_delete_all_data">Видалити всі дані</string>
     <!-- Title for confirmation dialog confirming user wants to delete all their data -->
@@ -40,7 +40,7 @@
     <!-- AccountSettingsFragment -->
     <string name="AccountSettingsFragment__account">Акаунт</string>
     <string name="AccountSettingsFragment__youll_be_asked_less_frequently">З часом нагадування з\'являтимуться рідше</string>
-    <string name="AccountSettingsFragment__require_your_signal_pin">Вимагати введення PIN-коду для повторної реєстрації номера телефону в Signal</string>
+    <string name="AccountSettingsFragment__require_your_signal_pin">Вимагати введення PIN-коду для повторної реєстрації номера телефону в Radar</string>
     <string name="AccountSettingsFragment__change_phone_number">Змінити номер телефону</string>
     <!-- Account setting that allows user to request and export their signal account data -->
     <string name="AccountSettingsFragment__request_account_data">Облікові дані</string>
@@ -140,7 +140,7 @@
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">Облікові дані</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
-    <string name="ExportAccountDataFragment__export_explanation">Експортуйте файл зі своїми обліковими даними користувача Signal. Облікові дані не включають повідомлення та медіафайли. %1$s</string>
+    <string name="ExportAccountDataFragment__export_explanation">Експортуйте файл зі своїми обліковими даними користувача Radar. Облікові дані не включають повідомлення та медіафайли. %1$s</string>
     <!-- Learn more link to more information about requesting account data -->
     <string name="ExportAccountDataFragment__learn_more">Докладніше</string>
     <!-- Button action to export the report data to another app (e.g. email) -->
@@ -168,14 +168,14 @@
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Експортувати дані?</string>
     <!-- Message for export confirmation dialog -->
-    <string name="ExportAccountDataFragment__export_report_confirmation_message">Надсилайте свої облікові дані користувача Signal лише тим людям і через ті застосунки, яким довіряєте.</string>
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Надсилайте свої облікові дані користувача Radar лише тим людям і через ті застосунки, яким довіряєте.</string>
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">Експортувати</string>
 
     <!-- Shown in a dialog with a spinner while the report is downloading -->
     <string name="ExportAccountDataFragment__download_progress">Створюємо файл…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
-    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Файл з обліковими даними створюється лише під час експортування. Signal не зберігає файл на вашому пристрої.</string>
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Файл з обліковими даними створюється лише під час експортування. Radar не зберігає файл на вашому пристрої.</string>
 
     <!-- TotpSetupScreen -->
     <!-- Title of the screen that walks the user through setting up an authenticator app -->
@@ -191,7 +191,7 @@
     <!-- Header of the second step of authenticator app setup -->
     <string name="TotpSetupScreen__step_2">Крок 2</string>
     <!-- Body of the second step of authenticator app setup -->
-    <string name="TotpSetupScreen__open_your_authenticator_app">Відкрийте автентифікатор, натиснувши кнопку нижче, щоб додати свій акаунт Signal.</string>
+    <string name="TotpSetupScreen__open_your_authenticator_app">Відкрийте автентифікатор, натиснувши кнопку нижче, щоб додати свій акаунт Radar.</string>
     <!-- Button that opens the user\'s authenticator app -->
     <string name="TotpSetupScreen__open">Відкрити</string>
     <!-- Text above the setup key explaining that it can be entered by hand instead -->
@@ -205,7 +205,7 @@
     <!-- Dialog message shown when the account already has as many authenticator apps as it\'s allowed -->
     <string name="TotpSetupScreen__you_cant_add_more_than_d">Можна додати максимум %1$d автентифікатори. Видаліть якийсь із наявних.</string>
     <!-- Dialog message shown when we couldn\'t reach the service to start setting up an authenticator app -->
-    <string name="TotpSetupScreen__couldnt_reach_signal">Не вдалося зв\'язатись із Signal. Перевірте з\'єднання і спробуйте ще раз.</string>
+    <string name="TotpSetupScreen__couldnt_reach_signal">Не вдалося зв\'язатись із Radar. Перевірте з\'єднання і спробуйте ще раз.</string>
     <!-- Header of the third step of authenticator app setup -->
     <string name="TotpSetupScreen__step_3">Крок 3</string>
     <!-- Body of the third step of authenticator app setup -->
@@ -243,7 +243,7 @@
     <!-- Error shown under the code field when the code the user entered was rejected -->
     <string name="TotpCodeEntryScreen__incorrect_code">Неправильний код. Введіть код, який зараз показано у вашому автентифікаторі.</string>
     <!-- Error shown under the code field when we couldn\'t reach the service to check the code -->
-    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Не вдалося зв\'язатись із Signal. Перевірте з\'єднання і спробуйте ще раз.</string>
+    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Не вдалося зв\'язатись із Radar. Перевірте з\'єднання і спробуйте ще раз.</string>
 
     <!-- Default name given to an authenticator app the moment it\'s set up, before the user chooses their own name for it -->
     <string name="TotpRepository__authenticator">Автентифікатор</string>
@@ -294,7 +294,7 @@
     <string name="DeleteAccountFragment__no_number">Не зазначено номер</string>
     <string name="DeleteAccountFragment__the_phone_number">Ви ввели номер телефону, не пов\'язаний з вашим акаунтом.</string>
     <string name="DeleteAccountFragment__are_you_sure">Ви точно хочете видалити свій акаунт?</string>
-    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">Ваш акаунт Signal буде видалено, а налаштування застосунку скинуто. Після завершення цього процесу застосунок закриється.</string>
+    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">Ваш акаунт Radar буде видалено, а налаштування застосунку скинуто. Після завершення цього процесу застосунок закриється.</string>
     <string name="DeleteAccountFragment__failed_to_delete_local_data">Не вдалося видалити локальні дані. Ви можете видалити їх вручну в системних налаштуваннях застосунку.</string>
     <string name="DeleteAccountFragment__launch_app_settings">Відкрити налаштування застосунку</string>
     <!-- Title of progress dialog shown when a user deletes their account and the process is leaving all groups -->
@@ -322,7 +322,7 @@
     <!-- Bullet point on the delete account screen warning the user that the deletion is permanent -->
     <string name="DeleteAccountScreen__this_action_can_not_be_undone">Незворотного видалення акаунту</string>
     <!-- Message of the deletion confirmation dialog, shown when the account has a username. Placeholder is the username. -->
-    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">Ваш акаунт Signal з іменем користувача «%1$s» буде видалено, а налаштування застосунку скинуто. Після цього застосунок закриється.</string>
+    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">Ваш акаунт Radar з іменем користувача «%1$s» буде видалено, а налаштування застосунку скинуто. Після цього застосунок закриється.</string>
     <!-- Label of the checkbox the user has to tick in the confirmation dialog before they can delete their account -->
     <string name="DeleteAccountScreen__yes_delete_my_account">Так, видалити акаунт</string>
 
@@ -457,15 +457,15 @@
     <!-- Section title above two radio buttons for enabling and disabling whether users can find me by my phone number  -->
     <string name="PhoneNumberPrivacySettingsFragment_who_can_find_me_by_number_heading">Хто може знайти мене за номером</string>
     <!-- Subtext below radio buttons when who can find me by number is set to everyone -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">Будь-яка людина, що має ваш номер телефону, бачитиме вас у Signal і зможе почати з вами чат.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">Будь-яка людина, що має ваш номер телефону, бачитиме вас у Radar і зможе почати з вами чат.</string>
     <!-- Subtext below radio buttons when who can find me by number is set to nobody -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">Крім людей, яким ви напишете самі й з якими ви вже маєте спільний чат, ніхто не побачить, що ви зареєстровані в Signal.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">Крім людей, яким ви напишете самі й з якими ви вже маєте спільний чат, ніхто не побачить, що ви зареєстровані в Radar.</string>
     <!-- Snackbar text when pressing invalid radio item -->
     <string name="PhoneNumberPrivacySettingsFragment__to_change_this_setting">"Щоб змінити це налаштування, виберіть «Ніхто» для параметра «Хто може бачити мій номер»."</string>
     <!-- Dialog title shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
     <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_title">Ви впевнені?</string>
     <!-- Dialog warning message shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
-    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">Якщо обрати варіант «Ніхто» для параметра «Хто може знайти мене за номером», людям буде складніше знайти вас у Signal.</string>
+    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">Якщо обрати варіант «Ніхто» для параметра «Хто може знайти мене за номером», людям буде складніше знайти вас у Radar.</string>
     <!-- Dialog button text for canceling change action -->
     <string name="PhoneNumberPrivacySettingsFragment__cancel">Скасувати</string>
     <string name="PhoneNumberPrivacy_everyone">Усі</string>
@@ -511,7 +511,7 @@
     <!-- Text shown with toggle that when switched on will enable screen lock -->
     <string name="ScreenLockSettingsFragment__use_screen_lock">Використовувати блокування екрана</string>
     <!-- Description of what screen locking will do and how notification content will not be shown when screen is locked -->
-    <string name="ScreenLockSettingsFragment__your_android_device">Якщо ви вийдете із застосунку або перейдете в інший, то повинні будете розблокувати Signal — так само, як розблоковуєте свій пристрій. Під час блокування екрана застосунку в сповіщеннях не буде показано вміст повідомлень.</string>
+    <string name="ScreenLockSettingsFragment__your_android_device">Якщо ви вийдете із застосунку або перейдете в інший, то повинні будете розблокувати Radar — так само, як розблоковуєте свій пристрій. Під час блокування екрана застосунку в сповіщеннях не буде показано вміст повідомлень.</string>
     <!-- Title text explaining when users should start the screen lock -->
     <string name="ScreenLockSettingsFragment__start_screen_lock">Активувати блокування екрана</string>
     <!-- Option text explaining that screen lock should start after 1 minute of inactivity -->
@@ -523,9 +523,9 @@
     <!-- Option text explaining that screen lock should start at a custom time set by the user -->
     <string name="ScreenLockSettingsFragment__custom_time">Свій час</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn on screen lock -->
-    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Використовувати блокування екрана в Signal?</string>
+    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Використовувати блокування екрана в Radar?</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn off screen lock -->
-    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">Вимкнути блокування екрана в Signal?</string>
+    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">Вимкнути блокування екрана в Radar?</string>
 
     <!-- HelpSettingsFragment -->
     <string name="preferences__help">Допомога</string>
@@ -547,7 +547,7 @@
     <!-- Visible warning label for the limitations of changing the app icon. -->
     <string name="preferences__app_icon_warning">Значки й назви застосунків видно на головному екрані й на панелі застосунків телефона.</string>
     <!-- Visible warning label explaining that changing the app icon and name does not affect notifications. -->
-    <string name="preferences__app_icon_notification_warning">У сповіщеннях значок і назва Signal завжди будуть стандартні.</string>
+    <string name="preferences__app_icon_notification_warning">У сповіщеннях значок і назва Radar завжди будуть стандартні.</string>
     <!--Text description of a graphic illustrating the limitations of the app icon change. -->
     <string name="preferences__graphic_illustrating_where_the_replacement_app_icon_will_be_visible">Зображення, яке показує, де буде видно змінений значок застосунку.</string>
 
@@ -567,9 +567,9 @@
     <!-- Title for the confirmation dialog of changing the app icon. -->
     <string name="preferences__app_icon_dialog_title">Змінити значок і назву застосунку на «%1$s»</string>
     <!-- Description for the confirmation dialog of changing the app icon. -->
-    <string name="preferences__app_icon_dialog_description">Для зміни значка й назви застосунку Signal закриється. У сповіщеннях значок і назва Signal завжди будуть стандартні.</string>
+    <string name="preferences__app_icon_dialog_description">Для зміни значка й назви застосунку Radar закриється. У сповіщеннях значок і назва Radar завжди будуть стандартні.</string>
     <!-- Visible warning label for the limitations of changing the app icon with learn more call to action. -->
-    <string name="preferences__app_icon_warning_learn_more">Оберіть значок і назву застосунку, які буде видно на головному екрані та в панелі застосунків телефона. У сповіщеннях значок і назва Signal завжди будуть стандартні. Докладніше</string>
+    <string name="preferences__app_icon_warning_learn_more">Оберіть значок і назву застосунку, які буде видно на головному екрані та в панелі застосунків телефона. У сповіщеннях значок і назва Radar завжди будуть стандартні. Докладніше</string>
     <!--Call to action to get more information about the limitations of the change app icon functionality. -->
     <string name="preferences__app_icon_learn_more">Докладніше</string>
 
@@ -599,10 +599,10 @@
     <string name="ApplicationPreferenceActivity_you_havent_set_a_passphrase_yet">Ви ще не встановили пароль!</string>
     <string name="ApplicationPreferencesActivity_disable">Деактивувати</string>
     <string name="ApplicationPreferencesActivity_disable_passphrase">Деактивувати пароль?</string>
-    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">Signal і сповіщення про повідомлення буде безстроково розблоковано.</string>
+    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">Radar і сповіщення про повідомлення буде безстроково розблоковано.</string>
     <string name="PrivacySettingsFragment__app_security">Безпека застосунку</string>
     <!-- This refers to the multi-tasking overview (recent apps) from the Android operating system.-->
-    <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">Блокувати знімки екрана в режимі перегляду недавніх застосунків і в самому Signal.</string>
+    <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">Блокувати знімки екрана в режимі перегляду недавніх застосунків і в самому Radar.</string>
     <string name="PrivacySettingsFragment__blocked">Заблоковані</string>
     <!-- Alert dialog description to setup screen lock or fingerprint in phone settings -->
     <string name="PrivacySettingsFragment__cant_enable_description">Щоб активувати захист платежів, потрібно спочатку увімкнути блокування екрана або розблокування відбитком пальця в налаштуваннях телефона.</string>
@@ -622,10 +622,10 @@
     <!-- Description for the payment lock toggle in privacy settings -->
     <string name="PrivacySettingsFragment__payment_lock_require_lock">Зробити обов\'язковим розблокування екрана Android або сканування відбитка пальця для переказу коштів</string>
     <string name="PrivacySettingsFragment__set_a_default_disappearing_message_timer_for_all_new_chats_started_by_you">Установіть стандартний таймер для тимчасових повідомлень у всіх нових чатах, які ви починаєте.</string>
-    <string name="PrivacySettingsFragment__signal_message_and_calls">Повідомлення і виклики в Signal, завжди ретранслювати виклики, засекречений відправник</string>
+    <string name="PrivacySettingsFragment__signal_message_and_calls">Повідомлення і виклики в Radar, завжди ретранслювати виклики, засекречений відправник</string>
     <!-- Text shown when screen lock is not enabled -->
     <string name="ScreenLockSettingsFragment__off">Вимк.</string>
-    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">Автоматично блокувати Signal після певного періоду бездіяльності</string>
+    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">Автоматично блокувати Radar після певного періоду бездіяльності</string>
     <string name="preferences__change_passphrase">Змінити пароль</string>
     <string name="preferences__change_your_passphrase">Змініть свій пароль</string>
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
@@ -647,7 +647,7 @@
     <string name="preferences__this_setting_is_not_a_guarantee">Це налаштування спрацьовує не в усіх випадках. Ваша клавіатура може його ігнорувати.</string>
     <string name="preferences__typing_indicators">Індикатор набору тексту</string>
     <!-- Subtext below option to launch into phone number privacy settings screen -->
-    <string name="preferences_app_protection__choose_who_can_see">Оберіть, хто зможе бачити ваш номер і зв\'язуватися з вами в Signal за номером.</string>
+    <string name="preferences_app_protection__choose_who_can_see">Оберіть, хто зможе бачити ваш номер і зв\'язуватися з вами в Radar за номером.</string>
     <!-- Privacy settings payments section title -->
     <string name="preferences_app_protection__payments">Платежі</string>
     <!-- Snackbar text shown when trying to enable screen lock but the user does not have a password or biometrics enabled -->
@@ -663,7 +663,7 @@
     <!-- Dismiss button on the dialog explaining payment lock needs a device screen lock -->
     <string name="PrivacySettingsScreen__not_now">Не зараз</string>
     <!-- Title of the authentication prompt shown when turning off payment lock -->
-    <string name="PrivacySettingsScreen__signal">Signal</string>
+    <string name="PrivacySettingsScreen__signal">Radar</string>
     <!-- Link after the incognito keyboard disclaimer that opens a support article -->
     <string name="PrivacySettingsScreen__learn_more">Докладніше</string>
 
@@ -679,7 +679,7 @@
     <!-- String displayed telling user to invite their friends to Signal -->
     <string name="AppSettingsFragment__invite_your_friends">Запросити друзів</string>
     <!-- String alerting user that something is wrong with their backups subscription -->
-    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">Поновіть передплату на надійне резервне копіювання від Signal</string>
+    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">Поновіть передплату на надійне резервне копіювання від Radar</string>
     <!-- App settings row that opens privacy settings -->
     <string name="preferences__privacy">Конфіденційність</string>
     <!-- Title of the top level app settings screen -->
@@ -749,7 +749,7 @@
     <!-- Error shown under the code field when the service rejected the code -->
     <string name="TwoFactorVerifyScreen__incorrect_code">Неправильний код. Введіть код, який зараз показано у вашому автентифікаторі.</string>
     <!-- Error shown when the service could not be reached -->
-    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Не вдалося зв\'язатись із Signal. Перевірте з\'єднання та спробуйте ще раз.</string>
+    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Не вдалося зв\'язатись із Radar. Перевірте з\'єднання та спробуйте ще раз.</string>
     <!-- Dialog shown when verifying with a passkey failed -->
     <string name="TwoFactorVerifyScreen__something_went_wrong_with_your_passkey">З ключем відновлення сталася помилка. Будь ласка, спробуйте ще раз або виберіть інший спосіб.</string>
 
@@ -881,9 +881,9 @@
     <!-- Explanation below the name, about and badges rows on the profile screen, saying who can see your profile -->
     <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">Ваш профіль і зміни в ньому бачать ваші співрозмовники, контакти й групи.</string>
     <!-- The title of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_title">Оновити Signal</string>
+    <string name="EditProfileFragment_deprecated_dialog_title">Оновити Radar</string>
     <!-- The body of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_body">Ця версія Signal застаріла. Оновіть застосунок, щоб і надалі ним користуватися.</string>
+    <string name="EditProfileFragment_deprecated_dialog_body">Ця версія Radar застаріла. Оновіть застосунок, щоб і надалі ним користуватися.</string>
     <!-- The button on a dialog prompting user to update to the latest version of Signal. When clicked, the user will be taken to the store to update their app. -->
     <string name="EditProfileFragment_deprecated_dialog_update_button">Оновити</string>
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
@@ -1015,7 +1015,7 @@
     <!-- Dialog title shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
     <string name="UsernameLinkSettings_qr_code_not_found">QR-код не знайдено</string>
     <!-- Dialog message shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
-    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Якщо можете, зіскануйте QR-код Signal з іншого зображення.</string>
+    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Якщо можете, зіскануйте QR-код Radar з іншого зображення.</string>
     <!-- Body of a dialog that is displayed when the username we looked up could not be found. -->
     <string name="UsernameLinkSettings_qr_result_not_found">Не вдалося знайти користувача з іменем %1$s.</string>
     <!-- Description text shown underneath the username QR code scanner -->
@@ -1023,19 +1023,19 @@
     <!-- Shown when the QR code you scanned leads to a username link that no one has -->
     <string name="UsernameLinkSettingsScreen__qr_result_not_found_no_username">Не вдалося знайти такого користувача.</string>
     <!-- Shown in place of the camera on the scan tab when the camera permission hasn\'t been granted -->
-    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">Щоб сканувати QR-коди, надайте Signal доступ до камери.</string>
+    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">Щоб сканувати QR-коди, надайте Radar доступ до камери.</string>
     <!-- Button on the scan tab that asks for the camera permission -->
     <string name="UsernameLinkSettingsScreen__allow_access">Надати доступ</string>
     <!-- Shown when the camera permission was denied, or permanently denied, and a QR code can\'t be scanned -->
-    <string name="UsernameLinkSettingsScreen__camera_needed">Signal потребує доступу до камери, щоб сканувати QR-коди</string>
+    <string name="UsernameLinkSettingsScreen__camera_needed">Radar потребує доступу до камери, щоб сканувати QR-коди</string>
 
     <!-- ManageStorageSettingsScreen -->
     <string name="preferences__storage">Пам\'ять</string>
     <string name="preferences_storage__storage_usage">Використання пам\'яті</string>
     <!-- Setting section title header for storage optimization -->
-    <string name="ManageStorageSettingsFragment__on_device_storage">Сховище Signal</string>
+    <string name="ManageStorageSettingsFragment__on_device_storage">Сховище Radar</string>
     <!-- Setting row title for storage optimization -->
-    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Оптимізувати сховище Signal</string>
+    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Оптимізувати сховище Radar</string>
     <!-- Setting row explanation for storage optimization -->
     <string name="ManageStorageSettingsFragment__unused_media_will_be_offloaded">Медіафайли, які не використовуються, буде вивантажено з пам\'яті пристрою; їх можна в будь-який час завантажити на пристрій з резервної копії.</string>
     <!-- Settings section title header show above manage settings options for automatic chat history management (deleting) -->
@@ -1057,11 +1057,11 @@
     <string name="preferences_storage__all_message_history_will_be_permanently_removed_this_action_cannot_be_undone_linked_device">Усю історію повідомлень буде остаточно видалено з усіх пристроїв. Ви не зможете її відновити.</string>
     <string name="preferences_storage__delete_all_now">Видалити все негайно</string>
     <!-- Dialog message for paid tier pending dialog -->
-    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">Оптимізація пам\'яті доступна тим, хто платить за надійне резервне копіювання від Signal. Опрацювання вашої передплати ще триває, тому вона поки що неактивна. Будь ласка, спробуйте пізніше.</string>
+    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">Оптимізація пам\'яті доступна тим, хто платить за надійне резервне копіювання від Radar. Опрацювання вашої передплати ще триває, тому вона поки що неактивна. Будь ласка, спробуйте пізніше.</string>
     <!-- Title of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
     <string name="ManageStorageSettingsFragment__media_will_be_removed_from_your_on_device_backup">З резервної копії на пристрої буде вилучено медіафайли</string>
     <!-- Body of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
-    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">Якщо ввімкнути функцію «Оптимізувати сховище Signal», старі медіафайли буде вивантажено з пристрою. Ви можете завантажити їх у будь-який час. Також старі медіафайли буде вилучено з резервної копії на пристрої.</string>
+    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">Якщо ввімкнути функцію «Оптимізувати сховище Radar», старі медіафайли буде вивантажено з пристрою. Ви можете завантажити їх у будь-який час. Також старі медіафайли буде вилучено з резервної копії на пристрої.</string>
     <!-- Dialog action to confirm turning on "Optimize Signal storage" -->
     <string name="ManageStorageSettingsFragment__turn_on">Увімкнути</string>
 
@@ -1091,15 +1091,15 @@
     <!-- Displayed in a toast when we fail to open the ringtone picker -->
     <string name="NotificationSettingsFragment__failed_to_open_picker">Не вдалося відкрити список.</string>
     <!-- Banner title when notification permission is disabled -->
-    <string name="NotificationSettingsFragment__to_enable_notifications">Щоб увімкнути сповіщення, необхідно дозволити Signal їх показувати.</string>
+    <string name="NotificationSettingsFragment__to_enable_notifications">Щоб увімкнути сповіщення, необхідно дозволити Radar їх показувати.</string>
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Увімкнути</string>
     <string name="NotificationsSettingsFragment__calls">Виклики</string>
-    <string name="NotificationsSettingsFragment__contact_joins_signal">Контакт приєднався до Signal</string>
+    <string name="NotificationsSettingsFragment__contact_joins_signal">Контакт приєднався до Radar</string>
     <!-- Notification preference summary text -->
     <string name="NotificationsSettingsFragment__create_a_profile_to_receive_notifications_only_from_people_and_groups_you_choose">Створіть профіль і отримуйте сповіщення лише від обраних людей і груп.</string>
     <!-- Notification body to get notified when someone joins Signal -->
-    <string name="NotificationsSettingsFragment__notify_contact">Показувати сповіщення, коли контакт із телефона приєднується в Signal</string>
+    <string name="NotificationsSettingsFragment__notify_contact">Показувати сповіщення, коли контакт із телефона приєднується в Radar</string>
     <!-- Option to reset their notification settings -->
     <string name="NotificationsSettingsFragment__reset">Скинути налаштування сповіщень</string>
     <!-- Dialog to reset their notification settings -->

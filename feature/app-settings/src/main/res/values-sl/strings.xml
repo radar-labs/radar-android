@@ -3,7 +3,7 @@
     <!-- RegistrationLockV2Dialog -->
     <string name="RegistrationLockV2Dialog_turn_on_registration_lock">Želite vklopiti zaklep registracije?</string>
     <string name="RegistrationLockV2Dialog_turn_off_registration_lock">Želite izklopiti zaklep registracije?</string>
-    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Če se ob ponovni registraciji na Signal ne boste spomnili svojega PINa, se bo vaš račun zaklenil za 7 dni.</string>
+    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Če se ob ponovni registraciji na Radar ne boste spomnili svojega PINa, se bo vaš račun zaklenil za 7 dni.</string>
     <string name="RegistrationLockV2Dialog_turn_on">Vklopi</string>
     <string name="RegistrationLockV2Dialog_turn_off">Izklopi</string>
     <string name="preferences__advanced_pin_settings">Napredne nastavite PIN</string>
@@ -12,20 +12,20 @@
     <string name="RegistrationLockFragment__switch_keyboard">Preklopi tipkovnico</string>
     <string name="preferences_chats__transfer_account">Prenos računa</string>
     <string name="preferences_chats__transfer_account_to_a_new_android_device">Prenos računa na novo androidno napravo</string>
-    <string name="preferences_app_protection__signal_pin">Signal PIN</string>
+    <string name="preferences_app_protection__signal_pin">Radar PIN</string>
     <string name="preferences_app_protection__create_a_pin">Ustvari PIN</string>
     <string name="preferences_app_protection__change_your_pin">Sprememba PINa</string>
     <string name="preferences_app_protection__pin_reminders">Opomniki za PIN</string>
     <string name="preferences_app_protection__turn_off">Izklopi</string>
     <string name="preferences_app_protection__confirm_pin">Potrdite PIN</string>
-    <string name="preferences_app_protection__confirm_your_signal_pin">Potrdite svoj PIN Signal</string>
-    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">Prosimo, dobro si zapomnite ali zapišite svoj PIN, saj ni obnovljiv. Če ga boste pozabili, lahko izgubite svoje podatke ob ponovni registraciji v račun Signal.</string>
+    <string name="preferences_app_protection__confirm_your_signal_pin">Potrdite svoj PIN Radar</string>
+    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">Prosimo, dobro si zapomnite ali zapišite svoj PIN, saj ni obnovljiv. Če ga boste pozabili, lahko izgubite svoje podatke ob ponovni registraciji v račun Radar.</string>
     <string name="preferences_app_protection__incorrect_pin_try_again">Napačen PIN. Poskusite znova.</string>
     <string name="preferences_app_protection__registration_lock">Zaklep registracije</string>
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
     <string name="preferences_account_reregister">Ponovno se prijavite</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
-    <string name="preferences_account_update_signal">Posodobite aplikacijo Signal</string>
+    <string name="preferences_account_update_signal">Posodobite aplikacijo Radar</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
     <string name="preferences_account_delete_all_data">Izbris vseh podatkov</string>
     <!-- Title for confirmation dialog confirming user wants to delete all their data -->
@@ -40,7 +40,7 @@
     <!-- AccountSettingsFragment -->
     <string name="AccountSettingsFragment__account">Račun</string>
     <string name="AccountSettingsFragment__youll_be_asked_less_frequently">Sčasoma boste opozorjeni manjkrat</string>
-    <string name="AccountSettingsFragment__require_your_signal_pin">Zahteva za vnos PIN kode Signal za ponovno prijavo vaše telefonske številke v sistem Signal.</string>
+    <string name="AccountSettingsFragment__require_your_signal_pin">Zahteva za vnos PIN kode Radar za ponovno prijavo vaše telefonske številke v sistem Radar.</string>
     <string name="AccountSettingsFragment__change_phone_number">Sprememba telefonske številke</string>
     <!-- Account setting that allows user to request and export their signal account data -->
     <string name="AccountSettingsFragment__request_account_data">Podatki vašega računa</string>
@@ -140,7 +140,7 @@
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">Podatki vašega računa</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
-    <string name="ExportAccountDataFragment__export_explanation">Izvozite poročilo podatkov svojega računa Signal. To poročilo ne vključuje nobenih sporočil ali medijev. %1$s</string>
+    <string name="ExportAccountDataFragment__export_explanation">Izvozite poročilo podatkov svojega računa Radar. To poročilo ne vključuje nobenih sporočil ali medijev. %1$s</string>
     <!-- Learn more link to more information about requesting account data -->
     <string name="ExportAccountDataFragment__learn_more">Preberite več</string>
     <!-- Button action to export the report data to another app (e.g. email) -->
@@ -168,14 +168,14 @@
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Želite izvoziti podatke?</string>
     <!-- Message for export confirmation dialog -->
-    <string name="ExportAccountDataFragment__export_report_confirmation_message">Podatke svojega računa Signal delite samo z osebami ali aplikacijami, ki jim zaupate.</string>
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Podatke svojega računa Radar delite samo z osebami ali aplikacijami, ki jim zaupate.</string>
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">Izvozi</string>
 
     <!-- Shown in a dialog with a spinner while the report is downloading -->
     <string name="ExportAccountDataFragment__download_progress">Ustvarjanje poročila …</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
-    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Vaše poročilo se ustvari samo v času izvoza in ga Signal ne shrani v vaši napravi.</string>
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Vaše poročilo se ustvari samo v času izvoza in ga Radar ne shrani v vaši napravi.</string>
 
     <!-- TotpSetupScreen -->
     <!-- Title of the screen that walks the user through setting up an authenticator app -->
@@ -191,7 +191,7 @@
     <!-- Header of the second step of authenticator app setup -->
     <string name="TotpSetupScreen__step_2">2. korak</string>
     <!-- Body of the second step of authenticator app setup -->
-    <string name="TotpSetupScreen__open_your_authenticator_app">Odprite svojo aplikacijo za preverjanje pristnosti tako, da tapnete spodnji gumb, in dodajte svoj račun Signal.</string>
+    <string name="TotpSetupScreen__open_your_authenticator_app">Odprite svojo aplikacijo za preverjanje pristnosti tako, da tapnete spodnji gumb, in dodajte svoj račun Radar.</string>
     <!-- Button that opens the user\'s authenticator app -->
     <string name="TotpSetupScreen__open">Odpri</string>
     <!-- Text above the setup key explaining that it can be entered by hand instead -->
@@ -205,7 +205,7 @@
     <!-- Dialog message shown when the account already has as many authenticator apps as it\'s allowed -->
     <string name="TotpSetupScreen__you_cant_add_more_than_d">Ne morete dodati več kot toliko aplikacij za preverjanje pristnosti: %1$d. Najprej jo poskusite odstraniti.</string>
     <!-- Dialog message shown when we couldn\'t reach the service to start setting up an authenticator app -->
-    <string name="TotpSetupScreen__couldnt_reach_signal">Signala ni bilo mogoče doseči. Preverite povezavo in poskusite znova.</string>
+    <string name="TotpSetupScreen__couldnt_reach_signal">Radara ni bilo mogoče doseči. Preverite povezavo in poskusite znova.</string>
     <!-- Header of the third step of authenticator app setup -->
     <string name="TotpSetupScreen__step_3">3. korak</string>
     <!-- Body of the third step of authenticator app setup -->
@@ -243,7 +243,7 @@
     <!-- Error shown under the code field when the code the user entered was rejected -->
     <string name="TotpCodeEntryScreen__incorrect_code">Napačna koda. Vnesite kodo, prikazano v vaši aplikaciji za preverjanje pristnosti.</string>
     <!-- Error shown under the code field when we couldn\'t reach the service to check the code -->
-    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Signala ni bilo mogoče doseči. Preverite povezavo in poskusite znova.</string>
+    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Radara ni bilo mogoče doseči. Preverite povezavo in poskusite znova.</string>
 
     <!-- Default name given to an authenticator app the moment it\'s set up, before the user chooses their own name for it -->
     <string name="TotpRepository__authenticator">Overjevalnik</string>
@@ -294,7 +294,7 @@
     <string name="DeleteAccountFragment__no_number">Ni vnesene telefonske številke</string>
     <string name="DeleteAccountFragment__the_phone_number">Vnesena številka se ne ujema s telefonsko številko vašega računa.</string>
     <string name="DeleteAccountFragment__are_you_sure">Ste prepričani, da želite izbrisati svoj račun?</string>
-    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">S tem boste izbrisali svoj račun Signal in ponastavili aplikacijo. Ko bo proces končan, se bo aplikacija zaprla.</string>
+    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">S tem boste izbrisali svoj račun Radar in ponastavili aplikacijo. Ko bo proces končan, se bo aplikacija zaprla.</string>
     <string name="DeleteAccountFragment__failed_to_delete_local_data">Lokalnih podatkov ni bilo mogoče izbrisati. To lahko storite ročno v sistemskih nastavitvah aplikacije.</string>
     <string name="DeleteAccountFragment__launch_app_settings">Zaženi nastavitve aplikacije</string>
     <!-- Title of progress dialog shown when a user deletes their account and the process is leaving all groups -->
@@ -322,7 +322,7 @@
     <!-- Bullet point on the delete account screen warning the user that the deletion is permanent -->
     <string name="DeleteAccountScreen__this_action_can_not_be_undone">Ta korak je nepovraten</string>
     <!-- Message of the deletion confirmation dialog, shown when the account has a username. Placeholder is the username. -->
-    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">To bo izbrisalo vaš račun Signal z uporabniškim imenom »%1$s« in ponastavilo aplikacijo. Aplikacija se bo zaprla, ko bo postopek končan.</string>
+    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">To bo izbrisalo vaš račun Radar z uporabniškim imenom »%1$s« in ponastavilo aplikacijo. Aplikacija se bo zaprla, ko bo postopek končan.</string>
     <!-- Label of the checkbox the user has to tick in the confirmation dialog before they can delete their account -->
     <string name="DeleteAccountScreen__yes_delete_my_account">Da, izbriši moj račun</string>
 
@@ -457,15 +457,15 @@
     <!-- Section title above two radio buttons for enabling and disabling whether users can find me by my phone number  -->
     <string name="PhoneNumberPrivacySettingsFragment_who_can_find_me_by_number_heading">Kdo me lahko najde preko telefonske številke</string>
     <!-- Subtext below radio buttons when who can find me by number is set to everyone -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">Vsak, ki ima vašo telefonsko številko, bo videl, da ste na Signalu, in bo lahko začel klepetati z vami.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">Vsak, ki ima vašo telefonsko številko, bo videl, da ste na Radaru, in bo lahko začel klepetati z vami.</string>
     <!-- Subtext below radio buttons when who can find me by number is set to nobody -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">Nihče ne bo mogel videti, da ste na Signalu, razen če mu/ji ne pošljete sporočila ali že klepetate z njim/njo.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">Nihče ne bo mogel videti, da ste na Radaru, razen če mu/ji ne pošljete sporočila ali že klepetate z njim/njo.</string>
     <!-- Snackbar text when pressing invalid radio item -->
     <string name="PhoneNumberPrivacySettingsFragment__to_change_this_setting">"Če želite spremeniti to nastavitev, nastavite »Kdo lahko vidi mojo številko« na »Nihče«."</string>
     <!-- Dialog title shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
     <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_title">Ste prepričani?</string>
     <!-- Dialog warning message shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
-    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">Če nastavite »Kdo me lahko najde po številki« na »Nihče«, vas bodo ljudje težje našli v Signalu.</string>
+    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">Če nastavite »Kdo me lahko najde po številki« na »Nihče«, vas bodo ljudje težje našli v Radaru.</string>
     <!-- Dialog button text for canceling change action -->
     <string name="PhoneNumberPrivacySettingsFragment__cancel">Prekliči</string>
     <string name="PhoneNumberPrivacy_everyone">Kdorkoli</string>
@@ -511,7 +511,7 @@
     <!-- Text shown with toggle that when switched on will enable screen lock -->
     <string name="ScreenLockSettingsFragment__use_screen_lock">Uporabi zaklepanje zaslona</string>
     <!-- Description of what screen locking will do and how notification content will not be shown when screen is locked -->
-    <string name="ScreenLockSettingsFragment__your_android_device">Nastavitve zaklepanja naprave Android bodo zahtevane za odklepanje Signala, ko zapustite ali preklopite aplikacije. Ko je zaklenjeno, predogledi obvestil ne prikazujejo vsebine sporočila.</string>
+    <string name="ScreenLockSettingsFragment__your_android_device">Nastavitve zaklepanja naprave Android bodo zahtevane za odklepanje Radara, ko zapustite ali preklopite aplikacije. Ko je zaklenjeno, predogledi obvestil ne prikazujejo vsebine sporočila.</string>
     <!-- Title text explaining when users should start the screen lock -->
     <string name="ScreenLockSettingsFragment__start_screen_lock">Začetek zaklepanja zaslona</string>
     <!-- Option text explaining that screen lock should start after 1 minute of inactivity -->
@@ -523,9 +523,9 @@
     <!-- Option text explaining that screen lock should start at a custom time set by the user -->
     <string name="ScreenLockSettingsFragment__custom_time">Čas po meri</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn on screen lock -->
-    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Uporabi zaklepanje zaslona Signal</string>
+    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Uporabi zaklepanje zaslona Radar</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn off screen lock -->
-    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">Izklop zaklepanja zaslona Signal</string>
+    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">Izklop zaklepanja zaslona Radar</string>
 
     <!-- HelpSettingsFragment -->
     <string name="preferences__help">Pomoč</string>
@@ -547,7 +547,7 @@
     <!-- Visible warning label for the limitations of changing the app icon. -->
     <string name="preferences__app_icon_warning">Ikone in imena aplikacij so vidne na začetnem zaslonu in v predalu aplikacij.</string>
     <!-- Visible warning label explaining that changing the app icon and name does not affect notifications. -->
-    <string name="preferences__app_icon_notification_warning">Obvestila bodo vedno prikazala privzeto ikono in ime Signala.</string>
+    <string name="preferences__app_icon_notification_warning">Obvestila bodo vedno prikazala privzeto ikono in ime Radara.</string>
     <!--Text description of a graphic illustrating the limitations of the app icon change. -->
     <string name="preferences__graphic_illustrating_where_the_replacement_app_icon_will_be_visible">Grafika, ki prikazuje, kje bo vidna nadomestna ikona aplikacije.</string>
 
@@ -567,9 +567,9 @@
     <!-- Title for the confirmation dialog of changing the app icon. -->
     <string name="preferences__app_icon_dialog_title">Spremenite ikono in ime aplikacije v »%1$s«</string>
     <!-- Description for the confirmation dialog of changing the app icon. -->
-    <string name="preferences__app_icon_dialog_description">Za spremembo ikone in imena aplikacije bo treba Signal zapreti. Obvestila bodo vedno prikazala privzeto ikono in ime Signala.</string>
+    <string name="preferences__app_icon_dialog_description">Za spremembo ikone in imena aplikacije bo treba Radar zapreti. Obvestila bodo vedno prikazala privzeto ikono in ime Radara.</string>
     <!-- Visible warning label for the limitations of changing the app icon with learn more call to action. -->
-    <string name="preferences__app_icon_warning_learn_more">Izberite ikono in ime aplikacije, ki bosta vidna na začetnem zaslonu in v predalu za aplikacije vašega telefona. Obvestila bodo vedno prikazala privzeto ikono in ime Signala. Preberite več</string>
+    <string name="preferences__app_icon_warning_learn_more">Izberite ikono in ime aplikacije, ki bosta vidna na začetnem zaslonu in v predalu za aplikacije vašega telefona. Obvestila bodo vedno prikazala privzeto ikono in ime Radara. Preberite več</string>
     <!--Call to action to get more information about the limitations of the change app icon functionality. -->
     <string name="preferences__app_icon_learn_more">Preberite več</string>
 
@@ -599,7 +599,7 @@
     <string name="ApplicationPreferenceActivity_you_havent_set_a_passphrase_yet">Niste še nastavili gesla!</string>
     <string name="ApplicationPreferencesActivity_disable">Onemogoči</string>
     <string name="ApplicationPreferencesActivity_disable_passphrase">Izključim geslo?</string>
-    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">S tem boste odklenili aplikacijo Signal in obvestila o sporočilih.</string>
+    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">S tem boste odklenili aplikacijo Radar in obvestila o sporočilih.</string>
     <string name="PrivacySettingsFragment__app_security">Varnost aplikacije</string>
     <!-- This refers to the multi-tasking overview (recent apps) from the Android operating system.-->
     <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">Prepreči zajem slike zaslona na seznamu nedavnih sporočil in v aplikaciji</string>
@@ -622,10 +622,10 @@
     <!-- Description for the payment lock toggle in privacy settings -->
     <string name="PrivacySettingsFragment__payment_lock_require_lock">Za prenos sredstev zahtevajte zaklepanje zaslona Android ali prstni odtis</string>
     <string name="PrivacySettingsFragment__set_a_default_disappearing_message_timer_for_all_new_chats_started_by_you">Nastavite privzeti čas poteka sporočil za vse nove klepete, ki jih začnete sami.</string>
-    <string name="PrivacySettingsFragment__signal_message_and_calls">Sporočila in klici Signal, posredovanje klicev in zakriti pošiljatelj</string>
+    <string name="PrivacySettingsFragment__signal_message_and_calls">Sporočila in klici Radar, posredovanje klicev in zakriti pošiljatelj</string>
     <!-- Text shown when screen lock is not enabled -->
     <string name="ScreenLockSettingsFragment__off">Izklopljeno</string>
-    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">Samodejno zakleni Signal po nastavljenem času neaktivnosti</string>
+    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">Samodejno zakleni Radar po nastavljenem času neaktivnosti</string>
     <string name="preferences__change_passphrase">Zamenjaj geslo</string>
     <string name="preferences__change_your_passphrase">Zamenjava gesla</string>
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
@@ -647,7 +647,7 @@
     <string name="preferences__this_setting_is_not_a_guarantee">Ta nastavitev ne zagotavlja, da bo tipkovnica tudi upoštevala zahtevo.</string>
     <string name="preferences__typing_indicators">Kazalniki tipkanja</string>
     <!-- Subtext below option to launch into phone number privacy settings screen -->
-    <string name="preferences_app_protection__choose_who_can_see">Izberite, kdo lahko vidi vašo telefonsko številko in kdo vas lahko z njo kontaktira v Signalu.</string>
+    <string name="preferences_app_protection__choose_who_can_see">Izberite, kdo lahko vidi vašo telefonsko številko in kdo vas lahko z njo kontaktira v Radaru.</string>
     <!-- Privacy settings payments section title -->
     <string name="preferences_app_protection__payments">Plačila</string>
     <!-- Snackbar text shown when trying to enable screen lock but the user does not have a password or biometrics enabled -->
@@ -663,7 +663,7 @@
     <!-- Dismiss button on the dialog explaining payment lock needs a device screen lock -->
     <string name="PrivacySettingsScreen__not_now">Ne zdaj</string>
     <!-- Title of the authentication prompt shown when turning off payment lock -->
-    <string name="PrivacySettingsScreen__signal">Signal</string>
+    <string name="PrivacySettingsScreen__signal">Radar</string>
     <!-- Link after the incognito keyboard disclaimer that opens a support article -->
     <string name="PrivacySettingsScreen__learn_more">Več o tem</string>
 
@@ -679,7 +679,7 @@
     <!-- String displayed telling user to invite their friends to Signal -->
     <string name="AppSettingsFragment__invite_your_friends">Povabite svoje prijatelje_ice</string>
     <!-- String alerting user that something is wrong with their backups subscription -->
-    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">Podaljšajte naročnino na Varne varnostne kopije Signal</string>
+    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">Podaljšajte naročnino na Varne varnostne kopije Radar</string>
     <!-- App settings row that opens privacy settings -->
     <string name="preferences__privacy">Zasebnost</string>
     <!-- Title of the top level app settings screen -->
@@ -749,7 +749,7 @@
     <!-- Error shown under the code field when the service rejected the code -->
     <string name="TwoFactorVerifyScreen__incorrect_code">Napačna koda. Vnesite kodo, prikazano v vaši aplikaciji za preverjanje pristnosti.</string>
     <!-- Error shown when the service could not be reached -->
-    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Signala ni bilo mogoče doseči. Preverite povezavo in poskusite znova.</string>
+    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Radara ni bilo mogoče doseči. Preverite povezavo in poskusite znova.</string>
     <!-- Dialog shown when verifying with a passkey failed -->
     <string name="TwoFactorVerifyScreen__something_went_wrong_with_your_passkey">Prišlo je do težave z vašim varnostnim ključem. Poskusite znova ali izberite drugi način.</string>
 
@@ -881,9 +881,9 @@
     <!-- Explanation below the name, about and badges rows on the profile screen, saying who can see your profile -->
     <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">Vaš profil in spremembe na njem bodo vidne osebam, ki jim pošiljate sporočila, stikom in skupinam.</string>
     <!-- The title of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_title">Posodobite aplikacijo Signal</string>
+    <string name="EditProfileFragment_deprecated_dialog_title">Posodobite aplikacijo Radar</string>
     <!-- The body of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_body">Ta različica aplikacije Signal je potekla. Posodobite zdaj, če želite še naprej uporabljati Signal.</string>
+    <string name="EditProfileFragment_deprecated_dialog_body">Ta različica aplikacije Radar je potekla. Posodobite zdaj, če želite še naprej uporabljati Radar.</string>
     <!-- The button on a dialog prompting user to update to the latest version of Signal. When clicked, the user will be taken to the store to update their app. -->
     <string name="EditProfileFragment_deprecated_dialog_update_button">Posodobitev</string>
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
@@ -1015,7 +1015,7 @@
     <!-- Dialog title shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
     <string name="UsernameLinkSettings_qr_code_not_found">QR koda ni bila najdena</string>
     <!-- Dialog message shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
-    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Poskusite skenirati drugo sliko, ki vsebuje Signalovo QR kodo.</string>
+    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Poskusite skenirati drugo sliko, ki vsebuje Radarovo QR kodo.</string>
     <!-- Body of a dialog that is displayed when the username we looked up could not be found. -->
     <string name="UsernameLinkSettings_qr_result_not_found">Uporabnika_ce z uporabniškim imenom %1$s ni bilo mogoče najti.</string>
     <!-- Description text shown underneath the username QR code scanner -->
@@ -1023,19 +1023,19 @@
     <!-- Shown when the QR code you scanned leads to a username link that no one has -->
     <string name="UsernameLinkSettingsScreen__qr_result_not_found_no_username">Tega uporabnika ni bilo mogoče najti.</string>
     <!-- Shown in place of the camera on the scan tab when the camera permission hasn\'t been granted -->
-    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">Za skeniranje QR kode dovolite Signalu dostop do kamere.</string>
+    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">Za skeniranje QR kode dovolite Radaru dostop do kamere.</string>
     <!-- Button on the scan tab that asks for the camera permission -->
     <string name="UsernameLinkSettingsScreen__allow_access">Dovoli dostop</string>
     <!-- Shown when the camera permission was denied, or permanently denied, and a QR code can\'t be scanned -->
-    <string name="UsernameLinkSettingsScreen__camera_needed">Signal potrebuje dostop do kamere za optično branje QR kod</string>
+    <string name="UsernameLinkSettingsScreen__camera_needed">Radar potrebuje dostop do kamere za optično branje QR kod</string>
 
     <!-- ManageStorageSettingsScreen -->
     <string name="preferences__storage">Pomnilnik</string>
     <string name="preferences_storage__storage_usage">Poraba pomnilnika</string>
     <!-- Setting section title header for storage optimization -->
-    <string name="ManageStorageSettingsFragment__on_device_storage">Shramba Signal</string>
+    <string name="ManageStorageSettingsFragment__on_device_storage">Shramba Radar</string>
     <!-- Setting row title for storage optimization -->
-    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Optimizirajte shrambo Signal</string>
+    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Optimizirajte shrambo Radar</string>
     <!-- Setting row explanation for storage optimization -->
     <string name="ManageStorageSettingsFragment__unused_media_will_be_offloaded">Neuporabljeni mediji bodo preneseni, vendar jih lahko kadarkoli prenesete iz varnostne kopije.</string>
     <!-- Settings section title header show above manage settings options for automatic chat history management (deleting) -->
@@ -1057,11 +1057,11 @@
     <string name="preferences_storage__all_message_history_will_be_permanently_removed_this_action_cannot_be_undone_linked_device">Vsa zgodovina sporočil bo trajno odstranjena iz vseh naprav. Ta korak je nepovraten.</string>
     <string name="preferences_storage__delete_all_now">Izbriši vse zdaj</string>
     <!-- Dialog message for paid tier pending dialog -->
-    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">Optimizacijo shranjevanja je mogoče uporabljati samo s plačljivo ravnjo Varne varnostne kopije Signal. Vaša naročnina na varnostno kopiranje je še vedno v obdelavi in še ni aktivna. Poskusite pozneje.</string>
+    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">Optimizacijo shranjevanja je mogoče uporabljati samo s plačljivo ravnjo Varne varnostne kopije Radar. Vaša naročnina na varnostno kopiranje je še vedno v obdelavi in še ni aktivna. Poskusite pozneje.</string>
     <!-- Title of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
     <string name="ManageStorageSettingsFragment__media_will_be_removed_from_your_on_device_backup">Mediji bodo odstranjeni iz varnostne kopije v vaši napravi</string>
     <!-- Body of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
-    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">Z vklopom možnosti »Optimiziraj pomnilnik Signal« bodo stari mediji odstranjeni iz vaše naprave. Kadarkoli je lahko ponovno prenesete. Prav tako bodo stari mediji odstranjeni iz varnostne kopije v vaši napravi.</string>
+    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">Z vklopom možnosti »Optimiziraj pomnilnik Radar« bodo stari mediji odstranjeni iz vaše naprave. Kadarkoli je lahko ponovno prenesete. Prav tako bodo stari mediji odstranjeni iz varnostne kopije v vaši napravi.</string>
     <!-- Dialog action to confirm turning on "Optimize Signal storage" -->
     <string name="ManageStorageSettingsFragment__turn_on">Vklopi</string>
 
@@ -1091,15 +1091,15 @@
     <!-- Displayed in a toast when we fail to open the ringtone picker -->
     <string name="NotificationSettingsFragment__failed_to_open_picker">Odpiranje izbirnika ni uspelo.</string>
     <!-- Banner title when notification permission is disabled -->
-    <string name="NotificationSettingsFragment__to_enable_notifications">Če želite omogočiti obvestila, potrebuje Signal dovoljenje za njihov prikaz.</string>
+    <string name="NotificationSettingsFragment__to_enable_notifications">Če želite omogočiti obvestila, potrebuje Radar dovoljenje za njihov prikaz.</string>
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Vklopi</string>
     <string name="NotificationsSettingsFragment__calls">Klici</string>
-    <string name="NotificationsSettingsFragment__contact_joins_signal">Oseba iz imenika se pridruži Signalu</string>
+    <string name="NotificationsSettingsFragment__contact_joins_signal">Oseba iz imenika se pridruži Radaru</string>
     <!-- Notification preference summary text -->
     <string name="NotificationsSettingsFragment__create_a_profile_to_receive_notifications_only_from_people_and_groups_you_choose">Ustvarite profil za prejemanje obvestil le od uporabnikov_ic in skupin po vaši izbiri.</string>
     <!-- Notification body to get notified when someone joins Signal -->
-    <string name="NotificationsSettingsFragment__notify_contact">Prikaži obvestilo, ko se telefonski stik pridruži Signalu</string>
+    <string name="NotificationsSettingsFragment__notify_contact">Prikaži obvestilo, ko se telefonski stik pridruži Radaru</string>
     <!-- Option to reset their notification settings -->
     <string name="NotificationsSettingsFragment__reset">Ponastavi nastavitve obvestil</string>
     <!-- Dialog to reset their notification settings -->

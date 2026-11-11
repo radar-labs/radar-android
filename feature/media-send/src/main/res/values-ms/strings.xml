@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Pergi ke kamera</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal perlukan kebenaran anda untuk menunjukkan gambar dan video anda</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar perlukan kebenaran anda untuk menunjukkan gambar dan video anda</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Benarkan Capaian</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Tiada foto atau video ditemui. Signal hanya mempunyai akses kepada foto dan video yang anda pilih.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Tiada foto atau video ditemui. Radar hanya mempunyai akses kepada foto dan video yang anda pilih.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal mempunyai akses terhad kepada foto atau video</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar mempunyai akses terhad kepada foto atau video</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Urus</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Untuk tunjuk foto dan video:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal memerlukan akses untuk menunjukkan foto dan video anda.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar memerlukan akses untuk menunjukkan foto dan video anda.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Foto</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Benarkan akses kepada mikrofon anda</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Untuk menangkap foto dan video, benarkan Signal untuk mengakses kamera anda.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Untuk menangkap foto dan video, benarkan Radar untuk mengakses kamera anda.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Untuk menangkap foto dan video, benarkan Signal untuk mengakses kamera dan mikrofon.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Untuk menangkap foto dan video, benarkan Radar untuk mengakses kamera dan mikrofon.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Untuk menangkap video dengan bunyi, benarkan Signal untuk mengakses mikrofon anda.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Untuk menangkap video dengan bunyi, benarkan Radar untuk mengakses mikrofon anda.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Untuk mengimbas kod QR, benarkan Signal untuk mengakses kamera.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Untuk mengimbas kod QR, benarkan Radar untuk mengakses kamera.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal perlukan akses kamera untuk menangkap foto</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar perlukan akses kamera untuk menangkap foto</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal perlu mengakses kamera untuk mengimbas kod QR</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar perlu mengakses kamera untuk mengimbas kod QR</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal perlu mengakses mikrofon untuk menangkap video</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar perlu mengakses mikrofon untuk menangkap video</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Untuk menangkap foto dalam Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Untuk menangkap foto dalam Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Untuk menangkap foto dan video dalam Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Untuk menangkap foto dan video dalam Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Untuk menangkap video dengan bunyi:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Berbilang tangkapan</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal memerlukan kebenaran Mikrofon untuk merakam video, tetapi telah ditolak secara kekal. Sila terus ke menu tetapan aplikasi, pilih \"Kebenaran\", dan dayakan \"Mikrofon\" dan \"Kamera\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar memerlukan kebenaran Mikrofon untuk merakam video, tetapi telah ditolak secara kekal. Sila terus ke menu tetapan aplikasi, pilih \"Kebenaran\", dan dayakan \"Mikrofon\" dan \"Kamera\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Ralat merakam video</string>
@@ -209,7 +209,7 @@
         <item quantity="other">%1$d item ditetapkan kepada kualiti standard</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal memerlukan kebenaran Storan untuk menyimpan ke storan luaran, tetapi telah ditolak secara kekal. Sila terus ke menu tetapan aplikasi, pilih \"Kebenaran\", dan dayakan \"Storan\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar memerlukan kebenaran Storan untuk menyimpan ke storan luaran, tetapi telah ditolak secara kekal. Sila terus ke menu tetapan aplikasi, pilih \"Kebenaran\", dan dayakan \"Storan\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Video akan dihantar tanpa audio</string>
 
@@ -223,14 +223,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Paut peranti?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Nampaknya anda sedang cuba memautkan peranti Signal. Ketik teruskan, kemudian ketik \"Pautkan Peranti Baharu\" dan imbas semula kod QR.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Nampaknya anda sedang cuba memautkan peranti Radar. Ketik teruskan, kemudian ketik \"Pautkan Peranti Baharu\" dan imbas semula kod QR.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Teruskan</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Tidak dapat memindahkan akaun</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Peranti yang anda cuba pindahkan sudah lapuk. Kemas kini Signal pada peranti itu dan cuba lagi.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Peranti yang anda cuba pindahkan sudah lapuk. Kemas kini Radar pada peranti itu dan cuba lagi.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

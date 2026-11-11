@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">ਜਾਰੀ ਰੱਖੋ \'ਤੇ ਟੈਪ ਕਰੋ ਅਤੇ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਆਪਣੇ ਫ਼ੋਨ ਦਾ ਲੌਕ ਦਰਜ ਕਰੋ। ਆਪਣਾ Signal PIN ਦਰਜ ਨਾ ਕਰੋ।</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">ਜਾਰੀ ਰੱਖੋ \'ਤੇ ਟੈਪ ਕਰੋ ਅਤੇ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਆਪਣੇ ਫ਼ੋਨ ਦਾ ਲੌਕ ਦਰਜ ਕਰੋ। ਆਪਣਾ Radar PIN ਦਰਜ ਨਾ ਕਰੋ।</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">ਜਾਰੀ ਰੱਖੋ</string>
 

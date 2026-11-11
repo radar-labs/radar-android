@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Atinge Continuă și introdu parola telefonului pentru a confirma. Nu introdu PIN-ul Signal.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Atinge Continuă și introdu parola telefonului pentru a confirma. Nu introdu PIN-ul Radar.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Continuă</string>
 

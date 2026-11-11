@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">点击继续并输入您手机的屏幕锁定密码。请勿输入您的 Signal 密码。</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">点击继续并输入您手机的屏幕锁定密码。请勿输入您的 Radar 密码。</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">继续</string>
 

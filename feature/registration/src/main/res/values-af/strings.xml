@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Laat toestemmings toe</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Om jou te help om boodskappe te stuur aan mense wat jy ken, sal Signal hierdie toestemmings versoek. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Om jou te help om boodskappe te stuur aan mense wat jy ken, sal Radar hierdie toestemmings versoek. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Nie nou nie</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontakte</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Vind mense wat jy ken. Jou kontakte is geënkripteer en is nie vir die Signal-diens sigbaar nie.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Vind mense wat jy ken. Jou kontakte is geënkripteer en is nie vir die Radar-diens sigbaar nie.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefoonoproepe</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Ek het my ou telefoon</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Skandeer \'n QR-kode in vanaf jou huidige Signal-rekening om vinnig te begin</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Skandeer \'n QR-kode in vanaf jou huidige Radar-rekening om vinnig te begin</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Ek het nie my ou telefoon nie</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Of jy is besig om Signal op dieselfde toestel te herinstalleer</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Of jy is besig om Radar op dieselfde toestel te herinstalleer</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Kies hoe jy jou boodskapgeskiedenis en rekeningdata wil herstel.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Vanaf Signal-rugsteun</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Vanaf Radar-rugsteun</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Jou gratis of betaalde Signal-rugsteunplan</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Jou gratis of betaalde Radar-rugsteunplan</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Herwin rugsteun op toestel</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Geen rugsteun gevind nie</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Geen Signal-rugsteun is in die geselekteerde vouer gevind nie. Probeer asseblief \'n ander vouer.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Geen Radar-rugsteun is in die geselekteerde vouer gevind nie. Probeer asseblief \'n ander vouer.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Probeer \'n ander vouer</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,7 +233,7 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Herwin in \'n nuwe rekening?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Die rugsteun wat jy besig is om te herwin, is geskep met gebruik van \'n ander Signal-rekening. Jy kan hierdie rugsteun in \'n nuwe rekening herwin, maar jy sal nie meer \'n lid wees van enige van die groepe wat herwin is nie.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Die rugsteun wat jy besig is om te herwin, is geskep met gebruik van \'n ander Radar-rekening. Jy kan hierdie rugsteun in \'n nuwe rekening herwin, maar jy sal nie meer \'n lid wees van enige van die groepe wat herwin is nie.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Herstel</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
@@ -243,7 +243,7 @@
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Verkeerde herwinsleutel</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Maak seker jy registreer met dieselfde telefoonnommer en 64-karakter-herwinsleutel wat jy gestoor het toe jy Signal-rugsteun geaktiveer het. Rugsteun kan nie sonder hierdie sleutel herwin word nie.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Maak seker jy registreer met dieselfde telefoonnommer en 64-karakter-herwinsleutel wat jy gestoor het toe jy Radar-rugsteun geaktiveer het. Rugsteun kan nie sonder hierdie sleutel herwin word nie.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Probeer weer</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Verifieer met SMS-kode?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Jy kan jou rekening registreer deur verifiëring via \'n SMS-kode wat Signal aan jou sal stuur. Nadat jy die kode ingevoer het, kan jy jou rugsteun deur jou herwinsleutel probeer herstel.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Jy kan jou rekening registreer deur verifiëring via \'n SMS-kode wat Radar aan jou sal stuur. Nadat jy die kode ingevoer het, kan jy jou rugsteun deur jou herwinsleutel probeer herstel.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Stuur kode</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Koppel jou rekening</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Nog nie op Signal nie?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Nog nie op Radar nie?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Skep rekening</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Kon nie hierdie rugsteun herwin nie</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Hierdie weergawe van Signal kan nie jou rugsteun herwin nie. Doen \'n opdatering na die jongste weergawe en probeer weer.</string>
+    <string name="RemoteRestoreScreen__update_latest">Hierdie weergawe van Radar kan nie jou rugsteun herwin nie. Doen \'n opdatering na die jongste weergawe en probeer weer.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Werk Signal by</string>
+    <string name="RemoteRestoreScreen__update_signal">Werk Radar by</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Nie nou nie</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Jou rekening is gesluit om jou privaatheid en sekuriteit te beskerm. Ná %1$d dae van onaktiwiteit in jou rekening sal jy hierdie telefoonnommer kan herregistreer sonder dat jy jou PIN nodig het. Alle inhoud sal geskrap word.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Maak Signal op jou ou toestel oop</string>
+    <string name="QuickRestoreQRScreen__step_1">Maak Radar op jou ou toestel oop</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Tik op die kamera-ikoon </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Kies ’n sterker PIN</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Jy het weer die kode ingevoer wat reeds gebruik is om jou telefoonnommer te verifieer. Kies \'n nuwe en unieke Signal-PIN.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Jy het weer die kode ingevoer wat reeds gebruik is om jou telefoonnommer te verifieer. Kies \'n nuwe en unieke Radar-PIN.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Vind meer uit oor PIN’s</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Waarskuwing</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Indien jy die PIN deaktiveer, sal jy alle data verloor wanneer jy Signal herregistreer, tensy jy handmatig \'n rugsteun maak en dit herwin. Jy kan nie Registrasiesluiting aanskakel terwyl die PIN gedeaktiveer is nie.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Indien jy die PIN deaktiveer, sal jy alle data verloor wanneer jy Radar herregistreer, tensy jy handmatig \'n rugsteun maak en dit herwin. Jy kan nie Registrasiesluiting aanskakel terwyl die PIN gedeaktiveer is nie.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Deaktiveer PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Voer jou PIN in</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Voer die PIN in wat jy geskep het toe jy Signal die eerste keer geïnstalleer het</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Voer die PIN in wat jy geskep het toe jy Radar die eerste keer geïnstalleer het</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Jy het weer die kode ingevoer wat reeds gebruik is om jou telefoonnommer te verifieer. Voer die unieke Signal-PIN in wat jy voorheen vir jou rekening gekies het.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Jy het weer die kode ingevoer wat reeds gebruik is om jou telefoonnommer te verifieer. Voer die unieke Radar-PIN in wat jy voorheen vir jou rekening gekies het.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">PIN verkeerd. %1$d poging oor.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Laat kennisgewings toe</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal versoek toestemming om kennisgewings te mag stuur. Dit laat jou toestel toe om waarskuwings te vertoon wanneer nuwe boodskappe inkom.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar versoek toestemming om kennisgewings te mag stuur. Dit laat jou toestel toe om waarskuwings te vertoon wanneer nuwe boodskappe inkom.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Nie nou nie</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Skandeer hierdie kode om jou rekening te koppel</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Maak Signal op jou foon oop</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Maak Radar op jou foon oop</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Tik op jou profielfoto om Signal-instellings oop te maak</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Tik op jou profielfoto om Radar-instellings oop te maak</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Tik op \"Gekoppelde toestelle\" en op \"Koppel nuwe toestel\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Generering van kode het misluk</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Jy het nie Signal op ’n ander toestel nie?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Jy het nie Radar op ’n ander toestel nie?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Skep rekening</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Skrap toepassing se data?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Jy is besig om \'n ander Signal-rekening te probeer koppel. Indien jy voortgaan, sal alle Signal-data wat tans op hierdie toestel is, geskrap word.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Jy is besig om \'n ander Radar-rekening te probeer koppel. Indien jy voortgaan, sal alle Radar-data wat tans op hierdie toestel is, geskrap word.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Skrap en begin weer</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Dra jou rekening oor</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Om jou rekening oor te dra, maak Signal op jou ou Android-toestel oop en selekteer Dra Rekening Oor.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Om jou rekening oor te dra, maak Radar op jou ou Android-toestel oop en selekteer Dra Rekening Oor.</string>
     <string name="DeviceTransferInstructions__continue">Gaan voort</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Ja, die nommers stem ooreen</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Die nommers stem nie ooreen nie</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Wag vir jou ou toestel om te verifieer…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal benodig liggingstoestemming om jou ou toestel te ontdek en daaraan te verbind.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar benodig liggingstoestemming om jou ou toestel te ontdek en daaraan te verbind.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Verleen toestemming</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal benodig geaktiveerde liggingsdienste om jou ou toestel te ontdek en daaraan te verbind.</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar benodig geaktiveerde liggingsdienste om jou ou toestel te ontdek en daaraan te verbind.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Skakel liggingsdienste aan</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal benodig die aanskakeling van Wi-Fi om jou ou toestel te ontdek en daaraan te verbind.</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar benodig die aanskakeling van Wi-Fi om jou ou toestel te ontdek en daaraan te verbind.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Skakel Wi-Fi aan</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Jammer, dit lyk nie of jou toestel Wi-Fi Direct ondersteun nie.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Herwin in plaas daarvan \'n rugsteunkopie</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Besig om data oor te dra</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d boodskappe tot dusver</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Kan nie oordra nie</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Kan nie van \'n nuwer weergawe van Signal af oordra nie.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Kan nie van \'n nuwer weergawe van Radar af oordra nie.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Sommige data kon nie oorgedra word nie weens \'n databasisbeperking.</string>
     <string name="DeviceTransferProgress__transfer_failed">Die oordrag het misluk. Probeer asb. weer.</string>
     <string name="DeviceTransferProgress__try_again">Probeer weer</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Is jy seker?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Sonder \'n gebruikersnaam sal mense jou nie op Signal kan vind nie.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Sonder \'n gebruikersnaam sal mense jou nie op Radar kan vind nie.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Kanselleer</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Jogosultságok engedélyezése</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">A Signal kérni fogja ezeket az engedélyeket, hogy segítsen üzenetet küldeni az ismerőseidnek. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">A Radar kérni fogja ezeket az engedélyeket, hogy segítsen üzenetet küldeni az ismerőseidnek. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Később</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Névjegyek</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Találj olyan személyeket, akiket ismersz. A névjegyeid titkosítva vannak, és nem láthatók a Signal számára.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Találj olyan személyeket, akiket ismersz. A névjegyeid titkosítva vannak, és nem láthatók a Radar számára.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefonhívások</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Nálam van a régi telefonom</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">A gyors kezdéshez olvasd be a QR-kódot jelenlegi Signal-fiókodból</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">A gyors kezdéshez olvasd be a QR-kódot jelenlegi Radar-fiókodból</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Nincs nálam a régi telefonom</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Vagy telepítsd újra a Signalt ugyanarra az eszközre</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Vagy telepítsd újra a Radart ugyanarra az eszközre</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Válaszd ki, hogyan szeretnéd helyreállítani az üzenetelőzményeket és a fiókadatokat.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">A Signal biztonsági mentéseiből</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">A Radar biztonsági mentéseiből</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Az ingyenes vagy fizetett Signal biztonsági mentési csomag</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Az ingyenes vagy fizetett Radar biztonsági mentési csomag</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Az eszközön tárolt biztonsági mentés visszaállítása</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Nem található biztonsági mentés</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">A kiválasztott mappában nem található Signal biztonsági mentés. Kérjük, próbálkozz egy másik mappával.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">A kiválasztott mappában nem található Radar biztonsági mentés. Kérjük, próbálkozz egy másik mappával.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Próbálkozz egy másik mappával</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,13 +233,13 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Helyreállítás új fiókba?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">A helyreállítandó biztonsági mentés egy másik Signal-fiókkal készült. Helyreállíthatod ezt a biztonsági mentést egy új fiókba, de a helyreállított csoportoknak többé nem leszel a tagja.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">A helyreállítandó biztonsági mentés egy másik Radar-fiókkal készült. Helyreállíthatod ezt a biztonsági mentést egy új fiókba, de a helyreállított csoportoknak többé nem leszel a tagja.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Visszaállítás</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Nem található biztonsági mentés</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">A helyreállítási kulcsod helyes, de ehhez a fiókhoz nem tartozik Signal biztonsági mentés. Menj vissza, és válassz másik helyreállítási módot, vagy folytasd helyreállítás nélkül.</string>
+    <string name="EnterAepScreen__no_backup_found_body">A helyreállítási kulcsod helyes, de ehhez a fiókhoz nem tartozik Radar biztonsági mentés. Menj vissza, és válassz másik helyreállítási módot, vagy folytasd helyreállítás nélkül.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Helytelen helyreállítási kulcs</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Hitelesítés SMS-kóddal?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Fiókodat a Signal által küldött SMS-kóddal igazolva regisztrálhatod. A kód megadása után megpróbálhatod újra visszaállítani a biztonsági mentést a helyreállítási kulccsal.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Fiókodat a Radar által küldött SMS-kóddal igazolva regisztrálhatod. A kód megadása után megpróbálhatod újra visszaállítani a biztonsági mentést a helyreállítási kulccsal.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Kód küldése</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Kösd össze a fiókod</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Még nem regisztráltál a Signalra?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Még nem regisztráltál a Radarra?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Fiók létrehozása</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Nem sikerült visszaállítani ezt a biztonsági másolatot</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">A Signal ezen verziója nem tudja visszaállítani a biztonsági másolatot. Frissíts a legújabb verzióra, és próbáld újra!</string>
+    <string name="RemoteRestoreScreen__update_latest">A Radar ezen verziója nem tudja visszaállítani a biztonsági másolatot. Frissíts a legújabb verzióra, és próbáld újra!</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Signal frissítése</string>
+    <string name="RemoteRestoreScreen__update_signal">Radar frissítése</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Később</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Biztonságod és személyes adataid védelme érdekében fiókodat zároltuk. %1$d nap inaktivitást követően újraregisztrálhatod ezt a telefonszámot a PIN kód használata nélkül. Az összes adat törlésre kerül.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Nyisd meg a Signalt a régi eszközödön</string>
+    <string name="QuickRestoreQRScreen__step_1">Nyisd meg a Radart a régi eszközödön</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Koppints a kamera ikonra </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Válassz egy erősebb PIN kódot!</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Újra beírtad a kódot, amelyet már korábban használtál a telefonszámod megerősítéséhez. Válassz egy új és egyedi Signal PIN kódot!</string>
+    <string name="PinCreationScreen__reentered_verification_code">Újra beírtad a kódot, amelyet már korábban használtál a telefonszámod megerősítéséhez. Válassz egy új és egyedi Radar PIN kódot!</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Bővebben a PIN kódokról</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Figyelmeztetés</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">PIN kódod letiltásával egy esetleges újraregisztráció során az összes Signal-adatod el fog veszni, kivéve ha azokat előtte külön lemented, majd helyreállítod. Letiltott PIN-kóddal nem lehetséges a regisztrációs zár bekapcsolása.</string>
+    <string name="PinCreationScreen__disable_pin_warning">PIN kódod letiltásával egy esetleges újraregisztráció során az összes Radar-adatod el fog veszni, kivéve ha azokat előtte külön lemented, majd helyreállítod. Letiltott PIN-kóddal nem lehetséges a regisztrációs zár bekapcsolása.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">PIN letiltása</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Add meg PIN kódodat</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Add meg a Signal első telepítésekor létrehozott PIN-kódot</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Add meg a Radar első telepítésekor létrehozott PIN-kódot</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Újra beírtad a kódot, amelyet már korábban használtál a telefonszámod megerősítéséhez. Add meg a fiókodhoz korábban kiválasztott egyedi Signal PIN kódot.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Újra beírtad a kódot, amelyet már korábban használtál a telefonszámod megerősítéséhez. Add meg a fiókodhoz korábban kiválasztott egyedi Radar PIN kódot.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">Hibás PIN kód. Még %1$d alkalommal próbálkozhatsz.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Értesítések engedélyezése</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">A Signal szeretné kérni az értesítési engedélyt. Ez lehetővé teszi, hogy az eszközöd értesítéseket jelenítsen meg, amikor új üzenetek érkeznek.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">A Radar szeretné kérni az értesítési engedélyt. Ez lehetővé teszi, hogy az eszközöd értesítéseket jelenítsen meg, amikor új üzenetek érkeznek.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Később</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">A fiókod összekapcsolásához olvasd be ezt a kódot</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Nyisd meg a Signalt a telefonodon!</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Nyisd meg a Radart a telefonodon!</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">A Signal beállításainak megnyitásához koppints a profilképedre</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">A Radar beállításainak megnyitásához koppints a profilképedre</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Koppints a „Kapcsolódó eszközök” és az „Új eszköz csatolása” lehetőségre</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">A kód generálása sikertelen</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Nincs letöltve a Signal másik eszközre?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Nincs letöltve a Radar másik eszközre?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Fiók létrehozása</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Alkalmazásadatok törlése?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Egy másik Signal-fiókot próbálsz összekapcsolni. Ha folytatod, az eszközön jelenleg található összes Signal-adat törlődik.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Egy másik Radar-fiókot próbálsz összekapcsolni. Ha folytatod, az eszközön jelenleg található összes Radar-adat törlődik.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Törlés és újraindítás</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Helyezd át a fiókodat</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">A fiókod áthelyezéséhez nyisd meg a Signalt a régi Android eszközödön, majd válaszd a Fiók áthelyezése lehetőséget.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">A fiókod áthelyezéséhez nyisd meg a Radart a régi Android eszközödön, majd válaszd a Fiók áthelyezése lehetőséget.</string>
     <string name="DeviceTransferInstructions__continue">Folytatás</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Igen, a számok egyeznek</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">A számok nem egyeznek</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Várakozás a régi eszközöd ellenőrzésére…</string>
-    <string name="DeviceTransferSetup__location_permission_required">A Signal alkalmazásnak szüksége van a helymeghatározási engedélyre ahhoz, hogy felismerje és csatlakozzon a régi eszközödhöz.</string>
+    <string name="DeviceTransferSetup__location_permission_required">A Radar alkalmazásnak szüksége van a helymeghatározási engedélyre ahhoz, hogy felismerje és csatlakozzon a régi eszközödhöz.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Engedély megadása</string>
-    <string name="DeviceTransferSetup__location_services_required">A Signal alkalmazásnak szüksége van a helymeghatározási szolgáltatások engedélyezésére, hogy felismerje és csatlakozzon a régi eszközödhöz.</string>
+    <string name="DeviceTransferSetup__location_services_required">A Radar alkalmazásnak szüksége van a helymeghatározási szolgáltatások engedélyezésére, hogy felismerje és csatlakozzon a régi eszközödhöz.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Helymeghatározás-szolgáltatások bekapcsolása</string>
-    <string name="DeviceTransferSetup__wifi_required">A Signal alkalmazásnak bekapcsolt Wi-Fi-re van szüksége, hogy felismerje és csatlakozzon a régi eszközödhöz.</string>
+    <string name="DeviceTransferSetup__wifi_required">A Radar alkalmazásnak bekapcsolt Wi-Fi-re van szüksége, hogy felismerje és csatlakozzon a régi eszközödhöz.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Wi-Fi bekapcsolása</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Sajnáljuk, úgy tűnik, hogy az eszközöd nem támogatja a Wi-Fi Direct funkciót.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Inkább állítsd vissza a biztonsági másolatot</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Adat áttöltése</string>
     <string name="DeviceTransferProgress__d_messages_so_far">Eddig %1$d db üzenet</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Sikertelen az átvitel</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Nem lehetséges az átvitel újabb verziójú Signalból.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Nem lehetséges az átvitel újabb verziójú Radarból.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Az adatbázis korlátai miatt egyes adatok átvitele nem sikerült.</string>
     <string name="DeviceTransferProgress__transfer_failed">Az áthelyezés sikertelen. Próbáld újra!</string>
     <string name="DeviceTransferProgress__try_again">Próbáld újra</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Biztos vagy benne?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Felhasználónév nélkül az emberek nem fognak tudni megtalálni a Signalon.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Felhasználónév nélkül az emberek nem fognak tudni megtalálni a Radaron.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Mégse</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

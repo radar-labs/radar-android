@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">ခွင့်ပြုချက်များ ပေးရန်</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">သင် သိရှိသောသူများထံသို့ မက်ဆေ့ချ်ပို့ရန်အတွက် ကူညီပေးရန် Signal သည် ထိုခွင့်ပြုချက်များကို တောင်းခံပါမည်။ </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">သင် သိရှိသောသူများထံသို့ မက်ဆေ့ချ်ပို့ရန်အတွက် ကူညီပေးရန် Radar သည် ထိုခွင့်ပြုချက်များကို တောင်းခံပါမည်။ </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">ယခု မလုပ်သေးပါ</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">အဆက်အသွယ်များ</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">သင် သိသောသူများကို ရှာဖွေလိုက်ပါ။ သင့်အဆက်အသွယ်များကို ကုဒ်ပြောင်းဝှက်ထားပြီး Signal ဝန်ဆောင်မှုက မမြင်တွေ့ရပါ။</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">သင် သိသောသူများကို ရှာဖွေလိုက်ပါ။ သင့်အဆက်အသွယ်များကို ကုဒ်ပြောင်းဝှက်ထားပြီး Radar ဝန်ဆောင်မှုက မမြင်တွေ့ရပါ။</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ဖုန်းကောလ်များ</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">ကျွန်ုပ်တွင် ဖုန်းအဟောင်းရှိသည်</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">လျင်မြန်စွာစတင်ရန် သင့် လက်ရှိ Signal အကောင့်မှ QR ကုဒ်တစ်ခုကို စကင်ဖတ်ပါ</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">လျင်မြန်စွာစတင်ရန် သင့် လက်ရှိ Radar အကောင့်မှ QR ကုဒ်တစ်ခုကို စကင်ဖတ်ပါ</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">ကျွန်ုပ်တွင် ဖုန်းအဟောင်းမရှိပါ</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">သို့မဟုတ် သင်သည် ထိုစက်တွင်ပင် Signal ကို ပြန်လည်ထည့်သွင်းနေသည်</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">သို့မဟုတ် သင်သည် ထိုစက်တွင်ပင် Radar ကို ပြန်လည်ထည့်သွင်းနေသည်</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">သင်၏ မက်ဆေ့ချ်မှတ်တမ်းနှင့် အကောင့်ဒေတာကို မည်သို့ပြန်လည်ရယူလိုသည်ကို ရွေးချယ်ပါ။</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Signal ဘက်ခ်အပ်မှ</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Radar ဘက်ခ်အပ်မှ</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">သင်၏ အခမဲ့ သို့မဟုတ် အခပေး Signal ဘက်ခ်အပ်အစီစဉ်</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">သင်၏ အခမဲ့ သို့မဟုတ် အခပေး Radar ဘက်ခ်အပ်အစီစဉ်</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">စက်ပေါ်ရှိ ဘက်ခ်အပ်ကို ပြန်လည်ရယူရန်</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">ဘက်ခ်အပ်မတွေ့ပါ</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">ရွေးချယ်ထားသောဖိုင်တွဲတွင် Signal ဘက်ခ်အပ်မတွေ့ပါ။ အခြားဖိုင်တွဲတွင် ရှာကြည့်ပါ။</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">ရွေးချယ်ထားသောဖိုင်တွဲတွင် Radar ဘက်ခ်အပ်မတွေ့ပါ။ အခြားဖိုင်တွဲတွင် ရှာကြည့်ပါ။</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">အခြားဖိုင်တွဲတွင် ရှာကြည့်ရန်</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">အကောင့်အသစ်သို့ ပြန်လည်ရယူလိုပါသလား။</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">သင်ပြန်လည်ရယူနေသော ဘက်ခ်အပ်ကို အခြား Signal အကောင့်တစ်ခု အသုံးပြု၍ ဖန်တီးထားပါသည်။ ဤဘက်ခ်အပ်ကို အကောင့်အသစ်တစ်ခုသို့ ပြန်ယူနိုင်သော်လည်း ပြန်လည်ရယူထားသော အဖွဲ့များ၏ အဖွဲ့ဝင်မဟုတ်တော့ပါ။</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">သင်ပြန်လည်ရယူနေသော ဘက်ခ်အပ်ကို အခြား Radar အကောင့်တစ်ခု အသုံးပြု၍ ဖန်တီးထားပါသည်။ ဤဘက်ခ်အပ်ကို အကောင့်အသစ်တစ်ခုသို့ ပြန်ယူနိုင်သော်လည်း ပြန်လည်ရယူထားသော အဖွဲ့များ၏ အဖွဲ့ဝင်မဟုတ်တော့ပါ။</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">ပြန်လည်ရယူမည်</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">ဘက်ခ်အပ်မတွေ့ပါ</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">သင့် ပြန်လည်ရယူရေးကီး မှန်ကန်ပါသည် သို့သော် ဤအကောင့်အတွက် Signal ဘက်ခ်အပ်မရှိပါ။ ပြန်လည်ရယူရန် အခြားနည်းလမ်းတစ်ခုကို ရွေးချယ်ရန် နောက်သို့ပြန်သွားပါ သို့မဟုတ် ပြန်လည်ရယူခြင်းမပြုဘဲ ဆက်လက်လုပ်ဆောင်ပါ။</string>
+    <string name="EnterAepScreen__no_backup_found_body">သင့် ပြန်လည်ရယူရေးကီး မှန်ကန်ပါသည် သို့သော် ဤအကောင့်အတွက် Radar ဘက်ခ်အပ်မရှိပါ။ ပြန်လည်ရယူရန် အခြားနည်းလမ်းတစ်ခုကို ရွေးချယ်ရန် နောက်သို့ပြန်သွားပါ သို့မဟုတ် ပြန်လည်ရယူခြင်းမပြုဘဲ ဆက်လက်လုပ်ဆောင်ပါ။</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">ပြန်လည်ရယူရေးကီး မှားနေသည်</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Signal ဘက်ခ်အပ်ကို ဖွင့်စဥ်က သင်သိမ်းဆည်းထားသည့် တူညီသော ဖုန်းနံပါတ်နှင့် စာလုံး 64 လုံးပါ ပြန်လည်ရယူရေးကီးဖြင့် စာရင်းသွင်းကြောင်း သေချာပါစေ။ ဤကီးမပါဘဲ ဘက်ခ်အပ်များကို ပြန်လည်ရယူ၍မရပါ။</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Radar ဘက်ခ်အပ်ကို ဖွင့်စဥ်က သင်သိမ်းဆည်းထားသည့် တူညီသော ဖုန်းနံပါတ်နှင့် စာလုံး 64 လုံးပါ ပြန်လည်ရယူရေးကီးဖြင့် စာရင်းသွင်းကြောင်း သေချာပါစေ။ ဤကီးမပါဘဲ ဘက်ခ်အပ်များကို ပြန်လည်ရယူ၍မရပါ။</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">ထပ်မံကြိုးစားမည်</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">SMS ကုဒ်ဖြင့် အတည်ပြုမလား။</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Signal မှ ပေးပို့မည့် SMS ကုဒ်ဖြင့် အတည်ပြုပြီး သင့်အကောင့်ကို မှတ်ပုံတင်နိုင်ပါသည်။ ကုဒ်ကို ထည့်သွင်းပြီးနောက် သင့်ပြန်လည်ရယူရေးကီးကို အသုံးပြု၍ ဘက်ခ်အပ်ကို ပြန်လည်ရယူရန် ထပ်မံကြိုးစားနိုင်ပါသည်။</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Radar မှ ပေးပို့မည့် SMS ကုဒ်ဖြင့် အတည်ပြုပြီး သင့်အကောင့်ကို မှတ်ပုံတင်နိုင်ပါသည်။ ကုဒ်ကို ထည့်သွင်းပြီးနောက် သင့်ပြန်လည်ရယူရေးကီးကို အသုံးပြု၍ ဘက်ခ်အပ်ကို ပြန်လည်ရယူရန် ထပ်မံကြိုးစားနိုင်ပါသည်။</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">ကုဒ်ပို့ရန်</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">သင့်အကောင့်ကို လင့်ခ်ချိတ်ပါ</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Signal မသုံးသေးဘူးလား။</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Radar မသုံးသေးဘူးလား။</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">အကောင့် ဖန်တီးရန်</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">ဤဘက်ခ်အပ်ကို ပြန်လည်ရယူ၍မရပါ</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">ဤ Signal ဗားရှင်းသည် သင့်ဘက်ခ်အပ်ကို ပြန်လည်ရယူ၍မရပါ။ နောက်ဆုံးဗားရှင်းအထိ အပ်ဒိတ်လုပ်ပြီး ထပ်စမ်းကြည့်ပါ။</string>
+    <string name="RemoteRestoreScreen__update_latest">ဤ Radar ဗားရှင်းသည် သင့်ဘက်ခ်အပ်ကို ပြန်လည်ရယူ၍မရပါ။ နောက်ဆုံးဗားရှင်းအထိ အပ်ဒိတ်လုပ်ပြီး ထပ်စမ်းကြည့်ပါ။</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Signal ကို အပ်ဒိတ်လုပ်ပါ။</string>
+    <string name="RemoteRestoreScreen__update_signal">Radar ကို အပ်ဒိတ်လုပ်ပါ။</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">ယခု မလုပ်သေးပါ</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">သင့်ကိုယ်ပိုင်အချက်အလက် လုံခြုံရေးအတွက် သင့်အကောင့်ကို ပိတ်လိုက်ပါပြီ။ အသုံးပြုမှုမရှိဘဲ %1$d ရက်အကြာတွင် ပင်နံပါတ်မလိုဘဲ သင့်ဖုန်းနံပါတ်ဖြင့် ပြန်လည် စာရင်းသွင်းနိုင်ပါမည်။ သို့သော် အကောင့်ထဲရှိ အကြောင်းအရာများအားလုံး ဖျက်သိမ်းသွားပါမည်။</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">သင့်စက်အဟောင်းတွင် Signal ကိုဖွင့်ပါ</string>
+    <string name="QuickRestoreQRScreen__step_1">သင့်စက်အဟောင်းတွင် Radar ကိုဖွင့်ပါ</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">ကင်မရာအိုင်ကွန်ကို နှိပ်ပါ </string>
     <!-- Step 3 to quick restore -->
@@ -397,13 +397,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">ပိုခိုင်မာသော PIN ကို ရွေးပါ</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">သင့်ဖုန်းနံပါတ်ကို အတည်ပြုရန် အသုံးပြုပြီးသား ကုဒ်ကို ထပ်မံထည့်သွင်းထားပါသည်။ သီးသန့် Signal PIN အသစ်ကို ရွေးပါ။</string>
+    <string name="PinCreationScreen__reentered_verification_code">သင့်ဖုန်းနံပါတ်ကို အတည်ပြုရန် အသုံးပြုပြီးသား ကုဒ်ကို ထပ်မံထည့်သွင်းထားပါသည်။ သီးသန့် Radar PIN အသစ်ကို ရွေးပါ။</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">PIN နံပါတ်များအကြောင်း ပိုမိုလေ့လာပါ</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">သတိပေးချက်</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">PIN ကို ပိတ်ထားပါက Signal ကို ပြန်လည်စာရင်းသွင်းသည့်အခါ ကိုယ်တိုင် ဘက်ခ်အပ်လုပ်၍ သိုလှောင်မထားလျှင် ဒေတာအားလုံး ပျောက်သွားပါလိမ့်မည်။ PIN ကို ပိတ်ထားစဉ် မှတ်ပုံတင်ခြင်း လော့ခ်ကို ဖွင့်၍ မရနိုင်ပါ။</string>
+    <string name="PinCreationScreen__disable_pin_warning">PIN ကို ပိတ်ထားပါက Radar ကို ပြန်လည်စာရင်းသွင်းသည့်အခါ ကိုယ်တိုင် ဘက်ခ်အပ်လုပ်၍ သိုလှောင်မထားလျှင် ဒေတာအားလုံး ပျောက်သွားပါလိမ့်မည်။ PIN ကို ပိတ်ထားစဉ် မှတ်ပုံတင်ခြင်း လော့ခ်ကို ဖွင့်၍ မရနိုင်ပါ။</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">PIN နံပါတ်ပိတ်ပါ</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -420,9 +420,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">သင်၏ PIN နံပါတ်ကို ထည့်ပါ</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Signal ကို ပထမဆုံးထည့်သွင်းစဥ်က ဖန်တီးခဲ့သည့် PIN ကို ရိုက်ထည့်ပါ။</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Radar ကို ပထမဆုံးထည့်သွင်းစဥ်က ဖန်တီးခဲ့သည့် PIN ကို ရိုက်ထည့်ပါ။</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">သင့်ဖုန်းနံပါတ်ကို အတည်ပြုရန် အသုံးပြုပြီးသား ကုဒ်ကို ထပ်မံထည့်သွင်းထားပါသည်။ သင့်အကောင့်အတွက် ယခင်ရွေးချယ်ထားသော သီးသန့် Signal PIN ကို ထည့်သွင်းပါ။</string>
+    <string name="PinEntryScreen__reentered_verification_code">သင့်ဖုန်းနံပါတ်ကို အတည်ပြုရန် အသုံးပြုပြီးသား ကုဒ်ကို ထပ်မံထည့်သွင်းထားပါသည်။ သင့်အကောင့်အတွက် ယခင်ရွေးချယ်ထားသော သီးသန့် Radar PIN ကို ထည့်သွင်းပါ။</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="other">PIN မမှန်ကန်ပါ။ ကြိုးစားရန် %1$d ကြိမ် ကျန်ရှိပါသည်။</item>
@@ -455,7 +455,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">အသိပေးချက်များကို ခွင့်ပြုရန်</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal မှ အသိပေးချက်များအား ခွင့်ပြုချက် တောင်းခံလိုပါသည်။ ၎င်းသည် မက်ဆေ့ချ်အသစ်များ ရောက်ရှိသည့်အခါ သင့်စက်ပေါ်တွင် အသိပေးချက်များကို ပြသနိုင်စေပါသည်။</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar မှ အသိပေးချက်များအား ခွင့်ပြုချက် တောင်းခံလိုပါသည်။ ၎င်းသည် မက်ဆေ့ချ်အသစ်များ ရောက်ရှိသည့်အခါ သင့်စက်ပေါ်တွင် အသိပေးချက်များကို ပြသနိုင်စေပါသည်။</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">ယခု မလုပ်သေးပါ</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -491,9 +491,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">သင့်အကောင့်ကို ချိတ်ဆက်ရန် ဤကုဒ်ကို စကင်န်ဖတ်ပါ</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">သင့်ဖုန်းတွင် Signal ကို ဖွင့်ရန်</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">သင့်ဖုန်းတွင် Radar ကို ဖွင့်ရန်</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Signal ဆက်တင်ကိုဖွင့်ရန် သင့်ပရိုဖိုင်ပုံကို နှိပ်ပါ</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Radar ဆက်တင်ကိုဖွင့်ရန် သင့်ပရိုဖိုင်ပုံကို နှိပ်ပါ</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">\"ချိတ်ထားသည့် စက်များ\" နှင့် \"စက်အသစ် ချိတ်ဆက်ရန်\" ကို နှိပ်ပါ</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -505,7 +505,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">ကုဒ်ထုတ်ပေးခြင်း မအောင်မြင်ပါ</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">အခြားစက်တွင် Signal မရှိဘူးလား။</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">အခြားစက်တွင် Radar မရှိဘူးလား။</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">အကောင့် ဖန်တီးရန်</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -519,7 +519,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">အက်ပ်ဒေတာကို ဖျက်မည်လား။</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">သင်သည် အခြား Signal အကောင့်တစ်ခုကို လင့်ခ်ချိတ်ရန် ကြိုးစားနေပါသည်။ ဆက်လက်လုပ်ဆောင်ပါက ဤစက်ပေါ်တွင် လက်ရှိရှိနေသော Signal ဒေတာအားလုံးကို ဖျက်လိုက်ပါမည်။</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">သင်သည် အခြား Radar အကောင့်တစ်ခုကို လင့်ခ်ချိတ်ရန် ကြိုးစားနေပါသည်။ ဆက်လက်လုပ်ဆောင်ပါက ဤစက်ပေါ်တွင် လက်ရှိရှိနေသော Radar ဒေတာအားလုံးကို ဖျက်လိုက်ပါမည်။</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">ဖျက်ပြီး ပြန်လည်စတင်ပါ</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -527,7 +527,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">သင့်အကောင့်ကို လွှဲပြောင်းပါ</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">သင့်အကောင့်ကို လွှဲပြောင်းရန်အတွက် သင့် Android စက်ဟောင်းတွင် Signal ကိုဖွင့်ပြီး အကောင့်လွှဲပြောင်းရန် ကို ရွေးချယ်ပါ။</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">သင့်အကောင့်ကို လွှဲပြောင်းရန်အတွက် သင့် Android စက်ဟောင်းတွင် Radar ကိုဖွင့်ပြီး အကောင့်လွှဲပြောင်းရန် ကို ရွေးချယ်ပါ။</string>
     <string name="DeviceTransferInstructions__continue">ရှေ့ဆက်ပါ</string>
 
     <!-- Device transfer: Setup screen -->
@@ -538,11 +538,11 @@
     <string name="DeviceTransferSetup__numbers_match">နံပါတ်များ ကိုက်ညီပါသည်</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">နံပါတ်များ မကိုက်ညီပါ</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">သင့်စက်အဟောင်းကို အတည်ပြုရန် စောင့်ဆိုင်းနေသည်…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal သည် သင့်စက်အဟောင်းဖြင့် ရှာဖွေချိတ်ဆက်ရန် တည်နေရာခွင့်ပြုချက် လိုအပ်ပါသည်။</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar သည် သင့်စက်အဟောင်းဖြင့် ရှာဖွေချိတ်ဆက်ရန် တည်နေရာခွင့်ပြုချက် လိုအပ်ပါသည်။</string>
     <string name="DeviceTransferSetup__grant_location_permission">ခွင့်ပြုချက်ပေးသည်</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal သည် သင့်စက်အဟောင်းဖြင့် ရှာဖွေချိတ်ဆက်ရန် တည်နေရာဝန်ဆောင်မှုများ ဖွင့်ထားရန် လိုအပ်ပါသည်။</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar သည် သင့်စက်အဟောင်းဖြင့် ရှာဖွေချိတ်ဆက်ရန် တည်နေရာဝန်ဆောင်မှုများ ဖွင့်ထားရန် လိုအပ်ပါသည်။</string>
     <string name="DeviceTransferSetup__turn_on_location_services">တည်နေရာဝန်ဆောင်မှုများ ဖွင့်မည်</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal သည် သင့်စက်ဟောင်းဖြင့် ရှာဖွေချိတ်ဆက်ရန် Wi-Fi ဖွင့်ထားရန် လိုအပ်ပါသည်။</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar သည် သင့်စက်ဟောင်းဖြင့် ရှာဖွေချိတ်ဆက်ရန် Wi-Fi ဖွင့်ထားရန် လိုအပ်ပါသည်။</string>
     <string name="DeviceTransferSetup__turn_on_wifi">ဝိုင်ဖိုင်ဖွင့်မည်</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">ဝမ်းနည်းပါသည်။ သင့်စက်သည် Wi-Fi Direct ကို ပံ့ပိုးပုံမရပါ။</string>
     <string name="DeviceTransferSetup__restore_a_backup">ဘက်ခ်အပ်ကို ပြန်လည်ရယူပါ</string>
@@ -559,7 +559,7 @@
     <string name="DeviceTransferProgress__transferring_data">ဒေတာများ လွှဲပြောင်းနေပါသည်</string>
     <string name="DeviceTransferProgress__d_messages_so_far">လက်ရှိအချိန်အထိ မက်ဆေ့ချ် %1$d စောင်</string>
     <string name="DeviceTransferProgress__unable_to_transfer">လွှဲပြောင်း၍ မရပါ</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Signal ဗားရှင်းအသစ်မှ မလွှဲပြောင်းနိုင်ပါ။</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Radar ဗားရှင်းအသစ်မှ မလွှဲပြောင်းနိုင်ပါ။</string>
     <string name="DeviceTransferProgress__failure_foreign_key">ဒေတာဘေ့စ်ကန့်သတ်ချက်ကြောင့် ဒေတာအချို့ကို လွှဲပြောင်း၍မရပါ။</string>
     <string name="DeviceTransferProgress__transfer_failed">လွှဲပြောင်းမှု မအောင်မြင်ပါ။ ထပ်ကြိုးစားကြည့်ပါ။</string>
     <string name="DeviceTransferProgress__try_again">ထပ်မံကြိုးစားမည်</string>
@@ -779,7 +779,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">သေချာပါသလား။</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">သုံးစွဲသူအမည်မရှိပါက Signal တွင် သင့်ကို အခြားသူများ ရှာတွေ့နိုင်မည်မဟုတ်ပါ။</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">သုံးစွဲသူအမည်မရှိပါက Radar တွင် သင့်ကို အခြားသူများ ရှာတွေ့နိုင်မည်မဟုတ်ပါ။</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">မလုပ်တော့ပါ</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

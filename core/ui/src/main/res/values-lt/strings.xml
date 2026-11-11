@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Bakstelėkite „Tęsti“ ir įveskite savo telefono užraktą, kad patvirtintumėte. Neįveskite savo „Signal“ PIN kodo.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Bakstelėkite „Tęsti“ ir įveskite savo telefono užraktą, kad patvirtintumėte. Neįveskite savo „Radar“ PIN kodo.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Tęsti</string>
 

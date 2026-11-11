@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Đến camera</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal cần quyền để hiển thị ảnh và video của bạn</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar cần quyền để hiển thị ảnh và video của bạn</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Cho phép Truy cập</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Không tìm thấy ảnh hoặc video. Signal chỉ có quyền truy cập ảnh và video bạn đã chọn.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Không tìm thấy ảnh hoặc video. Radar chỉ có quyền truy cập ảnh và video bạn đã chọn.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal chỉ có thể truy cập một số ảnh hoặc video</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar chỉ có thể truy cập một số ảnh hoặc video</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Quản lý</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Để hiển thị ảnh và video:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal cần quyền truy cập để hiển thị ảnh và video của bạn.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar cần quyền truy cập để hiển thị ảnh và video của bạn.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Ảnh</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Cho phép truy cập microphone của bạn</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Để chụp ảnh, hãy cho phép Signal truy cập máy ảnh.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Để chụp ảnh, hãy cho phép Radar truy cập máy ảnh.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Để chụp ảnh và quay video, hãy cho phép Signal truy cập camera của bạn.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Để chụp ảnh và quay video, hãy cho phép Radar truy cập camera của bạn.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Để quay video có âm thanh, hãy cho phép Signal truy cập microphone của bạn.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Để quay video có âm thanh, hãy cho phép Radar truy cập microphone của bạn.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Để quét mã QR, hãy cho phép Signal truy cập camera của bạn.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Để quét mã QR, hãy cho phép Radar truy cập camera của bạn.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal cần quyền truy cập camera của bạn để chụp ảnh</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar cần quyền truy cập camera của bạn để chụp ảnh</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal cần quyền truy cập camera của bạn để quét mã QR</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar cần quyền truy cập camera của bạn để quét mã QR</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal cần quyền truy cập microphone của bạn để quay video</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar cần quyền truy cập microphone của bạn để quay video</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Để chụp ảnh trong Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Để chụp ảnh trong Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Để chụp ảnh và quay video trong Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Để chụp ảnh và quay video trong Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Để quay video có âm thanh:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Multi-capture</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal cần quyền truy cập micro để quay video nhưng đã bị từ chối. Vui lòng mở cài đặt ứng dụng, chọn \"Quyền\" và bật \"Micro\" và \"Máy ảnh\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar cần quyền truy cập micro để quay video nhưng đã bị từ chối. Vui lòng mở cài đặt ứng dụng, chọn \"Quyền\" và bật \"Micro\" và \"Máy ảnh\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Đã xảy ra lỗi khi quay video</string>
@@ -209,7 +209,7 @@
         <item quantity="other">%1$d mục được đặt thành chất lượng tiêu chuẩn</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal cần quyền truy cập Bộ nhớ để lưu tệp vào bộ nhớ, nhưng đã bị từ chối vĩnh viễn. Vui lòng mở cài đặt ứng dụng, chọn \"Quyền\" và bật \"Bộ nhớ\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar cần quyền truy cập Bộ nhớ để lưu tệp vào bộ nhớ, nhưng đã bị từ chối vĩnh viễn. Vui lòng mở cài đặt ứng dụng, chọn \"Quyền\" và bật \"Bộ nhớ\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Video sẽ được gửi mà không có âm thanh</string>
 
@@ -223,14 +223,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Liên kết thiết bị?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Có vẻ như bạn đang cố liên kết một thiết bị Signal. Nhấn tiếp tục và sau đó nhấn \"Liên kết thiết bị mới\" và quét lại mã QR.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Có vẻ như bạn đang cố liên kết một thiết bị Radar. Nhấn tiếp tục và sau đó nhấn \"Liên kết thiết bị mới\" và quét lại mã QR.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Tiếp tục</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Không thể chuyển tài khoản</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Thiết bị bạn đang tiến hành chuyển đến đã cũ. Cập nhật Signal trên thiết bị đó và thử lại.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Thiết bị bạn đang tiến hành chuyển đến đã cũ. Cập nhật Radar trên thiết bị đó và thử lại.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

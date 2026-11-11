@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Ketuk lanjutkan dan masukkan kunci ponsel Anda untuk mengonfirmasi. Jangan masukkan PIN Signal Anda.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Ketuk lanjutkan dan masukkan kunci ponsel Anda untuk mengonfirmasi. Jangan masukkan PIN Radar Anda.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Lanjutkan</string>
 

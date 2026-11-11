@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Tryck på fortsätt och använd metoden för att låsa upp telefonen för att bekräfta. Ange inte din Signal-pinkod.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Tryck på fortsätt och använd metoden för att låsa upp telefonen för att bekräfta. Ange inte din Radar-pinkod.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Fortsätt</string>
 

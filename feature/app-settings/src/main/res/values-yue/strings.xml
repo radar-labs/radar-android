@@ -3,7 +3,7 @@
     <!-- RegistrationLockV2Dialog -->
     <string name="RegistrationLockV2Dialog_turn_on_registration_lock">係咪要開啟註冊鎖？</string>
     <string name="RegistrationLockV2Dialog_turn_off_registration_lock">係咪要閂咗註冊鎖？</string>
-    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">重新註冊 Signal 嘅時候，若果你唔記得咗個 Signal PIN 碼，個帳戶將會凍結 7 日，暫時唔用得住。</string>
+    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">重新註冊 Radar 嘅時候，若果你唔記得咗個 Radar PIN 碼，個帳戶將會凍結 7 日，暫時唔用得住。</string>
     <string name="RegistrationLockV2Dialog_turn_on">開啟</string>
     <string name="RegistrationLockV2Dialog_turn_off">關閉</string>
     <string name="preferences__advanced_pin_settings">進階 PIN 碼設定</string>
@@ -12,20 +12,20 @@
     <string name="RegistrationLockFragment__switch_keyboard">切換鍵盤</string>
     <string name="preferences_chats__transfer_account">過個帳戶落新機</string>
     <string name="preferences_chats__transfer_account_to_a_new_android_device">將帳戶轉移去一部新嘅 Android 機度</string>
-    <string name="preferences_app_protection__signal_pin">Signal PIN 碼</string>
+    <string name="preferences_app_protection__signal_pin">Radar PIN 碼</string>
     <string name="preferences_app_protection__create_a_pin">建立一個 PIN 碼</string>
     <string name="preferences_app_protection__change_your_pin">更改您嘅 PIN 碼</string>
     <string name="preferences_app_protection__pin_reminders">PIN 碼溫馨提醒</string>
     <string name="preferences_app_protection__turn_off">關閉</string>
     <string name="preferences_app_protection__confirm_pin">確認 PIN 碼</string>
-    <string name="preferences_app_protection__confirm_your_signal_pin">確認您嘅 Signal PIN 碼</string>
-    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">請確保你記住或者妥善保存您嘅 PIN 碼，因為無咗就無㗎喇。若果你唔記得咗個 PIN 碼，當重新註冊 Signal 帳戶嘅時候，就可能會冇晒您啲資料。</string>
+    <string name="preferences_app_protection__confirm_your_signal_pin">確認您嘅 Radar PIN 碼</string>
+    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">請確保你記住或者妥善保存您嘅 PIN 碼，因為無咗就無㗎喇。若果你唔記得咗個 PIN 碼，當重新註冊 Radar 帳戶嘅時候，就可能會冇晒您啲資料。</string>
     <string name="preferences_app_protection__incorrect_pin_try_again">PIN 碼唔啱。請你再試多次。</string>
     <string name="preferences_app_protection__registration_lock">註冊鎖</string>
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
     <string name="preferences_account_reregister">重新註冊帳戶</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
-    <string name="preferences_account_update_signal">更新 Signal</string>
+    <string name="preferences_account_update_signal">更新 Radar</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
     <string name="preferences_account_delete_all_data">刪除所有資料</string>
     <!-- Title for confirmation dialog confirming user wants to delete all their data -->
@@ -40,7 +40,7 @@
     <!-- AccountSettingsFragment -->
     <string name="AccountSettingsFragment__account">帳戶</string>
     <string name="AccountSettingsFragment__youll_be_asked_less_frequently">慢慢就唔會問得您咁密㗎喇</string>
-    <string name="AccountSettingsFragment__require_your_signal_pin">要求講得啱你個 Signal PIN 碼先可以喺 Signal 重新註冊你個電話冧把</string>
+    <string name="AccountSettingsFragment__require_your_signal_pin">要求講得啱你個 Radar PIN 碼先可以喺 Radar 重新註冊你個電話冧把</string>
     <string name="AccountSettingsFragment__change_phone_number">轉電話冧把</string>
     <!-- Account setting that allows user to request and export their signal account data -->
     <string name="AccountSettingsFragment__request_account_data">你嘅帳戶資料</string>
@@ -140,7 +140,7 @@
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">你嘅帳戶資料</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
-    <string name="ExportAccountDataFragment__export_explanation">匯出你嘅 Signal 帳戶資料報告。呢份報告唔包含任何訊息同媒體。%1$s</string>
+    <string name="ExportAccountDataFragment__export_explanation">匯出你嘅 Radar 帳戶資料報告。呢份報告唔包含任何訊息同媒體。%1$s</string>
     <!-- Learn more link to more information about requesting account data -->
     <string name="ExportAccountDataFragment__learn_more">了解詳情</string>
     <!-- Button action to export the report data to another app (e.g. email) -->
@@ -168,14 +168,14 @@
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">係咪要匯出資料？</string>
     <!-- Message for export confirmation dialog -->
-    <string name="ExportAccountDataFragment__export_report_confirmation_message">記得淨係好同你信任嘅人或者應用程式分享你嘅 Signal 帳戶資料呀。</string>
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">記得淨係好同你信任嘅人或者應用程式分享你嘅 Radar 帳戶資料呀。</string>
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">匯出</string>
 
     <!-- Shown in a dialog with a spinner while the report is downloading -->
     <string name="ExportAccountDataFragment__download_progress">建立緊報告……</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
-    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">你份報告只會喺匯出時建立，Signal 唔會將報告儲存喺裝置入面。</string>
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">你份報告只會喺匯出時建立，Radar 唔會將報告儲存喺裝置入面。</string>
 
     <!-- TotpSetupScreen -->
     <!-- Title of the screen that walks the user through setting up an authenticator app -->
@@ -191,7 +191,7 @@
     <!-- Header of the second step of authenticator app setup -->
     <string name="TotpSetupScreen__step_2">步驟 2</string>
     <!-- Body of the second step of authenticator app setup -->
-    <string name="TotpSetupScreen__open_your_authenticator_app">㩒一下下面個掣打開驗證 APP，就可以加你嘅 Signal 帳戶。</string>
+    <string name="TotpSetupScreen__open_your_authenticator_app">㩒一下下面個掣打開驗證 APP，就可以加你嘅 Radar 帳戶。</string>
     <!-- Button that opens the user\'s authenticator app -->
     <string name="TotpSetupScreen__open">打開</string>
     <!-- Text above the setup key explaining that it can be entered by hand instead -->
@@ -205,7 +205,7 @@
     <!-- Dialog message shown when the account already has as many authenticator apps as it\'s allowed -->
     <string name="TotpSetupScreen__you_cant_add_more_than_d">你冇得加超過 %1$d 個驗證 APP。試下先移除一個。</string>
     <!-- Dialog message shown when we couldn\'t reach the service to start setting up an authenticator app -->
-    <string name="TotpSetupScreen__couldnt_reach_signal">連線唔到去 Signal。請檢查你嘅連線，然後再試多次。</string>
+    <string name="TotpSetupScreen__couldnt_reach_signal">連線唔到去 Radar。請檢查你嘅連線，然後再試多次。</string>
     <!-- Header of the third step of authenticator app setup -->
     <string name="TotpSetupScreen__step_3">步驟 3</string>
     <!-- Body of the third step of authenticator app setup -->
@@ -243,7 +243,7 @@
     <!-- Error shown under the code field when the code the user entered was rejected -->
     <string name="TotpCodeEntryScreen__incorrect_code">個驗證碼唔啱。輸入而家驗證 APP 入面嘅驗證碼。</string>
     <!-- Error shown under the code field when we couldn\'t reach the service to check the code -->
-    <string name="TotpCodeEntryScreen__couldnt_reach_signal">連線唔到去 Signal。請檢查你嘅連線，然後再試多次。</string>
+    <string name="TotpCodeEntryScreen__couldnt_reach_signal">連線唔到去 Radar。請檢查你嘅連線，然後再試多次。</string>
 
     <!-- Default name given to an authenticator app the moment it\'s set up, before the user chooses their own name for it -->
     <string name="TotpRepository__authenticator">驗證</string>
@@ -294,7 +294,7 @@
     <string name="DeleteAccountFragment__no_number">冇講到冧把</string>
     <string name="DeleteAccountFragment__the_phone_number">你輸入嘅電話冧把，同你嘅帳戶唔脗合。</string>
     <string name="DeleteAccountFragment__are_you_sure">真係要刪除你嘅帳戶？</string>
-    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">咁做嘅話，你嘅 Signal 帳戶將會被刪除，同時重設應用程式。完成整個過程後，應用程式會自動關閉。</string>
+    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">咁做嘅話，你嘅 Radar 帳戶將會被刪除，同時重設應用程式。完成整個過程後，應用程式會自動關閉。</string>
     <string name="DeleteAccountFragment__failed_to_delete_local_data">刪除唔到機入面嘅資料。你可以喺系統應用程式設定入面手動清除。</string>
     <string name="DeleteAccountFragment__launch_app_settings">啟動 App 設定</string>
     <!-- Title of progress dialog shown when a user deletes their account and the process is leaving all groups -->
@@ -322,7 +322,7 @@
     <!-- Bullet point on the delete account screen warning the user that the deletion is permanent -->
     <string name="DeleteAccountScreen__this_action_can_not_be_undone">剷走咗就冇得返轉頭㗎喇</string>
     <!-- Message of the deletion confirmation dialog, shown when the account has a username. Placeholder is the username. -->
-    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">咁做嘅話，你用戶名稱叫做「%1$s」嘅 Signal 帳戶將會被刪除，同時重設個APP。過程完成之後，個 APP 會自動關閉。</string>
+    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">咁做嘅話，你用戶名稱叫做「%1$s」嘅 Radar 帳戶將會被刪除，同時重設個APP。過程完成之後，個 APP 會自動關閉。</string>
     <!-- Label of the checkbox the user has to tick in the confirmation dialog before they can delete their account -->
     <string name="DeleteAccountScreen__yes_delete_my_account">係，刪除我嘅帳戶</string>
 
@@ -454,15 +454,15 @@
     <!-- Section title above two radio buttons for enabling and disabling whether users can find me by my phone number  -->
     <string name="PhoneNumberPrivacySettingsFragment_who_can_find_me_by_number_heading">邊個可以用手機號碼搵到我</string>
     <!-- Subtext below radio buttons when who can find me by number is set to everyone -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">任何有你電話冧把嘅人都會睇到你用緊 Signal，同埋可以開始聊天。</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">任何有你電話冧把嘅人都會睇到你用緊 Radar，同埋可以開始聊天。</string>
     <!-- Subtext below radio buttons when who can find me by number is set to nobody -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">除非你向對方傳送訊息或者雙方已經有聊天紀錄，如果唔係冇人會睇到你用緊 Signal。</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">除非你向對方傳送訊息或者雙方已經有聊天紀錄，如果唔係冇人會睇到你用緊 Radar。</string>
     <!-- Snackbar text when pressing invalid radio item -->
     <string name="PhoneNumberPrivacySettingsFragment__to_change_this_setting">"要更改呢個設定，請將「邊個可以睇到我嘅手機號碼」設定為「邊個都唔得」。"</string>
     <!-- Dialog title shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
     <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_title">你係咪確定？</string>
     <!-- Dialog warning message shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
-    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">將「邊個可以用電話號碼搵到我」設定為「邊個都唔得」，會令其他人無咁容易喺 Signal 度搵到你。</string>
+    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">將「邊個可以用電話號碼搵到我」設定為「邊個都唔得」，會令其他人無咁容易喺 Radar 度搵到你。</string>
     <!-- Dialog button text for canceling change action -->
     <string name="PhoneNumberPrivacySettingsFragment__cancel">取消</string>
     <string name="PhoneNumberPrivacy_everyone">任何人都得</string>
@@ -508,7 +508,7 @@
     <!-- Text shown with toggle that when switched on will enable screen lock -->
     <string name="ScreenLockSettingsFragment__use_screen_lock">用螢幕鎖定</string>
     <!-- Description of what screen locking will do and how notification content will not be shown when screen is locked -->
-    <string name="ScreenLockSettingsFragment__your_android_device">當你退出或者切換 APP 嘅時候，就要用你部 Android 機嘅鎖定設定嚟解鎖 Signal。鎖定期間，通知預覽唔會顯示訊息內容。</string>
+    <string name="ScreenLockSettingsFragment__your_android_device">當你退出或者切換 APP 嘅時候，就要用你部 Android 機嘅鎖定設定嚟解鎖 Radar。鎖定期間，通知預覽唔會顯示訊息內容。</string>
     <!-- Title text explaining when users should start the screen lock -->
     <string name="ScreenLockSettingsFragment__start_screen_lock">開始螢幕鎖定</string>
     <!-- Option text explaining that screen lock should start after 1 minute of inactivity -->
@@ -520,9 +520,9 @@
     <!-- Option text explaining that screen lock should start at a custom time set by the user -->
     <string name="ScreenLockSettingsFragment__custom_time">自訂時間</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn on screen lock -->
-    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">用 Signal 螢幕鎖定</string>
+    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">用 Radar 螢幕鎖定</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn off screen lock -->
-    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">唔用 Signal 螢幕鎖定</string>
+    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">唔用 Radar 螢幕鎖定</string>
 
     <!-- HelpSettingsFragment -->
     <string name="preferences__help">說明</string>
@@ -544,7 +544,7 @@
     <!-- Visible warning label for the limitations of changing the app icon. -->
     <string name="preferences__app_icon_warning">App 圖示同個名可以喺手機嘅主螢幕同埋應用抽屜裡面見到。</string>
     <!-- Visible warning label explaining that changing the app icon and name does not affect notifications. -->
-    <string name="preferences__app_icon_notification_warning">通知都係會用返預設嘅 Signal 圖示同埋個名嚟顯示。</string>
+    <string name="preferences__app_icon_notification_warning">通知都係會用返預設嘅 Radar 圖示同埋個名嚟顯示。</string>
     <!--Text description of a graphic illustrating the limitations of the app icon change. -->
     <string name="preferences__graphic_illustrating_where_the_replacement_app_icon_will_be_visible">圖解顯示咗替代 app 圖示可以見到嘅位置。</string>
 
@@ -564,9 +564,9 @@
     <!-- Title for the confirmation dialog of changing the app icon. -->
     <string name="preferences__app_icon_dialog_title">將 app 圖示同個名轉做「%1$s」</string>
     <!-- Description for the confirmation dialog of changing the app icon. -->
-    <string name="preferences__app_icon_dialog_description">要閂咗 Signal 先可以更改個 app 嘅圖示同名。通知都係會用返預設嘅 Signal 圖示同埋個名嚟顯示。</string>
+    <string name="preferences__app_icon_dialog_description">要閂咗 Radar 先可以更改個 app 嘅圖示同名。通知都係會用返預設嘅 Radar 圖示同埋個名嚟顯示。</string>
     <!-- Visible warning label for the limitations of changing the app icon with learn more call to action. -->
-    <string name="preferences__app_icon_warning_learn_more">揀個 app 圖示同名，佢哋會顯示喺手機嘅主螢幕同埋應用抽屜嗰度。通知都係會用返預設嘅 Signal 圖示同埋個名嚟顯示。了解 詳情</string>
+    <string name="preferences__app_icon_warning_learn_more">揀個 app 圖示同名，佢哋會顯示喺手機嘅主螢幕同埋應用抽屜嗰度。通知都係會用返預設嘅 Radar 圖示同埋個名嚟顯示。了解 詳情</string>
     <!--Call to action to get more information about the limitations of the change app icon functionality. -->
     <string name="preferences__app_icon_learn_more">了解 詳情</string>
 
@@ -596,7 +596,7 @@
     <string name="ApplicationPreferenceActivity_you_havent_set_a_passphrase_yet">你仲未設定密碼喎！</string>
     <string name="ApplicationPreferencesActivity_disable">停用</string>
     <string name="ApplicationPreferencesActivity_disable_passphrase">係咪要停用密碼？</string>
-    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">咁樣以後 Signal 同埋訊息通知就唔會再上鎖㗎喇。</string>
+    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">咁樣以後 Radar 同埋訊息通知就唔會再上鎖㗎喇。</string>
     <string name="PrivacySettingsFragment__app_security">App 保安措施</string>
     <!-- This refers to the multi-tasking overview (recent apps) from the Android operating system.-->
     <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">封鎖最近清單同埋應用程式入面嘅螢幕截圖功能</string>
@@ -616,10 +616,10 @@
     <!-- Description for the payment lock toggle in privacy settings -->
     <string name="PrivacySettingsFragment__payment_lock_require_lock">一定要用 Android 螢幕鎖定或者指紋辨識功能嚟進行滙款</string>
     <string name="PrivacySettingsFragment__set_a_default_disappearing_message_timer_for_all_new_chats_started_by_you">你發起嘅所有新對話，都會幫你預先設定一個過眼雲煙訊息倒數限期。</string>
-    <string name="PrivacySettingsFragment__signal_message_and_calls">Signal 訊息同通話、一律轉駁通話同封密發送人</string>
+    <string name="PrivacySettingsFragment__signal_message_and_calls">Radar 訊息同通話、一律轉駁通話同封密發送人</string>
     <!-- Text shown when screen lock is not enabled -->
     <string name="ScreenLockSettingsFragment__off">閂咗</string>
-    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">指定嘅閒置時間過後自動將 Signal 上鎖</string>
+    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">指定嘅閒置時間過後自動將 Radar 上鎖</string>
     <string name="preferences__change_passphrase">更改密碼</string>
     <string name="preferences__change_your_passphrase">更改你嘅密碼</string>
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
@@ -641,7 +641,7 @@
     <string name="preferences__this_setting_is_not_a_guarantee">呢個設定唔係寫包單嘅，你嘅鍵盤亦可能話之得佢。</string>
     <string name="preferences__typing_indicators">示意打緊字</string>
     <!-- Subtext below option to launch into phone number privacy settings screen -->
-    <string name="preferences_app_protection__choose_who_can_see">選擇邊個可以睇到你嘅電話冧把，同埋喺 Signal 度用手機號碼聯絡你。</string>
+    <string name="preferences_app_protection__choose_who_can_see">選擇邊個可以睇到你嘅電話冧把，同埋喺 Radar 度用手機號碼聯絡你。</string>
     <!-- Privacy settings payments section title -->
     <string name="preferences_app_protection__payments">付款</string>
     <!-- Snackbar text shown when trying to enable screen lock but the user does not have a password or biometrics enabled -->
@@ -657,7 +657,7 @@
     <!-- Dismiss button on the dialog explaining payment lock needs a device screen lock -->
     <string name="PrivacySettingsScreen__not_now">暫時唔需要</string>
     <!-- Title of the authentication prompt shown when turning off payment lock -->
-    <string name="PrivacySettingsScreen__signal">Signal</string>
+    <string name="PrivacySettingsScreen__signal">Radar</string>
     <!-- Link after the incognito keyboard disclaimer that opens a support article -->
     <string name="PrivacySettingsScreen__learn_more">了解詳情</string>
 
@@ -673,7 +673,7 @@
     <!-- String displayed telling user to invite their friends to Signal -->
     <string name="AppSettingsFragment__invite_your_friends">邀請你嘅好友</string>
     <!-- String alerting user that something is wrong with their backups subscription -->
-    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">為你嘅「Signal 安全備份」課金計劃續期</string>
+    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">為你嘅「Radar 安全備份」課金計劃續期</string>
     <!-- App settings row that opens privacy settings -->
     <string name="preferences__privacy">私隱</string>
     <!-- Title of the top level app settings screen -->
@@ -743,7 +743,7 @@
     <!-- Error shown under the code field when the service rejected the code -->
     <string name="TwoFactorVerifyScreen__incorrect_code">個驗證碼唔啱。輸入而家驗證 APP 入面嘅驗證碼。</string>
     <!-- Error shown when the service could not be reached -->
-    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">連線唔到去 Signal。請檢查你嘅連線，然後再試多次。</string>
+    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">連線唔到去 Radar。請檢查你嘅連線，然後再試多次。</string>
     <!-- Dialog shown when verifying with a passkey failed -->
     <string name="TwoFactorVerifyScreen__something_went_wrong_with_your_passkey">你嘅通行密鑰出現咗問題。請你再試過，或者揀過第二個方法啦。</string>
 
@@ -869,9 +869,9 @@
     <!-- Explanation below the name, about and badges rows on the profile screen, saying who can see your profile -->
     <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">同你通訊嘅人、聯絡人同群組將會睇到你嘅個人檔案同埋相關更改。</string>
     <!-- The title of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_title">更新 Signal</string>
+    <string name="EditProfileFragment_deprecated_dialog_title">更新 Radar</string>
     <!-- The body of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_body">呢個 Signal 版本已經過咗期。即刻更新嚟繼續用 Signal 啦。</string>
+    <string name="EditProfileFragment_deprecated_dialog_body">呢個 Radar 版本已經過咗期。即刻更新嚟繼續用 Radar 啦。</string>
     <!-- The button on a dialog prompting user to update to the latest version of Signal. When clicked, the user will be taken to the store to update their app. -->
     <string name="EditProfileFragment_deprecated_dialog_update_button">更新</string>
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
@@ -1003,7 +1003,7 @@
     <!-- Dialog title shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
     <string name="UsernameLinkSettings_qr_code_not_found">搵唔到二維碼</string>
     <!-- Dialog message shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
-    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">試吓掃描第二張有 Signal 二維碼嘅圖片。</string>
+    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">試吓掃描第二張有 Radar 二維碼嘅圖片。</string>
     <!-- Body of a dialog that is displayed when the username we looked up could not be found. -->
     <string name="UsernameLinkSettings_qr_result_not_found">揾唔到用戶名稱叫「 %1$s 」嘅用戶。</string>
     <!-- Description text shown underneath the username QR code scanner -->
@@ -1011,19 +1011,19 @@
     <!-- Shown when the QR code you scanned leads to a username link that no one has -->
     <string name="UsernameLinkSettingsScreen__qr_result_not_found_no_username">搵唔到呢個用戶。</string>
     <!-- Shown in place of the camera on the scan tab when the camera permission hasn\'t been granted -->
-    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">要掃二維碼嘅話，Signal 需要存取你嘅相機。</string>
+    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">要掃二維碼嘅話，Radar 需要存取你嘅相機。</string>
     <!-- Button on the scan tab that asks for the camera permission -->
     <string name="UsernameLinkSettingsScreen__allow_access">允許存取</string>
     <!-- Shown when the camera permission was denied, or permanently denied, and a QR code can\'t be scanned -->
-    <string name="UsernameLinkSettingsScreen__camera_needed">Signal 需要相機嘅存取權先可以掃描二維碼</string>
+    <string name="UsernameLinkSettingsScreen__camera_needed">Radar 需要相機嘅存取權先可以掃描二維碼</string>
 
     <!-- ManageStorageSettingsScreen -->
     <string name="preferences__storage">儲存空間</string>
     <string name="preferences_storage__storage_usage">儲存空間用量</string>
     <!-- Setting section title header for storage optimization -->
-    <string name="ManageStorageSettingsFragment__on_device_storage">Signal 儲存空間</string>
+    <string name="ManageStorageSettingsFragment__on_device_storage">Radar 儲存空間</string>
     <!-- Setting row title for storage optimization -->
-    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">優化 Signal 儲存空間</string>
+    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">優化 Radar 儲存空間</string>
     <!-- Setting row explanation for storage optimization -->
     <string name="ManageStorageSettingsFragment__unused_media_will_be_offloaded">未用嘅媒體會卸載，但可以隨時喺備份度下載。</string>
     <!-- Settings section title header show above manage settings options for automatic chat history management (deleting) -->
@@ -1045,11 +1045,11 @@
     <string name="preferences_storage__all_message_history_will_be_permanently_removed_this_action_cannot_be_undone_linked_device">所有訊息紀錄就會喺所有裝置上面永久刪除㗎喇。剷走咗就冇得返轉頭㗎喇。</string>
     <string name="preferences_storage__delete_all_now">立即全部刪除</string>
     <!-- Dialog message for paid tier pending dialog -->
-    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">淨係得有課金「Signal 安全備份」嘅帳戶先用到「優化儲存空間」功能。你嘅備份課金計劃仲處理緊，未用得住。請你遲啲再試過啦。</string>
+    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">淨係得有課金「Radar 安全備份」嘅帳戶先用到「優化儲存空間」功能。你嘅備份課金計劃仲處理緊，未用得住。請你遲啲再試過啦。</string>
     <!-- Title of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
     <string name="ManageStorageSettingsFragment__media_will_be_removed_from_your_on_device_backup">媒體會喺你嘅裝置上備份入面踢走</string>
     <!-- Body of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
-    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">開咗「優化 Signal 儲存空間」之後，系統會喺你嘅裝置度卸載舊媒體。你可以隨時再下載。系統仲會由你嘅裝置上備份入面移除舊媒體。</string>
+    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">開咗「優化 Radar 儲存空間」之後，系統會喺你嘅裝置度卸載舊媒體。你可以隨時再下載。系統仲會由你嘅裝置上備份入面移除舊媒體。</string>
     <!-- Dialog action to confirm turning on "Optimize Signal storage" -->
     <string name="ManageStorageSettingsFragment__turn_on">開啟</string>
 
@@ -1079,15 +1079,15 @@
     <!-- Displayed in a toast when we fail to open the ringtone picker -->
     <string name="NotificationSettingsFragment__failed_to_open_picker">開唔到揀選工具。</string>
     <!-- Banner title when notification permission is disabled -->
-    <string name="NotificationSettingsFragment__to_enable_notifications">Signal 需要取得相關權限，先可以顯示同啟用通知功能。</string>
+    <string name="NotificationSettingsFragment__to_enable_notifications">Radar 需要取得相關權限，先可以顯示同啟用通知功能。</string>
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">開啟</string>
     <string name="NotificationsSettingsFragment__calls">通話</string>
-    <string name="NotificationsSettingsFragment__contact_joins_signal">聯絡人開咗 Signal</string>
+    <string name="NotificationsSettingsFragment__contact_joins_signal">聯絡人開咗 Radar</string>
     <!-- Notification preference summary text -->
     <string name="NotificationsSettingsFragment__create_a_profile_to_receive_notifications_only_from_people_and_groups_you_choose">搞搞新揀單，淨係接收您揀選嘅人同谷嘅通知，好圓善五光十色嘅通知濟渡。</string>
     <!-- Notification body to get notified when someone joins Signal -->
-    <string name="NotificationsSettingsFragment__notify_contact">當手機通訊錄度嘅聯絡人加入 Signal 嗰陣顯示通知</string>
+    <string name="NotificationsSettingsFragment__notify_contact">當手機通訊錄度嘅聯絡人加入 Radar 嗰陣顯示通知</string>
     <!-- Option to reset their notification settings -->
     <string name="NotificationsSettingsFragment__reset">重設通知設定</string>
     <!-- Dialog to reset their notification settings -->

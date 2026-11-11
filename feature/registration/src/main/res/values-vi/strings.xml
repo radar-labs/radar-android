@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Đồng ý Cho phép</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Để giúp bạn nhắn tin cho người bạn biết, Signal sẽ yêu cầu có các quyền này. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Để giúp bạn nhắn tin cho người bạn biết, Radar sẽ yêu cầu có các quyền này. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Để sau</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Danh bạ</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Tìm người bạn biết. Danh bạ của bạn được mã hóa và Signal không thể truy cập được.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Tìm người bạn biết. Danh bạ của bạn được mã hóa và Radar không thể truy cập được.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Gọi điện thoại</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Tôi có điện thoại cũ</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Quét mã QR từ tài khoản Signal điện thoại của bạn để nhanh chóng bắt đầu</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Quét mã QR từ tài khoản Radar điện thoại của bạn để nhanh chóng bắt đầu</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Tôi không có điện thoại cũ</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Hoặc bạn đang cài lại Signal trên cùng thiết bị</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Hoặc bạn đang cài lại Radar trên cùng thiết bị</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Chọn cách bạn muốn khôi phục lịch sử tin nhắn và dữ liệu tài khoản của mình.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Bản sao lưu từ Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Bản sao lưu từ Radar</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Gói sao lưu Signal miễn phí hoặc trả phí của bạn</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Gói sao lưu Radar miễn phí hoặc trả phí của bạn</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Khôi phục bản sao lưu trên thiết bị</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Không tìm thấy bản sao lưu</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Không tìm thấy bản sao lưu Signal trong thư mục đã chọn. Vui lòng thử một thư mục khác.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Không tìm thấy bản sao lưu Radar trong thư mục đã chọn. Vui lòng thử một thư mục khác.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Thử một thư mục khác</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Khôi phục vào tài khoản mới?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Bản sao lưu bạn đang khôi phục được tạo bằng một tài khoản Signal khác. Bạn có thể khôi phục bản sao lưu này vào một tài khoản mới, nhưng bạn sẽ không còn là thành viên của bất kỳ nhóm nào đã được khôi phục.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Bản sao lưu bạn đang khôi phục được tạo bằng một tài khoản Radar khác. Bạn có thể khôi phục bản sao lưu này vào một tài khoản mới, nhưng bạn sẽ không còn là thành viên của bất kỳ nhóm nào đã được khôi phục.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Khôi phục</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Không tìm thấy bản sao lưu</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Mã khóa khôi phục của bạn đúng, nhưng không có Bản sao lưu Signal nào cho tài khoản này. Hãy quay lại để chọn cách khôi phục khác hoặc tiếp tục mà không khôi phục.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Mã khóa khôi phục của bạn đúng, nhưng không có Bản sao lưu Radar nào cho tài khoản này. Hãy quay lại để chọn cách khôi phục khác hoặc tiếp tục mà không khôi phục.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Mã khóa khôi phục không đúng</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Hãy đảm bảo bạn đang đăng ký bằng cùng số điện thoại và mã khóa khôi phục 64 ký tự mà bạn đã lưu khi bật tính năng sao lưu Signal. Không thể khôi phục bản sao lưu nếu không có mã khóa này.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Hãy đảm bảo bạn đang đăng ký bằng cùng số điện thoại và mã khóa khôi phục 64 ký tự mà bạn đã lưu khi bật tính năng sao lưu Radar. Không thể khôi phục bản sao lưu nếu không có mã khóa này.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Thử lại</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Xác minh bằng mã SMS?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Bạn có thể đăng ký tài khoản bằng cách xác minh qua mã SMS mà Signal sẽ gửi cho bạn. Sau khi nhập mã, bạn có thể thử khôi phục lại bản sao lưu bằng mã khóa khôi phục.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Bạn có thể đăng ký tài khoản bằng cách xác minh qua mã SMS mà Radar sẽ gửi cho bạn. Sau khi nhập mã, bạn có thể thử khôi phục lại bản sao lưu bằng mã khóa khôi phục.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Gửi mã</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Liên kết tài khoản của bạn</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Chưa sử dụng Signal?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Chưa sử dụng Radar?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Tạo tài khoản</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Không thể khôi phục bản sao lưu này</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Phiên bản Signal này không thể khôi phục bản sao lưu của bạn. Cập nhật phiên bản mới nhất và thử lại.</string>
+    <string name="RemoteRestoreScreen__update_latest">Phiên bản Radar này không thể khôi phục bản sao lưu của bạn. Cập nhật phiên bản mới nhất và thử lại.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Cập nhật Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Cập nhật Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Để sau</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Tài khoản của bạn đã bị khóa để đảm bảo sự riêng tư và bảo mật. Sau %1$d ngày không sử dụng bạn có thể đăng ký lại số điện thoại mà không cần mã PIN nhưng toàn bộ dữ liệu sẽ bị xóa.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Mở Signal trên thiết bị cũ của bạn</string>
+    <string name="QuickRestoreQRScreen__step_1">Mở Radar trên thiết bị cũ của bạn</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Nhấn biểu tượng camera </string>
     <!-- Step 3 to quick restore -->
@@ -397,13 +397,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Chọn mã PIN mạnh hơn</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Bạn đã nhập lại mã đã được sử dụng để xác minh số điện thoại của mình. Chọn một mã PIN mới và riêng biệt cho Signal.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Bạn đã nhập lại mã đã được sử dụng để xác minh số điện thoại của mình. Chọn một mã PIN mới và riêng biệt cho Radar.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Tìm hiểu thêm về mã PIN</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Cảnh báo</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Nếu bạn tắt PIN, bạn sẽ mất toàn bộ dữ liệu khi bạn đăng kí lại với Signal trừ khi bạn sao lưu và khôi phục dữ liệu thủ công. Bạn không thể bật Khóa đăng kí khi PIN đang tắt.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Nếu bạn tắt PIN, bạn sẽ mất toàn bộ dữ liệu khi bạn đăng kí lại với Radar trừ khi bạn sao lưu và khôi phục dữ liệu thủ công. Bạn không thể bật Khóa đăng kí khi PIN đang tắt.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Tắt PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -420,9 +420,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Nhập mã PIN của bạn</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Nhập mã PIN bạn tạo ở thời điểm bắt đầu cài Signal</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Nhập mã PIN bạn tạo ở thời điểm bắt đầu cài Radar</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Bạn đã nhập lại mã đã được sử dụng để xác minh số điện thoại của mình. Vui lòng nhập mã PIN của Signal riêng biệt bạn đã chọn trước đó cho tài khoản của mình.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Bạn đã nhập lại mã đã được sử dụng để xác minh số điện thoại của mình. Vui lòng nhập mã PIN của Radar riêng biệt bạn đã chọn trước đó cho tài khoản của mình.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="other">Sai mã PIN. Còn %1$d lần thử.</item>
@@ -455,7 +455,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Cho Phép Thông Báo</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal muốn yêu cầu quyền thông báo. Điều này cho phép thiết bị của bạn hiển thị thông báo khi có tin nhắn mới.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar muốn yêu cầu quyền thông báo. Điều này cho phép thiết bị của bạn hiển thị thông báo khi có tin nhắn mới.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Để sau</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -491,9 +491,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Quét mã này để liên kết tài khoản của bạn</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Mở Signal trên điện thoại của bạn</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Mở Radar trên điện thoại của bạn</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Nhấn vào ảnh đại diện của bạn để mở Cài đặt Signal</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Nhấn vào ảnh đại diện của bạn để mở Cài đặt Radar</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Nhấn vào \"Thiết bị đã liên kết\" và \"Liên kết thiết bị mới\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -505,7 +505,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Tạo mã không thành công</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Không có Signal trên thiết bị khác?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Không có Radar trên thiết bị khác?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Tạo tài khoản</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -519,7 +519,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Xóa dữ liệu của ứng dụng?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Bạn đang cố gắng liên kết một tài khoản Signal khác. Nếu tiếp tục, tất cả dữ liệu hiện có trên thiết bị này sẽ bị xóa.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Bạn đang cố gắng liên kết một tài khoản Radar khác. Nếu tiếp tục, tất cả dữ liệu hiện có trên thiết bị này sẽ bị xóa.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Xóa và khởi động lại</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -527,7 +527,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Chuyển tài khoản của bạn</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Để chuyển tài khoản, hãy mở Signal trên thiết bị Android cũ của bạn và chọn Chuyển tài khoản.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Để chuyển tài khoản, hãy mở Radar trên thiết bị Android cũ của bạn và chọn Chuyển tài khoản.</string>
     <string name="DeviceTransferInstructions__continue">Tiếp tục</string>
 
     <!-- Device transfer: Setup screen -->
@@ -538,11 +538,11 @@
     <string name="DeviceTransferSetup__numbers_match">Có, số đã khớp</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Hai mã số không khớp nhau</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Đang chờ thiết bị cũ của bạn xác minh…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal cần quyền truy cập vị trí để kết nối và ngắt kết nối với thiết bị cũ của bạn.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar cần quyền truy cập vị trí để kết nối và ngắt kết nối với thiết bị cũ của bạn.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Cấp quyền</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal cần dịch vụ Vị trí được bật để kết nối và ngắt kết nối với thiết bị cũ của bạn.</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar cần dịch vụ Vị trí được bật để kết nối và ngắt kết nối với thiết bị cũ của bạn.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Bật dịch vụ Vị trí</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal cần bật Wi-Fi để tìm và kết nối với thiết bị cũ của bạn.</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar cần bật Wi-Fi để tìm và kết nối với thiết bị cũ của bạn.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Bật Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Rất tiếc, có vẻ thiết bị của bạn không hỗ trợ Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Khôi phục bản sao lưu</string>
@@ -559,7 +559,7 @@
     <string name="DeviceTransferProgress__transferring_data">Đang chuyển dữ liệu</string>
     <string name="DeviceTransferProgress__d_messages_so_far">Đã được %1$d tin nhắn</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Không thể chuyển</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Không thể chuyển từ các phiên bản mới hơn của Signal.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Không thể chuyển từ các phiên bản mới hơn của Radar.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Một số dữ liệu không thể được chuyển do hạn chế của cơ sở dữ liệu.</string>
     <string name="DeviceTransferProgress__transfer_failed">Chuyển không thành công. Vui lòng thử lại.</string>
     <string name="DeviceTransferProgress__try_again">Thử lại</string>
@@ -779,7 +779,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Bạn có chắc không?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Nếu không có tên người dùng, mọi người sẽ không thể tìm thấy bạn trên Signal.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Nếu không có tên người dùng, mọi người sẽ không thể tìm thấy bạn trên Radar.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Hủy</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

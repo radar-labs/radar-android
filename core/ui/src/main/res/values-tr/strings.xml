@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Devam\'a dokun ve onaylamak için telefonunun ekran kilidini aç. Signal PIN\'ini girme.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Devam\'a dokun ve onaylamak için telefonunun ekran kilidini aç. Radar PIN\'ini girme.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Devam</string>
 

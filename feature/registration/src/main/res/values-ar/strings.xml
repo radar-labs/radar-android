@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">تمكين الأذونات</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">لِمساعدتك على مراسلة الأشخاص الذين تعرفهم، سيطلب سيجنال هذه الأذونات. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">لِمساعدتك على مراسلة الأشخاص الذين تعرفهم، سيطلب رادار هذه الأذونات. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">ليس الآن</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">جهات الاتصال</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">اعثُر على أشخاص تعرفهم. جهات اتصالك مُشفَّرة وغير مرئية لخدمة سيجنال.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">اعثُر على أشخاص تعرفهم. جهات اتصالك مُشفَّرة وغير مرئية لخدمة رادار.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">مكالمات هاتفية</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">هاتفي القديم بحوزتي</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">امسح كود الـ QR ضوئيًا من حساب سيجنال الحالي الخاص بك للبدء بسرعة.</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">امسح كود الـ QR ضوئيًا من حساب رادار الحالي الخاص بك للبدء بسرعة.</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">هاتفي القديم ليس بحوزتي</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">أو تقوم بإعادة تثبيت سيجنال على الجهاز نفسه.</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">أو تقوم بإعادة تثبيت رادار على الجهاز نفسه.</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">اختر الطريقة التي تودّ أن تستعيد بها سِجل رسائلك وبيانات حسابك.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">من النسخ الاحتياطية على سيجنال</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">من النسخ الاحتياطية على رادار</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">خطة النسخ الاحتياطي لسيجنال المجانية أو المدفوعة</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">خطة النسخ الاحتياطي لرادار المجانية أو المدفوعة</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">استعادة النسخة الاحتياطية على الجهاز</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">لم يتم العثور على أي نسخة احتياطية</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">لم يتم العثور على أي نسخة سيجنال احتياطية في الملف المُحدَّد. يُرجى اختيار ملف مختلف.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">لم يتم العثور على أي نسخة رادار احتياطية في الملف المُحدَّد. يُرجى اختيار ملف مختلف.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">جرِّب ملفًا آخرًا</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">هل ترغبُ بالاستعادة إلى حساب جديد؟</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">تمَّ إنشاء النسخة الاحتياطية التي تستعيدها باستخدام حساب سيجنال مختلف. يمكنك استعادة هذه النسخة الاحتياطية إلى حساب جديد، لكن لن تبقى عضوًا في أي مجموعة تمَّت استعادتها.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">تمَّ إنشاء النسخة الاحتياطية التي تستعيدها باستخدام حساب رادار مختلف. يمكنك استعادة هذه النسخة الاحتياطية إلى حساب جديد، لكن لن تبقى عضوًا في أي مجموعة تمَّت استعادتها.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">استعادة</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">لم يتم العثور على أي نسخة احتياطية</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">مفتاح الاستعادة الخاص بك صحيح، لكن لا توجد أي نسخة احتياطية على سيجنال لهذا الحساب. عُد لاختيار طريقة أخرى للاستعادة، أو تابِع دون الاستعادة.</string>
+    <string name="EnterAepScreen__no_backup_found_body">مفتاح الاستعادة الخاص بك صحيح، لكن لا توجد أي نسخة احتياطية على رادار لهذا الحساب. عُد لاختيار طريقة أخرى للاستعادة، أو تابِع دون الاستعادة.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">مفتاح الاستعادة خاطئ</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">تأكَّد من أنك تُسجِّل باستخدام نفس رقم الهاتف ومفتاح النسخة الاحتياطية المُكوَّن من 64 رمزًا الذي حفظته عند تفعيل النسخ الاحتياطية لسيجنال. لا يُمكن استرجاع النُسخ الاحتياطية دون هذا المفتاح.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">تأكَّد من أنك تُسجِّل باستخدام نفس رقم الهاتف ومفتاح النسخة الاحتياطية المُكوَّن من 64 رمزًا الذي حفظته عند تفعيل النسخ الاحتياطية لرادار. لا يُمكن استرجاع النُسخ الاحتياطية دون هذا المفتاح.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">حاوِل مُجدَّدًا</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">التحقق باستخدام رمز عبر الرسائل القصيرة؟</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">يمكنك تسجيل حسابك عن طريق التحقق عبر رمز رسالة قصيرة سيقوم سيجنال بإرساله إليك. بعد إدخال الرمز، يمكنك محاولة استعادة نسختك الاحتياطية باستخدام مفتاح الاستعادة مرة أخرى.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">يمكنك تسجيل حسابك عن طريق التحقق عبر رمز رسالة قصيرة سيقوم رادار بإرساله إليك. بعد إدخال الرمز، يمكنك محاولة استعادة نسختك الاحتياطية باستخدام مفتاح الاستعادة مرة أخرى.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">إرسال الرمز</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">اربط حسابك</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">لستَ على سيجنال بعد؟</string>
+    <string name="WelcomeScreen__not_on_signal_yet">لستَ على رادار بعد؟</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">أنشِئ حسابًا</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">تعذَّرت استعادة هذه النسخة الاحتياطية.</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">لا يُمكن لهذه النسخة من سيجنال استعادة نسختك الاحتياطية. حدِّث لآخر نسخة وحاوِل مرّة أخرى.</string>
+    <string name="RemoteRestoreScreen__update_latest">لا يُمكن لهذه النسخة من رادار استعادة نسختك الاحتياطية. حدِّث لآخر نسخة وحاوِل مرّة أخرى.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">تحديث سيجنال</string>
+    <string name="RemoteRestoreScreen__update_signal">تحديث رادار</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">ليس الآن</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">تمَّ قفل حسابك لحماية خصوصيتك وأمانك. بعد %1$d يوم من خمول حسابك، سيكون بإمكانك إعادة التسجيل برقم هاتفك دون الحاجة إلى رقم التعريف الشخصي (PIN). سيتمُّ حذف جميع محتويات حسابك.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">افتح تطبيق سيجنال على جهازك القديم</string>
+    <string name="QuickRestoreQRScreen__step_1">افتح تطبيق رادار على جهازك القديم</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">انقر على أيقونة الكاميرا </string>
     <!-- Step 3 to quick restore -->
@@ -402,13 +402,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">اختر رقم تعريف شخصي (PIN) أقوى.</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">يبدو أنك أدخلتَ مُجدَّدًا كود تحقُّق اُستخدِم من قبل للتحقُّق من رقم هاتفك. اختر رقم تعريف شخصي (PIN) لسيجنال جديدًا وفريدًا.</string>
+    <string name="PinCreationScreen__reentered_verification_code">يبدو أنك أدخلتَ مُجدَّدًا كود تحقُّق اُستخدِم من قبل للتحقُّق من رقم هاتفك. اختر رقم تعريف شخصي (PIN) لرادار جديدًا وفريدًا.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">اعرف المزيد عن أرقام التعريف الشخصية (PINs)</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">تحذير</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">إذا قمتَ بتعطيل رقم التعريف الشخصي (PIN)، ستفقد جميع بياناتك عند قيامك بإعادة التسجيل في سيجنال، إلّا إذا قمتَ باسترجاعها بواسطة النسخ الاحتياطي اليدوي. لا يمكنك تفعيل قفل التسجيل أثناء تعطيل رقم التعريف الشخصي (PIN).</string>
+    <string name="PinCreationScreen__disable_pin_warning">إذا قمتَ بتعطيل رقم التعريف الشخصي (PIN)، ستفقد جميع بياناتك عند قيامك بإعادة التسجيل في رادار، إلّا إذا قمتَ باسترجاعها بواسطة النسخ الاحتياطي اليدوي. لا يمكنك تفعيل قفل التسجيل أثناء تعطيل رقم التعريف الشخصي (PIN).</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">تعطيل رقم الـ PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -425,9 +425,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">أدخِل رقم PIN</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">أدخِل رقم التعريف الشخصي (PIN) الذي أنشأته عند تثبيت سيجنال لأول مرّة.</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">أدخِل رقم التعريف الشخصي (PIN) الذي أنشأته عند تثبيت رادار لأول مرّة.</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">يبدو أنك أدخلتَ مُجدَّدًا كود تحقُّق اُستخدِم من قبل للتحقُّق من رقم هاتفك. أدخِل رقم التعريف الشخصي (PIN) الذي اخترته مُسبقًا لحسابك في سيجنال.</string>
+    <string name="PinEntryScreen__reentered_verification_code">يبدو أنك أدخلتَ مُجدَّدًا كود تحقُّق اُستخدِم من قبل للتحقُّق من رقم هاتفك. أدخِل رقم التعريف الشخصي (PIN) الذي اخترته مُسبقًا لحسابك في رادار.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="zero">رقم التعريف الشخصي (PIN) غير صحيح. تبقى لديك %1$d محاولات.</item>
@@ -465,7 +465,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">السماح بالإشعارات</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">يرغب سيجنال في الحصول على إذن لإرسال الإشعارات. يسمح هذا لجهازك بعرض التنبيهات عند وصول رسائل جديدة.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">يرغب رادار في الحصول على إذن لإرسال الإشعارات. يسمح هذا لجهازك بعرض التنبيهات عند وصول رسائل جديدة.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">ليس الآن</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -501,9 +501,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">امسح هذا الكود ضوئيًا لربط حسابك</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">افتح تطبيق سيجنال على هاتفك</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">افتح تطبيق رادار على هاتفك</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">انقر على صورة حسابك الشخصي لفتح إعدادات سيجنال</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">انقر على صورة حسابك الشخصي لفتح إعدادات رادار</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">انقر على \"الأجهزة المُرتبِطة\" ثم \"ربط جهاز جديد\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -515,7 +515,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">تعذَّر إنشاء الكود</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">ليس لديك سيجنال على جهازٍ آخر؟</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">ليس لديك رادار على جهازٍ آخر؟</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">أنشِئ حسابًا</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -529,7 +529,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">هل ترغبُ بحذف بيانات التطبيق؟</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">يبدو أنك تحاول الربط بحساب سيجنال مختلف. إذا واصلت، سَتُحذَف جميع بيانات سيجنال الموجودة حاليًا على هذا الجهاز.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">يبدو أنك تحاول الربط بحساب رادار مختلف. إذا واصلت، سَتُحذَف جميع بيانات رادار الموجودة حاليًا على هذا الجهاز.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">الحذف وإعادة التشغيل</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -537,7 +537,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">انقل حسابك</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">لنقل حسابك، افتح سيجنال على جهاز أندرويد القديم الخاص بك واختر \"نقل الحساب\".</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">لنقل حسابك، افتح رادار على جهاز أندرويد القديم الخاص بك واختر \"نقل الحساب\".</string>
     <string name="DeviceTransferInstructions__continue">متابعة</string>
 
     <!-- Device transfer: Setup screen -->
@@ -548,11 +548,11 @@
     <string name="DeviceTransferSetup__numbers_match">نعم، الأرقام متطابقة</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">الأعداد غير متطابقة</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">في انتظار التحقُّق من جهازك القديم…</string>
-    <string name="DeviceTransferSetup__location_permission_required">تحتاج سيجنال إلى إذن الوصول إلى الموقع لاكتشاف جهازك القديم والاتصال به.</string>
+    <string name="DeviceTransferSetup__location_permission_required">تحتاج رادار إلى إذن الوصول إلى الموقع لاكتشاف جهازك القديم والاتصال به.</string>
     <string name="DeviceTransferSetup__grant_location_permission">منح الصلاحية</string>
-    <string name="DeviceTransferSetup__location_services_required">يَحتاج سيجنال إلى أن تكون خدمات الموقع مُفعَّلة لكي يكتشف جهاز أندرويد القديم الخاص بك ويتصل به.</string>
+    <string name="DeviceTransferSetup__location_services_required">يَحتاج رادار إلى أن تكون خدمات الموقع مُفعَّلة لكي يكتشف جهاز أندرويد القديم الخاص بك ويتصل به.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">تشغيل خدمات الموقع</string>
-    <string name="DeviceTransferSetup__wifi_required">يحتاج سيجنال إلى تشغيل شبكة الواي فاي لاكتشاف جهازك القديم والاتصال به.</string>
+    <string name="DeviceTransferSetup__wifi_required">يحتاج رادار إلى تشغيل شبكة الواي فاي لاكتشاف جهازك القديم والاتصال به.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">تشغيل الواي فاي</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">عذرًا، يبدو أن جهازك لا يدعم Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">قُم باستعادة نسخة احتياطية بدلًا من ذلك</string>
@@ -569,7 +569,7 @@
     <string name="DeviceTransferProgress__transferring_data">جارٍ نقل البيانات</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d رسالة حتى الآن</string>
     <string name="DeviceTransferProgress__unable_to_transfer">تعذَّر النقل</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">تعذَّر النقل من إصدار أحدث من سيجنال.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">تعذَّر النقل من إصدار أحدث من رادار.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">تعذَّر نقل بعض البيانات بسبب قيود في قاعدة البيانات.</string>
     <string name="DeviceTransferProgress__transfer_failed">تعذَّر النقل. يُرجى المُحاولة مرّة أخرى.</string>
     <string name="DeviceTransferProgress__try_again">حاوِل مُجدَّدًا</string>
@@ -789,7 +789,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">هل أنت متأكد؟</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">دون اسم مُستخدِم، لن يتمكن الأشخاص من العثور عليك على سيجنال.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">دون اسم مُستخدِم، لن يتمكن الأشخاص من العثور عليك على رادار.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">إلغاء</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

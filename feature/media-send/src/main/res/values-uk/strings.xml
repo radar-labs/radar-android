@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">До камери</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal потребує дозволу, щоб показувати ваші фото і відео</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar потребує дозволу, щоб показувати ваші фото і відео</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Надати доступ</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Фото / відео не знайдено. Signal має доступ лише до вибраних вами фото і відео.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Фото / відео не знайдено. Radar має доступ лише до вибраних вами фото і відео.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal має обмежений доступ до фото і відео</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar має обмежений доступ до фото і відео</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Керувати</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Для показу фото і відео:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal потребує доступу, щоб показувати ваші фото і відео.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar потребує доступу, щоб показувати ваші фото і відео.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Фото</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Надайте доступ до мікрофона</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Щоб знімати фото і відео, надайте Signal доступ до камери.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Щоб знімати фото і відео, надайте Radar доступ до камери.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Щоб знімати фото і відео, надайте Signal доступ до камери й мікрофона.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Щоб знімати фото і відео, надайте Radar доступ до камери й мікрофона.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Щоб знімати відео зі звуком, надайте Signal доступ до мікрофона.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Щоб знімати відео зі звуком, надайте Radar доступ до мікрофона.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Щоб сканувати QR-коди, надайте Signal доступ до камери.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Щоб сканувати QR-коди, надайте Radar доступ до камери.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal потребує доступу до камери, щоб знімати фото</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar потребує доступу до камери, щоб знімати фото</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal потребує доступу до камери, щоб сканувати QR-коди</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar потребує доступу до камери, щоб сканувати QR-коди</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal потребує доступу до мікрофона, щоб знімати відео</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar потребує доступу до мікрофона, щоб знімати відео</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Щоб знімати фото через Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Щоб знімати фото через Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Щоб знімати фото і відео через Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Щоб знімати фото і відео через Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Щоб знімати відео зі звуком:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Кілька фото</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal потребує доступу до мікрофона, щоб записувати відео, але ви вирішили не надавати його. Перейдіть у налаштування застосунку, відкрийте «Дозволи» і виберіть мікрофон і камеру.</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar потребує доступу до мікрофона, щоб записувати відео, але ви вирішили не надавати його. Перейдіть у налаштування застосунку, відкрийте «Дозволи» і виберіть мікрофон і камеру.</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Помилка під час запису відео</string>
@@ -215,7 +215,7 @@
         <item quantity="other">Встановлено стандартну якість для %1$d медіафайлу</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal потребує доступу до пам\'яті, щоб зберігати файли, але його не надано. Перейдіть у налаштування застосунку, відкрийте «Дозволи» та виберіть «Пам\'ять».</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar потребує доступу до пам\'яті, щоб зберігати файли, але його не надано. Перейдіть у налаштування застосунку, відкрийте «Дозволи» та виберіть «Пам\'ять».</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Відео буде надіслано без звуку</string>
 
@@ -229,14 +229,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Зв\'язати пристрій?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Схоже, ви намагаєтеся зв\'язати пристрій із Signal. Натисніть «Продовжити», потім натисніть «Зв\'язати новий пристрій» і зіскануйте QR-код знову.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Схоже, ви намагаєтеся зв\'язати пристрій із Radar. Натисніть «Продовжити», потім натисніть «Зв\'язати новий пристрій» і зіскануйте QR-код знову.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Продовжити</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Не вдається перенести акаунт</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Версія Signal на пристрої, на який ви переносите дані, застаріла. Оновіть Signal на цьому пристрої та спробуйте знову.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Версія Radar на пристрої, на який ви переносите дані, застаріла. Оновіть Radar на цьому пристрої та спробуйте знову.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

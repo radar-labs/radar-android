@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Улантуу дегенди басып, түзмөгүңүздүн кодун киргизиңиз. Signal\'дын PIN кодун эмес.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Улантуу дегенди басып, түзмөгүңүздүн кодун киргизиңиз. Radar\'дын PIN кодун эмес.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Улантуу</string>
 

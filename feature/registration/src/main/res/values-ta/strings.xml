@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">பெர்மீஷன்களை அனுமதித்தல்</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">உங்களுக்குத் தெரிந்தவர்களுக்கு மெசேஜ் அனுப்ப உதவ, Signal இந்த அனுமதிகளைக் கோரும். </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">உங்களுக்குத் தெரிந்தவர்களுக்கு மெசேஜ் அனுப்ப உதவ, Radar இந்த அனுமதிகளைக் கோரும். </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">இப்போது வேண்டாம்</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">தொடர்புகள்</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">உங்களுக்குத் தெரிந்தவர்களைக் கண்டறியவும். உங்கள் தொடர்புகள் குறியாக்கம் செய்யப்பட்டுள்ளது, மேலும் Signal சேவைக்குக் காண்பிக்கப்படாது.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">உங்களுக்குத் தெரிந்தவர்களைக் கண்டறியவும். உங்கள் தொடர்புகள் குறியாக்கம் செய்யப்பட்டுள்ளது, மேலும் Radar சேவைக்குக் காண்பிக்கப்படாது.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">ஃபோன் அழைப்புகள்</string>
     <!-- Phone calls permission row description -->
@@ -239,11 +239,11 @@
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">காப்புப்பிரதி கிடைக்கவில்லை</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">உங்கள் மீட்புக் குறியீடு சரியானது, ஆனால் இந்தக் கணக்கிற்கு Signal காப்புப்பிரதி எதுவும் இல்லை. மீட்டமைப்பதற்கான வேறொரு வழியைத் தேர்வுசெய்ய பின்செல்லவும் அல்லது மீட்டமைக்காமல் தொடரவும்.</string>
+    <string name="EnterAepScreen__no_backup_found_body">உங்கள் மீட்புக் குறியீடு சரியானது, ஆனால் இந்தக் கணக்கிற்கு Radar காப்புப்பிரதி எதுவும் இல்லை. மீட்டமைப்பதற்கான வேறொரு வழியைத் தேர்வுசெய்ய பின்செல்லவும் அல்லது மீட்டமைக்காமல் தொடரவும்.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">தவறான மீட்புக் குறியீடு</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Signal காப்புப்பிரதிகளைச் செயல்படுததும்போது நீங்கள் சேமித்த அதே தொலைபேசி எண் மற்றும் 64-எழுத்து மீட்புக் குறியீட்டைக் கொண்டு பதிவுசெய்கிறீர்கள் என்பதை உறுதிப்படுத்திக்கொள்ளுங்கள். இந்தக் குறியீடு இல்லாமல் காப்புப்பிரதிகளை மீட்டெடுக்க முடியாது.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Radar காப்புப்பிரதிகளைச் செயல்படுததும்போது நீங்கள் சேமித்த அதே தொலைபேசி எண் மற்றும் 64-எழுத்து மீட்புக் குறியீட்டைக் கொண்டு பதிவுசெய்கிறீர்கள் என்பதை உறுதிப்படுத்திக்கொள்ளுங்கள். இந்தக் குறியீடு இல்லாமல் காப்புப்பிரதிகளை மீட்டெடுக்க முடியாது.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">மீண்டும் முயற்சிக்கவும்</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">SMS குறியீடு மூலம் சரிபார்க்கவா?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Signal உங்களுக்கு அனுப்பும் SMS குறியீடு மூலம் சரிபார்த்து உங்கள் கணக்கைப் பதிவுசெய்யலாம். குறியீட்டை உள்ளிட்ட பிறகு, உங்கள் மீட்புக் குறியீட்டைக் கொண்டு காப்புப்பிரதியை மீண்டும் மீட்டமைக்க முயலலாம்.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Radar உங்களுக்கு அனுப்பும் SMS குறியீடு மூலம் சரிபார்த்து உங்கள் கணக்கைப் பதிவுசெய்யலாம். குறியீட்டை உள்ளிட்ட பிறகு, உங்கள் மீட்புக் குறியீட்டைக் கொண்டு காப்புப்பிரதியை மீண்டும் மீட்டமைக்க முயலலாம்.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">குறியீட்டை அனுப்பு</string>
     <!-- Text shown while preparing the restore -->
@@ -315,7 +315,7 @@
     <!-- Body for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__update_latest">சிக்னலின் இந்தப் பதிப்பினால் உங்கள் காப்புப்பிரதியை மீட்டெடுக்க முடியாது. அண்மைய பதிப்புக்குப் புதுப்பித்து மீண்டும் முயலுங்கள்.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Signal லைப் புதுப்பிக்கவும்</string>
+    <string name="RemoteRestoreScreen__update_signal">Radar லைப் புதுப்பிக்கவும்</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">இப்போது வேண்டாம்</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -404,7 +404,7 @@
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">எச்சரிக்கை</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">நீங்கள் PIN-ஐ முடக்கினால், நீங்கள் கைமுறையாக பேக்அப் செய்து மீட்டெடுக்காமல் Signalஐ மீண்டும் பதிவுசெய்யும்போது எல்லா தரவையும் இழப்பீர்கள். PIN முடக்கப்பட்டிருக்கும் போது நீங்கள் பதிவு பூட்டை இயக்க முடியாது.</string>
+    <string name="PinCreationScreen__disable_pin_warning">நீங்கள் PIN-ஐ முடக்கினால், நீங்கள் கைமுறையாக பேக்அப் செய்து மீட்டெடுக்காமல் Radarஐ மீண்டும் பதிவுசெய்யும்போது எல்லா தரவையும் இழப்பீர்கள். PIN முடக்கப்பட்டிருக்கும் போது நீங்கள் பதிவு பூட்டை இயக்க முடியாது.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">PIN-ஐ முடக்கு</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">நீங்கள் உறுதியாக உள்ளீர்களா?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">பயனர்பெயர் இல்லாமல் மற்றவர்களால் உங்களை Signalஇல் கண்டறிய முடியாது.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">பயனர்பெயர் இல்லாமல் மற்றவர்களால் உங்களை Radarஇல் கண்டறிய முடியாது.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">ரத்துசெய்</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

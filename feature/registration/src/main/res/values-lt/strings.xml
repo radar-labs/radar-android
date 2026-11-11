@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Suteik leidimus</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Kad padėtų tau siųsti žinutes savo pažįstamiems, „Signal“ paprašys šių leidimų. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Kad padėtų tau siųsti žinutes savo pažįstamiems, „Radar“ paprašys šių leidimų. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Ne dabar</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Adresatai</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Rask savo pažįstamų. Tavo adresatai yra užšifruoti ir „Signal“ jų nemato.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Rask savo pažįstamų. Tavo adresatai yra užšifruoti ir „Radar“ jų nemato.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefono skambučiai</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Turiu savo senąjį telefoną</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Norėdami greitai pradėti, nuskaitykite QR kodą iš dabartinės „Signal“ paskyros</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Norėdami greitai pradėti, nuskaitykite QR kodą iš dabartinės „Radar“ paskyros</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Neturiu savo senojo telefono</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Arba iš naujo įdiegiate „Signal“ tame pačiame įrenginyje</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Arba iš naujo įdiegiate „Radar“ tame pačiame įrenginyje</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Pasirinkite, kaip pageidaujate atkurti žinučių istoriją ir paskyros duomenis.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Iš „Signal“ atsarginių kopijų</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Iš „Radar“ atsarginių kopijų</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Jūsų nemokamas arba mokamas „Signal“ atsarginių kopijų planas</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Jūsų nemokamas arba mokamas „Radar“ atsarginių kopijų planas</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Atkurti atsarginę kopiją įrenginyje</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Atsarginė kopija nerasta</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Pasirinktame aplanke „Signal“ atsarginės kopijos nerasta. Bandykite kitą aplanką.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Pasirinktame aplanke „Radar“ atsarginės kopijos nerasta. Bandykite kitą aplanką.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Bandyti kitą aplanką</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Atkurti į naują paskyrą?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Jūsų atkuriama atsarginė kopija sukurta naudojant kitą „Signal“ paskyrą. Galite atkurti šią atsarginę kopiją į naują paskyrą, tačiau nebebūsite jokių atkurtų grupių nariu.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Jūsų atkuriama atsarginė kopija sukurta naudojant kitą „Radar“ paskyrą. Galite atkurti šią atsarginę kopiją į naują paskyrą, tačiau nebebūsite jokių atkurtų grupių nariu.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Atkurti</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Atsarginė kopija nerasta</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Jūsų atkūrimo raktas teisingas, tačiau šiai paskyrai nesukurta „Signal“ atsarginė kopija. Grįžkite ir pasirinkite kitą atkūrimo būdą arba tęskite neatkūrę.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Jūsų atkūrimo raktas teisingas, tačiau šiai paskyrai nesukurta „Radar“ atsarginė kopija. Grįžkite ir pasirinkite kitą atkūrimo būdą arba tęskite neatkūrę.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Neteisingas atkūrimo raktas</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Įsitikinkite, kad registruojatės naudodami tą patį telefono numerį ir 64 simbolių atkūrimo raktą, kurį išsaugojote įjungdami „Signal“ atsargines kopijas. Be šio rakto atsarginių kopijų atkurti negalima.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Įsitikinkite, kad registruojatės naudodami tą patį telefono numerį ir 64 simbolių atkūrimo raktą, kurį išsaugojote įjungdami „Radar“ atsargines kopijas. Be šio rakto atsarginių kopijų atkurti negalima.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Bandykite dar kartą</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Patvirtinti naudojant SMS kodą?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Galite užregistruoti paskyrą patvirtindami SMS kodu, kurį jums išsiųs „Signal“. Įvedę kodą galėsite vėl bandyti atkurti atsarginę kopiją naudodami atkūrimo raktą.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Galite užregistruoti paskyrą patvirtindami SMS kodu, kurį jums išsiųs „Radar“. Įvedę kodą galėsite vėl bandyti atkurti atsarginę kopiją naudodami atkūrimo raktą.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Siųsti kodą</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Susieti savo paskyrą</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Dar nesinaudojate „Signal“?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Dar nesinaudojate „Radar“?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Susikurkite paskyrą</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Nepavyko atkurti atsarginės kopijos</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Ši „Signal“ versija negali atkurti jūsų atsarginės kopijos. Atnaujinkite į naujausią versiją ir bandykite dar kartą.</string>
+    <string name="RemoteRestoreScreen__update_latest">Ši „Radar“ versija negali atkurti jūsų atsarginės kopijos. Atnaujinkite į naujausią versiją ir bandykite dar kartą.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Atnaujinti Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Atnaujinti Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Ne dabar</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Siekiant apsaugoti tavo privatumą ir saugumą, tavo paskyra buvo užrakinta. Po %1$d dienų neveiklumo galėsi iš naujo registruoti šį telefono numerį be būtinybės įvesti PIN kodą. Visas turinys bus ištrintas.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Atverkite „Signal“ senajame telefone</string>
+    <string name="QuickRestoreQRScreen__step_1">Atverkite „Radar“ senajame telefone</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Bakstelėkite kameros piktogramą </string>
     <!-- Step 3 to quick restore -->
@@ -400,13 +400,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Pasirinkite stipresnį PIN kodą</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Įvedėte kodą, kuris jau buvo panaudotas patvirtinti jūsų telefono numerį. Pasirinkite naują ir unikalų „Signal“ PIN.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Įvedėte kodą, kuris jau buvo panaudotas patvirtinti jūsų telefono numerį. Pasirinkite naują ir unikalų „Radar“ PIN.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Sužinokite daugiau apie PIN kodus</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Įspėjimas</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Jei išjungsi PIN kodą, registruojantis „Signal“ iš naujo bus prarasti visi duomenys, nebent rankiniu būdu padarysi atsarginę kopiją ir atkursi. Negalėsi įjungti registracijos užrakto, kol PIN kodas išjungtas.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Jei išjungsi PIN kodą, registruojantis „Radar“ iš naujo bus prarasti visi duomenys, nebent rankiniu būdu padarysi atsarginę kopiją ir atkursi. Negalėsi įjungti registracijos užrakto, kol PIN kodas išjungtas.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Išjungti PIN kodą</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -423,9 +423,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Įveskite savo PIN kodą</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Įveskite PIN kodą, kurį susikūrėte pirmą kartą įdiegę „Signal“</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Įveskite PIN kodą, kurį susikūrėte pirmą kartą įdiegę „Radar“</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Įvedėte kodą, kuris jau buvo panaudotas patvirtinti jūsų telefono numerį. Įveskite unikalų „Signal“ PIN, kurį anksčiau pasirinkote savo paskyrai.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Įvedėte kodą, kuris jau buvo panaudotas patvirtinti jūsų telefono numerį. Įveskite unikalų „Radar“ PIN, kurį anksčiau pasirinkote savo paskyrai.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">Neteisingas PIN kodas. Liko %1$d bandymas.</item>
@@ -461,7 +461,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Leisti pranešimus</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">„Signal“ prašo suteikti leidimą siųsti pranešimus. Tai leis jūsų įrenginiui parodyti įspėjimus atėjus naujoms žinutėms.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">„Radar“ prašo suteikti leidimą siųsti pranešimus. Tai leis jūsų įrenginiui parodyti įspėjimus atėjus naujoms žinutėms.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Ne dabar</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -497,9 +497,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Nuskaityti šį kodą, kad susietumėte paskyrą</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Atverkite savo telefone Signal programėlę</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Atverkite savo telefone Radar programėlę</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Bakstelėkite savo profilio nuotrauką, kad atvertumėte „Signal“ nustatymus.</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Bakstelėkite savo profilio nuotrauką, kad atvertumėte „Radar“ nustatymus.</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Bakstelėkite „Susieti įrenginiai“ ir „Susieti naują įrenginį“.</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -511,7 +511,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Nepavyko sugeneruoti kodo</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Neturite „Signal“ kitame įrenginyje?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Neturite „Radar“ kitame įrenginyje?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Susikurkite paskyrą</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -525,7 +525,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Ištrinti programėlės duomenis?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Bandote susieti kitą „Signal“ paskyrą. Jei tęsite, visi dabar šiame įrenginyje esantys „Signal“ duomenys bus ištrinti.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Bandote susieti kitą „Radar“ paskyrą. Jei tęsite, visi dabar šiame įrenginyje esantys „Radar“ duomenys bus ištrinti.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Ištrinti ir paleisti iš naujo</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -533,7 +533,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Perkelti paskyrą</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Norėdami perkelti paskyrą, atverkite „Signal“ senajame „Android“ įrenginyje ir pasirinkite „Perkelti paskyrą“.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Norėdami perkelti paskyrą, atverkite „Radar“ senajame „Android“ įrenginyje ir pasirinkite „Perkelti paskyrą“.</string>
     <string name="DeviceTransferInstructions__continue">Tęsti</string>
 
     <!-- Device transfer: Setup screen -->
@@ -544,11 +544,11 @@
     <string name="DeviceTransferSetup__numbers_match">Taip, numeriai sutampa</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Skaitmenys nesutampa</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Laukiama, kol patvirtins jūsų senasis įrenginys…</string>
-    <string name="DeviceTransferSetup__location_permission_required">„Signal“ reikia įrenginio vietos leidimo, kad galėtų atrasti ir prisijungti prie jūsų senojo įrenginio.</string>
+    <string name="DeviceTransferSetup__location_permission_required">„Radar“ reikia įrenginio vietos leidimo, kad galėtų atrasti ir prisijungti prie jūsų senojo įrenginio.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Suteikti leidimą</string>
-    <string name="DeviceTransferSetup__location_services_required">„Signal“ reikia įjungtų vietos paslaugų, kad galėtų atrasti ir prisijungti prie jūsų senojo įrenginio.</string>
+    <string name="DeviceTransferSetup__location_services_required">„Radar“ reikia įjungtų vietos paslaugų, kad galėtų atrasti ir prisijungti prie jūsų senojo įrenginio.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Įjungti vietos paslaugas</string>
-    <string name="DeviceTransferSetup__wifi_required">„Signal“ reikia įjungto „Wi-Fi“, kad galėtų atrasti ir prisijungti prie jūsų senojo įrenginio.</string>
+    <string name="DeviceTransferSetup__wifi_required">„Radar“ reikia įjungto „Wi-Fi“, kad galėtų atrasti ir prisijungti prie jūsų senojo įrenginio.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Įjungti belaidį (Wi-Fi)</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Deja, panašu, kad jūsų įrenginys nepalaiko „Wi-Fi Direct“.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Vietoje to atkurti atsarginę kopiją</string>
@@ -565,7 +565,7 @@
     <string name="DeviceTransferProgress__transferring_data">Duomenų perkėlimas</string>
     <string name="DeviceTransferProgress__d_messages_so_far">Jau %1$d žinučių</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Nepavyko perkelti</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Negalima perkelti iš naujesnės „Signal“ versijos.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Negalima perkelti iš naujesnės „Radar“ versijos.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Kai kurių duomenų nepavyko perkelti dėl duomenų bazės apribojimo.</string>
     <string name="DeviceTransferProgress__transfer_failed">Perkėlimas nepavyko. Bandykite dar kartą.</string>
     <string name="DeviceTransferProgress__try_again">Bandykite dar kartą</string>
@@ -785,7 +785,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Ar tikrai to norite?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Neturėdami jūsų naudotojo vardo, žmonės negalės rasti jūsų „Signal“.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Neturėdami jūsų naudotojo vardo, žmonės negalės rasti jūsų „Radar“.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Atšaukti</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Kliko \"Vazhdo\" dhe vendos kodin e zhbllokimit të telefonit për konfirmim. Mos vendos PIN-in e Signal.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Kliko \"Vazhdo\" dhe vendos kodin e zhbllokimit të telefonit për konfirmim. Mos vendos PIN-in e Radar.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Vazhdo</string>
 

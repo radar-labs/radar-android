@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">授予权限</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">为了帮助您给认识的人发送消息，Signal 需要下列权限。 </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">为了帮助您给认识的人发送消息，Radar 需要下列权限。 </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">稍后再说</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">联系人</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">帮助您寻找认识的人。您的联系人信息已加密，Signal 服务无法看到您的联系人。</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">帮助您寻找认识的人。您的联系人信息已加密，Radar 服务无法看到您的联系人。</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">电话通话</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">我可以用旧手机</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">从您当前的 Signal 账户扫描二维码以快速开始操作</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">从您当前的 Radar 账户扫描二维码以快速开始操作</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">我无法用旧手机</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">您可以在同一个设备上重新安装 Signal</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">您可以在同一个设备上重新安装 Radar</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,7 +152,7 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">请选择您想要如何恢复您的消息记录和账户数据。</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">从 Signal 备份</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">从 Radar 备份</string>
     <!-- Subtitle for the Signal Backups option card -->
     <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">您的免费或付费备份套餐</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">未找到备份</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">所选文件夹中未找到任何 Signal 备份。请尝试查看其他文件夹。</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">所选文件夹中未找到任何 Radar 备份。请尝试查看其他文件夹。</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">查看其他文件夹</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">要恢复到新账户吗？</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">您正在尝试恢复的备份是使用另一个 Signal 账户创建的。您可以将此备份恢复到新的账户中，但您将不再是任何恢复的群组的成员。</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">您正在尝试恢复的备份是使用另一个 Radar 账户创建的。您可以将此备份恢复到新的账户中，但您将不再是任何恢复的群组的成员。</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">恢复</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">未找到备份</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">您的恢复密钥正确，但此账户没有 Signal 备份。请返回以选择另一种恢复方式，或在不恢复的情况下继续操作。</string>
+    <string name="EnterAepScreen__no_backup_found_body">您的恢复密钥正确，但此账户没有 Radar 备份。请返回以选择另一种恢复方式，或在不恢复的情况下继续操作。</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">恢复密钥不正确</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">请确保您在注册时使用的是相同的手机号码以及您保存的用于启用 Signal 备份的 64 位恢复密钥。如果没有此密钥，备份将无法恢复。</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">请确保您在注册时使用的是相同的手机号码以及您保存的用于启用 Radar 备份的 64 位恢复密钥。如果没有此密钥，备份将无法恢复。</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">重试</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">要通过短信验证码进行验证吗？</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">您可以通过 Signal 发送的短信验证码注册账户。输入验证码后，您可以再次尝试使用恢复密钥还原备份。</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">您可以通过 Radar 发送的短信验证码注册账户。输入验证码后，您可以再次尝试使用恢复密钥还原备份。</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">发送验证码</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">链接您的账户</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">还没有 Signal 账户？</string>
+    <string name="WelcomeScreen__not_on_signal_yet">还没有 Radar 账户？</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">创建账户</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">无法恢复此备份</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">此版本的 Signal 无法恢复您的备份。请更新到最新版本然后重试。</string>
+    <string name="RemoteRestoreScreen__update_latest">此版本的 Radar 无法恢复您的备份。请更新到最新版本然后重试。</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">升级 Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">升级 Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">稍后再说</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">为了保护您的隐私和安全，您的账户已被锁定。在您的账户处于非活动状态连续 %1$d 天后，您将无需密码即可重新注册此手机号码。不过所有数据将被删除。</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">在您的旧设备上打开 Signal</string>
+    <string name="QuickRestoreQRScreen__step_1">在您的旧设备上打开 Radar</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">点击相机图标 </string>
     <!-- Step 3 to quick restore -->
@@ -397,13 +397,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">选择更安全的密码</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">您再次输入了用于验证手机号码的验证码。请选择一个新的唯一 Signal 密码。</string>
+    <string name="PinCreationScreen__reentered_verification_code">您再次输入了用于验证手机号码的验证码。请选择一个新的唯一 Radar 密码。</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">了解更多关于密码的信息</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">警告</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">如果禁用 PIN，重新注册 Signal 时您将会丢失全部数据，除非您手动备份并还原这些数据。注册锁定功能在禁用 PIN 期间无法启用。</string>
+    <string name="PinCreationScreen__disable_pin_warning">如果禁用 PIN，重新注册 Radar 时您将会丢失全部数据，除非您手动备份并还原这些数据。注册锁定功能在禁用 PIN 期间无法启用。</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">禁用 PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -420,9 +420,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">请输入密码</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">请输入您首次安装 Signal 时创建的密码</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">请输入您首次安装 Radar 时创建的密码</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">您再次输入了用于验证手机号码的验证码。请输入您之前为账户选择的唯一 Signal 密码。</string>
+    <string name="PinEntryScreen__reentered_verification_code">您再次输入了用于验证手机号码的验证码。请输入您之前为账户选择的唯一 Radar 密码。</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="other">密码错误。还能尝试 %1$d 次。</item>
@@ -455,7 +455,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">允许通知</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal 希望获得通知权限。这让您的设备在有新消息时会显示提醒。</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar 希望获得通知权限。这让您的设备在有新消息时会显示提醒。</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">稍后再说</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -491,9 +491,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">扫描此二维码以链接您的账户</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">在您的手机上打开 Signal</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">在您的手机上打开 Radar</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">点击您的个人资料头像以打开 Signal 设置</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">点击您的个人资料头像以打开 Radar 设置</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">点击“已链接设备”，然后点击“链接新设备”</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -505,7 +505,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">无法生成二维码</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">在其他设备上没有 Signal 账户？</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">在其他设备上没有 Radar 账户？</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">创建账户</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -519,7 +519,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">要删除应用数据吗？</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">您正在尝试链接另一个 Signal 账户。如继续操作，当前此设备上的所有 Signal 数据将会被删除。</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">您正在尝试链接另一个 Radar 账户。如继续操作，当前此设备上的所有 Radar 数据将会被删除。</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">删除并重启</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -527,7 +527,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">转移您的账户</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">要转移您的账户，请在您的旧 Android 设备上打开 Signal，然后选择转移账户。</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">要转移您的账户，请在您的旧 Android 设备上打开 Radar，然后选择转移账户。</string>
     <string name="DeviceTransferInstructions__continue">继续</string>
 
     <!-- Device transfer: Setup screen -->
@@ -538,11 +538,11 @@
     <string name="DeviceTransferSetup__numbers_match">是的，数字一致</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">数字不一致</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">正在等待您的旧设备进行验证…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal 需要位置权限，以发现并连接您的旧设备。</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar 需要位置权限，以发现并连接您的旧设备。</string>
     <string name="DeviceTransferSetup__grant_location_permission">授予权限</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal 需要启用位置服务，以发现并连接您的旧设备。</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar 需要启用位置服务，以发现并连接您的旧设备。</string>
     <string name="DeviceTransferSetup__turn_on_location_services">开启位置服务</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal 需要启用 Wi-Fi，以发现并连接您的旧设备。</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar 需要启用 Wi-Fi，以发现并连接您的旧设备。</string>
     <string name="DeviceTransferSetup__turn_on_wifi">开启 Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">抱歉，您的设备似乎不支持 Wi-Fi Direct。</string>
     <string name="DeviceTransferSetup__restore_a_backup">改为恢复备份</string>
@@ -559,7 +559,7 @@
     <string name="DeviceTransferProgress__transferring_data">正在转移数据</string>
     <string name="DeviceTransferProgress__d_messages_so_far">已处理 %1$d 条消息</string>
     <string name="DeviceTransferProgress__unable_to_transfer">无法转移</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">无法从较新版 Signal 转移。</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">无法从较新版 Radar 转移。</string>
     <string name="DeviceTransferProgress__failure_foreign_key">由于数据库限制，部分数据无法转移。</string>
     <string name="DeviceTransferProgress__transfer_failed">转移失败。请重试。</string>
     <string name="DeviceTransferProgress__try_again">重试</string>
@@ -779,7 +779,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">确定吗？</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">如果没有用户名，其他用户无法在 Signal 上找到您。</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">如果没有用户名，其他用户无法在 Radar 上找到您。</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">取消</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

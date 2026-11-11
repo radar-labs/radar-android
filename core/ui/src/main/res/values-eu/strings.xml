@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Sakatu Jarraitu eta desblokeatu telefonoa berresteko. Ez idatzi Signal-eko PINa.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Sakatu Jarraitu eta desblokeatu telefonoa berresteko. Ez idatzi Radar-eko PINa.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Jarraitu</string>
 

@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Pumunta sa camera</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Kailangan ng Signal ng pahintulot para maipakita ang photos at videos mo</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Kailangan ng Radar ng pahintulot para maipakita ang photos at videos mo</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Bigyan ng Access</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Walang nahanap na photos o videos. Ang Signal ay may access lamang sa photos at videos na pinili mo.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Walang nahanap na photos o videos. Ang Radar ay may access lamang sa photos at videos na pinili mo.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Ang Signal ay may limited access sa photos o videos</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Ang Radar ay may limited access sa photos o videos</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">I-manage</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Para ipakita ang photos at videos:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Kailangan ng access ng Signal para mapakita ang photos at videos mo.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Kailangan ng access ng Radar para mapakita ang photos at videos mo.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Photo</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Payagang ma-access ang microphone mo</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Upang makakuha ng larawan at video, payagan ang Signal na gamitin ang camera.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Upang makakuha ng larawan at video, payagan ang Radar na gamitin ang camera.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Para kumuha ng photos at video, bigyan ng access sa camera at microphone ang Signal.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Para kumuha ng photos at video, bigyan ng access sa camera at microphone ang Radar.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Para kumuha ng videos na may sound, bigyan ng access sa microphone ang Signal.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Para kumuha ng videos na may sound, bigyan ng access sa microphone ang Radar.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Para mag-scan ng QR code, bigyan ng access sa camera ang Signal.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Para mag-scan ng QR code, bigyan ng access sa camera ang Radar.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Kailangan ng Signal ng access sa camera para kumuha ang photos</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Kailangan ng Radar ng access sa camera para kumuha ang photos</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Kailangan ng Signal ng access sa camera para mag-scan ng QR codes</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Kailangan ng Radar ng access sa camera para mag-scan ng QR codes</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Kailangan ng Signal ng access sa microphone para kumuha ng video</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Kailangan ng Radar ng access sa microphone para kumuha ng video</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Para kumuha ng photos sa Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Para kumuha ng photos sa Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Para kumuha ng photos at videos sa Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Para kumuha ng photos at videos sa Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Para kumuha ng videos na may tunog:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Multi-capture</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Kailangan ng Signal ang pahintulot sa Mikropono para makapag-record ng mga video, ngunit tinanggihan ang mga ito. Pumunta sa app settings, piliin ang \"Pahintulot\", at i-enable ang \"Mikropono\" at \"Camera\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Kailangan ng Radar ang pahintulot sa Mikropono para makapag-record ng mga video, ngunit tinanggihan ang mga ito. Pumunta sa app settings, piliin ang \"Pahintulot\", at i-enable ang \"Mikropono\" at \"Camera\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Nagkaroon ng error sa pag-record ng video</string>
@@ -211,7 +211,7 @@
         <item quantity="other">Ang %1$d items ay naka-set sa standard quality</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Kailangan ng Signal ng pahintulot sa Storage upang makapag-save sa external storage, ngunit ito ay permanenteng ipinagbabawal. Pumunta sa app settings, piliin ang \"Mga Pahintulot\", at i-enable ang \"Storage\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Kailangan ng Radar ng pahintulot sa Storage upang makapag-save sa external storage, ngunit ito ay permanenteng ipinagbabawal. Pumunta sa app settings, piliin ang \"Mga Pahintulot\", at i-enable ang \"Storage\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Ise-send ang video nang walang audio</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Gusto mo bang i-link ang iyong device?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Mukhang sinusubukan mong mag-link ng isang Signal device. I-tap ang continue, tapos i-tap ang \"Mag-link ng Bagong Device\", at subukang i-scan ulit ang QR code.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Mukhang sinusubukan mong mag-link ng isang Radar device. I-tap ang continue, tapos i-tap ang \"Mag-link ng Bagong Device\", at subukang i-scan ulit ang QR code.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Magpatuloy</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Hindi ma-transfer ang account</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Ang device kung saan ka magta-transfer ay out of date. I-update ang Signal sa device na ito at subukan ulit.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Ang device kung saan ka magta-transfer ay out of date. I-update ang Radar sa device na ito at subukan ulit.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">\'এগিয়ে যান\'-এ ট্যাপ করুন এবং নিশ্চিত করতে আপনার ফোনের লক খুলে তাতে প্রবেশ করুন। আপনার Signal পিন লিখবেন না।</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">\'এগিয়ে যান\'-এ ট্যাপ করুন এবং নিশ্চিত করতে আপনার ফোনের লক খুলে তাতে প্রবেশ করুন। আপনার Radar পিন লিখবেন না।</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">চালিয়ে যান</string>
 

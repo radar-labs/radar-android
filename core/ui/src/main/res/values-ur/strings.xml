@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">جاری رکھیں پر ٹیپ کریں اور تصدیق کرنے کے لیے اپنے فون کا لاک درج کریں۔ اپنے Signal کا پِن درج نہ کریں۔</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">جاری رکھیں پر ٹیپ کریں اور تصدیق کرنے کے لیے اپنے فون کا لاک درج کریں۔ اپنے Radar کا پِن درج نہ کریں۔</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">جاری رکھیں</string>
 

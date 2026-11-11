@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Onartu baimenak</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Ezagutzen dituzun pertsonei mezuak bidaltzen laguntzeko, Signal-ek baimen hauek eskatuko ditu. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Ezagutzen dituzun pertsonei mezuak bidaltzen laguntzeko, Radar-ek baimen hauek eskatuko ditu. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Orain ez</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontaktuak</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Aurkitu ezagutzen duzun jendea. Zure kontaktuak enkriptatuta daude eta ez daude ikusgai Signal zerbitzuan.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Aurkitu ezagutzen duzun jendea. Zure kontaktuak enkriptatuta daude eta ez daude ikusgai Radar zerbitzuan.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefono-deiak</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Telefono zaharra daukat</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Eskaneatu QR kode bat Signal-eko oraingo kontutik bizkor hasteko</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Eskaneatu QR kode bat Radar-eko oraingo kontutik bizkor hasteko</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Ez daukat telefono zaharra</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Edo Signal gailu berean berriro instalatzen ari zara</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Edo Radar gailu berean berriro instalatzen ari zara</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Aukeratu nola berrezarri nahi dituzun mezu-historia eta kontuko datuak.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Signal-en babeskopietatik</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Radar-en babeskopietatik</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Signal-en doako edo ordainpeko babeskopia-plana</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Radar-en doako edo ordainpeko babeskopia-plana</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Leheneratu gailuko babeskopia</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Ez da babeskopiarik aurkitu</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Ez da Signal-en babeskopiarik aurkitu hautatutako karpetan. Probatu beste karpeta batekin.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Ez da Radar-en babeskopiarik aurkitu hautatutako karpetan. Probatu beste karpeta batekin.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Probatu beste karpeta batekin</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Kontu berrian leheneratu nahi duzu?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Leheneratu behar duzun babeskopia Signal-eko beste kontu batekin sortua da. Babeskopia kontu berri batean lehenera dezakezu, baina, leheneratutakoan, ez zara izango inongo taldetako kide.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Leheneratu behar duzun babeskopia Radar-eko beste kontu batekin sortua da. Babeskopia kontu berri batean lehenera dezakezu, baina, leheneratutakoan, ez zara izango inongo taldetako kide.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Berreskuratu</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Ez da babeskopiarik aurkitu</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Berreskuratze-gakoa zuzena da, baina kontu honek ez du Signal-eko babeskopiarik. Egin atzera eta aukeratu beste leheneratze-metodo bat, edo jarraitu leheneratu gabe.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Berreskuratze-gakoa zuzena da, baina kontu honek ez du Radar-eko babeskopiarik. Egin atzera eta aukeratu beste leheneratze-metodo bat, edo jarraitu leheneratu gabe.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Berreskuratze-gakoa okerra da</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Ziurtatu telefono-zenbaki berarekin erregistratzen ari zarela, bai eta Signal-en babeskopiak gaitzean gorde zenuen 64 karaktereko berreskuratze-gakoarekin ere. Gako hori gabe, ezin dira berreskuratu babeskopiak.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Ziurtatu telefono-zenbaki berarekin erregistratzen ari zarela, bai eta Radar-en babeskopiak gaitzean gorde zenuen 64 karaktereko berreskuratze-gakoarekin ere. Gako hori gabe, ezin dira berreskuratu babeskopiak.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Saiatu berriro</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">SMS bidezko kode batekin egiaztatu nahi duzu?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Kontua egiaztatzeko, Signal-ek bidalitako SMS bidezko kode bat erabil dezakezu. Kodea idatzi ondoren, babeskopia berreskuratze-gakoarekin leheneratzen saia zaitezke berriro.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Kontua egiaztatzeko, Radar-ek bidalitako SMS bidezko kode bat erabil dezakezu. Kodea idatzi ondoren, babeskopia berreskuratze-gakoarekin leheneratzen saia zaitezke berriro.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Bidali kodea</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Lotu zure kontua</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Ez zaude Signal-en oraindik?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Ez zaude Radar-en oraindik?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Sortu kontu bat</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Ezin izan da leheneratu babeskopia hau</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Signal-en bertsio honek ezin du leheneratu babeskopia. Egunera ezazu azken bertsiora eta saiatu berriro.</string>
+    <string name="RemoteRestoreScreen__update_latest">Radar-en bertsio honek ezin du leheneratu babeskopia. Egunera ezazu azken bertsiora eta saiatu berriro.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Eguneratu Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Eguneratu Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Orain ez</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Zure pribatutasuna eta segurtasuna babesteko, kontua blokeatu egin da. %1$d egun jarduerarik gabe egon ondoren, berriro erregistratu ahal izango duzu telefono-zenbaki hau, PIN bat erabili gabe. Eduki guztia ezabatuko da.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Ireki Signal gailu zaharrean</string>
+    <string name="QuickRestoreQRScreen__step_1">Ireki Radar gailu zaharrean</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Sakatu kameraren ikonoa </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Aukeratu PIN hobea</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Telefono-zenbakia egiaztatzeko erabilita zegoen kode bat idatzi duzu. Aukeratu Signal-eko PIN berri eta esklusibo bat.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Telefono-zenbakia egiaztatzeko erabilita zegoen kode bat idatzi duzu. Aukeratu Radar-eko PIN berri eta esklusibo bat.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Gehiago ikasi PINei buruz</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__warning">Markatutako zenbakia ez dago Signalen erregistratuta. SMS bidez gonbidatu nahiko zenuke?</string>
+    <string name="PinCreationScreen__warning">Markatutako zenbakia ez dago Radaren erregistratuta. SMS bidez gonbidatu nahiko zenuke?</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">PINa desgaitzen baduzu, datu guztiak galduko dituzu Signal berriro erregistratzen duzunean, babeskopiak eskuz egin eta leheneratu ezean. PINa desgaituta badago, ezin duzu aktibatu erregistratzeko blokeoa.</string>
+    <string name="PinCreationScreen__disable_pin_warning">PINa desgaitzen baduzu, datu guztiak galduko dituzu Radar berriro erregistratzen duzunean, babeskopiak eskuz egin eta leheneratu ezean. PINa desgaituta badago, ezin duzu aktibatu erregistratzeko blokeoa.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Desaktibatu PINa</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Idatzi zure PINa</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Idatzi Signal instalatzean sortutako PINa</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Idatzi Radar instalatzean sortutako PINa</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Telefono-zenbakia egiaztatzeko erabilita zegoen kode bat idatzi duzu. Idatzi konturako aukeratu duzun Signal-eko PIN esklusiboa.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Telefono-zenbakia egiaztatzeko erabilita zegoen kode bat idatzi duzu. Idatzi konturako aukeratu duzun Radar-eko PIN esklusiboa.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">PIN okerra. Saiakera %1$d falta da.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Baimendu jakinarazpenak</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal-ek jakinarazpenak bidaltzeko baimena nahi du. Horri esker, zure gailuak alertak bistaratu ahal izango ditu mezu berriak iristen direnean.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar-ek jakinarazpenak bidaltzeko baimena nahi du. Horri esker, zure gailuak alertak bistaratu ahal izango ditu mezu berriak iristen direnean.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Orain ez</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Eskaneatu kode hau kontua lotzeko</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Ireki Signal telefonoan</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Ireki Radar telefonoan</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Sakatu profileko argazkia Signal-en ezarpenak irekitzeko</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Sakatu profileko argazkia Radar-en ezarpenak irekitzeko</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Sakatu \"Lotutako gailuak\" eta \"Lotu gailu berria\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Ezin iza da sortu kodea</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Ez duzu Signal beste gailu batean?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Ez duzu Radar beste gailu batean?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Sortu kontu bat</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Aplikazioko datuak ezabatu nahi dituzu?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Signal-eko beste kontu bat lotu nahian zabiltza. Jarraituz gero, gailu honetan dauden Signal-en datu guztiak ezabatu egingo dira.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Radar-eko beste kontu bat lotu nahian zabiltza. Jarraituz gero, gailu honetan dauden Radar-en datu guztiak ezabatu egingo dira.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Ezabatu eta berrabiarazi</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Transferitu kontua</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Kontua transferitzeko, ireki Signal Android-eko gailu zaharrean eta hautatu Transferitu kontua.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Kontua transferitzeko, ireki Radar Android-eko gailu zaharrean eta hautatu Transferitu kontua.</string>
     <string name="DeviceTransferInstructions__continue">Jarraitu</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Bai, zenbakiak bat datoz</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Zenbakiak ez datoz bat</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Gailu zaharra egiaztatzeko zain…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal-ek kokapena atzitzeko baimena behar du gailu zaharra hautemateko eta harekin konektatzeko.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar-ek kokapena atzitzeko baimena behar du gailu zaharra hautemateko eta harekin konektatzeko.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Eman baimena</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal-ek kokapen-zerbitzuak gaitzea behar du gailu zaharra hautemateko eta harekin konektatzeko.</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar-ek kokapen-zerbitzuak gaitzea behar du gailu zaharra hautemateko eta harekin konektatzeko.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Aktibatu kokapen zerbitzuak</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal-ek wifia aktibatzea behar du gailu zaharra hautemateko eta harekin konektatzeko.</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar-ek wifia aktibatzea behar du gailu zaharra hautemateko eta harekin konektatzeko.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Aktibatu Wi-Fi-a</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Dirudienez, zure gailua ez da bateragarria Wi-Fi Direct-ekin.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Horren ordez, leheneratu babeskopia bat</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Datuak transferitzen</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d mezu orain arte</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Ezin da transferitu</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Ezin da transferitu Signal-en bertsio berriago batetik.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Ezin da transferitu Radar-en bertsio berriago batetik.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Datu-basearen murriztapen bat dela eta, ezin izan dira transferitu datu batzuk.</string>
     <string name="DeviceTransferProgress__transfer_failed">Transferentziak huts egin du. Saiatu berriro.</string>
     <string name="DeviceTransferProgress__try_again">Saiatu berriro</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Ziur zaude?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Erabiltzaile-izenik gabe jendeak ezin izango zaitu Signal-en aurkitu.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Erabiltzaile-izenik gabe jendeak ezin izango zaitu Radar-en aurkitu.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Utzi</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

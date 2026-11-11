@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Shko te kamera</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal ka nevojë për leje që të shfaqë foto dhe video</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar ka nevojë për leje që të shfaqë foto dhe video</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Lejo aksesin</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Nuk u gjet asnjë foto ose video. Signal ka lejehyrje vetëm te fotot dhe videot që ke zgjedhur.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Nuk u gjet asnjë foto ose video. Radar ka lejehyrje vetëm te fotot dhe videot që ke zgjedhur.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal ka lejehyrje të kufizuar te fotot ose videot</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar ka lejehyrje të kufizuar te fotot ose videot</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Menaxho</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Për të shfaqur foto dhe video:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal ka nevojë për lejehyrje për të shfaqur fotot dhe videot.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar ka nevojë për lejehyrje për të shfaqur fotot dhe videot.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Foto</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Lejo aksesin në mikrofon</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Për të bërë foto dhe video, lejo qasjen e Signal-it në kamerë.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Për të bërë foto dhe video, lejo qasjen e Radar-it në kamerë.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Për të bërë foto dhe video, lejo përdorimin e kamerës dhe mikrofonit nga Signal.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Për të bërë foto dhe video, lejo përdorimin e kamerës dhe mikrofonit nga Radar.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Për të regjistruar video me zë, lejo përdorimin e mikrofonit nga Signal.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Për të regjistruar video me zë, lejo përdorimin e mikrofonit nga Radar.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Për të skanuar kod QR, lejo përdorimin e kamerës nga Signal.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Për të skanuar kod QR, lejo përdorimin e kamerës nga Radar.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal duhet të aksesojë kamerën që të bëjë fotografi</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar duhet të aksesojë kamerën që të bëjë fotografi</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal duhet të aksesojë kamerën që të skanojë kode QR</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar duhet të aksesojë kamerën që të skanojë kode QR</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal duhet të aksesojë mikrofonin që të regjistrojë video</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar duhet të aksesojë mikrofonin që të regjistrojë video</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Për të bërë foto në Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Për të bërë foto në Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Për të bërë foto dhe video në Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Për të bërë foto dhe video në Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Për të regjistruar video me zë:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Regjistrim i shumëfishtë</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal ka nevojë për lejet e aktivizimit të mikrofonit për të regjistruar video, por ato janë refuzuar. Ju lutemi, vazhdoni te parametrat e aplikacionit, zgjidhni \"Lejet\" dhe aktivizoni \"Mikrofoni\" dhe \"Kamera\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar ka nevojë për lejet e aktivizimit të mikrofonit për të regjistruar video, por ato janë refuzuar. Ju lutemi, vazhdoni te parametrat e aplikacionit, zgjidhni \"Lejet\" dhe aktivizoni \"Mikrofoni\" dhe \"Kamera\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Gabim gjatë regjistrimit të videos</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d artikuj u vendosën në cilësi standarde</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Për të ruajtur gjëra në depozitë të jashtme, Signal kërkon leje Depozitimi, por kjo i është mohuar. Ju lutemi, kaloni te parametrat e aplikacionit, përzgjidhni \"Leje\", dhe aktivizoni \"Depozitim\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Për të ruajtur gjëra në depozitë të jashtme, Radar kërkon leje Depozitimi, por kjo i është mohuar. Ju lutemi, kaloni te parametrat e aplikacionit, përzgjidhni \"Leje\", dhe aktivizoni \"Depozitim\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Videoja do të dërgohet pa zë</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Të lidhet pajisja?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Me sa duket, po përpiqesh të lidhësh një pajisje Signal. Prek \"Vazhdo\" dhe më pas prek \"Lidh pajisje të re\" dhe skano përsëri kodin QR.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Me sa duket, po përpiqesh të lidhësh një pajisje Radar. Prek \"Vazhdo\" dhe më pas prek \"Lidh pajisje të re\" dhe skano përsëri kodin QR.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Vazhdo</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Nuk mund të transferohet llogaria</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Pajisja në të cilën po transferon të dhënat është version i vjetër. Përditëso Signal në atë pajisje dhe provo sërish.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Pajisja në të cilën po transferon të dhënat është version i vjetër. Përditëso Radar në atë pajisje dhe provo sërish.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Gaan na kamera</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal benodig toestemming om jou foto\'s en videos te wys</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar benodig toestemming om jou foto\'s en videos te wys</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Gee toegang</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Geen foto\'s of video\'s gevind nie. Signal het slegs toegang tot foto\'s en video\'s wat jy gekies het.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Geen foto\'s of video\'s gevind nie. Radar het slegs toegang tot foto\'s en video\'s wat jy gekies het.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal het beperkte toegang tot foto\'s of video\'s</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar het beperkte toegang tot foto\'s of video\'s</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Bestuur</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Om foto\'s en video\'s te wys:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal benodig toegang om jou foto\'s en videos te wys.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar benodig toegang om jou foto\'s en videos te wys.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Foto</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Laat toegang tot jou mikrofoon toe</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Laat Signal toegang tot die kamera om foto\'s en video op te neem.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Laat Radar toegang tot die kamera om foto\'s en video op te neem.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Laat Signal toegang tot die kamera en mikrofoon toe om foto\'s en video\'s te neem.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Laat Radar toegang tot die kamera en mikrofoon toe om foto\'s en video\'s te neem.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Om video\'s met klank te neem, laat Signal toegang tot jou mikrofoon toe.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Om video\'s met klank te neem, laat Radar toegang tot jou mikrofoon toe.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Om \'n QR-kode te skandeer, laat Signal toegang tot die kamera toe.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Om \'n QR-kode te skandeer, laat Radar toegang tot die kamera toe.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal benodig kameratoegang om foto\'s te neem</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar benodig kameratoegang om foto\'s te neem</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal benodig kameratoegang om QR-kodes te skandeer</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar benodig kameratoegang om QR-kodes te skandeer</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal benodig mikrofoontoegang om video\'s te neem</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar benodig mikrofoontoegang om video\'s te neem</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Om foto\'s in Signal te neem:</string>
+  <string name="CameraXFragment_to_capture_photos">Om foto\'s in Radar te neem:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Om foto\'s en video\'s in Signal te neem:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Om foto\'s en video\'s in Radar te neem:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Om video\'s met klank te neem:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Multi-vaslegging</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal het mikrofoontoestemmings nodig om video\'s op te neem, maar dit is geweier. Gaan asseblief na die programinstellings, kies \"Toestemmings\" en skakel \"Mikrofoon\" en \"Kamera\" aan.</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar het mikrofoontoestemmings nodig om video\'s op te neem, maar dit is geweier. Gaan asseblief na die programinstellings, kies \"Toestemmings\" en skakel \"Mikrofoon\" en \"Kamera\" aan.</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Fout met opneem van video</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d items op standaardkwaliteit gestel</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal het die Storingstoestemming nodig om op \'n eksterne stoorplek te stoor, maar dit is permanent geweier. Gaan asseblief na die toepassingsinstellings, kies \"Toestemmings\" en aktiveer \"Storing\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar het die Storingstoestemming nodig om op \'n eksterne stoorplek te stoor, maar dit is permanent geweier. Gaan asseblief na die toepassingsinstellings, kies \"Toestemmings\" en aktiveer \"Storing\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Video sal sonder oudio gestuur word</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Koppel toestel?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Dit lyk of jy \'n Signal-toestel probeer koppel. Tik op Gaan voort en tik dan op \"Koppel \'n nuwe toestel\" en skandeer die QR-kode weer.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Dit lyk of jy \'n Radar-toestel probeer koppel. Tik op Gaan voort en tik dan op \"Koppel \'n nuwe toestel\" en skandeer die QR-kode weer.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Gaan voort</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Kan nie rekening oorplaas nie</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Die toestel waarheen jy jou rekening wil oorplaas, is nie op datum nie. Doen \'n opdatering van Signal op daardie toestel en probeer weer.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Die toestel waarheen jy jou rekening wil oorplaas, is nie op datum nie. Doen \'n opdatering van Radar op daardie toestel en probeer weer.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

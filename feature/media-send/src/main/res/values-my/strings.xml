@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">ကင်မရာသို့ သွားပါ</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal သည် သင်၏ဓာတ်ပုံနှင့် ဗီဒီယိုများကိုပြသရန် ခွင့်ပြုချက်လိုအပ်သည်</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar သည် သင်၏ဓာတ်ပုံနှင့် ဗီဒီယိုများကိုပြသရန် ခွင့်ပြုချက်လိုအပ်သည်</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">ဝင်ရောက် သုံးစွဲခွင့်ပြုရန်</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">ဓာတ်ပုံနှင့် ဗီဒီယိုများမတွေ့ပါ။ Signal သည် သင်ရွေးချယ်ထားသော ဓာတ်ပုံနှင့် ဗီဒီယိုများကိုသာ ရယူသုံးစွဲခွင့်ရှိသည်။</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">ဓာတ်ပုံနှင့် ဗီဒီယိုများမတွေ့ပါ။ Radar သည် သင်ရွေးချယ်ထားသော ဓာတ်ပုံနှင့် ဗီဒီယိုများကိုသာ ရယူသုံးစွဲခွင့်ရှိသည်။</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal သည် သင့်ဓာတ်ပုံနှင့် ဗီဒီယိုများအား ရယူသုံးစွဲခွင့် အကန့်အသတ်ရှိနေသည်</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar သည် သင့်ဓာတ်ပုံနှင့် ဗီဒီယိုများအား ရယူသုံးစွဲခွင့် အကန့်အသတ်ရှိနေသည်</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">စီမံရန်</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">ဓာတ်ပုံနှင့် ဗီဒီယိုများကို ပြသရန်-</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal သည် သင်၏ဓာတ်ပုံနှင့် ဗီဒီယိုများကိုပြသရန် ရယူသုံးစွဲခွင့် လိုအပ်သည်။</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar သည် သင်၏ဓာတ်ပုံနှင့် ဗီဒီယိုများကိုပြသရန် ရယူသုံးစွဲခွင့် လိုအပ်သည်။</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">ရုပ်ပုံ</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">သင့်မိုက်ခရိုဖုန်း အသုံးပြုခွင့်ပေးပါ</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">ဓါတ်ပုံနှင့် ဗီဒီယိုရိုက်နိုင်ရန် Signal ကို ကင်မရာအသုံးပြုခွင့် ပေးပါ။</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">ဓါတ်ပုံနှင့် ဗီဒီယိုရိုက်နိုင်ရန် Radar ကို ကင်မရာအသုံးပြုခွင့် ပေးပါ။</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">ဓာတ်ပုံနှင့် ဗီဒီယိုရိုက်ကူးရန် Signal ကို ကင်မရာနှင့် မိုက်ခရိုဖုန်း အသုံးပြုခွင့်ပေးပါ။</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">ဓာတ်ပုံနှင့် ဗီဒီယိုရိုက်ကူးရန် Radar ကို ကင်မရာနှင့် မိုက်ခရိုဖုန်း အသုံးပြုခွင့်ပေးပါ။</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">ဗီဒီယိုကို အသံဖြင့်ရိုက်ကူးရန် Signal ကို မိုက်ခရိုဖုန်း အသုံးပြုခွင့်ပေးပါ။</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">ဗီဒီယိုကို အသံဖြင့်ရိုက်ကူးရန် Radar ကို မိုက်ခရိုဖုန်း အသုံးပြုခွင့်ပေးပါ။</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR ကုဒ်ကို စကင်န်ဖတ်ရန် Signal ကို ကင်မရာ အသုံးပြုခွင့်ပေးပါ။</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR ကုဒ်ကို စကင်န်ဖတ်ရန် Radar ကို ကင်မရာ အသုံးပြုခွင့်ပေးပါ။</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">ဓာတ်ပုံရိုက်ကူးရန် Signal သည် ကင်မရာအသုံးပြုခွင့် လိုအပ်ပါသည်</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">ဓာတ်ပုံရိုက်ကူးရန် Radar သည် ကင်မရာအသုံးပြုခွင့် လိုအပ်ပါသည်</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR ကုဒ်များကို စကင်န်ဖတ်ရန် Signal သည် ကင်မရာအသုံးပြုခွင့် လိုအပ်ပါသည်</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR ကုဒ်များကို စကင်န်ဖတ်ရန် Radar သည် ကင်မရာအသုံးပြုခွင့် လိုအပ်ပါသည်</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">ဗီဒီယိုရိုက်ကူးရန်အတွက် Signal သည် မိုက်ခရိုဖုန်းအသုံးပြုခွင့် လိုအပ်ပါသည်</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">ဗီဒီယိုရိုက်ကူးရန်အတွက် Radar သည် မိုက်ခရိုဖုန်းအသုံးပြုခွင့် လိုအပ်ပါသည်</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Signal တွင် ဓာတ်ပုံများ ရိုက်ကူးရန်-</string>
+  <string name="CameraXFragment_to_capture_photos">Radar တွင် ဓာတ်ပုံများ ရိုက်ကူးရန်-</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Signal တွင် ဓာတ်ပုံနှင့် ဗီဒီယိုများ ရိုက်ကူးရန်-</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Radar တွင် ဓာတ်ပုံနှင့် ဗီဒီယိုများ ရိုက်ကူးရန်-</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">ဗီဒီယိုကိုအသံဖြင့် ရိုက်ကူးရန်-</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -209,7 +209,7 @@
         <item quantity="other">ဖိုင် %1$d ဖိုင်ကို ပုံမှန်အရည်အသွေးအဖြစ် သတ်မှတ်ထားသည်</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">သင်၏ ပြင်ပသိုလှောင်ရာနေရာတွင် သိမ်းရန် သိုလှောင်မှုခွင့်ပြုချက်အား Signal ကို ပေးရန်လိုအပ်ပါသည်။ သို့သော် လုံးဝခွင့်မပြုပါ ဟုရွေးထားပြီး ဖြစ်နေသဖြင့် အပ်ပလီကေးရှင်း ဆက်တင်သို့ သွား၍ \"ခွင့်ပြုချက်များ\" ကို ရွေးချယ်ကာ \"ထားသိုမှု\" ခွင့်ပြုချက်ကို ဖွင့်ပေးပါ။</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">သင်၏ ပြင်ပသိုလှောင်ရာနေရာတွင် သိမ်းရန် သိုလှောင်မှုခွင့်ပြုချက်အား Radar ကို ပေးရန်လိုအပ်ပါသည်။ သို့သော် လုံးဝခွင့်မပြုပါ ဟုရွေးထားပြီး ဖြစ်နေသဖြင့် အပ်ပလီကေးရှင်း ဆက်တင်သို့ သွား၍ \"ခွင့်ပြုချက်များ\" ကို ရွေးချယ်ကာ \"ထားသိုမှု\" ခွင့်ပြုချက်ကို ဖွင့်ပေးပါ။</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">ဗီဒီယိုကို အသံမပါဘဲ ပို့မည်</string>
 
@@ -223,14 +223,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">စက်ကို ချိတ်ဆက်မည်လား။</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">သင်သည် Signal စက်တစ်လုံးကို ချိတ်ဆက်ရန် ကြိုးစားနေပုံရပါသည်။ ဆက်လုပ်ရန်ကို နှိပ်ကာ \"စက်အသစ်တစ်ခုကို ချိတ်ဆက်ပါ\" ကိုနှိပ်ပြီး QR ကုဒ်ကို ထပ်မံစကင်န်ဖတ်ပါ။</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">သင်သည် Radar စက်တစ်လုံးကို ချိတ်ဆက်ရန် ကြိုးစားနေပုံရပါသည်။ ဆက်လုပ်ရန်ကို နှိပ်ကာ \"စက်အသစ်တစ်ခုကို ချိတ်ဆက်ပါ\" ကိုနှိပ်ပြီး QR ကုဒ်ကို ထပ်မံစကင်န်ဖတ်ပါ။</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">ဆက်လုပ်ရန်</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">အကောင့်ကို လွှဲပြောင်း၍ မရပါ</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">လွှဲပြောင်းပေးမည့် စက်သည် ဗားရှင်းဟောင်းဖြစ်နေပါသည်။ ထိုစက်တွင် Signal ကို အပ်ဒိတ်လုပ်ပြီး ထပ်မံကြိုးစားပါ။</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">လွှဲပြောင်းပေးမည့် စက်သည် ဗားရှင်းဟောင်းဖြစ်နေပါသည်။ ထိုစက်တွင် Radar ကို အပ်ဒိတ်လုပ်ပြီး ထပ်မံကြိုးစားပါ။</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

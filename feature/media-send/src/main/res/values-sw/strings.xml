@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Enda kwa kamera</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal inahitaji ruhusa ili kuonyesha picha zako na video.</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar inahitaji ruhusa ili kuonyesha picha zako na video.</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Ruhusu Ufikiaji</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Hakuna picha au video zilizopatikana. Signal inaweza tu kufikia picha na video ambazo umechagua.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Hakuna picha au video zilizopatikana. Radar inaweza tu kufikia picha na video ambazo umechagua.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal ina ufikiaji unaodhibitiwa wa picha au video</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar ina ufikiaji unaodhibitiwa wa picha au video</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Dhibiti</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Kuonyesha picha na video:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal inahitaji ufikiaji ili kuonyesha picha na video zako.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar inahitaji ufikiaji ili kuonyesha picha na video zako.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Picha</string>
@@ -136,25 +136,25 @@
   <!-- Dialog title asking users for camera permission -->
   <string name="CameraXFragment_allow_access_camera">Ruhusu ufikiaji wa kamera yako</string>
   <!-- Dialog title asking users for microphone permission -->
-  <string name="CameraXFragment_allow_access_microphone">Ruhusu Signal kufikia maikrofoni yako</string>
+  <string name="CameraXFragment_allow_access_microphone">Ruhusu Radar kufikia maikrofoni yako</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Ili kupiga picha na video, ruhusu ufikiaji wa Signal kwa kamera.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Ili kupiga picha na video, ruhusu ufikiaji wa Radar kwa kamera.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Ili kupiga picha na kurekodi video, iruhusu Signal ifikie kamera na maikrofoni.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Ili kupiga picha na kurekodi video, iruhusu Radar ifikie kamera na maikrofoni.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Ili kupiga kurekodi video, iruhusu Signal ifikie maikrofoni.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Ili kupiga kurekodi video, iruhusu Radar ifikie maikrofoni.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Ili kuskani QR code, iruhusu Signal ifikie kamera.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Ili kuskani QR code, iruhusu Radar ifikie kamera.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal inahitaji kufikia kamera ili kupiga picha</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar inahitaji kufikia kamera ili kupiga picha</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal inahitaji kufikia kamera ili kuskani QR codes</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar inahitaji kufikia kamera ili kuskani QR codes</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal inahitaji kufikia maikrofoni ili kurekodi video</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar inahitaji kufikia maikrofoni ili kurekodi video</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Ili kupiga picha kwenye Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Ili kupiga picha kwenye Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Ili kupiga picha na kurekodi video kwenye Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Ili kupiga picha na kurekodi video kwenye Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Ili kurekodi video na sauti:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Kurekodi mara nyingi</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal inahitaji ruhusa za kipaza sauti kurekodi video, lakini imekataliwa. Tafadhali enda kwenye mipangilio ya programu, chagua \"Ruhusa\", na uwezeshe \"Kipaza Sauti\" na \"Kamera\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar inahitaji ruhusa za kipaza sauti kurekodi video, lakini imekataliwa. Tafadhali enda kwenye mipangilio ya programu, chagua \"Ruhusa\", na uwezeshe \"Kipaza Sauti\" na \"Kamera\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Hitilafu wakati wa kurekodi video</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d zimewekwa kwenye ubora wa hali ya juu</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal inahitaji ruhusa ya Hifadhi ili kuhifadhi kwenye hifadhi ya nje, lakini imekataliwa kabisa. Tafadhali endelea kwenye mipangilio ya programu, chagua \"Ruhusa\", na uwezeshe \"Uhifadhi\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar inahitaji ruhusa ya Hifadhi ili kuhifadhi kwenye hifadhi ya nje, lakini imekataliwa kabisa. Tafadhali endelea kwenye mipangilio ya programu, chagua \"Ruhusa\", na uwezeshe \"Uhifadhi\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Video itatumwa bila sauti</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Unganisha kifaa?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Inaonekana kama unajaribu kuunganisha kifaa cha Signal. Gusa endelea na kisha gusa \"Unganisha kifaa kipya\" na uskani kodi ya QR tena.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Inaonekana kama unajaribu kuunganisha kifaa cha Radar. Gusa endelea na kisha gusa \"Unganisha kifaa kipya\" na uskani kodi ya QR tena.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Endelea</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Imeshindwa kuhamisha akaunti</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Kifaa unachohamishia, kimepitwa na wakati. Sasisha Signal kwenye kifaa hicho kisha ujaribu tena.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Kifaa unachohamishia, kimepitwa na wakati. Sasisha Radar kwenye kifaa hicho kisha ujaribu tena.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

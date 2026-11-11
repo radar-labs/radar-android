@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">კამერაზე გადასვლა</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">შენი ფოტოებისა და ვიდეოების საჩვენებლად Signal-ს ნებართვა სჭირდება</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">შენი ფოტოებისა და ვიდეოების საჩვენებლად Radar-ს ნებართვა სჭირდება</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">წვდომის მიცემა</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">ფოტოები და ვიდეოები ვერ მოიძებნა. Signal-ს მხოლოდ იმ ფოტოებსა და ვიდეოებზე აქვს წვდომა, რომლებიც შენ აირჩიე.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">ფოტოები და ვიდეოები ვერ მოიძებნა. Radar-ს მხოლოდ იმ ფოტოებსა და ვიდეოებზე აქვს წვდომა, რომლებიც შენ აირჩიე.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal-ს ფოტოებსა და ვიდეოებზე შეზღუდული წვდომა აქვს</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar-ს ფოტოებსა და ვიდეოებზე შეზღუდული წვდომა აქვს</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">მართვა</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">ფოტოებისა და ვიდეოების საჩვენებლად:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal-ს წვდომა მხოლოდ შენი ფოტოებისა და ვიდეოების საჩვენებლად სჭირდება.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar-ს წვდომა მხოლოდ შენი ფოტოებისა და ვიდეოების საჩვენებლად სჭირდება.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">ფოტო</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">მიკროფონზე წვდომის მიცემა</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">სურათების და ვიდეოების გადასაღებად, მიეცი Signal-ს წვდომა კამერაზე.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">სურათების და ვიდეოების გადასაღებად, მიეცი Radar-ს წვდომა კამერაზე.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">ფოტოებისა და ვიდეოს გადასაღებად, მიეცი Signal-ს კამერასა და მიკროფონზე წვდომა.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">ფოტოებისა და ვიდეოს გადასაღებად, მიეცი Radar-ს კამერასა და მიკროფონზე წვდომა.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">ხმით ვიდეოების გადასაღებად, მიეცი Signal-ს წვდომა შენს მიკროფონზე.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">ხმით ვიდეოების გადასაღებად, მიეცი Radar-ს წვდომა შენს მიკროფონზე.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR კოდის დასასკანირებლად, მიეცი Signal-ს წვდომა შენს კამერაზე.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR კოდის დასასკანირებლად, მიეცი Radar-ს წვდომა შენს კამერაზე.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal-ს ფოტოების გადასაღებად კამერაზე წვდომა სჭირდება</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar-ს ფოტოების გადასაღებად კამერაზე წვდომა სჭირდება</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR კოდების დასასკანირებლად Signal-ს კამერაზე წვდომა სჭირდება</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR კოდების დასასკანირებლად Radar-ს კამერაზე წვდომა სჭირდება</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">ვიდეოს გადასაღებად Signal-ს მიკროფონზე წვდომა სჭირდება</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">ვიდეოს გადასაღებად Radar-ს მიკროფონზე წვდომა სჭირდება</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Signal-ში ფოტოების გადასაღებად:</string>
+  <string name="CameraXFragment_to_capture_photos">Radar-ში ფოტოების გადასაღებად:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Signal-ში ფოტოებისა და ვიდეოების გადასაღებად:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Radar-ში ფოტოებისა და ვიდეოების გადასაღებად:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">ვიდეოების ხმით გადასაღებად:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">მრავალჯერადი გადაღება</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">ვიდეოების გადასაღებად Signal-ს სჭირდება მიკროფონზე წვდომის უფლება, მაგრამ იგი სამუდამოდ იქნა უარყოფილი. გთხოვთ, გადახვიდე აპის პარამეტრების მენიუში, აირჩიო \"უფლებები\" და ჩართო \"მიკროფონი\" და \"კამერა\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">ვიდეოების გადასაღებად Radar-ს სჭირდება მიკროფონზე წვდომის უფლება, მაგრამ იგი სამუდამოდ იქნა უარყოფილი. გთხოვთ, გადახვიდე აპის პარამეტრების მენიუში, აირჩიო \"უფლებები\" და ჩართო \"მიკროფონი\" და \"კამერა\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">ვიდეოს გადაღებისას ხარვეზი დაფიქსირდა</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d ელემენტი სტანდარტულ ხარისხზეა დაყენებული</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">გარე მეხსიერებაში შესანახად Signal-ს შენახვის ნებართვა სჭირდება, მაგრამ ის სამუდამოდ იქნა უარყოფილი. გთხოვთ, შეხვიდე აპის პარამეტრებში, აირჩიო „ნებართვები“ და ჩართო „შენახვა“.</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">გარე მეხსიერებაში შესანახად Radar-ს შენახვის ნებართვა სჭირდება, მაგრამ ის სამუდამოდ იქნა უარყოფილი. გთხოვთ, შეხვიდე აპის პარამეტრებში, აირჩიო „ნებართვები“ და ჩართო „შენახვა“.</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">ვიდეო ხმის გარეშე გაიგზავნება</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">დავაკავშიროთ მოწყობილობა?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">როგორც ჩანს, Signal-ის მოწყობილობის დაკავშირებას ცდილობ. დააჭირე გაგრძელებას, შემდეგ აირჩიე „ახალი მოწყობილობის მიბმა“ და თავიდან დაასკანირე QR კოდი.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">როგორც ჩანს, Radar-ის მოწყობილობის დაკავშირებას ცდილობ. დააჭირე გაგრძელებას, შემდეგ აირჩიე „ახალი მოწყობილობის მიბმა“ და თავიდან დაასკანირე QR კოდი.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">გაგრძელება</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">ანგარიშის გადატანა შეუძლებელია</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">მოწყობილობა, რომელზე გადატანასაც ცდილობ, მოძველებულია. განაახლე Signal-ი იმ მოწყობილობაზე და თავიდან სცადე.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">მოწყობილობა, რომელზე გადატანასაც ცდილობ, მოძველებულია. განაახლე Radar-ი იმ მოწყობილობაზე და თავიდან სცადე.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

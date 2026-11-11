@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">権限を許可する</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">友人にメッセージを送信するには、Signalに権限を与える必要があります。 </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">友人にメッセージを送信するには、Radarに権限を与える必要があります。 </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">今はしない</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">連絡先</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">知り合いを探しましょう。連絡先は暗号化され、私たちSignalからは見えません。</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">知り合いを探しましょう。連絡先は暗号化され、私たちRadarからは見えません。</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">通話</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">以前利用していた端末がある場合</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">新しいSignalアカウントからQRコードをスキャンすれば、すぐに再開できます</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">新しいRadarアカウントからQRコードをスキャンすれば、すぐに再開できます</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">以前利用していた端末がない場合</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">または、Signalを同じ端末に再インストールする場合</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">または、Radarを同じ端末に再インストールする場合</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">メッセージ履歴とアカウントデータを復元する方法を選択してください。</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Signalバックアップから復元する</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Radarバックアップから復元する</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">無料、または有料のSignalバックアッププランから復元します</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">無料、または有料のRadarバックアッププランから復元します</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">端末内のバックアップの復元</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">バックアップが見つかりません</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">選択したフォルダにはSignalのバックアップは見つかりませんでした。他のフォルダを選択してください。</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">選択したフォルダにはRadarのバックアップは見つかりませんでした。他のフォルダを選択してください。</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">他のフォルダを選択</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">新しいアカウントへ復元しますか？</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">復元しようとしているバックアップは、別のSignalアカウントで作成されたものです。新しいアカウントに復元することはできますが、復元後はすべてのグループから外れます。</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">復元しようとしているバックアップは、別のRadarアカウントで作成されたものです。新しいアカウントに復元することはできますが、復元後はすべてのグループから外れます。</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">復元する</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">バックアップが見つかりません</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">回復キーは正しいですが、このアカウントにはSignalバックアップがありません。戻って別の回復方法を選択するか、回復せずに続行してください。</string>
+    <string name="EnterAepScreen__no_backup_found_body">回復キーは正しいですが、このアカウントにはRadarバックアップがありません。戻って別の回復方法を選択するか、回復せずに続行してください。</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">回復キーが正しくありません</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Signalバックアップを有効にした際に保存したのと同じ電話番号と64文字の回復キーで登録していることを確認してください。このキーがないとバックアップを復元できません。</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Radarバックアップを有効にした際に保存したのと同じ電話番号と64文字の回復キーで登録していることを確認してください。このキーがないとバックアップを復元できません。</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">もう一度試す</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">SMSコードで確認しますか？</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Signalが送信するSMSコードで認証すれば、アカウントを登録できます。コードを入した後で、回復キーを使ってバックアップの復元をもう一度試すことができます。</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Radarが送信するSMSコードで認証すれば、アカウントを登録できます。コードを入した後で、回復キーを使ってバックアップの復元をもう一度試すことができます。</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">コードを送信</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">アカウントをリンクさせる</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">まだSignalを使っていませんか？</string>
+    <string name="WelcomeScreen__not_on_signal_yet">まだRadarを使っていませんか？</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">アカウントを作成</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">このバックアップを復元できませんでした</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">このバージョンの Signal ではバックアップを復元できません。最新バージョンにアップデートして、もう一度お試しください。</string>
+    <string name="RemoteRestoreScreen__update_latest">このバージョンの Radar ではバックアップを復元できません。最新バージョンにアップデートして、もう一度お試しください。</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Signalをアップデートしてください</string>
+    <string name="RemoteRestoreScreen__update_signal">Radarをアップデートしてください</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">今はしない</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">プライバシーとセキュリティ保護のため、あなたのアカウントをロックしました。%1$d日間の休止後に、PINなしでこの電話番号を再登録できるようになります。メッセージ等はすべて消去されます。</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">以前利用していた端末でSignalを開きます</string>
+    <string name="QuickRestoreQRScreen__step_1">以前利用していた端末でRadarを開きます</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">カメラのアイコンをタップします </string>
     <!-- Step 3 to quick restore -->
@@ -397,13 +397,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">より強固なPINを選択</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">電話番号の確認に、すでに使用したコードが再入力されました。新しい固有のSignal PINを選択してください。</string>
+    <string name="PinCreationScreen__reentered_verification_code">電話番号の確認に、すでに使用したコードが再入力されました。新しい固有のRadar PINを選択してください。</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">PINに関する詳細情報</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">ご注意ください</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">PINを無効にすると、自身でバックアップと復元を行わない限り、Signalに再登録する際すべてのデータが失われます。PINを無効にしている間は登録ロックは使用できません。</string>
+    <string name="PinCreationScreen__disable_pin_warning">PINを無効にすると、自身でバックアップと復元を行わない限り、Radarに再登録する際すべてのデータが失われます。PINを無効にしている間は登録ロックは使用できません。</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">PINを無効にする</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -420,9 +420,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">PINを入力してください</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">最初にSignalをインストールしたときに作成したPINを入力してください</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">最初にRadarをインストールしたときに作成したPINを入力してください</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">電話番号の確認に、すでに使用したコードが再入力されました。以前、アカウント用に選択した固有のSignal PINを入力してください。</string>
+    <string name="PinEntryScreen__reentered_verification_code">電話番号の確認に、すでに使用したコードが再入力されました。以前、アカウント用に選択した固有のRadar PINを入力してください。</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="other">PINが違います。あと%1$d回試せます。</item>
@@ -455,7 +455,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">通知を許可してください</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signalは通知権限をリクエストします。権限を有効にすると、新しいメッセージが届いたときに端末に通知が表示されるようになります。</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radarは通知権限をリクエストします。権限を有効にすると、新しいメッセージが届いたときに端末に通知が表示されるようになります。</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">今はしない</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -491,9 +491,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">このコードをスキャンするとアカウントがリンクします</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">ご利用のスマートフォンでSignalを開いてください</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">ご利用のスマートフォンでRadarを開いてください</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">プロフィール画像をタップしてSignalの設定を開きます</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">プロフィール画像をタップしてRadarの設定を開きます</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">「リンク済み端末」をタップし、次画面の「新しい端末をリンク」をタップします</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -505,7 +505,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">コードを生成できませんでした</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">他の端末にはSignalをインストールしていませんか？</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">他の端末にはRadarをインストールしていませんか？</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">アカウントを作成</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -519,7 +519,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">アプリのデータを消去しますか？</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">別のSignalアカウントへリンクしようとしています。続行すると、現在この端末上にあるすべてのSignalのデータが消去されます。</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">別のRadarアカウントへリンクしようとしています。続行すると、現在この端末上にあるすべてのRadarのデータが消去されます。</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">消去＆やり直す</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -527,7 +527,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">アカウントの移行</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">アカウントを移行するには、以前のAndroid端末でSignalを開き、「アカウントの移行」を選択してください。</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">アカウントを移行するには、以前のAndroid端末でRadarを開き、「アカウントの移行」を選択してください。</string>
     <string name="DeviceTransferInstructions__continue">続行</string>
 
     <!-- Device transfer: Setup screen -->
@@ -538,11 +538,11 @@
     <string name="DeviceTransferSetup__numbers_match">はい、番号は一致しています</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">番号が一致しません</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">以前の端末の確認を待っています…</string>
-    <string name="DeviceTransferSetup__location_permission_required">以前の端末を見つけて接続するには、Signalへの位置情報の権限が必要です。</string>
+    <string name="DeviceTransferSetup__location_permission_required">以前の端末を見つけて接続するには、Radarへの位置情報の権限が必要です。</string>
     <string name="DeviceTransferSetup__grant_location_permission">権限を許可</string>
     <string name="DeviceTransferSetup__location_services_required">以前の端末を見つけて接続するには、Signaの位置情報サービスを有効にする必要があります。</string>
     <string name="DeviceTransferSetup__turn_on_location_services">位置情報サービスを有効にする</string>
-    <string name="DeviceTransferSetup__wifi_required">Signalが以前の端末を見つけて接続するには、Wi-Fiを有効にする必要があります。</string>
+    <string name="DeviceTransferSetup__wifi_required">Radarが以前の端末を見つけて接続するには、Wi-Fiを有効にする必要があります。</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Wi-Fiを有効にしてください</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">申し訳ありませんが、ご利用の端末はWi-Fi Directに対応していないようです。</string>
     <string name="DeviceTransferSetup__restore_a_backup">代わりにバックアップを復元</string>
@@ -559,7 +559,7 @@
     <string name="DeviceTransferProgress__transferring_data">データを移行しています</string>
     <string name="DeviceTransferProgress__d_messages_so_far">これまで%1$d件のメッセージ</string>
     <string name="DeviceTransferProgress__unable_to_transfer">移行できません</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Signalのバージョンが、移行先よりも新しい場合は移行できません</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Radarのバージョンが、移行先よりも新しい場合は移行できません</string>
     <string name="DeviceTransferProgress__failure_foreign_key">データベースの制限のため一部のデータは移行できませんでした。</string>
     <string name="DeviceTransferProgress__transfer_failed">移行できませんでした。もう一度お試しください。</string>
     <string name="DeviceTransferProgress__try_again">もう一度試す</string>
@@ -779,7 +779,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">本当に復元しますか？</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">ユーザーネームがなければ、Signalであなたを確認できなくなります。</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">ユーザーネームがなければ、Radarであなたを確認できなくなります。</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">キャンセル</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

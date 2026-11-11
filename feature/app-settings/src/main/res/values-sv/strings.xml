@@ -3,7 +3,7 @@
     <!-- RegistrationLockV2Dialog -->
     <string name="RegistrationLockV2Dialog_turn_on_registration_lock">Aktivera registreringslåset?</string>
     <string name="RegistrationLockV2Dialog_turn_off_registration_lock">Inaktivera registreringslåset?</string>
-    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Om du glömmer din PIN-kod när du registrerar dig hos Signal igen, kommer du att vara utelåst från ditt konto i 7 dagar.</string>
+    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">Om du glömmer din PIN-kod när du registrerar dig hos Radar igen, kommer du att vara utelåst från ditt konto i 7 dagar.</string>
     <string name="RegistrationLockV2Dialog_turn_on">Aktivera</string>
     <string name="RegistrationLockV2Dialog_turn_off">Inaktivera</string>
     <string name="preferences__advanced_pin_settings">Avancerade PIN-kodsinställningar</string>
@@ -12,20 +12,20 @@
     <string name="RegistrationLockFragment__switch_keyboard">Växla tangentbord</string>
     <string name="preferences_chats__transfer_account">Överför konto</string>
     <string name="preferences_chats__transfer_account_to_a_new_android_device">Överför konto till en ny Android-enhet</string>
-    <string name="preferences_app_protection__signal_pin">Signal PIN-kod</string>
+    <string name="preferences_app_protection__signal_pin">Radar PIN-kod</string>
     <string name="preferences_app_protection__create_a_pin">Skapa en PIN-kod</string>
     <string name="preferences_app_protection__change_your_pin">Ändra din PIN-kod</string>
     <string name="preferences_app_protection__pin_reminders">PIN-kodspåminnelser</string>
     <string name="preferences_app_protection__turn_off">Inaktivera</string>
     <string name="preferences_app_protection__confirm_pin">Bekräfta PIN-kod</string>
-    <string name="preferences_app_protection__confirm_your_signal_pin">Bekräfta din Signal PIN-kod</string>
-    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">Se till att du lagrar din PIN-kod på ett säkert sätt, eftersom den inte kan återställas. Om du glömmer din PIN-kod kan du förlora data när du registrerar ditt Signal-konto igen.</string>
+    <string name="preferences_app_protection__confirm_your_signal_pin">Bekräfta din Radar PIN-kod</string>
+    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">Se till att du lagrar din PIN-kod på ett säkert sätt, eftersom den inte kan återställas. Om du glömmer din PIN-kod kan du förlora data när du registrerar ditt Radar-konto igen.</string>
     <string name="preferences_app_protection__incorrect_pin_try_again">Felaktig pinkod. Försök igen.</string>
     <string name="preferences_app_protection__registration_lock">Registreringslås</string>
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
     <string name="preferences_account_reregister">Registrera om konto</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
-    <string name="preferences_account_update_signal">Uppdatera Signal</string>
+    <string name="preferences_account_update_signal">Uppdatera Radar</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
     <string name="preferences_account_delete_all_data">Ta bort alla data</string>
     <!-- Title for confirmation dialog confirming user wants to delete all their data -->
@@ -40,7 +40,7 @@
     <!-- AccountSettingsFragment -->
     <string name="AccountSettingsFragment__account">Konto</string>
     <string name="AccountSettingsFragment__youll_be_asked_less_frequently">Du blir ombedd mindre ofta över tiden</string>
-    <string name="AccountSettingsFragment__require_your_signal_pin">Kräv din PIN-kod för att registrera ditt telefonnummer hos Signal igen</string>
+    <string name="AccountSettingsFragment__require_your_signal_pin">Kräv din PIN-kod för att registrera ditt telefonnummer hos Radar igen</string>
     <string name="AccountSettingsFragment__change_phone_number">Ändra telefonnummer</string>
     <!-- Account setting that allows user to request and export their signal account data -->
     <string name="AccountSettingsFragment__request_account_data">Dina kontodata</string>
@@ -140,7 +140,7 @@
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">Dina kontodata</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
-    <string name="ExportAccountDataFragment__export_explanation">Exportera en rapport med dina Signal-kontodata. Denna rapport innehåller inga meddelanden eller media. %1$s</string>
+    <string name="ExportAccountDataFragment__export_explanation">Exportera en rapport med dina Radar-kontodata. Denna rapport innehåller inga meddelanden eller media. %1$s</string>
     <!-- Learn more link to more information about requesting account data -->
     <string name="ExportAccountDataFragment__learn_more">Läs mer</string>
     <!-- Button action to export the report data to another app (e.g. email) -->
@@ -168,14 +168,14 @@
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">Exportera data?</string>
     <!-- Message for export confirmation dialog -->
-    <string name="ExportAccountDataFragment__export_report_confirmation_message">Dela bara dina Signal-kontodata med personer eller appar som du litar på.</string>
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">Dela bara dina Radar-kontodata med personer eller appar som du litar på.</string>
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">Exportera</string>
 
     <!-- Shown in a dialog with a spinner while the report is downloading -->
     <string name="ExportAccountDataFragment__download_progress">Genererar rapport …</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
-    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Din rapport genereras endast vid exporttillfället och lagras inte av Signal på din enhet.</string>
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">Din rapport genereras endast vid exporttillfället och lagras inte av Radar på din enhet.</string>
 
     <!-- TotpSetupScreen -->
     <!-- Title of the screen that walks the user through setting up an authenticator app -->
@@ -191,7 +191,7 @@
     <!-- Header of the second step of authenticator app setup -->
     <string name="TotpSetupScreen__step_2">Steg 2</string>
     <!-- Body of the second step of authenticator app setup -->
-    <string name="TotpSetupScreen__open_your_authenticator_app">Öppna din autentiseringsapp genom att trycka på knappen nedan för att lägga till ditt Signal-konto.</string>
+    <string name="TotpSetupScreen__open_your_authenticator_app">Öppna din autentiseringsapp genom att trycka på knappen nedan för att lägga till ditt Radar-konto.</string>
     <!-- Button that opens the user\'s authenticator app -->
     <string name="TotpSetupScreen__open">Öppna</string>
     <!-- Text above the setup key explaining that it can be entered by hand instead -->
@@ -205,7 +205,7 @@
     <!-- Dialog message shown when the account already has as many authenticator apps as it\'s allowed -->
     <string name="TotpSetupScreen__you_cant_add_more_than_d">Du kan inte lägga till fler än %1$d autentiseringsappar. Prova att ta bort en först.</string>
     <!-- Dialog message shown when we couldn\'t reach the service to start setting up an authenticator app -->
-    <string name="TotpSetupScreen__couldnt_reach_signal">Det gick inte att nå Signal. Kontrollera din anslutning och försök igen.</string>
+    <string name="TotpSetupScreen__couldnt_reach_signal">Det gick inte att nå Radar. Kontrollera din anslutning och försök igen.</string>
     <!-- Header of the third step of authenticator app setup -->
     <string name="TotpSetupScreen__step_3">Steg 3</string>
     <!-- Body of the third step of authenticator app setup -->
@@ -243,7 +243,7 @@
     <!-- Error shown under the code field when the code the user entered was rejected -->
     <string name="TotpCodeEntryScreen__incorrect_code">Felaktig kod. Ange koden som visas i din autentiseringsapp just nu.</string>
     <!-- Error shown under the code field when we couldn\'t reach the service to check the code -->
-    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Det gick inte att nå Signal. Kontrollera din anslutning och försök igen.</string>
+    <string name="TotpCodeEntryScreen__couldnt_reach_signal">Det gick inte att nå Radar. Kontrollera din anslutning och försök igen.</string>
 
     <!-- Default name given to an authenticator app the moment it\'s set up, before the user chooses their own name for it -->
     <string name="TotpRepository__authenticator">Authenticator</string>
@@ -294,7 +294,7 @@
     <string name="DeleteAccountFragment__no_number">Inget nummer specificerat</string>
     <string name="DeleteAccountFragment__the_phone_number">Det angivna telefonnumret matchar inte ditt kontos.</string>
     <string name="DeleteAccountFragment__are_you_sure">Är du säker på att du vill ta bort ditt konto?</string>
-    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">Detta tar bort ditt Signal-konto och återställer applikationen. Appen stängs när processen är slutförd.</string>
+    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">Detta tar bort ditt Radar-konto och återställer applikationen. Appen stängs när processen är slutförd.</string>
     <string name="DeleteAccountFragment__failed_to_delete_local_data">Det gick inte att ta bort lokala data. Du kan rensa det manuellt i systemapplikationsinställningarna.</string>
     <string name="DeleteAccountFragment__launch_app_settings">Starta appinställningar</string>
     <!-- Title of progress dialog shown when a user deletes their account and the process is leaving all groups -->
@@ -322,7 +322,7 @@
     <!-- Bullet point on the delete account screen warning the user that the deletion is permanent -->
     <string name="DeleteAccountScreen__this_action_can_not_be_undone">Denna åtgärd kan inte ångras</string>
     <!-- Message of the deletion confirmation dialog, shown when the account has a username. Placeholder is the username. -->
-    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">Detta tar bort ditt Signal-konto med användarnamnet \"%1$s\" och återställer applikationen. Appen stängs när processen är slutförd.</string>
+    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">Detta tar bort ditt Radar-konto med användarnamnet \"%1$s\" och återställer applikationen. Appen stängs när processen är slutförd.</string>
     <!-- Label of the checkbox the user has to tick in the confirmation dialog before they can delete their account -->
     <string name="DeleteAccountScreen__yes_delete_my_account">Ja, ta bort mitt konto</string>
 
@@ -455,15 +455,15 @@
     <!-- Section title above two radio buttons for enabling and disabling whether users can find me by my phone number  -->
     <string name="PhoneNumberPrivacySettingsFragment_who_can_find_me_by_number_heading">Vem kan hitta mig med nummer</string>
     <!-- Subtext below radio buttons when who can find me by number is set to everyone -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">Alla som har ditt telefonnummer ser att du är på Signal och kan börja chatta med dig.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">Alla som har ditt telefonnummer ser att du är på Radar och kan börja chatta med dig.</string>
     <!-- Subtext below radio buttons when who can find me by number is set to nobody -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">Ingen kommer att kunna se att du är på Signal om du inte skickar ett meddelande eller har en befintlig chatt med dem.</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">Ingen kommer att kunna se att du är på Radar om du inte skickar ett meddelande eller har en befintlig chatt med dem.</string>
     <!-- Snackbar text when pressing invalid radio item -->
     <string name="PhoneNumberPrivacySettingsFragment__to_change_this_setting">"Om du vill ändra den här inställningen ställer du in Vem kan se mitt nummer till Ingen."</string>
     <!-- Dialog title shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
     <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_title">Är du säker?</string>
     <!-- Dialog warning message shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
-    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">Om du ställer in \"Vem kan hitta mig med nummer\" till \"Ingen\" blir det svårare för andra att hitta dig på Signal.</string>
+    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">Om du ställer in \"Vem kan hitta mig med nummer\" till \"Ingen\" blir det svårare för andra att hitta dig på Radar.</string>
     <!-- Dialog button text for canceling change action -->
     <string name="PhoneNumberPrivacySettingsFragment__cancel">Avbryt</string>
     <string name="PhoneNumberPrivacy_everyone">Alla</string>
@@ -509,7 +509,7 @@
     <!-- Text shown with toggle that when switched on will enable screen lock -->
     <string name="ScreenLockSettingsFragment__use_screen_lock">Använd skärmlås</string>
     <!-- Description of what screen locking will do and how notification content will not be shown when screen is locked -->
-    <string name="ScreenLockSettingsFragment__your_android_device">Låsinställningarna på din Android-enhet kommer att behövas för att låsa upp Signal när du lämnar eller byter app. Förhandsvisning av aviseringar visar inte meddelandeinnehåll när låset är aktiverat.</string>
+    <string name="ScreenLockSettingsFragment__your_android_device">Låsinställningarna på din Android-enhet kommer att behövas för att låsa upp Radar när du lämnar eller byter app. Förhandsvisning av aviseringar visar inte meddelandeinnehåll när låset är aktiverat.</string>
     <!-- Title text explaining when users should start the screen lock -->
     <string name="ScreenLockSettingsFragment__start_screen_lock">Starta skärmlås</string>
     <!-- Option text explaining that screen lock should start after 1 minute of inactivity -->
@@ -521,9 +521,9 @@
     <!-- Option text explaining that screen lock should start at a custom time set by the user -->
     <string name="ScreenLockSettingsFragment__custom_time">Anpassad tid</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn on screen lock -->
-    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Använd Signal-skärmlås</string>
+    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">Använd Radar-skärmlås</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn off screen lock -->
-    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">Stäng av Signal-skärmlåset</string>
+    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">Stäng av Radar-skärmlåset</string>
 
     <!-- HelpSettingsFragment -->
     <string name="preferences__help">Hjälp</string>
@@ -545,7 +545,7 @@
     <!-- Visible warning label for the limitations of changing the app icon. -->
     <string name="preferences__app_icon_warning">Appikoner och namn syns på startskärmen och app-lådan.</string>
     <!-- Visible warning label explaining that changing the app icon and name does not affect notifications. -->
-    <string name="preferences__app_icon_notification_warning">Aviseringar visar alltid standardikonen för Signal och namn.</string>
+    <string name="preferences__app_icon_notification_warning">Aviseringar visar alltid standardikonen för Radar och namn.</string>
     <!--Text description of a graphic illustrating the limitations of the app icon change. -->
     <string name="preferences__graphic_illustrating_where_the_replacement_app_icon_will_be_visible">Grafik som illustrerar var ersättningsappikonen kommer att synas.</string>
 
@@ -565,9 +565,9 @@
     <!-- Title for the confirmation dialog of changing the app icon. -->
     <string name="preferences__app_icon_dialog_title">Ändra appikon och namn till \"%1$s\"</string>
     <!-- Description for the confirmation dialog of changing the app icon. -->
-    <string name="preferences__app_icon_dialog_description">Signal måste stängas för att ändra appikonen och namn. Aviseringar visar alltid standardikonen för Signal och namn.</string>
+    <string name="preferences__app_icon_dialog_description">Radar måste stängas för att ändra appikonen och namn. Aviseringar visar alltid standardikonen för Radar och namn.</string>
     <!-- Visible warning label for the limitations of changing the app icon with learn more call to action. -->
-    <string name="preferences__app_icon_warning_learn_more">Välj en appikon och ett namn som kommer att synas på telefonens startskärm och app-låda. Aviseringar visar alltid standardikonen för Signal och namn. Läs mer</string>
+    <string name="preferences__app_icon_warning_learn_more">Välj en appikon och ett namn som kommer att synas på telefonens startskärm och app-låda. Aviseringar visar alltid standardikonen för Radar och namn. Läs mer</string>
     <!--Call to action to get more information about the limitations of the change app icon functionality. -->
     <string name="preferences__app_icon_learn_more">Läs mer</string>
 
@@ -597,7 +597,7 @@
     <string name="ApplicationPreferenceActivity_you_havent_set_a_passphrase_yet">Du har inte angivit ett lösenord än!</string>
     <string name="ApplicationPreferencesActivity_disable">Inaktivera</string>
     <string name="ApplicationPreferencesActivity_disable_passphrase">Inaktivera lösenord?</string>
-    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">Detta låser upp Signal och meddelandeaviseringar permanent.</string>
+    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">Detta låser upp Radar och meddelandeaviseringar permanent.</string>
     <string name="PrivacySettingsFragment__app_security">Appsäkerhet</string>
     <!-- This refers to the multi-tasking overview (recent apps) from the Android operating system.-->
     <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">Blockera skärmdumpar i senaste-listan och appen</string>
@@ -618,10 +618,10 @@
     <!-- Description for the payment lock toggle in privacy settings -->
     <string name="PrivacySettingsFragment__payment_lock_require_lock">Kräv Andriod-skärmlås eller fingeravtryck för överföringar</string>
     <string name="PrivacySettingsFragment__set_a_default_disappearing_message_timer_for_all_new_chats_started_by_you">Ställ in en standardtidsgräns för försvinnande meddelanden för alla nya chattar som du startar.</string>
-    <string name="PrivacySettingsFragment__signal_message_and_calls">Signal-meddelanden och -samtal, vidarebefordra samtal och dold avsändare</string>
+    <string name="PrivacySettingsFragment__signal_message_and_calls">Radar-meddelanden och -samtal, vidarebefordra samtal och dold avsändare</string>
     <!-- Text shown when screen lock is not enabled -->
     <string name="ScreenLockSettingsFragment__off">Av</string>
-    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">Lås Signal automatiskt efter en viss tid av inaktivitet.</string>
+    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">Lås Radar automatiskt efter en viss tid av inaktivitet.</string>
     <string name="preferences__change_passphrase">Ändra lösenord</string>
     <string name="preferences__change_your_passphrase">Ändra ditt lösenord</string>
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
@@ -643,7 +643,7 @@
     <string name="preferences__this_setting_is_not_a_guarantee">Denna inställning är ingen garanti och ditt tangentbord kanske ignorerar det.</string>
     <string name="preferences__typing_indicators">Skrivindikatorer</string>
     <!-- Subtext below option to launch into phone number privacy settings screen -->
-    <string name="preferences_app_protection__choose_who_can_see">Välj vem som kan se ditt telefonnummer och vem som kan använda det för att kontakta dig på Signal.</string>
+    <string name="preferences_app_protection__choose_who_can_see">Välj vem som kan se ditt telefonnummer och vem som kan använda det för att kontakta dig på Radar.</string>
     <!-- Privacy settings payments section title -->
     <string name="preferences_app_protection__payments">Betalningar</string>
     <!-- Snackbar text shown when trying to enable screen lock but the user does not have a password or biometrics enabled -->
@@ -659,7 +659,7 @@
     <!-- Dismiss button on the dialog explaining payment lock needs a device screen lock -->
     <string name="PrivacySettingsScreen__not_now">Inte nu</string>
     <!-- Title of the authentication prompt shown when turning off payment lock -->
-    <string name="PrivacySettingsScreen__signal">Signal</string>
+    <string name="PrivacySettingsScreen__signal">Radar</string>
     <!-- Link after the incognito keyboard disclaimer that opens a support article -->
     <string name="PrivacySettingsScreen__learn_more">Läs mer</string>
 
@@ -675,7 +675,7 @@
     <!-- String displayed telling user to invite their friends to Signal -->
     <string name="AppSettingsFragment__invite_your_friends">Bjud in dina vänner</string>
     <!-- String alerting user that something is wrong with their backups subscription -->
-    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">Förnya din prenumeration på Säkerhetskopiering av Signal</string>
+    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">Förnya din prenumeration på Säkerhetskopiering av Radar</string>
     <!-- App settings row that opens privacy settings -->
     <string name="preferences__privacy">Integritet</string>
     <!-- Title of the top level app settings screen -->
@@ -745,7 +745,7 @@
     <!-- Error shown under the code field when the service rejected the code -->
     <string name="TwoFactorVerifyScreen__incorrect_code">Felaktig kod. Ange koden som visas i din autentiseringsapp just nu.</string>
     <!-- Error shown when the service could not be reached -->
-    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Det gick inte att nå Signal. Kontrollera din anslutning och försök igen.</string>
+    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">Det gick inte att nå Radar. Kontrollera din anslutning och försök igen.</string>
     <!-- Dialog shown when verifying with a passkey failed -->
     <string name="TwoFactorVerifyScreen__something_went_wrong_with_your_passkey">Något gick fel med din inloggningsnyckel. Försök igen eller välj en annan metod.</string>
 
@@ -873,9 +873,9 @@
     <!-- Explanation below the name, about and badges rows on the profile screen, saying who can see your profile -->
     <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">Din profil och ändringar till den kommer att vara synliga för personer som du skickar ett meddelande till, samt till dina kontakter och grupper.</string>
     <!-- The title of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_title">Uppdatera Signal</string>
+    <string name="EditProfileFragment_deprecated_dialog_title">Uppdatera Radar</string>
     <!-- The body of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_body">Denna version av Signal har upphört att gälla. Uppdatera nu för att fortsätta använda Signal.</string>
+    <string name="EditProfileFragment_deprecated_dialog_body">Denna version av Radar har upphört att gälla. Uppdatera nu för att fortsätta använda Radar.</string>
     <!-- The button on a dialog prompting user to update to the latest version of Signal. When clicked, the user will be taken to the store to update their app. -->
     <string name="EditProfileFragment_deprecated_dialog_update_button">Uppdatera</string>
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
@@ -1007,7 +1007,7 @@
     <!-- Dialog title shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
     <string name="UsernameLinkSettings_qr_code_not_found">QR-koden hittades inte</string>
     <!-- Dialog message shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
-    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Försök att skanna en annan bild som innehåller en QR-kod från Signal.</string>
+    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">Försök att skanna en annan bild som innehåller en QR-kod från Radar.</string>
     <!-- Body of a dialog that is displayed when the username we looked up could not be found. -->
     <string name="UsernameLinkSettings_qr_result_not_found">En användare med användarnamnet %1$s kunde inte hittas.</string>
     <!-- Description text shown underneath the username QR code scanner -->
@@ -1015,19 +1015,19 @@
     <!-- Shown when the QR code you scanned leads to a username link that no one has -->
     <string name="UsernameLinkSettingsScreen__qr_result_not_found_no_username">Användaren kunde inte hittas.</string>
     <!-- Shown in place of the camera on the scan tab when the camera permission hasn\'t been granted -->
-    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">Ge Signal åtkomst till kameran för att skanna en QR-kod.</string>
+    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">Ge Radar åtkomst till kameran för att skanna en QR-kod.</string>
     <!-- Button on the scan tab that asks for the camera permission -->
     <string name="UsernameLinkSettingsScreen__allow_access">Tillåt åtkomst</string>
     <!-- Shown when the camera permission was denied, or permanently denied, and a QR code can\'t be scanned -->
-    <string name="UsernameLinkSettingsScreen__camera_needed">Signal behöver åtkomst till kameran för att skanna QR-koder</string>
+    <string name="UsernameLinkSettingsScreen__camera_needed">Radar behöver åtkomst till kameran för att skanna QR-koder</string>
 
     <!-- ManageStorageSettingsScreen -->
     <string name="preferences__storage">Lagring</string>
     <string name="preferences_storage__storage_usage">Lagringsutrymme</string>
     <!-- Setting section title header for storage optimization -->
-    <string name="ManageStorageSettingsFragment__on_device_storage">Signal-lagring</string>
+    <string name="ManageStorageSettingsFragment__on_device_storage">Radar-lagring</string>
     <!-- Setting row title for storage optimization -->
-    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Optimera Signal-lagring</string>
+    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">Optimera Radar-lagring</string>
     <!-- Setting row explanation for storage optimization -->
     <string name="ManageStorageSettingsFragment__unused_media_will_be_offloaded">Oanvända mediafiler kommer att avlastas, men kan laddas ner från din säkerhetskopia när som helst.</string>
     <!-- Settings section title header show above manage settings options for automatic chat history management (deleting) -->
@@ -1049,11 +1049,11 @@
     <string name="preferences_storage__all_message_history_will_be_permanently_removed_this_action_cannot_be_undone_linked_device">All meddelandehistorik kommer att tas bort permanent från alla enheter. Denna åtgärd kan inte ångras.</string>
     <string name="preferences_storage__delete_all_now">Ta bort allt nu</string>
     <!-- Dialog message for paid tier pending dialog -->
-    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">Lagringsoptimering kan endast användas med den betalda nivån av Säkerhetskopiering av Signal. Ditt abonnemang för säkerhetskopiering bearbetas fortfarande och är inte aktivt ännu. Försök igen senare.</string>
+    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">Lagringsoptimering kan endast användas med den betalda nivån av Säkerhetskopiering av Radar. Ditt abonnemang för säkerhetskopiering bearbetas fortfarande och är inte aktivt ännu. Försök igen senare.</string>
     <!-- Title of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
     <string name="ManageStorageSettingsFragment__media_will_be_removed_from_your_on_device_backup">Medier tas bort från din säkerhetskopia på enheten</string>
     <!-- Body of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
-    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">När du aktiverar Optimera Signal-lagring avlastas gamla medier från din enhet. Du kan ladda ner dem igen när som helst. Det tar också bort gamla medier från din säkerhetskopia på enheten.</string>
+    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">När du aktiverar Optimera Radar-lagring avlastas gamla medier från din enhet. Du kan ladda ner dem igen när som helst. Det tar också bort gamla medier från din säkerhetskopia på enheten.</string>
     <!-- Dialog action to confirm turning on "Optimize Signal storage" -->
     <string name="ManageStorageSettingsFragment__turn_on">Aktivera</string>
 
@@ -1083,15 +1083,15 @@
     <!-- Displayed in a toast when we fail to open the ringtone picker -->
     <string name="NotificationSettingsFragment__failed_to_open_picker">Det gick inte att öppna väljaren.</string>
     <!-- Banner title when notification permission is disabled -->
-    <string name="NotificationSettingsFragment__to_enable_notifications">För att aktivera aviseringar behöver Signal behörighet för att visa dem.</string>
+    <string name="NotificationSettingsFragment__to_enable_notifications">För att aktivera aviseringar behöver Radar behörighet för att visa dem.</string>
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">Aktivera</string>
     <string name="NotificationsSettingsFragment__calls">Samtal</string>
-    <string name="NotificationsSettingsFragment__contact_joins_signal">Kontakt ansluter sig till Signal</string>
+    <string name="NotificationsSettingsFragment__contact_joins_signal">Kontakt ansluter sig till Radar</string>
     <!-- Notification preference summary text -->
     <string name="NotificationsSettingsFragment__create_a_profile_to_receive_notifications_only_from_people_and_groups_you_choose">Skapa en profil för att bara få aviseringar från personer och grupper du väljer.</string>
     <!-- Notification body to get notified when someone joins Signal -->
-    <string name="NotificationsSettingsFragment__notify_contact">Visa en avisering när en telefonkontakt börjar använda Signal</string>
+    <string name="NotificationsSettingsFragment__notify_contact">Visa en avisering när en telefonkontakt börjar använda Radar</string>
     <!-- Option to reset their notification settings -->
     <string name="NotificationsSettingsFragment__reset">Återställ aviseringsinställningar</string>
     <!-- Dialog to reset their notification settings -->

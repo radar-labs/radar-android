@@ -3,7 +3,7 @@
     <!-- RegistrationLockV2Dialog -->
     <string name="RegistrationLockV2Dialog_turn_on_registration_lock">បើកមុខងារចាក់សោការចុះឈ្មោះ?</string>
     <string name="RegistrationLockV2Dialog_turn_off_registration_lock">បិទមុខងារចាក់សោការចុះឈ្មោះ?</string>
-    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">បើអ្នកភ្លេចលេខកូដសម្ងាត់ Signal របស់អ្នក ពេលចុះឈ្មោះជាមួយ Signal ម្តងទៀត អ្នកនឹងត្រូវបានចាក់សោឱ្យចេញពីគណនីរបស់អ្នករយៈពេល 7 ថ្ងៃ។</string>
+    <string name="RegistrationLockV2Dialog_if_you_forget_your_signal_pin_when_registering_again">បើអ្នកភ្លេចលេខកូដសម្ងាត់ Radar របស់អ្នក ពេលចុះឈ្មោះជាមួយ Radar ម្តងទៀត អ្នកនឹងត្រូវបានចាក់សោឱ្យចេញពីគណនីរបស់អ្នករយៈពេល 7 ថ្ងៃ។</string>
     <string name="RegistrationLockV2Dialog_turn_on">បើក</string>
     <string name="RegistrationLockV2Dialog_turn_off">បិទ</string>
     <string name="preferences__advanced_pin_settings">ការកំណត់លេខកូដសម្ងាត់កម្រិតខ្ពស់</string>
@@ -12,20 +12,20 @@
     <string name="RegistrationLockFragment__switch_keyboard">ប្តូរក្តារចុច</string>
     <string name="preferences_chats__transfer_account">ផ្ទេរគណនី</string>
     <string name="preferences_chats__transfer_account_to_a_new_android_device">ផ្ទេរគណនីទៅកាន់ឧបករណ៍ Android ថ្មី</string>
-    <string name="preferences_app_protection__signal_pin">លេខកូដសម្ងាត់ Signal</string>
+    <string name="preferences_app_protection__signal_pin">លេខកូដសម្ងាត់ Radar</string>
     <string name="preferences_app_protection__create_a_pin">បង្កើតលេខកូដសម្ងាត់មួយ</string>
     <string name="preferences_app_protection__change_your_pin">ប្តូរលេខកូដសម្ងាត់របស់អ្នក</string>
     <string name="preferences_app_protection__pin_reminders">ការរំលឹកលេខកូដសម្ងាត់</string>
     <string name="preferences_app_protection__turn_off">បិទ</string>
     <string name="preferences_app_protection__confirm_pin">បញ្ជាក់លេខកូដសម្ងាត់</string>
-    <string name="preferences_app_protection__confirm_your_signal_pin">បញ្ជាក់លេខកូដសម្ងាត់ Signal របស់អ្នក</string>
-    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">ត្រូវប្រាកដថាអ្នកចាំ ឬរក្សាទុកលេខកូដសម្ងាត់របស់អ្នកដោយសុវត្ថិភាព ដោយសារវាមិនអាចស្តារមកវិញបានទេ។ បើអ្នកភ្លេចលេខកូដសម្ងាត់របស់អ្នក អ្នកអាចបាត់បង់ទិន្នន័យនៅពេលចុះឈ្មោះគណនី Signal របស់អ្នកឡើងវិញ។</string>
+    <string name="preferences_app_protection__confirm_your_signal_pin">បញ្ជាក់លេខកូដសម្ងាត់ Radar របស់អ្នក</string>
+    <string name="preferences_app_protection__make_sure_you_memorize_or_securely_store_your_pin">ត្រូវប្រាកដថាអ្នកចាំ ឬរក្សាទុកលេខកូដសម្ងាត់របស់អ្នកដោយសុវត្ថិភាព ដោយសារវាមិនអាចស្តារមកវិញបានទេ។ បើអ្នកភ្លេចលេខកូដសម្ងាត់របស់អ្នក អ្នកអាចបាត់បង់ទិន្នន័យនៅពេលចុះឈ្មោះគណនី Radar របស់អ្នកឡើងវិញ។</string>
     <string name="preferences_app_protection__incorrect_pin_try_again">លេខកូដសម្ងាត់មិនត្រឹមត្រូវ។ ព្យាយាមម្តងទៀត។</string>
     <string name="preferences_app_protection__registration_lock">ការចាក់សោការចុះឈ្មោះ</string>
     <!-- Option in settings that will take use to re-register if they are no longer registered -->
     <string name="preferences_account_reregister">ចុះឈ្មោះគណនីឡើងវិញ</string>
     <!-- Option in settings that will take user to our website or playstore to update their expired build -->
-    <string name="preferences_account_update_signal">ដំឡើងកំណែ Signal</string>
+    <string name="preferences_account_update_signal">ដំឡើងកំណែ Radar</string>
     <!-- Option in settings shown when user is no longer registered or expired client that will WIPE ALL THEIR DATA -->
     <string name="preferences_account_delete_all_data">លុបទិន្នន័យទាំងអស់</string>
     <!-- Title for confirmation dialog confirming user wants to delete all their data -->
@@ -40,7 +40,7 @@
     <!-- AccountSettingsFragment -->
     <string name="AccountSettingsFragment__account">គណនី</string>
     <string name="AccountSettingsFragment__youll_be_asked_less_frequently">ពីមួយពេលទៅមួយពេល គេមិនសូវសួរអ្នកញឹកញាប់ទេ</string>
-    <string name="AccountSettingsFragment__require_your_signal_pin">ទាមទារលេខកូដ Signal របស់អ្នកដើម្បីចុះឈ្មោះលេខទូរសព្ទរបស់អ្នកជាមួយ Signal ម្ដងទៀត</string>
+    <string name="AccountSettingsFragment__require_your_signal_pin">ទាមទារលេខកូដ Radar របស់អ្នកដើម្បីចុះឈ្មោះលេខទូរសព្ទរបស់អ្នកជាមួយ Radar ម្ដងទៀត</string>
     <string name="AccountSettingsFragment__change_phone_number">ប្ដូរលេខទូរសព្ទ</string>
     <!-- Account setting that allows user to request and export their signal account data -->
     <string name="AccountSettingsFragment__request_account_data">ទិន្នន័យគណនីរបស់អ្នក</string>
@@ -140,7 +140,7 @@
     <!-- Part of requesting account data flow, this is the section title for requesting that account data -->
     <string name="ExportAccountDataFragment__your_account_data">ទិន្នន័យគណនីរបស់អ្នក</string>
     <!-- Explanation of account data the user can request. %1$s is replaced with Learn more with a link -->
-    <string name="ExportAccountDataFragment__export_explanation">នាំចេញរបាយការណ៍នៃទិន្នន័យគណនី Signal របស់អ្នក។ របាយការណ៍នេះមិនរួមបញ្ចូលសារ ឬមេឌៀណាមួយឡើយ។ %1$s</string>
+    <string name="ExportAccountDataFragment__export_explanation">នាំចេញរបាយការណ៍នៃទិន្នន័យគណនី Radar របស់អ្នក។ របាយការណ៍នេះមិនរួមបញ្ចូលសារ ឬមេឌៀណាមួយឡើយ។ %1$s</string>
     <!-- Learn more link to more information about requesting account data -->
     <string name="ExportAccountDataFragment__learn_more">ស្វែងយល់បន្ថែម</string>
     <!-- Button action to export the report data to another app (e.g. email) -->
@@ -168,14 +168,14 @@
     <!-- Title for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_confirmation">នាំចេញទិន្នន័យឬ?</string>
     <!-- Message for export confirmation dialog -->
-    <string name="ExportAccountDataFragment__export_report_confirmation_message">ចែករំលែកទិន្នន័យគណនី Signal របស់អ្នកតែជាមួយមនុស្ស ឬកម្មវិធីដែលអ្នកទុកចិត្តប៉ុណ្ណោះ។</string>
+    <string name="ExportAccountDataFragment__export_report_confirmation_message">ចែករំលែកទិន្នន័យគណនី Radar របស់អ្នកតែជាមួយមនុស្ស ឬកម្មវិធីដែលអ្នកទុកចិត្តប៉ុណ្ណោះ។</string>
     <!-- Action to export in for export confirmation dialog -->
     <string name="ExportAccountDataFragment__export_report_action">នាំចេញ</string>
 
     <!-- Shown in a dialog with a spinner while the report is downloading -->
     <string name="ExportAccountDataFragment__download_progress">កំពុងបង្កើតរបាយការណ៍…</string>
     <!-- Explanation that the report is only generated on export and is not saved on the device -->
-    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">របាយការណ៍របស់អ្នកត្រូវបានបង្កើតឡើងតែនៅពេលនាំចេញប៉ុណ្ណោះ ហើយមិនត្រូវបានរក្សាទុកដោយ Signal នៅលើឧបករណ៍របស់អ្នកទេ។</string>
+    <string name="ExportAccountDataFragment__report_not_stored_disclaimer">របាយការណ៍របស់អ្នកត្រូវបានបង្កើតឡើងតែនៅពេលនាំចេញប៉ុណ្ណោះ ហើយមិនត្រូវបានរក្សាទុកដោយ Radar នៅលើឧបករណ៍របស់អ្នកទេ។</string>
 
     <!-- TotpSetupScreen -->
     <!-- Title of the screen that walks the user through setting up an authenticator app -->
@@ -191,7 +191,7 @@
     <!-- Header of the second step of authenticator app setup -->
     <string name="TotpSetupScreen__step_2">ជំហានទី 2</string>
     <!-- Body of the second step of authenticator app setup -->
-    <string name="TotpSetupScreen__open_your_authenticator_app">បើកកម្មវិធីផ្ទៀងផ្ទាត់របស់អ្នកដោយចុចប៊ូតុងខាងក្រោមដើម្បីបញ្ចូលគណនី Signal របស់អ្នក។</string>
+    <string name="TotpSetupScreen__open_your_authenticator_app">បើកកម្មវិធីផ្ទៀងផ្ទាត់របស់អ្នកដោយចុចប៊ូតុងខាងក្រោមដើម្បីបញ្ចូលគណនី Radar របស់អ្នក។</string>
     <!-- Button that opens the user\'s authenticator app -->
     <string name="TotpSetupScreen__open">បើក</string>
     <!-- Text above the setup key explaining that it can be entered by hand instead -->
@@ -205,7 +205,7 @@
     <!-- Dialog message shown when the account already has as many authenticator apps as it\'s allowed -->
     <string name="TotpSetupScreen__you_cant_add_more_than_d">អ្នកមិនអាចបញ្ចូលកម្មវិធីផ្ទៀងផ្ទាត់លើសពី %1$d បានទេ។ សាកល្បងលុបមួយចេញសិន។</string>
     <!-- Dialog message shown when we couldn\'t reach the service to start setting up an authenticator app -->
-    <string name="TotpSetupScreen__couldnt_reach_signal">មិនអាចទាក់ទង Signal បានទេ។ សូមពិនិត្យមើលសេវាអ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។</string>
+    <string name="TotpSetupScreen__couldnt_reach_signal">មិនអាចទាក់ទង Radar បានទេ។ សូមពិនិត្យមើលសេវាអ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។</string>
     <!-- Header of the third step of authenticator app setup -->
     <string name="TotpSetupScreen__step_3">ជំហានទី 3</string>
     <!-- Body of the third step of authenticator app setup -->
@@ -243,7 +243,7 @@
     <!-- Error shown under the code field when the code the user entered was rejected -->
     <string name="TotpCodeEntryScreen__incorrect_code">លេខកូដមិនត្រឹមត្រូវ។ សូមបញ្ចូលលេខកូដដែលបង្ហាញនៅក្នុងកម្មវិធីផ្ទៀងផ្ទាត់របស់អ្នកឥឡូវនេះ។</string>
     <!-- Error shown under the code field when we couldn\'t reach the service to check the code -->
-    <string name="TotpCodeEntryScreen__couldnt_reach_signal">មិនអាចទាក់ទង Signal បានទេ។ សូមពិនិត្យមើលសេវាអ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។</string>
+    <string name="TotpCodeEntryScreen__couldnt_reach_signal">មិនអាចទាក់ទង Radar បានទេ។ សូមពិនិត្យមើលសេវាអ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។</string>
 
     <!-- Default name given to an authenticator app the moment it\'s set up, before the user chooses their own name for it -->
     <string name="TotpRepository__authenticator">កម្មវិធីផ្ទៀងផ្ទាត់</string>
@@ -294,7 +294,7 @@
     <string name="DeleteAccountFragment__no_number">មិនបានបញ្ជាក់លេខ</string>
     <string name="DeleteAccountFragment__the_phone_number">លេខទូរសព្ទដែលអ្នកបានបញ្ចូលមិនត្រូវគ្នានឹងលេខក្នុងគណនីរបស់អ្នកទេ។</string>
     <string name="DeleteAccountFragment__are_you_sure">តើអ្នកប្រាកដទេថា ចង់លុបគណនីរបស់អ្នក?</string>
-    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">ការធ្វើបែបនេះនឹងលុបគណនី Signal របស់អ្នក ហើយកំណត់កម្មវិធីនេះឡើងវិញ។ កម្មវិធីនេះនឹងបិទបន្ទាប់ពីដំណើរការនេះបញ្ចប់។</string>
+    <string name="DeleteAccountFragment__this_will_delete_your_signal_account">ការធ្វើបែបនេះនឹងលុបគណនី Radar របស់អ្នក ហើយកំណត់កម្មវិធីនេះឡើងវិញ។ កម្មវិធីនេះនឹងបិទបន្ទាប់ពីដំណើរការនេះបញ្ចប់។</string>
     <string name="DeleteAccountFragment__failed_to_delete_local_data">មិនអាចលុបទិន្នន័យក្នុងឧបករណ៍បានទេ។ អ្នកអាចលុបវាបានដោយខ្លួនឯងនៅក្នុងការកំណត់កម្មវិធីក្នុងប្រព័ន្ធ។</string>
     <string name="DeleteAccountFragment__launch_app_settings">បើកការកំណត់របស់កម្មវិធី</string>
     <!-- Title of progress dialog shown when a user deletes their account and the process is leaving all groups -->
@@ -322,7 +322,7 @@
     <!-- Bullet point on the delete account screen warning the user that the deletion is permanent -->
     <string name="DeleteAccountScreen__this_action_can_not_be_undone">សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ</string>
     <!-- Message of the deletion confirmation dialog, shown when the account has a username. Placeholder is the username. -->
-    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">ការធ្វើបែបនេះនឹងលុបគណនី Signal របស់អ្នកជាមួយឈ្មោះអ្នកប្រើ \"%1$s\" ហើយកំណត់កម្មវិធីនេះឡើងវិញ។ កម្មវិធីនឹងបិទបន្ទាប់ពីដំណើរការនេះត្រូវបានបញ្ចប់។</string>
+    <string name="DeleteAccountScreen__this_will_delete_your_signal_account_with_username_s">ការធ្វើបែបនេះនឹងលុបគណនី Radar របស់អ្នកជាមួយឈ្មោះអ្នកប្រើ \"%1$s\" ហើយកំណត់កម្មវិធីនេះឡើងវិញ។ កម្មវិធីនឹងបិទបន្ទាប់ពីដំណើរការនេះត្រូវបានបញ្ចប់។</string>
     <!-- Label of the checkbox the user has to tick in the confirmation dialog before they can delete their account -->
     <string name="DeleteAccountScreen__yes_delete_my_account">បាទ/ចាស លុបគណនីរបស់ខ្ញុំ</string>
 
@@ -454,15 +454,15 @@
     <!-- Section title above two radio buttons for enabling and disabling whether users can find me by my phone number  -->
     <string name="PhoneNumberPrivacySettingsFragment_who_can_find_me_by_number_heading">នរណាខ្លះអាចរកខ្ញុំឃើញតាមលេខរបស់ខ្ញុំ</string>
     <!-- Subtext below radio buttons when who can find me by number is set to everyone -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">នរណាក៏ដោយដែលមានលេខទូរសព្ទរបស់អ្នកនឹងមើលឃើញអ្នកនៅលើ Signal ហើយអាចចាប់ផ្តើមជជែកជាមួយអ្នកបាន។</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_on_description">នរណាក៏ដោយដែលមានលេខទូរសព្ទរបស់អ្នកនឹងមើលឃើញអ្នកនៅលើ Radar ហើយអាចចាប់ផ្តើមជជែកជាមួយអ្នកបាន។</string>
     <!-- Subtext below radio buttons when who can find me by number is set to nobody -->
-    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">គ្មាននរណាម្នាក់អាចមើលឃើញអ្នកនៅលើ Signal ទេ លើកលែងតែអ្នកផ្ញើសារទៅពួកគេ ឬមានការជជែកដែលមានស្រាប់ជាមួយពួកគេ។</string>
+    <string name="PhoneNumberPrivacySettingsFragment_discovery_off_description">គ្មាននរណាម្នាក់អាចមើលឃើញអ្នកនៅលើ Radar ទេ លើកលែងតែអ្នកផ្ញើសារទៅពួកគេ ឬមានការជជែកដែលមានស្រាប់ជាមួយពួកគេ។</string>
     <!-- Snackbar text when pressing invalid radio item -->
     <string name="PhoneNumberPrivacySettingsFragment__to_change_this_setting">"ដើម្បីផ្លាស់ប្តូរការកំណត់នេះ សូមកំណត់ \"នរណាខ្លះអាចមើលឃើញលេខរបស់ខ្ញុំ\" ទៅជា \"គ្មាននរណាម្នាក់\"។"</string>
     <!-- Dialog title shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
     <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_title">តើអ្នកប្រាកដឬទេ?</string>
     <!-- Dialog warning message shown when selecting "Nobody" in phone number privacy settings for who can find me by number -->
-    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">ការកំណត់ \"នរណាខ្លះអាចរកខ្ញុំឃើញតាមលេខទូរសព្ទ\" ទៅជា \"គ្មាននរណាម្នាក់\" នឹងធ្វើឱ្យអ្នកផ្សេងកាន់តែពិបាកស្វែងរកអ្នកនៅលើ Signal។</string>
+    <string name="PhoneNumberPrivacySettingsFragment__nobody_can_find_me_warning_message">ការកំណត់ \"នរណាខ្លះអាចរកខ្ញុំឃើញតាមលេខទូរសព្ទ\" ទៅជា \"គ្មាននរណាម្នាក់\" នឹងធ្វើឱ្យអ្នកផ្សេងកាន់តែពិបាកស្វែងរកអ្នកនៅលើ Radar។</string>
     <!-- Dialog button text for canceling change action -->
     <string name="PhoneNumberPrivacySettingsFragment__cancel">បោះបង់</string>
     <string name="PhoneNumberPrivacy_everyone">អ្នករាល់គ្នា</string>
@@ -508,7 +508,7 @@
     <!-- Text shown with toggle that when switched on will enable screen lock -->
     <string name="ScreenLockSettingsFragment__use_screen_lock">ប្រើការចាក់សោអេក្រង់</string>
     <!-- Description of what screen locking will do and how notification content will not be shown when screen is locked -->
-    <string name="ScreenLockSettingsFragment__your_android_device">នឹងតម្រូវឱ្យមានការកំណត់ចាក់សោឧបករណ៍ Android របស់អ្នក ដើម្បីដោះសោ Signal នៅពេលអ្នកចេញពី ឬប្តូរកម្មវិធី។ នៅពេលចាក់សោ នៅក្នុងផ្នែកមើលការជូនដំណឹងជាមុន វានឹងមិនបង្ហាញខ្លឹមសាររបស់សារនោះទេ។</string>
+    <string name="ScreenLockSettingsFragment__your_android_device">នឹងតម្រូវឱ្យមានការកំណត់ចាក់សោឧបករណ៍ Android របស់អ្នក ដើម្បីដោះសោ Radar នៅពេលអ្នកចេញពី ឬប្តូរកម្មវិធី។ នៅពេលចាក់សោ នៅក្នុងផ្នែកមើលការជូនដំណឹងជាមុន វានឹងមិនបង្ហាញខ្លឹមសាររបស់សារនោះទេ។</string>
     <!-- Title text explaining when users should start the screen lock -->
     <string name="ScreenLockSettingsFragment__start_screen_lock">ចាប់ផ្តើមចាក់សោអេក្រង់</string>
     <!-- Option text explaining that screen lock should start after 1 minute of inactivity -->
@@ -520,9 +520,9 @@
     <!-- Option text explaining that screen lock should start at a custom time set by the user -->
     <string name="ScreenLockSettingsFragment__custom_time">កំណត់រយៈពេលខ្លួនឯង</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn on screen lock -->
-    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">ប្រើការចាក់សោអេក្រង់ Signal</string>
+    <string name="ScreenLockSettingsFragment__use_signal_screen_lock">ប្រើការចាក់សោអេក្រង់ Radar</string>
     <!-- Title on biometrics prompt explaining that biometrics are needed to turn off screen lock -->
-    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">បិទការចាក់សោអេក្រង់ Signal</string>
+    <string name="ScreenLockSettingsFragment__turn_off_signal_lock">បិទការចាក់សោអេក្រង់ Radar</string>
 
     <!-- HelpSettingsFragment -->
     <string name="preferences__help">ជំនួយ</string>
@@ -544,7 +544,7 @@
     <!-- Visible warning label for the limitations of changing the app icon. -->
     <string name="preferences__app_icon_warning">ឈ្មោះ និងរូបកម្មវិធីអាចមើលឃើញបាននៅលើអេក្រង់ទំព័រដើម និងថតកម្មវិធី។</string>
     <!-- Visible warning label explaining that changing the app icon and name does not affect notifications. -->
-    <string name="preferences__app_icon_notification_warning">ការជូនដំណឹងនឹងបង្ហាញឈ្មោះ និងរូបកម្មវិធី Signal លំនាំដើមជានិច្ច។</string>
+    <string name="preferences__app_icon_notification_warning">ការជូនដំណឹងនឹងបង្ហាញឈ្មោះ និងរូបកម្មវិធី Radar លំនាំដើមជានិច្ច។</string>
     <!--Text description of a graphic illustrating the limitations of the app icon change. -->
     <string name="preferences__graphic_illustrating_where_the_replacement_app_icon_will_be_visible">ក្រាហ្វិកបង្ហាញពីកន្លែងដែលនឹងអាចមើលឃើញរូបកម្មវិធីជំនួស។</string>
 
@@ -564,9 +564,9 @@
     <!-- Title for the confirmation dialog of changing the app icon. -->
     <string name="preferences__app_icon_dialog_title">ប្តូរឈ្មោះ និងរូបកម្មវិធីទៅជា \"%1$s\"</string>
     <!-- Description for the confirmation dialog of changing the app icon. -->
-    <string name="preferences__app_icon_dialog_description">ត្រូវបិទ Signal ដើម្បីប្តូរឈ្មោះ និងរូបកម្មវិធី។ ការជូនដំណឹងនឹងបង្ហាញឈ្មោះ និងរូបកម្មវិធី Signal លំនាំដើមជានិច្ច។</string>
+    <string name="preferences__app_icon_dialog_description">ត្រូវបិទ Radar ដើម្បីប្តូរឈ្មោះ និងរូបកម្មវិធី។ ការជូនដំណឹងនឹងបង្ហាញឈ្មោះ និងរូបកម្មវិធី Radar លំនាំដើមជានិច្ច។</string>
     <!-- Visible warning label for the limitations of changing the app icon with learn more call to action. -->
-    <string name="preferences__app_icon_warning_learn_more">ជ្រើសរើសឈ្មោះ និងរូបកម្មវិធីដែលនឹងអាចមើលឃើញបាននៅលើអេក្រង់ទំព័រដើម និងថតកម្មវិធីរបស់ទូរសព្ទអ្នក។ ការជូនដំណឹងនឹងបង្ហាញឈ្មោះ និងរូបកម្មវិធី Signal លំនាំដើមជានិច្ច។ ស្វែងយល់បន្ថែម</string>
+    <string name="preferences__app_icon_warning_learn_more">ជ្រើសរើសឈ្មោះ និងរូបកម្មវិធីដែលនឹងអាចមើលឃើញបាននៅលើអេក្រង់ទំព័រដើម និងថតកម្មវិធីរបស់ទូរសព្ទអ្នក។ ការជូនដំណឹងនឹងបង្ហាញឈ្មោះ និងរូបកម្មវិធី Radar លំនាំដើមជានិច្ច។ ស្វែងយល់បន្ថែម</string>
     <!--Call to action to get more information about the limitations of the change app icon functionality. -->
     <string name="preferences__app_icon_learn_more">ស្វែងយល់បន្ថែម</string>
 
@@ -596,7 +596,7 @@
     <string name="ApplicationPreferenceActivity_you_havent_set_a_passphrase_yet">អ្នកមិនទាន់បានកំណត់ឃ្លាសម្ងាត់ទេ!</string>
     <string name="ApplicationPreferencesActivity_disable">បិទ</string>
     <string name="ApplicationPreferencesActivity_disable_passphrase">បិទឃ្លាសម្ងាត់?</string>
-    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">វានឹងដោះសោ Signal និងសារជូនដំណឹងជាអចិន្ត្រៃយ៍។</string>
+    <string name="ApplicationPreferencesActivity_this_will_permanently_unlock_signal_and_message_notifications">វានឹងដោះសោ Radar និងសារជូនដំណឹងជាអចិន្ត្រៃយ៍។</string>
     <string name="PrivacySettingsFragment__app_security">សុវត្ថិភាពកម្មវិធី</string>
     <!-- This refers to the multi-tasking overview (recent apps) from the Android operating system.-->
     <string name="PrivacySettingsFragment__block_screenshots_in_the_recents_list_and_inside_the_app">ទប់ស្កាត់រូបថតអេក្រង់នៅក្នុងបញ្ជីថ្មីៗនេះ និងក្នុងកម្មវិធី</string>
@@ -616,10 +616,10 @@
     <!-- Description for the payment lock toggle in privacy settings -->
     <string name="PrivacySettingsFragment__payment_lock_require_lock">តម្រូវឱ្យចាក់សោអេក្រង់ Android ឬប្រើស្នាមម្រាមដៃដើម្បីផ្ទេរប្រាក់</string>
     <string name="PrivacySettingsFragment__set_a_default_disappearing_message_timer_for_all_new_chats_started_by_you">កំណត់ម៉ោងឱ្យបាត់សារទៅវិញសម្រាប់រាល់ការសន្ទនាថ្មីៗដែលអ្នកចាប់ផ្ដើម។</string>
-    <string name="PrivacySettingsFragment__signal_message_and_calls">សារ និងការហៅតាម Signal, មុខងារបញ្ជូនការហៅជានិច្ច និងមុខងារការពារអ្នកផ្ញើ</string>
+    <string name="PrivacySettingsFragment__signal_message_and_calls">សារ និងការហៅតាម Radar, មុខងារបញ្ជូនការហៅជានិច្ច និងមុខងារការពារអ្នកផ្ញើ</string>
     <!-- Text shown when screen lock is not enabled -->
     <string name="ScreenLockSettingsFragment__off">បិទ</string>
-    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">ចាក់សោ Signal ដោយស្វ័យប្រវត្តិ បន្ទាប់ពីទុកចោលមួយរយៈ</string>
+    <string name="preferences__auto_lock_signal_after_a_specified_time_interval_of_inactivity">ចាក់សោ Radar ដោយស្វ័យប្រវត្តិ បន្ទាប់ពីទុកចោលមួយរយៈ</string>
     <string name="preferences__change_passphrase">ផ្លាស់ប្តូរឃ្លាសម្ងាត់</string>
     <string name="preferences__change_your_passphrase">ផ្លាស់ប្តូរឃ្លាសម្ងាត់របស់អ្នក</string>
     <!-- Legacy preference menu item to enable a passphrase screen lock that is only available to those who have previously had a passphrase -->
@@ -641,7 +641,7 @@
     <string name="preferences__this_setting_is_not_a_guarantee">ការកំណត់នេះមិនអាចធានាបានទេ ហើយក្តារចុចរបស់អ្នកប្រហែលជាមិនអើពើនឹងវា។</string>
     <string name="preferences__typing_indicators">សញ្ញាវាយអក្សរ</string>
     <!-- Subtext below option to launch into phone number privacy settings screen -->
-    <string name="preferences_app_protection__choose_who_can_see">ជ្រើសរើសអ្នកដែលអាចមើលឃើញលេខទូរសព្ទរបស់អ្នក និងអ្នកណាដែលអាចប្រើវាទាក់ទងអ្នកបាននៅលើ Signal។</string>
+    <string name="preferences_app_protection__choose_who_can_see">ជ្រើសរើសអ្នកដែលអាចមើលឃើញលេខទូរសព្ទរបស់អ្នក និងអ្នកណាដែលអាចប្រើវាទាក់ទងអ្នកបាននៅលើ Radar។</string>
     <!-- Privacy settings payments section title -->
     <string name="preferences_app_protection__payments">ការបង់ប្រាក់</string>
     <!-- Snackbar text shown when trying to enable screen lock but the user does not have a password or biometrics enabled -->
@@ -657,7 +657,7 @@
     <!-- Dismiss button on the dialog explaining payment lock needs a device screen lock -->
     <string name="PrivacySettingsScreen__not_now">កុំទាន់</string>
     <!-- Title of the authentication prompt shown when turning off payment lock -->
-    <string name="PrivacySettingsScreen__signal">Signal</string>
+    <string name="PrivacySettingsScreen__signal">Radar</string>
     <!-- Link after the incognito keyboard disclaimer that opens a support article -->
     <string name="PrivacySettingsScreen__learn_more">ស្វែងយល់បន្ថែម</string>
 
@@ -673,7 +673,7 @@
     <!-- String displayed telling user to invite their friends to Signal -->
     <string name="AppSettingsFragment__invite_your_friends">អញ្ជើញមិត្តភក្តិអ្នក</string>
     <!-- String alerting user that something is wrong with their backups subscription -->
-    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">បន្តការជាវការបម្រុងទុកសុវត្ថិភាព Signal របស់អ្នក</string>
+    <string name="AppSettingsFragment__renew_your_signal_backups_subscription">បន្តការជាវការបម្រុងទុកសុវត្ថិភាព Radar របស់អ្នក</string>
     <!-- App settings row that opens privacy settings -->
     <string name="preferences__privacy">ឯកជនភាព</string>
     <!-- Title of the top level app settings screen -->
@@ -743,7 +743,7 @@
     <!-- Error shown under the code field when the service rejected the code -->
     <string name="TwoFactorVerifyScreen__incorrect_code">លេខកូដមិនត្រឹមត្រូវ។ សូមបញ្ចូលលេខកូដដែលបង្ហាញនៅក្នុងកម្មវិធីផ្ទៀងផ្ទាត់របស់អ្នកឥឡូវនេះ។</string>
     <!-- Error shown when the service could not be reached -->
-    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">មិនអាចទាក់ទង Signal បានទេ។ សូមពិនិត្យមើលសេវាអ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។</string>
+    <string name="TwoFactorVerifyScreen__couldnt_reach_signal">មិនអាចទាក់ទង Radar បានទេ។ សូមពិនិត្យមើលសេវាអ៊ីនធឺណិតរបស់អ្នក រួចព្យាយាមម្តងទៀត។</string>
     <!-- Dialog shown when verifying with a passkey failed -->
     <string name="TwoFactorVerifyScreen__something_went_wrong_with_your_passkey">មានអ្វីមួយមិនប្រក្រតីជាមួយសោសម្ងាត់របស់អ្នក។ សូមព្យាយាមម្តងទៀត ឬជ្រើសរើសវិធីផ្សេងទៀត។</string>
 
@@ -869,9 +869,9 @@
     <!-- Explanation below the name, about and badges rows on the profile screen, saying who can see your profile -->
     <string name="CreateProfileActivity_signal_profiles_are_end_to_end_encrypted">ប្រូហ្វាល់ និងការផ្លាស់ប្តូររបស់អ្នកនឹងមើលឃើញដោយមនុស្សដែលអ្នកផ្ញើសារ បញ្ជីទំនាក់ទំនង និងក្រុម។</string>
     <!-- The title of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_title">ដំឡើងកំណែ Signal</string>
+    <string name="EditProfileFragment_deprecated_dialog_title">ដំឡើងកំណែ Radar</string>
     <!-- The body of a dialog prompting user to update to the latest version of Signal. -->
-    <string name="EditProfileFragment_deprecated_dialog_body">កំណែ Signal នេះបានផុតកំណត់ហើយ។ ដំឡើងកំណែឥឡូវនេះដើម្បីបន្តប្រើប្រាស់ Signal។</string>
+    <string name="EditProfileFragment_deprecated_dialog_body">កំណែ Radar នេះបានផុតកំណត់ហើយ។ ដំឡើងកំណែឥឡូវនេះដើម្បីបន្តប្រើប្រាស់ Radar។</string>
     <!-- The button on a dialog prompting user to update to the latest version of Signal. When clicked, the user will be taken to the store to update their app. -->
     <string name="EditProfileFragment_deprecated_dialog_update_button">ដំឡើងកំណែ</string>
     <!-- The title of a dialog informing the user that they cannot use this app feature when they are unregistered. -->
@@ -1003,7 +1003,7 @@
     <!-- Dialog title shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
     <string name="UsernameLinkSettings_qr_code_not_found">រកមិនឃើញកូដ QR</string>
     <!-- Dialog message shown when scanning an image from the gallery for a username QR code and there is no qr code in the image. -->
-    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">សាកល្បងស្គែនរូបភាពផ្សេងទៀតដែលមានកូដ QR របស់ Signal។</string>
+    <string name="UsernameLinkSettings_try_scanning_another_image_containing_a_signal_qr_code">សាកល្បងស្គែនរូបភាពផ្សេងទៀតដែលមានកូដ QR របស់ Radar។</string>
     <!-- Body of a dialog that is displayed when the username we looked up could not be found. -->
     <string name="UsernameLinkSettings_qr_result_not_found">រកមិនឃើញអ្នកប្រើដែលមានឈ្មោះ %1$s ទេ។</string>
     <!-- Description text shown underneath the username QR code scanner -->
@@ -1011,19 +1011,19 @@
     <!-- Shown when the QR code you scanned leads to a username link that no one has -->
     <string name="UsernameLinkSettingsScreen__qr_result_not_found_no_username">រកមិនឃើញអ្នកប្រើនេះទេ។</string>
     <!-- Shown in place of the camera on the scan tab when the camera permission hasn\'t been granted -->
-    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">ដើម្បីស្គែនកូដ QR សូមអនុញ្ញាតឱ្យ Signal ចូលប្រើកាមេរ៉ា។</string>
+    <string name="UsernameLinkSettingsScreen__allow_camera_to_scan">ដើម្បីស្គែនកូដ QR សូមអនុញ្ញាតឱ្យ Radar ចូលប្រើកាមេរ៉ា។</string>
     <!-- Button on the scan tab that asks for the camera permission -->
     <string name="UsernameLinkSettingsScreen__allow_access">អនុញ្ញាតឱ្យចូលប្រើ</string>
     <!-- Shown when the camera permission was denied, or permanently denied, and a QR code can\'t be scanned -->
-    <string name="UsernameLinkSettingsScreen__camera_needed">Signal ត្រូវការសិទ្ធិចូលប្រើកាមេរ៉ាដើម្បីស្គែនកូដ QR</string>
+    <string name="UsernameLinkSettingsScreen__camera_needed">Radar ត្រូវការសិទ្ធិចូលប្រើកាមេរ៉ាដើម្បីស្គែនកូដ QR</string>
 
     <!-- ManageStorageSettingsScreen -->
     <string name="preferences__storage">ទំហំផ្ទុក</string>
     <string name="preferences_storage__storage_usage">ការប្រើប្រាស់ទំហំផ្ទុក</string>
     <!-- Setting section title header for storage optimization -->
-    <string name="ManageStorageSettingsFragment__on_device_storage">ទំហំផ្ទុកនៅលើ Signal</string>
+    <string name="ManageStorageSettingsFragment__on_device_storage">ទំហំផ្ទុកនៅលើ Radar</string>
     <!-- Setting row title for storage optimization -->
-    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">បង្កើនប្រសិទ្ធភាពទំហំផ្ទុក Signal</string>
+    <string name="ManageStorageSettingsFragment__optimize_on_device_storage">បង្កើនប្រសិទ្ធភាពទំហំផ្ទុក Radar</string>
     <!-- Setting row explanation for storage optimization -->
     <string name="ManageStorageSettingsFragment__unused_media_will_be_offloaded">មេឌៀដែលមិនបានប្រើនឹងត្រូវបានផ្ទេរ ប៉ុន្តែអាចទាញយកពីការបម្រុងទុករបស់អ្នកបានគ្រប់ពេល។</string>
     <!-- Settings section title header show above manage settings options for automatic chat history management (deleting) -->
@@ -1045,11 +1045,11 @@
     <string name="preferences_storage__all_message_history_will_be_permanently_removed_this_action_cannot_be_undone_linked_device">ប្រវត្តិសារទាំងអស់នឹងត្រូវបានលុបពីឧបករណ៍ទាំងអស់ជារៀងរហូត។ សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។</string>
     <string name="preferences_storage__delete_all_now">លុបទាំងអស់ឥឡូវនេះ</string>
     <!-- Dialog message for paid tier pending dialog -->
-    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">ការបង្កើនប្រសិទ្ធភាពទំហំផ្ទុកអាចប្រើបានតែជាមួយការបម្រុងទុកសុវត្ថិភាព Signal នៅក្នុងកម្រិតបង់ប្រាក់ប៉ុណ្ណោះ។ ការជាវការបម្រុងទុករបស់អ្នកកំពុងដំណើរការនៅឡើយ ហើយមិនទាន់សកម្មទេ។ សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ។</string>
+    <string name="ManageStorageSettingsFragment__storage_optimization_can_only_be_used">ការបង្កើនប្រសិទ្ធភាពទំហំផ្ទុកអាចប្រើបានតែជាមួយការបម្រុងទុកសុវត្ថិភាព Radar នៅក្នុងកម្រិតបង់ប្រាក់ប៉ុណ្ណោះ។ ការជាវការបម្រុងទុករបស់អ្នកកំពុងដំណើរការនៅឡើយ ហើយមិនទាន់សកម្មទេ។ សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ។</string>
     <!-- Title of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
     <string name="ManageStorageSettingsFragment__media_will_be_removed_from_your_on_device_backup">មេឌៀនឹងត្រូវបានលុបចេញពីការបម្រុងទុកនៅលើឧបករណ៍របស់អ្នក</string>
     <!-- Body of a dialog shown when turning on "Optimize Signal storage" while on-device backups are enabled -->
-    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">ការបើក \"បង្កើនប្រសិទ្ធភាពទំហំផ្ទុកនៅលើ Signal\" នឹងផ្ទេរមេឌៀចាស់ៗពីឧបករណ៍របស់អ្នក។ អ្នកអាចទាញយកវាម្តងទៀតនៅពេលណាក៏បាន។ វាក៏នឹងលុបមេឌៀចាស់ៗចេញពីការបម្រុងទុកនៅលើឧបករណ៍របស់អ្នកផងដែរ។</string>
+    <string name="ManageStorageSettingsFragment__turning_on_optimize_signal_storage_will_offload">ការបើក \"បង្កើនប្រសិទ្ធភាពទំហំផ្ទុកនៅលើ Radar\" នឹងផ្ទេរមេឌៀចាស់ៗពីឧបករណ៍របស់អ្នក។ អ្នកអាចទាញយកវាម្តងទៀតនៅពេលណាក៏បាន។ វាក៏នឹងលុបមេឌៀចាស់ៗចេញពីការបម្រុងទុកនៅលើឧបករណ៍របស់អ្នកផងដែរ។</string>
     <!-- Dialog action to confirm turning on "Optimize Signal storage" -->
     <string name="ManageStorageSettingsFragment__turn_on">បើក</string>
 
@@ -1079,15 +1079,15 @@
     <!-- Displayed in a toast when we fail to open the ringtone picker -->
     <string name="NotificationSettingsFragment__failed_to_open_picker">មិនអាចបើកផ្ទាំងជ្រើសរើសបាន។</string>
     <!-- Banner title when notification permission is disabled -->
-    <string name="NotificationSettingsFragment__to_enable_notifications">ដើម្បីបើកការជូនដំណឹង Signal ត្រូវការការអនុញ្ញាតដើម្បីបង្ហាញពួកវា។</string>
+    <string name="NotificationSettingsFragment__to_enable_notifications">ដើម្បីបើកការជូនដំណឹង Radar ត្រូវការការអនុញ្ញាតដើម្បីបង្ហាញពួកវា។</string>
     <!-- Banner action when notification permission is disabled -->
     <string name="NotificationSettingsFragment__turn_on">បើក</string>
     <string name="NotificationsSettingsFragment__calls">ការហៅ</string>
-    <string name="NotificationsSettingsFragment__contact_joins_signal">ទំនាក់ទំនងបានចូលរួមជាមួយ Signal</string>
+    <string name="NotificationsSettingsFragment__contact_joins_signal">ទំនាក់ទំនងបានចូលរួមជាមួយ Radar</string>
     <!-- Notification preference summary text -->
     <string name="NotificationsSettingsFragment__create_a_profile_to_receive_notifications_only_from_people_and_groups_you_choose">បង្កើតប្រូហ្វាល់មួយដើម្បីទទួលការជូនដំណឹងតែពីមនុស្ស និងក្រុមដែលអ្នកជ្រើសរើសប៉ុណ្ណោះ។</string>
     <!-- Notification body to get notified when someone joins Signal -->
-    <string name="NotificationsSettingsFragment__notify_contact">បង្ហាញការជូនដំណឹងនៅពេលដែលទំនាក់ទំនងតាមទូរសព្ទចូលរួមប្រើ Signal</string>
+    <string name="NotificationsSettingsFragment__notify_contact">បង្ហាញការជូនដំណឹងនៅពេលដែលទំនាក់ទំនងតាមទូរសព្ទចូលរួមប្រើ Radar</string>
     <!-- Option to reset their notification settings -->
     <string name="NotificationsSettingsFragment__reset">កំណត់ឡើងវិញនូវការកំណត់ការជូនដំណឹង</string>
     <!-- Dialog to reset their notification settings -->

@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Acessar câmera</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">O Signal precisa de permissão para mostrar suas fotos e vídeos</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">O Radar precisa de permissão para mostrar suas fotos e vídeos</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Permitir acesso</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Nenhuma foto ou vídeo encontrados. O Signal acessa somente as fotos e vídeos que você selecionou.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Nenhuma foto ou vídeo encontrados. O Radar acessa somente as fotos e vídeos que você selecionou.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">O Signal tem acesso limitado a fotos ou vídeos</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">O Radar tem acesso limitado a fotos ou vídeos</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Gerenciar</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Para mostrar fotos e vídeos:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">O Signal precisa de acesso para mostrar suas fotos e vídeos.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">O Radar precisa de acesso para mostrar suas fotos e vídeos.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Foto</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Permitir acesso ao microfone</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Para tirar fotos e gravar vídeos, permita que o Signal acesse a câmera.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Para tirar fotos e gravar vídeos, permita que o Radar acesse a câmera.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Para tirar fotos e gravar vídeos, permita que o Signal acesse a câmera e o microfone.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Para tirar fotos e gravar vídeos, permita que o Radar acesse a câmera e o microfone.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Para gravar vídeos com som, permita que o Signal acesse o microfone.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Para gravar vídeos com som, permita que o Radar acesse o microfone.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Para escanear um QR code, permita que o Signal acesse a câmera.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Para escanear um QR code, permita que o Radar acesse a câmera.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">O Signal precisa acessar a câmera para tirar fotos</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">O Radar precisa acessar a câmera para tirar fotos</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">O Signal precisa acessar a câmera para escanear QR codes</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">O Radar precisa acessar a câmera para escanear QR codes</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">O Signal precisa acessar o microfone para gravar um vídeo</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">O Radar precisa acessar o microfone para gravar um vídeo</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Para tirar fotos no Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Para tirar fotos no Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Para tirar fotos e gravar vídeos no Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Para tirar fotos e gravar vídeos no Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Para gravar vídeos com som:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Multicaptura</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">O Signal precisa de permissão para acessar o microfone e a câmera para gravar vídeos, mas essas permissões foram negadas. Por favor, acesse o menu de configurações do aplicativo, selecione \"Permissões\" e ative \"Microfone\" e \"Câmera\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">O Radar precisa de permissão para acessar o microfone e a câmera para gravar vídeos, mas essas permissões foram negadas. Por favor, acesse o menu de configurações do aplicativo, selecione \"Permissões\" e ative \"Microfone\" e \"Câmera\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Ocorreu um erro na gravação do vídeo</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d itens configurados para qualidade padrão</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">O Signal precisa da permissão de Armazenamento para salvar dados no armazenamento externo, mas ela foi negada permanentemente. Vá até as configurações do aplicativo, toque em \"Permissões\" e ative a opção \"Armazenamento\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">O Radar precisa da permissão de Armazenamento para salvar dados no armazenamento externo, mas ela foi negada permanentemente. Vá até as configurações do aplicativo, toque em \"Permissões\" e ative a opção \"Armazenamento\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">O vídeo será enviado sem áudio</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Vincular dispositivo?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Parece que você está tentando vincular um dispositivo Signal. Toque em continuar, depois em \"Vincular um novo dispositivo\" e escaneie o QR code novamente.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Parece que você está tentando vincular um dispositivo Radar. Toque em continuar, depois em \"Vincular um novo dispositivo\" e escaneie o QR code novamente.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Continuar</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Não foi possível transferir a conta</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">O dispositivo que você está transferindo está desatualizado. Atualize o Signal nesse dispositivo e tente novamente.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">O dispositivo que você está transferindo está desatualizado. Atualize o Radar nesse dispositivo e tente novamente.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

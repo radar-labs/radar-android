@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">카메라로 이동</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">사진과 동영상을 표시하려면 Signal에 권한이 필요합니다.</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">사진과 동영상을 표시하려면 Radar에 권한이 필요합니다.</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">권한 허용</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">사진 또는 동영상을 찾을 수 없습니다. Signal에는 사용자가 선택한 사진과 동영상에 대해서만 액세스 권한이 부여됩니다.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">사진 또는 동영상을 찾을 수 없습니다. Radar에는 사용자가 선택한 사진과 동영상에 대해서만 액세스 권한이 부여됩니다.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal의 사진 또는 동영상에 대한 액세스 권한이 제한됩니다.</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar의 사진 또는 동영상에 대한 액세스 권한이 제한됩니다.</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">관리하기</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">사진과 동영상 표시 방법:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">사진과 동영상을 표시하려면 Signal에 액세스 권한이 필요합니다.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">사진과 동영상을 표시하려면 Radar에 액세스 권한이 필요합니다.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">사진</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">마이크 접근을 허용해 주세요</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">사진이나 동영상을 찍으려면 Signal에 카메라 접근을 허용해 주세요.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">사진이나 동영상을 찍으려면 Radar에 카메라 접근을 허용해 주세요.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">사진이나 동영상을 찍으려면 Signal에 카메라와 마이크 접근을 허용해 주세요.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">사진이나 동영상을 찍으려면 Radar에 카메라와 마이크 접근을 허용해 주세요.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">소리가 포함된 동영상을 촬영하려면 Signal에 마이크 접근을 허용해 주세요.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">소리가 포함된 동영상을 촬영하려면 Radar에 마이크 접근을 허용해 주세요.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR 코드를 스캔하려면 Signal에 카메라 접근을 허용해 주세요.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR 코드를 스캔하려면 Radar에 카메라 접근을 허용해 주세요.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">사진을 촬영하려면 Signal에 카메라 접근 권한이 필요합니다.</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">사진을 촬영하려면 Radar에 카메라 접근 권한이 필요합니다.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR 코드를 스캔하려면 Signal에 카메라 접근 권한이 필요합니다.</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR 코드를 스캔하려면 Radar에 카메라 접근 권한이 필요합니다.</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">동영상을 촬영하려면 Signal에 마이크 접근 권한이 필요합니다.</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">동영상을 촬영하려면 Radar에 마이크 접근 권한이 필요합니다.</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Signal에서 사진을 촬영하려면 다음 단계를 따라주세요.</string>
+  <string name="CameraXFragment_to_capture_photos">Radar에서 사진을 촬영하려면 다음 단계를 따라주세요.</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Signal에서 사진과 동영상을 촬영하려면 다음 단계를 따라주세요.</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Radar에서 사진과 동영상을 촬영하려면 다음 단계를 따라주세요.</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">소리가 포함된 동영상을 촬영하려면 다음 단계를 따라주세요.</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">연속 촬영</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal에서 동영상을 촬영하려면 마이크 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'마이크\'와 \'카메라\'를 허용해 주세요.</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar에서 동영상을 촬영하려면 마이크 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'마이크\'와 \'카메라\'를 허용해 주세요.</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">동영상 촬영 오류</string>
@@ -209,7 +209,7 @@
         <item quantity="other">항목 %1$d개를 표준 품질로 설정했습니다.</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal에서 외부 저장 공간에 저장하려면 저장 공간 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'저장 공간\' 항목을 허용해 주세요.</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar에서 외부 저장 공간에 저장하려면 저장 공간 권한이 필요하지만, 현재 권한이 차단되어 있습니다. 앱 설정 메뉴에서 \'권한\'을 선택한 후 \'저장 공간\' 항목을 허용해 주세요.</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">음성 없이 동영상을 전송합니다</string>
 
@@ -223,14 +223,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">기기를 연동할까요?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Signal 기기를 연동하려고 하시는 것 같네요. 계속을 탭한 다음 \'새 기기 연동\'을 탭하고 QR 코드를 다시 스캔하세요.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Radar 기기를 연동하려고 하시는 것 같네요. 계속을 탭한 다음 \'새 기기 연동\'을 탭하고 QR 코드를 다시 스캔하세요.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">계속</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">계정을 이전할 수 없음</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">데이터를 이전 받을 기기의 버전이 오래되었습니다. 기기의 Signal 앱을 업데이트한 후 다시 시도해 주세요.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">데이터를 이전 받을 기기의 버전이 오래되었습니다. 기기의 Radar 앱을 업데이트한 후 다시 시도해 주세요.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

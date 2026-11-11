@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">יש ללחוץ על ׳המשך׳ ולהזין את ביטול נעילת הטלפון שלך כדי לאשר. לא להזין את קוד ה‑PIN של Signal.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">יש ללחוץ על ׳המשך׳ ולהזין את ביטול נעילת הטלפון שלך כדי לאשר. לא להזין את קוד ה‑PIN של Radar.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">המשך</string>
 

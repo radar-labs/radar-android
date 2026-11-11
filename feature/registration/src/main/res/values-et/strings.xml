@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Õiguste lubamine</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Selleks, et sul oleks lihtsam tuttavatele sõnumeid saata, küsib Signal järgmisi nõusolekuid. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Selleks, et sul oleks lihtsam tuttavatele sõnumeid saata, küsib Radar järgmisi nõusolekuid. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Mitte praegu</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Kontaktid</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Leia tuttavaid. Sinu kontaktid on krüptitud ega ole Signali teenusele nähtavad.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Leia tuttavaid. Sinu kontaktid on krüptitud ega ole Radari teenusele nähtavad.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefonikõned</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Mul on mu vana telefon alles</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Kiiresti alustamiseks skanni oma praeguse Signali konto alt QR-kood</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Kiiresti alustamiseks skanni oma praeguse Radari konto alt QR-kood</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Mul ei ole mu vana telefoni</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Või paigaldad Signalit uuesti samasse seadmesse</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Või paigaldad Radarit uuesti samasse seadmesse</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Vali, kuidas soovid oma sõnumiajalugu ja kontoandmeid taastada.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Signali varukoopiatest</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Radari varukoopiatest</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Sinu tasuta või tasuline Signali varundamisplaan</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Sinu tasuta või tasuline Radari varundamisplaan</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Seadmesisese varukoopia taastamine</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Varukoopiat ei leitud</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Valitud kaustast ei leitud ühtegi Signali varukoopiat. Palun proovi mõnda teist kausta.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Valitud kaustast ei leitud ühtegi Radari varukoopiat. Palun proovi mõnda teist kausta.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Proovi mõnda teist kausta</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Kas taastada uuele kontole?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Varukoopia, mida sa taastad, loodi teise Signali konto kaudu. Sa saad seda varukoopiat uuele kontole taastada, kuid sa ei ole enam taastatud gruppide liige.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Varukoopia, mida sa taastad, loodi teise Radari konto kaudu. Sa saad seda varukoopiat uuele kontole taastada, kuid sa ei ole enam taastatud gruppide liige.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Taasta</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Varukoopiat ei leitud</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Sinu varukoopia võti on õige, kuid sellel kontol ei ole Signali varukoopiat. Mine tagasi ja vali teine taastamise viis või jätka ilma taastamata.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Sinu varukoopia võti on õige, kuid sellel kontol ei ole Radari varukoopiat. Mine tagasi ja vali teine taastamise viis või jätka ilma taastamata.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Vale taastevõti</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Veendu, et kasutad registreerimisel sama telefoninumbrit ja 64-kohalist taastevõtit, mille salvestasid Signali varukoopiaid seadistades. Ilma selle võtmeta ei ole võimalik varukoopiaid taastada.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Veendu, et kasutad registreerimisel sama telefoninumbrit ja 64-kohalist taastevõtit, mille salvestasid Radari varukoopiaid seadistades. Ilma selle võtmeta ei ole võimalik varukoopiaid taastada.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Proovi uuesti</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Kas kinnitada SMS-koodiga?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Saad registreerida oma konto, registreerides selle SMS-koodiga, mille Signal sulle saadab. Pärast koodi sisestamist saad proovida oma varukoopiat uuesti taastevõtme abil taastada.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Saad registreerida oma konto, registreerides selle SMS-koodiga, mille Radar sulle saadab. Pärast koodi sisestamist saad proovida oma varukoopiat uuesti taastevõtme abil taastada.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Saada kood</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Seo oma konto</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Ei ole veel Signalis?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Ei ole veel Radaris?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Loo konto</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Seda varukoopiat ei saanud taastada</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">See Signali versioon ei saa su varukoopiat taastada. Hangi uusim versioon ja proovi uuesti.</string>
+    <string name="RemoteRestoreScreen__update_latest">See Radari versioon ei saa su varukoopiat taastada. Hangi uusim versioon ja proovi uuesti.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Uuenda Signalit</string>
+    <string name="RemoteRestoreScreen__update_signal">Uuenda Radarit</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Mitte praegu</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Sinu konto on sinu privaatsuse ja turvalisuse kaitseks lukustatud. Pärast %1$d päeva mitteaktiivsust sinu kontol on sul võimalik see telefoninumber ilma PIN-koodi vajamata uuesti registreerida. Kogu sisu eemaldatakse.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Ava Signal oma vanas seadmes</string>
+    <string name="QuickRestoreQRScreen__step_1">Ava Radar oma vanas seadmes</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Toksa kaamera ikooni </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Vali tugevam PIN-kood</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Sa sisestasid uuesti juba kasutatud koodi oma telefoninumbri kontrollimiseks. Vali uus unikaalne Signali PIN-kood.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Sa sisestasid uuesti juba kasutatud koodi oma telefoninumbri kontrollimiseks. Vali uus unikaalne Radari PIN-kood.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Uuri lähemalt PIN-koodide kohta</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Hoiatus</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Kui keelad PIN-koodi, siis kaotad Signalisse uuesti registreerudes kõik andmed, mida sa pole käsitsi varundanud ja taastanud. Registreerimislukku pole võimalik sisse lülitada, kui PIN-kood on keelatud.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Kui keelad PIN-koodi, siis kaotad Radarisse uuesti registreerudes kõik andmed, mida sa pole käsitsi varundanud ja taastanud. Registreerimislukku pole võimalik sisse lülitada, kui PIN-kood on keelatud.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Keela PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Sisesta enda PIN-kood</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Sisesta PIN-kood, mille sa Signalit esmakordselt paigaldades lõid</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Sisesta PIN-kood, mille sa Radarit esmakordselt paigaldades lõid</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Sa sisestasid uuesti juba kasutatud koodi oma telefoninumbri kontrollimiseks. Sisesta unikaalne Signali PIN-kood, mille oled varem oma konto jaoks loonud.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Sa sisestasid uuesti juba kasutatud koodi oma telefoninumbri kontrollimiseks. Sisesta unikaalne Radari PIN-kood, mille oled varem oma konto jaoks loonud.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">Vale PIN-kood. %1$d katse jäänud.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Luba teavitused</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal soovib luba teavituste saatmiseks. Nii saab su seade sind teavitada, kui uued sõnumid saabuvad.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar soovib luba teavituste saatmiseks. Nii saab su seade sind teavitada, kui uued sõnumid saabuvad.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Mitte praegu</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Skanni see kood oma konto linkimiseks</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Ava Signal enda telefonis</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Ava Radar enda telefonis</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Toksa oma profiilipilti ja ava Signali sätted</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Toksa oma profiilipilti ja ava Radari sätted</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Vali Lingitud seadmete alt Lingi uus seade</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Koodi ei saanud luua</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Kas sul ei ole teises seadmes Signalit?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Kas sul ei ole teises seadmes Radarit?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Loo konto</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Kas kustutada äpi andmed?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Sa üritad siduda teist Signali kontot. Kui jätkad, kustutatakse kõik praegu selles seadmes olevad Signali andmed.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Sa üritad siduda teist Radari kontot. Kui jätkad, kustutatakse kõik praegu selles seadmes olevad Radari andmed.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Kustuta ja taaskäivita</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Konto edastamine</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Oma konto edastamiseks ava oma vanas Android-seadmes Signal ja vali Konto edastamine.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Oma konto edastamiseks ava oma vanas Android-seadmes Radar ja vali Konto edastamine.</string>
     <string name="DeviceTransferInstructions__continue">Jätka</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Jah, numbrid ühtivad</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Numbrid ei ole samad</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Ootan vana seadme kinnitamist …</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal vajab sinu vana seadme leidmiseks ja sellega ühendamiseks juurdepääsu asukohainfole.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar vajab sinu vana seadme leidmiseks ja sellega ühendamiseks juurdepääsu asukohainfole.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Anna luba</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal vajab sinu vana seadme leidmiseks ja sellega ühendumiseks ligipääsu asukohainfole.</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar vajab sinu vana seadme leidmiseks ja sellega ühendumiseks ligipääsu asukohainfole.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Lülita sisse asukohateenused</string>
-    <string name="DeviceTransferSetup__wifi_required">Signalil on vaja su vana seadme leidmiseks ja sellega ühenduse loomiseks Wi-Fi ühendust.</string>
+    <string name="DeviceTransferSetup__wifi_required">Radaril on vaja su vana seadme leidmiseks ja sellega ühenduse loomiseks Wi-Fi ühendust.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Lülita Wi-Fi sisse</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Kahjuks tundub, et su seade ei toeta Wi-Fi Directi.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Taasta selle asemel varukoopia</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Andmete ülekandmine</string>
     <string name="DeviceTransferProgress__d_messages_so_far">Siiani leidsime %1$d sõnumit</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Ülekandmine ei ole võimalik</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Ülekandmine uuematest Signali versioonidest ei ole võimalik.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Ülekandmine uuematest Radari versioonidest ei ole võimalik.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Andmebaasi piirangute tõttu ei õnnestunud osasid andmeid edastada.</string>
     <string name="DeviceTransferProgress__transfer_failed">Edastus ebaõnnestus. Palun proovi uuesti.</string>
     <string name="DeviceTransferProgress__try_again">Proovi uuesti</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Kas oled kindel?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Kui sul puudub kasutajanimi, ei saa teised sind Signalist leida.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Kui sul puudub kasutajanimi, ei saa teised sind Radarist leida.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Loobu</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

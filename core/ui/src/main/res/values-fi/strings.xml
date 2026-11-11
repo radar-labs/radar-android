@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Napauta Jatka ja vahvista puhelimen lukituskoodilla. Älä anna Signalin PIN-koodia.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Napauta Jatka ja vahvista puhelimen lukituskoodilla. Älä anna Radarin PIN-koodia.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Jatka</string>
 

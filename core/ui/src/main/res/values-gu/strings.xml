@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">ચાલુ રાખો પર ટેપ કરો અને કન્ફર્મ કરવા માટે તમારા ફોનનું લૉક દાખલ કરો. તમારો Signal પિન દાખલ કરશો નહીં.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">ચાલુ રાખો પર ટેપ કરો અને કન્ફર્મ કરવા માટે તમારા ફોનનું લૉક દાખલ કરો. તમારો Radar પિન દાખલ કરશો નહીં.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">ચાલુ રાખો</string>
 

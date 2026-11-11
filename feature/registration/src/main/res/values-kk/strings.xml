@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Рұқсаттар беру</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Сіз білетін адамдарға хат жазуға көмектесу үшін Signal осы рұқсаттарды сұрайды. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Сіз білетін адамдарға хат жазуға көмектесу үшін Radar осы рұқсаттарды сұрайды. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Кейін</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Контактілер</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Өзіңіз танитын адамдарды табыңыз. Контактілеріңіз шифрланған және Signal қызметі оларды көре алмайды.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Өзіңіз танитын адамдарды табыңыз. Контактілеріңіз шифрланған және Radar қызметі оларды көре алмайды.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Телефон қоңыраулары</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Ескі телефоным бар</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Қазіргі Signal аккаунтыңыздан QR кодын сканерлеп, жылдам бастаңыз</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Қазіргі Radar аккаунтыңыздан QR кодын сканерлеп, жылдам бастаңыз</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Ескі телефоным жоқ</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Signal қолданбасын бір құрылғыға қайта орнатып жатырсыз</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Radar қолданбасын бір құрылғыға қайта орнатып жатырсыз</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Хабарлар тарихын және аккаунт деректерін қалпына келтіру жолын таңдаңыз.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Signal-дың сақтық көшірмелерінен</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Radar-дың сақтық көшірмелерінен</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Тегін немесе ақылы Signal cақтық көшірме жоспары</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Тегін немесе ақылы Radar cақтық көшірме жоспары</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Құрылғыдағы сақтық көшірмені қалпына келтіру</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Сақтық көшірме табылмады</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Таңдалған қалтада Signal сақтық көшірмесі табылмады. Басқа қалтаны көріңіз.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Таңдалған қалтада Radar сақтық көшірмесі табылмады. Басқа қалтаны көріңіз.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Басқа қалтаны көру</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Жаңа аккаунтта қалпына келтіру керек пе?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Сіз қалпына келтірейін деп жатқан сақтық көшірме басқа Signal аккаунтымен жасалған. Бұл сақтық көшірмені жаңа аккаунтта қалпына келтіре аласыз, бірақ сіз қалпына келтірілген ешбір топтың мүшесі бола алмайсыз.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Сіз қалпына келтірейін деп жатқан сақтық көшірме басқа Radar аккаунтымен жасалған. Бұл сақтық көшірмені жаңа аккаунтта қалпына келтіре аласыз, бірақ сіз қалпына келтірілген ешбір топтың мүшесі бола алмайсыз.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Қалпына келтіру</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Сақтық көшірме табылмады</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Қалпына келтіру кілті дұрыс, бірақ бұл аккаунт үшін Signal сақтық көшірмесі жоқ. Артқа қайтып, қалпына келтіру үшін басқа әдіс таңдаңыз немесе қалпына келтірмей жалғастыра беріңіз.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Қалпына келтіру кілті дұрыс, бірақ бұл аккаунт үшін Radar сақтық көшірмесі жоқ. Артқа қайтып, қалпына келтіру үшін басқа әдіс таңдаңыз немесе қалпына келтірмей жалғастыра беріңіз.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Қалпына келтіру кілті дұрыс емес</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Signal сақтық көшірмелерін қосқан кезде, сақтаған телефон нөміріңіз бен 64 таңбалы қалпына келтіру кілтімен тіркеліп жатқаныңызға көз жеткізіңіз. Сақтық көшірмелер бұл кілтсіз қалпына келтірілмейді.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Radar сақтық көшірмелерін қосқан кезде, сақтаған телефон нөміріңіз бен 64 таңбалы қалпына келтіру кілтімен тіркеліп жатқаныңызға көз жеткізіңіз. Сақтық көшірмелер бұл кілтсіз қалпына келтірілмейді.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Қайталап көру</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">SMS кодымен растау керек пе?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Signal-дан келген SMS коды арқылы растап, аккаунтыңызды тіркеуіңізге болады. Кодты енгізген соң, қалпына келтіру кілтіңізді қайта пайдаланып, сақтық көшірмеңізді қалпына келтіре аласыз.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Radar-дан келген SMS коды арқылы растап, аккаунтыңызды тіркеуіңізге болады. Кодты енгізген соң, қалпына келтіру кілтіңізді қайта пайдаланып, сақтық көшірмеңізді қалпына келтіре аласыз.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Кодты жіберу</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Аккаунтты байланыстыру</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Signal-ға әлі тіркелмедіңіз бе?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Radar-ға әлі тіркелмедіңіз бе?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Аккаунт жасау</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Бұл сақтық көшірме қалпына келтірілмеді</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Signal-дың бұл нұсқасы сақтық көшірмеңізді қалпына келтіре алмайды. Оның ең соңғы нұсқасын орнатып, әрекетті қайталап көріңіз.</string>
+    <string name="RemoteRestoreScreen__update_latest">Radar-дың бұл нұсқасы сақтық көшірмеңізді қалпына келтіре алмайды. Оның ең соңғы нұсқасын орнатып, әрекетті қайталап көріңіз.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Signal-ды жаңарту</string>
+    <string name="RemoteRestoreScreen__update_signal">Radar-ды жаңарту</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Кейін</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Құпия ақпаратыңызды және қауіпсіздігіңізді сақтау үшін аккаунтыңыз құлыпталды. Аккаунтыңызды %1$d күн пайдаланбағаннан кейін, PIN-кодты енгізбей-ақ, телефон нөміріңізді қайта тіркей аласыз. Барлық контент жойылады.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Signal қолданбасын ескі құрылғыңызда ашыңыз.</string>
+    <string name="QuickRestoreQRScreen__step_1">Radar қолданбасын ескі құрылғыңызда ашыңыз.</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Камера белгішесін түртіңіз </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Күрделірек PIN код таңдау</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Телефон нөміріңізді растау үшін бұған дейін енгізіліп қойған кодты енгіздіңіз. Жаңа және бірегей Signal PIN кодын таңдаңыз.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Телефон нөміріңізді растау үшін бұған дейін енгізіліп қойған кодты енгіздіңіз. Жаңа және бірегей Radar PIN кодын таңдаңыз.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">PIN кодтар туралы толығырақ ақпарат</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Ескерту</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">PIN-кодты өшіріп қойсаңыз, резервтік көшірмесін қолмен жасап, оны қалпына келтірмейінше, Signal қолданбасына қайта тіркелгенде, барлық дерегіңіз өшіп қалады. PIN-кодты өшіріп қойып, Тіркелу құлпын аша алмайсыз.</string>
+    <string name="PinCreationScreen__disable_pin_warning">PIN-кодты өшіріп қойсаңыз, резервтік көшірмесін қолмен жасап, оны қалпына келтірмейінше, Radar қолданбасына қайта тіркелгенде, барлық дерегіңіз өшіп қалады. PIN-кодты өшіріп қойып, Тіркелу құлпын аша алмайсыз.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">PIN-кодты өшіру</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">PIN кодыңызды енгізу</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Signal-ды алғаш орнатқан кезде ойлап тапқан PIN кодыңызды енгізіңіз</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Radar-ды алғаш орнатқан кезде ойлап тапқан PIN кодыңызды енгізіңіз</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Телефон нөміріңізді растау үшін бұған дейін енгізіліп қойған кодты енгіздіңіз. Аккаунтыңыз үшін бұған дейін таңдаған бірегей Signal PIN кодыңызды енгізіңіз.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Телефон нөміріңізді растау үшін бұған дейін енгізіліп қойған кодты енгіздіңіз. Аккаунтыңыз үшін бұған дейін таңдаған бірегей Radar PIN кодыңызды енгізіңіз.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">PIN код дұрыс емес. %1$d рет әрекет ету қалды.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Хабарландыруларға рұқсат ету</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal қолданбасы хабарландыру рұқсатын сұрайды. Бұл жаңа хабарлар келгенде құрылғыңызға ескертулерді көрсетуге мүмкіндік береді.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar қолданбасы хабарландыру рұқсатын сұрайды. Бұл жаңа хабарлар келгенде құрылғыңызға ескертулерді көрсетуге мүмкіндік береді.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Кейін</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Аккаунтыңызды байланыстыру үшін осы кодты сканерлеңіз</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Телефоныңызда Signal қолданбасын ашыңыз</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Телефоныңызда Radar қолданбасын ашыңыз</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Signal параметрлерін ашу үшін профиль суретін түртіңіз</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Radar параметрлерін ашу үшін профиль суретін түртіңіз</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">\"Байланыстырылған құрылғылар\" және \"Жаңа құрылғыны байланыстыру\" түймесін түртіңіз</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Код жасалмады</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Екінші құрылғыда Signal қолданбасы орнатылмаған ба?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Екінші құрылғыда Radar қолданбасы орнатылмаған ба?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Аккаунт жасау</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Қолданба дерегін жою керек пе?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Басқа Signal аккаунтына байланыстырайын деп жатырсыз. Жалғастырсаңыз, осы құрылғыдағы барлық Signal дерегі жойылып кетеді.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Басқа Radar аккаунтына байланыстырайын деп жатырсыз. Жалғастырсаңыз, осы құрылғыдағы барлық Radar дерегі жойылып кетеді.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Жою және қайта қосу</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Аккаунтыңызды тасымалдаңыз</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Аккаунтыңызды тасымалдау үшін ескі Android құрылғыңыздағы Signal қолданбасын ашып, \"Аккаунтты тасымалдау\" түймесін таңдаңыз.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Аккаунтыңызды тасымалдау үшін ескі Android құрылғыңыздағы Radar қолданбасын ашып, \"Аккаунтты тасымалдау\" түймесін таңдаңыз.</string>
     <string name="DeviceTransferInstructions__continue">Жалғастыру</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Иә, сандар сәйкес келеді</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Сандар сәйкес келмейді</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Ескі құрылғыңыздың растағанын күтіп отырмыз…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Ескі құрылғыңызды анықтап, оған қосылу үшін Signal қолданбасына геолокация рұқсаты керек.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Ескі құрылғыңызды анықтап, оған қосылу үшін Radar қолданбасына геолокация рұқсаты керек.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Рұқсат беру</string>
-    <string name="DeviceTransferSetup__location_services_required">Ескі құрылғыңызды анықтап, оған қосылу үшін Signal қолданбасы геолокация қызметтерін пайдалануы керек.</string>
+    <string name="DeviceTransferSetup__location_services_required">Ескі құрылғыңызды анықтап, оған қосылу үшін Radar қолданбасы геолокация қызметтерін пайдалануы керек.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Локация қызметтерін қосу</string>
-    <string name="DeviceTransferSetup__wifi_required">Ескі құрылғыңызды анықтап, оған қосылу үшін Signal қолданбасына Wi-Fi қосылып тұруы керек.</string>
+    <string name="DeviceTransferSetup__wifi_required">Ескі құрылғыңызды анықтап, оған қосылу үшін Radar қолданбасына Wi-Fi қосылып тұруы керек.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Wi-Fi қосу</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Кешіріңіз, құрылғыңызда Wi-Fi Direct істемейтін сияқты.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Сақтық көшірмені қалпына келтіру</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Деректер тасымалдануда</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d хат қалды</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Тасымалдау мүмкін емес</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Signal-дың жаңа нұсқаларынан тасымалдау мүмкін емес.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Radar-дың жаңа нұсқаларынан тасымалдау мүмкін емес.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Дерекқордағы шектеулерге байланысты кейбір деректер тасымалданбайды.</string>
     <string name="DeviceTransferProgress__transfer_failed">Тасымалданбады. Қайталап көріңіз.</string>
     <string name="DeviceTransferProgress__try_again">Қайталап көру</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Сенімдісіз бе?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Пайдаланушы атыңызды білмесе, адамдар сізді Signal-дан таба алмайды.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Пайдаланушы атыңызды білмесе, адамдар сізді Radar-дан таба алмайды.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Бас тарту</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

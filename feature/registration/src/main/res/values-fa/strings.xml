@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">اجازه دادن به مجوزها</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">برای اینکه راحت‌تر به افرادی که می‌شناسید پیام بفرستید، سیگنال این مجوزها را درخواست خواهد کرد. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">برای اینکه راحت‌تر به افرادی که می‌شناسید پیام بفرستید، رادار این مجوزها را درخواست خواهد کرد. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">حالا نه</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">مخاطبان</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">افرادی که می‌شناسید را پیدا کنید. مخاطبان شما رمزگذاری‌شده و برای سرویس سیگنال قابل مشاهده نیستند.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">افرادی که می‌شناسید را پیدا کنید. مخاطبان شما رمزگذاری‌شده و برای سرویس رادار قابل مشاهده نیستند.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">تماس‌های تلفنی</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">تلفن قدیمی‌ام را دارم</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">برای شروع سریع، کد QR را از حساب فعلی سیگنال خود اسکن کنید</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">برای شروع سریع، کد QR را از حساب فعلی رادار خود اسکن کنید</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">تلفن قدیمی‌ام را ندارم</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">یا در حال نصب مجدد سیگنال روی همین دستگاه هستید</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">یا در حال نصب مجدد رادار روی همین دستگاه هستید</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">انتخاب کنید که می‌خواهید چطور تاریخچه پیام و داده‌های حسابتان را بازیابی کنید.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">از پشتیبان‌های سیگنال</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">از پشتیبان‌های رادار</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">طرح پشتیبان‌گیری رایگان یا پولی سیگنال شما</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">طرح پشتیبان‌گیری رایگان یا پولی رادار شما</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">بازیابی نسخه پشتیبان در دستگاه</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">به حساب جدید بازیابی می‌کنید؟</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">نسخه پشتیبانی که در حال بازیابی آن هستید با حساب سیگنال دیگری ایجاد شده است. می‌توانید این نسخه پشتیبان را در حساب جدیدی بازیابی کنید، اما دیگر عضو هرگونه گروهی که بازیابی شود نخواهید بود.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">نسخه پشتیبانی که در حال بازیابی آن هستید با حساب رادار دیگری ایجاد شده است. می‌توانید این نسخه پشتیبان را در حساب جدیدی بازیابی کنید، اما دیگر عضو هرگونه گروهی که بازیابی شود نخواهید بود.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">بازیابی</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">نسخه پشتیبان پیدا نشد</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">رمز بازیابی درست است، اما هیچ پشتیبان سیگنالی برای این حساب وجود ندارد. برای انتخاب روش دیگری برای بازیابی، به عقب برگردید یا بدون بازیابی ادامه دهید.</string>
+    <string name="EnterAepScreen__no_backup_found_body">رمز بازیابی درست است، اما هیچ پشتیبان راداری برای این حساب وجود ندارد. برای انتخاب روش دیگری برای بازیابی، به عقب برگردید یا بدون بازیابی ادامه دهید.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">رمز بازیابی نادرست</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">حتماً با همان شماره تلفن و رمز بازیابی ۶۴ نویسه‌ای ثبت‌نام کنید که هنگام فعال‌سازی پشتیبان‌گیری سیگنال ذخیره کردید. نسخه‌های پشتیبان بدون این رمز قابل‌بازیابی نیستند.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">حتماً با همان شماره تلفن و رمز بازیابی ۶۴ نویسه‌ای ثبت‌نام کنید که هنگام فعال‌سازی پشتیبان‌گیری رادار ذخیره کردید. نسخه‌های پشتیبان بدون این رمز قابل‌بازیابی نیستند.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">دوباره امتحان کنید</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">تأیید با کد پیامکی؟</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">می‌توانید با تأیید از طریق کدی که سیگنال برایتان پیامک می‌کند، حساب خود را ثبت کنید. پس از وارد کردن کد، می‌توانید دوباره با استفاده از رمز بازیابی خود برای بازیابی نسخه پشتیبان تلاش کنید.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">می‌توانید با تأیید از طریق کدی که رادار برایتان پیامک می‌کند، حساب خود را ثبت کنید. پس از وارد کردن کد، می‌توانید دوباره با استفاده از رمز بازیابی خود برای بازیابی نسخه پشتیبان تلاش کنید.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">ارسال کد</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">حسابتان را متصل کنید</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">هنوز در سیگنال نیستید؟</string>
+    <string name="WelcomeScreen__not_on_signal_yet">هنوز در رادار نیستید؟</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">ایجاد حساب</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">این نسخه پشتیبان بازیابی نشد</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">این نسخه از سیگنال نمی‌تواند نسخه پشتیبان شما را بازیابی کند. به آخرین نسخه به‌روزرسانی کنید و دوباره امتحان کنید.</string>
+    <string name="RemoteRestoreScreen__update_latest">این نسخه از رادار نمی‌تواند نسخه پشتیبان شما را بازیابی کند. به آخرین نسخه به‌روزرسانی کنید و دوباره امتحان کنید.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">به‌روزرسانی سیگنال</string>
+    <string name="RemoteRestoreScreen__update_signal">به‌روزرسانی رادار</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">حالا نه</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">حساب کاربری شما به منظور حفاظت از حریم خصوصی و امنیت شما قفل شده است. پس از %1$d روز عدم فعالیت در حساب کاربری‌تان، می‌توانید دوباره با این شماره تلفن و بدون نیاز به پین ثبت‌نام کنید. تمام محتوا پاک خواهد شد.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">سیگنال را در دستگاه قدیمی‌تان باز کنید</string>
+    <string name="QuickRestoreQRScreen__step_1">رادار را در دستگاه قدیمی‌تان باز کنید</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">روی نماد دوربین ضربه بزنید </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">یک پین قوی‌تر انتخاب کنید</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">کدی را که قبلاً برای تأیید شماره تلفن‌تان استفاده شده بود، دوباره وارد کردید. یک پین سیگنال جدید و منحصربه‌فرد انتخاب کنید.</string>
+    <string name="PinCreationScreen__reentered_verification_code">کدی را که قبلاً برای تأیید شماره تلفن‌تان استفاده شده بود، دوباره وارد کردید. یک پین رادار جدید و منحصربه‌فرد انتخاب کنید.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">دربارهٔ پین ​​بیشتر یاد بگیرید</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">هشدار</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">اگر پین را غیرفعال کنید، وقتی دوباره در سیگنال ثبت‌نام می‌کنید، همه داده‌ها را از دست خواهید داد، مگر اینکه به‌صورت دستی پشتیبان‌گیری و بازیابی کنید. وقتی پین غیرفعال است نمی‌توانید قفل ثبت‌نام را روشن کنید.</string>
+    <string name="PinCreationScreen__disable_pin_warning">اگر پین را غیرفعال کنید، وقتی دوباره در رادار ثبت‌نام می‌کنید، همه داده‌ها را از دست خواهید داد، مگر اینکه به‌صورت دستی پشتیبان‌گیری و بازیابی کنید. وقتی پین غیرفعال است نمی‌توانید قفل ثبت‌نام را روشن کنید.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">غیرفعال کردن پین</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">پین خود را وارد کنید</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">پینی را وارد کنید که هنگام نصب اولیه سیگنال ایجاد کرده بودید</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">پینی را وارد کنید که هنگام نصب اولیه رادار ایجاد کرده بودید</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">کدی را که قبلاً برای تأیید شماره تلفن‌تان استفاده شده بود، دوباره وارد کردید. پین سیگنال منحصربه‌فردی را وارد کنید که قبلاً برای حساب‌تان انتخاب کردید.</string>
+    <string name="PinEntryScreen__reentered_verification_code">کدی را که قبلاً برای تأیید شماره تلفن‌تان استفاده شده بود، دوباره وارد کردید. پین رادار منحصربه‌فردی را وارد کنید که قبلاً برای حساب‌تان انتخاب کردید.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">پین نادرست. %1$d تلاش دیگر باقی مانده است.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">اعلان‌ها مجاز شود</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">سیگنال می‌خواهد مجوز اعلان را درخواست کند. این باعث می‌شود دستگاه شما هنگام دریافت پیام‌های جدید، هشدارهایی را نمایش دهد.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">رادار می‌خواهد مجوز اعلان را درخواست کند. این باعث می‌شود دستگاه شما هنگام دریافت پیام‌های جدید، هشدارهایی را نمایش دهد.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">حالا نه</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">برای اتصال حساب خود، این کد را اسکن کنید</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">باز کردن سیگنال روی گوشی</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">باز کردن رادار روی گوشی</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">برای باز کردن «تنظیمات سیگنال»، روی تصویر نمایه خود ضربه بزنید</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">برای باز کردن «تنظیمات رادار»، روی تصویر نمایه خود ضربه بزنید</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">روی «دستگاه‌های متصل‌شده» و «اتصال دستگاه جدید» ضربه بزنید</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">کد تولید نشد</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">سیگنال را روی دستگاه دیگری ندارید؟</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">رادار را روی دستگاه دیگری ندارید؟</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">ایجاد حساب</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">داده‌های برنامه حذف شود؟</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">در حال تلاش برای اتصال یک حساب سیگنال متفاوت هستید. اگر ادامه دهید، تمام داده‌های سیگنال که در حال حاضر روی این دستگاه هستند حذف خواهند شد.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">در حال تلاش برای اتصال یک حساب رادار متفاوت هستید. اگر ادامه دهید، تمام داده‌های رادار که در حال حاضر روی این دستگاه هستند حذف خواهند شد.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">حذف و بازراه‌اندازی</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">انتقال حساب</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">برای انتقال حساب خود، برنامه سیگنال را در دستگاه اندروید قدیمی خود باز کنید و گزینه «انتقال حساب» را انتخاب کنید.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">برای انتقال حساب خود، برنامه رادار را در دستگاه اندروید قدیمی خود باز کنید و گزینه «انتقال حساب» را انتخاب کنید.</string>
     <string name="DeviceTransferInstructions__continue">ادامه</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">بله، شماره‌ها مطابقت دارند</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">شماره‌ها همخوانی ندارند</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">در حال انتظار برای تأیید دستگاه قدیمی شما…</string>
-    <string name="DeviceTransferSetup__location_permission_required">سیگنال برای شناسایی و اتصال به دستگاه قدیمی شما، به مجوز موقعیت مکانی نیاز دارد.</string>
+    <string name="DeviceTransferSetup__location_permission_required">رادار برای شناسایی و اتصال به دستگاه قدیمی شما، به مجوز موقعیت مکانی نیاز دارد.</string>
     <string name="DeviceTransferSetup__grant_location_permission">اعطای مجوز</string>
-    <string name="DeviceTransferSetup__location_services_required">سیگنال برای شناسایی و اتصال به دستگاه قدیمی شما، نیاز دارد که سرویس‌های موقعیت مکانی فعال باشد.</string>
+    <string name="DeviceTransferSetup__location_services_required">رادار برای شناسایی و اتصال به دستگاه قدیمی شما، نیاز دارد که سرویس‌های موقعیت مکانی فعال باشد.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">سرویس‌های مکان را روشن کنید</string>
-    <string name="DeviceTransferSetup__wifi_required">سیگنال برای شناسایی و اتصال به دستگاه قدیمی شما، نیاز دارد که Wi-Fi روشن باشد.</string>
+    <string name="DeviceTransferSetup__wifi_required">رادار برای شناسایی و اتصال به دستگاه قدیمی شما، نیاز دارد که Wi-Fi روشن باشد.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">روشن کردن Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">متأسفانه به نظر می‌رسد دستگاه شما از Wi-Fi Direct پشتیبانی نمی‌کند.</string>
     <string name="DeviceTransferSetup__restore_a_backup">در عوض، یک نسخه پشتیبان را بازیابی کنید</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">در حال انتقال داده‌ها</string>
     <string name="DeviceTransferProgress__d_messages_so_far">%1$d پیام تا به حال</string>
     <string name="DeviceTransferProgress__unable_to_transfer">انتقال ممکن نبود</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">انتقال از نسخه‌ٔ جدیدتر سیگنال ممکن نیست.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">انتقال از نسخه‌ٔ جدیدتر رادار ممکن نیست.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">به‌دلیل محدودیت پایگاه داده، برخی از داده‌ها منتقل نشد.</string>
     <string name="DeviceTransferProgress__transfer_failed">انتقال انجام نشد. لطفاً دوباره امتحان کنید.</string>
     <string name="DeviceTransferProgress__try_again">دوباره امتحان کنید</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">مطمئن هستید؟</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">بدون نام کاربری، افراد نمی‌توانند شما را در سیگنال پیدا کنند.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">بدون نام کاربری، افراد نمی‌توانند شما را در رادار پیدا کنند.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">لغو</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Siirry kameraan</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal tarvitsee käyttöoikeuden kuvien ja videoiden näyttämiseksi</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar tarvitsee käyttöoikeuden kuvien ja videoiden näyttämiseksi</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Myönnä käyttöoikeus</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Kuvia tai videoita ei löytynyt. Signalilla on pääsy vain valitsemiisi valokuviin ja videoihin.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Kuvia tai videoita ei löytynyt. Radarilla on pääsy vain valitsemiisi valokuviin ja videoihin.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signalilla on rajoitettu pääsy kuviin tai videoihin</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radarilla on rajoitettu pääsy kuviin tai videoihin</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Hallinnoi</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Kuvien ja videoiden näyttäminen:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Signal tarvitsee käyttöoikeuden kuvien ja videoiden näyttämiseksi.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Radar tarvitsee käyttöoikeuden kuvien ja videoiden näyttämiseksi.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Kuva</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Myönnä mikrofonin käyttöoikeus</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Kuvien ja videoiden ottaminen edellyttää, että annat Signalille kameran käyttöoikeuden.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Kuvien ja videoiden ottaminen edellyttää, että annat Radarille kameran käyttöoikeuden.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Kuvien ja videoiden ottaminen edellyttää, että annat Signalille kameran ja mikrofonin käyttöoikeuden.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Kuvien ja videoiden ottaminen edellyttää, että annat Radarille kameran ja mikrofonin käyttöoikeuden.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Jos haluat tallentaa videoita äänellä, anna Signalille mikrofonin käyttöoikeus.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Jos haluat tallentaa videoita äänellä, anna Radarille mikrofonin käyttöoikeus.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Jotta voit skannata QR-koodin, anna Signalille kameran käyttöoikeus.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Jotta voit skannata QR-koodin, anna Radarille kameran käyttöoikeus.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal tarvitsee kameran käyttöoikeuden kuvien ottamiseksi</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar tarvitsee kameran käyttöoikeuden kuvien ottamiseksi</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal tarvitsee kameran käyttöoikeuden QR-koodien skannaamiseksi</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar tarvitsee kameran käyttöoikeuden QR-koodien skannaamiseksi</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal tarvitsee mikrofonin käyttöoikeuden videon tallentamiseksi</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar tarvitsee mikrofonin käyttöoikeuden videon tallentamiseksi</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Kuvien ottaminen Signalissa:</string>
+  <string name="CameraXFragment_to_capture_photos">Kuvien ottaminen Radarissa:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Valokuvien ja videoiden ottaminen Signalissa:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Valokuvien ja videoiden ottaminen Radarissa:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Videoiden tallentaminen äänellä:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Monitallennus</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal tarvitsee mikrofonin käyttöoikeuden videoiden tallennusta varten, mutta se on evätty. Jatka sovellusasetuksiin, valitse \"käyttöoikeudet\" ja ota käyttöön \"mikrofoni\" ja \"kamera\".</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar tarvitsee mikrofonin käyttöoikeuden videoiden tallennusta varten, mutta se on evätty. Jatka sovellusasetuksiin, valitse \"käyttöoikeudet\" ja ota käyttöön \"mikrofoni\" ja \"kamera\".</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Virhe videota tallennettaessa</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d kohdetta asetettu vakiolaatuiseksi</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal tarvitsee luvan käyttää laitteesi tallennustilaa tallentaakseen sinne, mutta tämä käyttöoikeus on pysyvästi evätty Signalilta. Voit muuttaa tätä menemällä sovellusten asetuksiin, valitsemalla \"Sovelluksen käyttöoikeudet\" ja laittamalla päälle \"Tallennustila\".</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar tarvitsee luvan käyttää laitteesi tallennustilaa tallentaakseen sinne, mutta tämä käyttöoikeus on pysyvästi evätty Radarilta. Voit muuttaa tätä menemällä sovellusten asetuksiin, valitsemalla \"Sovelluksen käyttöoikeudet\" ja laittamalla päälle \"Tallennustila\".</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Video lähetetään ilman ääntä</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Yhdistä laite?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Vaikuttaa siltä, että yrität yhdistää laitetta Signaliin. Napauta Jatka ja napauta sitten Yhdistä uusi laite ja skannaa QR-koodi uudelleen.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Vaikuttaa siltä, että yrität yhdistää laitetta Radariin. Napauta Jatka ja napauta sitten Yhdistä uusi laite ja skannaa QR-koodi uudelleen.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Jatka</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Tilin siirto ei onnistu</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Yrität tehdä siirtoa laitteelle, jota ei ole päivitetty. Päivitä Signal laitteella ja yritä uudelleen.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Yrität tehdä siirtoa laitteelle, jota ei ole päivitetty. Päivitä Radar laitteella ja yritä uudelleen.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

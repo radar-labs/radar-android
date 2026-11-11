@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Přejít do fotoaparátu</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Aplikace Signal potřebuje povolení, aby mohla zobrazovat vaše fotografie a videa.</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Aplikace Radar potřebuje povolení, aby mohla zobrazovat vaše fotografie a videa.</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Povolit přístup</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Nebyly nalezeny žádné fotografie ani videa. Aplikace Signal má přístup pouze k vybraným fotografiím a videím.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Nebyly nalezeny žádné fotografie ani videa. Aplikace Radar má přístup pouze k vybraným fotografiím a videím.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Aplikace Signal má omezený přístup k fotografiím nebo videím</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Aplikace Radar má omezený přístup k fotografiím nebo videím</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Spravovat</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Zobrazení fotografií a videí:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Aplikace Signal potřebuje přístup k vašim fotografiím a videím.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Aplikace Radar potřebuje přístup k vašim fotografiím a videím.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Fotografie</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Povolte přístup k mikrofonu</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Chcete-li pořizovat fotografie a videa, povolte aplikaci Signal přístup k fotoaparátu.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Chcete-li pořizovat fotografie a videa, povolte aplikaci Radar přístup k fotoaparátu.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Chcete-li pořizovat fotografie a videa, povolte aplikaci Signal přístup k fotoaparátu a mikrofonu.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Chcete-li pořizovat fotografie a videa, povolte aplikaci Radar přístup k fotoaparátu a mikrofonu.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Chcete-li natáčet videa se zvukem, povolte aplikaci Signal přístup k mikrofonu.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Chcete-li natáčet videa se zvukem, povolte aplikaci Radar přístup k mikrofonu.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Chcete-li naskenovat QR kód, povolte aplikaci Signal přístup k fotoaparátu.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">Chcete-li naskenovat QR kód, povolte aplikaci Radar přístup k fotoaparátu.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Signal potřebuje přístup k fotoaparátu, aby mohl pořizovat fotky</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Radar potřebuje přístup k fotoaparátu, aby mohl pořizovat fotky</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Signal potřebuje přístup k fotoaparátu, aby mohl skenovat QR kódy</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">Radar potřebuje přístup k fotoaparátu, aby mohl skenovat QR kódy</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Signal potřebuje přístup k mikrofonu, aby mohl natáčet video</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Radar potřebuje přístup k mikrofonu, aby mohl natáčet video</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Jak pořizovat fotografie v aplikaci Signal:</string>
+  <string name="CameraXFragment_to_capture_photos">Jak pořizovat fotografie v aplikaci Radar:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Jak pořizovat fotografie a videa v aplikaci Signal:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Jak pořizovat fotografie a videa v aplikaci Radar:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Jak natáčet videa se zvukem:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Více snímků za sebou</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal potřebuje oprávnění k mikrofonu, aby mohl nahrávat videa, ale toto oprávnění bylo odmítnuto. Přejděte prosím do nastavení aplikace, vyberte „Oprávnění“ a povolte „Mikrofon“ a „Fotoaparát“.</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar potřebuje oprávnění k mikrofonu, aby mohl nahrávat videa, ale toto oprávnění bylo odmítnuto. Přejděte prosím do nastavení aplikace, vyberte „Oprávnění“ a povolte „Mikrofon“ a „Fotoaparát“.</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Chyba při nahrávání videa</string>
@@ -215,7 +215,7 @@
         <item quantity="other">%1$d položek nastaveno na standardní kvalitu</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Signal potřebuje oprávnění pro přístup k úložišti, aby mohl zapisovat do externího úložiště, ale to bylo trvale zamítnuto. Pokračujte do nastavení aplikace, vyberte „Oprávnění“ a povolte „Úložiště“.</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Radar potřebuje oprávnění pro přístup k úložišti, aby mohl zapisovat do externího úložiště, ale to bylo trvale zamítnuto. Pokračujte do nastavení aplikace, vyberte „Oprávnění“ a povolte „Úložiště“.</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Video bude odesláno bez zvuku</string>
 
@@ -229,14 +229,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Propojit zařízení?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Zdá se, že se snažíte propojit zařízení Signal. Klepněte na pokračovat a poté klepněte na Propojit nové zařízení a znovu naskenujte QR kód.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Zdá se, že se snažíte propojit zařízení Radar. Klepněte na pokračovat a poté klepněte na Propojit nové zařízení a znovu naskenujte QR kód.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Pokračovat</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Účet nelze přenést</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Zařízení, do kterého přenášíte data, má zastaralou verzi. Aktualizujte v daném zařízení aplikaci Signal a zkuste to znovu.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Zařízení, do kterého přenášíte data, má zastaralou verzi. Aktualizujte v daném zařízení aplikaci Radar a zkuste to znovu.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

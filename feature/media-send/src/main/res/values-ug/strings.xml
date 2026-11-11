@@ -61,7 +61,7 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">كامېرانى ئېچىش</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">رەسىم ۋە ۋىدېيولىرىڭىزنى كۆرسىتىش ئۈچۈن Signal ئىجازىتىڭىزگە ئېھتىياجلىق</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">رەسىم ۋە ۋىدېيولىرىڭىزنى كۆرسىتىش ئۈچۈن Radar ئىجازىتىڭىزگە ئېھتىياجلىق</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">ئىشلىتىشكە رۇخسەت</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">مىكروفوننى ئىشلىتىشكە رۇخسەت قىلىڭ</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">رەسىم ۋە سىنغا ئېلىش ئۈچۈن ، Signal نىڭ كامېرانى زىيارەت قىلىشىغا يول قويۇڭ.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">رەسىم ۋە سىنغا ئېلىش ئۈچۈن ، Radar نىڭ كامېرانى زىيارەت قىلىشىغا يول قويۇڭ.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">رەسىم ۋە سىنغا ئېلىش ئۈچۈن، Signal نىڭ كامېرا ۋە مىكروفوننى زىيارەت قىلىشىغا رۇخسەت قىلىڭ.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">رەسىم ۋە سىنغا ئېلىش ئۈچۈن، Radar نىڭ كامېرا ۋە مىكروفوننى زىيارەت قىلىشىغا رۇخسەت قىلىڭ.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">ئاۋازلىق سىنغا ئېلىش ئۈچۈن، Signal نىڭ مىكروفوننى زىيارەت قىلىشىغا رۇخسەت قىلىڭ.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">ئاۋازلىق سىنغا ئېلىش ئۈچۈن، Radar نىڭ مىكروفوننى زىيارەت قىلىشىغا رۇخسەت قىلىڭ.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR كودىنى سايىلەش ئۈچۈن، Signal نىڭ كامېرانى زىيارەت قىلىشىغا رۇخسەت قىلىڭ.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR كودىنى سايىلەش ئۈچۈن، Radar نىڭ كامېرانى زىيارەت قىلىشىغا رۇخسەت قىلىڭ.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">رەسىم تارتىش ئۈچۈن Signal كامېرا ئىجازىتىنى تەلەپ قىلىدۇ</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">رەسىم تارتىش ئۈچۈن Radar كامېرا ئىجازىتىنى تەلەپ قىلىدۇ</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR كودىنى سايىلەش ئۈچۈن Signal كامېرا ئىجازىتىنى تەلەپ قىلىدۇ</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR كودىنى سايىلەش ئۈچۈن Radar كامېرا ئىجازىتىنى تەلەپ قىلىدۇ</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">سىنغا ئېلىش ئۈچۈن Signal مىكروفون ئىجازىتىنى تەلەپ قىلىدۇ</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">سىنغا ئېلىش ئۈچۈن Radar مىكروفون ئىجازىتىنى تەلەپ قىلىدۇ</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Signal دا رەسىمگە تارتىش:</string>
+  <string name="CameraXFragment_to_capture_photos">Radar دا رەسىمگە تارتىش:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Signal دا رەسىم تارتىش ۋە سىنغا ئېلىش:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Radar دا رەسىم تارتىش ۋە سىنغا ئېلىش:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">ئاۋازلىق سىنغا ئېلىش:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">كۆپ قېتىم سۈرەتكە تارتىش</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">سىنغا ئېلىش ئۈچۈن Signal مىكروفون ھوقۇقىغا موھتاج ، ئەمما ئۇلار رەت قىلىندى. ئەپ تەڭشەكلىرىدىن «ھوقۇقلار» نى تاللاپ ۋە «مىكروفون» ۋە «كامېرا» نى قوزغىتىڭ.</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">سىنغا ئېلىش ئۈچۈن Radar مىكروفون ھوقۇقىغا موھتاج ، ئەمما ئۇلار رەت قىلىندى. ئەپ تەڭشەكلىرىدىن «ھوقۇقلار» نى تاللاپ ۋە «مىكروفون» ۋە «كامېرا» نى قوزغىتىڭ.</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">سىن ئېلىشتا خاتالىق كۆرۈلدى</string>
@@ -209,7 +209,7 @@
         <item quantity="other">%1$d تۈر ئۆلچەملىك ئېنىقلىققا تەڭشەلگەن</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">ھۆججەتنى سىرتقا ساقلىغۇچقا ساقلاش ئۈچۈن Signal ساقلاش ھوقۇقىغا ئېھتىياجلىق، ئەمما ئۇ مەڭگۈلۈك چەكلەنگەن، ئەپ تەڭشىكىدىن، «ھوقۇقلار» نى تاللاپ، «ساقلاش» نى قوزغىتىڭ.</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">ھۆججەتنى سىرتقا ساقلىغۇچقا ساقلاش ئۈچۈن Radar ساقلاش ھوقۇقىغا ئېھتىياجلىق، ئەمما ئۇ مەڭگۈلۈك چەكلەنگەن، ئەپ تەڭشىكىدىن، «ھوقۇقلار» نى تاللاپ، «ساقلاش» نى قوزغىتىڭ.</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">سىن ئۈنسىز يوللىنىلىدۇ</string>
 
@@ -223,14 +223,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">ئۈسكۈنە ئۇلامسىز؟</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">بىر Signal ئۈسكۈنىسىنى ئۇلىماقچى بولغاندەك تۇرىسىز. داۋاملاشتۇرۇشنى چېكىپ ئاندىن «يېڭى ئۈسكۈنىنى ئۇلاش» نى چېكىڭ ھەمدە QR كودىنى قايتا سىكانېرلاڭ.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">بىر Radar ئۈسكۈنىسىنى ئۇلىماقچى بولغاندەك تۇرىسىز. داۋاملاشتۇرۇشنى چېكىپ ئاندىن «يېڭى ئۈسكۈنىنى ئۇلاش» نى چېكىڭ ھەمدە QR كودىنى قايتا سىكانېرلاڭ.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">داۋاملاشتۇر</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">ھېساباتنى يۆتكىگىلى بولمىدى</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">سىز يۆتكەلمەكچى بولغان ئۈسكۈنىنىڭ ۋاقتى ئۆتكەن. ئۇ ئۈسكۈنىدە Signal نىڭ يېڭى نەشرىگە يېڭىلاپ قايتا سىناڭ.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">سىز يۆتكەلمەكچى بولغان ئۈسكۈنىنىڭ ۋاقتى ئۆتكەن. ئۇ ئۈسكۈنىدە Radar نىڭ يېڭى نەشرىگە يېڭىلاپ قايتا سىناڭ.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

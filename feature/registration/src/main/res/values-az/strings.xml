@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">İcazələri aktivləşdir</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Tanıdığınız şəxslərə mesaj atmaqda sizə kömək etmək üçün Signal bu icazələri tələb edəcək. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Tanıdığınız şəxslərə mesaj atmaqda sizə kömək etmək üçün Radar bu icazələri tələb edəcək. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">İndi yox</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Əlaqələr</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Tanıdığınız şəxsləri tapın. Mesajlarınız şifrələnib və Signal xidmətində görünmür.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Tanıdığınız şəxsləri tapın. Mesajlarınız şifrələnib və Radar xidmətində görünmür.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Telefon zəngləri</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Köhnə telefonum əlimdədir</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Prosesi sürətləndirmək üçün cari Signal hesabınızdan QR kodunu skan edin</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Prosesi sürətləndirmək üçün cari Radar hesabınızdan QR kodunu skan edin</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Köhnə telefonum əlimdə deyil</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Yaxud da Signal-ı eyni cihazda yenidən quraşdırırsınız</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Yaxud da Radar-ı eyni cihazda yenidən quraşdırırsınız</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Mesaj tarixçənizin və hesab məlumatlarınızın bərpa edilmə yolunu seçin.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Signal ehtiyat nüsxələrindən</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Radar ehtiyat nüsxələrindən</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Pulsuz və ya ödənişli Signal Ehtiyat nüsxə planı</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Pulsuz və ya ödənişli Radar Ehtiyat nüsxə planı</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Cihaz daxili ehtiyat nüsxəni bərpa edin</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Heç bir ehtiyat nüsxə tapılmadı</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Seçilmiş qovluqda heç bir Signal ehtiyat nüsxəsi tapılmadı. Başqa bir qovluğa baxın.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Seçilmiş qovluqda heç bir Radar ehtiyat nüsxəsi tapılmadı. Başqa bir qovluğa baxın.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Başqa qovluğa baxın</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,17 +233,17 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Yeni hesab bərpa edilsin?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Bərpa etdiyiniz ehtiyat nüsxə fərqli bir Signal hesabından istifadə edərək yaradıldı. Bu ehtiyat nüsxəni yeni hesabınızda bərpa edə bilərsiniz, lakin artıq bərpa edilən heç bir qrupun üzvü olmayacaqsınız.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Bərpa etdiyiniz ehtiyat nüsxə fərqli bir Radar hesabından istifadə edərək yaradıldı. Bu ehtiyat nüsxəni yeni hesabınızda bərpa edə bilərsiniz, lakin artıq bərpa edilən heç bir qrupun üzvü olmayacaqsınız.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Geri yüklə</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
     <string name="EnterAepScreen__no_backup_found">Heç bir ehtiyat nüsxə tapılmadı</string>
     <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
-    <string name="EnterAepScreen__no_backup_found_body">Bərpa şifrəsi düzdür, amma bu hesabla bağlı bir Signal ehtiyat nüsxəsi yoxdur. Başqa bir bərpaetmə yolu seçmək üçün geriyə qayıdın və ya bərpa etmədən davam edin.</string>
+    <string name="EnterAepScreen__no_backup_found_body">Bərpa şifrəsi düzdür, amma bu hesabla bağlı bir Radar ehtiyat nüsxəsi yoxdur. Başqa bir bərpaetmə yolu seçmək üçün geriyə qayıdın və ya bərpa etmədən davam edin.</string>
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Səhv bərpa şifrəsi</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Signal ehtiyat nüsxələrini aktivləşdirərkən yaddaşda saxladığınız eyni telefon nömrəsi və 64 simvoldan ibarət bərpa şifrəsi ilə qeydiyyatdan keçdiyinizdən əmin olun. Ehtiyat nüsxələr bu şifrə olmadan bərpa edilə bilməz.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Radar ehtiyat nüsxələrini aktivləşdirərkən yaddaşda saxladığınız eyni telefon nömrəsi və 64 simvoldan ibarət bərpa şifrəsi ilə qeydiyyatdan keçdiyinizdən əmin olun. Ehtiyat nüsxələr bu şifrə olmadan bərpa edilə bilməz.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Yenidən sına</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">SMS kodla təsdiqlənsin?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Hesabınızı Signal-ın sizə göndərəcəyi SMS kodla təsdiqləyərək qeydiyyatdan keçirə bilərsiniz. Kodu daxil etdikdən sonra bərpa şifrəsindən istifadə edərək ehtiyat nüsxənizi yenidən bərpa edə bilərsiniz.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Hesabınızı Radar-ın sizə göndərəcəyi SMS kodla təsdiqləyərək qeydiyyatdan keçirə bilərsiniz. Kodu daxil etdikdən sonra bərpa şifrəsindən istifadə edərək ehtiyat nüsxənizi yenidən bərpa edə bilərsiniz.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Kod göndər</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Hesabınızı əlaqələndirin</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Hələ Signal-a keçməmisiniz?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Hələ Radar-a keçməmisiniz?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Hesab yaradın</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Bu ehtiyat nüsxəni bərpa etmək mümkün olmadı</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Signal-ın bu versiyası ehtiyat nüsxənizi bərpa edə bilmir. Ən son versiyaya yeniləyib, təkrar cəhd edin.</string>
+    <string name="RemoteRestoreScreen__update_latest">Radar-ın bu versiyası ehtiyat nüsxənizi bərpa edə bilmir. Ən son versiyaya yeniləyib, təkrar cəhd edin.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Signal-ı yenilə</string>
+    <string name="RemoteRestoreScreen__update_signal">Radar-ı yenilə</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">İndi yox</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Hesabınız məxfilik və təhlükəsizliyinizi qorumaq üçün kilidləndi. Hesabınızda fəaliyyətsiz %1$d gündən sonra bu telefon nömrəsi ilə PIN-inizə ehtiyac olmadan yenidən qeydiyyatdan keçə biləcəksiniz. Bütün məzmunlar silinəcək.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Signal-ı köhnə cihazınızda açın</string>
+    <string name="QuickRestoreQRScreen__step_1">Radar-ı köhnə cihazınızda açın</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Kamera piktoqramına klikləyin </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Güclü bir PIN seçin</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Siz telefon nömrənizi təsdiqləmək üçün artıq istifadə olunmuş kodu təkrar daxil etdiniz. Yeni və unikal bir Signal PIN kodu seçin.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Siz telefon nömrənizi təsdiqləmək üçün artıq istifadə olunmuş kodu təkrar daxil etdiniz. Yeni və unikal bir Radar PIN kodu seçin.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">PIN-lər haqqında daha ətraflı</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Xəbərdarlıq</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Əgər PIN-i qeyri-aktiv etsəniz, əllə ehtiyat nüsxəsini çıxarmadığınız və geri yükləmə etmədiyiniz müddətcə Signal-da yenidən qeydiyyatdan keçəndə bütün verilənləri itirəcəksiniz. PIN qeyri-aktiv edildikdə, Qeydiyyat Kilidini aça bilməyəcəksiniz.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Əgər PIN-i qeyri-aktiv etsəniz, əllə ehtiyat nüsxəsini çıxarmadığınız və geri yükləmə etmədiyiniz müddətcə Radar-da yenidən qeydiyyatdan keçəndə bütün verilənləri itirəcəksiniz. PIN qeyri-aktiv edildikdə, Qeydiyyat Kilidini aça bilməyəcəksiniz.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">PIN-i sıradan çıxart</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">PIN-inizi daxil edin</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Signal-ı ilk quraşdırdığınız zaman yaratdığınız PIN kodu daxil edin</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Radar-ı ilk quraşdırdığınız zaman yaratdığınız PIN kodu daxil edin</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Siz telefon nömrənizi təsdiqləmək üçün artıq istifadə olunmuş kodu təkrar daxil etdiniz. Hesabınız üçün əvvəl seçdiyiniz unikal Signal PIN kodunu daxil edin.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Siz telefon nömrənizi təsdiqləmək üçün artıq istifadə olunmuş kodu təkrar daxil etdiniz. Hesabınız üçün əvvəl seçdiyiniz unikal Radar PIN kodunu daxil edin.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">Səhv PIN. %1$d cəhd qaldı.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Bildirişlərə icazə verin</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal bildiriş icazəsi sorğulamaq istərdi. Bu, yeni mesajlar gəldikdə, cihazın xəbərdarlıqları göstərməsinə imkan verir.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar bildiriş icazəsi sorğulamaq istərdi. Bu, yeni mesajlar gəldikdə, cihazın xəbərdarlıqları göstərməsinə imkan verir.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">İndi yox</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Hesabınızı əlaqələndirmək üçün bu kodu skan edin</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Signal-ı telefonunuzda açın</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Radar-ı telefonunuzda açın</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Signal parametrlərini açmaq üçün profil şəklinizə toxunun</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Radar parametrlərini açmaq üçün profil şəklinizə toxunun</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">\"Əlaqələndirilmiş cihazlar\" və \"Yeni cihazı əlaqələndir\" seçiminə toxunun</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Kod yaradılmadı</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Digər cihazda Signal tətbiqi yoxdur?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Digər cihazda Radar tətbiqi yoxdur?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Hesab yaradın</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Tətbiq məlumatları silinsin?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Fərqli bir Signal hesabını əlaqələndirməyə çalışırsınız. Davam etsəniz, hazırda bu cihazda olan bütün Signal məlumatları silinəcək.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Fərqli bir Radar hesabını əlaqələndirməyə çalışırsınız. Davam etsəniz, hazırda bu cihazda olan bütün Radar məlumatları silinəcək.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Sil və yenidən başlat</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Hesabınızı köçürün</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Hesabınızı köçürmək üçün köhnə Android cihazınızda Signal tətbiqini açın və \"Hesabı köçür\" seçimini edin.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Hesabınızı köçürmək üçün köhnə Android cihazınızda Radar tətbiqini açın və \"Hesabı köçür\" seçimini edin.</string>
     <string name="DeviceTransferInstructions__continue">Davam et</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Bəli, nömrələr uyğundur</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Nömrələr uyğunlaşmır</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Köhnə cihazınızın təsdiqləməsi gözlənilir…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal köhnə cihazınızı aşkar etmək və onunla bağlantı qurmaq üçün məkan parametrlərinə giriş icazəsi tələb edir.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar köhnə cihazınızı aşkar etmək və onunla bağlantı qurmaq üçün məkan parametrlərinə giriş icazəsi tələb edir.</string>
     <string name="DeviceTransferSetup__grant_location_permission">İcazə ver</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal köhnə cihazınızı aşkarlamaq və onunla bağlantı qurmaq üçün məkan xidmətlərinin aktivləşdirilməsini tələb edir.</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar köhnə cihazınızı aşkarlamaq və onunla bağlantı qurmaq üçün məkan xidmətlərinin aktivləşdirilməsini tələb edir.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Yerləşmə xidmətlərini işə sal</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal köhnə cihazınızı aşkarlamaq və onunla bağlantı qurmaq üçün Wi-Fi-a qoşulu olmağı tələb edir.</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar köhnə cihazınızı aşkarlamaq və onunla bağlantı qurmaq üçün Wi-Fi-a qoşulu olmağı tələb edir.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">\"Wi-Fi\"ı açın</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Üzr istəyirik, görünür cihazınız Wi-Fi Direct-i dəstəkləmir.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Bunun əvəzinə ehtiyat nüsxəni bərpa edin</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Verilənlər köçürülür</string>
     <string name="DeviceTransferProgress__d_messages_so_far">İndiyə qədər %1$d mesaj</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Köçürülə bilmir</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Signal-ın daha yeni versiyasından köçürmək olmur.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Radar-ın daha yeni versiyasından köçürmək olmur.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Verilənlər bazasının məhdudiyyəti səbəbilə bəzi məlumatları köçürmək mümkün olmadı.</string>
     <string name="DeviceTransferProgress__transfer_failed">Köçürmə baş tutmadı. Yenidən cəhd edin.</string>
     <string name="DeviceTransferProgress__try_again">Yenidən cəhd edin</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Əminsiniz?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">İstifadəçi adı olmadan insanlar sizi Signal-da tapa bilməz.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">İstifadəçi adı olmadan insanlar sizi Radar-da tapa bilməz.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Ləğv et</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

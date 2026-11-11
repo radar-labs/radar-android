@@ -14,7 +14,7 @@
     <!-- Displayed as a title at the top of the screen -->
     <string name="GrantPermissionsFragment__allow_permissions">Kubalisha ruhusa</string>
     <!-- Displayed as a subtitle at the top of the screen -->
-    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Ili kukusaidia kutuma ujumbe kwa watu unaowajua, Signal itakuomba ruhusa hizi. </string>
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Ili kukusaidia kutuma ujumbe kwa watu unaowajua, Radar itakuomba ruhusa hizi. </string>
     <!-- Displayed as a text-only action button at the bottom start of the screen -->
     <string name="GrantPermissionsFragment__not_now">Sio sasa</string>
     <!-- Displayed as an action button at the bottom end of the screen -->
@@ -26,7 +26,7 @@
     <!-- Contacts permission row title -->
     <string name="GrantPermissionsFragment__contacts">Wawasiliani</string>
     <!-- Contacts permission row description -->
-    <string name="GrantPermissionsFragment__find_people_you_know">Tafuta watu unaowafahamu. Wawasiliani wako wamesimbwa fiche na hawaonekani kwa huduma ya Signal.</string>
+    <string name="GrantPermissionsFragment__find_people_you_know">Tafuta watu unaowafahamu. Wawasiliani wako wamesimbwa fiche na hawaonekani kwa huduma ya Radar.</string>
     <!-- Phone calls permission row title -->
     <string name="GrantPermissionsFragment__phone_calls">Simu</string>
     <!-- Phone calls permission row description -->
@@ -140,11 +140,11 @@
     <!-- Row title for restore/transfer using a previous registered phone/device -->
     <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Nina simu yangu ya zamani</string>
     <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
-    <string name="WelcomeFragment_restore_action_scan_qr">Skani QR code kutoka kwenye akaunti yako ya Signal ya sasa ili uanze haraka</string>
+    <string name="WelcomeFragment_restore_action_scan_qr">Skani QR code kutoka kwenye akaunti yako ya Radar ya sasa ili uanze haraka</string>
     <!-- Row title for restore/transfer without using a previous device -->
     <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Sina simu yangu ya zamani</string>
     <!-- Row subtitle for restore/transfer without using a previous device -->
-    <string name="WelcomeFragment_restore_action_reinstalling">Au unasakinisha tena Signal kwenye kifaa kile kile</string>
+    <string name="WelcomeFragment_restore_action_reinstalling">Au unasakinisha tena Radar kwenye kifaa kile kile</string>
 
     <!-- ArchiveRestoreSelectionScreen -->
     <!-- Title text for the archive restore selection screen -->
@@ -152,9 +152,9 @@
     <!-- Subtitle text for the archive restore selection screen -->
     <string name="ArchiveRestoreSelectionScreen__subheading">Chagua jinsi ungependa kurejesha historia ya jumbe zako na data ya akaunti.</string>
     <!-- Title for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Kutoka Hifadhi Nakala ya Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Kutoka Hifadhi Nakala ya Radar</string>
     <!-- Subtitle for the Signal Backups option card -->
-    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Mpango wako wa bila malipo na wa kulipia wa Hifadhi Nakala ya Signal</string>
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Mpango wako wa bila malipo na wa kulipia wa Hifadhi Nakala ya Radar</string>
     <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
     <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Rejesha uhifadhi nakala wa kwenye kifaa</string>
     <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
@@ -200,7 +200,7 @@
     <!-- Title when no backup is found -->
     <string name="LocalBackupRestoreScreen__no_backup_found">Hakuna nakala hifadhi zimepatikana</string>
     <!-- Description when no backup is found -->
-    <string name="LocalBackupRestoreScreen__no_backup_found_description">Hakuna nakala zilizohifadhiwa na Signal zilizopatikana katika folda iliyochaguliwa. Tafadhali jaribu folda tofauti.</string>
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Hakuna nakala zilizohifadhiwa na Radar zilizopatikana katika folda iliyochaguliwa. Tafadhali jaribu folda tofauti.</string>
     <!-- Button to try a different folder -->
     <string name="LocalBackupRestoreScreen__try_different_folder">Jaribu folda tofauti</string>
     <!-- Title for V1 passphrase entry screen -->
@@ -233,7 +233,7 @@
     <!-- Title of the dialog warning that the backup being restored was created with a different account -->
     <string name="EnterAepScreen__restore_to_new_account">Ungependa kurejesha akaunti mpya?</string>
     <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
-    <string name="EnterAepScreen__restore_to_new_account_body">Nakala unazorejesha ziliundwa kwa kutumia akaunti tofauti ya Signal. Unaweza kurejesha nakala hii kwenye akaunti hii, lakini hautaweza kuwa mwanakikundi wa kikundi chochote kilichorejeshwa.</string>
+    <string name="EnterAepScreen__restore_to_new_account_body">Nakala unazorejesha ziliundwa kwa kutumia akaunti tofauti ya Radar. Unaweza kurejesha nakala hii kwenye akaunti hii, lakini hautaweza kuwa mwanakikundi wa kikundi chochote kilichorejeshwa.</string>
     <!-- Confirm button label for the restore to new account dialog -->
     <string name="EnterAepScreen__restore">Rejesha</string>
     <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
@@ -243,7 +243,7 @@
     <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
     <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Ufunguo wa kurejesha akaunti usio sahihi</string>
     <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
-    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Hakikisha unasajili kwa kutumia namba moja ya simu na ufunguo wa kurejesha akaunti wenye herufi 64 uliouhifadhi wakati wa kuwasha hifadhi nakala ya Signal. Nakala zilizohifadhiwa haziwezi kurejeshwa bila ufunguo huu.</string>
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Hakikisha unasajili kwa kutumia namba moja ya simu na ufunguo wa kurejesha akaunti wenye herufi 64 uliouhifadhi wakati wa kuwasha hifadhi nakala ya Radar. Nakala zilizohifadhiwa haziwezi kurejeshwa bila ufunguo huu.</string>
     <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
     <string name="EnterAepScreen__try_again">Jaribu tena</string>
     <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
@@ -253,7 +253,7 @@
     <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
     <string name="EnterAepScreen__verify_with_sms_code">Thibitisha kwa kutumia code ya SMS?</string>
     <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
-    <string name="EnterAepScreen__verify_with_sms_code_body">Unaweza kusajili akaunti yako kwa kuthibitisha kupitia code ya SMS ambayo Signal itakutumia. Baada ya kuingiza code, unaweza kujaribu kurejesha nakala zako ukitumia tena ufunguo wa kurejesha akaunti.</string>
+    <string name="EnterAepScreen__verify_with_sms_code_body">Unaweza kusajili akaunti yako kwa kuthibitisha kupitia code ya SMS ambayo Radar itakutumia. Baada ya kuingiza code, unaweza kujaribu kurejesha nakala zako ukitumia tena ufunguo wa kurejesha akaunti.</string>
     <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
     <string name="EnterAepScreen__send_code">Tuma code</string>
     <!-- Text shown while preparing the restore -->
@@ -279,7 +279,7 @@
     <!-- Button to link an existing Signal account to this device -->
     <string name="WelcomeScreen__link_your_account">Unganisha akaunti yako</string>
     <!-- Prompt shown to users who don\'t have a Signal account yet -->
-    <string name="WelcomeScreen__not_on_signal_yet">Bado haupo kwenye Signal?</string>
+    <string name="WelcomeScreen__not_on_signal_yet">Bado haupo kwenye Radar?</string>
     <!-- Button to create a new Signal account -->
     <string name="WelcomeScreen__create_account">Fungua akaunti</string>
 
@@ -313,9 +313,9 @@
     <!-- Title for the invalid backup version dialog -->
     <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Imeshindwa kurejesha nakala hii</string>
     <!-- Body for the invalid backup version dialog -->
-    <string name="RemoteRestoreScreen__update_latest">Toleo hili la Signal limeshindwa kurejesha nakala yako. Sasisha toleo jipya zaidi na ujaribu tena.</string>
+    <string name="RemoteRestoreScreen__update_latest">Toleo hili la Radar limeshindwa kurejesha nakala yako. Sasisha toleo jipya zaidi na ujaribu tena.</string>
     <!-- Button to update Signal -->
-    <string name="RemoteRestoreScreen__update_signal">Sasisha Signal</string>
+    <string name="RemoteRestoreScreen__update_signal">Sasisha Radar</string>
     <!-- Button to dismiss update dialog -->
     <string name="RemoteRestoreScreen__not_now">Sio sasa</string>
     <!-- Title for unrecoverable backup failure dialog -->
@@ -347,7 +347,7 @@
     <string name="AccountLockedScreen__your_account">Akaunti yako imefungwa ili kulinda faragha yako na usalama wako. Baada ya siku %1$d bila shughuli kwenye akaunti yako utaweza kusajili upya nambari hii ya simu bila kuhitaji Nenosiri lako. Yote yaliyomo yatafutwa.</string>
 
     <!-- Step 1 to quick restore -->
-    <string name="QuickRestoreQRScreen__step_1">Fungua Signal kwenye kifaa chako cha zamani</string>
+    <string name="QuickRestoreQRScreen__step_1">Fungua Radar kwenye kifaa chako cha zamani</string>
     <!-- Step 2 to quick restore -->
     <string name="QuickRestoreQRScreen__step_2">Gusa aikoni ya kamera </string>
     <!-- Step 3 to quick restore -->
@@ -398,13 +398,13 @@
     <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
     <string name="PinCreationScreen__choose_a_stronger_pin">Chagua PINI yenye nguvu zaidi.</string>
     <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
-    <string name="PinCreationScreen__reentered_verification_code">Umeweka tena code ambayo ulishatumia kuthibitisha namba yako ya simu. Chagua PIN ya Signal mpya na ya kipekee.</string>
+    <string name="PinCreationScreen__reentered_verification_code">Umeweka tena code ambayo ulishatumia kuthibitisha namba yako ya simu. Chagua PIN ya Radar mpya na ya kipekee.</string>
     <!-- Overflow menu item that opens a help article about Signal PINs. -->
     <string name="PinCreationScreen__learn_more_about_pins">Jifunze zaidi kuhusu PINI</string>
     <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
     <string name="PinCreationScreen__warning">Onyo</string>
     <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
-    <string name="PinCreationScreen__disable_pin_warning">Ukizima PIN, utapoteza data zote utakaposajili upya Signal isipokuwa kama ukihifadhi nakala yake na kuirejesha mwenyewe. Huwezi kuwasha Kufuli la Usajili wakati PIN imezimwa.</string>
+    <string name="PinCreationScreen__disable_pin_warning">Ukizima PIN, utapoteza data zote utakaposajili upya Radar isipokuwa kama ukihifadhi nakala yake na kuirejesha mwenyewe. Huwezi kuwasha Kufuli la Usajili wakati PIN imezimwa.</string>
     <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
     <string name="PinCreationScreen__disable_pin">Lemaza PIN</string>
     <!-- Labels the button that cancels disabling the Signal PIN. -->
@@ -421,9 +421,9 @@
     <!-- PIN entry screen title when restoring an account. -->
     <string name="PinEntryScreen__enter_your_pin">Ingiza Nenosiri lako</string>
     <!-- Describes the PIN that needs to be entered. -->
-    <string name="PinEntryScreen__enter_the_pin_you_created">Weka PIN uliyotengeneza wakati uliposakinisha Signal kwa mara ya kwanza</string>
+    <string name="PinEntryScreen__enter_the_pin_you_created">Weka PIN uliyotengeneza wakati uliposakinisha Radar kwa mara ya kwanza</string>
     <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
-    <string name="PinEntryScreen__reentered_verification_code">Umeweka tena code ambayo ulishatumia kuthibitisha namba yako ya simu. Weka PIN ya Signal ya kipekee ambayo uliichagua awali kwa ajili ya akaunti yako.</string>
+    <string name="PinEntryScreen__reentered_verification_code">Umeweka tena code ambayo ulishatumia kuthibitisha namba yako ya simu. Weka PIN ya Radar ya kipekee ambayo uliichagua awali kwa ajili ya akaunti yako.</string>
     <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
     <plurals name="PinEntryScreen__incorrect_pin">
         <item quantity="one">PINI si sahihi. Jaribio %1$d limebaki.</item>
@@ -457,7 +457,7 @@
     <!-- Title for the screen asking the user to grant the notification permission -->
     <string name="AllowNotificationsScreen__allow_notifications">Ruhusu Arifa</string>
     <!-- Description for the screen asking the user to grant the notification permission -->
-    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Signal ingependa kuomba ruhusa ya arifa. Hii inaruhusu kifaa chako kuonyesha arifa za jumbe mpya zikiingia.</string>
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Radar ingependa kuomba ruhusa ya arifa. Hii inaruhusu kifaa chako kuonyesha arifa za jumbe mpya zikiingia.</string>
     <!-- Button label that dismisses the notification permission request without granting it -->
     <string name="AllowNotificationsScreen__not_now">Sio sasa</string>
     <!-- Button label that proceeds with the notification permission request -->
@@ -493,9 +493,9 @@
     <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
     <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Changanua code hii ili uunganishe akaunti yako</string>
     <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
-    <string name="LinkAccountScreen__open_signal_on_your_phone">Fungua Signal kwenye simu yako</string>
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Fungua Radar kwenye simu yako</string>
     <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
-    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Gusa picha ya wasifu wako ili ufungue Mipangilio ya Signal</string>
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Gusa picha ya wasifu wako ili ufungue Mipangilio ya Radar</string>
     <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
     <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Gusa \"Vifaa vilivyounganishwa\" na \"Unganisha kifaa kipya\"</string>
     <!-- Button label opening help content for users who can\'t complete the link-account steps -->
@@ -507,7 +507,7 @@
     <!-- Error label shown in place of the QR code if it could not be generated -->
     <string name="LinkAccountScreen__failed_to_generate_code">Imeshindwa kutayarisha code</string>
     <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
-    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Hauna Signal kwenye kifaa kingine?</string>
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Hauna Radar kwenye kifaa kingine?</string>
     <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
     <string name="LinkAccountScreen__create_account">Fungua akaunti</string>
     <!-- Button to retry generating the QR code after it failed to load -->
@@ -521,7 +521,7 @@
     <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
     <string name="LinkAccountScreen__delete_app_data_question">Futa data ya programu?</string>
     <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
-    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Unajaribu kuunganisha akaunti tofauti ya Signal. Ukiendelea, data yote ya Signal iliyopo sasa kwenye kifaa hiki itafutwa.</string>
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Unajaribu kuunganisha akaunti tofauti ya Radar. Ukiendelea, data yote ya Radar iliyopo sasa kwenye kifaa hiki itafutwa.</string>
     <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
     <string name="LinkAccountScreen__delete_and_restart">Futa na zima kisha uwashe</string>
     <!-- Content description for the button that closes the maximized QR code overlay -->
@@ -529,7 +529,7 @@
 
     <!-- Device transfer: Instructions screen -->
     <string name="DeviceTransferInstructions__transfer_your_account">Hamisha akaunti yako</string>
-    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Ili uhamishe akaunti yako, fungua Signal kwenye kifaa chako cha Android cha zamani kisha chagua Hamisha Akaunti.</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Ili uhamishe akaunti yako, fungua Radar kwenye kifaa chako cha Android cha zamani kisha chagua Hamisha Akaunti.</string>
     <string name="DeviceTransferInstructions__continue">Endelea</string>
 
     <!-- Device transfer: Setup screen -->
@@ -540,11 +540,11 @@
     <string name="DeviceTransferSetup__numbers_match">Ndio, namba zinalingana</string>
     <string name="DeviceTransferSetup__numbers_do_not_match">Nambari hazilingani</string>
     <string name="DeviceTransferSetup__waiting_for_other_to_verify">Inasubiri kifaa chako cha zamani kithibitishe…</string>
-    <string name="DeviceTransferSetup__location_permission_required">Signal inahitaji ruhusa ya kufikia data ya mahali ulipo ili kugundua na kuunganisha na kifaa chako cha zamani.</string>
+    <string name="DeviceTransferSetup__location_permission_required">Radar inahitaji ruhusa ya kufikia data ya mahali ulipo ili kugundua na kuunganisha na kifaa chako cha zamani.</string>
     <string name="DeviceTransferSetup__grant_location_permission">Ipe ruhusa</string>
-    <string name="DeviceTransferSetup__location_services_required">Signal inahitaji idhini ya kufikia data ya mahali ulipo ili igundue na kuunganisha na kifaa chako cha awali cha Android.</string>
+    <string name="DeviceTransferSetup__location_services_required">Radar inahitaji idhini ya kufikia data ya mahali ulipo ili igundue na kuunganisha na kifaa chako cha awali cha Android.</string>
     <string name="DeviceTransferSetup__turn_on_location_services">Washa huduma za eneo</string>
-    <string name="DeviceTransferSetup__wifi_required">Signal inahitaji W-Fi iwashwe ili iweze kugundua na kuunganisha kwenye kifaaa chako cha zamani.</string>
+    <string name="DeviceTransferSetup__wifi_required">Radar inahitaji W-Fi iwashwe ili iweze kugundua na kuunganisha kwenye kifaaa chako cha zamani.</string>
     <string name="DeviceTransferSetup__turn_on_wifi">Washa Wi-Fi</string>
     <string name="DeviceTransferSetup__wifi_direct_unavailable">Samahani, inaonekana kifaa chako hakitumii Wi-Fi Direct.</string>
     <string name="DeviceTransferSetup__restore_a_backup">Badala yake, rejesha nakala zilizohifadhiwa</string>
@@ -561,7 +561,7 @@
     <string name="DeviceTransferProgress__transferring_data">Inahamisha data</string>
     <string name="DeviceTransferProgress__d_messages_so_far">1%1$d Jumbe hadi sasa</string>
     <string name="DeviceTransferProgress__unable_to_transfer">Imeshindwa kuhamisha</string>
-    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Haiwezi kuhamisha kutoka matoleo mapya ya Signal.</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Haiwezi kuhamisha kutoka matoleo mapya ya Radar.</string>
     <string name="DeviceTransferProgress__failure_foreign_key">Baadhi ya data imeshindwa kuhama kutokana na vikwazo vya hifadhidata.</string>
     <string name="DeviceTransferProgress__transfer_failed">Imeshindwa kuhamisha. Tafadhali jaribu tena.</string>
     <string name="DeviceTransferProgress__try_again">Jaribu tena</string>
@@ -781,7 +781,7 @@
     <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
     <string name="AddUsernameScreen__are_you_sure">Una uhakika?</string>
     <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
-    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Bila jina la mtumiaji watu hawataweza kukupata kwenye Signal.</string>
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Bila jina la mtumiaji watu hawataweza kukupata kwenye Radar.</string>
     <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
     <string name="AddUsernameScreen__cancel">Ghairi</string>
     <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->

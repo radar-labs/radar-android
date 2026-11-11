@@ -61,13 +61,13 @@
   <!-- Accessibility description for the button that leaves media selection and opens the camera. -->
   <string name="MediaSelectScreen__go_to_camera">Камерага өтүү</string>
   <!-- Message shown in place of the gallery when the user has not granted permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Signal сүрөттөрүңүз менен видеолоруңузду сиздин уруксатыңыз менен көрсөтөт</string>
+  <string name="MediaSelectScreen__signal_needs_permission_to_show_your_photos_and_videos">Radar сүрөттөрүңүз менен видеолоруңузду сиздин уруксатыңыз менен көрсөтөт</string>
   <!-- Label for the button that asks the system for permission to read the user\'s photos and videos. -->
   <string name="MediaSelectScreen__allow_access">Кирүүгө уруксат берүү</string>
   <!-- Message shown in place of the gallery when the user only shared selected photos with Signal and none of them can be shown. -->
-  <string name="MediaSelectScreen__no_photos_or_videos_found">Бир дагы сүрөт же видео табылган жок. Signal\'га сиз тандаган сүрөттөр менен видеолор гана жеткиликтүү.</string>
+  <string name="MediaSelectScreen__no_photos_or_videos_found">Бир дагы сүрөт же видео табылган жок. Radar\'га сиз тандаган сүрөттөр менен видеолор гана жеткиликтүү.</string>
   <!-- Reminder shown above the gallery when the user only shared selected photos with Signal. -->
-  <string name="MediaSelectScreen__signal_has_limited_access">Signal\'га сүрөттөр же видеолор жеткиликсиз</string>
+  <string name="MediaSelectScreen__signal_has_limited_access">Radar\'га сүрөттөр же видеолор жеткиликсиз</string>
   <!-- Label for the button that opens the menu for changing which photos and videos Signal can see. -->
   <string name="MediaSelectScreen__manage">Өзгөртүү</string>
   <!-- Menu option that re-opens the system picker so the user can share more photos and videos with Signal. -->
@@ -79,7 +79,7 @@
   <!-- Subtitle of the sheet shown when the permission to read photos and videos has been permanently denied, introducing the steps that follow. -->
   <string name="MediaSelectScreen__to_show_photos_and_videos">Сүрөттөр менен видеолорду көрсөтүү үчүн:</string>
   <!-- Snackbar shown when the user denies the permission to read their photos and videos. -->
-  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Сүрөттөрүңүз менен видеолоруңузду Signal\'га жеткиликтүү кылыңыз.</string>
+  <string name="MediaSelectScreen__signal_needs_access_to_show_your_photos_and_videos">Сүрөттөрүңүз менен видеолоруңузду Radar\'га жеткиликтүү кылыңыз.</string>
 
   <!-- Label for the button that switches the capture screen to taking a photo. -->
   <string name="MediaCaptureScreen__photo">Сүрөт</string>
@@ -138,23 +138,23 @@
   <!-- Dialog title asking users for microphone permission -->
   <string name="CameraXFragment_allow_access_microphone">Микрофонуңузга уруксат бериңиз</string>
   <!-- Text explaining why Signal needs camera access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Сүрөт же видео тартуу үчүн Signal колдонмосуна камераны колдонууга уруксат беришиңиз керек.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera">Сүрөт же видео тартуу үчүн Radar колдонмосуна камераны колдонууга уруксат беришиңиз керек.</string>
   <!-- Text explaining why Signal needs camera and microphone access in order to take photos and videos -->
-  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Сүрөт жана видео тартуу үчүн Signal колдонмосуна камерага жана микрофонго кирүүсүнө уруксат бериңиз.</string>
+  <string name="CameraXFragment_to_capture_photos_and_video_allow_camera_microphone">Сүрөт жана видео тартуу үчүн Radar колдонмосуна камерага жана микрофонго кирүүсүнө уруксат бериңиз.</string>
   <!-- Text explaining why Signal needs microphone access to take videos -->
-  <string name="CameraXFragment_to_capture_videos_with_sound">Үн менен видео тартуу үчүн Signal колдонмосуна микрофонуңузга кирүүгө уруксат бериңиз.</string>
+  <string name="CameraXFragment_to_capture_videos_with_sound">Үн менен видео тартуу үчүн Radar колдонмосуна микрофонуңузга кирүүгө уруксат бериңиз.</string>
   <!-- Text explaining why Signal needs camera access to scan QR codes -->
-  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR кодун скандоо үчүн Signal колдонмосуна камерага кирүүсүнө уруксат бериңиз.</string>
+  <string name="CameraXFragment_to_scan_qr_code_allow_camera">QR кодун скандоо үчүн Radar колдонмосуна камерага кирүүсүнө уруксат бериңиз.</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when capturing photos -->
-  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Сүрөт тартуу үчүн Signal камерага кирүү мүмкүнчүлүгүн талап кылат</string>
+  <string name="CameraXFragment_signal_needs_camera_access_capture_photos">Сүрөт тартуу үчүн Radar камерага кирүү мүмкүнчүлүгүн талап кылат</string>
   <!-- Toast dialog explaining why Signal needs camera permissions when scanning QR codes -->
-  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR коддорун скандоо үчүн Signal колдонмосу камерага кирүүсү керек</string>
+  <string name="CameraXFragment_signal_needs_camera_access_scan_qr_code">QR коддорун скандоо үчүн Radar колдонмосу камерага кирүүсү керек</string>
   <!-- Toast dialog explaining why Signal needs microphone permissions -->
-  <string name="CameraXFragment_signal_needs_microphone_access_video">Видеого тартуу үчүн Signal микрофонду колдонушу керек</string>
+  <string name="CameraXFragment_signal_needs_microphone_access_video">Видеого тартуу үчүн Radar микрофонду колдонушу керек</string>
   <!-- Dialog description that explains the steps needed to give camera permission -->
-  <string name="CameraXFragment_to_capture_photos">Signal\'да сүрөт тартуу үчүн:</string>
+  <string name="CameraXFragment_to_capture_photos">Radar\'да сүрөт тартуу үчүн:</string>
   <!-- Dialog description that explains the steps needed to give camera and microphone permission -->
-  <string name="CameraXFragment_to_capture_photos_videos">Signal\'да сүрөт жана видео тартуу үчүн:</string>
+  <string name="CameraXFragment_to_capture_photos_videos">Radar\'да сүрөт жана видео тартуу үчүн:</string>
   <!-- Dialog description that explains the steps needed to give microphone permission -->
   <string name="CameraXFragment_to_capture_videos">Үн менен видео тартуу үчүн:</string>
   <!-- Dialog description that explains the steps needed to give Signal camera permissions -->
@@ -168,7 +168,7 @@
   <!-- Accessibility label for the camera toggle that keeps the camera open after each capture so several photos or videos can be taken in a row -->
   <string name="CameraXFragment_multi_capture">Бир нече сүрөт</string>
   <!-- Displayed in a permissions dialog when the user has denied access to hardware for image and video capture. -->
-  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Signal колдонмосуна видео тартуу үчүн микрофонду колдонууга уруксат беришиңиз керек, бирок сиз баш тарткансыз. Колдонмонун параметрлерине кирүү үчүн \"Улантуу\" дегенди басып, \"Уруксаттар\" дегенди тандап, \"Микрофон\" дегенди иштетиңиз.</string>
+  <string name="CameraXFragment_signal_needs_the_recording_permissions_to_capture_video">Radar колдонмосуна видео тартуу үчүн микрофонду колдонууга уруксат беришиңиз керек, бирок сиз баш тарткансыз. Колдонмонун параметрлерине кирүү үчүн \"Улантуу\" дегенди басып, \"Уруксаттар\" дегенди тандап, \"Микрофон\" дегенди иштетиңиз.</string>
 
   <!-- Displayed when there is an error capturing video -->
   <string name="MediaSendViewModel__error_recording_video">Видео тартууда ката кетти</string>
@@ -211,7 +211,7 @@
         <item quantity="other">%1$d нерсе стандарттык сапатка коюлду</item>
     </plurals>
   <!-- Message shown when saving the media being edited requires the storage permission, but that permission has been permanently denied by the user. -->
-  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Тышкы сактагычка сактоо үчүн Signal колдонмосуна сактагычты колдонууга уруксат беришиңиз керек, бирок сиз андан баш тарткансыз. Колдонмонун параметрлерине кирүү үчүн \"Улантуу\" дегенди басып, \"Уруксаттар\" дегенди тандап, \"Сактагыч\" дегенди иштетиңиз.</string>
+  <string name="MediaSendViewModel__signal_needs_the_storage_permission">Тышкы сактагычка сактоо үчүн Radar колдонмосуна сактагычты колдонууга уруксат беришиңиз керек, бирок сиз андан баш тарткансыз. Колдонмонун параметрлерине кирүү үчүн \"Улантуу\" дегенди басып, \"Уруксаттар\" дегенди тандап, \"Сактагыч\" дегенди иштетиңиз.</string>
   <!-- Message shown when the user disables audio on a video -->
   <string name="MediaSendViewModel__video_will_be_sent_without_audio">Видео үнү жок жөнөтүлөт</string>
 
@@ -225,14 +225,14 @@
   <!-- The title of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_title">Түзмөктү байланыштырасызбы?</string>
   <!-- The body of a dialog notifying that the user scanned a QR code that could be used to link a Signal device. -->
-  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Signal түзмөгүн байланыштырганы жатат окшойсуз. Алгач, Улантуу дегенди, андан соң \"Жаңы түзмөктү байланыштыруу\" дегенди таптап, QR кодду кайра скандаңыз.</string>
+  <string name="LinkedDeviceScannedDialog__it_looks_like_youre_trying">Radar түзмөгүн байланыштырганы жатат окшойсуз. Алгач, Улантуу дегенди, андан соң \"Жаңы түзмөктү байланыштыруу\" дегенди таптап, QR кодду кайра скандаңыз.</string>
   <!-- The label of a dialog asking the user if they would like to continue to the linked device settings screen. -->
   <string name="LinkedDeviceScannedDialog__device_link_dialog_continue">Улантуу</string>
 
   <!-- The title of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
   <string name="ReRegistrationScannedDialog__transfer_failed_title">Аккаунт өтпөй жатат</string>
   <!-- The body of a dialog shown when the user scanned a transfer QR code from a device that is too old to accept their account. -->
-  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Өткөрүп жаткан түзмөк эскирип калган. Signal\'ды ошол түзмөктө жаңыртып, кайталап көрүңүз.</string>
+  <string name="ReRegistrationScannedDialog__the_device_you_are_transferring_to_is_out_of_date">Өткөрүп жаткан түзмөк эскирип калган. Radar\'ды ошол түзмөктө жаңыртып, кайталап көрүңүз.</string>
 
     <!-- Gif label displayed in a pill in the editor specifying the type of media being sent. -->
     <plurals name="MediaEditScreen__gif">

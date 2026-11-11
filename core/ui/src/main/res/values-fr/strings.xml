@@ -30,7 +30,7 @@
 
     <!-- DevicePinAuthEducationSheet -->
     <!-- Body of bottom sheet explaining that users should use their device pin or biometrics and not their Signal pin -->
-    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Appuyez sur \"Continuer\", puis utilisez la méthode de déverrouillage de votre téléphone. Ne saisissez pas votre code PIN Signal.</string>
+    <string name="LinkDeviceFragment__tap_continue_and_enter_phone">Appuyez sur \"Continuer\", puis utilisez la méthode de déverrouillage de votre téléphone. Ne saisissez pas votre code PIN Radar.</string>
     <!-- Button that dismisses the bottom sheet -->
     <string name="LinkDeviceFragment__continue">Continuer</string>
 
