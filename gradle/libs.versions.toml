@@ -6,7 +6,8 @@
 buildTools = "36.0.0"
 compileSdk = "37"
 targetSdk = "36"
-minSdk = "23"
+# Radar: 24 (upstream 23) — the Breez SDK bindings need API 24.
+minSdk = "24"
 ndk = "28.0.13004108"
 javaVersion = "21"
 kotlinJvmTarget = "21"
@@ -149,6 +150,8 @@ androidx-documentfile = "androidx.documentfile:documentfile:1.0.1"
 androidx-credentials = "androidx.credentials:credentials:1.6.0"
 androidx-credentials-compat = "androidx.credentials:credentials-play-services-auth:1.6.0"
 android-billing = "com.android.billingclient:billing-ktx:8.3.0"
+# Radar: Breez SDK (Spark) for Lightning payments.
+breezsdk = "breez_sdk_spark:bindings-android:0.27.2"
 
 # Billing
 material-material = "com.google.android.material:material:1.12.0"
