@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,17 +31,20 @@ import org.thoughtcrime.securesms.PaymentPreferencesDirections;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.banner.BannerManager;
 import org.thoughtcrime.securesms.banner.banners.EnclaveFailureBanner;
-import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity;
-import org.thoughtcrime.securesms.help.HelpFragment;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
+import org.thoughtcrime.securesms.jobs.PaymentLedgerUpdateJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity;
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.payments.MoneyView;
+import org.thoughtcrime.securesms.payments.PaymentSnippetRefresher;
 import org.thoughtcrime.securesms.payments.backup.RecoveryPhraseStates;
 import org.thoughtcrime.securesms.payments.backup.confirm.PaymentsRecoveryPhraseConfirmFragment;
 import org.thoughtcrime.securesms.payments.preferences.model.InfoCard;
 import org.thoughtcrime.securesms.payments.preferences.model.PaymentItem;
 import org.thoughtcrime.securesms.util.CommunicationActions;
+import org.thoughtcrime.securesms.util.DrawableUtil;
 import org.thoughtcrime.securesms.util.PlayStoreUtil;
 import org.signal.core.ui.util.SpanUtil;
 import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
@@ -57,6 +61,22 @@ public class PaymentsHomeFragment extends LoggingFragment {
   private static final String TAG = Log.tag(PaymentsHomeFragment.class);
 
   private PaymentsHomeViewModel viewModel;
+  private PaymentsHomeAdapter   adapter;
+
+  /** Tracks whether the balance is currently visible to the user. */
+  private boolean balanceVisible = true;
+
+  /** Holds the most recently received balance so we can redisplay it on toggle. */
+  private org.whispersystems.signalservice.api.payments.Money lastBalanceAmount = null;
+
+  /** The fiat-equivalent label; masked alongside the balance when hidden. */
+  private TextView exchangeView = null;
+
+  /** Holds the most recently rendered fiat-equivalent text so we can redisplay it on toggle. */
+  private CharSequence lastExchangeText = null;
+
+  /** Spinner shown over the balance slot until the first balance value is fetched from the SDK. */
+  private View balanceLoadingView = null;
 
   public PaymentsHomeFragment() {
     super(R.layout.payments_home_fragment);
@@ -90,27 +110,80 @@ public class PaymentsHomeFragment extends LoggingFragment {
       SignalStore.payments().setPaymentLockSkipCount(++skipCount);
   }
 
+  /** Renders the balance respecting the hide/show preference. The sats/BTC unit is handled
+   *  centrally by {@link MoneyView#setMoney} so no caller-side toggle check is needed. */
+  private void renderBalance(@NonNull MoneyView balance) {
+    if (!balanceVisible) {
+      balance.setText(PaymentAmountFormatter.HIDDEN_AMOUNT);
+    } else if (lastBalanceAmount != null) {
+      balance.setMoney(lastBalanceAmount);
+    }
+    renderExchange();
+  }
+
+  /** Renders the fiat-equivalent label respecting the hide/show preference. Masked with the same
+   *  bullets as the balance so the fiat value isn't leaked while the balance is hidden. */
+  private void renderExchange() {
+    if (exchangeView == null) {
+      return;
+    }
+    if (!balanceVisible) {
+      exchangeView.setText(PaymentAmountFormatter.HIDDEN_AMOUNT);
+      return;
+    }
+    if (lastExchangeText != null) {
+      exchangeView.setText(lastExchangeText);
+    }
+  }
+
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    Toolbar             toolbar          = view.findViewById(R.id.payments_home_fragment_toolbar);
-    RecyclerView        recycler         = view.findViewById(R.id.payments_home_fragment_recycler);
-    View                header           = view.findViewById(R.id.payments_home_fragment_header);
-    MoneyView           balance          = view.findViewById(R.id.payments_home_fragment_header_balance);
-    TextView            exchange         = view.findViewById(R.id.payments_home_fragment_header_exchange);
-    View                addMoney         = view.findViewById(R.id.button_start_frame);
-    View                sendMoney        = view.findViewById(R.id.button_end_frame);
-    View                refresh          = view.findViewById(R.id.payments_home_fragment_header_refresh);
-    LottieAnimationView refreshAnimation = view.findViewById(R.id.payments_home_fragment_header_refresh_animation);
-    Stub<ComposeView>   bannerView       = ViewUtil.findStubById(view, R.id.banner_compose_view);
+    Toolbar             toolbar             = view.findViewById(R.id.payments_home_fragment_toolbar);
+    RecyclerView        recycler            = view.findViewById(R.id.payments_home_fragment_recycler);
+    View                header              = view.findViewById(R.id.payments_home_fragment_header);
+    MoneyView           balance             = view.findViewById(R.id.payments_home_fragment_header_balance);
+    TextView            exchange            = view.findViewById(R.id.payments_home_fragment_header_exchange);
+    exchangeView = exchange;
+    balanceLoadingView = view.findViewById(R.id.payments_home_fragment_header_balance_loading);
+    // Start in the loading state; the balance observer below hides this once a value arrives. When
+    // the balance was already fetched earlier this session it arrives immediately, so there's no
+    // visible flash.
+    balanceLoadingView.setVisibility(View.VISIBLE);
+    View                addMoney            = view.findViewById(R.id.button_start_frame);
+    View                sendMoney           = view.findViewById(R.id.button_end_frame);
+    Stub<ComposeView>   bannerView          = ViewUtil.findStubById(view, R.id.banner_compose_view);
 
-    toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
-    SystemWindowInsetsSetter.attach(toolbar, getViewLifecycleOwner(), WindowInsetsCompat.Type.statusBars());
-    SystemWindowInsetsSetter.attach(recycler, getViewLifecycleOwner(), WindowInsetsCompat.Type.navigationBars());
+    // Initialize visibility from the persisted preference (mirrors iOS PaymentsDisplayPreferences)
+    // BEFORE applying any eye icon below, so the icon matches the persisted state after a restart.
+    balanceVisible = !SignalStore.payments().getBalanceHidden();
 
-    toolbar.setNavigationOnClickListener(v -> {
-      viewModel.markAllPaymentsSeen();
-      requireActivity().finish();
-    });
+    // When hosted in MainActivity's bottom-nav tab, this fragment IS the tab root: there's
+    // no "back to Settings" — instead the LEFT nav-icon slot is repurposed to the hide/show
+    // balance eye (mirrors iOS leftBarButtonItem). When launched standalone (via
+    // PaymentsActivity from Settings → Payments), the existing back-arrow stays put and the
+    // eye lives as a leading menu item on the right.
+    final boolean hostedInMainActivity = requireActivity() instanceof org.thoughtcrime.securesms.MainActivity;
+    if (hostedInMainActivity) {
+      // Status-bar safe-area is applied once at the AndroidFragment wrapper in MainActivity
+      // (`Modifier.fillMaxSize().statusBarsPadding()`), so we don't add per-toolbar inset
+      // padding here — a previous attempt clipped the toolbar content because adding
+      // top-padding to a fixed-height toolbar shrinks the actions area.
+
+      // Replace the back-arrow with the eye toggle on the LEFT; nav click toggles the balance.
+      applyBalanceVisibilityNavIcon(toolbar);
+      toolbar.setNavigationOnClickListener(v -> toggleBalanceVisibility(toolbar, balance));
+    } else {
+      // Upstream edge-to-edge: standalone PaymentsActivity pads the toolbar and list for the system
+      // bars. In the MainActivity tab the Compose wrapper and bottom navigation already do that.
+      toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+      SystemWindowInsetsSetter.attach(toolbar, getViewLifecycleOwner(), WindowInsetsCompat.Type.statusBars());
+      SystemWindowInsetsSetter.attach(recycler, getViewLifecycleOwner(), WindowInsetsCompat.Type.navigationBars());
+
+      toolbar.setNavigationOnClickListener(v -> {
+        viewModel.markAllPaymentsSeen();
+        requireActivity().finish();
+      });
+    }
 
     toolbar.setOnMenuItemClickListener(this::onMenuItemSelected);
 
@@ -133,7 +206,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
       }
     });
 
-    PaymentsHomeAdapter adapter = new PaymentsHomeAdapter(new HomeCallbacks());
+    adapter = new PaymentsHomeAdapter(new HomeCallbacks());
     recycler.setAdapter(adapter);
 
     viewModel = new ViewModelProvider(this, new PaymentsHomeViewModel.Factory()).get(PaymentsHomeViewModel.class);
@@ -157,14 +230,41 @@ public class PaymentsHomeFragment extends LoggingFragment {
     viewModel.getPaymentsEnabled().observe(getViewLifecycleOwner(), enabled -> {
       if (enabled) {
         toolbar.inflateMenu(R.menu.payments_home_fragment_menu);
+        // The eye-toggle lives on the LEFT (as the nav icon) in tab mode; suppress the
+        // right-side menu copy. Standalone mode keeps the menu item visible.
+        MenuItem balanceItem = toolbar.getMenu().findItem(R.id.payments_home_fragment_menu_balance_visibility);
+        if (balanceItem != null) {
+          balanceItem.setVisible(!hostedInMainActivity);
+          applyBalanceVisibilityMenuIcon(balanceItem);
+        }
+        // The gear is a vector with a hardcoded black fill and no night variant, so it renders
+        // black on dark theme. Tint it to the theme-aware toolbar icon color.
+        MenuItem settingsItem = toolbar.getMenu().findItem(R.id.payments_home_fragment_menu_settings);
+        if (settingsItem != null && settingsItem.getIcon() != null) {
+          settingsItem.setIcon(DrawableUtil.tint(settingsItem.getIcon(), ContextCompat.getColor(requireContext(), R.color.signal_icon_tint_primary)));
+        }
       } else {
         toolbar.getMenu().clear();
       }
       header.setVisibility(enabled ? View.VISIBLE : View.GONE);
     });
 
+    // Tap the balance to toggle between sats and BTC display.
+    balance.setOnClickListener(v -> {
+      SignalStore.payments().setShowInSats(!SignalStore.payments().getShowInSats());
+      renderBalance(balance);
+      // The recent-activity rows format through PaymentAmountFormatter too, but DiffUtil
+      // can't see the preference flip (the items are unchanged), so force a rebind.
+      adapter.notifyDataSetChanged();
+      PaymentSnippetRefresher.refreshAsync();
+    });
+
     viewModel.getBalance().observe(getViewLifecycleOwner(), balanceAmount -> {
-      balance.setMoney(balanceAmount);
+      lastBalanceAmount = balanceAmount;
+      if (balanceLoadingView != null) {
+        balanceLoadingView.setVisibility(View.GONE);
+      }
+      renderBalance(balance);
       if (SignalStore.payments().getShowSaveRecoveryPhrase() &&
           !SignalStore.payments().getUserConfirmedMnemonic() &&
           !balanceAmount.isEqualOrLessThanZero()) {
@@ -175,35 +275,20 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
     viewModel.getExchange().observe(getViewLifecycleOwner(), amount -> {
       if (amount != null) {
-        exchange.setText(FiatMoneyUtil.format(getResources(), amount));
+        lastExchangeText = FiatMoneyUtil.format(getResources(), amount, FiatMoneyUtil.formatOptions().withDisplayTime(false));
       } else {
-        exchange.setText(R.string.PaymentsHomeFragment__unknown_amount);
+        lastExchangeText = getString(R.string.PaymentsHomeFragment__unknown_amount);
       }
+      renderExchange();
     });
 
-    refresh.setOnClickListener(v -> viewModel.refreshExchangeRates(true));
     exchange.setOnClickListener(v -> viewModel.refreshExchangeRates(true));
 
     viewModel.getExchangeLoadState().observe(getViewLifecycleOwner(), loadState -> {
-      switch (loadState) {
-        case INITIAL:
-        case LOADED:
-          refresh.setVisibility(View.VISIBLE);
-          refreshAnimation.cancelAnimation();
-          refreshAnimation.setVisibility(View.GONE);
-          break;
-        case LOADING:
-          refresh.setVisibility(View.INVISIBLE);
-          refreshAnimation.playAnimation();
-          refreshAnimation.setVisibility(View.VISIBLE);
-          break;
-        case ERROR:
-          refresh.setVisibility(View.VISIBLE);
-          refreshAnimation.cancelAnimation();
-          refreshAnimation.setVisibility(View.GONE);
-          exchange.setText(R.string.PaymentsHomeFragment__currency_conversion_not_available);
-          Toast.makeText(view.getContext(), R.string.PaymentsHomeFragment__cant_display_currency_conversion, Toast.LENGTH_SHORT).show();
-          break;
+      if (loadState == LoadState.ERROR) {
+        lastExchangeText = getString(R.string.PaymentsHomeFragment__currency_conversion_not_available);
+        renderExchange();
+        Toast.makeText(view.getContext(), R.string.PaymentsHomeFragment__cant_display_currency_conversion, Toast.LENGTH_SHORT).show();
       }
     });
 
@@ -277,6 +362,73 @@ public class PaymentsHomeFragment extends LoggingFragment {
   public void onResume() {
     super.onResume();
     viewModel.checkPaymentActivationState();
+
+    // Re-fetch the wallet balance from the Breez SDK every time the screen is shown. The
+    // balance LiveData (PaymentsValues#liveMobileCoinLedger) is only re-published when a
+    // ledger update job runs, so without this the displayed balance can lag behind a
+    // received payment that already appears in Recent activity (which is driven by the
+    // local payments DB). PaymentsActivity#onResume does the same for the standalone
+    // presentation, but in the MainActivity bottom-nav tab that activity never resumes,
+    // so the fragment must trigger the refresh itself. The job no-ops when payments are
+    // disabled and collapses duplicates via setMaxInstancesForQueue(1).
+    AppDependencies.getJobManager().add(PaymentLedgerUpdateJob.updateLedger());
+
+    // The sats/BTC unit can be changed on the settings menu screen; when we return here the
+    // view isn't recreated, so re-render the balance and rebind the recent-activity rows so
+    // they reflect the (possibly changed) preference. Mirrors iOS reloading on the amount-type
+    // notification.
+    View view = getView();
+    if (view != null) {
+      renderBalance(view.findViewById(R.id.payments_home_fragment_header_balance));
+      if (adapter != null) {
+        adapter.notifyDataSetChanged();
+      }
+    }
+  }
+
+  // MARK: - Balance-visibility helpers (eye toggle)
+  //
+  // The toggle has two presentations driven by the host:
+  //   - Tab mode (MainActivity bottom-nav): eye on the LEFT as the toolbar's navigation icon.
+  //   - Standalone (PaymentsActivity from Settings → Payments): eye as the first menu item on
+  //     the right; the back-arrow stays as the nav icon for the back-to-Settings path.
+  // The single source of truth is `balanceVisible` + `SignalStore.payments.balanceHidden`.
+
+  private void applyBalanceVisibilityNavIcon(@NonNull Toolbar toolbar) {
+    toolbar.setNavigationIcon(balanceVisible ? R.drawable.ic_visibility_24dp
+                                             : R.drawable.ic_visibility_off_24dp);
+    toolbar.setNavigationContentDescription(R.string.PaymentsHomeFragment__toggle_balance_visibility);
+  }
+
+  private void applyBalanceVisibilityMenuIcon(@NonNull MenuItem item) {
+    item.setIcon(balanceVisible ? R.drawable.ic_visibility_24dp : R.drawable.ic_visibility_off_24dp);
+    item.setTitle(R.string.PaymentsHomeFragment__toggle_balance_visibility);
+  }
+
+  /** Flips the persisted preference, refreshes the balance label + chat-list snippets, and
+   *  updates whichever icon presentation (nav vs menu) is currently visible on this toolbar. */
+  private void toggleBalanceVisibility(@NonNull Toolbar toolbar, @NonNull MoneyView balance) {
+    balanceVisible = !balanceVisible;
+    SignalStore.payments().setBalanceHidden(!balanceVisible);
+    renderBalance(balance);
+
+    // Update whichever surface is currently driving the icon.
+    if (toolbar.getNavigationIcon() != null) {
+      applyBalanceVisibilityNavIcon(toolbar);
+    }
+    MenuItem menuItem = toolbar.getMenu().findItem(R.id.payments_home_fragment_menu_balance_visibility);
+    if (menuItem != null && menuItem.isVisible()) {
+      applyBalanceVisibilityMenuIcon(menuItem);
+    }
+
+    // The transaction rows below the balance are masked from the same preference, but nothing in
+    // their LiveData chain changed, so they will not re-emit on their own. Rebind them explicitly.
+    if (adapter != null) {
+      adapter.notifyItemRangeChanged(0, adapter.getItemCount());
+    }
+
+    // Mirrors iOS — chat-list payment snippets re-render with the new mask state.
+    PaymentSnippetRefresher.refreshAsync();
   }
 
   private void showUpdateIsRequiredDialog() {
@@ -290,27 +442,16 @@ public class PaymentsHomeFragment extends LoggingFragment {
   }
 
   private boolean onMenuItemSelected(@NonNull MenuItem item) {
-    if (item.getItemId() == R.id.payments_home_fragment_menu_transfer_to_exchange) {
-      if (viewModel.isEnclaveFailurePresent()) {
-        showUpdateIsRequiredDialog();
-      } else {
-        SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_paymentsTransfer);
-      }
+    if (item.getItemId() == R.id.payments_home_fragment_menu_balance_visibility) {
+      Toolbar   toolbar = requireView().findViewById(R.id.payments_home_fragment_toolbar);
+      MoneyView balance = requireView().findViewById(R.id.payments_home_fragment_header_balance);
+      toggleBalanceVisibility(toolbar, balance);
+      applyBalanceVisibilityMenuIcon(item);
       return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_set_currency) {
-      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_setCurrency);
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_deactivate_wallet) {
-      viewModel.deactivatePayments();
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_view_recovery_phrase) {
-      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this),
-                                  PaymentsHomeFragmentDirections.actionPaymentsHomeToPaymentsBackup().setRecoveryPhraseState(SignalStore.payments().isMnemonicConfirmed() ?
-                                                                                        RecoveryPhraseStates.FROM_PAYMENTS_MENU_WITH_MNEMONIC_CONFIRMED :
-                                                                                        RecoveryPhraseStates.FROM_PAYMENTS_MENU_WITH_MNEMONIC_NOT_CONFIRMED));
-      return true;
-    } else if (item.getItemId() == R.id.payments_home_fragment_menu_help) {
-      startActivity(AppSettingsActivity.help(requireContext(), HelpFragment.PAYMENT_INDEX));
+    } else if (item.getItemId() == R.id.payments_home_fragment_menu_settings) {
+      // The individual settings rows now live behind this gear, in
+      // PaymentSettingsMenuFragment (mirrors iOS PaymentSettingsMenuViewController).
+      SafeNavigation.safeNavigate(NavHostFragment.findNavController(this), R.id.action_paymentsHome_to_paymentSettingsMenu);
       return true;
     }
 

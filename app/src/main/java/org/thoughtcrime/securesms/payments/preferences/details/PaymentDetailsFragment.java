@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -22,19 +23,22 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import org.signal.core.util.StringUtil;
+import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
 import org.signal.core.ui.logging.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.badges.BadgeImageView;
 import org.thoughtcrime.securesms.components.AvatarImageView;
+import org.thoughtcrime.securesms.conversation.ConversationIntents;
 import org.thoughtcrime.securesms.database.PaymentTable;
+import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.payments.Direction;
 import org.thoughtcrime.securesms.payments.MoneyView;
 import org.thoughtcrime.securesms.payments.Payee;
 import org.thoughtcrime.securesms.payments.Payment;
 import org.thoughtcrime.securesms.payments.State;
 import org.thoughtcrime.securesms.recipients.Recipient;
+import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.DateUtils;
 import org.signal.core.ui.util.SpanUtil;
 import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
@@ -57,6 +61,9 @@ public final class PaymentDetailsFragment extends LoggingFragment {
     Toolbar toolbar = view.findViewById(R.id.payments_details_toolbar);
 
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+    toolbar.inflateMenu(R.menu.payment_details);
+
+    MenuItem messageItem = toolbar.getMenu().findItem(R.id.payment_details_message);
 
     toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
     SystemWindowInsetsSetter.attach(toolbar, getViewLifecycleOwner(), WindowInsetsCompat.Type.statusBars());
@@ -78,15 +85,13 @@ public final class PaymentDetailsFragment extends LoggingFragment {
     View              sentFeeHeader   = view.findViewById(R.id.payments_details_sent_fee_header);
     MoneyView         sentFeeAmount   = view.findViewById(R.id.payments_details_sent_fee_amount);
     Group             sentViews       = view.findViewById(R.id.payments_details_sent_views);
-    View              blockHeader     = view.findViewById(R.id.payments_details_block_header);
-    TextView          blockNumber     = view.findViewById(R.id.payments_details_block);
 
     if (details.hasPayment()) {
       Payment payment = details.requirePayment();
       avatar.disableQuickContact();
-      avatar.setImageResource(R.drawable.ic_mobilecoin_avatar_24);
+      avatar.setImageResource(R.drawable.ic_ln_black);
       contactFromTo.setText(getContactFromToTextFromDirection(payment.getDirection()));
-      amount.setMoney(payment.getAmountPlusFeeWithDirection());
+      amount.setMoneyRespectingHiddenBalance(payment.getAmountPlusFeeWithDirection());
       note.setVisibility(View.GONE);
       status.setText(getStatusFromPayment(payment));
       sentByHeader.setVisibility(View.GONE);
@@ -96,12 +101,9 @@ public final class PaymentDetailsFragment extends LoggingFragment {
       transactionInfo.setLink(getString(R.string.PaymentsDetailsFragment__learn_more__information));
       sentTo.setVisibility(View.GONE);
       sentToAmount.setVisibility(View.GONE);
-      blockHeader.setVisibility(View.VISIBLE);
-      blockNumber.setVisibility(View.VISIBLE);
-      blockNumber.setText(String.valueOf(payment.getBlockIndex()));
 
       if (payment.getDirection() == Direction.SENT) {
-        sentFeeAmount.setMoney(payment.getFee());
+        sentFeeAmount.setMoneyRespectingHiddenBalance(payment.getFee());
         sentFeeHeader.setVisibility(View.VISIBLE);
         sentFeeAmount.setVisibility(View.VISIBLE);
       }
@@ -113,18 +115,26 @@ public final class PaymentDetailsFragment extends LoggingFragment {
                           if (state.getRecipient().getId().isUnknown() || state.getPayment().isDefrag()) {
                             avatar.disableQuickContact();
                             avatar.setImageResource(R.drawable.ic_mobilecoin_avatar_24);
+                            messageItem.setVisible(false);
                           } else {
                             avatar.setRecipient(state.getRecipient(), true);
                             badge.setBadgeFromRecipient(state.getRecipient());
+
+                            RecipientId recipientId = state.getRecipient().getId();
+                            messageItem.setVisible(true);
+                            messageItem.setOnMenuItemClickListener(item -> {
+                              openConversation(recipientId);
+                              return true;
+                            });
                           }
                           contactFromTo.setText(describeToOrFrom(state));
 
                           if (state.getPayment().getState() == State.FAILED) {
                             amount.setTextColor(ContextCompat.getColor(requireContext(), R.color.signal_text_primary_disabled));
-                            amount.setMoney(state.getPayment().getAmountPlusFeeWithDirection(), false);
+                            amount.setMoneyRespectingHiddenBalance(state.getPayment().getAmountPlusFeeWithDirection(), false);
                             transactionInfo.setVisibility(View.GONE);
                           } else {
-                            amount.setMoney(state.getPayment().getAmountPlusFeeWithDirection());
+                            amount.setMoneyRespectingHiddenBalance(state.getPayment().getAmountPlusFeeWithDirection());
                             if (state.getPayment().isDefrag()) {
                               transactionInfo.setLearnMoreVisible(true);
                               transactionInfo.setText(R.string.PaymentsDetailsFragment__coin_cleanup_information);
@@ -143,13 +153,13 @@ public final class PaymentDetailsFragment extends LoggingFragment {
                           status.setText(describeStatus(state.getPayment()));
                           sentBy.setText(describeSentBy(state));
                           if (state.getPayment().getDirection().isReceived()) {
-                            sentToAmount.setMoney(Money.MobileCoin.ZERO);
-                            sentFeeAmount.setMoney(Money.MobileCoin.ZERO);
+                            sentToAmount.setMoneyRespectingHiddenBalance(Money.MobileCoin.ZERO);
+                            sentFeeAmount.setMoneyRespectingHiddenBalance(Money.MobileCoin.ZERO);
                             sentViews.setVisibility(View.GONE);
                           } else {
                             sentTo.setText(describeSentTo(state, state.getPayment()));
-                            sentToAmount.setMoney(state.getPayment().getAmount());
-                            sentFeeAmount.setMoney(state.getPayment().getFee());
+                            sentToAmount.setMoneyRespectingHiddenBalance(state.getPayment().getAmount());
+                            sentFeeAmount.setMoneyRespectingHiddenBalance(state.getPayment().getFee());
                             sentViews.setVisibility(View.VISIBLE);
                           }
                         }
@@ -165,6 +175,12 @@ public final class PaymentDetailsFragment extends LoggingFragment {
                  }
                });
     }
+  }
+
+  private void openConversation(@NonNull RecipientId recipientId) {
+    SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
+                   () -> SignalDatabase.threads().getOrCreateThreadIdFor(Recipient.resolved(recipientId)),
+                   threadId -> startActivity(ConversationIntents.createBuilderSync(requireContext(), recipientId, threadId).build()));
   }
 
   private CharSequence describeToOrFrom(PaymentsDetailsViewModel.ViewState state) {
@@ -191,7 +207,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
     if (payee.hasRecipientId()) {
       return recipient.getDisplayName(requireContext());
     } else if (payee.hasPublicAddress()) {
-      return mono(requireContext(), Objects.requireNonNull(StringUtil.abbreviateInMiddle(payee.requirePublicAddress().getPaymentAddressBase58(), 17)));
+      return mono(requireContext(), Objects.requireNonNull(payee.requireLightningAddress().getPaymentAddress()));
     } else {
       throw new AssertionError();
     }

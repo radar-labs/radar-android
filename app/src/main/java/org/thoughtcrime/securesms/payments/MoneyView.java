@@ -20,7 +20,6 @@ import org.whispersystems.signalservice.api.payments.FormatterOptions;
 import org.whispersystems.signalservice.api.payments.Money;
 
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.Locale;
 
 public final class MoneyView extends AppCompatTextView {
@@ -52,7 +51,10 @@ public final class MoneyView extends AppCompatTextView {
       builder.alwaysPrefixWithSign();
     }
 
-    formatterOptions = builder.withoutSpaceBeforeUnit().build();
+    // Radar: show a space between the amount and the currency unit (mirrors iOS "add a space
+    // between balance and currency"). iOS applied it to the balance specifically; on Android
+    // MoneyView is the single money formatter, so the space applies consistently.
+    formatterOptions = builder.build();
 
     String value = styledAttributes.getString(R.styleable.MoneyView_money);
     if (value != null) {
@@ -74,9 +76,18 @@ public final class MoneyView extends AppCompatTextView {
   }
 
   public void setMoney(@NonNull String amount, @NonNull Currency currency) {
-    SpannableString balanceSpan   = new SpannableString(localizeAmountString(amount) + currency.getCurrencyCode());
-    int             currencyIndex = balanceSpan.length() - currency.getCurrencyCode().length();
-    balanceSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.payment_currency_code_foreground_color)), currencyIndex, currencyIndex + currency.getCurrencyCode().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    setMoney(amount, currency.getCurrencyCode());
+  }
+
+  /**
+   * Renders a raw, in-progress amount string followed by an arbitrary unit label (e.g. {@code
+   * "sats"} or {@code "BTC"}), highlighting the unit. Used by the send flow so the displayed unit
+   * follows the user's sats/BTC preference instead of always being the currency code.
+   */
+  public void setMoney(@NonNull String amount, @NonNull String unit) {
+    SpannableString balanceSpan = new SpannableString(localizeAmountString(amount) + " " + unit);
+    int             unitIndex   = balanceSpan.length() - unit.length();
+    balanceSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.payment_currency_code_foreground_color)), unitIndex, balanceSpan.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     setText(balanceSpan);
   }
 
@@ -92,9 +103,43 @@ public final class MoneyView extends AppCompatTextView {
     setMoney(money, timestamp, (highlightCurrency ? new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.payment_currency_code_foreground_color)) : null));
   }
 
+  /**
+   * Displays {@code money}, or {@link PaymentAmountFormatter#HIDDEN_AMOUNT} while the user has
+   * hidden their balance. For amounts that are being shown back to the user (a settled payment, a
+   * balance); the send-flow input keeps using {@link #setMoney} so the user can always see what
+   * they are typing.
+   */
+  public void setMoneyRespectingHiddenBalance(@NonNull Money money) {
+    setMoneyRespectingHiddenBalance(money, true, 0L);
+  }
+
+  /** @see #setMoneyRespectingHiddenBalance(Money) */
+  public void setMoneyRespectingHiddenBalance(@NonNull Money money, boolean highlightCurrency) {
+    setMoneyRespectingHiddenBalance(money, highlightCurrency, 0L);
+  }
+
+  /** @see #setMoneyRespectingHiddenBalance(Money) */
+  public void setMoneyRespectingHiddenBalance(@NonNull Money money, boolean highlightCurrency, long timestamp) {
+    setMoneyRespectingHiddenBalance(money, timestamp, (highlightCurrency ? new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.payment_currency_code_foreground_color)) : null));
+  }
+
+  /** @see #setMoneyRespectingHiddenBalance(Money) */
+  public void setMoneyRespectingHiddenBalance(@NonNull Money money, long timestamp, @Nullable Object currencySpan) {
+    if (PaymentAmountFormatter.isBalanceHidden()) {
+      setText(PaymentAmountFormatter.HIDDEN_AMOUNT);
+      return;
+    }
+    setMoney(money, timestamp, currencySpan);
+  }
+
   public void setMoney(@NonNull Money money, long timestamp, @Nullable Object currencySpan) {
-    String          balance       = money.toString(formatterOptions);
-    int             currencyIndex = balance.indexOf(money.getCurrency().getCurrencyCode());
+    // The sats-vs-BTC decision and all formatting live in PaymentAmountFormatter, the single
+    // display layer. Every caller (home balance, chat bubble, history, send flow, chat-list
+    // snippet, …) renders through it, so flipping the preference updates them consistently.
+    final String balance         = PaymentAmountFormatter.format(money, formatterOptions);
+    final String unitToHighlight = PaymentAmountFormatter.unit(money);
+
+    int currencyIndex = balance.indexOf(unitToHighlight);
 
     final SpannableString balanceSpan;
 
@@ -106,19 +151,11 @@ public final class MoneyView extends AppCompatTextView {
       balanceSpan = new SpannableString(balance);
     }
 
-    if (currencySpan != null) {
-      balanceSpan.setSpan(currencySpan, currencyIndex, currencyIndex + money.getCurrency().getCurrencyCode().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    if (currencySpan != null && currencyIndex >= 0) {
+      balanceSpan.setSpan(currencySpan, currencyIndex, currencyIndex + unitToHighlight.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     setText(balanceSpan);
   }
 
-  private static @NonNull NumberFormat getMoneyFormat(int decimalPrecision) {
-    NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-
-    numberFormat.setGroupingUsed(true);
-    numberFormat.setMaximumFractionDigits(decimalPrecision);
-
-    return numberFormat;
-  }
 }

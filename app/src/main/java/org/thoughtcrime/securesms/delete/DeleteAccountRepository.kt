@@ -23,9 +23,9 @@ import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.GroupManager
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.net.SignalNetwork
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.whispersystems.signalservice.api.NetworkResultUtil
-import org.whispersystems.signalservice.api.payments.FormatterOptions
 import java.io.IOException
 
 /**
@@ -56,7 +56,8 @@ class DeleteAccountRepository {
   /** The user's payments balance, formatted for display, or null if there's nothing in there worth mentioning. */
   fun getFormattedWalletBalance(): String? {
     val amount = SignalStore.payments.mobileCoinLatestBalance().fullAmount
-    return if (amount.isPositive) amount.toString(FormatterOptions.defaults()) else null
+    // Radar: show the wallet balance in the user's chosen sats/BTC unit.
+    return if (amount.isPositive) PaymentAmountFormatter.format(amount) else null
   }
 
   /** Whether the given number is the one this account is registered to. */

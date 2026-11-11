@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pill background for the Edit Username field. Mirrors iOS RadarUsernameViewController
+     `fieldContainer`: grayFill (rgba(120,120,128,0.16)), corner radius 26pt, height 52pt. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+  <solid android:color="@color/radar_gray_fill" />
+  <corners android:radius="26dp" />
+</shape>

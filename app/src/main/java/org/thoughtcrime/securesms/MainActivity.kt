@@ -144,6 +144,7 @@ import org.thoughtcrime.securesms.conversationlist.model.UnreadPaymentsLiveData
 import org.thoughtcrime.securesms.devicetransfer.olddevice.OldDeviceExitActivity
 import org.thoughtcrime.securesms.groups.ui.creategroup.CreateGroupActivity
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.isDecisionPending
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity
 import org.thoughtcrime.securesms.main.EmptyDetailScreen
 import org.thoughtcrime.securesms.main.MainBottomChrome
@@ -174,6 +175,7 @@ import org.thoughtcrime.securesms.net.DeviceTransferBlockingInterceptor
 import org.thoughtcrime.securesms.notifications.VitalsViewModel
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfile
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfiles
+import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingActivity
 import org.thoughtcrime.securesms.profiles.manage.username.UsernameEditFragment
 import org.thoughtcrime.securesms.service.BackupMediaRestoreService
 import org.thoughtcrime.securesms.service.KeyCachingService
@@ -244,6 +246,9 @@ class MainActivity :
 
   override val voiceNoteMediaController: VoiceNoteMediaController
     get() = mediaController
+
+  /** Radar: guards the deferred payments onboarding launch (see [maybeLaunchDeferredPaymentsOnboarding]). */
+  private var launchingDeferredPaymentsOnboarding = false
 
   private val mainNavigationViewModel: MainNavigationViewModel by viewModel {
     val startingTab = intent.extras?.getSerializableCompat(KEY_STARTING_TAB, MainListRoute::class.java)
@@ -740,6 +745,8 @@ class MainActivity :
         .show()
     }
 
+    maybeLaunchDeferredPaymentsOnboarding()
+
     vitalsViewModel.checkSlowNotificationHeuristics()
     mainNavigationViewModel.onEvent(MainNavigationEvents.RefreshNavigationBar)
 
@@ -751,6 +758,35 @@ class MainActivity :
   override fun onStop() {
     super.onStop()
     SplashScreenUtil.setSplashScreenThemeIfNecessary(this, SignalStore.settings.theme)
+  }
+
+  /**
+   * Radar: launches the post-registration payments onboarding that was deferred by a restore (see
+   * [org.thoughtcrime.securesms.keyvalue.PaymentsValues.paymentsOnboardingPendingAfterRestore]).
+   *
+   * Onboarding launches as soon as the restore / "Enter your PIN" step finishes so it appears right
+   * after the PIN. The wait for the restored payments seed happens inside the onboarding flow (see
+   * [org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingViewModel]) rather than here,
+   * so the user is already looking at onboarding while the seed lands instead of at the chat list.
+   */
+  private fun maybeLaunchDeferredPaymentsOnboarding() {
+    if (launchingDeferredPaymentsOnboarding || !SignalStore.payments.paymentsOnboardingPendingAfterRestore) {
+      return
+    }
+
+    // Wait until the restore / "Enter your PIN" step has actually finished and we're in the normal
+    // app state. On earlier resumes the PassphraseRequiredActivity router is still sending us off to
+    // the restore/PIN screens — onboarding must come after those.
+    if (isFinishing || SignalStore.storageService.needsAccountRestore || SignalStore.registration.restoreDecisionState.isDecisionPending) {
+      return
+    }
+
+    // Clear the flags synchronously at launch (not inside onboarding) so a subsequent onResume /
+    // process death can't relaunch onboarding.
+    launchingDeferredPaymentsOnboarding = true
+    SignalStore.payments.paymentsOnboardingPendingAfterRestore = false
+    SignalStore.payments.paymentsOnboardingShown = true
+    startActivity(PaymentsOnboardingActivity.createIntent(this, awaitRestoredSeed = true))
   }
 
   @Suppress("OVERRIDE_DEPRECATION")

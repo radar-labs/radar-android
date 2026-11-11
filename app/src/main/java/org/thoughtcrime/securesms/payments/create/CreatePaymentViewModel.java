@@ -29,6 +29,7 @@ import org.whispersystems.signalservice.api.payments.Money;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Currency;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,8 +38,8 @@ public class CreatePaymentViewModel extends ViewModel {
 
   private static final String TAG = Log.tag(CreatePaymentViewModel.class);
 
-  private static final Money.MobileCoin AMOUNT_LOWER_BOUND_EXCLUSIVE = Money.MobileCoin.ZERO;
-  private static final Money.MobileCoin AMOUNT_UPPER_BOUND_EXCLUSIVE = Money.MobileCoin.MAX_VALUE;
+  private static final Money.Satoshi AMOUNT_LOWER_BOUND_EXCLUSIVE = Money.Satoshi.ZERO;
+  private static final Money.Satoshi AMOUNT_UPPER_BOUND_EXCLUSIVE = Money.Satoshi.MAX_VALUE;
 
   private final LiveData<Money>   spendableBalance;
   private final LiveData<Boolean> isValidAmount;
@@ -54,7 +55,7 @@ public class CreatePaymentViewModel extends ViewModel {
     this.spendableBalance = Transformations.map(SignalStore.payments().liveMobileCoinBalance(), Balance::getTransferableAmount);
     this.note             = new MutableLiveData<>(note);
     this.inputState       = new Store<>(new InputState());
-    this.isValidAmount    = LiveDataUtil.combineLatest(spendableBalance, inputState.getStateLiveData(), (b, s) -> validateAmount(b.requireMobileCoin(), s.getMoney().requireMobileCoin()));
+    this.isValidAmount    = LiveDataUtil.combineLatest(spendableBalance, inputState.getStateLiveData(), (b, s) -> validateAmount(b.requireBitcoin(), s.getMoney().requireBitcoin()));
     this.enclaveFailure   = LiveDataUtil.mapDistinct(SignalStore.payments().enclaveFailure(), isFailure -> isFailure);
 
     if (payee.getPayee().hasRecipientId()) {
@@ -123,10 +124,23 @@ public class CreatePaymentViewModel extends ViewModel {
 
   void clearAmount() {
     inputState.update(s -> {
-      final Money               money = Money.MobileCoin.ZERO;
+      final Money               money = Money.Satoshi.ZERO;
       final Optional<FiatMoney> fiat  = s.getExchangeRate().flatMap(r -> r.exchange(money));
 
-      return s.updateAmount("0", "0", Money.MobileCoin.ZERO, fiat);
+      return s.updateAmount("0", "0", Money.Satoshi.ZERO, fiat);
+    });
+  }
+
+  /**
+   * Seeds the amount from a destination that dictates it — a BOLT11 invoice carrying its own
+   * amount. The user does not get to choose in that case: the invoice does, and sending anything
+   * else would be refused by the network.
+   */
+  void setAmount(@NonNull Money money) {
+    inputState.update(s -> {
+      final Optional<FiatMoney> fiat = s.getExchangeRate().flatMap(r -> r.exchange(money));
+
+      return s.updateAmount(money.requireBitcoin().toSatoshiBigInteger().toString(), "0", money, fiat);
     });
   }
 
@@ -165,11 +179,15 @@ public class CreatePaymentViewModel extends ViewModel {
 
     if (newFiatAmount.equals("0")) {
       newMoneyAmount = "0";
+    } else if (SignalStore.payments().getShowInSats()) {
+      // Keep the crypto string in the same unit the user enters/sees, so toggling back to
+      // crypto entry shows whole sats rather than a BTC decimal.
+      newMoneyAmount = newMoney.requireBitcoin().toSatoshiBigInteger().toString();
     } else {
       newMoneyAmount = newMoney.toString(FormatterOptions.builder().withoutUnit().build());
     }
 
-    if (!withinMobileCoinBounds(newMoney.requireMobileCoin())) {
+    if (!withinMobileCoinBounds(newMoney.requireBitcoin())) {
       return inputState;
     }
 
@@ -180,8 +198,12 @@ public class CreatePaymentViewModel extends ViewModel {
                                                 @NonNull InputState inputState,
                                                 @NonNull AmountKeyboardGlyph glyph)
   {
-    String              newMoneyAmount = updateAmountString(context, inputState.getMoneyAmount(), glyph, inputState.getMoney().getCurrency().getDecimalPrecision());
-    Money.MobileCoin    newMoney       = stringToMobileCoinValueOrZero(newMoneyAmount);
+    // The crypto amount is entered in whatever unit the user prefers: whole satoshis (no
+    // fractional digits) when sats display is on, otherwise BTC (8 decimal places).
+    boolean             showInSats     = SignalStore.payments().getShowInSats();
+    int                 maxPrecision   = showInSats ? 0 : inputState.getMoney().getCurrency().getDecimalPrecision();
+    String              newMoneyAmount = updateAmountString(context, inputState.getMoneyAmount(), glyph, maxPrecision);
+    Money.Satoshi       newMoney       = stringToCryptoValueOrZero(newMoneyAmount, showInSats);
     Optional<FiatMoney> newFiat        = inputState.getExchangeRate().flatMap(e -> e.exchange(newMoney));
     String              newFiatAmount;
 
@@ -198,7 +220,7 @@ public class CreatePaymentViewModel extends ViewModel {
     return inputState.updateAmount(newMoneyAmount, newFiatAmount, newMoney, newFiat);
   }
 
-  private boolean validateAmount(@NonNull Money.MobileCoin spendableBalance, @NonNull Money.MobileCoin amount) {
+  private boolean validateAmount(@NonNull Money.Satoshi spendableBalance, @NonNull Money.Satoshi amount) {
     try {
       return amount.greaterThan(AMOUNT_LOWER_BOUND_EXCLUSIVE) &&
              !amount.greaterThan(spendableBalance);
@@ -207,7 +229,7 @@ public class CreatePaymentViewModel extends ViewModel {
     }
   }
 
-  private static boolean withinMobileCoinBounds(@NonNull Money.MobileCoin amount) {
+  private static boolean withinMobileCoinBounds(@NonNull Money.Satoshi amount) {
     return !amount.lessThan(AMOUNT_LOWER_BOUND_EXCLUSIVE) &&
            !amount.greaterThan(AMOUNT_UPPER_BOUND_EXCLUSIVE);
   }
@@ -220,12 +242,15 @@ public class CreatePaymentViewModel extends ViewModel {
     return new FiatMoney(BigDecimal.ZERO, currency);
   }
 
-  private @NonNull Money.MobileCoin stringToMobileCoinValueOrZero(@Nullable String string) {
+  private @NonNull Money.Satoshi stringToCryptoValueOrZero(@Nullable String string, boolean showInSats) {
     try {
-      if (string != null) return Money.mobileCoin(new BigDecimal(string));
-    } catch (NumberFormatException ignored) { }
+      if (string != null) {
+        return showInSats ? Money.satoshi(new BigInteger(string))
+                          : Money.bitcoin(new BigDecimal(string));
+      }
+    } catch (NumberFormatException | ArithmeticException ignored) { }
 
-    return Money.MobileCoin.ZERO;
+    return Money.Satoshi.ZERO;
   }
 
   public @NonNull CreatePaymentDetails getCreatePaymentDetails() {
@@ -236,6 +261,11 @@ public class CreatePaymentViewModel extends ViewModel {
 
   private static @NonNull String updateAmountString(@NonNull Context context, @NonNull String oldAmount, @NonNull AmountKeyboardGlyph glyph, int maxPrecision) {
     if (glyph == AmountKeyboardGlyph.NONE) {
+      return oldAmount;
+    }
+
+    // No fractional digits allowed (e.g. sats entry): the decimal key is a no-op.
+    if (glyph == AmountKeyboardGlyph.DECIMAL && maxPrecision == 0) {
       return oldAmount;
     }
 

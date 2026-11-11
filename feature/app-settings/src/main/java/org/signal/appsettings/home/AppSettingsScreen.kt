@@ -180,35 +180,53 @@ fun AppSettingsScreen(
           }
         }
 
-        item {
-          Rows.TextRow(
-            text = {
-              Text(
-                text = stringResource(R.string.AppSettingsScreen__donate_to_signal),
-                modifier = Modifier.weight(1f)
-              )
-
-              if (state.hasExpiredGiftBadge) {
-                Icon(
-                  painter = painterResource(CoreUiR.drawable.symbol_info_fill_24),
-                  tint = colorResource(CoreUiR.color.signal_accent_primary),
-                  contentDescription = null
+        if (state.showDonate) {
+          item {
+            Rows.TextRow(
+              text = {
+                Text(
+                  text = stringResource(R.string.AppSettingsScreen__donate_to_signal),
+                  modifier = Modifier.weight(1f)
                 )
-              }
-            },
-            icon = {
-              Icon(
-                painter = SignalIcons.Heart.painter,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurface
-              )
-            },
-            onClick = { onEvent(AppSettingsEvent.DonateClicked) },
-            onLongClick = { onEvent(AppSettingsEvent.DonateLongClicked) },
-            modifier = Modifier
-              .selectionHighlight(selectedRoute is AppSettingsRoute.DonationsRoute)
-              .testTag(AppSettingsTestTags.ROW_DONATE)
-          )
+
+                if (state.hasExpiredGiftBadge) {
+                  Icon(
+                    painter = painterResource(CoreUiR.drawable.symbol_info_fill_24),
+                    tint = colorResource(CoreUiR.color.signal_accent_primary),
+                    contentDescription = null
+                  )
+                }
+              },
+              icon = {
+                Icon(
+                  painter = SignalIcons.Heart.painter,
+                  contentDescription = null,
+                  tint = MaterialTheme.colorScheme.onSurface
+                )
+              },
+              onClick = { onEvent(AppSettingsEvent.DonateClicked) },
+              onLongClick = { onEvent(AppSettingsEvent.DonateLongClicked) },
+              modifier = Modifier
+                .selectionHighlight(selectedRoute is AppSettingsRoute.DonationsRoute)
+                .testTag(AppSettingsTestTags.ROW_DONATE)
+            )
+          }
+        }
+
+        // Radar: Payments is its own section right after Account / Linked devices
+        // (mirrors iOS AppSettingsViewController's paymentsSection placement).
+        if (state.isPrimaryDevice && state.showPayments) {
+          item {
+            Dividers.Default()
+          }
+
+          item {
+            PaymentsRow(
+              unreadPaymentsCount = state.unreadPaymentsCount,
+              onClick = { onEvent(AppSettingsEvent.PaymentsClicked) },
+              modifier = Modifier.selectionHighlight(selectedRoute == AppSettingsRoute.Payments)
+            )
+          }
         }
 
         item {
@@ -307,20 +325,6 @@ fun AppSettingsScreen(
               modifier = Modifier
                 .selectionHighlight(selectedRoute == AppSettingsRoute.AppUpdates)
                 .testTag(AppSettingsTestTags.ROW_APP_UPDATES)
-            )
-          }
-        }
-
-        if (state.isPrimaryDevice && state.showPayments) {
-          item {
-            Dividers.Default()
-          }
-
-          item {
-            PaymentsRow(
-              unreadPaymentsCount = state.unreadPaymentsCount,
-              onClick = { onEvent(AppSettingsEvent.PaymentsClicked) },
-              modifier = Modifier.selectionHighlight(selectedRoute == AppSettingsRoute.Payments)
             )
           }
         }
@@ -473,7 +477,7 @@ private fun PaymentsRow(
     },
     icon = {
       Icon(
-        painter = SignalIcons.Payment.painter,
+        painter = painterResource(R.drawable.symbol_bitcoin_24),
         contentDescription = null,
         tint = MaterialTheme.colorScheme.onSurface
       )

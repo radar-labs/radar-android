@@ -17,7 +17,7 @@ final class InputState {
   private final Optional<CurrencyExchange.ExchangeRate> exchangeRate;
 
   InputState() {
-    this(InputTarget.MONEY, "0", "0", Money.MobileCoin.ZERO, Optional.empty(), Optional.empty());
+    this(InputTarget.MONEY, "0", "0", Money.Satoshi.ZERO, Optional.empty(), Optional.empty());
   }
 
   private InputState(@NonNull InputTarget inputTarget,

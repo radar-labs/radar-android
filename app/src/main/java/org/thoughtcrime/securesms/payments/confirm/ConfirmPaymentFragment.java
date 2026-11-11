@@ -28,7 +28,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.signal.core.util.StringUtil;
 import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.logging.Log;
 import org.signal.core.ui.biometrics.BiometricDeviceAuthentication;
@@ -39,6 +38,7 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.payments.CanNotSendPaymentDialog;
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil;
 import org.thoughtcrime.securesms.payments.Payee;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.payments.preferences.PaymentsHomeFragmentDirections;
 import org.thoughtcrime.securesms.payments.preferences.RecipientHasNotEnabledPaymentsDialog;
 import org.thoughtcrime.securesms.recipients.Recipient;
@@ -178,14 +178,14 @@ public class ConfirmPaymentFragment extends BottomSheetDialogFragment {
         break;
       case NOT_SET:
       case SET:
-        list.add(new ConfirmPaymentAdapter.LineItem(getToPayeeDescription(requireContext(), state), state.getAmount().toString(options)));
+        list.add(new ConfirmPaymentAdapter.LineItem(getToPayeeDescription(requireContext(), state), PaymentAmountFormatter.format(state.getAmount(), options)));
         if (state.getExchange() != null) {
           list.add(new ConfirmPaymentAdapter.LineItem(getString(R.string.ConfirmPayment__estimated_s, state.getExchange().getCurrency().getCurrencyCode()),
                                                       FiatMoneyUtil.format(getResources(), state.getExchange(), FiatMoneyUtil.formatOptions().withDisplayTime(false))));
         }
-        list.add(new ConfirmPaymentAdapter.LineItem(getString(R.string.ConfirmPayment__network_fee), state.getFee().toString(options)));
+        list.add(new ConfirmPaymentAdapter.LineItem(getString(R.string.ConfirmPayment__network_fee), PaymentAmountFormatter.format(state.getFee(), options)));
         list.add(new ConfirmPaymentAdapter.Divider());
-        list.add(new ConfirmPaymentAdapter.TotalLineItem(getString(R.string.ConfirmPayment__total_amount), state.getTotal().toString(options)));
+        list.add(new ConfirmPaymentAdapter.TotalLineItem(getString(R.string.ConfirmPayment__total_amount), PaymentAmountFormatter.format(state.getTotal(), options)));
     }
 
     list.add(new ConfirmPaymentAdapter.ConfirmPaymentStatus(state.getStatus(), state.getFeeStatus(), state.getBalance()));
@@ -200,7 +200,7 @@ public class ConfirmPaymentFragment extends BottomSheetDialogFragment {
 
   private static CharSequence getPayeeDescription(Context context, @NonNull Payee payee) {
     return payee.hasRecipientId() ? Recipient.resolved(payee.requireRecipientId()).getDisplayName(context)
-                                  : mono(context, StringUtil.abbreviateInMiddle(payee.requirePublicAddress().getPaymentAddressBase58(), 17));
+                                  : mono(context, payee.requireLightningAddress().getPaymentAddress());
   }
 
   private static CharSequence mono(Context context, CharSequence address) {

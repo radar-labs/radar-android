@@ -20,6 +20,7 @@ import org.signal.appsettings.routes.navigateBack
 import org.signal.appsettings.routes.openSection
 import org.signal.core.ui.compose.EventDrivenViewModel
 import org.signal.core.util.logging.Log
+import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.database.model.InAppPaymentSubscriberRecord
 
@@ -40,6 +41,8 @@ class AppSettingsViewModel(
       allowUserToGoToDonationManagementScreen = AppSettingsRepository.likelyCanManageDonations(),
       showInternalPreferences = AppSettingsRepository.showInternalPreferences(),
       showPayments = AppSettingsRepository.showPayments(),
+      // Radar does not take donations (they go to Signal's infrastructure). Mirrors iOS BuildFlags.donations = false.
+      showDonate = BuildConfig.DONATIONS_ENABLED,
       showAppUpdates = AppSettingsRepository.showAppUpdates()
     )
   )

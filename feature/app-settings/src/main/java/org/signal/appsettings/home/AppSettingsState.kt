@@ -22,6 +22,8 @@ data class AppSettingsState(
   val clientDeprecated: Boolean = false,
   val showInternalPreferences: Boolean = false,
   val showPayments: Boolean = false,
+  /** Radar: the Donate row is hidden (donations go to Signal's infrastructure). */
+  val showDonate: Boolean = true,
   val showAppUpdates: Boolean = false,
   val backupFailureState: BackupFailureState = BackupFailureState.NONE,
   val snackbar: Snackbar = Snackbar.None

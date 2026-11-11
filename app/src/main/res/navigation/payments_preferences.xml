@@ -32,6 +32,14 @@
             app:popExitAnim="@anim/fragment_close_exit" />
 
         <action
+            android:id="@+id/action_paymentsHome_to_lightningLogs"
+            app:destination="@id/lightningLogs"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
             android:id="@+id/action_paymentsHome_to_paymentRecipientSelectionFragment"
             app:destination="@id/paymentRecipientSelectionFragment"
             app:enterAnim="@anim/fragment_open_enter"
@@ -120,6 +128,105 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
 
+        <!-- Edit Lightning Username from the Payments-home overflow menu (mirrors iOS PaymentSettingsMenuViewController → RadarUsernameViewController). -->
+        <action
+            android:id="@+id/action_paymentsHome_to_editLightningUsername"
+            app:destination="@id/editLightningUsername"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <!-- Trailing gear in the wallet toolbar → Payment settings disclosure list. -->
+        <action
+            android:id="@+id/action_paymentsHome_to_paymentSettingsMenu"
+            app:destination="@id/paymentSettingsMenu"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+    </fragment>
+
+    <!--
+      Settings-style menu page reached from App Settings → Payments. Mirrors iOS
+      `PaymentSettingsMenuViewController`. Distinct from `paymentsHome` (the wallet UI
+      reached from the bottom-nav Payments tab) — this destination lists only the
+      payment settings rows (currency, bitcoin unit, username, recovery, help,
+      lightning logs, deactivate, delete wallet).
+    -->
+    <fragment
+        android:id="@+id/paymentSettingsMenu"
+        android:name="org.thoughtcrime.securesms.payments.preferences.PaymentSettingsMenuFragment"
+        tools:layout="@layout/dsl_settings_fragment">
+
+        <action
+            android:id="@+id/action_paymentSettingsMenu_to_setCurrency"
+            app:destination="@id/setCurrency"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_paymentSettingsMenu_to_editLightningUsername"
+            app:destination="@id/editLightningUsername"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_paymentSettingsMenu_to_lightningLogs"
+            app:destination="@id/lightningLogs"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_paymentSettingsMenu_to_deactivateWallet"
+            app:destination="@id/deactivateWallet"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_paymentSettingsMenu_to_paymentsBackup"
+            app:destination="@id/payments_backup"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit">
+
+            <argument
+                android:name="is_restore"
+                android:defaultValue="false"
+                app:argType="boolean" />
+
+            <argument
+                android:name="recovery_phrase_state"
+                android:defaultValue="NONE"
+                app:argType="org.thoughtcrime.securesms.payments.backup.RecoveryPhraseStates" />
+
+            <argument
+                android:name="first_time_non_zero_balance"
+                android:defaultValue="false"
+                app:argType="boolean" />
+
+            <argument
+                android:name="info_card"
+                android:defaultValue="false"
+                app:argType="boolean" />
+
+            <argument
+                android:name="payment_menu"
+                android:defaultValue="false"
+                app:argType="boolean" />
+
+        </action>
+
     </fragment>
 
     <fragment
@@ -151,6 +258,14 @@
         tools:layout="@layout/payment_recipient_selection_fragment">
 
         <action
+            android:id="@+id/action_paymentRecipientSelection_to_scanQr"
+            app:destination="@id/paymentRecipientScanQr"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
             android:id="@+id/action_paymentRecipientSelection_to_createPayment"
             app:destination="@id/payments_create"
             app:enterAnim="@anim/fragment_open_enter"
@@ -176,7 +291,27 @@
     <fragment
         android:id="@+id/paymentsAddMoney"
         android:name="org.thoughtcrime.securesms.payments.preferences.addmoney.PaymentsAddMoneyFragment"
-        tools:layout="@layout/payments_add_money_fragment" />
+        tools:layout="@layout/payments_add_money_fragment">
+
+        <action
+            android:id="@+id/action_paymentsAddMoney_to_editLightningUsername"
+            app:destination="@id/editLightningUsername"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editLightningUsername"
+        android:name="org.thoughtcrime.securesms.payments.preferences.addmoney.EditLightningUsernameFragment"
+        tools:layout="@layout/fragment_edit_lightning_username" />
+
+    <fragment
+        android:id="@+id/lightningLogs"
+        android:name="org.thoughtcrime.securesms.payments.preferences.LightningLogsFragment"
+        tools:layout="@layout/fragment_lightning_logs" />
 
     <fragment
         android:id="@+id/setCurrency"
@@ -291,6 +426,16 @@
         app:popExitAnim="@anim/fragment_close_exit" />
 
     <include app:graph="@navigation/payments_create" />
+
+    <!--
+      A second destination for the same scanner fragment. The one in the payments_transfer graph is
+      scoped to that graph's view model; this one reports back through a fragment result instead,
+      so the send screen can consume it without joining that graph.
+    -->
+    <fragment
+        android:id="@+id/paymentRecipientScanQr"
+        android:name="org.thoughtcrime.securesms.payments.preferences.transfer.PaymentsTransferQrScanFragment"
+        tools:layout="@layout/payments_transfer_qr_scan_fragment" />
 
     <include app:graph="@navigation/payments_transfer" />
 

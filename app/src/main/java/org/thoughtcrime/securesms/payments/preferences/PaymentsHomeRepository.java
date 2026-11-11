@@ -8,6 +8,7 @@ import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobs.PaymentLedgerUpdateJob;
 import org.thoughtcrime.securesms.jobs.ProfileUploadJob;
+import org.thoughtcrime.securesms.jobs.PublishLightningAddressJob;
 import org.thoughtcrime.securesms.jobs.SendPaymentsActivatedJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.util.AsynchronousCallback;
@@ -26,6 +27,10 @@ public class PaymentsHomeRepository {
       SignalStore.payments().setMobileCoinPaymentsEnabled(true);
       try {
         ProfileUtil.uploadProfile(AppDependencies.getApplication());
+        // Eagerly publish the lightning address to our profile so senders can pay this account
+        // immediately, instead of only once we happen to open a Receive/Send screen. The job
+        // retries if the Breez registration or upload is slow or fails.
+        AppDependencies.getJobManager().add(new PublishLightningAddressJob());
         AppDependencies.getJobManager()
                        .startChain(PaymentLedgerUpdateJob.updateLedger())
                        .then(new SendPaymentsActivatedJob())

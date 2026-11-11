@@ -78,6 +78,19 @@
                     android:visibility="gone"
                     app:srcCompat="@drawable/ic_x_conversation_filter_24" />
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/search_paste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?actionBarItemBackground"
+                    android:clickable="true"
+                    android:contentDescription="@string/contact_filter_toolbar__paste_from_clipboard_description"
+                    android:focusable="true"
+                    android:tint="@color/signal_icon_tint_primary"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/symbol_copy_android_24" />
+
             </org.thoughtcrime.securesms.components.AnimatingToggle>
 
         </LinearLayout>

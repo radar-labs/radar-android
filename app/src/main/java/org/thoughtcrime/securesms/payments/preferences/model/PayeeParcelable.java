@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.signal.core.models.recipients.RecipientId;
+import org.thoughtcrime.securesms.payments.LightningAddress;
 import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
 import org.thoughtcrime.securesms.payments.Payee;
 
@@ -25,7 +26,7 @@ public final class PayeeParcelable implements Parcelable {
     this(Payee.fromRecipientAndAddress(recipientId, address));
   }
 
-  public PayeeParcelable(@NonNull MobileCoinPublicAddress publicAddress) {
+  public PayeeParcelable(@NonNull LightningAddress publicAddress) {
     this(new Payee(publicAddress));
   }
 
@@ -58,14 +59,14 @@ public final class PayeeParcelable implements Parcelable {
       if (payee.hasPublicAddress()) {
         dest.writeInt(CONTAINS_RECIPIENT_ID_AND_ADDRESS);
         dest.writeParcelable(payee.requireRecipientId(), flags);
-        dest.writeString(payee.requirePublicAddress().getPaymentAddressBase58());
+        dest.writeString(payee.requireLightningAddress().getPaymentAddress());
       } else {
         dest.writeInt(CONTAINS_RECIPIENT_ID);
         dest.writeParcelable(payee.requireRecipientId(), flags);
       }
     } else if (payee.hasPublicAddress()) {
       dest.writeInt(CONTAINS_ADDRESS);
-      dest.writeString(payee.requirePublicAddress().getPaymentAddressBase58());
+      dest.writeString(payee.requireLightningAddress().getPaymentAddress());
     } else {
       dest.writeInt(UNKNOWN);
     }
@@ -89,12 +90,12 @@ public final class PayeeParcelable implements Parcelable {
           return new PayeeParcelable(new Payee(recipientId));
         }
         case CONTAINS_RECIPIENT_ID_AND_ADDRESS: {
-          RecipientId             recipientId   = in.readParcelable(RecipientId.class.getClassLoader());
-          MobileCoinPublicAddress publicAddress = MobileCoinPublicAddress.fromBase58OrThrow(in.readString());
-          return new PayeeParcelable(Payee.fromRecipientAndAddress(recipientId, publicAddress));
+          RecipientId      recipientId   = in.readParcelable(RecipientId.class.getClassLoader());
+          LightningAddress publicAddress = LightningAddress.Companion.fromLightningAddressOrThrow(in.readString());
+          return new PayeeParcelable(new Payee(recipientId, publicAddress));
         }
         case CONTAINS_ADDRESS: {
-          return new PayeeParcelable(new Payee(MobileCoinPublicAddress.fromBase58OrThrow(in.readString())));
+          return new PayeeParcelable(new Payee(LightningAddress.Companion.fromLightningAddressOrThrow(in.readString())));
         }
         default: {
           throw new AssertionError();

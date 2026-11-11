@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.payments.Payment;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.payments.ReconstructedPayment;
 import org.thoughtcrime.securesms.payments.State;
 import org.thoughtcrime.securesms.payments.preferences.PaymentType;
@@ -20,7 +21,6 @@ import org.signal.core.ui.util.SpanUtil;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModelList;
 import org.whispersystems.signalservice.api.payments.FormatterOptions;
-import org.whispersystems.signalservice.api.payments.PaymentsConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -91,11 +91,12 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
       return context.getString(R.string.PaymentsHomeFragment__details);
     }
 
-    return payment.getAmountPlusFeeWithDirection()
-                  .toString(FormatterOptions.builder(Locale.getDefault())
-                                            .alwaysPrefixWithSign()
-                                            .withMaximumFractionDigits(PaymentsConstants.SHORT_FRACTION_LENGTH)
-                                            .build());
+    // Route through the single display layer so the row follows the sats/BTC preference
+    // (mirrors MoneyView / iOS PaymentsFormat) instead of always rendering BTC.
+    return PaymentAmountFormatter.formatRespectingHiddenBalance(payment.getAmountPlusFeeWithDirection(),
+                                         FormatterOptions.builder(Locale.getDefault())
+                                                         .alwaysPrefixWithSign()
+                                                         .build());
   }
 
   public @ColorRes int getAmountColor() {
@@ -127,7 +128,7 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
   }
 
   public @DrawableRes int getTransactionAvatar() {
-    return R.drawable.ic_mobilecoin_avatar_24;
+    return R.drawable.ic_ln_black;
   }
 
   public @NonNull RecipientIdMappingModel getRecipientIdModel() {

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--
+  Payments-home toolbar menu. The individual settings rows (Set currency, Bitcoin
+  unit, Payments username, Recovery phrase, Help, Lightning logs, Deactivate,
+  Delete wallet) now live behind the trailing gear, which opens
+  PaymentSettingsMenuFragment (mirrors iOS PaymentSettingsMenuViewController).
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/payments_home_fragment_menu_transfer_to_exchange"
-        android:title="@string/PaymentsHomeFragment__transfer_to_exchange" />
+    <!-- Hide/show-balance toggle. Shown as a leading icon button in the toolbar in standalone
+         mode (PaymentsActivity); programmatically hidden in tab mode where the same toggle
+         is placed on the LEFT as the toolbar's navigation icon (mirrors iOS leftBarButtonItem). -->
+    <item android:id="@+id/payments_home_fragment_menu_balance_visibility"
+        android:title="@string/PaymentsHomeFragment__toggle_balance_visibility"
+        android:icon="@drawable/ic_visibility_24dp"
+        app:showAsAction="always" />
 
-    <item android:id="@+id/payments_home_fragment_menu_set_currency"
-        android:title="@string/PaymentsHomeFragment__currency_conversion" />
-
-    <item android:id="@+id/payments_home_fragment_menu_deactivate_wallet"
-        android:title="@string/PaymentsHomeFragment__deactivate_payments" />
-
-    <item android:id="@+id/payments_home_fragment_menu_view_recovery_phrase"
-        android:title="@string/PaymentsHomeFragment__recovery_phrase" />
-
-    <item android:id="@+id/payments_home_fragment_menu_help"
-        android:title="@string/PaymentsHomeFragment__help" />
+    <!-- Trailing gear → Payment settings disclosure list. -->
+    <item android:id="@+id/payments_home_fragment_menu_settings"
+        android:title="@string/PaymentsHomeFragment__payment_settings"
+        android:icon="@drawable/symbol_settings_android_24"
+        app:showAsAction="always" />
 </menu>

@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="@id/create_payment_fragment_large_currency_space"
         app:layout_constraintStart_toStartOf="@id/create_payment_fragment_large_currency_space"
         app:layout_constraintTop_toTopOf="@id/create_payment_fragment_large_currency_space"
-        tools:money="MOB:275000000000000" />
+        tools:money="BTC:10000000" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/create_payment_fragment_toggle"
