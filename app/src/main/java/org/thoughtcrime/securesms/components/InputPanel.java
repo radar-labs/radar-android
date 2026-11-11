@@ -94,6 +94,8 @@ public class InputPanel extends ConstraintLayout
   private Stub<QuoteView>       quoteViewStub;
   private Stub<LinkPreviewView> linkPreviewStub;
   private EmojiToggle           mediaKeyboard;
+  /** Radar: the payment button takes the emoji toggle's place; emoji and stickers open from the attachment keyboard. */
+  private ImageButton           paymentButton;
   private ComposeText           composeText;
   private ImageButton           quickCameraToggle;
   private ImageButton           quickAudioToggle;
@@ -156,6 +158,7 @@ public class InputPanel extends ConstraintLayout
     this.quoteViewStub          = new Stub<>(findViewById(R.id.quote_view));
     this.linkPreviewStub        = new Stub<>(findViewById(R.id.link_preview));
     this.mediaKeyboard          = findViewById(R.id.emoji_toggle);
+    this.paymentButton          = findViewById(R.id.payment_button);
     this.composeText            = findViewById(R.id.embedded_text_editor);
     this.composeTextContainer   = findViewById(R.id.embedded_text_editor_container);
     this.quickCameraToggle      = findViewById(R.id.quick_camera_toggle);
@@ -178,8 +181,10 @@ public class InputPanel extends ConstraintLayout
 
     this.recordLockCancel.setOnClickListener(v -> microphoneRecorderView.cancelAction(true));
 
-    mediaKeyboard.setVisibility(View.VISIBLE);
-    emojiVisible = true;
+    // Radar: the media keyboard toggle stays hidden; the payment button is shown in its place.
+    mediaKeyboard.setVisibility(View.GONE);
+    emojiVisible = false;
+    paymentButton.setVisibility(View.VISIBLE);
 
     stickerSuggestionAdapter = new ConversationStickerSuggestionAdapter(Glide.with(this), this);
 
@@ -225,6 +230,7 @@ public class InputPanel extends ConstraintLayout
     this.listener = listener;
 
     mediaKeyboard.setOnClickListener(v -> listener.onEmojiToggle());
+    paymentButton.setOnClickListener(v -> listener.onPaymentToggle());
 
     if (getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
       quickCameraToggle.setOnClickListener(v -> listener.onQuickCameraToggleClicked());
@@ -416,8 +422,9 @@ public class InputPanel extends ConstraintLayout
   }
 
   public void showMediaKeyboardToggle(boolean show) {
-    emojiVisible = show;
-    mediaKeyboard.setVisibility(show ? View.VISIBLE : GONE);
+    // Radar: the toggle is never shown (the payment button is in its place).
+    emojiVisible = false;
+    mediaKeyboard.setVisibility(GONE);
   }
 
   public void setMediaKeyboardToggleMode(@NonNull MediaKeyboardTab tab) {
@@ -469,6 +476,7 @@ public class InputPanel extends ConstraintLayout
     }
 
     mediaKeyboard.setColorFilter(iconTint);
+    paymentButton.setColorFilter(iconTint);
     quickAudioToggle.setColorFilter(iconTint);
     quickCameraToggle.setColorFilter(iconTint);
     composeText.setTextColor(textColor);
@@ -516,7 +524,7 @@ public class InputPanel extends ConstraintLayout
     updateEditModeUi();
     updateEditModeThumbnail(requestManager);
 
-    int maxWidth = composeContainer.getWidth() - mediaKeyboard.getWidth();
+    int maxWidth = composeContainer.getWidth() - paymentButton.getWidth();
     if (!fromEditMessageMode) {
       maxWidth -= editMessageCancel.getWidth();
       if (editMessageCancel.getLayoutParams() instanceof MarginLayoutParams) {
@@ -656,6 +664,7 @@ public class InputPanel extends ConstraintLayout
     if (emojiVisible) {
       fadeOut(mediaKeyboard);
     }
+    fadeOut(paymentButton);
 
     fadeOut(composeText);
     fadeOut(quickCameraToggle);
@@ -730,6 +739,7 @@ public class InputPanel extends ConstraintLayout
   public void setEnabled(boolean enabled) {
     composeText.setEnabled(enabled);
     mediaKeyboard.setEnabled(enabled);
+    paymentButton.setEnabled(enabled);
     quickAudioToggle.setEnabled(enabled);
     quickCameraToggle.setEnabled(enabled);
   }
@@ -823,6 +833,8 @@ public class InputPanel extends ConstraintLayout
       mediaKeyboard.animate().cancel();
       mediaKeyboard.setAlpha(0f);
     }
+    paymentButton.animate().cancel();
+    paymentButton.setAlpha(0f);
 
     for (View view : Arrays.asList(composeText, quickCameraToggle, quickAudioToggle)) {
       view.animate().cancel();
@@ -834,6 +846,7 @@ public class InputPanel extends ConstraintLayout
     if (emojiVisible) {
       fadeIn(mediaKeyboard);
     }
+    fadeIn(paymentButton);
 
     fadeIn(composeText);
     fadeIn(quickCameraToggle);
@@ -908,6 +921,9 @@ public class InputPanel extends ConstraintLayout
     void onRecorderPermissionRequired();
     void onRecorderAlreadyInUse();
     void onEmojiToggle();
+
+    /** Radar: the payment button in the compose bar was tapped. */
+    void onPaymentToggle();
     void onLinkPreviewCanceled();
     void onStickerSuggestionSelected(@NonNull StickerRecord sticker);
     void onQuoteChanged(long id, @NonNull RecipientId author);

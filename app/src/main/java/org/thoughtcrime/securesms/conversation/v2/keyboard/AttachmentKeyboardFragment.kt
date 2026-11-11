@@ -25,9 +25,7 @@ import org.thoughtcrime.securesms.conversation.AttachmentKeyboard
 import org.thoughtcrime.securesms.conversation.AttachmentKeyboardButton
 import org.thoughtcrime.securesms.conversation.ManageContextMenu
 import org.thoughtcrime.securesms.conversation.v2.ConversationViewModel
-import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.Recipient
-import java.util.function.Predicate
 
 /**
  * Fragment wrapped version of [AttachmentKeyboard] to help encapsulate logic the view
@@ -47,7 +45,6 @@ class AttachmentKeyboardFragment : LoggingFragment(R.layout.attachment_keyboard_
   private lateinit var attachmentKeyboardView: AttachmentKeyboard
 
   private val lifecycleDisposable = LifecycleDisposable()
-  private val removePaymentFilter: Predicate<AttachmentKeyboardButton> = Predicate { button -> button != AttachmentKeyboardButton.PAYMENT }
 
   @Suppress("ReplaceGetOrSet")
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,12 +52,7 @@ class AttachmentKeyboardFragment : LoggingFragment(R.layout.attachment_keyboard_
     lifecycleDisposable.bindTo(viewLifecycleOwner)
 
     attachmentKeyboardView = view.findViewById(R.id.attachment_keyboard)
-    attachmentKeyboardView.apply {
-      setCallback(this@AttachmentKeyboardFragment)
-      if (!SignalStore.payments.paymentsAvailability.isSendAllowed) {
-        filterAttachmentKeyboardButtons(removePaymentFilter)
-      }
-    }
+    attachmentKeyboardView.setCallback(this@AttachmentKeyboardFragment)
 
     viewModel.getRecentMedia()
       .subscribeBy {
@@ -126,14 +118,10 @@ class AttachmentKeyboardFragment : LoggingFragment(R.layout.attachment_keyboard_
       .execute()
   }
 
+  @Suppress("UNUSED_PARAMETER")
   private fun updateButtonsAvailable(recipient: Recipient) {
-    val paymentsValues = SignalStore.payments
-    val isPaymentsAvailable = paymentsValues.paymentsAvailability.isSendAllowed && !recipient.isSelf && !recipient.isGroup && recipient.isRegistered && SignalStore.account.isPrimaryDevice
-
-    if (!isPaymentsAvailable) {
-      attachmentKeyboardView.filterAttachmentKeyboardButtons(removePaymentFilter)
-    } else {
-      attachmentKeyboardView.filterAttachmentKeyboardButtons(null)
-    }
+    // Radar: there is no Payment button here (payments have their own button in the compose bar),
+    // so every button is always offered.
+    attachmentKeyboardView.filterAttachmentKeyboardButtons(null)
   }
 }

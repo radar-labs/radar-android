@@ -66,7 +66,6 @@ import org.thoughtcrime.securesms.payments.CanNotSendPaymentDialog;
 import org.thoughtcrime.securesms.payments.PaymentsAddressException;
 import org.thoughtcrime.securesms.payments.create.CreatePaymentFragmentArgs;
 import org.thoughtcrime.securesms.payments.preferences.PaymentsActivity;
-import org.thoughtcrime.securesms.payments.preferences.RecipientHasNotEnabledPaymentsDialog;
 import org.thoughtcrime.securesms.payments.preferences.model.PayeeParcelable;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.sms.MessageSender;
@@ -288,7 +287,11 @@ public class AttachmentManager {
   }
 
   public static void selectPayment(@NonNull Fragment fragment, @NonNull Recipient recipient) {
-    if (!ExpiringProfileCredentialUtil.isValid(recipient.getExpiringProfileKeyCredential())) {
+    // We need the recipient's profile key to fetch their payment address. It is delivered in their
+    // messages once they share their profile with us; without it we cannot reach their payment profile.
+    // (We intentionally do not gate on an expiring profile key credential: this fork does not use one
+    // and the server does not issue one for the fixed payment profile version.)
+    if (recipient.getProfileKey() == null) {
       CanNotSendPaymentDialog.show(fragment.requireContext());
       return;
     }
@@ -308,10 +311,13 @@ public class AttachmentManager {
                        intent.putExtra(PaymentsActivity.EXTRA_PAYMENTS_STARTING_ACTION, R.id.action_directly_to_createPayment);
                        intent.putExtra(PaymentsActivity.EXTRA_STARTING_ARGUMENTS, new CreatePaymentFragmentArgs.Builder(new PayeeParcelable(recipient.getId())).setFinishOnConfirm(true).build().toBundle());
                        fragment.startActivity(intent);
-                     } else if (RemoteConfig.paymentsRequestActivateFlow()) {
-                       showRequestToActivatePayments(fragment.requireContext(), recipient);
                      } else {
-                       RecipientHasNotEnabledPaymentsDialog.show(fragment.requireContext());
+                       // Always offer to ask. This used to sit behind
+                       // RemoteConfig.paymentsRequestActivateFlow, whose key
+                       // ("android.payments.requestActivateFlow") defaults to false and is served by
+                       // Signal's config, so for Radar it was never on and the user only ever saw a
+                       // dead-end dialog. iOS offers the request unconditionally.
+                       showRequestToActivatePayments(fragment.requireContext(), recipient);
                      }
                    });
   }

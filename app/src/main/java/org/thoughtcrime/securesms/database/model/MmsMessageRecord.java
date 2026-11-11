@@ -35,6 +35,7 @@ import org.thoughtcrime.securesms.mms.Slide;
 import org.thoughtcrime.securesms.mms.SlideDeck;
 import org.thoughtcrime.securesms.payments.CryptoValueUtil;
 import org.thoughtcrime.securesms.payments.Payment;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.polls.PollRecord;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.whispersystems.signalservice.api.payments.FormatterOptions;
@@ -229,7 +230,7 @@ public class MmsMessageRecord extends MessageRecord {
     if (MessageTypes.isChatSessionRefresh(type)) {
       return emphasisAdded(context.getString(R.string.MessageRecord_chat_session_refreshed));
     } else if (isPaymentNotification() && payment != null) {
-      return new SpannableString(context.getString(R.string.MessageRecord__payment_s, payment.getAmount().toString(FormatterOptions.defaults())));
+      return new SpannableString(context.getString(R.string.MessageRecord__payment_s, PaymentAmountFormatter.formatRespectingHiddenBalance(payment.getAmount())));
     } else if (isPaymentTombstone() || isPaymentNotification()) {
       MessageExtras extras = getMessageExtras();
 
@@ -240,7 +241,7 @@ public class MmsMessageRecord extends MessageRecord {
       if (amount == null) {
         return new SpannableString(context.getString(R.string.MessageRecord__payment_tombstone));
       } else {
-        return new SpannableString(context.getString(R.string.MessageRecord__payment_s, amount.toString(FormatterOptions.defaults())));
+        return new SpannableString(context.getString(R.string.MessageRecord__payment_s, PaymentAmountFormatter.formatRespectingHiddenBalance(amount)));
       }
     }
 

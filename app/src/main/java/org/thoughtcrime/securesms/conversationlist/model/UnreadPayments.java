@@ -6,8 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.thoughtcrime.securesms.R;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.whispersystems.signalservice.api.payments.FormatterOptions;
 import org.whispersystems.signalservice.api.payments.Money;
 
 import java.util.UUID;
@@ -51,9 +52,12 @@ public abstract class UnreadPayments {
     @Override
     public @NonNull String getDescription(@NonNull Context context) {
       if (recipient != null) {
+        String amountString = SignalStore.payments().getBalanceHidden()
+                              ? PaymentAmountFormatter.HIDDEN_AMOUNT
+                              : PaymentAmountFormatter.format(amount);
         return context.getString(R.string.UnreadPayments__s_sent_you_s,
                                  recipient.getShortDisplayName(context),
-                                 amount.toString(FormatterOptions.defaults()));
+                                 amountString);
       } else {
         return context.getString(R.string.UnreadPayments__d_new_payment_notifications, 1);
       }

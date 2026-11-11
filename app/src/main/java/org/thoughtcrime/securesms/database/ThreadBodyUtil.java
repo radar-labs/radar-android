@@ -15,7 +15,13 @@ import org.thoughtcrime.securesms.contactshare.Contact;
 import org.thoughtcrime.securesms.contactshare.ContactUtil;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
+import org.thoughtcrime.securesms.database.model.databaseprotos.MessageExtras;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.mms.GifSlide;
+import org.thoughtcrime.securesms.payments.CryptoValueUtil;
+import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
+import org.whispersystems.signalservice.api.payments.FormatterOptions;
+import org.whispersystems.signalservice.api.payments.Money;
 import org.thoughtcrime.securesms.mms.Slide;
 import org.thoughtcrime.securesms.mms.StickerSlide;
 import org.thoughtcrime.securesms.util.MessageRecordUtil;
@@ -24,6 +30,7 @@ import org.signal.core.util.Util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class ThreadBodyUtil {
@@ -45,6 +52,53 @@ public final class ThreadBodyUtil {
     return getFormattedBodyForMms(context, (MmsMessageRecord) record, bodyOverride).body;
   }
 
+  /**
+   * Chat-list snippet for payment messages. Mirrors iOS `ThreadViewModel.paymentSnippet`
+   * (commit c90dd2d790):
+   *   - with amount + not hidden: "You sent 100 sats" / "<Sender> sent you 100 sats"
+   *   - balance hidden: amount replaced with `•••••`
+   *   - no amount available (notification missing payment, tombstone missing amount):
+   *     "You sent payment" / "<Sender> sent you payment"
+   */
+  private static @NonNull String getPaymentDirectionSnippet(@NonNull Context context, @NonNull MmsMessageRecord record) {
+    String amountText = formatPaymentAmount(record);
+    if (record.isOutgoing()) {
+      return amountText != null
+          ? context.getString(R.string.PaymentMessageView_you_sent_s, amountText)
+          : context.getString(R.string.ThreadRecord__you_sent_payment);
+    } else {
+      String sender = record.getFromRecipient().getShortDisplayName(context);
+      return amountText != null
+          ? context.getString(R.string.UnreadPayments__s_sent_you_s, sender, amountText)
+          : context.getString(R.string.ThreadRecord__s_sent_you_payment, sender);
+    }
+  }
+
+  /**
+   * Extracts a formatted amount string for the payment associated with a chat-list message.
+   * Returns `null` if the amount can't be resolved; the hidden-balance placeholder if the
+   * (mirrors iOS `balanceHidden` masking from c90dd2d790).
+   */
+  private static @Nullable String formatPaymentAmount(@NonNull MmsMessageRecord record) {
+    Money amount = null;
+    if (record.isPaymentNotification() && record.getPayment() != null) {
+      amount = record.getPayment().getAmount();
+    } else if (record.isPaymentTombstone()) {
+      MessageExtras extras = record.getMessageExtras();
+      if (extras != null && extras.paymentTombstone != null && extras.paymentTombstone.amount != null) {
+        amount = CryptoValueUtil.cryptoValueToMoney(extras.paymentTombstone.amount);
+      }
+    }
+    if (amount == null) {
+      return null;
+    }
+    if (SignalStore.payments().getBalanceHidden()) {
+      return PaymentAmountFormatter.HIDDEN_AMOUNT;
+    }
+    // Single display layer decides sats vs BTC (mirrors MoneyView / iOS PaymentsFormat).
+    return PaymentAmountFormatter.format(amount, FormatterOptions.builder(Locale.getDefault()).build());
+  }
+
   private static @NonNull ThreadBody getFormattedBodyForMms(@NonNull Context context, @NonNull MmsMessageRecord record, @Nullable CharSequence bodyOverride) {
     if (record.getSharedContacts().size() > 0) {
       Contact contact = record.getSharedContacts().get(0);
@@ -62,7 +116,7 @@ public final class ThreadBodyUtil {
     } else if (MessageRecordUtil.isStoryReaction(record)) {
       return new ThreadBody(getStoryReactionSummary(context, record));
     } else if (record.isPaymentNotification() || record.isPaymentTombstone()) {
-      return format(EmojiStrings.CARD, context.getString(R.string.ThreadRecord_payment), null);
+      return format(EmojiStrings.CARD, getPaymentDirectionSnippet(context, record), null);
     } else if (record.isPaymentsRequestToActivate()) {
       return format(EmojiStrings.CARD, getPaymentActivationRequestSummary(context, record), null);
     } else if (record.isPaymentsActivated()) {

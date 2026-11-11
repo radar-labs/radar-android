@@ -80,7 +80,7 @@ class PaymentMessageView @JvmOverloads constructor(
       binding.paymentAmount.visible = true
       binding.paymentInprogress.visible = false
       binding.paymentAmount.setTextColor(quoteViewColorTheme.getForegroundColor(context))
-      binding.paymentAmount.setMoney(payment.amount, 0L, currencyTypefaceSpan)
+      binding.paymentAmount.setMoneyRespectingHiddenBalance(payment.amount, 0L, currencyTypefaceSpan)
     }
 
     ViewCompat.setBackgroundTintList(binding.paymentAmountLayout, ColorStateList.valueOf(quoteViewColorTheme.getBackgroundColor(context)))
@@ -126,7 +126,7 @@ class PaymentMessageView @JvmOverloads constructor(
     binding.paymentAmount.visible = true
     binding.paymentInprogress.visible = false
     binding.paymentAmount.setTextColor(quoteViewColorTheme.getForegroundColor(context))
-    binding.paymentAmount.setMoney(amount, 0L, currencyTypefaceSpan)
+    binding.paymentAmount.setMoneyRespectingHiddenBalance(amount, 0L, currencyTypefaceSpan)
 
     ViewCompat.setBackgroundTintList(binding.paymentAmountLayout, ColorStateList.valueOf(quoteViewColorTheme.getBackgroundColor(context)))
   }

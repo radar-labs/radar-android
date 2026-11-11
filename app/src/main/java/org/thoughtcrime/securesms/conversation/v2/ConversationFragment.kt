@@ -2794,6 +2794,26 @@ class ConversationFragment :
     }
   }
 
+  /** Radar: the payment button in the compose bar. */
+  private fun handlePaymentButtonClicked() {
+    val recipient = viewModel.recipientSnapshot ?: return
+    val paymentsAvailability = SignalStore.payments.paymentsAvailability
+
+    when {
+      !paymentsAvailability.isSendAllowed -> {
+        if (paymentsAvailability.canRegister()) {
+          startActivity(Intent(requireContext(), PaymentsActivity::class.java))
+        } else {
+          toast(R.string.ConversationActivity__payments_are_not_available_on_your_account)
+        }
+      }
+      recipient.isSelf -> toast(R.string.ConversationActivity__you_cant_send_a_payment_to_yourself)
+      recipient.isGroup -> toast(R.string.ConversationActivity__payments_cant_be_sent_in_group_chats)
+      !recipient.isRegistered -> toast(R.string.ConversationActivity__this_contact_isnt_registered_for_payments)
+      else -> AttachmentManager.selectPayment(this, recipient)
+    }
+  }
+
   private fun initializeMediaKeyboard() {
     val stickerIntro: Boolean = !SignalStore.tooltips.hasSeenStickerIntroTooltip()
 
@@ -2803,7 +2823,8 @@ class ConversationFragment :
     if (stickerIntro) {
       SignalStore.settings.mediaKeyboardMode = MediaKeyboardMode.STICKER
       inputPanel.setMediaKeyboardToggleMode(MediaKeyboardTab.STICKER)
-      conversationTooltips.displayStickerIntroductionTooltip(inputPanel.mediaKeyboardToggleAnchorView) {
+      // Radar: the media keyboard toggle is hidden (the payment button is in its place), so point at the attach button.
+      conversationTooltips.displayStickerIntroductionTooltip(binding.conversationInputPanel.attachButton) {
         EventBus.default.removeStickyEvent<StickerPackInstallEvent>()
       }
     }
@@ -5539,6 +5560,10 @@ class ConversationFragment :
       container.toggleInput(ChatKeyboards.Media, composeText, showSoftKeyOnHide = true)
     }
 
+    override fun onPaymentToggle() {
+      handlePaymentButtonClicked()
+    }
+
     override fun onLinkPreviewCanceled() {
       linkPreviewViewModel.onUserCancel()
     }
@@ -5662,7 +5687,11 @@ class ConversationFragment :
 
           AttachmentKeyboardButton.LOCATION -> conversationActivityResultContracts.launchSelectLocation(recipient.chatColors)
 
-          AttachmentKeyboardButton.PAYMENT -> AttachmentManager.selectPayment(this@ConversationFragment, recipient)
+          // Radar: emoji and stickers open from the attachment keyboard (the compose bar has a payment button).
+          AttachmentKeyboardButton.EMOJI -> {
+            container.toggleInput(ChatKeyboards.Media, composeText, showSoftKeyOnHide = true)
+            return
+          }
 
           AttachmentKeyboardButton.FILE -> {
             if (!conversationActivityResultContracts.launchSelectFile()) {
@@ -5710,7 +5739,7 @@ class ConversationFragment :
     EventBus.default.removeStickyEvent(event)
 
     if (!inputPanel.isStickerMode) {
-      conversationTooltips.displayStickerPackInstalledTooltip(inputPanel.mediaKeyboardToggleAnchorView, event)
+      conversationTooltips.displayStickerPackInstalledTooltip(binding.conversationInputPanel.attachButton, event)
     }
   }
 

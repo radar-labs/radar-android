@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.database.model;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -8,6 +9,7 @@ import android.text.SpannableStringBuilder;
 import androidx.annotation.ColorInt;
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
@@ -17,6 +19,8 @@ import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.ui.fonts.SignalSymbols;
 import org.signal.core.ui.util.ThemeUtil;
 import org.signal.core.util.BidiUtil;
+import org.signal.core.ui.fonts.SignalSymbols.Glyph;
+import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientIds;
 import org.signal.core.ui.util.SpanUtil;
@@ -72,6 +76,20 @@ public final class LiveUpdateMessage {
 
     if (glyph == null) {
       return new SpannableString(string);
+    } else if (glyph == Glyph.ACTIVATE_PAYMENTS) {
+      // Radar branding: render the Radar logo instead of the Signal-logo symbol glyph.
+      SpannableStringBuilder builder = new SpannableStringBuilder();
+      Drawable               radar   = AppCompatResources.getDrawable(context, R.drawable.radar_logo);
+
+      if (radar != null) {
+        int size = Math.round(context.getResources().getDisplayMetrics().density * 16);
+        radar.setBounds(0, 0, size, size);
+        builder.append(SpanUtil.buildCenteredImageSpan(radar));
+      }
+      builder.append(" ");
+      builder.append(SpanUtil.color(tint, string));
+
+      return new SpannableString(builder);
     } else {
       SpannableStringBuilder builder   = new SpannableStringBuilder();
       CharSequence           glyphChar = SignalSymbols.getSpannedString(context, SignalSymbols.Weight.REGULAR, glyph, -1);
