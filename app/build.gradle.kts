@@ -40,7 +40,7 @@ staticIps.stringPropertyNames().forEach { rootProject.extra[it] = staticIps.getP
 // `canonicalVersionName` is Radar's own product version; it diverged from upstream Signal's
 // 7.68.x at Radar 1.0.4 and must match the vX.Y.Z git tag of each GitHub release exactly
 // (Obtainium detects updates by comparing the release tag against the installed versionName).
-val canonicalVersionCode = 1651
+val canonicalVersionCode = 1652
 val canonicalVersionName = "1.0.9"
 // Version string Radar reports to Signal's servers in the "Signal-Android/<version>" User-Agent.
 // Signal's infra rejects unrecognized/deprecated client versions with HTTP 499 (DeprecatedVersionException),
