@@ -86,6 +86,11 @@ fun MainFloatingActionButtons(
     }
   }
 
+  // Radar: no FABs on the Payments tab (its header has its own Add Money / Send buttons).
+  if (destination == MainListRoute.Payments) {
+    return
+  }
+
   Box(
     modifier = modifier
       .padding(ACTION_BUTTON_SPACING)
@@ -178,6 +183,10 @@ private fun PrimaryActionButton(
       MainListRoute.Stories -> {
         { onCameraClick(destination) }
       }
+      // Radar: the Payments tab has its own Add Money / Send buttons; the FAB is hidden there.
+      MainListRoute.Payments -> {
+        {}
+      }
     }
   }
 
@@ -191,6 +200,7 @@ private fun PrimaryActionButton(
           MainListRoute.Chats -> CoreUiR.drawable.symbol_edit_24 to R.string.conversation_list_fragment__fab_content_description
           MainListRoute.Calls -> R.drawable.symbol_phone_plus_24 to R.string.CallLogFragment__start_a_new_call
           MainListRoute.Stories -> CoreUiR.drawable.symbol_camera_24 to R.string.conversation_list_fragment__open_camera_description
+          MainListRoute.Payments -> R.drawable.symbol_bitcoin_24 to R.string.preferences__payments
         }
 
         Icon(

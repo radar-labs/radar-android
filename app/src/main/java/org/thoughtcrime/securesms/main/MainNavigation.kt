@@ -20,6 +20,7 @@ import org.thoughtcrime.securesms.calls.registerCallsTabDetailRoutes
 import org.thoughtcrime.securesms.chats.ArchiveListPane
 import org.thoughtcrime.securesms.chats.ChatsListPane
 import org.thoughtcrime.securesms.chats.registerChatsTabDetailRoutes
+import org.thoughtcrime.securesms.payments.preferences.PaymentsListPane
 import org.thoughtcrime.securesms.stories.StoriesListPane
 import org.thoughtcrime.securesms.stories.registerStoriesTabDetailRoutes
 
@@ -67,6 +68,7 @@ private fun EntryProviderScope<NavKey>.registerMainScreenRoutes() {
       MainListRoute.Archive -> ArchiveListPane(modifier = Modifier.fillMaxSize())
       MainListRoute.Calls -> CallsListPane(modifier = Modifier.fillMaxSize())
       MainListRoute.Stories -> StoriesListPane(modifier = Modifier.fillMaxSize())
+      MainListRoute.Payments -> PaymentsListPane(modifier = Modifier.fillMaxSize())
     }
   }
 }

@@ -484,6 +484,8 @@ private fun PrimaryToolbar(
           MainListRoute.Chats -> ChatDropdownItems(state, callback, dismiss)
           MainListRoute.Calls -> CallDropdownItems(state.callFilter, callback, dismiss)
           MainListRoute.Stories -> StoryDropDownItems(callback, dismiss)
+          // Radar: the Payments tab has its own toolbar.
+          MainListRoute.Payments -> Unit
         }
       }
     }

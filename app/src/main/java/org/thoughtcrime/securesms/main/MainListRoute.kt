@@ -5,6 +5,7 @@
 
 package org.thoughtcrime.securesms.main
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import kotlinx.serialization.Serializable
@@ -19,7 +20,9 @@ import org.thoughtcrime.securesms.R
 enum class MainListRoute(
   @get:StringRes val label: Int,
   @get:RawRes val icon: Int,
-  @get:StringRes val contentDescription: Int = label
+  @get:StringRes val contentDescription: Int = label,
+  /** Radar: a static icon for tabs without a Lottie animation (Payments). Takes precedence over [icon] when non-zero. */
+  @get:DrawableRes val drawableIcon: Int = 0
 ) : ListNavKey {
   Chats(
     label = R.string.ConversationListTabs__chats,
@@ -28,6 +31,13 @@ enum class MainListRoute(
   Archive(
     label = R.string.ConversationListTabs__chats,
     icon = R.raw.chats_28
+  ),
+
+  /** Radar: the Payments tab (between Chats and Calls, like iOS HomeTabBarController). */
+  Payments(
+    label = R.string.preferences__payments,
+    icon = 0,
+    drawableIcon = R.drawable.symbol_bitcoin_24
   ),
   Calls(
     label = R.string.ConversationListTabs__calls,

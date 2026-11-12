@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -79,6 +81,7 @@ fun MainNavigationBar(
         MainListRoute.Chats -> state.chatsCount
         MainListRoute.Calls -> state.callsCount
         MainListRoute.Stories -> state.storiesCount
+        MainListRoute.Payments -> state.paymentsCount
       }
 
       val selected = state.currentListLocation == destination
@@ -230,6 +233,7 @@ private fun BoxScope.NavigationRailCountIndicator(
       MainListRoute.Chats -> state.chatsCount
       MainListRoute.Calls -> state.callsCount
       MainListRoute.Stories -> state.storiesCount
+      MainListRoute.Payments -> state.paymentsCount
     }
   }
 
@@ -259,6 +263,17 @@ private fun NavigationDestinationIcon(
   destination: MainListRoute,
   selected: Boolean
 ) {
+  // Radar: tabs without a Lottie animation (Payments) draw a static icon in the same colour.
+  if (destination.drawableIcon != 0) {
+    Icon(
+      painter = painterResource(destination.drawableIcon),
+      contentDescription = null,
+      tint = MaterialTheme.colorScheme.onSurface,
+      modifier = Modifier.size(LOTTIE_SIZE)
+    )
+    return
+  }
+
   val dynamicProperties = rememberLottieDynamicProperties(
     rememberLottieDynamicProperty(
       property = LottieProperty.COLOR_FILTER,

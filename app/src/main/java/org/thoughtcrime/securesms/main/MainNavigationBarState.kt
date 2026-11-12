@@ -15,6 +15,8 @@ data class MainNavigationBarState(
   val chatsCount: Int = 0,
   val callsCount: Int = 0,
   val storiesCount: Int = 0,
+  /** Radar: unread payments badge on the Payments tab. */
+  val paymentsCount: Int = 0,
   val storyFailure: Boolean = false,
   val destinations: List<MainListRoute> = ALL_DESTINATIONS,
   val currentListLocation: MainListRoute = MainListRoute.Chats,

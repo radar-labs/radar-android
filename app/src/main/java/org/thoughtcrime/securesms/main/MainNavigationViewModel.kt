@@ -62,6 +62,7 @@ class MainNavigationViewModel(
     private const val CHATS_BACK_STACK_KEY = "chats_back_stack_v2"
     private const val CALLS_BACK_STACK_KEY = "calls_back_stack_v2"
     private const val STORIES_BACK_STACK_KEY = "stories_back_stack_v2"
+    private const val PAYMENTS_BACK_STACK_KEY = "payments_back_stack_v2"
   }
 
   class Factory(
@@ -86,7 +87,8 @@ class MainNavigationViewModel(
     stackKeys = mapOf(
       MainListRoute.Chats to CHATS_BACK_STACK_KEY,
       MainListRoute.Calls to CALLS_BACK_STACK_KEY,
-      MainListRoute.Stories to STORIES_BACK_STACK_KEY
+      MainListRoute.Stories to STORIES_BACK_STACK_KEY,
+      MainListRoute.Payments to PAYMENTS_BACK_STACK_KEY
     ),
     initialRoot = initialListLocation.tab
   )
@@ -296,9 +298,22 @@ class MainNavigationViewModel(
         compact = SignalStore.settings.useCompactNavigationBar,
         destinations = MainNavigationBarState.ALL_DESTINATIONS.filter { destination ->
           destination != MainListRoute.Stories || Stories.isFeatureEnabled()
+        }.let { tabs ->
+          // Radar: the Payments tab sits right after Chats whenever payments are available to this user
+          // (mirrors iOS HomeTabBarController gating on shouldShowPaymentsUI).
+          if (SignalStore.payments.paymentsAvailability.showPaymentsMenu()) {
+            tabs.flatMap { if (it == MainListRoute.Chats) listOf(it, MainListRoute.Payments) else listOf(it) }
+          } else {
+            tabs
+          }
         }
       )
     }
+  }
+
+  /** Radar: updates the unread badge on the Payments tab. */
+  fun setPaymentsCount(count: Int) {
+    internalMainNavigationBarState.update { it.copy(paymentsCount = count) }
   }
 
   fun getNotificationProfiles(): Flow<List<NotificationProfile>> {

@@ -301,6 +301,8 @@ class MainActivity :
 
     UnreadPaymentsLiveData().observe(this) { unread ->
       toolbarViewModel.setHasUnreadPayments(unread.isPresent)
+      // Radar: drive the Payments tab badge as well.
+      mainNavigationViewModel.setPaymentsCount(unread.map { it.unreadCount }.orElse(0))
     }
 
     lifecycleScope.launch {
@@ -397,12 +399,16 @@ class MainActivity :
           MainListRoute.Archive -> toolbarViewModel.presentToolbarForConversationListArchiveFragment()
           MainListRoute.Calls -> toolbarViewModel.presentToolbarForCallLogFragment()
           MainListRoute.Stories -> toolbarViewModel.presentToolbarForStoriesLandingFragment()
+          // Radar: the Payments tab has its own toolbar.
+          MainListRoute.Payments -> Unit
         }
       }
 
       val isActionModeActive = mainToolbarState.mode == MainToolbarMode.ACTION_MODE
       val isSearchModeActive = mainToolbarState.mode == MainToolbarMode.SEARCH
-      val isBackHandlerEnabled = mainToolbarState.destination != MainListRoute.Chats && !isActionModeActive && !isSearchModeActive
+      // Radar: on the Payments tab, back belongs to the embedded payments navigation.
+      val isBackHandlerEnabled = mainNavigationState.currentListLocation != MainListRoute.Payments &&
+        mainToolbarState.destination != MainListRoute.Chats && !isActionModeActive && !isSearchModeActive
 
       BackHandler(enabled = isBackHandlerEnabled) {
         mainNavigationViewModel.onEvent(MainNavigationEvents.GoToList(MainListRoute.Chats))
@@ -572,9 +578,12 @@ class MainActivity :
     val contentLayoutData = rememberListDetailPaneMetrics(listPaddingStart = mainToolbarState.mode.listPaddingStart)
     val navigationType = NavigationType.rememberNavigationType()
 
-    val bottomChromeState = remember(mainToolbarState.destination, mainToolbarState.mode, megaphone) {
+    // Radar: the Payments tab never presents a toolbar, so drive the bottom chrome (FABs) off the
+    // selected tab there instead of the last toolbar destination.
+    val bottomChromeDestination = if (mainNavigationState.currentListLocation == MainListRoute.Payments) MainListRoute.Payments else mainToolbarState.destination
+    val bottomChromeState = remember(bottomChromeDestination, mainToolbarState.mode, megaphone) {
       MainBottomChromeState(
-        destination = mainToolbarState.destination,
+        destination = bottomChromeDestination,
         mainToolbarMode = mainToolbarState.mode,
         megaphoneState = MainMegaphoneState(
           megaphone = megaphone,
@@ -611,10 +620,13 @@ class MainActivity :
           .background(listContainerColor, contentLayoutData.shape)
           .clip(contentLayoutData.shape)
       ) {
-        MainToolbar(
-          state = mainToolbarState,
-          callback = toolbarCallback
-        )
+        // Radar: PaymentsHomeFragment ships its own toolbar, so the shared one is hidden on the Payments tab.
+        if (mainNavigationState.currentListLocation != MainListRoute.Payments) {
+          MainToolbar(
+            state = mainToolbarState,
+            callback = toolbarCallback
+          )
+        }
 
         Box(modifier = Modifier.weight(1f)) {
           content()
