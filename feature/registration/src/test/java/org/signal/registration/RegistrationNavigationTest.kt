@@ -98,6 +98,9 @@ class RegistrationNavigationTest {
 
     // When
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
     // Then - verify Permissions screen is displayed
@@ -122,6 +125,9 @@ class RegistrationNavigationTest {
 
     // When
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
     // Then - the Permissions screen is skipped and PhoneNumber is displayed
@@ -144,6 +150,9 @@ class RegistrationNavigationTest {
 
     // Navigate to Permissions screen first
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
     // When
@@ -170,6 +179,9 @@ class RegistrationNavigationTest {
 
     // Navigate to Permissions screen first
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
     // When
@@ -393,8 +405,8 @@ class RegistrationNavigationTest {
     composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON).performClick()
     Shadows.shadowOf(Looper.getMainLooper()).idle()
 
-    // Then - verify Restore screen is displayed (or its expected content)
-    // Note: Update this assertion based on actual Restore screen content when implemented
+    // Then - Radar: this row is "Migrate from Signal", which opens Radar's migrate screen
+    composeTestRule.onNodeWithTag(TestTags.MIGRATE_FROM_SIGNAL_SCREEN).assertIsDisplayed()
   }
 
   /**

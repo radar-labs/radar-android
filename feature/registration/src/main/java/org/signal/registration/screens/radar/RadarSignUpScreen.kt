@@ -29,6 +29,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -45,6 +46,7 @@ import org.signal.registration.R
 import org.signal.registration.screens.RegistrationScaffold
 import org.signal.registration.screens.welcome.RadarRestoreOptions
 import org.signal.registration.screens.welcome.WelcomeScreenEvents
+import org.signal.registration.test.TestTags
 
 /**
  * Radar: the "Sign up" screen reached from "I'm new to Radar" on the welcome screen (as in Radar 1.0.9).
@@ -60,7 +62,9 @@ fun RadarSignUpScreen(
   var showRestoreOptions by remember { mutableStateOf(false) }
 
   RegistrationScaffold(
-    modifier = modifier.fillMaxSize(),
+    modifier = modifier
+      .fillMaxSize()
+      .testTag(TestTags.RADAR_SIGN_UP_SCREEN),
     content = {
       Box(
         modifier = Modifier
@@ -108,7 +112,9 @@ fun RadarSignUpScreen(
       ) {
         Buttons.LargePrimary(
           onClick = { onEvent(WelcomeScreenEvents.Continue) },
-          modifier = Modifier.fillMaxWidth()
+          modifier = Modifier
+            .fillMaxWidth()
+            .testTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON)
         ) {
           Text(stringResource(R.string.RegistrationActivity_create_new_account))
         }

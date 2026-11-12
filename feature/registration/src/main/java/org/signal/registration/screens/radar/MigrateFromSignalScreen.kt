@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -35,6 +36,7 @@ import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.SignalIcons
 import org.signal.registration.R
 import org.signal.registration.screens.RegistrationScaffold
+import org.signal.registration.test.TestTags
 
 /**
  * Radar: explains what the user has to do in Signal before their account and messages can be brought
@@ -49,7 +51,9 @@ fun MigrateFromSignalScreen(
   modifier: Modifier = Modifier
 ) {
   RegistrationScaffold(
-    modifier = modifier.fillMaxSize(),
+    modifier = modifier
+      .fillMaxSize()
+      .testTag(TestTags.MIGRATE_FROM_SIGNAL_SCREEN),
     content = {
       Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -114,7 +118,9 @@ fun MigrateFromSignalScreen(
       ) {
         Buttons.LargeTonal(
           onClick = onContinue,
-          modifier = Modifier.fillMaxWidth()
+          modifier = Modifier
+            .fillMaxWidth()
+            .testTag(TestTags.MIGRATE_FROM_SIGNAL_CONTINUE_BUTTON)
         ) {
           Text(stringResource(R.string.MigrateFromSignal_continue))
         }

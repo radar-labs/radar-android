@@ -46,7 +46,7 @@ class AppIconTutorialScreenTest {
 
     composeTestRule.onNodeWithText("App icons and names are visible on the home screen and app drawer.").assertIsDisplayed()
 
-    val notificationWarning = "Notifications will always display the default Signal icon and name."
+    val notificationWarning = "Notifications will always display the default Radar icon and name." // Radar rebrand
     composeTestRule.onNodeWithTag(AppIconTutorialTestTags.SCROLLER).performScrollToNode(hasText(notificationWarning))
     composeTestRule.onNodeWithText(notificationWarning).assertIsDisplayed()
   }

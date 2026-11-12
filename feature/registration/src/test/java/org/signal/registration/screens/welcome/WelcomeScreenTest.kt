@@ -36,7 +36,7 @@ class WelcomeScreenTest {
   val coreUiDependenciesRule = CoreUiDependenciesRule(ApplicationProvider.getApplicationContext())
 
   @Test
-  fun `when Get Started is clicked, Continue event is emitted`() {
+  fun `when I'm new to Radar is clicked, SignUp event is emitted`() {
     // Given
     var emittedEvent: WelcomeScreenEvents? = null
 
@@ -54,8 +54,8 @@ class WelcomeScreenTest {
     // When
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
 
-    // Then
-    assert(emittedEvent == WelcomeScreenEvents.Continue)
+    // Then - Radar: opens Radar's sign-up screen
+    assert(emittedEvent == WelcomeScreenEvents.SignUp)
   }
 
   @Config(qualifiers = "w1280dp-h800dp-xhdpi")
@@ -124,7 +124,7 @@ class WelcomeScreenTest {
   }
 
   @Test
-  fun `when I don't have my old phone is clicked, DoesNotHaveOldPhone event is emitted`() {
+  fun `when Migrate from Signal is clicked, MigrateFromSignal event is emitted`() {
     // Given
     var emittedEvent: WelcomeScreenEvents? = null
 
@@ -143,8 +143,8 @@ class WelcomeScreenTest {
     composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).performClick()
     composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON).performClick()
 
-    // Then
-    assert(emittedEvent == WelcomeScreenEvents.DoesNotHaveOldPhone)
+    // Then - Radar: the row under this tag is "Migrate from Signal"
+    assert(emittedEvent == WelcomeScreenEvents.MigrateFromSignal)
   }
 
   @Test

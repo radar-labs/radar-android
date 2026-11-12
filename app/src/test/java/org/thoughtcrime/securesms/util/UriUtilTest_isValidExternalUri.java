@@ -28,7 +28,8 @@ public class UriUtilTest_isValidExternalUri {
   private final String  input;
   private final boolean output;
 
-  private static final String APPLICATION_ID = "org.thoughtcrime.securesms";
+  // Radar: the app checks its own application ID, which is not Signal's.
+  private static final String APPLICATION_ID = org.thoughtcrime.securesms.BuildConfig.APPLICATION_ID;
 
   @ParameterizedRobolectricTestRunner.Parameters
   public static Collection<Object[]> data() {

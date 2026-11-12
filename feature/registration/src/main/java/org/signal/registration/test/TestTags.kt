@@ -19,6 +19,12 @@ object TestTags {
   const val WELCOME_RESTORE_HAS_OLD_PHONE_BUTTON = "welcome_restore_has_old_phone_button"
   const val WELCOME_RESTORE_NO_OLD_PHONE_BUTTON = "welcome_restore_no_old_phone_button"
 
+  // Radar
+  const val RADAR_SIGN_UP_SCREEN = "radar_sign_up_screen"
+  const val RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON = "radar_sign_up_create_account_button"
+  const val MIGRATE_FROM_SIGNAL_SCREEN = "migrate_from_signal_screen"
+  const val MIGRATE_FROM_SIGNAL_CONTINUE_BUTTON = "migrate_from_signal_continue_button"
+
   // Permissions Screen
   const val PERMISSIONS_SCREEN = "permissions_screen"
   const val PERMISSIONS_NEXT_BUTTON = "permissions_next_button"

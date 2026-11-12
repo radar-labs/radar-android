@@ -92,6 +92,7 @@ import org.signal.registration.screens.remotebackuprestore.RemoteBackupRestorePr
 import org.signal.registration.screens.signalloginpayment.PaymentAvailability
 import org.signal.registration.screens.util.MockMultiplePermissionsState
 import org.signal.registration.screens.util.MockPermissionsState
+import org.signal.registration.screens.util.navigateTo
 import org.signal.registration.test.TestTags
 import org.signal.uicomponents.codeentryfield.CodeEntryFieldTestTags
 import java.time.Duration
@@ -718,6 +719,9 @@ class RegistrationEndToEndTest {
 
     // Continue to phone entry, where the previous number is prefilled, and confirm it
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    waitForTag(TestTags.RADAR_SIGN_UP_SCREEN)
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
     waitForTag(TestTags.PHONE_NUMBER_SCREEN)
     composeTestRule.onNodeWithTag(TestTags.PHONE_NUMBER_NEXT_BUTTON).performClick()
     waitForTag(Dialogs.TEST_TAG_ALERT_DIALOG_CONFIRM_BUTTON)
@@ -770,6 +774,9 @@ class RegistrationEndToEndTest {
     // Continue to phone entry, where the previous number is prefilled, and confirm it
     waitForTag(TestTags.WELCOME_SCREEN)
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    waitForTag(TestTags.RADAR_SIGN_UP_SCREEN)
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
     waitForTag(TestTags.PHONE_NUMBER_SCREEN)
     composeTestRule.onNodeWithTag(TestTags.PHONE_NUMBER_NEXT_BUTTON).performClick()
     waitForTag(Dialogs.TEST_TAG_ALERT_DIALOG_CONFIRM_BUTTON)
@@ -814,6 +821,9 @@ class RegistrationEndToEndTest {
 
     waitForTag(TestTags.WELCOME_SCREEN)
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    waitForTag(TestTags.RADAR_SIGN_UP_SCREEN)
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
 
     // The previous number is prefilled; replace it with a different number and confirm
     waitForTag(TestTags.PHONE_NUMBER_SCREEN)
@@ -860,6 +870,9 @@ class RegistrationEndToEndTest {
     // Continue to phone entry, where the previous number is prefilled, and confirm it
     waitForTag(TestTags.WELCOME_SCREEN)
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    waitForTag(TestTags.RADAR_SIGN_UP_SCREEN)
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
     waitForTag(TestTags.PHONE_NUMBER_SCREEN)
     composeTestRule.onNodeWithTag(TestTags.PHONE_NUMBER_NEXT_BUTTON).performClick()
     waitForTag(Dialogs.TEST_TAG_ALERT_DIALOG_CONFIRM_BUTTON)
@@ -2557,6 +2570,9 @@ class RegistrationEndToEndTest {
   private fun goToPhoneNumberEntry() {
     waitForTag(TestTags.WELCOME_SCREEN)
     composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    waitForTag(TestTags.RADAR_SIGN_UP_SCREEN)
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
     waitForTag(TestTags.PHONE_NUMBER_SCREEN)
   }
 
@@ -2583,10 +2599,12 @@ class RegistrationEndToEndTest {
 
   /** From the Welcome screen: navigates to manual restore selection via "restore or transfer" → "don't have my old phone". */
   private fun startManualRestore() {
+    // Radar: the welcome screen has no "I don't have my old phone" row (its "Migrate from Signal" goes straight to the
+    // remote-backup restore), so these upstream flows open upstream's manual restore selection directly.
     waitForTag(TestTags.WELCOME_SCREEN)
-    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).performClick()
-    waitForTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON)
-    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON).performClick()
+    composeTestRule.runOnIdle {
+      (viewModel::onEvent).navigateTo(RegistrationRoute.ArchiveRestoreSelection.forManualRestore())
+    }
   }
 
   /**
