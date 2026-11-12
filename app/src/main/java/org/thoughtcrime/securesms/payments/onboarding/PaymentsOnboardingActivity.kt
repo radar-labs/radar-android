@@ -9,10 +9,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.WindowInsetsCompat
 import org.thoughtcrime.securesms.BaseActivity
 import org.thoughtcrime.securesms.MainActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter
 
 /**
  * Hosts the post-registration payments onboarding flow (intro → add funds → deposit received →
@@ -28,6 +30,13 @@ class PaymentsOnboardingActivity : BaseActivity() {
     dynamicTheme.onCreate(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_payments_onboarding)
+
+    // The fitsSystemWindows nav host clears the system bars and the keyboard for every onboarding screen, so the
+    // ones that also pad for them themselves (Add Funds) leave it to the host instead of adding a second gap.
+    SystemWindowInsetsSetter.markInsetByHost(
+      findViewById(R.id.payments_onboarding_nav_host),
+      WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
+    )
 
     // Open the wallet-readiness gate. When deferred behind a restore, this waits for the restored
     // seed before the Add Funds intro activates payments. The gate is idempotent across recreation.

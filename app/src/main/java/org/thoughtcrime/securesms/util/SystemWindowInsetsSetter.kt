@@ -2,14 +2,41 @@ package org.thoughtcrime.securesms.util
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import org.signal.core.ui.util.ViewUtil
+import org.thoughtcrime.securesms.R
 
 object SystemWindowInsetsSetter {
+
+  /**
+   * Radar: marks [host] as a container that already insets everything inside it for [handledTypes], so views
+   * attached below it leave those types to the host instead of adding them a second time. Used by the payments
+   * hosts, which inset their screens themselves as in Radar 1.0.9: the Payments tab in MainActivity (its
+   * Compose pane pads the status bar, the bottom navigation covers the navigation bar) and the payments
+   * activities (`fitsSystemWindows` roots). Views with no marked ancestor are unaffected.
+   */
+  @JvmStatic
+  fun markInsetByHost(host: View, @WindowInsetsCompat.Type.InsetsType handledTypes: Int) {
+    host.setTag(R.id.radar_insets_handled_by_host, handledTypes)
+  }
+
+  /** The inset types the nearest marked ancestor of [view] applies itself, or 0 when there is none. */
+  private fun typesHandledByHost(view: View): Int {
+    var current: ViewParent? = view.parent
+    while (current is View) {
+      val handled = current.getTag(R.id.radar_insets_handled_by_host)
+      if (handled is Int) {
+        return handled
+      }
+      current = current.parent
+    }
+    return 0
+  }
 
   /**
    * The safe area for a screen root that contains text input. The host windows are edge-to-edge, so
@@ -103,7 +130,13 @@ object SystemWindowInsetsSetter {
    * the system window insets and the stable insets, which is exactly what the (edge-to-edge, and therefore never
    * resized) window reports while the keyboard is up.
    */
-  private fun resolveInsets(view: View, @WindowInsetsCompat.Type.InsetsType insetType: Int): Insets {
+  private fun resolveInsets(view: View, @WindowInsetsCompat.Type.InsetsType requestedType: Int): Insets {
+    // Radar: types an enclosing host already applies (see markInsetByHost) are not applied again.
+    val insetType = requestedType and typesHandledByHost(view).inv()
+    if (insetType == 0) {
+      return Insets.NONE
+    }
+
     val rootInsets = ViewCompat.getRootWindowInsets(view)
     val insets: Insets? = rootInsets?.getInsets(insetType)
 

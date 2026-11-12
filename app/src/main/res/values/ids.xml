@@ -34,4 +34,7 @@
     <item name="edittext_clear_formatting" type="id" />
 
     <item name="nav_host_wrapper_container" type="id" />
+
+    <!-- Radar: the inset types a payments host container already applies (SystemWindowInsetsSetter.markInsetByHost). -->
+    <item name="radar_insets_handled_by_host" type="id" />
 </resources>

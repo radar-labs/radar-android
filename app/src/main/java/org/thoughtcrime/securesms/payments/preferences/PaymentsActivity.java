@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
@@ -18,6 +19,7 @@ import org.thoughtcrime.securesms.payments.preferences.details.PaymentDetailsFra
 import org.thoughtcrime.securesms.payments.preferences.details.PaymentDetailsParcelable;
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
 import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
 
 import java.util.UUID;
@@ -57,6 +59,12 @@ public class PaymentsActivity extends PassphraseRequiredActivity {
     dynamicTheme.onCreate(this);
 
     setContentView(R.layout.payments_activity);
+
+    // Radar: the root clears the system bars and the keyboard for every payments screen (fitsSystemWindows, as in
+    // 1.0.9), including Radar's own screens that don't inset themselves. Screens that do pad for them (upstream's
+    // edge-to-edge pass) leave it to the root instead of adding a second gap.
+    SystemWindowInsetsSetter.markInsetByHost(findViewById(R.id.payments_activity_root),
+                                             WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.ime());
 
     NavController controller       = Navigation.findNavController(this, R.id.nav_host_fragment);
     NavGraph      graph            = controller.getNavInflater().inflate(R.navigation.payments_preferences);
