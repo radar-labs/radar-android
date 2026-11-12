@@ -117,7 +117,8 @@ class AppSettingsNavigationActivity : PassphraseRequiredActivity(), GooglePayCom
 
   private fun tryLaunchActivity(route: AppSettingsRoute): Boolean {
     val intent = when (route) {
-      AppSettingsRoute.Payments -> Intent(this, PaymentsActivity::class.java)
+      // Radar: Settings → Payments opens the payment settings menu, as AppSettingsFragment does (and as in 1.0.9).
+      AppSettingsRoute.Payments -> PaymentsActivity.navigateToSettingsMenu(this)
       else -> return false
     }
 
