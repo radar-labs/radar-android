@@ -418,7 +418,9 @@ class MainActivity :
       val isSearchModeActive = mainToolbarState.mode == MainToolbarMode.SEARCH
       // Radar: on the Payments tab, back belongs to the embedded payments navigation.
       val isBackHandlerEnabled = mainNavigationState.currentListLocation != MainListRoute.Payments &&
-        mainToolbarState.destination != MainListRoute.Chats && !isActionModeActive && !isSearchModeActive
+        mainToolbarState.destination != MainListRoute.Chats &&
+        !isActionModeActive &&
+        !isSearchModeActive
 
       BackHandler(enabled = isBackHandlerEnabled) {
         mainNavigationViewModel.onEvent(MainNavigationEvents.GoToList(MainListRoute.Chats))
