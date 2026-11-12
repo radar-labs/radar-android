@@ -19,12 +19,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -49,10 +52,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -78,6 +83,7 @@ import org.signal.registration.screens.attachDebugLogHelper
 import org.signal.registration.test.TestTags
 import kotlin.math.pow
 import kotlin.math.sqrt
+import org.signal.core.ui.R as CoreR
 
 /**
  * Welcome screen for the registration flow.
@@ -147,48 +153,63 @@ private fun CompactLayout(
       .fillMaxSize()
       .testTag(TestTags.WELCOME_SCREEN),
     content = {
+      // Radar: laid out from the top like Radar 1.0.9's welcome (fragment_registration_welcome_v3.xml): the icon
+      // 80dp below the status bar, the wordmark 24dp under it and the headline 48dp under that. On short screens
+      // the top gap, the icon and the gap above the headline shrink in proportion (never growing past those
+      // sizes), so the headline stays on screen.
       Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        HeroImage(
+        Spacer(
           modifier = Modifier
-            .weight(1f)
-            .fillMaxWidth()
-            .padding(16.dp)
+            .weight(80f, fill = false)
+            .height(80.dp)
+        )
+
+        RadarLogo(
+          modifier = Modifier
+            .weight(120f, fill = false)
+            .sizeIn(maxWidth = 120.dp, maxHeight = 120.dp)
+            .aspectRatio(1f)
+            .attachDebugLogHelper()
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        RadarWordmark()
+
+        Spacer(
+          modifier = Modifier
+            .weight(48f, fill = false)
+            .height(48.dp)
         )
 
         Headline(
           textAlign = TextAlign.Center,
           modifier = Modifier.padding(horizontal = 32.dp)
         )
-
-        Spacer(modifier = Modifier.height(40.dp))
       }
     },
     footer = {
-      Box(
+      // Radar: full-width buttons with 32dp side margins and the terms link 24dp above them, as in 1.0.9.
+      Column(
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = 24.dp),
-        contentAlignment = Alignment.Center
+          .padding(horizontal = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        Column(
-          modifier = Modifier.widthIn(max = 320.dp),
-          horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-          TermsAndPrivacy(onEvent)
+        TermsAndPrivacy(onEvent)
 
-          Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-          PrimaryDeviceCallToActionButtons(
-            onEvent = onEvent,
-            onRestoreOrTransferClick = onRestoreOrTransferClick,
-            showRestoreOrTransfer = state.showRestoreOrTransfer
-          )
+        PrimaryDeviceCallToActionButtons(
+          onEvent = onEvent,
+          onRestoreOrTransferClick = onRestoreOrTransferClick,
+          showRestoreOrTransfer = state.showRestoreOrTransfer
+        )
 
-          Spacer(modifier = Modifier.height(48.dp))
-        }
+        Spacer(modifier = Modifier.height(48.dp))
       }
     }
   )
@@ -326,22 +347,42 @@ private fun HeroImage(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center
   ) {
-    Image(
-      painter = painterResource(R.drawable.radar_logo_icon),
-      contentDescription = null,
-      contentScale = ContentScale.Fit,
-      modifier = Modifier.size(120.dp)
-    )
+    RadarLogo(modifier = Modifier.size(120.dp))
 
     Spacer(modifier = Modifier.height(24.dp))
 
-    Image(
-      painter = painterResource(R.drawable.radar_logo_wordmark),
-      contentDescription = null,
-      contentScale = ContentScale.Fit,
-      modifier = Modifier.width(132.dp)
-    )
+    RadarWordmark()
   }
+}
+
+@Composable
+private fun RadarLogo(
+  modifier: Modifier = Modifier
+) {
+  Image(
+    painter = painterResource(R.drawable.radar_logo_icon),
+    contentDescription = null,
+    contentScale = ContentScale.Fit,
+    modifier = modifier
+  )
+}
+
+/**
+ * The "Radar." wordmark, 132dp wide and tinted Radar orange like 1.0.9's. FillWidth rather than Fit: with only
+ * the width set, Fit never scales the bitmap up, so the wordmark was drawn at its raw pixel size (about half of
+ * 1.0.9's 132dp).
+ */
+@Composable
+private fun RadarWordmark(
+  modifier: Modifier = Modifier
+) {
+  Image(
+    painter = painterResource(R.drawable.radar_logo_wordmark),
+    contentDescription = null,
+    contentScale = ContentScale.FillWidth,
+    colorFilter = ColorFilter.tint(colorResource(R.color.radar_orange)),
+    modifier = modifier.width(132.dp)
+  )
 }
 
 @Composable
@@ -386,11 +427,17 @@ private fun PrimaryDeviceCallToActionButtons(
   onRestoreOrTransferClick: () -> Unit,
   showRestoreOrTransfer: Boolean
 ) {
-  // Radar: "I'm new to Radar" opens Radar's sign-up screen (create an account or use a Signal account).
+  // Radar: "I'm new to Radar" opens Radar's sign-up screen (create an account or use a Signal account). Both
+  // buttons are 52dp tall and "I'm new to Radar" is Radar orange, as on 1.0.9's welcome screen.
   Buttons.LargePrimary(
     onClick = { onEvent(WelcomeScreenEvents.SignUp) },
+    colors = ButtonDefaults.buttonColors(
+      containerColor = colorResource(R.color.radar_orange),
+      contentColor = colorResource(R.color.radar_on_orange)
+    ),
     modifier = Modifier
       .fillMaxWidth()
+      .heightIn(min = 52.dp)
       .testTag(TestTags.WELCOME_GET_STARTED_BUTTON)
   ) {
     Text(stringResource(R.string.RegistrationActivity_im_new_to_radar))
@@ -402,10 +449,13 @@ private fun PrimaryDeviceCallToActionButtons(
     Buttons.LargeTonal(
       onClick = onRestoreOrTransferClick,
       colors = ButtonDefaults.filledTonalButtonColors(
-        containerColor = SignalTheme.colors.colorSurface2
+        containerColor = SignalTheme.colors.colorSurface2,
+        // Radar: the label colour 1.0.9's (View) tonal welcome button had.
+        contentColor = colorResource(CoreR.color.signal_colorOnPrimaryContainer)
       ),
       modifier = Modifier
         .fillMaxWidth()
+        .heightIn(min = 52.dp)
         .testTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON)
     ) {
       Text(stringResource(R.string.RegistrationActivity_i_already_have_an_account))

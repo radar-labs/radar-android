@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Radar brand colours for the Radar onboarding screens (welcome, sign-up), which live in this module since
+  upstream moved registration to Compose. radar_orange has the same value as the app module's radar_orange
+  (app/src/main/res/values/radar_colors.xml), whose definition wins at resource-merge time.
+  -->
+<resources>
+    <!-- Radar brand orange: the welcome wordmark, "I'm new to Radar", and the sign-up icon, accent and buttons. -->
+    <color name="radar_orange">#F46300</color>
+    <!-- Label colour on Radar-orange buttons. -->
+    <color name="radar_on_orange">#FFFFFF</color>
+</resources>

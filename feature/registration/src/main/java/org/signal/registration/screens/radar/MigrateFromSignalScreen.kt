@@ -28,7 +28,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.Buttons
 import org.signal.core.ui.compose.DayNightPreviews
@@ -36,6 +35,7 @@ import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.SignalIcons
 import org.signal.registration.R
 import org.signal.registration.screens.RegistrationScaffold
+import org.signal.registration.screens.attachDebugLogHelper
 import org.signal.registration.test.TestTags
 
 /**
@@ -55,6 +55,8 @@ fun MigrateFromSignalScreen(
       .fillMaxSize()
       .testTag(TestTags.MIGRATE_FROM_SIGNAL_SCREEN),
     content = {
+      // Radar: laid out like 1.0.9's screen, which used the shared registration screen frame: start-aligned
+      // title and subtitle, 40dp above the content, 24dp side gutters.
       Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -67,24 +69,27 @@ fun MigrateFromSignalScreen(
         Text(
           text = stringResource(R.string.MigrateFromSignal_title),
           style = MaterialTheme.typography.headlineMedium,
-          textAlign = TextAlign.Center
+          modifier = Modifier
+            .fillMaxWidth()
+            .attachDebugLogHelper()
         )
-
-        Spacer(modifier = Modifier.height(12.dp))
 
         Text(
           text = stringResource(R.string.MigrateFromSignal_subtitle),
           style = MaterialTheme.typography.bodyLarge,
           color = MaterialTheme.colorScheme.onSurfaceVariant,
-          textAlign = TextAlign.Center,
-          modifier = Modifier.widthIn(max = 360.dp)
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp)
         )
+
+        Spacer(modifier = Modifier.height(40.dp))
 
         Image(
           painter = painterResource(R.drawable.welcome_signal_app_icon),
           contentDescription = null,
           modifier = Modifier
-            .padding(top = 32.dp, bottom = 24.dp)
+            .padding(top = 8.dp, bottom = 24.dp)
             .size(64.dp)
         )
 
@@ -114,7 +119,7 @@ fun MigrateFromSignalScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
           .fillMaxWidth()
-          .padding(horizontal = 32.dp)
+          .padding(horizontal = 24.dp)
       ) {
         Buttons.LargeTonal(
           onClick = onContinue,
@@ -146,7 +151,7 @@ private fun InstructionRow(icon: Painter, instruction: String) {
     Icon(
       painter = icon,
       contentDescription = null,
-      tint = MaterialTheme.colorScheme.onSurfaceVariant,
+      tint = MaterialTheme.colorScheme.primary,
       modifier = Modifier.size(24.dp)
     )
 
