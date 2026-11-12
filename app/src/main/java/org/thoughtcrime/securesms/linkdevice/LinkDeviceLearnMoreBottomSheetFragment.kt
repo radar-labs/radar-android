@@ -25,6 +25,7 @@ import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.ui.compose.Texts
 import org.signal.core.ui.util.SpanUtil
+import org.signal.core.util.R as CoreUtilsR
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.util.CommunicationActions
 
@@ -48,7 +49,7 @@ fun LearnMoreSheet() {
   // "install Radar", so sending people to signal.org/download would install the wrong app.
   // The href reuses install_url so there is a single source of truth for that address.
   val downloadUrl = stringResource(id = R.string.LinkDeviceFragment__signal_download_url)
-  val downloadHref = stringResource(id = R.string.install_url)
+  val downloadHref = stringResource(id = CoreUtilsR.string.install_url)
   val fullString = stringResource(id = R.string.LinkDeviceFragment__on_other_device_visit_signal, downloadUrl)
   val spanned = SpanUtil.urlSubsequence(fullString, downloadUrl, downloadHref)
 

@@ -88,7 +88,7 @@ public final class SetCurrencyFragment extends LoggingFragment {
     Drawable icon = searchItem.getIcon();
     if (icon != null) {
       icon = DrawableCompat.wrap(icon.mutate());
-      DrawableCompat.setTint(icon, ContextCompat.getColor(requireContext(), R.color.signal_colorOnSurface));
+      DrawableCompat.setTint(icon, ContextCompat.getColor(requireContext(), org.signal.core.ui.R.color.signal_colorOnSurface));
       searchItem.setIcon(icon);
     }
 

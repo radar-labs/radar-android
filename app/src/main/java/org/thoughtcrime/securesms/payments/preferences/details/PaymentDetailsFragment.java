@@ -38,7 +38,7 @@ import org.thoughtcrime.securesms.payments.Payee;
 import org.thoughtcrime.securesms.payments.Payment;
 import org.thoughtcrime.securesms.payments.State;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
+import org.signal.core.models.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.DateUtils;
 import org.signal.core.ui.util.SpanUtil;
 import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;

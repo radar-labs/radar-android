@@ -44,7 +44,7 @@ import org.thoughtcrime.securesms.payments.backup.confirm.PaymentsRecoveryPhrase
 import org.thoughtcrime.securesms.payments.preferences.model.InfoCard;
 import org.thoughtcrime.securesms.payments.preferences.model.PaymentItem;
 import org.thoughtcrime.securesms.util.CommunicationActions;
-import org.thoughtcrime.securesms.util.DrawableUtil;
+import org.signal.core.util.DrawableUtil;
 import org.thoughtcrime.securesms.util.PlayStoreUtil;
 import org.signal.core.ui.util.SpanUtil;
 import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;

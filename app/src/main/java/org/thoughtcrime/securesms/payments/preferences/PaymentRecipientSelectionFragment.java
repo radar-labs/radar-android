@@ -3,7 +3,7 @@ package org.thoughtcrime.securesms.payments.preferences;
 import android.Manifest;
 import android.widget.Toast;
 import org.thoughtcrime.securesms.payments.preferences.transfer.PaymentsTransferQrScanFragment;
-import org.thoughtcrime.securesms.permissions.Permissions;
+import org.signal.core.ui.permissions.Permissions;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -65,7 +65,7 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 
-public class PaymentRecipientSelectionFragment extends LoggingFragment implements ContactSelectionListFragment.OnContactSelectedListener, ContactSelectionListFragment.ScrollCallback, ContactSelectionListFragment.FindByCallback {
+public class PaymentRecipientSelectionFragment extends LoggingFragment implements ContactSelectionListFragment.OnContactSelectedListener, ContactSelectionListFragment.FindByCallback {
 
   private static final String TAG = Log.tag(PaymentRecipientSelectionFragment.class);
 
@@ -257,7 +257,7 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     // No-op: only the find-by-username row is enabled in the payment recipient picker.
   }
 
-  @Override
+  // Upstream's contact list is a Compose list now and no longer reports scroll starts (ScrollCallback is gone).
   public void onBeginScroll() {
     hideKeyboard();
   }
@@ -319,8 +319,8 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     Permissions.with(this)
                .request(Manifest.permission.CAMERA)
                .ifNecessary()
-               .withRationaleDialog(getString(R.string.CameraXFragment_allow_access_camera), getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs), R.drawable.ic_camera_24)
-               .withPermanentDenialDialog(getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera), null, R.string.CameraXFragment_allow_access_camera, R.string.CameraXFragment_to_scan_qr_codes, getParentFragmentManager())
+               .withRationaleDialog(getString(org.signal.mediasend.R.string.CameraXFragment_allow_access_camera), getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs), R.drawable.ic_camera_24)
+               .withPermanentDenialDialog(getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera), null, org.signal.mediasend.R.string.CameraXFragment_allow_access_camera, org.signal.mediasend.R.string.CameraXFragment_to_scan_qr_codes, getParentFragmentManager())
                .onAllGranted(() -> SafeNavigation.safeNavigate(Navigation.findNavController(requireView()), R.id.action_paymentRecipientSelection_to_scanQr))
                .onAnyDenied(() -> Toast.makeText(requireContext(), R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera, Toast.LENGTH_LONG).show())
                .execute();

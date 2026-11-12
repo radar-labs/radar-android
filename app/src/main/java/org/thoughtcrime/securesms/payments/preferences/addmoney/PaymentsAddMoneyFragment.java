@@ -144,7 +144,7 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     Drawable shareIcon = shareItem.getIcon();
     if (shareIcon != null) {
       shareIcon = DrawableCompat.wrap(shareIcon.mutate());
-      DrawableCompat.setTint(shareIcon, ContextCompat.getColor(requireContext(), R.color.signal_colorOnSurface));
+      DrawableCompat.setTint(shareIcon, ContextCompat.getColor(requireContext(), org.signal.core.ui.R.color.signal_colorOnSurface));
       shareItem.setIcon(shareIcon);
     }
 

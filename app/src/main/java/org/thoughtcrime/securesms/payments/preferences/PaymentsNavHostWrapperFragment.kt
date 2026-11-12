@@ -5,7 +5,7 @@
 
 package org.thoughtcrime.securesms.payments.preferences
 
-import org.thoughtcrime.securesms.LoggingFragment
+import org.signal.core.ui.logging.LoggingFragment
 import org.thoughtcrime.securesms.R
 
 /**

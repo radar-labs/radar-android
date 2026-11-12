@@ -8,7 +8,7 @@ package org.thoughtcrime.securesms.payments.onboarding
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.button.MaterialButton
-import org.thoughtcrime.securesms.LoggingFragment
+import org.signal.core.ui.logging.LoggingFragment
 import org.thoughtcrime.securesms.R
 
 /** Final step of the payments onboarding flow. Mirrors iOS RegistrationSetupCompleteViewController. */
