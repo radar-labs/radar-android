@@ -19,6 +19,7 @@ import org.signal.core.util.SetUtil;
 import org.signal.core.util.TranslationDetection;
 import org.signal.core.util.logging.Log;
 import org.signal.remoteconfig.RemoteConfig;
+import org.thoughtcrime.securesms.BuildConfig;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.backup.v2.MessageBackupTier;
 import org.thoughtcrime.securesms.backup.v2.ui.BackupUpsellBottomSheet;
@@ -694,6 +695,11 @@ public final class Megaphones {
 
   @WorkerThread
   private static boolean shouldShowRemoteMegaphone(@NonNull Map<Event, MegaphoneRecord> records) {
+    // Radar: Signal's remote megaphones (including ones fetched by an older build) are not shown.
+    if (!BuildConfig.REMOTE_ANNOUNCEMENTS_ENABLED) {
+      return false;
+    }
+
     boolean canShowLocalDonate = timeSinceLastDonatePrompt(Event.REMOTE_MEGAPHONE, records) > MIN_TIME_BETWEEN_DONATE_MEGAPHONES;
     return RemoteMegaphoneRepository.hasRemoteMegaphoneToShow(canShowLocalDonate);
   }

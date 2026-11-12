@@ -62,6 +62,11 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
     @JvmStatic
     @JvmOverloads
     fun enqueue(force: Boolean = false) {
+      if (!BuildConfig.REMOTE_ANNOUNCEMENTS_ENABLED) {
+        Log.i(TAG, "Remote announcements are disabled in this build, skipping.")
+        return
+      }
+
       if (!SignalStore.account.isRegistered) {
         Log.i(TAG, "Not registered, skipping.")
         return
@@ -118,6 +123,12 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
   override fun onFailure() = Unit
 
   override fun onRun() {
+    // Radar: also covers a job that an older build already queued.
+    if (!BuildConfig.REMOTE_ANNOUNCEMENTS_ENABLED) {
+      Log.i(TAG, "Remote announcements are disabled in this build, skipping.")
+      return
+    }
+
     if (!SignalStore.account.isRegistered) {
       Log.i(TAG, "Not registered, skipping.")
       return

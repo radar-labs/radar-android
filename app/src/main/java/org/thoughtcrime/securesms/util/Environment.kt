@@ -25,8 +25,9 @@ object Environment {
   @JvmField
   val IS_LINK_AND_SYNC_AVAILABLE: Boolean = true
 
+  /** Radar: Signal Login (registering without a phone number) is off; see BuildConfig.SIGNAL_LOGIN_ENABLED. */
   @JvmField
-  val PHONENUMBERLESS_REGISTRATION: Boolean = true
+  val PHONENUMBERLESS_REGISTRATION: Boolean = BuildConfig.SIGNAL_LOGIN_ENABLED
 
   /** Whether this build is distributed through the Play Store, and so can use Google Play billing at all. */
   @JvmStatic

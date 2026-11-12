@@ -353,6 +353,14 @@ android {
     // BuildFlags.Backups.showPaidPlan = false: hides the paid tier in the plan chooser and the
     // free-tier upgrade button, while leaving manage/cancel reachable for existing subscribers.
     buildConfigField("boolean", "PAID_BACKUPS_ENABLED", "false")
+    // Radar does not offer Signal Login (registering without a phone number): it is a Google Play purchase
+    // sold by Signal, and its passkeys are tied to login.signal.org. Mirrors iOS (Signal Login stays off).
+    buildConfigField("boolean", "SIGNAL_LOGIN_ENABLED", "false")
+    // Signal's post-call quality survey posts answers to Signal. Mirrors iOS BuildFlags.callQualitySurvey = false.
+    buildConfigField("boolean", "CALL_QUALITY_SURVEY_ENABLED", "false")
+    // Signal's remote megaphones and release notes announce Signal's own features and campaigns.
+    // Mirrors iOS BuildFlags.remoteMegaphonesAndReleaseNotes = false.
+    buildConfigField("boolean", "REMOTE_ANNOUNCEMENTS_ENABLED", "false")
 
     ndk {
       abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")

@@ -11,6 +11,7 @@ import org.signal.ringrtc.CallSummary
 import org.signal.ringrtc.GroupCall
 import org.signal.storage.protos.CallQualitySurveyRequest
 import org.signal.storageservice.protos.calls.quality.SubmitCallQualitySurveyRequest
+import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.util.LocaleRemoteConfig
 import kotlin.time.Duration.Companion.days
@@ -128,7 +129,8 @@ object CallQuality {
   }
 
   private fun isFeatureEnabled(): Boolean {
-    return RemoteConfig.callQualitySurvey && SignalStore.callQuality.isQualitySurveyEnabled
+    // Radar: the survey is off (it reports to Signal); see BuildConfig.CALL_QUALITY_SURVEY_ENABLED.
+    return BuildConfig.CALL_QUALITY_SURVEY_ENABLED && RemoteConfig.callQualitySurvey && SignalStore.callQuality.isQualitySurveyEnabled
   }
 
   private enum class CallType(val code: String) {
