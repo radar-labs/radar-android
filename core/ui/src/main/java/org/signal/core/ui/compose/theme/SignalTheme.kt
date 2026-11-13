@@ -97,8 +97,12 @@ private val typography = Typography().run {
   )
 }
 
+// Radar: primary is Radar orange, as in the View theme (signal_light_colorPrimary / signal_dark_colorPrimary in
+// material3_colors_light/dark.xml), so Compose and View screens match. surfaceTint stays Signal's blue: Material3
+// derives it from primary otherwise, and the View theme's surfaces were never re-tinted.
 private val lightColorScheme = lightColorScheme(
-  primary = Color(0xFF2C58C3),
+  primary = Color(0xFFF46300),
+  surfaceTint = Color(0xFF2C58C3),
   primaryContainer = Color(0xFFD2DFFB),
   secondary = Color(0xFF586071),
   secondaryContainer = Color(0xFFDCE5F9),
@@ -182,7 +186,8 @@ private val darkExtendedColors = ExtendedColors(
 )
 
 private val darkColorScheme = darkColorScheme(
-  primary = Color(0xFFB6C5FA),
+  primary = Color(0xFFFF8A3D),
+  surfaceTint = Color(0xFFB6C5FA),
   primaryContainer = Color(0xFF464B5C),
   secondary = Color(0xFFC1C6DD),
   secondaryContainer = Color(0xFF414659),
