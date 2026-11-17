@@ -90,7 +90,7 @@ public class MultiDeviceProfileKeyUpdateJob extends BaseJob {
                                                                             .withStream(new ByteArrayInputStream(baos.toByteArray()))
                                                                             .withContentType("application/octet-stream")
                                                                             .withLength(baos.toByteArray().length)
-                                                                            .withResumableUploadSpec(messageSender.getResumableUploadSpec())
+                                                                            .withResumableUploadSpec(messageSender.getResumableUploadSpec(baos.toByteArray().length))
                                                                             .build();
 
     SignalServiceSyncMessage syncMessage = SignalServiceSyncMessage.forContacts(new ContactsMessage(attachmentStream, false));

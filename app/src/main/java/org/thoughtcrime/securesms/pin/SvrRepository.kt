@@ -54,7 +54,8 @@ object SvrRepository {
   // fall through these until we find it. Read-only — we never back up to a previous enclave. Every
   // entry MUST be attestable by the bundled libsignal or the whole restore chain aborts with
   // "Error looking up mrenclave" (this is why the retired 093be9ea… enclave, absent from libsignal
-  // 0.96.3, is no longer listed). Keep this + BuildConfig in lockstep with iOS and the libsignal bump.
+  // 0.96.3, is no longer listed). Empty since 2026-11 (2026Q1 and 2025Q3 shut down; see
+  // SVR2_MRENCLAVE_PREVIOUS). Keep this + BuildConfig in lockstep with iOS and the libsignal bump.
   private val svr2Previous: List<SecureValueRecovery> = BuildConfig.SVR2_MRENCLAVE_PREVIOUS.map {
     AppDependencies.signalServiceAccountManager.getSecureValueRecoveryV2(it)
   }

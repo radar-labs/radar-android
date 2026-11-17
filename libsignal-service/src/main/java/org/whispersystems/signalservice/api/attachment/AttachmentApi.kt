@@ -31,13 +31,16 @@ class AttachmentApi(
   /**
    * Gets a v4 attachment upload form, which provides the necessary information to upload an attachment.
    *
-   * GET /v4/attachments/form/upload
+   * GET /v4/attachments/form/upload?uploadLength=[uploadSizeBytes]
    * - 200: Success
-   * - 413: Too many attempts
+   * - 400: Missing or invalid uploadLength (the server requires it since 2026-11-04)
+   * - 413: uploadLength is larger than the server's maximum upload size
    * - 429: Too many attempts
+   *
+   * @param uploadSizeBytes Exact size of the encrypted upload (padded ciphertext incl. IV and MAC). The server caps the form at this size.
    */
-  fun getAttachmentV4UploadForm(): NetworkResult<AttachmentUploadForm> {
-    val request = WebSocketRequestMessage.get("/v4/attachments/form/upload")
+  fun getAttachmentV4UploadForm(uploadSizeBytes: Long): NetworkResult<AttachmentUploadForm> {
+    val request = WebSocketRequestMessage.get("/v4/attachments/form/upload?uploadLength=$uploadSizeBytes")
     return NetworkResult.fromWebSocketRequest(authWebSocket, request, AttachmentUploadForm::class)
   }
 

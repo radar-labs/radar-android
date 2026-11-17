@@ -216,7 +216,7 @@ public abstract class PushSendJob extends SendJob {
                                     .withHeight(attachment.height)
                                     .withCaption(attachment.caption)
                                     .withUuid(attachment.uuid)
-                                    .withResumableUploadSpec(AppDependencies.getSignalServiceMessageSender().getResumableUploadSpec())
+                                    .withResumableUploadSpec(AppDependencies.getSignalServiceMessageSender().getResumableUploadSpec(attachment.size))
                                     .withListener(new SignalServiceAttachment.ProgressListener() {
                                       @Override
                                       public void onAttachmentProgress(@NonNull AttachmentTransferProgress progress) {

@@ -825,9 +825,15 @@ public class SignalServiceMessageSender {
     return uploadAttachmentV4(attachment, attachmentKey, attachmentData);
   }
 
-  public ResumableUploadSpec getResumableUploadSpec() throws IOException {
+  /**
+   * @param plaintextLength Length of the attachment before padding and encryption. The form is requested for the exact
+   *                        encrypted size (same formula as {@link #uploadAttachment}), which the server requires since
+   *                        2026-11-04 and uses as the upload's size cap.
+   */
+  public ResumableUploadSpec getResumableUploadSpec(long plaintextLength) throws IOException {
     Log.d(TAG, "Using pipe to retrieve attachment upload attributes...");
-    AttachmentUploadForm v4UploadAttributes = NetworkResultUtil.toBasicLegacy(attachmentApi.getAttachmentV4UploadForm());
+    long                 uploadSizeBytes    = AttachmentCipherStreamUtil.getCiphertextLength(PaddingInputStream.getPaddedSize(plaintextLength));
+    AttachmentUploadForm v4UploadAttributes = NetworkResultUtil.toBasicLegacy(attachmentApi.getAttachmentV4UploadForm(uploadSizeBytes));
 
     return socket.getResumableUploadSpec(v4UploadAttributes);
   }
