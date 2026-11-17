@@ -420,7 +420,14 @@ class PaymentsValues internal constructor(store: KeyValueStore) : SignalStoreVal
     StorageSyncHelper.scheduleSyncForDataChange()
   }
 
+  /**
+   * Whether the last known balance is above [LARGE_BALANCE_THRESHOLD]. Reads the cached ledger only: this runs on the
+   * main thread (the wallet's info cards and the payment settings menu), and a fresh balance means a blocking Breez
+   * sync that froze the wallet for seconds, or until it timed out while offline. Until the first ledger has loaded
+   * the balance counts as small, which it is for any real wallet (the threshold is 500 BTC).
+   */
   private fun userHasLargeBalance(): Boolean {
-    return mobileCoinLatestBalance().fullAmount.requireBitcoin().greaterThan(LARGE_BALANCE_THRESHOLD)
+    val balance = liveMobileCoinLedger.value?.balance ?: return false
+    return balance.fullAmount.requireBitcoin().greaterThan(LARGE_BALANCE_THRESHOLD)
   }
 }
