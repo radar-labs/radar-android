@@ -13,12 +13,14 @@ permissions: {}
 
 jobs:
   resolve:
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
     if: >-
+      github.repository_owner == 'signalapp' && (
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'issue_comment' &&
        github.event.issue.pull_request &&
        github.event.comment.body == '!screenshots' &&
-       contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association))
+       contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)))
 
     runs-on: ubuntu-latest
 
@@ -79,6 +81,8 @@ jobs:
 
   update:
     needs: resolve
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
+    if: ${{ github.repository_owner == 'signalapp' }}
 
     runs-on: ubuntu-latest-8-cores
 
@@ -155,7 +159,8 @@ jobs:
 
   report-failure:
     needs: [resolve, update]
-    if: ${{ failure() && github.event_name == 'issue_comment' }}
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
+    if: ${{ github.repository_owner == 'signalapp' && failure() && github.event_name == 'issue_comment' }}
 
     runs-on: ubuntu-latest
 

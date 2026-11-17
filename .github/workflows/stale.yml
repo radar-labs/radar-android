@@ -7,6 +7,8 @@ on:
 
 jobs:
   stale:
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
+    if: ${{ github.repository_owner == 'signalapp' }}
     runs-on: ubuntu-latest
     permissions:
       issues: write

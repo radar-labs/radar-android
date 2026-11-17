@@ -9,6 +9,8 @@ permissions:
 
 jobs:
   build:
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
+    if: ${{ github.repository_owner == 'signalapp' }}
     runs-on: ubuntu-latest
     steps:
       - name: Free up disk space

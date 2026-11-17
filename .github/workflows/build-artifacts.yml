@@ -45,6 +45,8 @@ permissions:
 
 jobs:
   build:
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
+    if: ${{ github.repository_owner == 'signalapp' }}
     name: "Build #${{ matrix.index }}"
     runs-on: ubuntu-latest-8-cores
     timeout-minutes: 50

@@ -16,7 +16,8 @@ concurrency:
 
 jobs:
   retarget:
-    if: ${{ github.repository != 'signalapp/Signal-Android' }}
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
+    if: ${{ github.repository_owner == 'signalapp' && github.repository != 'signalapp/Signal-Android' }}
 
     runs-on: ubuntu-latest
 
