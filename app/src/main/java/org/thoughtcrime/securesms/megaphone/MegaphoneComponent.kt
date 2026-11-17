@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -49,20 +51,20 @@ import kotlinx.coroutines.withContext
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.IconButtons
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.emoji.Emojifier
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.components.emoji.Emojifier
-import org.thoughtcrime.securesms.compose.SignalTheme
 import org.thoughtcrime.securesms.main.EmptyMegaphoneActionController
 import org.thoughtcrime.securesms.megaphone.Megaphones.Event
-import org.thoughtcrime.securesms.util.DynamicTheme
 import kotlin.math.roundToInt
+import org.signal.core.ui.R as CoreUiR
 
 /**
  * Allows us to utilize our composeView from Java code.
  */
 fun setContent(composeView: ComposeView, megaphone: Megaphone, megaphoneActionController: MegaphoneActionController) {
   composeView.setContent {
-    SignalTheme(isDarkMode = DynamicTheme.isDarkTheme(composeView.context)) {
+    SignalTheme {
       MegaphoneComponent(
         megaphone,
         megaphoneActionController
@@ -123,7 +125,7 @@ private fun BasicMegaphone(
   Card(
     elevation = CardDefaults.outlinedCardElevation(),
     border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.38f)),
-    shape = RoundedCornerShape(12.dp),
+    shape = RoundedCornerShape(24.dp),
     colors = CardDefaults.cardColors(
       containerColor = MaterialTheme.colorScheme.background
     ),
@@ -133,6 +135,7 @@ private fun BasicMegaphone(
   ) {
     Column(
       modifier = Modifier
+        .verticalScroll(rememberScrollState())
         .padding(horizontal = 8.dp)
         .padding(top = 16.dp, bottom = 8.dp)
     ) {
@@ -197,6 +200,7 @@ private fun PopupMegaphone(
       MegaphoneCardContent(
         megaphone = megaphone,
         modifier = Modifier
+          .verticalScroll(rememberScrollState())
           .padding(horizontal = 8.dp)
           .padding(top = 16.dp, bottom = 8.dp)
       )
@@ -214,7 +218,7 @@ private fun PopupMegaphone(
       ) {
         Icon(
           imageVector = ImageVector.vectorResource(R.drawable.ic_x_20),
-          contentDescription = stringResource(R.string.Material3SearchToolbar__close)
+          contentDescription = stringResource(CoreUiR.string.CloseButton__content_description)
         )
       }
     }

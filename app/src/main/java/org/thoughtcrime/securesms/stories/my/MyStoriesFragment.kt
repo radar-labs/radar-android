@@ -2,12 +2,12 @@ package org.thoughtcrime.securesms.stories.my
 
 import android.net.Uri
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import org.signal.core.ui.permissions.Permissions
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.settings.DSLConfiguration
@@ -17,7 +17,6 @@ import org.thoughtcrime.securesms.components.settings.configure
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragment
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragmentArgs
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
-import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.safety.SafetyNumberBottomSheet
 import org.thoughtcrime.securesms.stories.StoryTextPostModel
@@ -43,15 +42,6 @@ class MyStoriesFragment : DSLSettingsFragment(
 
   override fun bindAdapter(adapter: MappingAdapter) {
     MyStoriesItem.register(adapter)
-
-    requireActivity().onBackPressedDispatcher.addCallback(
-      viewLifecycleOwner,
-      object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-          requireActivity().finish()
-        }
-      }
-    )
 
     val emptyNotice = requireView().findViewById<View>(R.id.empty_notice)
     lifecycleDisposable.bindTo(viewLifecycleOwner)
@@ -118,7 +108,7 @@ class MyStoriesFragment : DSLSettingsFragment(
     if (it.distributionStory.messageRecord.isOutgoing && it.distributionStory.messageRecord.isFailed) {
       if (it.distributionStory.messageRecord.isIdentityMismatchFailure) {
         SafetyNumberBottomSheet
-          .forMessageRecord(requireContext(), it.distributionStory.messageRecord)
+          .forOutgoingMessageRecord(requireContext(), it.distributionStory.messageRecord)
           .show(childFragmentManager)
       } else {
         StoryDialogs.resendStory(requireContext()) {
@@ -161,7 +151,7 @@ class MyStoriesFragment : DSLSettingsFragment(
   }
 
   private fun handleDeleteClick(model: MyStoriesItem.Model) {
-    lifecycleDisposable += StoryContextMenu.delete(requireContext(), setOf(model.distributionStory.messageRecord)).subscribe()
+    lifecycleDisposable += StoryContextMenu.delete(requireContext(), model.distributionStory.messageRecord).subscribe()
   }
 
   @Suppress("OVERRIDE_DEPRECATION")

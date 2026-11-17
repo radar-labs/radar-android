@@ -28,24 +28,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
+import org.signal.core.models.badges.Badge
 import org.signal.core.ui.compose.BottomSheets
 import org.signal.core.ui.compose.Buttons
+import org.signal.core.ui.compose.ComposeBottomSheetDialogFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.SignalIcons
+import org.signal.core.ui.viewModel
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.badges.BadgeRepository
-import org.thoughtcrime.securesms.badges.models.Badge
 import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity
 import org.thoughtcrime.securesms.components.settings.app.subscription.BadgeImage112
-import org.thoughtcrime.securesms.compose.ComposeBottomSheetDialogFragment
 import org.thoughtcrime.securesms.database.model.databaseprotos.TerminalDonationQueue
-import org.thoughtcrime.securesms.util.viewModel
 
 /**
  * Bottom Sheet displayed when the app notices that a long-running donation has
@@ -76,7 +75,7 @@ class TerminalDonationBottomSheet : ComposeBottomSheetDialogFragment() {
   }
 
   private val viewModel: TerminalDonationViewModel by viewModel {
-    TerminalDonationViewModel(terminalDonation, badgeRepository = BadgeRepository(requireContext()))
+    TerminalDonationViewModel(terminalDonation)
   }
 
   @Composable
@@ -125,20 +124,6 @@ class TerminalDonationBottomSheet : ComposeBottomSheetDialogFragment() {
   }
 }
 
-@DayNightPreviews
-@Composable
-private fun DonationPaymentFailureBottomSheet() {
-  Previews.Preview {
-    Surface {
-      DonationPaymentFailureBottomSheet(
-        badge = null,
-        onTryAgainClick = {},
-        onNotNowClick = {}
-      )
-    }
-  }
-}
-
 @Composable
 private fun DonationPaymentFailureBottomSheet(
   badge: Badge?,
@@ -172,7 +157,7 @@ private fun DonationPaymentFailureBottomSheet(
       )
 
       Icon(
-        painter = painterResource(id = R.drawable.symbol_error_circle_fill_24),
+        painter = SignalIcons.ErrorCircle.painter,
         tint = MaterialTheme.colorScheme.error,
         contentDescription = null,
         modifier = Modifier.align(Alignment.TopEnd)
@@ -218,22 +203,6 @@ private fun DonationPaymentFailureBottomSheet(
     ) {
       Text(
         text = stringResource(id = R.string.DonationErrorBottomSheet__not_now)
-      )
-    }
-  }
-}
-
-@DayNightPreviews
-@Composable
-private fun DonationCompletedSheetContentPreview() {
-  Previews.Preview {
-    Surface {
-      DonationCompletedSheetContent(
-        badge = null,
-        isToggleChecked = false,
-        toggleType = TerminalDonationViewModel.ToggleType.NONE,
-        onCheckChanged = {},
-        onDoneClick = {}
       )
     }
   }
@@ -333,5 +302,35 @@ private fun DonationToggleRow(
       onCheckedChange = onCheckChanged,
       modifier = Modifier.align(Alignment.CenterVertically)
     )
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun DonationPaymentFailureBottomSheetPreview() {
+  Previews.Preview {
+    Surface {
+      DonationPaymentFailureBottomSheet(
+        badge = null,
+        onTryAgainClick = {},
+        onNotNowClick = {}
+      )
+    }
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun DonationCompletedSheetContentPreview() {
+  Previews.Preview {
+    Surface {
+      DonationCompletedSheetContent(
+        badge = null,
+        isToggleChecked = false,
+        toggleType = TerminalDonationViewModel.ToggleType.NONE,
+        onCheckChanged = {},
+        onDoneClick = {}
+      )
+    }
   }
 }

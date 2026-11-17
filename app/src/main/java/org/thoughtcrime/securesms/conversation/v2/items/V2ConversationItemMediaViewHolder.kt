@@ -80,6 +80,16 @@ class V2ConversationItemMediaViewHolder<Model : MappingModel<Model>>(
     }
 
     binding.quoteStub.visibility = View.VISIBLE
+
+    quoteView.setMessageType(
+      when {
+        conversationMessage.messageRecord.isStoryReaction() && binding.textBridge.isIncoming -> QuoteView.MessageType.STORY_REPLY_INCOMING
+        conversationMessage.messageRecord.isStoryReaction() -> QuoteView.MessageType.STORY_REPLY_OUTGOING
+        binding.textBridge.isIncoming -> QuoteView.MessageType.INCOMING
+        else -> QuoteView.MessageType.OUTGOING
+      }
+    )
+
     quoteView.setQuote(
       conversationContext.requestManager,
       quote.id,
@@ -89,16 +99,8 @@ class V2ConversationItemMediaViewHolder<Model : MappingModel<Model>>(
       quote.attachment,
       if (conversationMessage.messageRecord.isStoryReaction()) conversationMessage.messageRecord.body else null,
       quote.quoteType,
-      false
-    )
-
-    quoteView.setMessageType(
-      when {
-        conversationMessage.messageRecord.isStoryReaction() && binding.textBridge.isIncoming -> QuoteView.MessageType.STORY_REPLY_INCOMING
-        conversationMessage.messageRecord.isStoryReaction() -> QuoteView.MessageType.STORY_REPLY_OUTGOING
-        binding.textBridge.isIncoming -> QuoteView.MessageType.INCOMING
-        else -> QuoteView.MessageType.OUTGOING
-      }
+      false,
+      conversationMessage.quoteMemberLabel
     )
 
     quoteView.setWallpaperEnabled(conversationContext.hasWallpaper())
@@ -130,7 +132,7 @@ class V2ConversationItemMediaViewHolder<Model : MappingModel<Model>>(
   }
 
   private fun hasGroupSenderName(): Boolean {
-    return binding.textBridge.senderName?.visible == true
+    return binding.textBridge.senderNameWithLabel?.visible == true
   }
 
   private fun hasThumbnail(): Boolean {

@@ -13,7 +13,6 @@ data class LinkDeviceSettingsState(
   val dialogState: DialogState = DialogState.None,
   val deviceListLoading: Boolean = false,
   val oneTimeEvent: OneTimeEvent = OneTimeEvent.None,
-  val showFrontCamera: Boolean? = null,
   val qrCodeState: QrCodeState = QrCodeState.NONE,
   val linkUri: Uri? = null,
   val linkDeviceResult: LinkDeviceResult = LinkDeviceResult.None,
@@ -21,7 +20,8 @@ data class LinkDeviceSettingsState(
   val bottomSheetVisible: Boolean = false,
   val deviceToEdit: Device? = null,
   val shouldCancelArchiveUpload: Boolean = false,
-  val debugLogUrl: String? = null
+  val debugLogUrl: String? = null,
+  val isInternalUser: Boolean = false
 ) {
   sealed interface DialogState {
     data object None : DialogState
@@ -41,6 +41,7 @@ data class LinkDeviceSettingsState(
     data class ToastUnlinked(val name: String) : OneTimeEvent
     data class ToastLinked(val name: String) : OneTimeEvent
     data object SnackbarLinkCancelled : OneTimeEvent
+    data object SnackbarDeviceLimitReached : OneTimeEvent
     data object SnackbarNameChangeSuccess : OneTimeEvent
     data object SnackbarNameChangeFailure : OneTimeEvent
     data object ShowFinishedSheet : OneTimeEvent
@@ -50,7 +51,7 @@ data class LinkDeviceSettingsState(
   }
 
   enum class QrCodeState {
-    NONE, VALID_WITH_SYNC, VALID_WITHOUT_SYNC, INVALID
+    NONE, VALID_WITH_SYNC, VALID_WITHOUT_SYNC, INVALID, OUTDATED_DEVICE
   }
 
   enum class SyncFailType {

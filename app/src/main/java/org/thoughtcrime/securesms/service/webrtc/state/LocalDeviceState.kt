@@ -1,5 +1,6 @@
 package org.thoughtcrime.securesms.service.webrtc.state
 
+import android.content.Intent
 import org.thoughtcrime.securesms.components.sensors.Orientation
 import org.thoughtcrime.securesms.events.CallParticipant
 import org.thoughtcrime.securesms.ringrtc.CameraState
@@ -18,9 +19,13 @@ data class LocalDeviceState(
   var activeDevice: SignalAudioManager.AudioDevice = SignalAudioManager.AudioDevice.NONE,
   var availableDevices: Set<SignalAudioManager.AudioDevice> = emptySet(),
   var bluetoothPermissionDenied: Boolean = false,
+  var microphoneSilencedTimestamp: Long = 0,
+  var isAudioDeviceChangePending: Boolean = false,
   var networkConnectionType: PeerConnection.AdapterType = PeerConnection.AdapterType.UNKNOWN,
   var handRaisedTimestamp: Long = CallParticipant.HAND_LOWERED,
-  var remoteMutedBy: CallParticipant? = null
+  var remoteMutedBy: CallParticipant? = null,
+  var isScreenSharing: Boolean = false,
+  var mediaProjectionIntent: Intent? = null
 ) {
 
   fun duplicate(): LocalDeviceState {

@@ -21,6 +21,7 @@ import org.signal.core.util.logging.Log
 import org.signal.core.util.money.FiatMoney
 import org.signal.core.util.throttleLatest
 import org.signal.donations.InAppPaymentType
+import org.signal.network.NetworkResult
 import org.thoughtcrime.securesms.backup.v2.BackupRepository
 import org.thoughtcrime.securesms.backup.v2.MessageBackupTier
 import org.thoughtcrime.securesms.backup.v2.ui.subscription.MessageBackupsType
@@ -33,7 +34,6 @@ import org.thoughtcrime.securesms.database.model.InAppPaymentSubscriberRecord
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.util.InternetConnectionObserver
-import org.whispersystems.signalservice.api.NetworkResult
 import org.whispersystems.signalservice.api.subscriptions.ActiveSubscription
 import java.math.BigDecimal
 import java.util.Currency
@@ -58,7 +58,7 @@ class BackupStateObserver(
   companion object {
     private val TAG = Log.tag(BackupStateObserver::class)
 
-    private val staticScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val staticScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val backupTierChangedNotifier = MutableSharedFlow<Unit>()
 
     /**
@@ -107,13 +107,13 @@ class BackupStateObserver(
         }
     }
 
-    scope.launch(SignalDispatchers.IO) {
+    scope.launch(SignalDispatchers.Default) {
       backupTierChangedNotifier.collect {
         requestBackupStateRefresh()
       }
     }
 
-    scope.launch(SignalDispatchers.IO) {
+    scope.launch(SignalDispatchers.Default) {
       InternetConnectionObserver.observe().asFlow()
         .collect {
           if (backupState.value is BackupState.Error) {
@@ -122,19 +122,19 @@ class BackupStateObserver(
         }
     }
 
-    scope.launch(SignalDispatchers.IO) {
+    scope.launch(SignalDispatchers.Default) {
       InAppPaymentsRepository.observeLatestBackupPayment().collect {
         requestBackupStateRefresh()
       }
     }
 
-    scope.launch(SignalDispatchers.IO) {
+    scope.launch(SignalDispatchers.Default) {
       SignalStore.backup.subscriptionStateMismatchDetectedFlow.collect {
         requestBackupStateRefresh()
       }
     }
 
-    scope.launch(SignalDispatchers.IO) {
+    scope.launch(SignalDispatchers.Default) {
       SignalStore.backup.deletionStateFlow.collect {
         requestBackupStateRefresh()
       }
@@ -166,8 +166,7 @@ class BackupStateObserver(
     }
 
     val price = latestPayment.data.amount!!.toFiatMoney()
-    val isKeepAlive = latestPayment.data.redemption?.keepAlive == true
-    val isPending = latestPayment.state == InAppPaymentTable.State.PENDING && !isKeepAlive
+    val isPending = SignalDatabase.inAppPayments.hasPendingBackupRedemption()
     if (isPending) {
       Log.d(TAG, "[getDatabaseBackupState] We have a pending subscription.")
       return BackupState.Pending(price = price)
@@ -192,7 +191,8 @@ class BackupStateObserver(
       Log.d(TAG, "[getDatabaseBackupState] We have a subscription state mismatch with Google Play.")
       return BackupState.SubscriptionMismatchMissingGooglePlay(
         messageBackupsType = paidBackupType,
-        renewalTime = latestPayment.endOfPeriod
+        renewalTime = latestPayment.endOfPeriod,
+        isBilledThroughOtherStore = InAppPaymentsRepository.isBackupBilledThroughOtherStore()
       )
     }
 
@@ -243,8 +243,7 @@ class BackupStateObserver(
    * Utilizes everything we can to resolve the most accurate backup state available, including database and network.
    */
   private suspend fun getNetworkBackupState(lastPurchase: InAppPaymentTable.InAppPayment?): BackupState {
-    val isKeepAlive = lastPurchase?.data?.redemption?.keepAlive == true
-    if (lastPurchase?.state == InAppPaymentTable.State.PENDING && !isKeepAlive) {
+    if (lastPurchase?.state == InAppPaymentTable.State.PENDING) {
       Log.d(TAG, "[getNetworkBackupState] We have a pending subscription.")
       return BackupState.Pending(
         price = lastPurchase.data.amount!!.toFiatMoney()
@@ -260,7 +259,8 @@ class BackupStateObserver(
       val googlePlayBillingSubscriptionIsActiveAndWillRenew = when (purchaseResult) {
         is BillingPurchaseResult.Success -> {
           Log.d(TAG, "[getNetworkBackupState][subscriptionStateMismatchDetected] Found a purchase: $purchaseResult")
-          purchaseResult.isAcknowledged && purchaseResult.isAutoRenewing
+          purchaseResult.isAutoRenewing &&
+            withContext(SignalDispatchers.IO) { InAppPaymentsRepository.isPurchaseValidatedByService(purchaseResult) }
         }
 
         else -> {
@@ -298,13 +298,13 @@ class BackupStateObserver(
         }
       }
 
-      val signalServiceSubscriptionIsActiveAndWillRenew = activeSubscription?.isActive == true && (!activeSubscription.isCanceled || activeSubscription.willCancelAtPeriodEnd())
+      val signalServiceSubscriptionIsActiveAndWillRenew = activeSubscription?.isActive == true && (!activeSubscription.isCanceled || activeSubscription.willCancelAtPeriodEnd)
 
       Log.d(TAG, "[getNetworkBackupState][subscriptionStateMismatchDetected] signalServiceSubscriptionIsActiveAndWillRenew: $signalServiceSubscriptionIsActiveAndWillRenew")
 
       when {
         signalServiceSubscriptionIsActiveAndWillRenew && !googlePlayBillingSubscriptionIsActiveAndWillRenew -> {
-          val type = buildPaidTypeFromSubscription(activeSubscription.activeSubscription)
+          val type = buildPaidTypeFromSubscription(activeSubscription.activeSubscription!!)
 
           if (type == null) {
             Log.d(TAG, "[getNetworkBackupState][subscriptionMismatchDetected] failed to load backup configuration. Likely a network error.")
@@ -314,7 +314,8 @@ class BackupStateObserver(
           Log.d(TAG, "[getNetworkBackupState][subscriptionMismatchDetected] found a subscription mismatch and successfully loaded configuration.")
           return BackupState.SubscriptionMismatchMissingGooglePlay(
             messageBackupsType = type,
-            renewalTime = activeSubscription.activeSubscription.endOfCurrentPeriod.seconds
+            renewalTime = activeSubscription.activeSubscription!!.endOfCurrentPeriod.seconds,
+            isBilledThroughOtherStore = InAppPaymentsRepository.isBackupBilledThroughOtherStore(activeSubscription.activeSubscription!!)
           )
         }
 
@@ -397,7 +398,7 @@ class BackupStateObserver(
           getStateOnError()
         } else {
           when {
-            (subscription.isCanceled || subscription.willCancelAtPeriodEnd()) && subscription.isActive -> {
+            (subscription.isCanceled || subscription.willCancelAtPeriodEnd) && subscription.isActive -> {
               Log.d(TAG, "[getPaidBackupState] Found a canceled subscription.")
               InAppPaymentsRepository.updateBackupInAppPaymentWithCancelation(activeSubscription.successOrThrow())
 

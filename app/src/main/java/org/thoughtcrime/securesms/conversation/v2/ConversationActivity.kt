@@ -8,8 +8,12 @@ import android.view.Window
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.enableSavedStateHandles
+import androidx.lifecycle.lifecycleScope
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
+import kotlinx.coroutines.launch
+import org.signal.core.util.ConfigurationUtil
+import org.signal.core.util.Debouncer
 import org.signal.core.util.logging.Log
 import org.signal.core.util.logging.Log.tag
 import org.thoughtcrime.securesms.MainActivity
@@ -17,24 +21,27 @@ import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.settings.app.subscription.GooglePayComponent
 import org.thoughtcrime.securesms.components.settings.app.subscription.GooglePayRepository
+import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsNavHostFragment
+import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsNavHostFragment.Companion.setConversationSettingsAnimations
 import org.thoughtcrime.securesms.components.voice.VoiceNoteMediaController
 import org.thoughtcrime.securesms.components.voice.VoiceNoteMediaControllerOwner
 import org.thoughtcrime.securesms.conversation.ConversationIntents
 import org.thoughtcrime.securesms.jobs.ConversationShortcutUpdateJob
-import org.thoughtcrime.securesms.util.ConfigurationUtil
-import org.thoughtcrime.securesms.util.Debouncer
+import org.thoughtcrime.securesms.main.MainDetailRoute
+import org.thoughtcrime.securesms.main.MainNavigationEventSink
+import org.thoughtcrime.securesms.main.MainNavigationEvents
+import org.thoughtcrime.securesms.messagedetails.MessageDetailsFragment
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme
 import java.util.concurrent.TimeUnit
 
 /**
  * Wrapper activity for ConversationFragment.
  */
-open class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner, GooglePayComponent {
+open class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaControllerOwner, GooglePayComponent, MainNavigationEventSink {
 
   companion object {
     private val TAG = tag(ConversationActivity::class.java)
-
-    private const val STATE_WATERMARK = "share_data_watermark"
+    private const val MESSAGE_DETAILS_FRAGMENT_TAG = "MessageDetailsFragment"
   }
 
   private val theme = DynamicNoActionBarTheme()
@@ -46,17 +53,9 @@ open class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaCo
   override val googlePayResultPublisher: Subject<GooglePayComponent.GooglePayResult> = PublishSubject.create()
 
   private val motionEventRelay: MotionEventRelay by viewModels()
-  private val shareDataTimestampViewModel: ShareDataTimestampViewModel by viewModels()
 
   override fun onPreCreate() {
     theme.onCreate(this)
-
-    // Window features must be requested before BaseActivity.onCreate() installs
-    // the content view (it looks up android.R.id.content to apply insets);
-    // requesting it later throws "requestFeature() must be called before adding content".
-    if (ActivityCompat.isLaunchedFromBubble(this)) {
-      window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-    }
   }
 
   override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
@@ -79,8 +78,8 @@ open class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaCo
     enableSavedStateHandles()
     supportPostponeEnterTransition()
     transitionDebouncer.publish { supportStartPostponedEnterTransition() }
+    window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
 
-    shareDataTimestampViewModel.setTimestampFromActivityCreation(savedInstanceState, intent)
     setContentView(R.layout.fragment_container)
 
     if (savedInstanceState == null) {
@@ -141,6 +140,53 @@ open class ConversationActivity : PassphraseRequiredActivity(), VoiceNoteMediaCo
       .replace(R.id.fragment_container, fragment)
       .disallowAddToBackStack()
       .commitNowAllowingStateLoss()
+  }
+
+  /**
+   * Only the events a conversation displayed on its own can answer. The rest belong to the main window,
+   * which is where the same screens send them when it is the one hosting them.
+   */
+  override fun onEvent(event: MainNavigationEvents) {
+    when (event) {
+      MainNavigationEvents.ExitDetail -> exitDetail()
+      is MainNavigationEvents.GoToDetail -> {
+        val route = event.route
+        if (route is MainDetailRoute.Chats) {
+          goToChatDetail(route)
+        } else {
+          Log.w(TAG, "Cannot display $route outside of the main window. Ignoring it.")
+        }
+      }
+
+      else -> Log.w(TAG, "Unsupported outside of the main window: $event. Ignoring it.")
+    }
+  }
+
+  private fun exitDetail() {
+    if (!supportFragmentManager.popBackStackImmediate()) {
+      finish()
+    }
+  }
+
+  private fun goToChatDetail(location: MainDetailRoute.Chats) {
+    when (location) {
+      is MainDetailRoute.Chats.ConversationSettings -> {
+        lifecycleScope.launch {
+          val args = ConversationSettingsNavHostFragment.createArgs(location.recipientId)
+          supportFragmentManager
+            .beginTransaction()
+            .setConversationSettingsAnimations()
+            .replace(R.id.fragment_container, ConversationSettingsNavHostFragment::class.java, args)
+            .addToBackStack(null)
+            .commit()
+        }
+      }
+
+      is MainDetailRoute.Chats.MessageDetails -> {
+        MessageDetailsFragment.create(location.messageId, location.recipientId)
+          .show(supportFragmentManager, MESSAGE_DETAILS_FRAGMENT_TAG)
+      }
+    }
   }
 
   override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

@@ -1,55 +1,95 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.android.build.api.dsl.ManagedVirtualDevice
+import com.android.build.api.artifact.ArtifactTransformationRequest
+import com.android.build.api.artifact.SingleArtifact
+import com.android.build.api.variant.BuiltArtifactsLoader
+import com.android.build.api.variant.HasAndroidTest
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import java.io.FileInputStream
-import java.text.SimpleDateFormat
-import java.util.Date
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import java.util.Properties
 
 plugins {
   alias(libs.plugins.android.application)
-  alias(libs.plugins.jetbrains.kotlin.android)
   alias(libs.plugins.ktlint)
   alias(libs.plugins.compose.compiler)
   alias(libs.plugins.kotlinx.serialization)
+  id("com.android.compose.screenshot")
+  alias(benchmarkLibs.plugins.baselineprofile)
   id("androidx.navigation.safeargs")
   id("kotlin-parcelize")
   id("com.squareup.wire")
   id("translations")
   id("licenses")
+  id("pseudo-locales")
 }
 
-apply(from = "static-ips.gradle.kts")
+val staticIps = Properties().apply { file("static-ips.properties").reader().use { load(it) } }
+staticIps.stringPropertyNames().forEach { rootProject.extra[it] = staticIps.getProperty(it) }
 
 // NOTE: `canonicalVersionCode` is an INTERNAL monotonic version signal, not the user-facing version
 // (that's `canonicalVersionName`). It must stay high enough that the resulting BuildConfig.VERSION_CODE
-// (= canonicalVersionCode * maxHotfixVersions) is >= ApplicationMigrations.LEGACY_CANONICAL_VERSION (455);
+// (= canonicalVersionCode * maxHotfixVersions + hotfix) is >= ApplicationMigrations.LEGACY_CANONICAL_VERSION (455);
 // i.e. canonicalVersionCode >= 5. Below that, the app treats every launch as a pre-2018 "legacy update"
 // and runs LegacyMigrationJob, which crashes on the modern DB schema ("no such column: color"). Setting
 // this to 1 (VERSION_CODE 100) is what caused the launch crash — keep it >= the prior 1633.
 // `canonicalVersionName` is Radar's own product version; it diverged from upstream Signal's
 // 7.68.x at Radar 1.0.4 and must match the vX.Y.Z git tag of each GitHub release exactly
 // (Obtainium detects updates by comparing the release tag against the installed versionName).
-val canonicalVersionCode = 1651
-val canonicalVersionName = "1.0.9"
+val canonicalVersionCode = 1652
+val canonicalVersionName = "1.1.0"
 // Version string Radar reports to Signal's servers in the "Signal-Android/<version>" User-Agent.
 // Signal's infra rejects unrecognized/deprecated client versions with HTTP 499 (DeprecatedVersionException),
 // which blocks registration ("Could not create valid session for confirming the entered E164"). It must
-// therefore stay a real, currently-supported upstream Signal Android version (this fork's 7.68.x base) and
-// be kept SEPARATE from Radar's product versionName above. Bump when rebasing on upstream or if 499 returns.
-val signalUpstreamVersionName = "7.68.5"
+// therefore stay a real, currently-supported upstream Signal Android version (the upstream release this
+// fork is synced to) and be kept SEPARATE from Radar's product versionName above. Bump when syncing with
+// upstream or if 499 returns.
+val signalUpstreamVersionName = "8.35.2"
 val currentHotfixVersion = 0
 val maxHotfixVersions = 100
 
-val keystores: Map<String, Properties?> = mapOf(
-  "debug" to loadKeystoreProperties("keystore.debug.properties"),
-  "release" to loadKeystoreProperties("keystore.release.properties")
-)
+// We don't want versions to ever end in 0 so that they don't conflict with nightly versions
+val possibleHotfixVersions = (0 until maxHotfixVersions).toList().filter { it % 10 != 0 }
+
+// Nightly tags look like v8.33.0-nightly-1767-3: the canonical version code of the tagged commit, then a build number from 0 to 9 that resets with it.
+val nightlyTagRegex = Regex("^v\\d+\\.\\d+\\.\\d+-nightly-(\\d+)-(\\d)$")
+
+val debugKeystorePropertiesProvider: Provider<Properties> = providers.of(PropertiesFileValueSource::class.java) {
+  parameters.file.set(rootProject.layout.projectDirectory.file("keystore.debug.properties"))
+}
+
+// Radar: release signing for the GitHub/Play builds (keystore.release.properties is gitignored).
+val releaseKeystorePropertiesProvider: Provider<Properties> = providers.of(PropertiesFileValueSource::class.java) {
+  parameters.file.set(rootProject.layout.projectDirectory.file("keystore.release.properties"))
+}
+
+val languagesProvider: Provider<List<String>> = providers.of(LanguageListValueSource::class.java) {
+  parameters.resDir.set(layout.projectDirectory.dir("src/main/res"))
+}
+
+val languagesForBuildConfigProvider = languagesProvider.map { languages ->
+  languages.joinToString(separator = ", ") { language -> "\"$language\"" }
+}
+
+val localPropertiesFile = File(rootProject.projectDir, "local.properties")
+val localProperties: Properties? = if (localPropertiesFile.exists()) {
+  Properties().apply { localPropertiesFile.inputStream().use { load(it) } }
+} else {
+  null
+}
+val quickstartCredentialsDir: String? = localProperties?.getProperty("quickstart.credentials.dir")
+val benchmarkBackupFile: String? = localProperties?.getProperty("benchmark.backup.file")
+
+val isInstrumentationTestRun = gradle.startParameter.taskNames.any { taskName ->
+  val lower = taskName.lowercase()
+  lower.contains("androidtest") || lower.contains("connectedcheck")
+}
 
 val selectableVariants = listOf(
-  "nightlyBackupRelease",
-  "nightlyBackupSpinner",
   "nightlyProdSpinner",
   "nightlyProdPerf",
   "nightlyProdRelease",
@@ -58,26 +98,43 @@ val selectableVariants = listOf(
   "playProdSpinner",
   "playProdCanary",
   "playProdPerf",
+  "playProdMocked",
+  "playProdNonMinifiedMocked",
   "playProdBenchmark",
-  "playProdInstrumentation",
   "playProdRelease",
   "playStagingDebug",
   "playStagingCanary",
   "playStagingSpinner",
   "playStagingPerf",
-  "playStagingInstrumentation",
   "playStagingRelease",
+  "playProdQuickstart",
+  "playStagingQuickstart",
   "websiteProdSpinner",
-  "websiteProdRelease"
+  "websiteProdRelease",
+  "githubProdSpinner",
+  "githubProdRelease"
 )
 
-val signalBuildToolsVersion: String by rootProject.extra
-val signalCompileSdkVersion: String by rootProject.extra
-val signalTargetSdkVersion: Int by rootProject.extra
-val signalMinSdkVersion: Int by rootProject.extra
-val signalNdkVersion: String by rootProject.extra
-val signalJavaVersion: JavaVersion by rootProject.extra
-val signalKotlinJvmTarget: String by rootProject.extra
+// Wire 5.x iterates Android source sets and expects matching Kotlin source sets.
+// AGP 9.0's built-in Kotlin doesn't create all source sets automatically.
+val kotlinExt = extensions.getByName("kotlin") as KotlinAndroidProjectExtension
+android.sourceSets.all {
+  kotlinExt.sourceSets.findByName(name) ?: kotlinExt.sourceSets.create(name)
+}
+// AGP 9.0's built-in Kotlin doesn't pick up extra java.srcDir entries from Android
+// source sets, so add shared dirs directly to the relevant Kotlin compile tasks.
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
+  val isTestTask = name.contains("UnitTest") || name.contains("AndroidTest")
+  if (isTestTask) {
+    source("$projectDir/src/testShared")
+  }
+  if (!isTestTask && (name.contains("Mocked") || name.contains("Benchmark"))) {
+    source("$projectDir/src/benchmarkShared/java")
+  }
+  if (isTestTask && name.contains("AndroidTest")) {
+    source("$projectDir/src/benchmarkShared/java")
+  }
+}
 
 wire {
   kotlin {
@@ -89,35 +146,49 @@ wire {
   }
 
   protoPath {
-    srcDir("${project.rootDir}/libsignal-service/src/main/protowire")
+    srcDir("${project.rootDir}/lib/libsignal-service/src/main/protowire")
+    srcDir("${project.rootDir}/lib/archive/src/main/protowire")
   }
-  // Handled by libsignal
-  prune("signalservice.DecryptionErrorMessage")
 }
 
 ktlint {
   version.set("1.5.0")
 }
 
+// ktlint only scans convention source dirs, so the shared dirs added to the compile tasks are
+// otherwise skipped. Add them to the base test/androidTest ktlint tasks so ktlintCheck/format cover them.
+tasks.withType(org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask::class.java).configureEach {
+  if (name.endsWith("OverTestSourceSet") || name.endsWith("OverAndroidTestSourceSet")) {
+    source("$projectDir/src/testShared")
+  }
+  if (name.endsWith("OverAndroidTestSourceSet")) {
+    source("$projectDir/src/benchmarkShared/java")
+  }
+}
+
+screenshotTests {
+  // Fraction of differing pixels tolerated before a screenshot test fails (0.0001 = 0.01%).
+  imageDifferenceThreshold = 0.0001f
+}
+
 android {
   namespace = "org.thoughtcrime.securesms"
 
-  buildToolsVersion = signalBuildToolsVersion
-  compileSdkVersion = signalCompileSdkVersion
-  ndkVersion = signalNdkVersion
+  experimentalProperties["android.experimental.enableScreenshotTest"] = true
+
+  buildToolsVersion = libs.versions.buildTools.get()
+
+  compileSdk {
+    version = release(libs.versions.compileSdk.get().toInt())
+  }
+
+  ndkVersion = libs.versions.ndk.get()
 
   flavorDimensions += listOf("distribution", "environment")
-  testBuildType = "instrumentation"
 
   android.bundle.language.enableSplit = false
 
-  kotlinOptions {
-    jvmTarget = signalKotlinJvmTarget
-    freeCompilerArgs = listOf("-Xjvm-default=all")
-    suppressWarnings = true
-  }
-
-  keystores["debug"]?.let { properties ->
+  debugKeystorePropertiesProvider.get().takeIf { it.isNotEmpty() }?.let { properties ->
     signingConfigs.getByName("debug").apply {
       storeFile = file("${project.rootDir}/${properties.getProperty("storeFile")}")
       storePassword = properties.getProperty("storePassword")
@@ -126,7 +197,7 @@ android {
     }
   }
 
-  keystores["release"]?.let { properties ->
+  releaseKeystorePropertiesProvider.get().takeIf { it.isNotEmpty() }?.let { properties ->
     signingConfigs.create("release").apply {
       storeFile = file("${project.rootDir}/${properties.getProperty("storeFile")}")
       storePassword = properties.getProperty("storePassword")
@@ -143,8 +214,8 @@ android {
     }
 
     managedDevices {
-      devices {
-        create<ManagedVirtualDevice>("pixel3api30") {
+      localDevices {
+        create("pixel3api30") {
           device = "Pixel 3"
           apiLevel = 30
           systemImageSource = "google-atd"
@@ -156,18 +227,19 @@ android {
 
   sourceSets {
     getByName("test") {
-      java.srcDir("$projectDir/src/testShared")
+      java.directories += "$projectDir/src/testShared"
     }
 
     getByName("androidTest") {
-      java.srcDir("$projectDir/src/testShared")
+      java.directories += "$projectDir/src/testShared"
+      java.directories += "$projectDir/src/benchmarkShared/java"
     }
   }
 
   compileOptions {
     isCoreLibraryDesugaringEnabled = true
-    sourceCompatibility = signalJavaVersion
-    targetCompatibility = signalJavaVersion
+    sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+    targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
   }
 
   packaging {
@@ -189,7 +261,8 @@ android {
         "META-INF/LICENSE-notice.md",
         "META-INF/proguard/androidx-annotations.pro",
         "**/*.dylib",
-        "**/*.dll"
+        "**/*.dll",
+        "**/*.proto"
       )
     }
   }
@@ -200,17 +273,20 @@ android {
     compose = true
   }
 
-  composeOptions {
-    kotlinCompilerExtensionVersion = "1.5.4"
-  }
-
   defaultConfig {
     applicationId = "com.radarlabs.radar"
-    versionCode = (canonicalVersionCode * maxHotfixVersions) + currentHotfixVersion
+    if (currentHotfixVersion >= maxHotfixVersions) {
+      throw AssertionError("Hotfix version offset is too large!")
+    }
+    versionCode = (canonicalVersionCode * maxHotfixVersions) + possibleHotfixVersions[currentHotfixVersion]
     versionName = canonicalVersionName
 
-    minSdk = signalMinSdkVersion
-    targetSdk = signalTargetSdkVersion
+    if (isInstrumentationTestRun) {
+      applicationIdSuffix = ".test_run"
+    }
+
+    minSdk = libs.versions.minSdk.get().toInt()
+    targetSdk = libs.versions.targetSdk.get().toInt()
 
     vectorDrawables.useSupportLibrary = true
     project.ext.set("archivesBaseName", "Signal")
@@ -244,19 +320,13 @@ android {
     buildConfigField("String[]", "SIGNAL_SVR2_IPS", rootProject.extra["svr2_ips"] as String)
     buildConfigField("String", "SIGNAL_AGENT", "\"OWA\"")
     buildConfigField("String", "SIGNAL_CLIENT_VERSION", "\"$signalUpstreamVersionName\"")
-    // SVR2 enclaves — keep in lockstep with Signal-iOS TSConstants (svr2Enclave / svr2PreviousEnclaves)
-    // and the bundled libsignal enclave table. The current enclave is read/written first; PREVIOUS are
-    // read-only fallbacks (newest→oldest) because SVR2 key material migrates forward. Every value must
-    // be attestable by the pinned libsignal or restore aborts with "Error looking up mrenclave".
-    // PREVIOUS is empty since 2026-11: Signal shut down 2026Q1 (1240acbd…) and 2025Q3 (29cd63c8…),
-    // both now 404, and libsignal 0.99.4 can no longer attest 2025Q3.
-    buildConfigField("String", "SVR2_MRENCLAVE", "\"ced8217b26228e4b210c985786999d095c4958a94faf37b14acaf25c4cbb02a4\"")
-    buildConfigField("String[]", "SVR2_MRENCLAVE_PREVIOUS", "new String[]{}")
+    buildConfigField("String", "SVR2_MRENCLAVE_LEGACY", "\"ced8217b26228e4b210c985786999d095c4958a94faf37b14acaf25c4cbb02a4\"")
+    buildConfigField("String", "SVR2_MRENCLAVE", "\"fdbbacdc0c043d0d53fe1440f62728de0386f45ab0a275bd8f99e03a02af355e\"")
     buildConfigField("String[]", "UNIDENTIFIED_SENDER_TRUST_ROOTS", "new String[]{ \"BXu6QIKVz5MA8gstzfOgRQGqyLqOwNKHL6INkv3IHWMF\", \"BUkY0I+9+oPgDCn4+Ac6Iu813yvqkDr/ga8DzLxFxuk6\"}")
     buildConfigField("String", "ZKGROUP_SERVER_PUBLIC_PARAMS", "\"AMhf5ywVwITZMsff/eCyudZx9JDmkkkbV6PInzG4p8x3VqVJSFiMvnvlEKWuRob/1eaIetR31IYeAbm0NdOuHH8Qi+Rexi1wLlpzIo1gstHWBfZzy1+qHRV5A4TqPp15YzBPm0WSggW6PbSn+F4lf57VCnHF7p8SvzAA2ZZJPYJURt8X7bbg+H3i+PEjH9DXItNEqs2sNcug37xZQDLm7X36nOoGPs54XsEGzPdEV+itQNGUFEjY6X9Uv+Acuks7NpyGvCoKxGwgKgE5XyJ+nNKlyHHOLb6N1NuHyBrZrgtY/JYJHRooo5CEqYKBqdFnmbTVGEkCvJKxLnjwKWf+fEPoWeQFj5ObDjcKMZf2Jm2Ae69x+ikU5gBXsRmoF94GXTLfN0/vLt98KDPnxwAQL9j5V1jGOY8jQl6MLxEs56cwXN0dqCnImzVH3TZT1cJ8SW1BRX6qIVxEzjsSGx3yxF3suAilPMqGRp4ffyopjMD1JXiKR2RwLKzizUe5e8XyGOy9fplzhw3jVzTRyUZTRSZKkMLWcQ/gv0E4aONNqs4P+NameAZYOD12qRkxosQQP5uux6B2nRyZ7sAV54DgFyLiRcq1FvwKw2EPQdk4HDoePrO/RNUbyNddnM/mMgj4FW65xCoT1LmjrIjsv/Ggdlx46ueczhMgtBunx1/w8k8V+l8LVZ8gAT6wkU5J+DPQalQguMg12Jzug3q4TbdHiGCmD9EunCwOmsLuLJkz6EcSYXtrlDEnAM+hicw7iergYLLlMXpfTdGxJCWJmP4zqUFeTTmsmhsjGBt7NiEB/9pFFEB3pSbf4iiUukw63Eo8Aqnf4iwob6X1QviCWuc8t0LUlT9vALgh/f2DPVOOmR0RW6bgRvc7DSF20V/omg+YBw==\"")
-    buildConfigField("String", "GENERIC_SERVER_PUBLIC_PARAMS", "\"AByD873dTilmOSG0TjKrvpeaKEsUmIO8Vx9BeMmftwUs9v7ikPwM8P3OHyT0+X3EUMZrSe9VUp26Wai51Q9I8mdk0hX/yo7CeFGJyzoOqn8e/i4Ygbn5HoAyXJx5eXfIbqpc0bIxzju4H/HOQeOpt6h742qii5u/cbwOhFZCsMIbElZTaeU+BWMBQiZHIGHT5IE0qCordQKZ5iPZom0HeFa8Yq0ShuEyAl0WINBiY6xE3H/9WnvzXBbMuuk//eRxXgzO8ieCeK8FwQNxbfXqZm6Ro1cMhCOF3u7xoX83QhpN\"")
-    buildConfigField("String", "BACKUP_SERVER_PUBLIC_PARAMS", "\"AJwNSU55fsFCbgaxGRD11wO1juAs8Yr5GF8FPlGzzvdJJIKH5/4CC7ZJSOe3yL2vturVaRU2Cx0n751Vt8wkj1bozK3CBV1UokxV09GWf+hdVImLGjXGYLLhnI1J2TWEe7iWHyb553EEnRb5oxr9n3lUbNAJuRmFM7hrr0Al0F0wrDD4S8lo2mGaXe0MJCOM166F8oYRQqpFeEHfiLnxA1O8ZLh7vMdv4g9jI5phpRBTsJ5IjiJrWeP0zdIGHEssUeprDZ9OUJ14m0v61eYJMKsf59Bn+mAT2a7YfB+Don9O\"")
-    buildConfigField("String[]", "LANGUAGES", "new String[]{ ${languageList().map { "\"$it\"" }.joinToString(separator = ", ")} }")
+    buildConfigField("String", "GENERIC_SERVER_PUBLIC_PARAMS", "\"AeCO67P9mIv1yUHkdeZ9JF789GDbox61GvTqq3S4kYc1ADUWxWHQygU390tv1oRWt9WjkdZlU7mKkifF59ftjE+2ZlMmxns6I+ySiLpR8FEmfu+TGpVp3zYTjNV93obJJTyBCCsSHVETCyQRbKdCyb5TMa6LGrvcZaX0Q/VAavhuNA/m4kSiRMgSnYrUjGhVekdDnF+7xioo4wvFnxjIDh7uJQrYOWD6MloNGX7St5gbysTuQQ7i/HI38b9V8x8mKazuDSXxB//BKGZx/XHkK8cHX+QK1MPxYUVM1/CBI5oW\"")
+    buildConfigField("String", "BACKUP_SERVER_PUBLIC_PARAMS", "\"AZwNSU55fsFCbgaxGRD11wO1juAs8Yr5GF8FPlGzzvdJJIKH5/4CC7ZJSOe3yL2vturVaRU2Cx0n751Vt8wkj1Y4pyiScu0/S10n647ipo+iq97JZQv+UOlwH8ThyNlGT5DfxXCwTqivxHuXvZpuezPgHk5Gxl5aC6xuNxOnwmFlmu4CeSgdhW8+Pp0vAJOQ1MsU2D0+/kzI+tU94nB3tybY/Ao1AcGW2q41uKQbnOJUWwmQaFT6s+xTISgzsg7CPox6oORGX8rnyk/9lic3DbGsUHctIVpMAl/ogJBb4aYC\"")
+    buildConfigField("String[]", "LANGUAGES", "new String[]{ ${languagesForBuildConfigProvider.get()} }")
     buildConfigField("int", "CANONICAL_VERSION_CODE", "$canonicalVersionCode")
     // Preferred fiat conversions for Radar payments. Mirrors iOS `Stripe.preferredCurrencyInfos`
     // after commit 37007fe8e8 (removed AUD/CAD; added USD/JPY).
@@ -264,6 +334,7 @@ android {
     buildConfigField("String", "GIPHY_API_KEY", "\"3o6ZsYH6U6Eri53TXy\"")
     buildConfigField("String", "SIGNAL_CAPTCHA_URL", "\"https://signalcaptchas.org/registration/generate.html\"")
     buildConfigField("String", "RECAPTCHA_PROOF_URL", "\"https://signalcaptchas.org/challenge/generate.html\"")
+    buildConfigField("String", "WEBAUTHN_RP_ID", "\"login.signal.org\"")
     buildConfigField("org.signal.libsignal.net.Network.Environment", "LIBSIGNAL_NET_ENV", "org.signal.libsignal.net.Network.Environment.PRODUCTION")
     buildConfigField("int", "LIBSIGNAL_LOG_LEVEL", "org.signal.libsignal.protocol.logging.SignalProtocolLogger.INFO")
 
@@ -282,7 +353,14 @@ android {
     // BuildFlags.Backups.showPaidPlan = false: hides the paid tier in the plan chooser and the
     // free-tier upgrade button, while leaving manage/cancel reachable for existing subscribers.
     buildConfigField("boolean", "PAID_BACKUPS_ENABLED", "false")
-    buildConfigField("boolean", "USE_STRING_ID", "true")
+    // Radar does not offer Signal Login (registering without a phone number): it is a Google Play purchase
+    // sold by Signal, and its passkeys are tied to login.signal.org. Mirrors iOS (Signal Login stays off).
+    buildConfigField("boolean", "SIGNAL_LOGIN_ENABLED", "false")
+    // Signal's post-call quality survey posts answers to Signal. Mirrors iOS BuildFlags.callQualitySurvey = false.
+    buildConfigField("boolean", "CALL_QUALITY_SURVEY_ENABLED", "false")
+    // Signal's remote megaphones and release notes announce Signal's own features and campaigns.
+    // Mirrors iOS BuildFlags.remoteMegaphonesAndReleaseNotes = false.
+    buildConfigField("boolean", "REMOTE_ANNOUNCEMENTS_ENABLED", "false")
 
     ndk {
       abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
@@ -298,28 +376,30 @@ android {
       }
     }
 
-    testInstrumentationRunner = "org.thoughtcrime.securesms.testing.SignalTestRunner"
+    testInstrumentationRunner = if (project.hasProperty("imoTests")) {
+      "org.thoughtcrime.securesms.testing.incomingmessageobserver.IncomingMessageObserverTestRunner"
+    } else {
+      "org.thoughtcrime.securesms.testing.SignalTestRunner"
+    }
     testInstrumentationRunnerArguments["clearPackageData"] = "true"
   }
 
   buildTypes {
     getByName("debug") {
-      if (keystores["debug"] != null) {
+      if (debugKeystorePropertiesProvider.orNull != null) {
         signingConfig = signingConfigs["debug"]
       }
       isDefault = true
       isMinifyEnabled = false
       proguardFiles(
-        getDefaultProguardFile("proguard-android.txt"),
+        getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard/proguard-firebase-messaging.pro",
         "proguard/proguard-google-play-services.pro",
         "proguard/proguard-jackson.pro",
         "proguard/proguard-sqlite.pro",
-        "proguard/proguard-appcompat-v7.pro",
         "proguard/proguard-square-okhttp.pro",
         "proguard/proguard-square-okio.pro",
         "proguard/proguard-rounded-image-view.pro",
-        "proguard/proguard-glide.pro",
         "proguard/proguard-shortcutbadger.pro",
         "proguard/proguard-retrofit.pro",
         "proguard/proguard-klinker.pro",
@@ -327,6 +407,7 @@ android {
         "proguard/proguard-retrolambda.pro",
         "proguard/proguard-okhttp.pro",
         "proguard/proguard-ez-vcard.pro",
+        "proguard/proguard-dnsjava.pro",
         "proguard/proguard-breez-jna.pro",
         "proguard/proguard.cfg"
       )
@@ -342,23 +423,12 @@ android {
     }
 
     getByName("release") {
-      if (keystores["release"] != null) {
+      if (releaseKeystorePropertiesProvider.get().isNotEmpty()) {
         signingConfig = signingConfigs["release"]
       }
       isMinifyEnabled = true
       proguardFiles(*buildTypes["debug"].proguardFiles.toTypedArray())
       buildConfigField("String", "BUILD_VARIANT_TYPE", "\"Release\"")
-    }
-
-    create("instrumentation") {
-      initWith(getByName("debug"))
-      isDefault = false
-      isMinifyEnabled = false
-      matchingFallbacks += "debug"
-      applicationIdSuffix = ".instrumentation"
-
-      buildConfigField("String", "BUILD_VARIANT_TYPE", "\"Instrumentation\"")
-      buildConfigField("String", "STRIPE_BASE_URL", "\"http://127.0.0.1:8080/stripe\"")
     }
 
     create("spinner") {
@@ -385,8 +455,26 @@ android {
       isDebuggable = false
       isMinifyEnabled = true
       matchingFallbacks += "debug"
+      applicationIdSuffix = ".benchmark"
+
       buildConfigField("String", "BUILD_VARIANT_TYPE", "\"Benchmark\"")
       buildConfigField("boolean", "TRACING_ENABLED", "true")
+      buildConfigField("String[]", "UNIDENTIFIED_SENDER_TRUST_ROOTS", "new String[]{ \"BVT/2gHqbrG1xzuIypLIOjFgMtihrMld1/5TGADL6Dhv\"}")
+
+      manifestPlaceholders["applicationClass"] = "org.thoughtcrime.securesms.BenchmarkApplicationContext"
+    }
+
+    create("mocked") {
+      initWith(getByName("debug"))
+      isDefault = false
+      isDebuggable = false
+      isMinifyEnabled = true
+      isShrinkResources = true
+      matchingFallbacks += "debug"
+      buildConfigField("String", "BUILD_VARIANT_TYPE", "\"Benchmark\"")
+      buildConfigField("boolean", "TRACING_ENABLED", "true")
+
+      manifestPlaceholders["applicationClass"] = "org.thoughtcrime.securesms.ApplicationContext"
     }
 
     create("canary") {
@@ -395,6 +483,14 @@ android {
       isMinifyEnabled = false
       matchingFallbacks += "debug"
       buildConfigField("String", "BUILD_VARIANT_TYPE", "\"Canary\"")
+    }
+
+    create("quickstart") {
+      initWith(getByName("debug"))
+      isDefault = false
+      isMinifyEnabled = false
+      matchingFallbacks += "debug"
+      buildConfigField("String", "BUILD_VARIANT_TYPE", "\"Quickstart\"")
     }
   }
 
@@ -414,17 +510,18 @@ android {
       buildConfigField("String", "BUILD_DISTRIBUTION_TYPE", "\"website\"")
     }
 
-    create("nightly") {
-      val apkUpdateManifestUrl = if (file("${project.rootDir}/nightly-url.txt").exists()) {
-        file("${project.rootDir}/nightly-url.txt").readText().trim()
-      } else {
-        "<unset>"
-      }
-
+    create("github") {
       dimension = "distribution"
-      versionNameSuffix = "-nightly-untagged-${getDateSuffix()}"
-      buildConfigField("boolean", "MANAGES_APP_UPDATES", "true")
-      buildConfigField("String", "APK_UPDATE_MANIFEST_URL", "\"${apkUpdateManifestUrl}\"")
+      buildConfigField("boolean", "MANAGES_APP_UPDATES", "false")
+      buildConfigField("String", "APK_UPDATE_MANIFEST_URL", "null")
+      buildConfigField("String", "BUILD_DISTRIBUTION_TYPE", "\"github\"")
+    }
+
+    create("nightly") {
+      dimension = "distribution"
+      versionNameSuffix = "-nightly-untagged-${getGitHash()}"
+      buildConfigField("boolean", "MANAGES_APP_UPDATES", "false")
+      buildConfigField("String", "APK_UPDATE_MANIFEST_URL", "null")
       buildConfigField("String", "BUILD_DISTRIBUTION_TYPE", "\"nightly\"")
       buildConfigField("boolean", "LINK_DEVICE_UX_ENABLED", "true")
     }
@@ -450,32 +547,20 @@ android {
       buildConfigField("String", "SIGNAL_CDN3_URL", "\"https://cdn3-staging.signal.org\"")
       buildConfigField("String", "SIGNAL_CDSI_URL", "\"https://cdsi.staging.signal.org\"")
       buildConfigField("String", "SIGNAL_SVR2_URL", "\"https://svr2.staging.signal.org\"")
-      buildConfigField("String", "SVR2_MRENCLAVE", "\"3c699f4975aaa3d172c0aad042f94f031b2b03e10b9c19a45116a01693d83302\"")
-      buildConfigField("String[]", "SVR2_MRENCLAVE_PREVIOUS", "new String[]{\"97f151f6ed078edbbfd72fa9cae694dcc08353f1f5e8d9ccd79a971b10ffc535\"}")
+      buildConfigField("String", "SVR2_MRENCLAVE_LEGACY", "\"3c699f4975aaa3d172c0aad042f94f031b2b03e10b9c19a45116a01693d83302\"")
+      buildConfigField("String", "SVR2_MRENCLAVE", "\"0ff2d7d4efbe7cfc24ac069a16fba898928dbe6c40d500c8b6da55733c727d6e\"")
       buildConfigField("String[]", "UNIDENTIFIED_SENDER_TRUST_ROOTS", "new String[]{\"BbqY1DzohE4NUZoVF+L18oUPrK3kILllLEJh2UnPSsEx\", \"BYhU6tPjqP46KGZEzRs1OL4U39V5dlPJ/X09ha4rErkm\"}")
       buildConfigField("String", "ZKGROUP_SERVER_PUBLIC_PARAMS", "\"ABSY21VckQcbSXVNCGRYJcfWHiAMZmpTtTELcDmxgdFbtp/bWsSxZdMKzfCp8rvIs8ocCU3B37fT3r4Mi5qAemeGeR2X+/YmOGR5ofui7tD5mDQfstAI9i+4WpMtIe8KC3wU5w3Inq3uNWVmoGtpKndsNfwJrCg0Hd9zmObhypUnSkfYn2ooMOOnBpfdanRtrvetZUayDMSC5iSRcXKpdlukrpzzsCIvEwjwQlJYVPOQPj4V0F4UXXBdHSLK05uoPBCQG8G9rYIGedYsClJXnbrgGYG3eMTG5hnx4X4ntARBgELuMWWUEEfSK0mjXg+/2lPmWcTZWR9nkqgQQP0tbzuiPm74H2wMO4u1Wafe+UwyIlIT9L7KLS19Aw8r4sPrXZSSsOZ6s7M1+rTJN0bI5CKY2PX29y5Ok3jSWufIKcgKOnWoP67d5b2du2ZVJjpjfibNIHbT/cegy/sBLoFwtHogVYUewANUAXIaMPyCLRArsKhfJ5wBtTminG/PAvuBdJ70Z/bXVPf8TVsR292zQ65xwvWTejROW6AZX6aqucUjlENAErBme1YHmOSpU6tr6doJ66dPzVAWIanmO/5mgjNEDeK7DDqQdB1xd03HT2Qs2TxY3kCK8aAb/0iM0HQiXjxZ9HIgYhbtvGEnDKW5ILSUydqH/KBhW4Pb0jZWnqN/YgbWDKeJxnDbYcUob5ZY5Lt5ZCMKuaGUvCJRrCtuugSMaqjowCGRempsDdJEt+cMaalhZ6gczklJB/IbdwENW9KeVFPoFNFzhxWUIS5ML9riVYhAtE6JE5jX0xiHNVIIPthb458cfA8daR0nYfYAUKogQArm0iBezOO+mPk5vCNWI+wwkyFCqNDXz/qxl1gAntuCJtSfq9OC3NkdhQlgYQ==\"")
-      buildConfigField("String", "GENERIC_SERVER_PUBLIC_PARAMS", "\"AHILOIrFPXX9laLbalbA9+L1CXpSbM/bTJXZGZiuyK1JaI6dK5FHHWL6tWxmHKYAZTSYmElmJ5z2A5YcirjO/yfoemE03FItyaf8W1fE4p14hzb5qnrmfXUSiAIVrhaXVwIwSzH6RL/+EO8jFIjJ/YfExfJ8aBl48CKHgu1+A6kWynhttonvWWx6h7924mIzW0Czj2ROuh4LwQyZypex4GuOPW8sgIT21KNZaafgg+KbV7XM1x1tF3XA17B4uGUaDbDw2O+nR1+U5p6qHPzmJ7ggFjSN6Utu+35dS1sS0P9N\"")
-      buildConfigField("String", "BACKUP_SERVER_PUBLIC_PARAMS", "\"AHYrGb9IfugAAJiPKp+mdXUx+OL9zBolPYHYQz6GI1gWjpEu5me3zVNSvmYY4zWboZHif+HG1sDHSuvwFd0QszSwuSF4X4kRP3fJREdTZ5MCR0n55zUppTwfHRW2S4sdQ0JGz7YDQIJCufYSKh0pGNEHL6hv79Agrdnr4momr3oXdnkpVBIp3HWAQ6IbXQVSG18X36GaicI1vdT0UFmTwU2KTneluC2eyL9c5ff8PcmiS+YcLzh0OKYQXB5ZfQ06d6DiINvDQLy75zcfUOniLAj0lGJiHxGczin/RXisKSR8\"")
+      buildConfigField("String", "GENERIC_SERVER_PUBLIC_PARAMS", "\"AYhaw+NbxtNLo/RlGFEsHd904hW38LpPJ59jYJlNmT4wwtyOq4xzCs/MyXsfRbIsAYhQjDnpE0rhFtWkMcn/kV740SISwFfpPHunrtZ9h0YWz5QNNbI5I3DRGUjhKXgMU7J7s7qOr0fdms+g0e+L9FMSjJLobDkOngp/m0B5TsxTyqLscJ5VyU69Cj8txImTfHMCKrYphYfRHO78RwPoz2g2tGUAzEbKHm12OgDna2qutkE5TvYqwZczvgZyLVHdHXpvdyOlEdv4afVyWkI7u/S0XYDonIJoHlxqJoTSepZR\"")
+      buildConfigField("String", "BACKUP_SERVER_PUBLIC_PARAMS", "\"AXYrGb9IfugAAJiPKp+mdXUx+OL9zBolPYHYQz6GI1gWjpEu5me3zVNSvmYY4zWboZHif+HG1sDHSuvwFd0QszS6h3nZ6vRdM/IYGK+cLynw3ucWo7idf3zjOG3b6JnGT/z7XYCr6HuOGkWH4DQWCH98hxVZMGOgmT8DCQoqebQb3oK1yrwEglRWmtI01KhRg9RGUKoQiwuej1JZEY8uaG4Uz9n1cVODJ1iuByhNqGHo+KfI4iWhjtx2AnhYqHViQ3CMd4ASGBJtic9UTFVk/4vegVIy0wfYsAmViftzK6t4\"")
       buildConfigField("String", "MOBILE_COIN_ENVIRONMENT", "\"testnet\"")
       buildConfigField("String", "SIGNAL_CAPTCHA_URL", "\"https://signalcaptchas.org/staging/registration/generate.html\"")
       buildConfigField("String", "RECAPTCHA_PROOF_URL", "\"https://signalcaptchas.org/staging/challenge/generate.html\"")
       buildConfigField("org.signal.libsignal.net.Network.Environment", "LIBSIGNAL_NET_ENV", "org.signal.libsignal.net.Network.Environment.STAGING")
       buildConfigField("int", "LIBSIGNAL_LOG_LEVEL", "org.signal.libsignal.protocol.logging.SignalProtocolLogger.DEBUG")
-      buildConfigField("boolean", "USE_STRING_ID", "false")
 
       buildConfigField("String", "BUILD_ENVIRONMENT_TYPE", "\"Staging\"")
       buildConfigField("String", "STRIPE_PUBLISHABLE_KEY", "\"pk_test_sngOd8FnXNkpce9nPXawKrJD00kIDngZkD\"")
-    }
-
-    create("backup") {
-      initWith(getByName("staging"))
-
-      dimension = "environment"
-
-      applicationIdSuffix = ".backup"
-
-      buildConfigField("boolean", "MANAGES_APP_UPDATES", "true")
-      buildConfigField("String", "BUILD_ENVIRONMENT_TYPE", "\"Backup\"")
     }
   }
 
@@ -486,43 +571,7 @@ android {
     ignoreWarnings = true
     quiet = true
     disable += "LintError"
-  }
-
-  applicationVariants.all {
-    outputs
-      .map { it as com.android.build.gradle.internal.api.ApkVariantOutputImpl }
-      .forEach { output ->
-        if (output.baseName.contains("nightly")) {
-          var tag = getCurrentGitTag()
-          if (!tag.isNullOrEmpty()) {
-            if (tag.startsWith("v")) {
-              tag = tag.substring(1)
-            }
-            output.versionNameOverride = tag
-            output.outputFileName = output.outputFileName.replace(".apk", "-${output.versionNameOverride}.apk")
-          } else {
-            output.outputFileName = output.outputFileName.replace(".apk", "-$versionName.apk")
-          }
-        } else {
-          output.outputFileName = output.outputFileName.replace(".apk", "-$versionName.apk")
-
-          if (currentHotfixVersion >= maxHotfixVersions) {
-            throw AssertionError("Hotfix version is too large!")
-          }
-        }
-      }
-  }
-
-  androidComponents {
-    beforeVariants { variant ->
-      variant.enable = variant.name in selectableVariants
-    }
-    onVariants { variant ->
-      // Include the test-only library on debug builds.
-      if (variant.buildType != "instrumentation") {
-        variant.packaging.jniLibs.excludes.add("**/libsignal_jni_testing.so")
-      }
-    }
+    lintConfig = rootProject.file("lint.xml")
   }
 
   val releaseDir = "$projectDir/src/release/java"
@@ -531,8 +580,159 @@ android {
   android.buildTypes.configureEach {
     val path = if (name == "release") releaseDir else debugDir
     sourceSets.named(name) {
-      java.srcDir(path)
+      java.directories += path
     }
+  }
+
+  sourceSets {
+    getByName("mocked") {
+      java.directories += "$projectDir/src/benchmarkShared/java"
+      manifest.srcFile("$projectDir/src/benchmarkShared/AndroidManifest.xml")
+    }
+
+    getByName("benchmark") {
+      java.directories += "$projectDir/src/benchmarkShared/java"
+      manifest.srcFile("$projectDir/src/benchmarkShared/AndroidManifest.xml")
+    }
+  }
+}
+
+androidComponents {
+  beforeVariants { variant ->
+    variant.enable = variant.name in selectableVariants
+    if (variant.enable) {
+      (variant as? com.android.build.api.variant.HasUnitTestBuilder)?.enableUnitTest = true
+    }
+  }
+  onVariants(selector().all()) { variant: com.android.build.api.variant.ApplicationVariant ->
+    // Rename APK to include version name
+    val renameTask = tasks.register<RenameApkTask>("renameApk${variant.name.replaceFirstChar { it.uppercase() }}")
+    val renameRequest = variant.artifacts.use(renameTask)
+      .wiredWithDirectories(RenameApkTask::apkFolder, RenameApkTask::outFolder)
+      .toTransformMany(SingleArtifact.APK)
+    renameTask.configure {
+      transformationRequest.set(renameRequest)
+    }
+
+    // Include the test-only library on non-release builds.
+    if (variant.buildType == "release") {
+      variant.packaging.jniLibs.excludes.add("**/libsignal_jni_testing.so")
+      variant.androidResources.ignoreAssetsPatterns.add("libsignal-testing.md")
+    }
+
+    // Starting with minSdk 23, Android leaves native libraries uncompressed, which is fine for the Play Store, but not for our self-distributed APKs.
+    // This reverts it to the legacy behavior, compressing the native libraries, and drastically reducing the APK file size.
+    if (variant.name.contains("website", ignoreCase = true) || variant.name.contains("github", ignoreCase = true)) {
+      variant.packaging.jniLibs.useLegacyPackaging.set(true)
+    }
+
+    // Version overrides
+    if (variant.name.contains("nightly", ignoreCase = true)) {
+      val tag = getNightlyTagForCurrentCommit()
+      if (tag != null) {
+        val nightlyVersionCode = providers.provider { getNightlyVersionCode(tag) }
+
+        variant.outputs.forEach { output ->
+          output.versionName.set("${tag.removePrefix("v")} | ${getLastCommitDateTimeUtc()}")
+          output.versionCode.set(nightlyVersionCode)
+        }
+      } else if (variant.buildType == "release") {
+        val missingTag = providers.provider<Int> {
+          throw GradleException("Nightly release builds need a tag like v<version>-nightly-$canonicalVersionCode-<n> pointing at HEAD.")
+        }
+
+        variant.outputs.forEach { output ->
+          output.versionCode.set(missingTag)
+        }
+      }
+    }
+  }
+
+  onVariants(selector().withBuildType("quickstart")) { variant ->
+    val environment = variant.flavorName?.let { name ->
+      when {
+        name.contains("staging", ignoreCase = true) -> "staging"
+        name.contains("prod", ignoreCase = true) -> "prod"
+        else -> "prod"
+      }
+    } ?: "prod"
+
+    val taskProvider = tasks.register<CopyQuickstartCredentialsTask>("copyQuickstartCredentials${variant.name.capitalize()}") {
+      if (quickstartCredentialsDir != null) {
+        inputDir.set(File(quickstartCredentialsDir))
+      }
+      filePrefix.set("${environment}_")
+    }
+    variant.sources.assets?.addGeneratedSourceDirectory(taskProvider) { it.outputDir }
+  }
+
+  onVariants(selector().withBuildType("benchmark")) { variant ->
+    val taskProvider = tasks.register<CopyBenchmarkBackupTask>("copyBenchmarkBackup${variant.name.capitalize()}") {
+      if (benchmarkBackupFile != null) {
+        inputFile.set(File(benchmarkBackupFile))
+      }
+    }
+    variant.sources.assets?.addGeneratedSourceDirectory(taskProvider) { it.outputDir }
+  }
+
+  onVariants(selector().withName("playProdDebug")) { variant ->
+    val androidTest = (variant as? HasAndroidTest)?.androidTest ?: return@onVariants
+
+    tasks.register<FirebaseTestLabTask>("firebaseTestLab") {
+      group = "Verification"
+      description = "Runs the ${variant.name} instrumentation tests on Firebase Test Lab via the gcloud CLI. Run a single class with -Pftl.class=<fqcn>[#method]; override other defaults with -Pftl.* properties."
+
+      appApkDirectory.set(variant.artifacts.get(SingleArtifact.APK))
+      testApkDirectory.set(androidTest.artifacts.get(SingleArtifact.APK))
+      builtArtifactsLoader.set(variant.artifacts.getBuiltArtifactsLoader())
+
+      val deviceOverride = project.providers.gradleProperty("ftl.devices").orNull
+      devices.set(
+        deviceOverride?.split(";")?.map { it.trim() }?.filter { it.isNotEmpty() }
+          ?: listOf("model=Pixel2.arm,version=31,locale=en,orientation=portrait")
+      )
+
+      useOrchestrator.set(true)
+      environmentVariables.set(mapOf("clearPackageData" to "true"))
+      testTimeout.set(project.providers.gradleProperty("ftl.timeout").getOrElse("30m"))
+      numFlakyTestAttempts.set(project.providers.gradleProperty("ftl.numFlakyTestAttempts").map { it.toInt() }.getOrElse(1))
+      gcloudProject.set(project.providers.gradleProperty("ftl.project"))
+      resultsBucket.set(project.providers.gradleProperty("ftl.resultsBucket"))
+      resultsDir.set(project.providers.gradleProperty("ftl.resultsDir"))
+
+      val testClass = project.providers.gradleProperty("ftl.class").orNull?.takeIf { it.isNotBlank() }
+      testTargets.set(
+        if (testClass != null) "class $testClass" else project.providers.gradleProperty("ftl.testTargets").orNull
+      )
+      gcloudExecutable.set(project.providers.gradleProperty("ftl.gcloud").getOrElse("gcloud"))
+      extraArgs.set(
+        project.providers.gradleProperty("ftl.extraArgs").orNull
+          ?.split(" ")?.map { it.trim() }?.filter { it.isNotEmpty() }
+          ?: emptyList()
+      )
+    }
+  }
+}
+
+baselineProfile {
+  warnings {
+    disabledVariants = false
+  }
+
+  mergeIntoMain = true
+
+  variants.create("mocked") {
+    from(project(":baseline-profile"))
+  }
+
+  dexLayoutOptimization = false
+}
+
+kotlin {
+  compilerOptions {
+    jvmTarget = JvmTarget.fromTarget(libs.versions.kotlinJvmTarget.get())
+    freeCompilerArgs.addAll("-Xjvm-default=all")
+    suppressWarnings = true
   }
 }
 
@@ -541,28 +741,42 @@ dependencies {
   ktlintRuleset(libs.ktlint.twitter.compose)
   coreLibraryDesugaring(libs.android.tools.desugar)
 
-  implementation(project(":libsignal-service"))
-  implementation(project(":paging"))
-  implementation(project(":core-util"))
-  implementation(project(":glide-config"))
-  implementation(project(":video"))
-  implementation(project(":device-transfer"))
-  implementation(project(":image-editor"))
-  implementation(project(":donations"))
-  implementation(project(":debuglogs-viewer"))
-  implementation(project(":contacts"))
-  implementation(project(":qr"))
-  implementation(project(":sticky-header-grid"))
-  implementation(project(":photoview"))
-  implementation(project(":core-ui"))
-  implementation(project(":core-models"))
+  implementation(project(":core:database"))
+  implementation(project(":core:serialization"))
+  implementation(project(":core:ui"))
+  implementation(project(":core:util"))
+
+  implementation(project(":lib:apng"))
+  implementation(project(":lib:archive"))
+  implementation(project(":lib:contacts"))
+  implementation(project(":lib:blurhash"))
+  implementation(project(":lib:debuglogs-viewer"))
+  implementation(project(":lib:device-transfer"))
+  implementation(project(":lib:donations"))
+  implementation(project(":lib:emoji"))
+  implementation(project(":lib:glide"))
+  implementation(project(":lib:image-editor"))
+  implementation(project(":lib:libsignal-service"))
+  implementation(project(":lib:network"))
+  implementation(project(":lib:paging"))
+  implementation(project(":lib:password-manager"))
+  implementation(project(":lib:photoview"))
+  implementation(project(":lib:qr"))
+  implementation(project(":lib:remote-config"))
+  implementation(project(":lib:signal-login"))
+  implementation(project(":lib:sticky-header-grid"))
+  implementation(project(":lib:storage"))
+  implementation(project(":lib:ui-components"))
+  implementation(project(":lib:video"))
+
+  implementation(project(":feature:app-settings"))
+  implementation(project(":feature:camera"))
+  implementation(project(":feature:chat-settings"))
+  implementation(project(":feature:media-keyboard"))
+  implementation(project(":feature:registration"))
 
   implementation(libs.androidx.fragment.ktx)
-  implementation(libs.androidx.appcompat) {
-    version {
-      strictly("1.6.1")
-    }
-  }
+  implementation(libs.androidx.appcompat)
   implementation(libs.androidx.window.window)
   implementation(libs.androidx.window.java)
   implementation(libs.androidx.recyclerview)
@@ -579,6 +793,9 @@ dependencies {
   implementation(libs.androidx.navigation.fragment.ktx)
   implementation(libs.androidx.navigation.ui.ktx)
   implementation(libs.androidx.navigation.compose)
+  implementation(libs.androidx.navigation3.runtime)
+  implementation(libs.androidx.navigation3.ui)
+  implementation(libs.androidx.lifecycle.viewmodel.navigation3)
   implementation(libs.androidx.lifecycle.viewmodel.ktx)
   implementation(libs.androidx.lifecycle.livedata.ktx)
   implementation(libs.androidx.lifecycle.process)
@@ -595,11 +812,14 @@ dependencies {
   implementation(libs.androidx.concurrent.futures)
   implementation(libs.androidx.autofill)
   implementation(libs.androidx.biometric)
+  implementation(libs.androidx.core.telecom)
   implementation(libs.androidx.sharetarget)
   implementation(libs.androidx.profileinstaller)
   implementation(libs.androidx.asynclayoutinflater)
   implementation(libs.androidx.asynclayoutinflater.appcompat)
   implementation(libs.androidx.emoji2)
+  implementation(libs.androidx.paging.runtime)
+  implementation(libs.androidx.paging.compose)
   implementation(libs.firebase.messaging) {
     exclude(group = "com.google.firebase", module = "firebase-core")
     exclude(group = "com.google.firebase", module = "firebase-analytics")
@@ -608,6 +828,7 @@ dependencies {
   implementation(libs.google.play.services.maps)
   implementation(libs.google.play.services.auth)
   implementation(libs.google.signin)
+  implementation(libs.androidx.media)
   implementation(libs.bundles.media3)
   implementation(libs.conscrypt.android)
   implementation(libs.signal.aesgcmprovider)
@@ -615,23 +836,22 @@ dependencies {
   implementation(libs.mobilecoin)
   implementation(libs.signal.ringrtc)
   implementation(libs.leolin.shortcutbadger)
-  implementation(libs.emilsjolander.stickylistheaders)
   implementation(libs.glide.glide)
   implementation(libs.roundedimageview)
   implementation(libs.materialish.progress)
-  implementation(libs.greenrobot.eventbus)
   implementation(libs.google.zxing.android.integration)
   implementation(libs.google.zxing.core)
   implementation(libs.google.flexbox)
   implementation(libs.subsampling.scale.image.view) {
     exclude(group = "com.android.support", module = "support-annotations")
   }
-  implementation(libs.android.tooltips) {
-    exclude(group = "com.android.support", module = "appcompat-v7")
-  }
-  implementation(libs.stream)
   implementation(libs.lottie)
   implementation(libs.lottie.compose)
+
+  // Compose screenshot testing
+  screenshotTestImplementation(testLibs.compose.screenshot.validation.api)
+  screenshotTestImplementation(libs.androidx.compose.ui.tooling.core)
+  screenshotTestImplementation(libs.androidx.compose.ui.tooling.preview)
   implementation(libs.signal.android.database.sqlcipher)
   implementation(libs.androidx.sqlite)
   testImplementation(libs.androidx.sqlite.framework)
@@ -641,6 +861,7 @@ dependencies {
   }
   implementation(libs.dnsjava)
   implementation(libs.kotlinx.collections.immutable)
+  implementation(libs.arrow.core)
   implementation(libs.accompanist.permissions)
   implementation(libs.accompanist.drawablepainter)
   implementation(libs.kotlin.stdlib.jdk8)
@@ -651,18 +872,18 @@ dependencies {
   implementation(libs.rxjava3.rxandroid)
   implementation(libs.rxjava3.rxkotlin)
   implementation(libs.rxdogtag)
-  implementation(libs.androidx.credentials)
-  implementation(libs.androidx.credentials.compat)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.breezsdk)
 
-  implementation(project(":billing"))
+  implementation(project(":lib:billing"))
+  implementation(project(":feature:media-send"))
+  implementation(project(":feature:media-viewer"))
 
-  "spinnerImplementation"(project(":spinner"))
+  "spinnerImplementation"(project(":lib:spinner"))
 
   "canaryImplementation"(libs.square.leakcanary)
 
-  "instrumentationImplementation"(libs.androidx.fragment.testing) {
+  androidTestImplementation(libs.androidx.fragment.testing) {
     exclude(group = "androidx.test", module = "core")
   }
 
@@ -684,17 +905,31 @@ dependencies {
   }
   testImplementation(testLibs.conscrypt.openjdk.uber)
   testImplementation(testLibs.mockk)
-  testImplementation(testFixtures(project(":libsignal-service")))
+  testImplementation(testFixtures(project(":core:ui")))
+  testImplementation(testFixtures(project(":lib:emoji")))
+  testImplementation(testFixtures(project(":lib:libsignal-service")))
+  testImplementation(testFixtures(project(":lib:storage")))
   testImplementation(testLibs.espresso.core)
   testImplementation(testLibs.kotlinx.coroutines.test)
+  testImplementation(testLibs.sqlite.jdbc)
   testImplementation(libs.androidx.compose.ui.test.junit4)
 
   "perfImplementation"(libs.androidx.compose.ui.test.manifest)
 
   androidTestImplementation(platform(libs.androidx.compose.bom))
   androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+  androidTestImplementation(libs.androidx.compose.ui.test.manifest)
   androidTestImplementation(testLibs.androidx.test.ext.junit)
   androidTestImplementation(testLibs.espresso.core)
+  androidTestImplementation(testLibs.espresso.contrib) {
+    // espresso-contrib transitively pulls the full checkerframework jar (only its annotations are needed),
+    // whose MANIFEST.MF collides with other test dependencies during androidTest resource merging.
+    exclude(group = "org.checkerframework", module = "checker")
+    // accessibility-test-framework drags in an ancient com.google.protobuf:protobuf-lite:3.0.1 whose
+    // GeneratedMessageLite wins the merged dex and lacks registerDefaultInstance(Class, GeneratedMessageLite),
+    // crashing tests at runtime. We only use RecyclerViewActions from contrib, not the accessibility checks.
+    exclude(group = "com.google.android.apps.common.testing.accessibility.framework")
+  }
   androidTestImplementation(testLibs.androidx.test.core)
   androidTestImplementation(testLibs.androidx.test.core.ktx)
   androidTestImplementation(testLibs.androidx.test.ext.junit.ktx)
@@ -703,43 +938,6 @@ dependencies {
   androidTestImplementation(testLibs.diff.utils)
 
   androidTestUtil(testLibs.androidx.test.orchestrator)
-}
-
-fun assertIsGitRepo() {
-  if (!file("${project.rootDir}/.git").exists()) {
-    throw IllegalStateException("Must be a git repository to guarantee reproducible builds! (git hash is part of APK)")
-  }
-}
-
-fun getLastCommitTimestamp(): String {
-  assertIsGitRepo()
-
-  return providers.exec {
-    commandLine("git", "log", "-1", "--pretty=format:%ct")
-  }.standardOutput.asText.get() + "000"
-}
-
-fun getGitHash(): String {
-  assertIsGitRepo()
-
-  return providers.exec {
-    commandLine("git", "rev-parse", "HEAD")
-  }.standardOutput.asText.get().trim().substring(0, 12)
-}
-
-fun getCurrentGitTag(): String? {
-  assertIsGitRepo()
-
-  val output = providers.exec {
-    commandLine("git", "tag", "--points-at", "HEAD")
-  }.standardOutput.asText.get().trim()
-
-  return if (output.isNotEmpty()) {
-    val tags = output.split("\n").toList()
-    tags.firstOrNull { it.contains("nightly") } ?: tags[0]
-  } else {
-    null
-  }
 }
 
 tasks.withType<Test>().configureEach {
@@ -752,55 +950,309 @@ tasks.withType<Test>().configureEach {
   }
 }
 
-gradle.taskGraph.whenReady {
-  if (gradle.startParameter.taskNames.any { it.contains("nightly", ignoreCase = true) }) {
-    if (!file("${project.rootDir}/nightly-url.txt").exists()) {
-      throw GradleException("Missing required file: nightly-url.txt")
+fun getLastCommitTimestamp(): String {
+  return providers.exec {
+    commandLine("git", "log", "-1", "--pretty=format:%ct")
+  }.standardOutput.asText.get() + "000"
+}
+
+fun getGitHash(): String {
+  return providers.exec {
+    commandLine("git", "rev-parse", "HEAD")
+  }.standardOutput.asText.get().trim().substring(0, 12)
+}
+
+fun getNightlyTagForCurrentCommit(): String? {
+  val output = providers.exec {
+    commandLine("git", "tag", "--points-at", "HEAD")
+  }.standardOutput.asText.get().trim()
+
+  return output.lines()
+    .mapNotNull { nightlyTagRegex.matchEntire(it) }
+    .maxByOrNull { it.groupValues[2].toInt() }
+    ?.value
+}
+
+fun getNightlyVersionCode(tag: String): Int {
+  val (tagCanonicalVersionCode, buildNumber) = checkNotNull(nightlyTagRegex.matchEntire(tag)).destructured
+
+  if (tagCanonicalVersionCode.toInt() != canonicalVersionCode) {
+    throw GradleException("Nightly tag '$tag' is for canonical version code $tagCanonicalVersionCode, but HEAD is at $canonicalVersionCode.")
+  }
+
+  // Nightlies sit 5 canonical versions ahead and only use version codes ending in 0, so they never collide with a release or hotfix.
+  return ((canonicalVersionCode + 5) * maxHotfixVersions) + (buildNumber.toInt() * 10)
+}
+
+fun getLastCommitDateTimeUtc(): String {
+  val timestamp = providers.exec {
+    commandLine("git", "log", "-1", "--pretty=format:%ct")
+  }.standardOutput.asText.get().trim().toLong()
+  val instant = Instant.ofEpochSecond(timestamp)
+  val formatter = DateTimeFormatter.ofPattern("MMM d '@' HH:mm 'UTC'", Locale.US)
+    .withZone(ZoneOffset.UTC)
+  return formatter.format(instant)
+}
+
+fun getMapsKey(): String {
+  return providers
+    .gradleProperty("mapsKey")
+    .orElse(providers.environmentVariable("MAPS_KEY"))
+    .orElse("AIzaSyCSx9xea86GwDKGznCAULE9Y5a8b-TfN9U")
+    .get()
+}
+
+abstract class LanguageListValueSource : ValueSource<List<String>, LanguageListValueSource.Params> {
+  interface Params : ValueSourceParameters {
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    val resDir: DirectoryProperty
+  }
+
+  override fun obtain(): List<String> {
+    // In API 35, language codes for Hebrew and Indonesian now use the ISO 639-1 code ("he" and "id").
+    // However, the value resources still only support the outdated code ("iw" and "in") so we have
+    // to manually indicate that we support these languages.
+    val updatedLanguageCodes = listOf("he", "id")
+
+    val resRoot = parameters.resDir.asFile.get()
+
+    val languages = resRoot
+      .walkTopDown()
+      .filter { it.isFile && it.name == "strings.xml" }
+      .mapNotNull { stringFile -> stringFile.parentFile?.name }
+      .map { valuesFolderName -> valuesFolderName.removePrefix("values-") }
+      .filter { valuesFolderName -> valuesFolderName != "values" }
+      .map { languageCode -> languageCode.replace("-r", "_") }
+      .toList()
+      .distinct()
+      .sorted()
+
+    return languages + updatedLanguageCodes + "en"
+  }
+}
+
+abstract class PropertiesFileValueSource : ValueSource<Properties, PropertiesFileValueSource.Params> {
+  interface Params : ValueSourceParameters {
+    @get:InputFile
+    @get:Optional
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    val file: RegularFileProperty
+  }
+
+  override fun obtain(): Properties {
+    val f: File = parameters.file.asFile.get()
+    if (!f.exists()) return Properties()
+
+    return Properties().apply {
+      f.inputStream().use { load(it) }
     }
   }
 }
 
-fun loadKeystoreProperties(filename: String): Properties? {
-  val keystorePropertiesFile = file("${project.rootDir}/$filename")
-
-  return if (keystorePropertiesFile.exists()) {
-    val keystoreProperties = Properties()
-    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-    keystoreProperties
-  } else {
-    null
-  }
-}
-
-fun getDateSuffix(): String {
-  return SimpleDateFormat("yyyy-MM-dd-HH:mm").format(Date())
-}
-
-fun getMapsKey(): String {
-  val mapKey = file("${project.rootDir}/maps.key")
-
-  return if (mapKey.exists()) {
-    mapKey.readLines()[0]
-  } else {
-    "AIzaSyCSx9xea86GwDKGznCAULE9Y5a8b-TfN9U"
-  }
-}
-
-fun Project.languageList(): List<String> {
-  // In API 35, language codes for Hebrew and Indonesian now use the ISO 639-1 code ("he" and "id").
-  // However, the value resources still only support the outdated code ("iw" and "in") so we have
-  // to manually indicate that we support these languages.
-  val updatedLanguageCodes = listOf("he", "id")
-
-  return fileTree("src/main/res") { include("**/strings.xml") }
-    .map { stringFile -> stringFile.parentFile.name }
-    .map { valuesFolderName -> valuesFolderName.replace("values-", "") }
-    .filter { valuesFolderName -> valuesFolderName != "values" }
-    .map { languageCode -> languageCode.replace("-r", "_") }
-    .distinct()
-    .sorted() + updatedLanguageCodes + "en"
-}
-
 fun String.capitalize(): String {
   return this.replaceFirstChar { it.uppercase() }
+}
+
+abstract class CopyQuickstartCredentialsTask : DefaultTask() {
+  @get:InputDirectory
+  @get:Optional
+  abstract val inputDir: DirectoryProperty
+
+  @get:Input
+  abstract val filePrefix: Property<String>
+
+  @get:OutputDirectory
+  abstract val outputDir: DirectoryProperty
+
+  @TaskAction
+  fun copy() {
+    if (!inputDir.isPresent) {
+      throw GradleException("quickstart.credentials.dir is not set in local.properties. This is required for quickstart builds.")
+    }
+
+    val prefix = filePrefix.get()
+    val candidates = inputDir.get().asFile.listFiles()
+      ?.filter { it.extension == "json" && it.name.startsWith(prefix) }
+      ?: emptyList()
+
+    if (candidates.isEmpty()) {
+      throw GradleException("No credential files matching '$prefix*.json' found in ${inputDir.get().asFile}. Add files like '${prefix}account1.json' to your credentials directory.")
+    }
+
+    val chosen = candidates.random()
+    logger.lifecycle("Selected quickstart credential: ${chosen.name}")
+
+    val dest = outputDir.get().asFile.resolve("quickstart")
+    dest.mkdirs()
+    chosen.copyTo(dest.resolve(chosen.name), overwrite = true)
+  }
+}
+
+abstract class CopyBenchmarkBackupTask : DefaultTask() {
+  @get:InputFile
+  @get:Optional
+  abstract val inputFile: RegularFileProperty
+
+  @get:OutputDirectory
+  abstract val outputDir: DirectoryProperty
+
+  @TaskAction
+  fun copy() {
+    val dest = outputDir.get().asFile.resolve("backups")
+    dest.mkdirs()
+
+    if (!inputFile.isPresent) {
+      logger.lifecycle("benchmark.backup.file is not set in local.properties. Benchmark tests using backup data will crash at runtime.")
+      return
+    }
+
+    val backupFile = inputFile.get().asFile
+    logger.lifecycle("Using benchmark backup: ${backupFile.absolutePath} (${backupFile.length() / 1024}KB)")
+    backupFile.copyTo(dest.resolve("backup.binproto"), overwrite = true)
+  }
+}
+
+/**
+ * Runs an instrumentation test suite on Firebase Test Lab by shelling out to `gcloud firebase test android run`.
+ *
+ * The `gcloud` CLI must be installed and authenticated (`gcloud auth login` and a configured project, or an
+ * activated service account) before invoking this task.
+ */
+@DisableCachingByDefault(because = "Executes tests on remote devices; results must never be served from the build cache")
+abstract class FirebaseTestLabTask
+@Inject
+constructor(
+  private val execOperations: ExecOperations
+) : DefaultTask() {
+  @get:InputFiles
+  @get:PathSensitive(PathSensitivity.RELATIVE)
+  abstract val appApkDirectory: DirectoryProperty
+
+  @get:InputFiles
+  @get:PathSensitive(PathSensitivity.RELATIVE)
+  abstract val testApkDirectory: DirectoryProperty
+
+  @get:Input
+  abstract val devices: ListProperty<String>
+
+  @get:Input
+  abstract val useOrchestrator: Property<Boolean>
+
+  @get:Input
+  abstract val environmentVariables: MapProperty<String, String>
+
+  @get:Input
+  abstract val testTimeout: Property<String>
+
+  @get:Input
+  abstract val numFlakyTestAttempts: Property<Int>
+
+  @get:Input
+  @get:Optional
+  abstract val gcloudProject: Property<String>
+
+  @get:Input
+  @get:Optional
+  abstract val resultsBucket: Property<String>
+
+  @get:Input
+  @get:Optional
+  abstract val resultsDir: Property<String>
+
+  @get:Input
+  @get:Optional
+  abstract val testTargets: Property<String>
+
+  @get:Input
+  abstract val gcloudExecutable: Property<String>
+
+  @get:Input
+  abstract val extraArgs: ListProperty<String>
+
+  @get:Internal
+  abstract val builtArtifactsLoader: Property<BuiltArtifactsLoader>
+
+  @TaskAction
+  fun run() {
+    val appApk = findApk(appApkDirectory.get(), "app")
+    val testApk = findApk(testApkDirectory.get(), "instrumentation test")
+
+    val arguments = mutableListOf(
+      gcloudExecutable.get(),
+      "firebase", "test", "android", "run",
+      "--type", "instrumentation",
+      "--app", appApk.absolutePath,
+      "--test", testApk.absolutePath,
+      "--timeout", testTimeout.get(),
+      "--num-flaky-test-attempts", numFlakyTestAttempts.get().toString()
+    )
+
+    devices.get().forEach { device ->
+      arguments += listOf("--device", device)
+    }
+
+    if (useOrchestrator.get()) {
+      arguments += "--use-orchestrator"
+    }
+
+    val environment = environmentVariables.get()
+    if (environment.isNotEmpty()) {
+      arguments += "--environment-variables"
+      arguments += environment.entries.joinToString(",") { "${it.key}=${it.value}" }
+    }
+
+    gcloudProject.orNull?.takeIf { it.isNotBlank() }?.let { arguments += listOf("--project", it) }
+    resultsBucket.orNull?.takeIf { it.isNotBlank() }?.let { arguments += listOf("--results-bucket", it) }
+    resultsDir.orNull?.takeIf { it.isNotBlank() }?.let { arguments += listOf("--results-dir", it) }
+    testTargets.orNull?.takeIf { it.isNotBlank() }?.let { arguments += listOf("--test-targets", it) }
+    arguments += extraArgs.get()
+
+    logger.lifecycle("Running Firebase Test Lab:\n  ${arguments.joinToString(" ")}")
+    execOperations.exec {
+      commandLine(arguments)
+    }
+  }
+
+  /**
+   * Resolves the APK this build produced from the variant's own output metadata. The directory listing can't be
+   * trusted: APKs are named per version and ABI, so it also holds every earlier build's, plus this build's other
+   * splits.
+   */
+  private fun findApk(directory: Directory, label: String): File {
+    val elements = builtArtifactsLoader.get().load(directory)?.elements?.takeIf { it.isNotEmpty() }
+      ?: throw GradleException("No $label APK found under ${directory.asFile.absolutePath}. Was the assemble task run?")
+
+    val element = elements.firstOrNull { it.filters.isEmpty() }
+      ?: throw GradleException("The $label APK is split by ${elements.flatMap { it.filters }.joinToString { it.filterType.name }} with no universal output to run on Test Lab.")
+
+    return File(element.outputFile)
+  }
+}
+
+abstract class RenameApkTask : DefaultTask() {
+  @get:InputFiles
+  abstract val apkFolder: DirectoryProperty
+
+  @get:OutputDirectory
+  abstract val outFolder: DirectoryProperty
+
+  @get:Internal
+  abstract val transformationRequest: Property<ArtifactTransformationRequest<RenameApkTask>>
+
+  @TaskAction
+  fun rename() {
+    transformationRequest.get().submit(this) { artifact ->
+      val originalFile = File(artifact.outputFile)
+      val versionName = artifact.versionName?.substringBefore(" |")
+      val newName = if (!versionName.isNullOrEmpty()) {
+        originalFile.name.replace(".apk", "-$versionName.apk")
+      } else {
+        originalFile.name
+      }
+      val newFile = File(outFolder.get().asFile, newName)
+      originalFile.copyTo(newFile, overwrite = true)
+      newFile
+    }
+  }
 }

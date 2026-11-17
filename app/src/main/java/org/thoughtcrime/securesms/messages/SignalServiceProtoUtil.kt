@@ -8,7 +8,8 @@ import org.signal.core.util.isNotEmpty
 import org.signal.core.util.orNull
 import org.signal.libsignal.protocol.message.DecryptionErrorMessage
 import org.signal.libsignal.zkgroup.groups.GroupMasterKey
-import org.signal.storageservice.protos.groups.local.DecryptedGroupChange
+import org.signal.remoteconfig.RemoteConfig
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroupChange
 import org.thoughtcrime.securesms.attachments.Attachment
 import org.thoughtcrime.securesms.attachments.Cdn
 import org.thoughtcrime.securesms.attachments.PointerAttachment
@@ -16,7 +17,6 @@ import org.thoughtcrime.securesms.database.model.StoryType
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.stickers.StickerLocator
 import org.thoughtcrime.securesms.util.MediaUtil
-import org.thoughtcrime.securesms.util.RemoteConfig
 import org.whispersystems.signalservice.api.InvalidMessageStructureException
 import org.whispersystems.signalservice.api.crypto.EnvelopeMetadata
 import org.whispersystems.signalservice.api.messages.SignalServiceAttachmentPointer
@@ -56,7 +56,8 @@ object SignalServiceProtoUtil {
         pollVote != null ||
         pollTerminate != null ||
         pinMessage != null ||
-        unpinMessage != null
+        unpinMessage != null ||
+        adminDelete != null
     }
 
   val DataMessage.hasDisallowedAnnouncementOnlyContent: Boolean
@@ -66,18 +67,24 @@ object SignalServiceProtoUtil {
         quote != null ||
         preview.isNotEmpty() ||
         bodyRanges.isNotEmpty() ||
-        sticker != null
+        sticker != null ||
+        pollCreate != null
     }
 
   val DataMessage.isExpirationUpdate: Boolean
     get() = flags != null && flags!! and DataMessage.Flags.EXPIRATION_TIMER_UPDATE.value != 0
 
+  val DataMessage.isProfileKeyUpdate: Boolean
+    get() = flags != null && flags!! and DataMessage.Flags.PROFILE_KEY_UPDATE.value != 0
+
   val DataMessage.hasRemoteDelete: Boolean
     get() = delete != null && delete!!.targetSentTimestamp != null
 
   val DataMessage.isGroupV2Update: Boolean
-    get() = !hasRenderableContent && hasSignedGroupChange
+    get() = hasSignedGroupChange && !hasRenderableContent
 
+  @JvmStatic
+  @get:JvmName("hasGroupContext")
   val DataMessage?.hasGroupContext: Boolean
     get() = this?.groupV2?.masterKey.isNotEmpty()
 
@@ -86,9 +93,6 @@ object SignalServiceProtoUtil {
 
   val DataMessage.isMediaMessage: Boolean
     get() = attachments.isNotEmpty() || quote != null || contact.isNotEmpty() || sticker != null || bodyRanges.isNotEmpty() || preview.isNotEmpty()
-
-  val DataMessage.isEndSession: Boolean
-    get() = flags != null && flags!! and DataMessage.Flags.END_SESSION.value != 0
 
   val DataMessage.isStoryReaction: Boolean
     get() = reaction != null && storyContext != null
@@ -176,7 +180,14 @@ object SignalServiceProtoUtil {
   }
 
   fun List<AttachmentPointer>.toPointersWithinLimit(): List<Attachment> {
-    return mapNotNull { it.toPointer() }.take(RemoteConfig.maxAttachmentCount)
+    val pointers = mapNotNull { it.toPointer() }.take(RemoteConfig.maxAttachmentCount)
+
+    val voiceNote = pointers.firstOrNull { it.voiceNote }
+    return if (voiceNote != null) {
+      listOf(voiceNote)
+    } else {
+      pointers
+    }
   }
 
   fun AttachmentPointer.toPointer(stickerLocator: StickerLocator? = null): Attachment? {

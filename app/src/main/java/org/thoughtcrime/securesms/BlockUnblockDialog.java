@@ -23,45 +23,25 @@ public final class BlockUnblockDialog {
   private BlockUnblockDialog() {}
 
   public static void showReportSpamFor(@NonNull Context context,
-                                       @NonNull Lifecycle lifecycle,
                                        @NonNull Recipient recipient,
                                        @NonNull Runnable onReportSpam,
                                        @Nullable Runnable onBlockAndReportSpam)
   {
-    SimpleTask.run(lifecycle,
-                   () -> buildReportSpamFor(context, recipient, onReportSpam, onBlockAndReportSpam),
-                   AlertDialog.Builder::show);
+    buildReportSpamFor(context, recipient, onReportSpam, onBlockAndReportSpam).show();
   }
 
   public static void showBlockFor(@NonNull Context context,
-                                  @NonNull Lifecycle lifecycle,
                                   @NonNull Recipient recipient,
                                   @NonNull Runnable onBlock)
   {
-    SimpleTask.run(lifecycle,
-                   () -> buildBlockFor(context, recipient, onBlock, null),
-                   AlertDialog.Builder::show);
-  }
-
-  public static void showBlockAndReportSpamFor(@NonNull Context context,
-                                               @NonNull Lifecycle lifecycle,
-                                               @NonNull Recipient recipient,
-                                               @NonNull Runnable onBlock,
-                                               @NonNull Runnable onBlockAndReportSpam)
-  {
-    SimpleTask.run(lifecycle,
-                   () -> buildBlockFor(context, recipient, onBlock, onBlockAndReportSpam),
-                   AlertDialog.Builder::show);
+    buildBlockFor(context, recipient, onBlock, null).show();
   }
 
   public static void showUnblockFor(@NonNull Context context,
-                                    @NonNull Lifecycle lifecycle,
                                     @NonNull Recipient recipient,
                                     @NonNull Runnable onUnblock)
   {
-    SimpleTask.run(lifecycle,
-                   () -> buildUnblockFor(context, recipient, onUnblock),
-                   AlertDialog.Builder::show);
+    buildUnblockFor(context, recipient, onUnblock).show();
   }
 
   @WorkerThread
@@ -76,7 +56,7 @@ public final class BlockUnblockDialog {
     Resources           resources = context.getResources();
 
     if (recipient.isGroup()) {
-      if (SignalDatabase.groups().isActive(recipient.requireGroupId())) {
+      if (SignalDatabase.groups().isMember(recipient.requireGroupId())) {
         builder.setTitle(resources.getString(R.string.BlockUnblockDialog_block_and_leave_s, recipient.getDisplayName(context)));
         builder.setMessage(R.string.BlockUnblockDialog_you_will_no_longer_receive_messages_or_updates);
         builder.setPositiveButton(R.string.BlockUnblockDialog_block_and_leave, ((dialog, which) -> onBlock.run()));
@@ -121,7 +101,7 @@ public final class BlockUnblockDialog {
     Resources           resources = context.getResources();
 
     if (recipient.isGroup()) {
-      if (SignalDatabase.groups().isActive(recipient.requireGroupId())) {
+      if (SignalDatabase.groups().isMember(recipient.requireGroupId())) {
         builder.setTitle(resources.getString(R.string.BlockUnblockDialog_unblock_s, recipient.getDisplayName(context)));
         builder.setMessage(R.string.BlockUnblockDialog_group_members_will_be_able_to_add_you);
         builder.setPositiveButton(R.string.RecipientPreferenceActivity_unblock, ((dialog, which) -> onUnblock.run()));

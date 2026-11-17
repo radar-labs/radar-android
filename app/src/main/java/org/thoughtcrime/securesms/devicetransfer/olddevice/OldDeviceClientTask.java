@@ -4,18 +4,16 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import org.signal.core.util.crypto.AttachmentSecretProvider;
+import org.signal.core.util.eventbus.EventBus;
 import org.signal.core.util.logging.Log;
 import org.signal.devicetransfer.ClientTask;
 import org.thoughtcrime.securesms.backup.BackupEvent;
 import org.thoughtcrime.securesms.backup.FullBackupExporter;
-import org.thoughtcrime.securesms.crypto.AttachmentSecretProvider;
+import org.thoughtcrime.securesms.crypto.AppAttachmentSecretStore;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.net.DeviceTransferBlockingInterceptor;
-import org.thoughtcrime.securesms.util.RemoteConfig;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,12 +36,12 @@ final class OldDeviceClientTask implements ClientTask {
 
     long start = System.currentTimeMillis();
 
-    EventBus.getDefault().register(this);
+    EventBus.Subscription subscription = EventBus.getDefault().subscribe(BackupEvent.class, this::onBackupEvent);
     try {
       String passphrase = SignalStore.account().getAccountEntropyPool().getValue();
 
       FullBackupExporter.transfer(context,
-                                  AttachmentSecretProvider.getInstance(context).getOrCreateAttachmentSecret(),
+                                  AttachmentSecretProvider.getInstance(context, AppAttachmentSecretStore.INSTANCE).getOrCreateAttachmentSecret(),
                                   SignalDatabase.getBackupDatabase(),
                                   outputStream,
                                   passphrase);
@@ -51,15 +49,14 @@ final class OldDeviceClientTask implements ClientTask {
       DeviceTransferBlockingInterceptor.getInstance().unblockNetwork();
       throw e;
     } finally {
-      EventBus.getDefault().unregister(this);
+      subscription.unsubscribe();
     }
 
     long end = System.currentTimeMillis();
     Log.i(TAG, "Sending took: " + (end - start));
   }
 
-  @Subscribe(threadMode = ThreadMode.POSTING)
-  public void onEvent(BackupEvent event) {
+  private void onBackupEvent(@NonNull BackupEvent event) {
     if (event.getType() == BackupEvent.Type.PROGRESS) {
       if (System.currentTimeMillis() > lastProgressUpdate + PROGRESS_UPDATE_THROTTLE) {
         EventBus.getDefault().post(new Status(event.getCount(), event.getEstimatedTotalCount(), event.getCompletionPercentage(), false));

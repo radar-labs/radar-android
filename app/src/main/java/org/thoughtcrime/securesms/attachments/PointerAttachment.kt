@@ -3,8 +3,10 @@ package org.thoughtcrime.securesms.attachments
 import android.net.Uri
 import android.os.Parcel
 import androidx.annotation.VisibleForTesting
+import org.signal.blurhash.BlurHash
 import org.signal.core.util.Base64
-import org.thoughtcrime.securesms.blurhash.BlurHash
+import org.signal.core.util.logging.Log
+import org.thoughtcrime.securesms.audio.AudioHash
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.stickers.StickerLocator
 import org.whispersystems.signalservice.api.InvalidMessageStructureException
@@ -40,7 +42,8 @@ class PointerAttachment : Attachment {
     blurHash: BlurHash?,
     uuid: UUID?,
     quote: Boolean,
-    quoteTargetContentType: String? = null
+    quoteTargetContentType: String? = null,
+    audioHash: AudioHash? = null
   ) : super(
     contentType = contentType,
     transferState = transferState,
@@ -64,7 +67,7 @@ class PointerAttachment : Attachment {
     caption = caption,
     stickerLocator = stickerLocator,
     blurHash = blurHash,
-    audioHash = null,
+    audioHash = audioHash,
     transformProperties = null,
     uuid = uuid
   )
@@ -76,6 +79,8 @@ class PointerAttachment : Attachment {
   override val thumbnailUri: Uri? = null
 
   companion object {
+    private val TAG = Log.tag(PointerAttachment::class)
+
     @JvmStatic
     fun forPointers(pointers: Optional<List<SignalServiceAttachment>>): List<Attachment> {
       if (!pointers.isPresent) {
@@ -102,6 +107,13 @@ class PointerAttachment : Attachment {
         return Optional.empty()
       }
 
+      val cdnNumber = pointer.get().asPointer().cdnNumber
+      val cdn = Cdn.fromCdnNumberOrNull(cdnNumber)
+      if (cdn == null) {
+        Log.w(TAG, "Encountered an attachment pointer with an unsupported CDN number ($cdnNumber). Skipping attachment.")
+        return Optional.empty()
+      }
+
       val encodedKey: String? = pointer.get().asPointer().key?.let { Base64.encodeWithPadding(it) }
 
       return Optional.of(
@@ -110,7 +122,7 @@ class PointerAttachment : Attachment {
           transferState = transferState,
           size = pointer.get().asPointer().size.orElse(0).toLong(),
           fileName = pointer.get().asPointer().fileName.orElse(null),
-          cdn = Cdn.fromCdnNumber(pointer.get().asPointer().cdnNumber),
+          cdn = cdn,
           location = pointer.get().asPointer().remoteId.toString(),
           key = encodedKey,
           iv = null,
@@ -127,6 +139,7 @@ class PointerAttachment : Attachment {
           caption = pointer.get().asPointer().caption.orElse(null),
           stickerLocator = stickerLocator,
           blurHash = BlurHash.parseOrNull(pointer.get().asPointer().blurHash.orElse(null)),
+          audioHash = AudioHash.fromSenderProvided(pointer.get().contentType, pointer.get().asPointer().audioWaveform, pointer.get().asPointer().audioDurationSeconds),
           uuid = pointer.get().asPointer().uuid,
           quote = quote,
           quoteTargetContentType = quoteTargetContentType
@@ -145,6 +158,17 @@ class PointerAttachment : Attachment {
         return Optional.empty()
       }
 
+      val cdnNumber = thumbnail?.asPointer()?.cdnNumber ?: 0
+      val cdn = Cdn.fromCdnNumberOrNull(cdnNumber)
+      if (cdn == null) {
+        Log.w(TAG, "Encountered a quote thumbnail with an unsupported CDN number ($cdnNumber). Skipping attachment.")
+        return Optional.empty()
+      }
+
+      if (cdn == Cdn.S3) {
+        return Optional.empty()
+      }
+
       return Optional.of(
         PointerAttachment(
           quote = true,
@@ -153,7 +177,7 @@ class PointerAttachment : Attachment {
           transferState = AttachmentTable.TRANSFER_PROGRESS_PENDING,
           size = (if (thumbnail != null) thumbnail.asPointer().size.orElse(0) else 0).toLong(),
           fileName = quotedAttachment.fileName,
-          cdn = Cdn.fromCdnNumber(thumbnail?.asPointer()?.cdnNumber ?: 0),
+          cdn = cdn,
           location = thumbnail?.asPointer()?.remoteId?.toString() ?: "0",
           key = thumbnail?.asPointer()?.key?.let { Base64.encodeWithPadding(it) },
           iv = null,

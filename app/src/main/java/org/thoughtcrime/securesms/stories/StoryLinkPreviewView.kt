@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
+import org.signal.core.ui.view.Stub
 import org.signal.core.util.concurrent.ListenableFuture
 import org.signal.core.util.concurrent.SettableFuture
 import org.signal.core.util.isAbsent
@@ -19,7 +20,6 @@ import org.thoughtcrime.securesms.linkpreview.LinkPreviewState
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewUtil
 import org.thoughtcrime.securesms.mms.ImageSlide
 import org.thoughtcrime.securesms.mms.Slide
-import org.thoughtcrime.securesms.util.views.Stub
 import org.thoughtcrime.securesms.util.visible
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -36,6 +36,9 @@ class StoryLinkPreviewView @JvmOverloads constructor(
 
   private val binding = StoriesTextPostLinkPreviewBinding.bind(this)
   private val spinnerStub = Stub<View>(binding.loadingSpinner)
+
+  private var canClose: Boolean = false
+  private var hasContent: Boolean = false
 
   init {
     binding.linkPreviewImage.isClickable = false
@@ -70,6 +73,9 @@ class StoryLinkPreviewView @JvmOverloads constructor(
       visibility = hiddenVisibility
     }
 
+    hasContent = linkPreview != null
+    updateCloseVisibility()
+
     return future ?: SettableFuture(false)
   }
 
@@ -85,6 +91,8 @@ class StoryLinkPreviewView @JvmOverloads constructor(
     spinnerStub.get().visible = linkPreviewState.isLoading
     if (linkPreviewState.isLoading) {
       visible = true
+      hasContent = true
+      updateCloseVisibility()
     }
   }
 
@@ -175,7 +183,12 @@ class StoryLinkPreviewView @JvmOverloads constructor(
   }
 
   fun setCanClose(canClose: Boolean) {
-    binding.linkPreviewClose.visible = canClose
+    this.canClose = canClose
+    updateCloseVisibility()
+  }
+
+  private fun updateCloseVisibility() {
+    binding.linkPreviewClose.visible = canClose && hasContent
   }
 
   private fun formatDate(date: Long): String? {

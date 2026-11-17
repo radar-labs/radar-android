@@ -6,15 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
-import com.annimon.stream.Stream;
-
+import org.signal.core.models.media.Media;
+import org.signal.core.models.media.TransformProperties;
 import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.attachments.Attachment;
-import org.thoughtcrime.securesms.attachments.AttachmentId;
+import org.signal.core.models.database.AttachmentId;
 import org.thoughtcrime.securesms.database.AttachmentTable;
-import org.thoughtcrime.securesms.database.AttachmentTable.TransformProperties;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.JobManager;
@@ -130,6 +129,19 @@ public class MediaUploadRepository {
     });
   }
 
+  /**
+   * Replaces the tracked results with pre-uploads performed elsewhere, so that a send driven by this repository
+   * can reuse them instead of uploading the same media again.
+   */
+  public void setPreUploadResults(@NonNull Collection<PreUploadResult> results) {
+    executor.execute(() -> {
+      uploadResults.clear();
+      for (PreUploadResult result : results) {
+        uploadResults.put(result.getMedia(), result);
+      }
+    });
+  }
+
   public void getPreUploadResults(@NonNull Callback<Collection<PreUploadResult>> callback) {
     executor.execute(() -> callback.onResult(uploadResults.values()));
   }
@@ -167,7 +179,7 @@ public class MediaUploadRepository {
 
     if (result != null) {
       Log.d(TAG, "Canceling attachment upload job for " + result.getAttachmentId());
-      Stream.of(result.getJobIds()).forEach(jobManager::cancel);
+      result.getJobIds().stream().forEach(jobManager::cancel);
       uploadResults.remove(media);
       SignalDatabase.attachments().deleteAttachment(result.getAttachmentId());
     }

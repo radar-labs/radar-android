@@ -2,7 +2,8 @@ package org.thoughtcrime.securesms.contacts.paged
 
 import android.database.Cursor
 import androidx.annotation.WorkerThread
-import org.signal.core.util.requireLong
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.util.UsernameUtil
 import org.signal.paging.PagedDataSource
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.contacts.ContactRepository
@@ -10,20 +11,18 @@ import org.thoughtcrime.securesms.contacts.paged.collections.ContactSearchCollec
 import org.thoughtcrime.securesms.contacts.paged.collections.ContactSearchIterator
 import org.thoughtcrime.securesms.contacts.paged.collections.CursorSearchIterator
 import org.thoughtcrime.securesms.contacts.paged.collections.StoriesSearchCollection
-import org.thoughtcrime.securesms.database.GroupTable
 import org.thoughtcrime.securesms.database.RecipientTable
 import org.thoughtcrime.securesms.database.model.DistributionListPrivacyMode
 import org.thoughtcrime.securesms.database.model.GroupRecord
-import org.thoughtcrime.securesms.database.model.ThreadRecord
+import org.thoughtcrime.securesms.database.model.ThreadWithRecipient
+import org.thoughtcrime.securesms.groups.GroupsInCommonSummary
 import org.thoughtcrime.securesms.keyvalue.StorySend
 import org.thoughtcrime.securesms.phonenumbers.NumberUtil
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.search.MessageResult
 import org.thoughtcrime.securesms.search.MessageSearchResult
 import org.thoughtcrime.securesms.search.SearchRepository
 import org.thoughtcrime.securesms.search.ThreadSearchResult
-import org.thoughtcrime.securesms.util.UsernameUtil
 import java.util.concurrent.TimeUnit
 
 /**
@@ -33,7 +32,8 @@ class ContactSearchPagedDataSource(
   private val contactConfiguration: ContactSearchConfiguration,
   private val contactSearchPagedDataSourceRepository: ContactSearchPagedDataSourceRepository,
   private val arbitraryRepository: ArbitraryRepository? = null,
-  private val searchRepository: SearchRepository? = null
+  private val searchRepository: SearchRepository? = null,
+  private val sectionResults: ContactSearchSectionResults = ContactSearchSectionResults()
 ) : PagedDataSource<ContactSearchKey, ContactSearchData> {
 
   companion object {
@@ -130,13 +130,17 @@ class ContactSearchPagedDataSource(
   }
 
   private fun getSectionSize(section: ContactSearchConfiguration.Section, query: String?): Int {
+    if (section.sectionKey in sectionResults.pending) {
+      return getPendingSectionRows(section).size
+    }
+
     return when (section) {
       is ContactSearchConfiguration.Section.Individuals -> getNonGroupSearchIterator(section, query).getCollectionSizeAndClose(section, query, null)
       is ContactSearchConfiguration.Section.Groups -> contactSearchPagedDataSourceRepository.getGroupSearchIterator(section, query).getCollectionSizeAndClose(section, query, this::canSendToGroup)
       is ContactSearchConfiguration.Section.Recents -> getRecentsSearchIterator(section, query).getCollectionSizeAndClose(section, query, null)
       is ContactSearchConfiguration.Section.Stories -> getStoriesSearchIterator(query).getCollectionSizeAndClose(section, query, null)
       is ContactSearchConfiguration.Section.Arbitrary -> arbitraryRepository?.getSize(section, query) ?: error("Invalid arbitrary section.")
-      is ContactSearchConfiguration.Section.GroupMembers -> getGroupMembersSearchIterator(query).getCollectionSizeAndClose(section, query, null)
+      is ContactSearchConfiguration.Section.GroupMembers -> getGroupMembersSearchIterator(section, query).getCollectionSizeAndClose(section, query, filterByRole(section))
       is ContactSearchConfiguration.Section.Chats -> getThreadData(query, section.isUnreadOnly).getCollectionSizeAndClose(section, query, null)
       is ContactSearchConfiguration.Section.Messages -> getMessageData(query).getCollectionSizeAndClose(section, query, null)
       is ContactSearchConfiguration.Section.GroupsWithMembers -> getGroupsWithMembersIterator(query).getCollectionSizeAndClose(section, query, null)
@@ -172,6 +176,12 @@ class ContactSearchPagedDataSource(
 
   @WorkerThread
   private fun getSectionData(section: ContactSearchConfiguration.Section, query: String?, startIndex: Int, endIndex: Int): List<ContactSearchData> {
+    if (section.sectionKey in sectionResults.pending) {
+      val rows = getPendingSectionRows(section)
+      val start = startIndex.coerceIn(0, rows.size)
+      return rows.subList(start, endIndex.coerceIn(start, rows.size))
+    }
+
     return when (section) {
       is ContactSearchConfiguration.Section.Groups -> getGroupContactsData(section, query, startIndex, endIndex)
       is ContactSearchConfiguration.Section.Individuals -> getNonGroupContactsData(section, query, startIndex, endIndex)
@@ -187,6 +197,20 @@ class ContactSearchPagedDataSource(
       is ContactSearchConfiguration.Section.Username -> getPossibleUsername(section, query)
       is ContactSearchConfiguration.Section.Empty -> listOf(ContactSearchData.Empty(query))
       is ContactSearchConfiguration.Section.ChatTypes -> getChatTypesData(section)
+    }
+  }
+
+  /**
+   * The rows a section occupies while its query is still running: its header, so the user can see
+   * which section is outstanding, plus a spinner in place of its results.
+   */
+  private fun getPendingSectionRows(section: ContactSearchConfiguration.Section): List<ContactSearchData> {
+    val loading = ContactSearchData.SectionLoading(section.sectionKey)
+
+    return if (section.includeHeader) {
+      listOf(ContactSearchData.Header(section.sectionKey, section.headerAction), loading)
+    } else {
+      listOf(loading)
     }
   }
 
@@ -240,38 +264,59 @@ class ContactSearchPagedDataSource(
     return 0
   }
 
-  private fun getNonGroupHeaderLetterMap(section: ContactSearchConfiguration.Section.Individuals, query: String?): Map<RecipientId, String> {
-    return contactSearchPagedDataSourceRepository.querySignalContactLetterHeaders(
-      query = query,
-      includeSelfMode = section.includeSelfMode,
-      includePush = when (section.transportType) {
-        ContactSearchConfiguration.TransportType.PUSH, ContactSearchConfiguration.TransportType.ALL -> true
-        else -> false
-      },
-      includeSms = when (section.transportType) {
-        ContactSearchConfiguration.TransportType.SMS, ContactSearchConfiguration.TransportType.ALL -> true
-        else -> false
+  /**
+   * Returns the letter header to display above the recipient at the cursor's current row, or null if
+   * none should be shown. A header is shown only when this row begins a new letter group, determined by
+   * comparing its letter to the first visible preceding row in display order (filtered by recordPredicate). Peeking that single
+   * row means a letter group split across pages still yields exactly one header, anchored to the first
+   * row of the group, without re-scanning the whole contact set.
+   *
+   * The cursor is restored to its original position before returning so iteration is unaffected.
+   */
+  private fun getHeaderLetterForCurrentRow(cursor: Cursor, recordPredicate: ((Cursor) -> Boolean)? = null): String? {
+    val position = cursor.position
+    val currentLetter = letterForCurrentRow(cursor) ?: return null
+
+    var foundPrevious = false
+    while (cursor.moveToPrevious()) {
+      if (recordPredicate == null || recordPredicate.invoke(cursor)) {
+        foundPrevious = true
+        break
       }
-    )
+    }
+
+    val previousLetter = if (foundPrevious) letterForCurrentRow(cursor) else null
+    cursor.moveToPosition(position)
+
+    return if (previousLetter != currentLetter) currentLetter else null
+  }
+
+  private fun letterForCurrentRow(cursor: Cursor): String? {
+    val sortName = cursor.getString(cursor.getColumnIndexOrThrow(ContactRepository.SORT_NAME_COLUMN))
+    return sortName?.takeIf { it.isNotEmpty() }?.first()?.uppercaseChar()?.toString()
   }
 
   private fun getStoriesSearchIterator(query: String?): ContactSearchIterator<Cursor> {
     return CursorSearchIterator(contactSearchPagedDataSourceRepository.getStories(query))
   }
 
-  private fun getGroupsWithMembersIterator(query: String?): ContactSearchIterator<Cursor> {
+  private fun getGroupsWithMembersIterator(query: String?): ContactSearchIterator<GroupWithMembersRecord> {
+    sectionResults.groupsWithMembers?.let { return ListSearchIterator(it) }
+
     return if (query.isNullOrEmpty()) {
-      CursorSearchIterator(null)
+      ListSearchIterator(emptyList())
     } else {
-      CursorSearchIterator(contactSearchPagedDataSourceRepository.getGroupsWithMembers(query))
+      ListSearchIterator(contactSearchPagedDataSourceRepository.getGroupsWithMembers(query))
     }
   }
 
-  private fun getContactsWithoutThreadsIterator(query: String?): ContactSearchIterator<Cursor> {
+  private fun getContactsWithoutThreadsIterator(query: String?): ContactSearchIterator<RecipientId> {
+    sectionResults.contactsWithoutThreads?.let { return ListSearchIterator(it) }
+
     return if (query.isNullOrEmpty()) {
-      CursorSearchIterator(null)
+      ListSearchIterator(emptyList())
     } else {
-      CursorSearchIterator(contactSearchPagedDataSourceRepository.getContactsWithoutThreads(query))
+      ListSearchIterator(contactSearchPagedDataSourceRepository.getContactsWithoutThreads(query))
     }
   }
 
@@ -283,8 +328,8 @@ class ContactSearchPagedDataSource(
     return CursorSearchIterator(contactSearchPagedDataSourceRepository.getRecents(section))
   }
 
-  private fun getGroupMembersSearchIterator(query: String?): ContactSearchIterator<Cursor> {
-    return CursorSearchIterator(contactSearchPagedDataSourceRepository.queryGroupMemberContacts(query))
+  private fun getGroupMembersSearchIterator(section: ContactSearchConfiguration.Section.GroupMembers, query: String?): ContactSearchIterator<Cursor> {
+    return CursorSearchIterator(contactSearchPagedDataSourceRepository.queryGroupMemberContacts(section, query))
   }
 
   private fun <R> readContactData(
@@ -331,10 +376,7 @@ class ContactSearchPagedDataSource(
         section = section,
         startIndex = startIndex,
         endIndex = endIndex,
-        recordMapper = { cursor ->
-          val record = GroupTable.Reader(cursor).getCurrent()
-          ContactSearchData.GroupWithMembers(query!!, record!!, cursor.requireLong(GroupTable.THREAD_DATE))
-        }
+        recordMapper = { ContactSearchData.GroupWithMembers(query ?: "", it.groupRecord, it.threadDate) }
       )
     }
   }
@@ -378,19 +420,13 @@ class ContactSearchPagedDataSource(
         startIndex = startIndex,
         endIndex = endIndex,
         recordMapper = {
-          ContactSearchData.KnownRecipient(section.sectionKey, contactSearchPagedDataSourceRepository.getRecipientFromRecipientCursor(it))
+          ContactSearchData.KnownRecipient(section.sectionKey, contactSearchPagedDataSourceRepository.getRecipient(it))
         }
       )
     }
   }
 
   private fun getNonGroupContactsData(section: ContactSearchConfiguration.Section.Individuals, query: String?, startIndex: Int, endIndex: Int): List<ContactSearchData> {
-    val headerMap: Map<RecipientId, String> = if (section.includeLetterHeaders) {
-      getNonGroupHeaderLetterMap(section, query)
-    } else {
-      emptyMap()
-    }
-
     return getNonGroupSearchIterator(section, query).use { records ->
       readContactData(
         records = records,
@@ -400,7 +436,8 @@ class ContactSearchPagedDataSource(
         endIndex = endIndex,
         recordMapper = {
           val recipient = contactSearchPagedDataSourceRepository.getRecipientFromSearchCursor(it)
-          ContactSearchData.KnownRecipient(section.sectionKey, recipient, headerLetter = headerMap[recipient.id])
+          val headerLetter = if (section.includeLetterHeaders) getHeaderLetterForCurrentRow(it) else null
+          ContactSearchData.KnownRecipient(section.sectionKey, recipient, headerLetter = headerLetter)
         }
       )
     }
@@ -426,7 +463,7 @@ class ContactSearchPagedDataSource(
   }
 
   private fun canSendToGroup(groupRecord: GroupRecord?): Boolean {
-    if (groupRecord == null) return false
+    if (groupRecord == null || groupRecord.isTerminated) return false
 
     return if (groupRecord.isAnnouncementGroup) {
       groupRecord.isAdmin(Recipient.self())
@@ -435,29 +472,50 @@ class ContactSearchPagedDataSource(
     }
   }
 
+  private fun filterByRole(section: ContactSearchConfiguration.Section.GroupMembers): ((Cursor) -> Boolean)? {
+    if (section.roleFilter == ContactSearchConfiguration.MemberRole.ALL || section.groupId == null) {
+      return null
+    }
+
+    val groupRecord = contactSearchPagedDataSourceRepository.getGroupRecord(section.groupId) ?: return null
+    return { cursor ->
+      val recipient = contactSearchPagedDataSourceRepository.getRecipientFromSearchCursor(cursor)
+      when (section.roleFilter) {
+        ContactSearchConfiguration.MemberRole.ALL -> true
+        ContactSearchConfiguration.MemberRole.ADMINS -> groupRecord.isAdmin(recipient)
+        ContactSearchConfiguration.MemberRole.CONTACTS -> recipient.isSystemContact
+      }
+    }
+  }
+
   @WorkerThread
   private fun getGroupMembersContactData(section: ContactSearchConfiguration.Section.GroupMembers, query: String?, startIndex: Int, endIndex: Int): List<ContactSearchData> {
-    return getGroupMembersSearchIterator(query).use { records ->
+    val groupRecord = section.groupId?.let { contactSearchPagedDataSourceRepository.getGroupRecord(it) }
+    val recordPredicate = filterByRole(section)
+    return getGroupMembersSearchIterator(section, query).use { records ->
       readContactData(
         records = records,
-        recordsPredicate = null,
+        recordsPredicate = recordPredicate,
         section = section,
         startIndex = startIndex,
         endIndex = endIndex,
         recordMapper = {
           val recipient = contactSearchPagedDataSourceRepository.getRecipientFromSearchCursor(it)
-          val groupsInCommon = contactSearchPagedDataSourceRepository.getGroupsInCommon(recipient)
-          ContactSearchData.KnownRecipient(section.sectionKey, recipient, groupsInCommon = groupsInCommon)
+          val groupsInCommon = if (section.showGroupsInCommon) contactSearchPagedDataSourceRepository.getGroupsInCommon(recipient) else GroupsInCommonSummary(listOf())
+          val headerLetter = if (section.includeLetterHeaders) getHeaderLetterForCurrentRow(it, recordPredicate) else null
+          ContactSearchData.KnownRecipient(section.sectionKey, recipient, groupsInCommon = groupsInCommon, headerLetter = headerLetter, showSelfAsYou = section.showSelfAsYou, showAdminLabel = groupRecord?.isAdmin(recipient) == true, query = query)
         }
       )
     }
   }
 
   private fun getMessageData(query: String?): ContactSearchIterator<MessageResult> {
+    sectionResults.messages?.let { return ListSearchIterator(it) }
+
     check(searchRepository != null)
 
     if (searchCache.messageSearchResult == null && query != null) {
-      searchCache = searchCache.copy(messageSearchResult = searchRepository.queryMessagesSync(query))
+      searchCache = searchCache.copy(messageSearchResult = searchRepository.queryMessagesSync(query, contactConfiguration.searchFilter))
     }
 
     return if (query != null) {
@@ -482,7 +540,9 @@ class ContactSearchPagedDataSource(
     }
   }
 
-  private fun getThreadData(query: String?, unreadOnly: Boolean): ContactSearchIterator<ThreadRecord> {
+  private fun getThreadData(query: String?, unreadOnly: Boolean): ContactSearchIterator<ThreadWithRecipient> {
+    sectionResults.threads?.let { return ListSearchIterator(it) }
+
     check(searchRepository != null)
     if (searchCache.threadSearchResult == null && query != null) {
       searchCache = searchCache.copy(threadSearchResult = searchRepository.queryThreadsSync(query, unreadOnly))

@@ -7,8 +7,6 @@ package org.thoughtcrime.securesms.backup.v2.ui.subscription
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.core.content.IntentCompat
 import androidx.core.os.bundleOf
@@ -25,9 +23,6 @@ import org.thoughtcrime.securesms.components.settings.app.subscription.donate.In
  * instead of the normal donations routes.
  */
 class MessageBackupsCheckoutActivity : FragmentWrapperActivity() {
-  /** Draws edge to edge and positions its own content against the insets. */
-  override fun fitsSystemBars(): Boolean = false
-
 
   companion object {
     private const val TIER = "tier"
@@ -43,12 +38,6 @@ class MessageBackupsCheckoutActivity : FragmentWrapperActivity() {
 
       return Intent().putExtras(data)
     }
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
-    super.onCreate(savedInstanceState, ready)
-
-    enableEdgeToEdge()
   }
 
   override fun getFragment(): Fragment = MessageBackupsFlowFragment.create(

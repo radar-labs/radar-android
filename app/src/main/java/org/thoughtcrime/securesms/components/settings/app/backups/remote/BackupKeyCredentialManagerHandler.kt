@@ -7,8 +7,8 @@ package org.thoughtcrime.securesms.components.settings.app.backups.remote
 
 import org.signal.core.util.logging.Log
 import org.signal.core.util.logging.logW
-import org.thoughtcrime.securesms.util.storage.CredentialManagerError
-import org.thoughtcrime.securesms.util.storage.CredentialManagerResult
+import org.signal.passwordmanager.CredentialManagerError
+import org.signal.passwordmanager.CredentialManagerResult
 
 /**
  * Handles the process of storing a backup key to the device password manager.
@@ -26,6 +26,9 @@ interface BackupKeyCredentialManagerHandler {
 
   /** Called when the user confirms they want to save the backup key to the password manager. */
   fun onBackupKeySaveConfirmed() = updateBackupKeySaveState(BackupKeySaveState.AwaitingCredentialManager(isRetry = false))
+
+  /** Called to clear the key save state. */
+  fun onBackupKeySaveStateCleared() = updateBackupKeySaveState(null)
 
   /** Handles the password manager save operation response. */
   fun onBackupKeySaveCompleted(result: CredentialManagerResult) {

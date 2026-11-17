@@ -1,3 +1,0 @@
-package org.whispersystems.signalservice.api.push.exceptions
-
-class IncorrectRegistrationRecoveryPasswordException : NonSuccessfulResponseCodeException(403)

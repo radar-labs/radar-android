@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.attachments.AttachmentId;
+import org.signal.core.models.database.AttachmentId;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobs.UploadAttachmentToArchiveJob;
@@ -57,17 +57,23 @@ public final class WallpaperStorage {
    */
   @WorkerThread
   public static void onWallpaperDeselected(@NonNull Uri uri) {
+    if (!isWallpaperUriUsed(uri)) {
+      AttachmentId attachmentId = new PartUriParser(uri).getPartId();
+      SignalDatabase.attachments().deleteAttachment(attachmentId);
+    }
+  }
+
+  public static boolean isWallpaperUriUsed(@NonNull Uri uri) {
     Uri globalUri = SignalStore.wallpaper().getWallpaperUri();
     if (Objects.equals(uri, globalUri)) {
-      return;
+      return true;
     }
 
     int recipientCount = SignalDatabase.recipients().getWallpaperUriUsageCount(uri);
     if (recipientCount > 0) {
-      return;
+      return true;
     }
 
-    AttachmentId attachmentId = new PartUriParser(uri).getPartId();
-    SignalDatabase.attachments().deleteAttachment(attachmentId);
+    return false;
   }
 }

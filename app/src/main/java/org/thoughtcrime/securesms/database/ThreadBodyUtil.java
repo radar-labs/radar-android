@@ -10,7 +10,7 @@ import androidx.annotation.StringRes;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.components.emoji.EmojiStrings;
+import org.signal.emoji.EmojiStrings;
 import org.thoughtcrime.securesms.contactshare.Contact;
 import org.thoughtcrime.securesms.contactshare.ContactUtil;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
@@ -25,7 +25,7 @@ import org.whispersystems.signalservice.api.payments.Money;
 import org.thoughtcrime.securesms.mms.Slide;
 import org.thoughtcrime.securesms.mms.StickerSlide;
 import org.thoughtcrime.securesms.util.MessageRecordUtil;
-import org.thoughtcrime.securesms.util.Util;
+import org.signal.core.util.Util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -166,6 +166,10 @@ public final class ThreadBodyUtil {
     return format(EmojiStrings.POLL, context.getString(R.string.Poll__poll_end, record.getFromRecipient().getDisplayName(context), record.getMessageExtras().pollTerminate.question), null).body;
   }
 
+  public static CharSequence getFormattedBodyForReply(@NonNull Context context, @NonNull CharSequence body) {
+    return context.getString(R.string.MessageNotifier_replied_to_you, body);
+  }
+
   private static @NonNull String getGiftSummary(@NonNull Context context, @NonNull MessageRecord messageRecord) {
     if (messageRecord.isOutgoing()) {
       return context.getString(R.string.ThreadRecord__you_donated_for_s, messageRecord.getToRecipient().getShortDisplayName(context));
@@ -205,10 +209,11 @@ public final class ThreadBodyUtil {
     if (call != null) {
       boolean accepted = call.getEvent() == CallTable.Event.ACCEPTED;
       if (call.getDirection() == CallTable.Direction.OUTGOING) {
-        if (call.getType() == CallTable.Type.AUDIO_CALL) {
-          return context.getString(R.string.MessageRecord_outgoing_voice_call);
+        boolean isVideoCall = call.getType() == CallTable.Type.VIDEO_CALL;
+        if (call.getEvent() == CallTable.Event.NOT_ACCEPTED) {
+          return context.getString(isVideoCall ? R.string.MessageRecord_unanswered_video_call : R.string.MessageRecord_unanswered_voice_call);
         } else {
-          return context.getString(R.string.MessageRecord_outgoing_video_call);
+          return context.getString(isVideoCall ? R.string.MessageRecord_outgoing_video_call : R.string.MessageRecord_outgoing_voice_call);
         }
       } else {
         boolean isVideoCall = call.getType() == CallTable.Type.VIDEO_CALL;

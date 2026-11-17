@@ -1,13 +1,14 @@
 package org.thoughtcrime.securesms.recipients;
 
-import android.content.Context;
 import android.database.Cursor;
 
 import androidx.annotation.AnyThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.annotation.WorkerThread;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
@@ -15,21 +16,23 @@ import org.thoughtcrime.securesms.database.RecipientTable;
 import org.thoughtcrime.securesms.database.RecipientTable.MissingRecipientException;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.ThreadTable;
-import org.thoughtcrime.securesms.database.model.ThreadRecord;
+import org.thoughtcrime.securesms.database.model.ThreadWithRecipient;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.signal.core.util.CursorUtil;
-import org.thoughtcrime.securesms.util.LRUCache;
+import org.signal.core.util.LRUCache;
 import org.signal.core.util.Stopwatch;
-import org.thoughtcrime.securesms.util.concurrent.FilteredExecutor;
+import org.signal.core.util.concurrent.FilteredExecutor;
 import org.signal.core.models.ServiceId.ACI;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 public final class LiveRecipientCache {
 
@@ -39,7 +42,6 @@ public final class LiveRecipientCache {
   private static final int THREAD_CACHE_WARM_MAX  = 500;
   private static final int CONTACT_CACHE_WARM_MAX = 50;
 
-  private final Context                         context;
   private final RecipientTable                  recipientTable;
   private final Map<RecipientId, LiveRecipient> recipients;
   private final LiveRecipient                   unknown;
@@ -48,18 +50,17 @@ public final class LiveRecipientCache {
   private final AtomicReference<RecipientId> localRecipientId;
   private final AtomicBoolean                warmedUp;
 
-  public LiveRecipientCache(@NonNull Context context) {
-    this(context, new FilteredExecutor(SignalExecutors.newCachedBoundedExecutor("signal-recipients", ThreadUtil.PRIORITY_UI_BLOCKING_THREAD, 1, 4, 15), () -> !SignalDatabase.inTransaction()));
+  public LiveRecipientCache() {
+    this(new FilteredExecutor(SignalExecutors.newCachedBoundedExecutor("signal-recipients", ThreadUtil.PRIORITY_UI_BLOCKING_THREAD, 1, 4, 15), () -> !SignalDatabase.inTransaction()));
   }
 
   @VisibleForTesting
-  public LiveRecipientCache(@NonNull Context context, @NonNull Executor executor) {
-    this.context        = context.getApplicationContext();
+  public LiveRecipientCache(@NonNull Executor executor) {
     this.recipientTable = SignalDatabase.recipients();
     this.recipients     = new LRUCache<>(CACHE_MAX);
     this.warmedUp          = new AtomicBoolean(false);
     this.localRecipientId  = new AtomicReference<>(null);
-    this.unknown           = new LiveRecipient(context, Recipient.UNKNOWN);
+    this.unknown           = new LiveRecipient(Recipient.UNKNOWN);
     this.resolveExecutor   = executor;
   }
 
@@ -74,7 +75,7 @@ public final class LiveRecipientCache {
       live = recipients.get(id);
 
       if (live == null) {
-        live = new LiveRecipient(context, RecipientCreator.forId(id));
+        live = new LiveRecipient(RecipientCreator.forId(id));
         recipients.put(id, live);
         needsResolve = true;
       } else {
@@ -103,6 +104,29 @@ public final class LiveRecipientCache {
   }
 
   /**
+   * Resolves and updates entries for each recipient already in the cache.
+   */
+  @WorkerThread
+  public void refresh(@NonNull Collection<RecipientId> recipientIds) {
+    Set<RecipientId> cachedIds;
+    synchronized (recipients) {
+      cachedIds = recipientIds.stream().filter(recipients::containsKey).collect(Collectors.toSet());
+    }
+
+    if (!cachedIds.isEmpty()) {
+      Set<Recipient> recipients = SignalDatabase
+          .recipients()
+          .getExistingRecords(cachedIds)
+          .values()
+          .stream()
+          .map(RecipientCreator::forRecord)
+          .collect(Collectors.toSet());
+
+      addToCache(recipients);
+    }
+  }
+
+  /**
    * Adds a recipient to the cache if we don't have an entry. This will also update a cache entry
    * if the provided recipient is resolved, or if the existing cache entry is unresolved.
    *
@@ -119,7 +143,7 @@ public final class LiveRecipientCache {
         live = recipients.get(recipient.getId());
 
         if (live == null) {
-          live = new LiveRecipient(context, recipient);
+          live = new LiveRecipient(recipient);
           recipients.put(recipient.getId(), live);
           needsResolve = recipient.isResolving();
         } else if (live.get().isResolving() || !recipient.isResolving()) {
@@ -224,8 +248,8 @@ public final class LiveRecipientCache {
       List<Recipient> recipients  = new ArrayList<>();
 
       try (ThreadTable.Reader reader = threadTable.readerFor(threadTable.getRecentConversationList(THREAD_CACHE_WARM_MAX, false, false))) {
-        int          i      = 0;
-        ThreadRecord record = null;
+        int                 i      = 0;
+        ThreadWithRecipient record = null;
 
         while ((record = reader.getNext()) != null && i < THREAD_CACHE_WARM_MAX) {
           recipients.add(record.getRecipient());

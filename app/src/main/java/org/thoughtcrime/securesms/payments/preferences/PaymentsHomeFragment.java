@@ -3,6 +3,7 @@ package org.thoughtcrime.securesms.payments.preferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,17 +14,19 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.compose.ui.platform.ComposeView;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.annimon.stream.Stream;
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.LoggingFragment;
+import org.signal.core.ui.view.Stub;
+import org.signal.core.ui.logging.LoggingFragment;
 import org.thoughtcrime.securesms.PaymentPreferencesDirections;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.banner.BannerManager;
@@ -41,12 +44,12 @@ import org.thoughtcrime.securesms.payments.backup.confirm.PaymentsRecoveryPhrase
 import org.thoughtcrime.securesms.payments.preferences.model.InfoCard;
 import org.thoughtcrime.securesms.payments.preferences.model.PaymentItem;
 import org.thoughtcrime.securesms.util.CommunicationActions;
-import org.thoughtcrime.securesms.util.DrawableUtil;
+import org.signal.core.util.DrawableUtil;
 import org.thoughtcrime.securesms.util.PlayStoreUtil;
-import org.thoughtcrime.securesms.util.SpanUtil;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.signal.core.ui.util.SpanUtil;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.signal.core.ui.util.ViewUtil;
 import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
-import org.thoughtcrime.securesms.util.views.Stub;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -170,6 +173,12 @@ public class PaymentsHomeFragment extends LoggingFragment {
       applyBalanceVisibilityNavIcon(toolbar);
       toolbar.setNavigationOnClickListener(v -> toggleBalanceVisibility(toolbar, balance));
     } else {
+      // Upstream edge-to-edge: standalone PaymentsActivity pads the toolbar and list for the system
+      // bars. In the MainActivity tab the Compose wrapper and bottom navigation already do that.
+      toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+      SystemWindowInsetsSetter.attach(toolbar, getViewLifecycleOwner(), WindowInsetsCompat.Type.statusBars());
+      SystemWindowInsetsSetter.attach(recycler, getViewLifecycleOwner(), WindowInsetsCompat.Type.navigationBars());
+
       toolbar.setNavigationOnClickListener(v -> {
         viewModel.markAllPaymentsSeen();
         requireActivity().finish();
@@ -209,7 +218,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
     });
 
     viewModel.getList().observe(getViewLifecycleOwner(), list -> {
-      boolean hadPaymentItems = Stream.of(adapter.getCurrentList()).anyMatch(model -> model instanceof PaymentItem);
+      boolean hadPaymentItems = adapter.getCurrentList().stream().anyMatch(model -> model instanceof PaymentItem);
 
       if (!hadPaymentItems) {
         adapter.submitList(list, () -> recycler.scrollToPosition(0));

@@ -8,13 +8,17 @@ package org.thoughtcrime.securesms.database
 import android.content.Context
 import androidx.annotation.WorkerThread
 import androidx.core.content.contentValuesOf
-import net.zetetic.database.sqlcipher.SQLiteDatabase
+import org.signal.core.database.SqlUtil
+import org.signal.core.database.delete
+import org.signal.core.database.exists
+import org.signal.core.database.insertInto
+import org.signal.core.database.select
+import org.signal.core.database.update
+import org.signal.core.database.withinTransaction
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64
 import org.signal.core.util.Hex
-import org.signal.core.util.SqlUtil
-import org.signal.core.util.delete
-import org.signal.core.util.exists
-import org.signal.core.util.insertInto
+import org.signal.core.util.logging.Log
 import org.signal.core.util.orNull
 import org.signal.core.util.readToList
 import org.signal.core.util.readToSet
@@ -22,20 +26,15 @@ import org.signal.core.util.readToSingleLong
 import org.signal.core.util.readToSingleObject
 import org.signal.core.util.requireBlob
 import org.signal.core.util.requireBoolean
-import org.signal.core.util.requireInt
 import org.signal.core.util.requireLong
 import org.signal.core.util.requireString
-import org.signal.core.util.select
 import org.signal.core.util.toInt
-import org.signal.core.util.update
-import org.signal.core.util.withinTransaction
 import org.thoughtcrime.securesms.database.model.MessageRecord
 import org.thoughtcrime.securesms.database.model.databaseprotos.ProfileChangeDetails
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.GroupId.V2
 import org.thoughtcrime.securesms.profiles.spoofing.ReviewRecipient
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import java.io.IOException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -48,36 +47,33 @@ import kotlin.time.Duration.Companion.days
 class NameCollisionTables(
   context: Context,
   database: SignalDatabase
-) : DatabaseTable(context, database) {
+) : DatabaseTable(context, database), RecipientIdDatabaseReference {
 
   companion object {
+    private val TAG = Log.tag(NameCollisionTables::class)
+
     private const val ID = "_id"
 
     private val PROFILE_CHANGE_TIMEOUT = 1.days
 
     val CREATE_TABLE = arrayOf(
       NameCollisionTable.CREATE_TABLE,
+      NameCollisionThreadTable.CREATE_TABLE,
       NameCollisionMembershipTable.CREATE_TABLE
     )
 
-    val CREATE_INDEXES = NameCollisionMembershipTable.CREATE_INDEXES
+    val CREATE_INDEXES = arrayOf(
+      *NameCollisionThreadTable.CREATE_INDEXES,
+      *NameCollisionMembershipTable.CREATE_INDEXES
+    )
   }
 
   /**
    * Represents a detected name collision which can involve one or more recipients.
+   * A single collision record can be shared across multiple threads via [NameCollisionThreadTable].
    */
   private object NameCollisionTable {
     const val TABLE_NAME = "name_collision"
-
-    /**
-     * The thread id of the conversation to display this collision for.
-     */
-    const val THREAD_ID = "thread_id"
-
-    /**
-     * Whether the user has manually dismissed the collision.
-     */
-    const val DISMISSED = "dismissed"
 
     /**
      * The hash representing the latest known display name state.
@@ -87,11 +83,33 @@ class NameCollisionTables(
     const val CREATE_TABLE = """
       CREATE TABLE $TABLE_NAME (
         $ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        $THREAD_ID INTEGER UNIQUE NOT NULL,
-        $DISMISSED INTEGER DEFAULT 0,
         $HASH STRING DEFAULT NULL
       )
     """
+  }
+
+  /**
+   * Links threads to collision records with per-thread dismissed state.
+   */
+  private object NameCollisionThreadTable {
+    const val TABLE_NAME = "name_collision_thread"
+
+    const val COLLISION_ID = "collision_id"
+    const val THREAD_ID = "thread_id"
+    const val DISMISSED = "dismissed"
+
+    const val CREATE_TABLE = """
+      CREATE TABLE $TABLE_NAME (
+        $ID INTEGER PRIMARY KEY AUTOINCREMENT,
+        $COLLISION_ID INTEGER NOT NULL REFERENCES ${NameCollisionTable.TABLE_NAME} ($ID) ON DELETE CASCADE,
+        $THREAD_ID INTEGER UNIQUE NOT NULL,
+        $DISMISSED INTEGER DEFAULT 0
+      )
+    """
+
+    val CREATE_INDEXES = arrayOf(
+      "CREATE INDEX name_collision_thread_collision_id_index ON $TABLE_NAME ($COLLISION_ID)"
+    )
   }
 
   /**
@@ -139,9 +157,9 @@ class NameCollisionTables(
     writableDatabase.withinTransaction { db ->
       val threadId = SignalDatabase.threads.getThreadIdFor(threadRecipientId) ?: return@withinTransaction
 
-      db.update(NameCollisionTable.TABLE_NAME)
-        .values(NameCollisionTable.DISMISSED to 1)
-        .where("${NameCollisionTable.THREAD_ID} = ?", threadId)
+      db.update(NameCollisionThreadTable.TABLE_NAME)
+        .values(NameCollisionThreadTable.DISMISSED to 1)
+        .where("${NameCollisionThreadTable.THREAD_ID} = ?", threadId)
         .run()
     }
   }
@@ -153,9 +171,9 @@ class NameCollisionTables(
   fun getCollisionsForThreadRecipientId(recipientId: RecipientId): List<ReviewRecipient> {
     val threadId = SignalDatabase.threads.getThreadIdFor(recipientId) ?: return emptyList()
     val collisionId = readableDatabase
-      .select(ID)
-      .from(NameCollisionTable.TABLE_NAME)
-      .where("${NameCollisionTable.THREAD_ID} = ? AND ${NameCollisionTable.DISMISSED} = 0", threadId)
+      .select(NameCollisionThreadTable.COLLISION_ID)
+      .from(NameCollisionThreadTable.TABLE_NAME)
+      .where("${NameCollisionThreadTable.THREAD_ID} = ? AND ${NameCollisionThreadTable.DISMISSED} = 0", threadId)
       .run()
       .readToSingleLong()
 
@@ -202,7 +220,7 @@ class NameCollisionTables(
             .run()
         }
 
-        pruneCollisions()
+        pruneCollisions(setOf(collisionId))
       }
     }
 
@@ -216,6 +234,7 @@ class NameCollisionTables(
   fun handleIndividualNameCollision(recipientId: RecipientId) {
     writableDatabase.withinTransaction { db ->
       val similarRecipients = SignalDatabase.recipients.getSimilarRecipientIds(Recipient.resolved(recipientId))
+      val affectedCollisionIds: MutableSet<Long> = getCollisionIdsForRecipient(recipientId).toMutableSet()
 
       db.delete(NameCollisionMembershipTable.TABLE_NAME)
         .where("${NameCollisionMembershipTable.RECIPIENT_ID} = ?", recipientId)
@@ -224,8 +243,8 @@ class NameCollisionTables(
       if (similarRecipients.size == 1) {
         val threadId = SignalDatabase.threads.getThreadIdFor(recipientId) ?: -1
         if (threadId > 0L) {
-          db.delete(NameCollisionTable.TABLE_NAME)
-            .where("${NameCollisionTable.THREAD_ID} = ?", threadId)
+          db.delete(NameCollisionThreadTable.TABLE_NAME)
+            .where("${NameCollisionThreadTable.THREAD_ID} = ?", threadId)
             .run()
         }
       }
@@ -238,10 +257,10 @@ class NameCollisionTables(
 
             recipients.map { ReviewRecipient(it) }.toSet()
           }
-        )
+        )?.let { affectedCollisionIds += it }
       }
 
-      pruneCollisions()
+      pruneCollisions(affectedCollisionIds)
     }
   }
 
@@ -252,26 +271,59 @@ class NameCollisionTables(
   fun handleGroupNameCollisions(groupId: GroupId.V2, changed: Set<RecipientId>) {
     writableDatabase.withinTransaction {
       val threadRecipientId = SignalDatabase.recipients.getByGroupId(groupId).orNull() ?: return@withinTransaction
-      handleNameCollisions(
+      val collisionId = handleNameCollisions(
         threadRecipientId = threadRecipientId,
         getCollisionRecipients = { getDuplicatedGroupRecipients(groupId, changed).toSet() }
-      )
+      ) ?: return@withinTransaction
 
-      pruneCollisions()
+      pruneCollisions(setOf(collisionId))
     }
   }
 
+  override fun remapRecipient(fromId: RecipientId, toId: RecipientId) {
+    writableDatabase.withinTransaction { db ->
+      val affectedCollisionIds = getCollisionIdsForRecipient(fromId)
+
+      db.execSQL(
+        "UPDATE OR REPLACE ${NameCollisionMembershipTable.TABLE_NAME} SET ${NameCollisionMembershipTable.RECIPIENT_ID} = ? WHERE ${NameCollisionMembershipTable.RECIPIENT_ID} = ?",
+        arrayOf(toId.serialize(), fromId.serialize())
+      )
+
+      pruneCollisions(affectedCollisionIds)
+    }
+    Log.d(TAG, "Remapped $fromId to $toId")
+  }
+
+  override fun onDeletedRecipient(recipientId: RecipientId) {
+    val deleted = writableDatabase.withinTransaction { db ->
+      val affectedCollisionIds = getCollisionIdsForRecipient(recipientId)
+
+      val deleted = db
+        .delete(NameCollisionMembershipTable.TABLE_NAME)
+        .where("${NameCollisionMembershipTable.RECIPIENT_ID} = ?", recipientId)
+        .run()
+
+      pruneCollisions(affectedCollisionIds)
+      deleted
+    }
+
+    Log.d(TAG, "Deleted recipient: $deleted")
+  }
+
+  /**
+   * @return The id of the collision that was updated, if any.
+   */
   private fun handleNameCollisions(
     threadRecipientId: RecipientId,
     getCollisionRecipients: () -> Set<ReviewRecipient>
-  ) {
+  ): Long? {
     check(writableDatabase.inTransaction())
 
     val resolved = Recipient.resolved(threadRecipientId)
     val collisionRecipients: Set<ReviewRecipient> = getCollisionRecipients()
 
     if (collisionRecipients.size < 2 && !collisionExists(threadRecipientId)) {
-      return
+      return null
     }
 
     val collision: NameCollision = getOrCreateCollision(resolved)
@@ -284,13 +336,24 @@ class NameCollisionTables(
         dismissed = if (!collision.dismissed) false else collision.hash == hash
       )
     )
+
+    return collision.id
+  }
+
+  private fun getCollisionIdsForRecipient(recipientId: RecipientId): Set<Long> {
+    return writableDatabase
+      .select(NameCollisionMembershipTable.COLLISION_ID)
+      .from(NameCollisionMembershipTable.TABLE_NAME)
+      .where("${NameCollisionMembershipTable.RECIPIENT_ID} = ?", recipientId)
+      .run()
+      .readToSet { it.requireLong(NameCollisionMembershipTable.COLLISION_ID) }
   }
 
   private fun collisionExists(threadRecipientId: RecipientId): Boolean {
     val threadId = SignalDatabase.threads.getThreadIdFor(threadRecipientId) ?: return false
     return writableDatabase
-      .exists(NameCollisionTable.TABLE_NAME)
-      .where("${NameCollisionTable.THREAD_ID} = ?", threadId)
+      .exists(NameCollisionThreadTable.TABLE_NAME)
+      .where("${NameCollisionThreadTable.THREAD_ID} = ?", threadId)
       .run()
   }
 
@@ -298,55 +361,75 @@ class NameCollisionTables(
     check(writableDatabase.inTransaction())
     val threadId = SignalDatabase.threads.getOrCreateThreadIdFor(threadRecipient)
 
-    val collision = writableDatabase
-      .select()
-      .from(NameCollisionTable.TABLE_NAME)
-      .where("${NameCollisionTable.THREAD_ID} = ?", threadId)
+    val threadLink = writableDatabase
+      .select(NameCollisionThreadTable.COLLISION_ID, NameCollisionThreadTable.DISMISSED)
+      .from(NameCollisionThreadTable.TABLE_NAME)
+      .where("${NameCollisionThreadTable.THREAD_ID} = ?", threadId)
       .run()
-      .readToSingleObject { nameCollisionCursor ->
-        NameCollision(
-          id = nameCollisionCursor.requireLong(ID),
-          threadId = threadId,
-          members = writableDatabase
-            .select(NameCollisionMembershipTable.RECIPIENT_ID, NameCollisionMembershipTable.PROFILE_CHANGE_DETAILS)
-            .from(NameCollisionMembershipTable.TABLE_NAME)
-            .where("${NameCollisionMembershipTable.COLLISION_ID} = ?", nameCollisionCursor.requireInt(ID))
-            .run()
-            .readToSet {
-              val id = RecipientId.from(it.requireLong(NameCollisionMembershipTable.RECIPIENT_ID))
-              val rawProfileChangeDetails = it.requireBlob(NameCollisionMembershipTable.PROFILE_CHANGE_DETAILS)
-              val profileChangeDetails = if (rawProfileChangeDetails != null) {
-                ProfileChangeDetails.ADAPTER.decode(rawProfileChangeDetails)
-              } else {
-                null
-              }
-
-              ReviewRecipient(
-                Recipient.resolved(id),
-                profileChangeDetails
-              )
-            },
-          dismissed = nameCollisionCursor.requireBoolean(NameCollisionTable.DISMISSED),
-          hash = nameCollisionCursor.requireString(NameCollisionTable.HASH) ?: ""
-        )
+      .readToSingleObject {
+        Pair(it.requireLong(NameCollisionThreadTable.COLLISION_ID), it.requireBoolean(NameCollisionThreadTable.DISMISSED))
       }
 
-    return if (collision == null) {
-      val rowId = writableDatabase
-        .insertInto(NameCollisionTable.TABLE_NAME)
-        .values(
-          contentValuesOf(
-            NameCollisionTable.THREAD_ID to threadId,
-            NameCollisionTable.DISMISSED to 0,
-            NameCollisionTable.HASH to null
-          )
-        )
-        .run()
+    if (threadLink != null) {
+      val (collisionId, dismissed) = threadLink
 
-      NameCollision(id = rowId, threadId = threadId, members = emptySet(), dismissed = false, hash = "")
-    } else {
-      collision
+      val hash = writableDatabase
+        .select(NameCollisionTable.HASH)
+        .from(NameCollisionTable.TABLE_NAME)
+        .where("$ID = ?", collisionId)
+        .run()
+        .readToSingleObject { it.requireString(NameCollisionTable.HASH) ?: "" } ?: ""
+
+      val members = writableDatabase
+        .select(NameCollisionMembershipTable.RECIPIENT_ID, NameCollisionMembershipTable.PROFILE_CHANGE_DETAILS)
+        .from(NameCollisionMembershipTable.TABLE_NAME)
+        .where("${NameCollisionMembershipTable.COLLISION_ID} = ?", collisionId)
+        .run()
+        .readToSet {
+          val id = RecipientId.from(it.requireLong(NameCollisionMembershipTable.RECIPIENT_ID))
+          val rawProfileChangeDetails = it.requireBlob(NameCollisionMembershipTable.PROFILE_CHANGE_DETAILS)
+          val profileChangeDetails = if (rawProfileChangeDetails != null) {
+            ProfileChangeDetails.ADAPTER.decode(rawProfileChangeDetails)
+          } else {
+            null
+          }
+
+          ReviewRecipient(
+            Recipient.resolved(id),
+            profileChangeDetails
+          )
+        }
+
+      return NameCollision(
+        id = collisionId,
+        threadId = threadId,
+        members = members,
+        dismissed = dismissed,
+        hash = hash
+      )
     }
+
+    val collisionId = writableDatabase
+      .insertInto(NameCollisionTable.TABLE_NAME)
+      .values(
+        contentValuesOf(
+          NameCollisionTable.HASH to null
+        )
+      )
+      .run()
+
+    writableDatabase
+      .insertInto(NameCollisionThreadTable.TABLE_NAME)
+      .values(
+        contentValuesOf(
+          NameCollisionThreadTable.COLLISION_ID to collisionId,
+          NameCollisionThreadTable.THREAD_ID to threadId,
+          NameCollisionThreadTable.DISMISSED to 0
+        )
+      )
+      .run()
+
+    return NameCollision(id = collisionId, threadId = threadId, members = emptySet(), dismissed = false, hash = "")
   }
 
   private fun updateCollision(collision: NameCollision) {
@@ -356,8 +439,6 @@ class NameCollisionTables(
       .update(NameCollisionTable.TABLE_NAME)
       .values(
         contentValuesOf(
-          NameCollisionTable.DISMISSED to collision.dismissed.toInt(),
-          NameCollisionTable.THREAD_ID to collision.threadId,
           NameCollisionTable.HASH to collision.hash
         )
       )
@@ -365,8 +446,18 @@ class NameCollisionTables(
       .run()
 
     writableDatabase
+      .update(NameCollisionThreadTable.TABLE_NAME)
+      .values(
+        contentValuesOf(
+          NameCollisionThreadTable.DISMISSED to collision.dismissed.toInt()
+        )
+      )
+      .where("${NameCollisionThreadTable.COLLISION_ID} = ? AND ${NameCollisionThreadTable.THREAD_ID} = ?", collision.id, collision.threadId)
+      .run()
+
+    writableDatabase
       .delete(NameCollisionMembershipTable.TABLE_NAME)
-      .where("${NameCollisionMembershipTable.COLLISION_ID} = ?")
+      .where("${NameCollisionMembershipTable.COLLISION_ID} = ?", collision.id)
       .run()
 
     if (collision.members.size < 2) {
@@ -392,7 +483,7 @@ class NameCollisionTables(
 
     return try {
       val digest = MessageDigest.getInstance("MD5")
-      val names = collisionRecipients.map { it.recipient.getDisplayName(context) }
+      val names = collisionRecipients.map { it.recipient.getDisplayName(context) }.sorted()
       names.forEach { digest.update(it.encodeToByteArray()) }
       Hex.toStringCondensed(digest.digest())
     } catch (e: NoSuchAlgorithmException) {
@@ -401,22 +492,29 @@ class NameCollisionTables(
   }
 
   /**
-   * Remove any collision for which there is only a single member.
+   * Removes any of the given collisions that have fewer than two members. Scoped to specific ids so that
+   * each check is an index lookup rather than a scan of every collision.
    */
-  private fun pruneCollisions() {
+  private fun pruneCollisions(collisionIds: Collection<Long>) {
     check(writableDatabase.inTransaction())
 
-    writableDatabase.execSQL(
-      """
-      DELETE FROM ${NameCollisionTable.TABLE_NAME}
-      WHERE ${NameCollisionTable.TABLE_NAME}.$ID IN (
-          SELECT ${NameCollisionMembershipTable.COLLISION_ID}
+    if (collisionIds.isEmpty()) {
+      return
+    }
+
+    for (query in SqlUtil.buildCollectionQuery(ID, collisionIds)) {
+      writableDatabase.execSQL(
+        """
+        DELETE FROM ${NameCollisionTable.TABLE_NAME}
+        WHERE ${query.where} AND (
+          SELECT COUNT(*)
           FROM ${NameCollisionMembershipTable.TABLE_NAME}
-          GROUP BY ${NameCollisionMembershipTable.COLLISION_ID}
-          HAVING COUNT($ID) < 2
+          WHERE ${NameCollisionMembershipTable.TABLE_NAME}.${NameCollisionMembershipTable.COLLISION_ID} = ${NameCollisionTable.TABLE_NAME}.$ID
+        ) < 2
+        """.trimIndent(),
+        query.whereArgs
       )
-      """.trimIndent()
-    )
+    }
   }
 
   private fun getDuplicatedGroupRecipients(groupId: V2, toCheck: Set<RecipientId>): List<ReviewRecipient> {
@@ -432,6 +530,9 @@ class NameCollisionTables(
 
     val results = mutableListOf<ReviewRecipient>()
 
+    val cachedDisplayNames = HashMap<RecipientId, String>(members.size + changed.size)
+    val displayName = { recipient: Recipient -> cachedDisplayNames.getOrPut(recipient.id) { recipient.getDisplayName(context) } }
+
     for (reviewRecipient in changed) {
       if (results.contains(reviewRecipient)) {
         continue
@@ -439,8 +540,10 @@ class NameCollisionTables(
 
       members.remove(reviewRecipient.recipient)
 
+      val changedDisplayName = displayName(reviewRecipient.recipient)
+
       for (member in members) {
-        if (member.getDisplayName(context) == reviewRecipient.recipient.getDisplayName(context)) {
+        if (displayName(member) == changedDisplayName) {
           results.add(reviewRecipient)
           results.add(ReviewRecipient(member))
         }

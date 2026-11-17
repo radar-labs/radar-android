@@ -3,9 +3,6 @@ package org.thoughtcrime.securesms.payments.reconciliation;
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.ComparatorCompat;
-import com.annimon.stream.Stream;
 
 import org.signal.core.util.MapUtil;
 import org.signal.core.util.logging.Log;
@@ -14,6 +11,7 @@ import org.thoughtcrime.securesms.payments.history.TransactionReconstruction;
 import org.whispersystems.signalservice.api.payments.Money;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -37,7 +35,7 @@ public final class LedgerReconcile {
   private static @NonNull List<Payment> reconcile(@NonNull Collection<? extends Payment> allLocalPaymentTransactions,
                                                   @NonNull List<MobileCoinLedgerWrapper.OwnedTxo> allTxOuts)
   {
-    List<? extends Payment> nonFailedLocalPayments = Stream.of(allLocalPaymentTransactions).filter(i -> i.getState() != State.FAILED).toList();
+    List<? extends Payment> nonFailedLocalPayments = allLocalPaymentTransactions.stream().filter(i -> i.getState() != State.FAILED).collect(Collectors.toList());
     Set<String> allKnownKeys = new HashSet<>(nonFailedLocalPayments.size());
 
     for (Payment paymentTransaction : nonFailedLocalPayments) {
@@ -50,7 +48,7 @@ public final class LedgerReconcile {
       allKnownKeys.add(key);
     }
 
-    Set<MobileCoinLedgerWrapper.OwnedTxo> knownTxosByPublicKeys = Stream.of(allTxOuts)
+    Set<MobileCoinLedgerWrapper.OwnedTxo> knownTxosByPublicKeys = allTxOuts.stream()
                                                                         .filter(t -> allKnownKeys.contains(t.getIdentifier()))
                                                                         .collect(Collectors.toSet());
 
@@ -59,7 +57,7 @@ public final class LedgerReconcile {
     unknownTxOutsReceived.removeAll(knownTxosByPublicKeys);
 
     if (unknownTxOutsReceived.isEmpty()) {
-      return Stream.of(allLocalPaymentTransactions).map(t -> (Payment) t).toList();
+      return allLocalPaymentTransactions.stream().map(t -> (Payment) t).collect(Collectors.toList());
     }
 
     List<Payment> reconstructedPayments = new ArrayList<>(unknownTxOutsReceived.size());

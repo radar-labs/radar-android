@@ -1,0 +1,63 @@
+plugins {
+  id("signal-library")
+  alias(libs.plugins.compose.compiler)
+  alias(libs.plugins.kotlinx.serialization)
+}
+
+android {
+  namespace = "org.signal.core.ui"
+
+  buildFeatures {
+    compose = true
+  }
+
+  testFixtures {
+    enable = true
+  }
+
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+    }
+  }
+}
+
+dependencies {
+  lintChecks(project(":lintchecks"))
+
+  api(project(":core:util"))
+
+  api(platform(libs.androidx.compose.bom))
+  androidTestImplementation(platform(libs.androidx.compose.bom))
+
+  api(libs.androidx.compose.material3)
+  api(libs.androidx.compose.material3.adaptive)
+  implementation(libs.androidx.navigation3.ui)
+  implementation(libs.androidx.navigation3.runtime)
+  implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+  implementation(libs.androidx.lifecycle.runtime.compose)
+  api(libs.androidx.compose.ui.tooling.preview)
+  api(libs.androidx.activity.compose)
+  debugApi(libs.androidx.compose.ui.tooling.core)
+  api(libs.androidx.fragment.compose)
+  api(libs.androidx.biometric)
+  implementation(libs.kotlinx.serialization.json)
+  api(libs.google.zxing.core)
+  api(libs.material.material)
+  api(libs.androidx.window.window)
+  api(libs.accompanist.permissions)
+
+  testImplementation(testLibs.junit.junit)
+  testImplementation(testLibs.assertk)
+  testImplementation(testLibs.kotlinx.coroutines.test)
+  testImplementation(testLibs.robolectric.robolectric)
+  testImplementation(libs.androidx.compose.ui.test.junit4)
+
+  // Supplies the ComponentActivity that createComposeRule() launches the content into
+  debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+  // JUnit is used by test fixtures
+  testFixturesImplementation(testLibs.junit.junit)
+  testFixturesImplementation(testLibs.androidx.test.core)
+  testFixturesApi(project(":screener"))
+}

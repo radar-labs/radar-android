@@ -2,21 +2,21 @@ package org.thoughtcrime.securesms.database
 
 import okio.ByteString.Companion.toByteString
 import org.signal.core.models.ServiceId
+import org.signal.core.models.recipients.RecipientId
 import org.signal.libsignal.zkgroup.groups.GroupMasterKey
-import org.signal.storageservice.protos.groups.AccessControl
-import org.signal.storageservice.protos.groups.GroupChange
-import org.signal.storageservice.protos.groups.Member
-import org.signal.storageservice.protos.groups.local.DecryptedGroup
-import org.signal.storageservice.protos.groups.local.DecryptedGroupChange
-import org.signal.storageservice.protos.groups.local.DecryptedMember
-import org.signal.storageservice.protos.groups.local.DecryptedPendingMember
-import org.signal.storageservice.protos.groups.local.DecryptedRequestingMember
-import org.signal.storageservice.protos.groups.local.DecryptedString
-import org.signal.storageservice.protos.groups.local.DecryptedTimer
-import org.signal.storageservice.protos.groups.local.EnabledState
+import org.signal.storageservice.storage.protos.groups.AccessControl
+import org.signal.storageservice.storage.protos.groups.GroupChange
+import org.signal.storageservice.storage.protos.groups.Member
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroup
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroupChange
+import org.signal.storageservice.storage.protos.groups.local.DecryptedMember
+import org.signal.storageservice.storage.protos.groups.local.DecryptedPendingMember
+import org.signal.storageservice.storage.protos.groups.local.DecryptedRequestingMember
+import org.signal.storageservice.storage.protos.groups.local.DecryptedString
+import org.signal.storageservice.storage.protos.groups.local.DecryptedTimer
+import org.signal.storageservice.storage.protos.groups.local.EnabledState
 import org.thoughtcrime.securesms.database.model.GroupRecord
 import org.thoughtcrime.securesms.groups.GroupId
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.whispersystems.signalservice.api.groupsv2.DecryptedGroupChangeLog
 import org.whispersystems.signalservice.api.groupsv2.GroupHistoryPage
 import org.whispersystems.signalservice.api.groupsv2.GroupsV2Operations
@@ -80,12 +80,12 @@ class GroupChangeData(private val revision: Int, private val groupOperations: Gr
     get() {
       return groupChangeBuilder
         .changeEpoch(changeEpoch)
-        .actions(actionsBuilder.revision(revision).build().encodeByteString())
+        .actions(actionsBuilder.version(revision).build().encodeByteString())
         .build()
     }
 
   fun source(serviceId: ServiceId) {
-    actionsBuilder.sourceServiceId = groupOperations.encryptServiceId(serviceId)
+    actionsBuilder.sourceUserId = groupOperations.encryptServiceId(serviceId)
   }
 
   fun deleteMember(serviceId: ServiceId) {
@@ -94,6 +94,22 @@ class GroupChangeData(private val revision: Int, private val groupOperations: Gr
 
   fun modifyRole(serviceId: ServiceId, role: Member.Role) {
     actionsBuilder.modifyMemberRoles += GroupChange.Actions.ModifyMemberRoleAction(userId = groupOperations.encryptServiceId(serviceId), role = role)
+  }
+
+  fun clearMemberLabel(serviceId: ServiceId) {
+    actionsBuilder.modifyMemberLabels += GroupChange.Actions.ModifyMemberLabelAction(
+      userId = groupOperations.encryptServiceId(serviceId),
+      labelEmoji = okio.ByteString.EMPTY,
+      labelString = okio.ByteString.EMPTY
+    )
+  }
+
+  fun changeMemberLabelAccess(access: AccessControl.AccessRequired) {
+    actionsBuilder.modifyMemberLabelAccess = GroupChange.Actions.ModifyMemberLabelAccessControlAction(memberLabelAccess = access)
+  }
+
+  fun terminateGroup() {
+    actionsBuilder.terminate_group = GroupChange.Actions.TerminateGroupAction()
   }
 }
 
@@ -122,9 +138,11 @@ class GroupStateTestData(private val masterKey: GroupMasterKey, private val grou
     requestingMembers: List<DecryptedRequestingMember> = emptyList(),
     inviteLinkPassword: ByteArray = ByteArray(0),
     disappearingMessageTimer: DecryptedTimer = DecryptedTimer(),
-    isPlaceholderGroup: Boolean = false
+    isPlaceholderGroup: Boolean = false,
+    terminated: Boolean = false,
+    needsServerSnapshot: Boolean = false
   ) {
-    localState = decryptedGroup(revision, title, avatar, description, accessControl, members, pendingMembers, requestingMembers, inviteLinkPassword, disappearingMessageTimer, isPlaceholderGroup)
+    localState = decryptedGroup(revision, title, avatar, description, accessControl, members, pendingMembers, requestingMembers, inviteLinkPassword, disappearingMessageTimer, isPlaceholderGroup, terminated, needsServerSnapshot)
     groupRecord = groupRecord(masterKey, localState!!, active = active)
   }
 
@@ -139,9 +157,10 @@ class GroupStateTestData(private val masterKey: GroupMasterKey, private val grou
     pendingMembers: List<DecryptedPendingMember> = extendGroup?.pendingMembers ?: emptyList(),
     requestingMembers: List<DecryptedRequestingMember> = extendGroup?.requestingMembers ?: emptyList(),
     inviteLinkPassword: ByteArray = extendGroup?.inviteLinkPassword?.toByteArray() ?: ByteArray(0),
-    disappearingMessageTimer: DecryptedTimer = extendGroup?.disappearingMessagesTimer ?: DecryptedTimer()
+    disappearingMessageTimer: DecryptedTimer = extendGroup?.disappearingMessagesTimer ?: DecryptedTimer(),
+    terminated: Boolean = extendGroup?.terminated ?: false
   ) {
-    serverState = decryptedGroup(revision, title, avatar, description, accessControl, members, pendingMembers, requestingMembers, inviteLinkPassword, disappearingMessageTimer)
+    serverState = decryptedGroup(revision, title, avatar, description, accessControl, members, pendingMembers, requestingMembers, inviteLinkPassword, disappearingMessageTimer, terminated = terminated)
   }
 
   fun changeSet(init: ChangeSet.() -> Unit) {
@@ -179,23 +198,24 @@ fun groupRecord(
 ): Optional<GroupRecord> {
   return Optional.of(
     GroupRecord(
-      id,
-      recipientId,
-      decryptedGroup.title,
-      members,
-      unmigratedV1Members,
-      avatarId,
-      avatarKey,
-      avatarContentType,
-      active,
-      avatarDigest,
-      mms,
-      masterKey.serialize(),
-      decryptedGroup.revision,
-      decryptedGroup.encode(),
-      distributionId,
-      System.currentTimeMillis(),
-      0
+      id = id,
+      recipientId = recipientId,
+      title = decryptedGroup.title,
+      serializedMembers = members,
+      serializedUnmigratedV1Members = unmigratedV1Members,
+      avatarId = avatarId,
+      avatarKey = avatarKey,
+      avatarContentType = avatarContentType,
+      isMember = active,
+      terminatedBy = if (decryptedGroup.terminated) -1L else 0L,
+      avatarDigest = avatarDigest,
+      isMms = mms,
+      groupMasterKeyBytes = masterKey.serialize(),
+      groupRevision = decryptedGroup.revision,
+      decryptedGroupBytes = decryptedGroup.encode(),
+      distributionId = distributionId,
+      lastForceUpdateTimestamp = System.currentTimeMillis(),
+      groupSendEndorsementExpiration = 0
     )
   )
 }
@@ -211,7 +231,9 @@ fun decryptedGroup(
   requestingMembers: List<DecryptedRequestingMember> = emptyList(),
   inviteLinkPassword: ByteArray = ByteArray(0),
   disappearingMessageTimer: DecryptedTimer = DecryptedTimer(),
-  isPlaceholderGroup: Boolean = false
+  isPlaceholderGroup: Boolean = false,
+  terminated: Boolean = false,
+  needsServerSnapshot: Boolean = false
 ): DecryptedGroup {
   return DecryptedGroup(
     accessControl = accessControl,
@@ -225,6 +247,8 @@ fun decryptedGroup(
     members = members,
     pendingMembers = pendingMembers,
     requestingMembers = requestingMembers,
-    isPlaceholderGroup = isPlaceholderGroup
+    isPlaceholderGroup = isPlaceholderGroup,
+    terminated = terminated,
+    needsServerSnapshot = needsServerSnapshot
   )
 }

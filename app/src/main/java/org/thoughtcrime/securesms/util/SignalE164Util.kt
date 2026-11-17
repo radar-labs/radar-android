@@ -5,7 +5,10 @@
 
 package org.thoughtcrime.securesms.util
 
+import org.signal.core.util.BidiUtil
 import org.signal.core.util.E164Util
+import org.signal.core.util.LRUCache
+import org.signal.core.util.Util
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 
@@ -13,6 +16,12 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore
  * A wrapper around [E164Util] that automatically handles fetching our own number and caching formatters.
  */
 object SignalE164Util {
+
+  /**
+   * The country code used in place of a real one for accounts without a phone number, allowing locale-based
+   * remote configs to target them.
+   */
+  const val NUMBERLESS_COUNTRY_CODE: Int = 99999
 
   private val cachedFormatters: MutableMap<String, E164Util.Formatter> = LRUCache(2)
   private val defaultFormatter: E164Util.Formatter by lazy {
@@ -28,7 +37,7 @@ object SignalE164Util {
    */
   @JvmStatic
   fun prettyPrint(input: String): String {
-    return getFormatter().prettyPrint(input)
+    return BidiUtil.forceLtr(getFormatter().prettyPrint(input))
   }
 
   /**
@@ -36,6 +45,15 @@ object SignalE164Util {
    */
   fun getLocalCountryCode(): Int {
     return getFormatter().localNumber?.countryCode ?: 0
+  }
+
+  /**
+   * The country code to use when evaluating locale-based remote configs. Accounts without a phone number are
+   * represented by [NUMBERLESS_COUNTRY_CODE].
+   */
+  @JvmStatic
+  fun getRemoteConfigCountryCode(): Int {
+    return if (SignalStore.account.e164 == null) NUMBERLESS_COUNTRY_CODE else getLocalCountryCode()
   }
 
   /**

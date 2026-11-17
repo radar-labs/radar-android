@@ -6,9 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import com.fasterxml.jackson.annotation.JsonProperty
-import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.signal.core.util.Hex
+import org.signal.core.util.JsonUtils
 import org.signal.core.util.forEach
 import org.signal.core.util.getDownloadManager
 import org.signal.core.util.logging.Log
@@ -17,12 +17,12 @@ import org.signal.core.util.requireLong
 import org.signal.core.util.requireString
 import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.apkupdate.ApkUpdateDownloadManagerReceiver
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.util.Environment
 import org.thoughtcrime.securesms.util.FileUtils
-import org.thoughtcrime.securesms.util.JsonUtils
 import java.io.FileInputStream
 import java.io.IOException
 import java.security.MessageDigest
@@ -63,7 +63,7 @@ class ApkUpdateJob private constructor(parameters: Parameters) : BaseJob(paramet
 
     Log.d(TAG, "Checking for APK update at ${BuildConfig.APK_UPDATE_MANIFEST_URL}")
 
-    val client = OkHttpClient()
+    val client = AppDependencies.okHttpClient
     val request = Request.Builder().url(BuildConfig.APK_UPDATE_MANIFEST_URL).build()
 
     val rawUpdateDescriptor: String = client.newCall(request).execute().use { response ->

@@ -9,10 +9,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.signal.core.database.select
+import org.signal.core.database.withinTransaction
 import org.signal.core.util.ThreadUtil
 import org.signal.core.util.readToList
-import org.signal.core.util.select
-import org.signal.core.util.withinTransaction
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.database.MessageTable
 import org.thoughtcrime.securesms.database.SignalDatabase
@@ -75,6 +75,14 @@ class EditMessageSyncProcessorTest {
             .timestamp(originalTimestamp)
             .expirationStartTimestamp(originalTimestamp)
             .message(content.dataMessage)
+            .unidentifiedStatus(
+              listOf(
+                SyncMessage.Sent.UnidentifiedDeliveryStatus.Builder()
+                  .destinationServiceIdBinary(toRecipient.requireServiceId().toByteString())
+                  .unidentified(true)
+                  .build()
+              )
+            )
             .build()
         ).build()
       ).build()
@@ -99,6 +107,14 @@ class EditMessageSyncProcessorTest {
                 .dataMessage(editedContent.dataMessage)
                 .targetSentTimestamp(originalTimestamp)
                 .build()
+            )
+            .unidentifiedStatus(
+              listOf(
+                SyncMessage.Sent.UnidentifiedDeliveryStatus.Builder()
+                  .destinationServiceIdBinary(toRecipient.requireServiceId().toByteString())
+                  .unidentified(true)
+                  .build()
+              )
             )
             .build()
         ).build()
@@ -191,7 +207,7 @@ class EditMessageSyncProcessorTest {
     }
 
     fun cleanup() {
-      SignalDatabase.rawDatabase.withinTransaction { db ->
+      SignalDatabase.writableDatabase.withinTransaction { db ->
         SignalDatabase.threads.deleteAllConversations()
         db.execSQL("DELETE FROM sqlite_sequence WHERE name = '${MessageTable.TABLE_NAME}'")
         db.execSQL("DELETE FROM sqlite_sequence WHERE name = '${ThreadTable.TABLE_NAME}'")

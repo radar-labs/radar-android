@@ -6,16 +6,19 @@
 package org.thoughtcrime.securesms.backup.v2
 
 import android.text.TextUtils
+import kotlinx.coroutines.runBlocking
 import org.signal.core.models.backup.MediaName
 import org.signal.core.util.Base64
 import org.signal.core.util.Base64.decodeBase64
 import org.signal.core.util.Base64.decodeBase64OrThrow
+import org.signal.core.util.Util
+import org.signal.network.service.successOrThrow
+import org.signal.remoteconfig.RemoteConfig
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.attachments.InvalidAttachmentException
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.util.RemoteConfig
-import org.thoughtcrime.securesms.util.Util
+import org.thoughtcrime.securesms.net.SignalNetwork
 import org.whispersystems.signalservice.api.messages.SignalServiceAttachmentPointer
 import org.whispersystems.signalservice.api.messages.SignalServiceAttachmentRemoteId
 import java.io.IOException
@@ -24,7 +27,7 @@ import java.util.Optional
 object DatabaseAttachmentArchiveUtil {
   @JvmStatic
   fun requireMediaName(attachment: DatabaseAttachment): MediaName {
-    require(hadIntegrityCheckPerformed(attachment))
+    require(hadIntegrityCheckPerformed(attachment)) { "${attachment.attachmentId} has not had its integrity check performed yet. TransferState: ${attachment.transferState}, ArchiveTransferState: ${attachment.archiveTransferState}" }
     return MediaName.fromPlaintextHashAndRemoteKey(attachment.dataHash!!.decodeBase64OrThrow(), attachment.remoteKey!!.decodeBase64OrThrow())
   }
 
@@ -33,7 +36,7 @@ object DatabaseAttachmentArchiveUtil {
    */
   @JvmStatic
   fun requireMediaNameAsString(attachment: DatabaseAttachment): String {
-    require(hadIntegrityCheckPerformed(attachment))
+    require(hadIntegrityCheckPerformed(attachment)) { "${attachment.attachmentId} has not had its integrity check performed yet. TransferState: ${attachment.transferState}, ArchiveTransferState: ${attachment.archiveTransferState}" }
     return MediaName.fromPlaintextHashAndRemoteKey(attachment.dataHash!!.decodeBase64OrThrow(), attachment.remoteKey!!.decodeBase64OrThrow()).name
   }
 
@@ -55,7 +58,7 @@ object DatabaseAttachmentArchiveUtil {
 
   @JvmStatic
   fun requireThumbnailMediaName(attachment: DatabaseAttachment): MediaName {
-    require(hadIntegrityCheckPerformed(attachment))
+    require(hadIntegrityCheckPerformed(attachment)) { "${attachment.attachmentId} has not had its integrity check performed yet. TransferState: ${attachment.transferState}, ArchiveTransferState: ${attachment.archiveTransferState}" }
     return MediaName.fromPlaintextHashAndRemoteKeyForThumbnail(attachment.dataHash!!.decodeBase64OrThrow(), attachment.remoteKey!!.decodeBase64OrThrow())
   }
 
@@ -96,9 +99,11 @@ fun DatabaseAttachment.hadIntegrityCheckPerformed(): Boolean {
 
 /**
  * Creates a [SignalServiceAttachmentPointer] for the archived attachment of the given [DatabaseAttachment].
+ *
+ * @param archiveCdnOverride The archive CDN to point at instead of the one we have stored, for retrying a download whose stored CDN looks wrong.
  */
 @Throws(InvalidAttachmentException::class)
-fun DatabaseAttachment.createArchiveAttachmentPointer(useArchiveCdn: Boolean): SignalServiceAttachmentPointer {
+fun DatabaseAttachment.createArchiveAttachmentPointer(useArchiveCdn: Boolean, archiveCdnOverride: Int? = null): SignalServiceAttachmentPointer {
   if (remoteKey.isNullOrBlank()) {
     throw InvalidAttachmentException("empty encrypted key")
   }
@@ -110,20 +115,20 @@ fun DatabaseAttachment.createArchiveAttachmentPointer(useArchiveCdn: Boolean): S
   return try {
     val (remoteId, cdnNumber) = if (useArchiveCdn) {
       val mediaRootBackupKey = SignalStore.backup.mediaRootBackupKey
-      val mediaCdnPath = BackupRepository.getArchivedMediaCdnPath().successOrThrow()
+      val mediaCdnPath = runBlocking { SignalNetwork.archiveService.getArchivedMediaCdnPath() }.successOrThrow()
 
       val id = SignalServiceAttachmentRemoteId.Backup(
         mediaCdnPath = mediaCdnPath,
         mediaId = this.requireMediaName().toMediaId(mediaRootBackupKey).encode()
       )
 
-      id to (archiveCdn ?: RemoteConfig.backupFallbackArchiveCdn)
+      id to (archiveCdnOverride ?: archiveCdn ?: RemoteConfig.backupFallbackArchiveCdn)
     } else {
       if (remoteLocation.isNullOrEmpty()) {
         throw InvalidAttachmentException("empty content id")
       }
 
-      SignalServiceAttachmentRemoteId.from(remoteLocation) to cdn.cdnNumber
+      SignalServiceAttachmentRemoteId.from(remoteLocation, cdn.cdnNumber) to cdn.cdnNumber
     }
 
     val key = Base64.decode(remoteKey)
@@ -166,7 +171,7 @@ fun DatabaseAttachment.createArchiveThumbnailPointer(): SignalServiceAttachmentP
   }
 
   val mediaRootBackupKey = SignalStore.backup.mediaRootBackupKey
-  val mediaCdnPath = BackupRepository.getArchivedMediaCdnPath().successOrThrow()
+  val mediaCdnPath = runBlocking { SignalNetwork.archiveService.getArchivedMediaCdnPath() }.successOrThrow()
   return try {
     val key = mediaRootBackupKey.deriveThumbnailTransitKey(requireThumbnailMediaName())
     val mediaId = mediaRootBackupKey.deriveMediaId(requireThumbnailMediaName()).encode()

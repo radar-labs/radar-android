@@ -7,25 +7,26 @@ package org.thoughtcrime.securesms.components.webrtc.v2
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.KeyguardManager
 import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.hardware.display.DisplayManager
 import android.media.AudioManager
+import android.media.projection.MediaProjectionConfig
+import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
 import android.view.Surface
 import android.view.ViewGroup
-import android.view.Window
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import androidx.core.util.Consumer
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -39,25 +40,32 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.ui.BottomSheetUtil
+import org.signal.core.ui.permissions.Permissions
+import org.signal.core.util.DeviceProperties
+import org.signal.core.util.EllapsedTimeFormatter
 import org.signal.core.util.ThreadUtil
+import org.signal.core.util.ThrottledDebouncer
 import org.signal.core.util.concurrent.LifecycleDisposable
-import org.signal.core.util.concurrent.SignalDispatchers
 import org.signal.core.util.concurrent.SignalExecutors
+import org.signal.core.util.eventbus.EventBus
+import org.signal.core.util.eventbus.RestartableSubscription
+import org.signal.core.util.eventbus.ThreadMode
 import org.signal.core.util.isInMultiWindowModeCompat
 import org.signal.core.util.logging.Log
+import org.signal.remoteconfig.RemoteConfig
 import org.signal.ringrtc.CallManager
 import org.thoughtcrime.securesms.BaseActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.sensors.Orientation
 import org.thoughtcrime.securesms.components.webrtc.CallLinkProfileKeySender
 import org.thoughtcrime.securesms.components.webrtc.CallParticipantsState
-import org.thoughtcrime.securesms.components.webrtc.CallReactionScrubber
-import org.thoughtcrime.securesms.components.webrtc.CallToastPopupWindow
 import org.thoughtcrime.securesms.components.webrtc.GroupCallSafetyNumberChangeNotificationUtil
 import org.thoughtcrime.securesms.components.webrtc.InCallStatus
 import org.thoughtcrime.securesms.components.webrtc.PendingParticipantsBottomSheet
@@ -70,28 +78,22 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.events.WebRtcViewModel
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.messagerequests.CalleeMustAcceptMessageRequestActivity
-import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.ratelimit.RecaptchaProofBottomSheetFragment
 import org.thoughtcrime.securesms.ratelimit.RecaptchaRequiredEvent
 import org.thoughtcrime.securesms.reactions.any.ReactWithAnyEmojiBottomSheetDialogFragment
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.safety.SafetyNumberBottomSheet
+import org.thoughtcrime.securesms.service.webrtc.ActiveCallManager
 import org.thoughtcrime.securesms.service.webrtc.CallLinkDisconnectReason
 import org.thoughtcrime.securesms.service.webrtc.SignalCallManager
 import org.thoughtcrime.securesms.sms.MessageSender
-import org.thoughtcrime.securesms.util.BottomSheetUtil
-import org.thoughtcrime.securesms.util.EllapsedTimeFormatter
 import org.thoughtcrime.securesms.util.FullscreenHelper
-import org.thoughtcrime.securesms.util.RemoteConfig
-import org.thoughtcrime.securesms.util.TextSecurePreferences
-import org.thoughtcrime.securesms.util.ThrottledDebouncer
 import org.thoughtcrime.securesms.util.VibrateUtil
-import org.thoughtcrime.securesms.util.WindowUtil
 import org.thoughtcrime.securesms.webrtc.CallParticipantsViewState
 import org.thoughtcrime.securesms.webrtc.audio.SignalAudioManager
 import org.thoughtcrime.securesms.webrtc.audio.SignalAudioManager.ChosenAudioDeviceIdentifier
 import org.whispersystems.signalservice.api.messages.calls.HangupMessage
+import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
 
 /** Conversion */
@@ -102,16 +104,29 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     private const val STANDARD_DELAY_FINISH = 1000L
     private const val VIBRATE_DURATION = 50
-  }
+    private const val CUSTOM_REACTION_BOTTOM_SHEET_TAG = "CallReaction"
+    private const val SAVED_STATE_PIP_ASPECT_RATIO = "pip_aspect_ratio"
+    private const val SAVED_STATE_LOCAL_PARTICIPANT_LANDSCAPE = "local_participant_landscape"
 
-  /**
-   * Draws edge to edge via [ComposeCallScreenMediator] and positions its own content against the insets.
-   *
-   * This must also stay false because [onCreate] calls [requestWindowFeature] after `super.onCreate()`.
-   * BaseActivity's inset handling looks up `android.R.id.content`, which makes AppCompat install the
-   * window content, after which [requestWindowFeature] throws and the call screen crashes.
-   */
-  override fun fitsSystemBars(): Boolean = false
+    private val BACKGROUND_RESTRICTION_WARNING_STATES = setOf(
+      WebRtcViewModel.State.CALL_PRE_JOIN,
+      WebRtcViewModel.State.CALL_OUTGOING,
+      WebRtcViewModel.State.CALL_CONNECTED
+    )
+
+    private val PHONE_STATE_PERMISSION_STATES = setOf(
+      WebRtcViewModel.State.CALL_OUTGOING,
+      WebRtcViewModel.State.CALL_CONNECTED
+    )
+
+    /**
+     * The system rejects picture-in-picture aspect ratios outside of [1/2.39, 2.39] with an
+     * IllegalArgumentException. We stay a hair inside those bounds so that rounding when converting
+     * to a [Rational] can never push us back over the line.
+     */
+    private const val MIN_PIP_ASPECT_RATIO = 0.42f
+    private const val MAX_PIP_ASPECT_RATIO = 2.38f
+  }
 
   private lateinit var callScreen: CallScreenMediator
   private var videoTooltip: Dismissible? = null
@@ -119,21 +134,41 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
   private val viewModel: WebRtcCallViewModel by viewModels()
   private var enableVideoIfAvailable: Boolean = false
   private var hasWarnedAboutBluetooth: Boolean = false
+  private var hasWarnedAboutBackgroundRestriction: Boolean = false
+  private var hasWarnedAboutMicrophoneSilenced: Boolean = false
+  private var hasRequestedPhoneStatePermission: Boolean = false
   private lateinit var windowLayoutInfoConsumer: WindowLayoutInfoConsumer
   private lateinit var windowInfoTrackerCallbackAdapter: WindowInfoTrackerCallbackAdapter
   private lateinit var requestNewSizesThrottle: ThrottledDebouncer
   private lateinit var pipBuilderParams: PictureInPictureParams.Builder
+  private var lastPipAspectRatio: Float = 0f
+  private var lastLocalParticipantLandscape: Boolean = false
   private val lifecycleDisposable = LifecycleDisposable()
   private var lastCallLinkDisconnectDialogShowTime: Long = 0L
   private var enterPipOnResume: Boolean = false
   private var lastProcessedIntentTimestamp = 0L
   private var previousEvent: WebRtcViewModel? = null
+  private var answeredFromNotification: Boolean = false
   private var ephemeralStateDisposable = Disposable.empty()
   private val callPermissionsDialogController = CallPermissionsDialogController()
+  private val eventSubscriptions = listOf(
+    RestartableSubscription { EventBus.default.subscribe<RecaptchaRequiredEvent>(ThreadMode.MAIN, ::onRecaptchaRequiredEvent) },
+    RestartableSubscription { EventBus.default.subscribeSticky<WebRtcViewModel>(ThreadMode.MAIN, ::onEventMainThread) }
+  )
+  private val mediaProjectionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == RESULT_OK && result.data != null) {
+      AppDependencies.signalCallManager.startScreenShare(result.data!!)
+    }
+  }
 
   override fun attachBaseContext(newBase: Context) {
     delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
     super.attachBaseContext(newBase)
+  }
+
+  override fun onConfigurationChanged(newConfig: Configuration) {
+    super.onConfigurationChanged(newConfig)
+    recreate()
   }
 
   @SuppressLint("MissingInflatedId")
@@ -143,21 +178,32 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     lifecycleDisposable.bindTo(this)
 
-    if (Build.VERSION.SDK_INT >= 27) {
-      setShowWhenLocked(true)
-    } else {
-      window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
-    }
-
     super.onCreate(savedInstanceState)
-
-    requestWindowFeature(Window.FEATURE_NO_TITLE)
 
     volumeControlStream = AudioManager.STREAM_VOICE_CALL
 
     initializeResources()
     initializeViewModel()
-    initializePictureInPictureParams()
+
+    onBackPressedDispatcher.addCallback(
+      this,
+      object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+          if (viewModel.callParticipantsStateSnapshot.callState != WebRtcViewModel.State.CALL_INCOMING && enterPipModeIfPossible()) {
+            return
+          }
+          isEnabled = false
+          onBackPressedDispatcher.onBackPressed()
+          isEnabled = true
+        }
+      }
+    )
+
+    // Restore saved state if recreated while in PIP mode
+    val savedAspectRatio = savedInstanceState?.getFloat(SAVED_STATE_PIP_ASPECT_RATIO, 0f) ?: 0f
+    lastLocalParticipantLandscape = savedInstanceState?.getBoolean(SAVED_STATE_LOCAL_PARTICIPANT_LANDSCAPE, false) ?: false
+    viewModel.setSavedLocalParticipantLandscape(lastLocalParticipantLandscape)
+    initializePictureInPictureParams(savedAspectRatio)
 
     callScreen.setControlsAndInfoVisibilityListener(ControlsVisibilityListener())
 
@@ -189,10 +235,6 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     initializePendingParticipantFragmentListener()
 
-    if (!SignalStore.internal.newCallingUi) {
-      WindowUtil.setNavigationBarColor(this, ContextCompat.getColor(this, R.color.signal_dark_colorSurface))
-    }
-
     if (!hasCameraPermission() && !hasAudioPermission()) {
       askCameraAudioPermissions {
         callScreen.setMicEnabled(viewModel.microphoneEnabled.value)
@@ -203,6 +245,17 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
         callScreen.setMicEnabled(viewModel.microphoneEnabled.value)
       }
     }
+
+    lifecycleScope.launch {
+      viewModel
+        .isLocalScreenSharing
+        .drop(1)
+        .collect { sharing ->
+          if (!sharing && !lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            AppDependencies.signalCallManager.setEnableVideo(false)
+          }
+        }
+    }
   }
 
   override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -210,7 +263,20 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     callScreen.onStateRestored()
   }
 
+  override fun onSaveInstanceState(outState: Bundle) {
+    super.onSaveInstanceState(outState)
+    // Always save these values - Activity may recreate while entering PIP (before isInPipMode is true)
+    if (lastPipAspectRatio > 0f) {
+      outState.putFloat(SAVED_STATE_PIP_ASPECT_RATIO, lastPipAspectRatio)
+    }
+    outState.putBoolean(SAVED_STATE_LOCAL_PARTICIPANT_LANDSCAPE, lastLocalParticipantLandscape)
+  }
+
   override fun onStart() {
+    // This instance outlived being backgrounded (e.g. the screen was turned off and back on), so any relaunch scheduled in onStop() is unnecessary.
+    // Cancel it before super.onStart() dispatches the app-foregrounded event, otherwise it would yank the call out of PiP and into fullscreen.
+    AppDependencies.signalCallManager.cancelPipRelaunch()
+
     super.onStart()
 
     ephemeralStateDisposable = AppDependencies.signalCallManager
@@ -225,15 +291,13 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     initializeScreenshotSecurity()
 
-    if (!EventBus.getDefault().isRegistered(this)) {
-      EventBus.getDefault().register(this)
-    }
+    subscribeToEvents()
 
-    val rtcViewModel = EventBus.getDefault().getStickyEvent(WebRtcViewModel::class.java)
+    val rtcViewModel = EventBus.default.getStickyEvent<WebRtcViewModel>()
     if (rtcViewModel == null) {
       Log.w(TAG, "Activity resumed without service event, perform delay destroy")
       ThreadUtil.runOnMainDelayed({
-        val delayedViewModel = EventBus.getDefault().getStickyEvent(WebRtcViewModel::class.java)
+        val delayedViewModel = EventBus.default.getStickyEvent<WebRtcViewModel>()
         if (delayedViewModel == null) {
           Log.w(TAG, "Activity still without service event, finishing activity")
           finish()
@@ -251,12 +315,16 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     if (SignalStore.rateLimit.needsRecaptcha()) {
       RecaptchaProofBottomSheetFragment.show(supportFragmentManager)
     }
+
+    updateIncomingRingingVanity()
   }
 
   override fun onNewIntent(intent: Intent) {
+    super.onNewIntent(intent)
+    setIntent(intent)
+
     val callIntent = getCallIntent()
     Log.i(TAG, "onNewIntent(${callIntent.isStartedFromFullScreen})")
-    super.onNewIntent(intent)
     logIntent(callIntent)
     processIntent(callIntent)
   }
@@ -265,15 +333,17 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     Log.i(TAG, "onPause")
     super.onPause()
 
+    disableIncomingRingingVanity()
+
     if (!isInPipMode() || isFinishing) {
-      EventBus.getDefault().unregister(this)
+      unsubscribeFromEvents()
     }
 
     if (!callPermissionsDialogController.isAskingForPermission && !viewModel.isCallStarting && !isChangingConfigurations) {
       val state = viewModel.callParticipantsStateSnapshot
       if (state.callState.isPreJoinOrNetworkUnavailable || (Build.VERSION.SDK_INT >= 27 && state.callState.isIncomingOrHandledElsewhere)) {
-        if (getCallIntent().isStartedFromFullScreen && state.callState == WebRtcViewModel.State.CALL_INCOMING) {
-          Log.w(TAG, "Pausing during full-screen incoming call view. Refusing to finish.")
+        if (state.callState == WebRtcViewModel.State.CALL_INCOMING) {
+          Log.w(TAG, "Pausing during incoming call view. Refusing to finish.")
         } else {
           finish()
         }
@@ -288,11 +358,11 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     ephemeralStateDisposable.dispose()
 
     if (!isInPipMode() || isFinishing) {
-      EventBus.getDefault().unregister(this)
+      unsubscribeFromEvents()
       requestNewSizesThrottle.clear()
     }
 
-    if (!isChangingConfigurations && !isInMultiWindowModeCompat()) {
+    if (!isChangingConfigurations && !isInMultiWindowModeCompat() && !viewModel.isLocalScreenSharing.value) {
       AppDependencies.signalCallManager.setEnableVideo(false)
     }
 
@@ -310,7 +380,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     Log.d(TAG, "onDestroy")
     super.onDestroy()
     windowInfoTrackerCallbackAdapter.removeWindowLayoutInfoListener(windowLayoutInfoConsumer)
-    EventBus.getDefault().unregister(this)
+    unsubscribeFromEvents()
   }
 
   @SuppressLint("MissingSuperCall")
@@ -324,12 +394,6 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     super.onUserLeaveHint()
     if (viewModel.callParticipantsStateSnapshot.callState != WebRtcViewModel.State.CALL_INCOMING) {
       enterPipModeIfPossible()
-    }
-  }
-
-  override fun onBackPressed() {
-    if (viewModel.callParticipantsStateSnapshot.callState == WebRtcViewModel.State.CALL_INCOMING || !enterPipModeIfPossible()) {
-      super.onBackPressed()
     }
   }
 
@@ -374,13 +438,11 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     AppDependencies.signalCallManager.resendMediaKeys()
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  fun onRecaptchaRequiredEvent(recaptchaRequiredEvent: RecaptchaRequiredEvent) {
+  private fun onRecaptchaRequiredEvent(recaptchaRequiredEvent: RecaptchaRequiredEvent) {
     RecaptchaProofBottomSheetFragment.show(supportFragmentManager)
   }
 
-  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  fun onEventMainThread(event: WebRtcViewModel) {
+  private fun onEventMainThread(event: WebRtcViewModel) {
     Log.i(TAG, "Got message from service: ${event.describeDifference(previousEvent)}")
 
     val previousCallState: WebRtcViewModel.State? = previousEvent?.state
@@ -390,7 +452,19 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     viewModel.setRecipient(event.recipient)
     callScreen.setRecipient(event.recipient)
     event.isRemoteVideoOffer
-    callScreen.setWebRtcCallState(event.state)
+
+    if (answeredFromNotification && event.state == WebRtcViewModel.State.CALL_INCOMING) {
+      Log.d(TAG, "Suppressing CALL_INCOMING UI state because call was already answered from notification")
+    } else {
+      if (event.state != WebRtcViewModel.State.CALL_INCOMING) {
+        answeredFromNotification = false
+      }
+      callScreen.setWebRtcCallState(event.state)
+    }
+
+    if (event.state != previousCallState) {
+      setTurnScreenOnForCallState(event.state)
+    }
 
     when (event.state) {
       WebRtcViewModel.State.IDLE -> Unit
@@ -400,6 +474,9 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
           Log.d(TAG, "Incoming call directly from network failure state. Recreating activity.")
           recreate()
           return
+        }
+        if (previousCallState != WebRtcViewModel.State.CALL_INCOMING) {
+          updateIncomingRingingVanity()
         }
       }
 
@@ -454,6 +531,43 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
       hasWarnedAboutBluetooth = true
     }
+
+    maybeWarnAboutBackgroundRestriction(event)
+    maybeRequestPhoneStatePermission(event)
+  }
+
+  private fun maybeRequestPhoneStatePermission(event: WebRtcViewModel) {
+    if (Build.VERSION.SDK_INT < 31 || hasRequestedPhoneStatePermission || isFinishing || isInPipMode()) {
+      return
+    }
+
+    if (event.state !in PHONE_STATE_PERMISSION_STATES || !hasAudioPermission() || callPermissionsDialogController.isAskingForPermission) {
+      return
+    }
+
+    hasRequestedPhoneStatePermission = true
+    if (!Permissions.hasAll(this, Manifest.permission.READ_PHONE_STATE)) {
+      callPermissionsDialogController.requestPhoneStatePermission(this) {
+        ActiveCallManager.onPhoneStatePermissionGranted()
+      }
+    }
+  }
+
+  private fun maybeWarnAboutBackgroundRestriction(event: WebRtcViewModel) {
+    if (isFinishing || hasWarnedAboutMicrophoneSilenced || !DeviceProperties.isBackgroundRestricted()) {
+      return
+    }
+
+    if (event.microphoneSilencedTimestamp > 0) {
+      Log.i(TAG, "Microphone was silenced while background restricted, warning user.")
+      callScreen.showDialog(CallScreenDialogType.MICROPHONE_SILENCED_IN_BACKGROUND)
+      hasWarnedAboutMicrophoneSilenced = true
+      hasWarnedAboutBackgroundRestriction = true
+    } else if (!hasWarnedAboutBackgroundRestriction && event.state in BACKGROUND_RESTRICTION_WARNING_STATES) {
+      Log.i(TAG, "Background restricted at call start, warning user.")
+      callScreen.showDialog(CallScreenDialogType.BACKGROUND_RESTRICTED)
+      hasWarnedAboutBackgroundRestriction = true
+    }
   }
 
   private fun getCallIntent(): CallIntent {
@@ -467,30 +581,18 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
   private fun initializeViewModel() {
     val orientation: Orientation = resolveOrientationFromContext()
-    if (orientation == Orientation.PORTRAIT_BOTTOM_EDGE && !SignalStore.internal.newCallingUi) {
-      WindowUtil.setNavigationBarColor(this, ContextCompat.getColor(this, R.color.signal_dark_colorSurface2))
-      WindowUtil.clearTranslucentNavigationBar(window)
-    }
 
     AppDependencies.signalCallManager.orientationChanged(true, orientation.degrees)
+
+    // Update local participant landscape state for self-pip orientation
+    val isLandscape = orientation != Orientation.PORTRAIT_BOTTOM_EDGE
+    lastLocalParticipantLandscape = isLandscape
+    viewModel.setSavedLocalParticipantLandscape(isLandscape)
 
     viewModel.setIsLandscapeEnabled(true)
     viewModel.setIsInPipMode(isInPipMode())
 
     lifecycleScope.launch {
-      launch(SignalDispatchers.Unconfined) {
-        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-          val displayManager = application.getSystemService<DisplayManager>()!!
-          DisplayMonitor.monitor(displayManager)
-            .collectLatest {
-              val display = displayManager.getDisplay(it.displayId) ?: return@collectLatest
-              val orientation = Orientation.fromSurfaceRotation(display.rotation)
-
-              AppDependencies.signalCallManager.orientationChanged(true, orientation.degrees)
-            }
-        }
-      }
-
       lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
         launch {
           viewModel.microphoneEnabled.collectLatest {
@@ -535,6 +637,19 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
         }
 
         launch {
+          viewModel.callParticipantsState
+            .map { it.allRemoteParticipants.size > 1 }
+            .distinctUntilChanged()
+            .collectLatest { hasMultipleRemoteParticipants ->
+              // A call that grows past a single remote participant can no longer be edge to edge, even if
+              // we already went immersive back when it was one-to-one.
+              if (hasMultipleRemoteParticipants) {
+                FullscreenHelper.showSystemUI(window)
+              }
+            }
+        }
+
+        launch {
           viewModel.getSafetyNumberChangeEvent().collect { handleSafetyNumberChangeEvent(it) }
         }
 
@@ -565,6 +680,8 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
       callScreen.enableCallStateUpdatePopup(!info.isInPictureInPictureMode)
       if (info.isInPictureInPictureMode) {
         callScreen.maybeDismissAudioPicker()
+
+        subscribeToEvents()
       }
       viewModel.setIsLandscapeEnabled(info.isInPictureInPictureMode)
     }
@@ -580,17 +697,24 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     }
   }
 
-  private fun initializePictureInPictureParams() {
+  private fun initializePictureInPictureParams(savedAspectRatio: Float) {
     if (isSystemPipEnabledAndAvailable()) {
-      val orientation = resolveOrientationFromContext()
-      val aspectRatio = if (orientation == Orientation.PORTRAIT_BOTTOM_EDGE) {
-        Rational(9, 16)
-      } else {
-        Rational(16, 9)
-      }
-
       pipBuilderParams = PictureInPictureParams.Builder()
-      pipBuilderParams.setAspectRatio(aspectRatio)
+
+      // Use saved aspect ratio if available (recreation while in PIP), otherwise use display orientation
+      if (savedAspectRatio > 0f) {
+        lastPipAspectRatio = savedAspectRatio
+        pipBuilderParams.setAspectRatio(floatToRational(savedAspectRatio))
+      } else {
+        val orientation = resolveOrientationFromContext()
+        val aspectRatio = if (orientation == Orientation.PORTRAIT_BOTTOM_EDGE) {
+          9f / 16f
+        } else {
+          16f / 9f
+        }
+        lastPipAspectRatio = aspectRatio
+        pipBuilderParams.setAspectRatio(floatToRational(aspectRatio))
+      }
 
       if (Build.VERSION.SDK_INT >= 31) {
         lifecycleScope.launch {
@@ -601,6 +725,16 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
                 tryToSetPictureInPictureParams()
               }
             }
+
+            // Observe focused participant video for PIP aspect ratio updates
+            launch {
+              viewModel.callParticipantsState.collectLatest { state ->
+                val participant = state.allRemoteParticipants.firstOrNull() ?: state.localParticipant
+                if (participant.isVideoEnabled) {
+                  observeVideoSinkAspectRatio(participant.videoSink)
+                }
+              }
+            }
           }
         }
       } else {
@@ -609,14 +743,77 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     }
   }
 
+  private suspend fun observeVideoSinkAspectRatio(videoSink: org.thoughtcrime.securesms.components.webrtc.BroadcastVideoSink?) {
+    if (videoSink == null) return
+
+    kotlinx.coroutines.suspendCancellableCoroutine<Nothing> { continuation ->
+      val dimensionSink = object : org.webrtc.VideoSink {
+        override fun onFrame(frame: org.webrtc.VideoFrame) {
+          val width = frame.rotatedWidth
+          val height = frame.rotatedHeight
+          if (width > 0 && height > 0) {
+            val aspectRatio = width.toFloat() / height.toFloat()
+            updatePipAspectRatio(aspectRatio)
+          }
+        }
+      }
+
+      videoSink.addSink(dimensionSink)
+
+      continuation.invokeOnCancellation {
+        videoSink.removeSink(dimensionSink)
+      }
+    }
+  }
+
+  @SuppressLint("NewApi") // Only called when isSystemPipEnabledAndAvailable() which requires API 26
+  private fun updatePipAspectRatio(aspectRatio: Float) {
+    if (!isSystemPipEnabledAndAvailable()) return
+    if (!::pipBuilderParams.isInitialized) return
+    // Ignore invalid aspect ratios (uninitialized texture view, video off, etc.)
+    if (aspectRatio <= 0f) return
+
+    val clampedAspectRatio = aspectRatio.coerceIn(MIN_PIP_ASPECT_RATIO, MAX_PIP_ASPECT_RATIO)
+
+    // Only update if aspect ratio changed meaningfully (>10%) to avoid feedback loops from noise
+    val changeRatio = if (lastPipAspectRatio > 0f) {
+      kotlin.math.abs(clampedAspectRatio - lastPipAspectRatio) / lastPipAspectRatio
+    } else {
+      1f
+    }
+    if (changeRatio < 0.1f) return
+
+    lastPipAspectRatio = clampedAspectRatio
+    val rational = floatToRational(clampedAspectRatio)
+
+    pipBuilderParams.setAspectRatio(rational)
+    tryToSetPictureInPictureParams()
+  }
+
+  private fun floatToRational(value: Float): Rational {
+    val denominator = 1000
+    val numerator = (value.coerceIn(MIN_PIP_ASPECT_RATIO, MAX_PIP_ASPECT_RATIO) * denominator).roundToInt()
+    return Rational(numerator, denominator)
+  }
+
   private fun logIntent(callIntent: CallIntent) {
     Log.d(TAG, callIntent.toString())
   }
 
   private fun processIntent(callIntent: CallIntent) {
     when (callIntent.action) {
-      CallIntent.Action.ANSWER_AUDIO -> handleAnswerWithAudio()
-      CallIntent.Action.ANSWER_VIDEO -> handleAnswerWithVideo()
+      CallIntent.Action.ANSWER_AUDIO -> {
+        handleAnswerWithAudio()
+        if (!callIntent.isStartedFromFullScreen) {
+          answeredFromNotification = true
+        }
+      }
+      CallIntent.Action.ANSWER_VIDEO -> {
+        handleAnswerWithVideo()
+        if (!callIntent.isStartedFromFullScreen) {
+          answeredFromNotification = true
+        }
+      }
       CallIntent.Action.DENY -> handleDenyCall()
       CallIntent.Action.END_CALL -> handleEndCall()
       else -> Unit
@@ -631,7 +828,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
   private fun registerSystemPipChangeListeners() {
     addOnPictureInPictureModeChangedListener {
-      CallReactionScrubber.dismissCustomEmojiBottomSheet(supportFragmentManager)
+      (supportFragmentManager.findFragmentByTag(CUSTOM_REACTION_BOTTOM_SHEET_TAG) as? ReactWithAnyEmojiBottomSheetDialogFragment)?.dismissNow()
     }
   }
 
@@ -751,7 +948,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     val onGranted: () -> Unit = {
       callScreen.setStatus(getString(R.string.RedPhone_answering))
       AppDependencies.signalCallManager.acceptCall(true)
-      handleSetMuteVideo(false)
+      AppDependencies.signalCallManager.setEnableVideo(true)
     }
 
     if (!hasCameraPermission() && !hasAudioPermission()) {
@@ -799,7 +996,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     callScreen.setStatusFromHangupType(this, hangupType)
 
-    EventBus.getDefault().removeStickyEvent(WebRtcViewModel::class.java)
+    EventBus.default.removeStickyEvent<WebRtcViewModel>()
 
     if (hangupType == HangupMessage.Type.NEED_PERMISSION) {
       startActivity(CalleeMustAcceptMessageRequestActivity.createIntent(this, recipient.id))
@@ -818,7 +1015,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
   }
 
   private fun handleCallBusy() {
-    EventBus.getDefault().removeStickyEvent(WebRtcViewModel::class.java)
+    EventBus.default.removeStickyEvent<WebRtcViewModel>()
     callScreen.setStatus(getString(R.string.RedPhone_busy))
     delayedFinish(SignalCallManager.BUSY_TONE_LENGTH.toLong())
   }
@@ -846,13 +1043,13 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
   }
 
   private fun handleRecipientUnavailable() {
-    EventBus.getDefault().removeStickyEvent(WebRtcViewModel::class.java)
+    EventBus.default.removeStickyEvent<WebRtcViewModel>()
     callScreen.setStatus(getString(R.string.RedPhone_recipient_unavailable))
     delayedFinish()
   }
 
   private fun handleServerFailure() {
-    EventBus.getDefault().removeStickyEvent(WebRtcViewModel::class.java)
+    EventBus.default.removeStickyEvent<WebRtcViewModel>()
     callScreen.setStatus(getString(R.string.RedPhone_network_failed))
   }
 
@@ -886,8 +1083,12 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
       is CallEvent.StartCall -> startCall(event.isVideoCall)
       is CallEvent.ShowGroupCallSafetyNumberChange -> SafetyNumberBottomSheet.forGroupCall(event.identityRecords).show(supportFragmentManager)
       is CallEvent.SwitchToSpeaker -> callScreen.switchToSpeakerView()
-      is CallEvent.ShowSwipeToSpeakerHint -> CallToastPopupWindow.show(rootView())
-      is CallEvent.ShowRemoteMuteToast -> CallToastPopupWindow.show(rootView(), R.drawable.ic_mic_off_solid_18, event.getDescription(this))
+      is CallEvent.ShowSwipeToScreenShareHint -> callScreen.showScreenShareHint()
+      is CallEvent.ShowRemoteMuteToast -> callScreen.showRemoteMuteToast(event.getDescription(this))
+      is CallEvent.ShowLargeGroupAutoMuteToast -> {
+        callScreen.onCallStateUpdate(CallControlsChange.MIC_OFF)
+        callScreen.showRemoteMuteToast(getString(R.string.WebRtcCallView__youve_been_muted_large_group))
+      }
       is CallEvent.ShowVideoTooltip -> {
         if (isInPipMode()) return
 
@@ -987,11 +1188,56 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     }
   }
 
+  private fun updateIncomingRingingVanity() {
+    val event = previousEvent ?: return
+    if (event.state != WebRtcViewModel.State.CALL_INCOMING) return
+
+    val keyguardManager = getSystemService(KeyguardManager::class.java)
+    val shouldEnable = keyguardManager == null || !keyguardManager.isKeyguardLocked
+
+    Log.i(TAG, "updateIncomingRingingVanity(): shouldEnable=$shouldEnable, keyguardLocked=${keyguardManager?.isKeyguardLocked}")
+    AppDependencies.signalCallManager.setIncomingRingingVanity(shouldEnable)
+  }
+
+  private fun disableIncomingRingingVanity() {
+    val event = previousEvent ?: return
+    if (event.state == WebRtcViewModel.State.CALL_INCOMING) {
+      AppDependencies.signalCallManager.setIncomingRingingVanity(false)
+    }
+  }
+
   private fun initializeScreenshotSecurity() {
-    if (TextSecurePreferences.isScreenSecurityEnabled(this)) {
+    if (SignalStore.settings.isScreenSecurityEnabled) {
       window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
     } else {
       window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
+    }
+  }
+
+  /**
+   * Controls lock screen and screen-on behavior based on call state.
+   * - Show over lock screen: For any ongoing call state, so the call UI remains visible
+   *   if the call was answered from the lock screen.
+   * - Turn screen on: For any ongoing call state, so screen stays on during call.
+   */
+  private fun setTurnScreenOnForCallState(callState: WebRtcViewModel.State) {
+    val isOngoingCall = callState.inOngoingCall
+    if (Build.VERSION.SDK_INT >= 27) {
+      setShowWhenLocked(isOngoingCall)
+      setTurnScreenOn(isOngoingCall)
+    } else {
+      @Suppress("DEPRECATION")
+      if (isOngoingCall) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+      } else {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+      }
+
+      if (isOngoingCall) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+      } else {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+      }
     }
   }
 
@@ -1025,16 +1271,11 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
   }
 
   private fun resolveOrientationFromContext(): Orientation {
-    val displayOrientation = resources.configuration.orientation
-    val displayRotation = ContextCompat.getDisplayOrDefault(this).rotation
-
-    return if (displayOrientation == Configuration.ORIENTATION_PORTRAIT) {
-      Orientation.PORTRAIT_BOTTOM_EDGE
-    } else if (displayRotation == Surface.ROTATION_270) {
-      Orientation.LANDSCAPE_RIGHT_EDGE
-    } else {
-      Orientation.LANDSCAPE_LEFT_EDGE
-    }
+    // Always use device display rotation, not window configuration
+    // This ensures correct orientation even when in PIP mode
+    val displayManager = getSystemService(android.content.Context.DISPLAY_SERVICE) as android.hardware.display.DisplayManager
+    val displayRotation = displayManager.getDisplay(android.view.Display.DEFAULT_DISPLAY)?.rotation ?: Surface.ROTATION_0
+    return Orientation.fromSurfaceRotation(displayRotation)
   }
 
   private fun tryToSetPictureInPictureParams() {
@@ -1111,24 +1352,26 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     private val fullScreenHelper: FullscreenHelper = FullscreenHelper(this@WebRtcCallActivity)
 
     init {
-      fullScreenHelper.showAndHideWithSystemUI(
-        window,
-        findViewById(R.id.call_screen_header_gradient),
-        findViewById(R.id.webrtc_call_view_toolbar_text),
-        findViewById(R.id.webrtc_call_view_toolbar_no_text)
-      )
+      fullScreenHelper.showAndHideWithSystemUI(window)
     }
 
     override fun onShown() {
       fullScreenHelper.showSystemUI()
     }
 
-    override fun onHidden() {
+    override fun onHidden(isFullBleedCall: Boolean) {
       val controlState = viewModel.getWebRtcControls().value
-      if (!controlState.displayErrorControls()) {
-        fullScreenHelper.hideSystemUI()
-        videoTooltip?.dismiss()
+      if (controlState.displayErrorControls()) {
+        return
       }
+
+      // Only an edge-to-edge call goes immersive with the controls. Anything else keeps the system bars
+      // up and pads around them instead, so the grid doesn't reflow every time the controls fade.
+      if (isFullBleedCall) {
+        fullScreenHelper.hideSystemUI()
+      }
+
+      videoTooltip?.dismiss()
     }
   }
 
@@ -1155,7 +1398,16 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     @RequiresApi(31)
     override fun onAudioOutputChanged31(audioOutput: WebRtcAudioDevice) {
       maybeDisplaySpeakerphonePopup(audioOutput.webRtcAudioOutput)
-      AppDependencies.signalCallManager.selectAudioDevice(ChosenAudioDeviceIdentifier(audioOutput.deviceId!!))
+      if (audioOutput.deviceId != null) {
+        AppDependencies.signalCallManager.selectAudioDevice(ChosenAudioDeviceIdentifier(audioOutput.deviceId))
+      } else {
+        when (audioOutput.webRtcAudioOutput) {
+          WebRtcAudioOutput.HANDSET -> handleSetAudioHandset()
+          WebRtcAudioOutput.SPEAKER -> handleSetAudioSpeaker()
+          WebRtcAudioOutput.BLUETOOTH_HEADSET -> handleSetAudioBluetooth()
+          WebRtcAudioOutput.WIRED_HEADSET -> handleSetAudioWiredHeadset()
+        }
+      }
     }
 
     override fun onVideoChanged(isVideoEnabled: Boolean) {
@@ -1230,7 +1482,7 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     }
 
     override fun onNavigateUpClicked() {
-      onBackPressed()
+      onBackPressedDispatcher.onBackPressed()
     }
 
     override fun toggleControls() {
@@ -1242,6 +1494,20 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
 
     override fun onAudioPermissionsRequested(onGranted: Runnable?) {
       askAudioPermissions { onGranted?.run() }
+    }
+
+    override fun onScreenShareChanged(sharing: Boolean) {
+      if (sharing) {
+        val mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+        val intent = if (Build.VERSION.SDK_INT >= 34) {
+          mediaProjectionManager.createScreenCaptureIntent(MediaProjectionConfig.createConfigForDefaultDisplay())
+        } else {
+          mediaProjectionManager.createScreenCaptureIntent()
+        }
+        mediaProjectionLauncher.launch(intent)
+      } else {
+        AppDependencies.signalCallManager.stopScreenShare()
+      }
     }
   }
 
@@ -1261,5 +1527,13 @@ class WebRtcCallActivity : BaseActivity(), SafetyNumberChangeDialog.Callback, Re
     override fun onLaunchPendingRequestsSheet() {
       PendingParticipantsBottomSheet().show(supportFragmentManager, BottomSheetUtil.STANDARD_BOTTOM_SHEET_FRAGMENT_TAG)
     }
+  }
+
+  private fun subscribeToEvents() {
+    eventSubscriptions.forEach { it.start() }
+  }
+
+  private fun unsubscribeFromEvents() {
+    eventSubscriptions.forEach { it.stop() }
   }
 }

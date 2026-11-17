@@ -28,12 +28,21 @@ public class UriUtilTest_isValidExternalUri {
   private final String  input;
   private final boolean output;
 
-  private static final String APPLICATION_ID = "org.thoughtcrime.securesms";
+  // Radar: the app checks its own application ID, which is not Signal's.
+  private static final String APPLICATION_ID = org.thoughtcrime.securesms.BuildConfig.APPLICATION_ID;
 
   @ParameterizedRobolectricTestRunner.Parameters
   public static Collection<Object[]> data() {
     return Arrays.asList(new Object[][]{
         { "content://other.app.package.name.org/path/public.txt",             true  },
+        { "content://" + APPLICATION_ID + ".part/part/42",                   false },
+        { "content://" + APPLICATION_ID + ".blob/blob/42",                   false },
+        { "content://" + APPLICATION_ID + ".avatar/avatar/42",               false },
+        { "content://" + APPLICATION_ID + ".fileprovider/external_files/f",  false },
+        { "content://0@" + APPLICATION_ID + ".part/part/42",                 false },
+        { "content://10@" + APPLICATION_ID + ".blob/blob/42",                false },
+        { "content://0@0@" + APPLICATION_ID + ".part/part/42",               false },
+        { "content://0@other.app.package.name.org/path/public.txt",           true  },
         { "file:///sdcard/public.txt",                                        true  },
         {"file:///data/data/" + APPLICATION_ID + "/private.txt",              false },
         {"file:///any/path/with/package/name/" + APPLICATION_ID,              false },
@@ -44,6 +53,7 @@ public class UriUtilTest_isValidExternalUri {
         { "file:///encoded/back/reference/%2F..%2F..path%2Fto%2Fprivate.txt", false },
         { "file:///public/%2E%2E%2Fprivate%2Fprivate.txt",                    false },
         { "file:///data/no/paths/in/data",                                    false },
+        { "file://",                                                          false },
     });
   }
 

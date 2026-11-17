@@ -2,10 +2,13 @@ package org.thoughtcrime.securesms.components
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import org.signal.core.ui.enableEdgeToEdge
+import org.signal.core.ui.initializeScreenshotSecurity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.util.fragments.findListener
 
@@ -40,6 +43,12 @@ abstract class WrapperDialogFragment : DialogFragment(R.layout.fragment_containe
     setStyle(STYLE_NO_FRAME, R.style.Signal_DayNight_Dialog_FullScreen)
   }
 
+  override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
+    return super.onGetLayoutInflater(savedInstanceState).also {
+      dialog?.window?.enableEdgeToEdge()
+    }
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     requireActivity().onBackPressedDispatcher.addCallback(
       viewLifecycleOwner,
@@ -55,6 +64,11 @@ abstract class WrapperDialogFragment : DialogFragment(R.layout.fragment_containe
         .replace(R.id.fragment_container, getWrappedFragment())
         .commitAllowingStateLoss()
     }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    dialog?.window?.initializeScreenshotSecurity()
   }
 
   open fun onHandleBackPressed() {

@@ -1,0 +1,183 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.registration.screens.welcome
+
+import android.app.Application
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.test.core.app.ApplicationProvider
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import org.signal.core.ui.CoreUiDependenciesRule
+import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.registration.test.TestTags
+
+/**
+ * Tests for WelcomeScreen that validate event emissions.
+ * Uses Robolectric to run fast JUnit tests without an emulator.
+ */
+@RunWith(RobolectricTestRunner::class)
+@Config(application = Application::class)
+class WelcomeScreenTest {
+
+  @get:Rule
+  val composeTestRule = createComposeRule()
+
+  @get:Rule
+  val coreUiDependenciesRule = CoreUiDependenciesRule(ApplicationProvider.getApplicationContext())
+
+  @Test
+  fun `when I'm new to Radar is clicked, SignUp event is emitted`() {
+    // Given
+    var emittedEvent: WelcomeScreenEvents? = null
+
+    composeTestRule.setContent {
+      SignalTheme {
+        WelcomeScreen(
+          state = WelcomeScreenState(),
+          onEvent = { event ->
+            emittedEvent = event
+          }
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+
+    // Then - Radar: opens Radar's sign-up screen
+    assert(emittedEvent == WelcomeScreenEvents.SignUp)
+  }
+
+  @Config(qualifiers = "w1280dp-h800dp-xhdpi")
+  @Test
+  fun `when Link Your Account is clicked, LinkDevice event is emitted`() {
+    // Given
+    var emittedEvent: WelcomeScreenEvents? = null
+
+    composeTestRule.setContent {
+      SignalTheme {
+        WelcomeScreen(
+          state = WelcomeScreenState(isLinkAndSyncAvailable = true),
+          onEvent = { event ->
+            emittedEvent = event
+          }
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_LINK_DEVICE_BUTTON).performClick()
+
+    // Then
+    assert(emittedEvent == WelcomeScreenEvents.LinkDevice)
+  }
+
+  @Test
+  fun `when Restore or transfer is clicked, bottom sheet is shown`() {
+    // Given
+    composeTestRule.setContent {
+      SignalTheme {
+        WelcomeScreen(state = WelcomeScreenState(), onEvent = {})
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).performClick()
+
+    // Then - bottom sheet options should be visible
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_HAS_OLD_PHONE_BUTTON).assertIsDisplayed()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON).assertIsDisplayed()
+  }
+
+  @Test
+  fun `when I have my old phone is clicked, HasOldPhone event is emitted`() {
+    // Given
+    var emittedEvent: WelcomeScreenEvents? = null
+
+    composeTestRule.setContent {
+      SignalTheme {
+        WelcomeScreen(
+          state = WelcomeScreenState(),
+          onEvent = { event ->
+            emittedEvent = event
+          }
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).performClick()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_HAS_OLD_PHONE_BUTTON).performClick()
+
+    // Then
+    assert(emittedEvent == WelcomeScreenEvents.HasOldPhone)
+  }
+
+  @Test
+  fun `when Migrate from Signal is clicked, MigrateFromSignal event is emitted`() {
+    // Given
+    var emittedEvent: WelcomeScreenEvents? = null
+
+    composeTestRule.setContent {
+      SignalTheme {
+        WelcomeScreen(
+          state = WelcomeScreenState(),
+          onEvent = { event ->
+            emittedEvent = event
+          }
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).performClick()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON).performClick()
+
+    // Then - Radar: the row under this tag is "Migrate from Signal"
+    assert(emittedEvent == WelcomeScreenEvents.MigrateFromSignal)
+  }
+
+  @Test
+  fun `during re-registration the restore or transfer option is hidden`() {
+    // Given
+    composeTestRule.setContent {
+      SignalTheme {
+        WelcomeScreen(
+          state = WelcomeScreenState(showRestoreOrTransfer = false),
+          onEvent = {}
+        )
+      }
+    }
+
+    // Then - the continue option remains but the restore/transfer option is not offered
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).assertIsDisplayed()
+    assert(composeTestRule.onAllNodesWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).fetchSemanticsNodes().isEmpty()) {
+      "Expected no restore/transfer option during re-registration"
+    }
+  }
+
+  @Test
+  fun `screen displays welcome message`() {
+    // Given
+    composeTestRule.setContent {
+      SignalTheme {
+        WelcomeScreen(state = WelcomeScreenState(), onEvent = {})
+      }
+    }
+
+    // Then
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_HEADLINE).assertIsDisplayed()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).assertIsDisplayed()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).assertIsDisplayed()
+  }
+}

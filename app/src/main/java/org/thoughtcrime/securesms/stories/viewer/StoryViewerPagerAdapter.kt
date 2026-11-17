@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import org.thoughtcrime.securesms.recipients.RecipientId
+import org.signal.core.models.recipients.RecipientId
 import org.thoughtcrime.securesms.stories.viewer.page.StoryViewerPageArgs
 import org.thoughtcrime.securesms.stories.viewer.page.StoryViewerPageFragment
 
@@ -26,6 +26,10 @@ class StoryViewerPagerAdapter(
 
   fun getRecipientId(position: Int): RecipientId {
     return pages[position]
+  }
+
+  fun getRecipientIdOrNull(position: Int): RecipientId? {
+    return pages.getOrNull(position)
   }
 
   override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

@@ -14,14 +14,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import org.signal.core.ui.logging.LoggingFragment
 import org.signal.core.util.getParcelableCompat
-import org.thoughtcrime.securesms.LoggingFragment
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.ViewBinderDelegate
 import org.thoughtcrime.securesms.databinding.FragmentChangeNumberEnterPhoneNumberBinding
 import org.thoughtcrime.securesms.registration.ui.countrycode.Country
 import org.thoughtcrime.securesms.registration.util.ChangeNumberInputController
 import org.thoughtcrime.securesms.util.Dialogs
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
 
 /**
@@ -38,6 +39,8 @@ class ChangeNumberEnterPhoneNumberFragment : LoggingFragment(R.layout.fragment_c
   private val viewModel by activityViewModels<ChangeNumberViewModel>()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    SystemWindowInsetsSetter.attach(view, viewLifecycleOwner, SystemWindowInsetsSetter.SAFE_AREA_WITH_KEYBOARD)
+
     val toolbar: Toolbar = view.findViewById(R.id.toolbar)
     toolbar.setTitle(R.string.ChangeNumberEnterPhoneNumberFragment__change_number)
     toolbar.setNavigationOnClickListener { findNavController().navigateUp() }

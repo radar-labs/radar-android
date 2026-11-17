@@ -1,8 +1,8 @@
 package org.thoughtcrime.securesms.jobs
 
+import org.signal.core.models.database.AttachmentId
 import org.signal.core.util.concurrent.safeBlockingGet
 import org.signal.core.util.logging.Log
-import org.thoughtcrime.securesms.attachments.AttachmentId
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.audio.AudioWaveForms
 import org.thoughtcrime.securesms.database.SignalDatabase
@@ -26,14 +26,19 @@ class GenerateAudioWaveFormJob private constructor(private val attachmentId: Att
 
     @JvmStatic
     fun enqueue(attachmentId: AttachmentId) {
-      AppDependencies.jobManager.add(GenerateAudioWaveFormJob(attachmentId))
+      AppDependencies.jobManager.add(GenerateAudioWaveFormJob(attachmentId, queue = "GenerateAudioWaveFormJob"))
+    }
+
+    @JvmStatic
+    fun forUploadChain(attachmentId: AttachmentId): GenerateAudioWaveFormJob {
+      return GenerateAudioWaveFormJob(attachmentId, queue = null)
     }
   }
 
-  private constructor(attachmentId: AttachmentId) : this(
+  private constructor(attachmentId: AttachmentId, queue: String?) : this(
     attachmentId,
     Parameters.Builder()
-      .setQueue("GenerateAudioWaveFormJob")
+      .setQueue(queue)
       .setLifespan(1.days.inWholeMilliseconds)
       .setMaxAttempts(1)
       .build()

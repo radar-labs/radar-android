@@ -5,23 +5,17 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.sqlite.db.SupportSQLiteDatabase
 import net.zetetic.database.sqlcipher.SQLiteOpenHelper
-import org.signal.core.util.SqlUtil
+import org.signal.core.database.SqlUtil
+import org.signal.core.database.withinTransaction
+import org.signal.core.util.crypto.AttachmentSecret
 import org.signal.core.util.logging.Log
-import org.signal.core.util.withinTransaction
-import org.thoughtcrime.securesms.crypto.AttachmentSecret
-import org.thoughtcrime.securesms.crypto.DatabaseSecret
-import org.thoughtcrime.securesms.crypto.MasterSecret
-import org.thoughtcrime.securesms.database.helpers.ClassicOpenHelper
-import org.thoughtcrime.securesms.database.helpers.PreKeyMigrationHelper
-import org.thoughtcrime.securesms.database.helpers.SQLCipherMigrationHelper
-import org.thoughtcrime.securesms.database.helpers.SessionStoreMigrationHelper
+import org.signal.storage.database.DatabaseSecret
+import org.signal.storage.database.SignalDatabaseOpenHelper
+import org.signal.storage.database.SqlCipherDatabaseHook
+import org.signal.storage.database.SqlCipherErrorHandler
+import org.thoughtcrime.securesms.database.SignalDatabase.Companion.runInTransaction
 import org.thoughtcrime.securesms.database.helpers.SignalDatabaseMigrations
 import org.thoughtcrime.securesms.database.model.AvatarPickerDatabase
-import org.thoughtcrime.securesms.jobs.PreKeysSyncJob
-import org.thoughtcrime.securesms.migrations.LegacyMigrationJob
-import org.thoughtcrime.securesms.migrations.LegacyMigrationJob.DatabaseUpgradeListener
-import org.thoughtcrime.securesms.service.KeyCachingService
-import org.thoughtcrime.securesms.util.TextSecurePreferences
 import java.io.File
 import org.thoughtcrime.securesms.database.SQLiteDatabase as SignalSQLiteDatabase
 
@@ -29,15 +23,17 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
   SQLiteOpenHelper(
     context,
     name,
-    databaseSecret.asString(),
+    databaseSecret.asHex(),
     null,
     SignalDatabaseMigrations.DATABASE_VERSION,
     0,
-    SqlCipherErrorHandler(context, name),
+    SqlCipherErrorHandler(context, name) { db -> messageSearch.rebuildIndex(db) },
     SqlCipherDatabaseHook(),
     true
   ),
   SignalDatabaseOpenHelper {
+
+  val isPrimaryDatabase: Boolean = name == DATABASE_NAME
 
   val messageTable: MessageTable = MessageTable(context, this)
   val attachmentTable: AttachmentTable = AttachmentTable(context, this, attachmentSecret)
@@ -55,7 +51,7 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
   val senderKeySharedTable: SenderKeySharedTable = SenderKeySharedTable(context, this)
   val pendingRetryReceiptTable: PendingRetryReceiptTable = PendingRetryReceiptTable(context, this)
   val searchTable: SearchTable = SearchTable(context, this)
-  val stickerTable: StickerTable = StickerTable(context, this, attachmentSecret)
+  val stickerTables: StickerTables = StickerTables(context, this, attachmentSecret)
   val storageIdDatabase: UnknownStorageIdTable = UnknownStorageIdTable(context, this)
   val remappedRecordTables: RemappedRecordTables = RemappedRecordTables(context, this)
   val mentionTable: MentionTable = MentionTable(context, this)
@@ -82,6 +78,7 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
   val backupMediaSnapshotTable: BackupMediaSnapshotTable = BackupMediaSnapshotTable(context, this)
   val pollTable: PollTables = PollTables(context, this)
   val lastResortKeyTuples: LastResortKeyTupleTable = LastResortKeyTupleTable(context, this)
+  val attachmentMetadataTable: AttachmentMetadataTable = AttachmentMetadataTable(context, this)
 
   override fun onOpen(db: net.zetetic.database.sqlcipher.SQLiteDatabase) {
     db.setForeignKeyConstraintsEnabled(true)
@@ -94,19 +91,6 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
     // Requires FTS5
     executeStatements(signalDb, SearchTable.CREATE_TABLE)
     executeStatements(signalDb, SearchTable.CREATE_TRIGGERS)
-
-    if (context.getDatabasePath(ClassicOpenHelper.NAME).exists()) {
-      val legacyHelper = ClassicOpenHelper(context)
-      val legacyDb = legacyHelper.writableDatabase
-      SQLCipherMigrationHelper.migratePlaintext(context, legacyDb, db)
-      val masterSecret = KeyCachingService.getMasterSecret(context)
-      if (masterSecret != null) SQLCipherMigrationHelper.migrateCiphertext(context, masterSecret, legacyDb, db, null) else TextSecurePreferences.setNeedsSqlCipherMigration(context, true)
-      if (!PreKeyMigrationHelper.migratePreKeys(context, db)) {
-        PreKeysSyncJob.enqueue()
-      }
-      SessionStoreMigrationHelper.migrateSessions(context, db)
-      PreKeyMigrationHelper.cleanUpPreKeys(context)
-    }
   }
 
   @VisibleForTesting
@@ -125,7 +109,7 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
     db.execSQL(SenderKeyTable.CREATE_TABLE)
     db.execSQL(SenderKeySharedTable.CREATE_TABLE)
     db.execSQL(PendingRetryReceiptTable.CREATE_TABLE)
-    db.execSQL(StickerTable.CREATE_TABLE)
+    executeStatements(db, StickerTables.CREATE_TABLES)
     db.execSQL(UnknownStorageIdTable.CREATE_TABLE)
     db.execSQL(MentionTable.CREATE_TABLE)
     db.execSQL(PaymentTable.CREATE_TABLE)
@@ -152,6 +136,7 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
     executeStatements(db, PollTables.CREATE_TABLE)
     db.execSQL(BackupMediaSnapshotTable.CREATE_TABLE)
     db.execSQL(LastResortKeyTupleTable.CREATE_TABLE)
+    db.execSQL(AttachmentMetadataTable.CREATE_TABLE)
 
     executeStatements(db, RecipientTable.CREATE_INDEXS)
     executeStatements(db, MessageTable.CREATE_INDEXS)
@@ -160,7 +145,7 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
     executeStatements(db, DraftTable.CREATE_INDEXS)
     executeStatements(db, GroupTable.CREATE_INDEXS)
     executeStatements(db, GroupReceiptTable.CREATE_INDEXES)
-    executeStatements(db, StickerTable.CREATE_INDEXES)
+    executeStatements(db, StickerTables.CREATE_INDEXES)
     executeStatements(db, UnknownStorageIdTable.CREATE_INDEXES)
     executeStatements(db, MentionTable.CREATE_INDEXES)
     executeStatements(db, PaymentTable.CREATE_INDEXES)
@@ -224,9 +209,8 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
   open val signalWritableDatabase: SignalSQLiteDatabase
     get() = SignalSQLiteDatabase(super.writableDatabase)
 
-  override fun getSqlCipherDatabase(): net.zetetic.database.sqlcipher.SQLiteDatabase {
-    return super.writableDatabase
-  }
+  override val sqlCipherDatabase: net.zetetic.database.sqlcipher.SQLiteDatabase
+    get() = super.writableDatabase
 
   open fun markCurrent(db: net.zetetic.database.sqlcipher.SQLiteDatabase) {
     db.version = SignalDatabaseMigrations.DATABASE_VERSION
@@ -320,6 +304,7 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
           instance!!.reactionTable.deleteAbandonedReactions()
           instance!!.searchTable.fullyResetTables(useTransaction = false)
           instance!!.recipientTable.clearFileWallpapersPostBackupRestore()
+          instance!!.recipientTable.clearSelfKeyTransparencyData()
           instance!!.rawWritableDatabase.execSQL("DROP TABLE IF EXISTS key_value")
           instance!!.rawWritableDatabase.execSQL("DROP TABLE IF EXISTS megaphone")
           instance!!.rawWritableDatabase.execSQL("DROP TABLE IF EXISTS job_spec")
@@ -346,41 +331,27 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
       instance!!.signalWritableDatabase
     }
 
-    @Deprecated("Only used for a legacy migration.")
-    @JvmStatic
-    fun onApplicationLevelUpgrade(
-      context: Context,
-      masterSecret: MasterSecret,
-      fromVersion: Int,
-      listener: DatabaseUpgradeListener?
-    ) {
-      instance!!.signalWritableDatabase
-      var legacyOpenHelper: ClassicOpenHelper? = null
-      if (fromVersion < LegacyMigrationJob.ASYMMETRIC_MASTER_SECRET_FIX_VERSION) {
-        legacyOpenHelper = ClassicOpenHelper(context)
-        legacyOpenHelper.onApplicationLevelUpgrade(context, masterSecret, fromVersion, listener)
-      }
-
-      if (fromVersion < LegacyMigrationJob.SQLCIPHER && TextSecurePreferences.getNeedsSqlCipherMigration(context)) {
-        if (legacyOpenHelper == null) {
-          legacyOpenHelper = ClassicOpenHelper(context)
-        }
-
-        SQLCipherMigrationHelper.migrateCiphertext(
-          context,
-          masterSecret,
-          legacyOpenHelper.writableDatabase,
-          instance!!.rawWritableDatabase,
-          listener
-        )
-      }
-    }
-
     @JvmStatic
     fun <T> runInTransaction(block: (SignalSQLiteDatabase) -> T): T {
       return instance!!.signalWritableDatabase.withinTransaction {
         block(it)
       }
+    }
+
+    /**
+     * Mirrors [runInTransaction] but instead of returning the result of calling block it returns
+     * whether the transaction completed successfully.
+     */
+    @JvmStatic
+    fun tryRunInTransaction(block: (SignalSQLiteDatabase) -> Unit): Boolean {
+      var committed = false
+
+      instance!!.signalWritableDatabase.withinTransaction {
+        block(it)
+        it.runPostSuccessfulTransaction { committed = true }
+      }
+
+      return committed
     }
 
     @get:JvmStatic
@@ -535,8 +506,8 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
 
     @get:JvmStatic
     @get:JvmName("stickers")
-    val stickers: StickerTable
-      get() = instance!!.stickerTable
+    val stickers: StickerTables
+      get() = instance!!.stickerTables
 
     @get:JvmStatic
     @get:JvmName("storySends")
@@ -597,5 +568,10 @@ open class SignalDatabase(private val context: Application, databaseSecret: Data
     @get:JvmName("lastResortKeyTuples")
     val lastResortKeyTuples: LastResortKeyTupleTable
       get() = instance!!.lastResortKeyTuples
+
+    @get:JvmStatic
+    @get:JvmName("attachmentMetadata")
+    val attachmentMetadata: AttachmentMetadataTable
+      get() = instance!!.attachmentMetadataTable
   }
 }

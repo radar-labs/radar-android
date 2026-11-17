@@ -5,80 +5,114 @@
 
 package org.thoughtcrime.securesms.components.webrtc.v2
 
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsIgnoringVisibility
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.movableContentOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.ui.compose.AllNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.thoughtcrime.securesms.conversation.colors.ChatColorsPalette
 import org.thoughtcrime.securesms.events.CallParticipant
 import org.thoughtcrime.securesms.events.CallParticipantId
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CallParticipantsPager(
   callParticipantsPagerState: CallParticipantsPagerState,
   pagerState: PagerState,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  onTap: (() -> Unit)? = null,
+  onParticipantLongPress: ((CallParticipant, Offset) -> Unit)? = null
 ) {
   if (callParticipantsPagerState.focusedParticipant == null) {
     return
   }
 
-  // Use movableContentOf to preserve CallGrid state when switching between
-  // single participant (no pager) and multiple participants (with pager)
-  val callGridContent = remember {
-    movableContentOf { state: CallParticipantsPagerState, mod: Modifier ->
-      CallGrid(
-        items = state.callParticipants,
-        modifier = mod,
-        itemKey = { it.callParticipantId }
-      ) { participant, itemModifier ->
-        RemoteParticipantContent(
-          participant = participant,
-          renderInPip = state.isRenderInPip,
-          raiseHandAllowed = false,
-          onInfoMoreInfoClick = null,
-          modifier = itemModifier
-        )
-      }
-    }
+  val currentOnTap = rememberUpdatedState(onTap)
+  val currentOnLongPress = rememberUpdatedState(onParticipantLongPress)
+
+  val firstParticipantAR = rememberParticipantAspectRatio(
+    callParticipantsPagerState.callParticipants.firstOrNull()?.videoSink
+  )
+
+  // Inset so that CallGrid's outer padding is measured from the system bars, not the screen edge.
+  val isFullBleed = rememberIsFullBleedCall(callParticipantsPagerState.callParticipants.size)
+
+  val insetModifier = if (isFullBleed) {
+    Modifier
+  } else {
+    Modifier
+      .displayCutoutPadding()
+      .windowInsetsPadding(WindowInsets.systemBarsIgnoringVisibility)
   }
 
-  if (callParticipantsPagerState.callParticipants.size > 1) {
-    VerticalPager(
-      state = pagerState,
-      modifier = modifier
-        .displayCutoutPadding()
-        .statusBarsPadding()
-    ) { page ->
-      when (page) {
-        0 -> {
-          callGridContent(callParticipantsPagerState, Modifier.fillMaxSize())
-        }
+  VerticalPager(
+    state = pagerState,
+    modifier = modifier.then(insetModifier)
+  ) { page ->
+    when (page) {
+      0 -> {
+        CallGrid(
+          items = callParticipantsPagerState.callParticipants,
+          singleParticipantAspectRatio = firstParticipantAR,
+          modifier = Modifier.fillMaxSize(),
+          itemKey = { it.callParticipantId }
+        ) { participant, itemModifier ->
+          val longPressModifier = if (!participant.recipient.isSelf && currentOnLongPress.value != null) {
+            var itemWindowOrigin by remember(participant.callParticipantId) { mutableStateOf(Offset.Zero) }
+            itemModifier
+              .onGloballyPositioned { coords -> itemWindowOrigin = coords.positionInRoot() }
+              .pointerInput(participant.callParticipantId) {
+                detectTapGestures(
+                  onTap = { currentOnTap.value?.invoke() },
+                  onLongPress = { local -> currentOnLongPress.value?.invoke(participant, itemWindowOrigin + local) }
+                )
+              }
+          } else {
+            itemModifier
+          }
 
-        1 -> {
           RemoteParticipantContent(
-            participant = callParticipantsPagerState.focusedParticipant,
+            participant = participant,
             renderInPip = callParticipantsPagerState.isRenderInPip,
             raiseHandAllowed = false,
             onInfoMoreInfoClick = null,
-            modifier = Modifier.fillMaxSize()
+            showAudioIndicator = callParticipantsPagerState.callParticipants.size > 1,
+            modifier = longPressModifier
           )
         }
       }
+
+      1 -> {
+        RemoteParticipantContent(
+          participant = callParticipantsPagerState.focusedParticipant,
+          renderInPip = callParticipantsPagerState.isRenderInPip,
+          raiseHandAllowed = false,
+          onInfoMoreInfoClick = null,
+          modifier = Modifier.fillMaxSize()
+        )
+      }
     }
-  } else {
-    callGridContent(callParticipantsPagerState, modifier)
   }
 }
 

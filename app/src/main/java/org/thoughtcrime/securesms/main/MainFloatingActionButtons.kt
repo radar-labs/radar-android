@@ -36,12 +36,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.signal.core.ui.NavigationType
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.ui.compose.theme.SignalTheme
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.window.NavigationType
 import kotlin.math.roundToInt
+import org.signal.core.ui.R as CoreUiR
 
 private val ACTION_BUTTON_SIZE = 56.dp
 private val ACTION_BUTTON_SPACING = 16.dp
@@ -49,18 +51,18 @@ private val ACTION_BUTTON_SPACING = 16.dp
 interface MainFloatingActionButtonsCallback {
   fun onNewChatClick()
   fun onNewCallClick()
-  fun onCameraClick(destination: MainNavigationListLocation)
+  fun onCameraClick(destination: MainListRoute)
 
   object Empty : MainFloatingActionButtonsCallback {
     override fun onNewChatClick() = Unit
     override fun onNewCallClick() = Unit
-    override fun onCameraClick(destination: MainNavigationListLocation) = Unit
+    override fun onCameraClick(destination: MainListRoute) = Unit
   }
 }
 
 @Composable
 fun MainFloatingActionButtons(
-  destination: MainNavigationListLocation,
+  destination: MainListRoute,
   callback: MainFloatingActionButtonsCallback,
   modifier: Modifier = Modifier,
   navigationType: NavigationType = NavigationType.rememberNavigationType()
@@ -84,6 +86,11 @@ fun MainFloatingActionButtons(
     }
   }
 
+  // Radar: no FABs on the Payments tab (its header has its own Add Money / Send buttons).
+  if (destination == MainListRoute.Payments) {
+    return
+  }
+
   Box(
     modifier = modifier
       .padding(ACTION_BUTTON_SPACING)
@@ -96,10 +103,7 @@ fun MainFloatingActionButtons(
       elevation = shadowElevation
     )
 
-    // The Payments tab has its own "Add Money" / "Send" buttons inside PaymentsHomeFragment's
-    // header — suppress the global FAB on this tab so we don't show a no-op button.
-    AnimatedVisibility(
-      visible = destination != MainNavigationListLocation.PAYMENTS,
+    Box(
       modifier = Modifier.align(primaryButtonAlignment)
     ) {
       PrimaryActionButton(
@@ -115,10 +119,10 @@ fun MainFloatingActionButtons(
 
 @Composable
 private fun BoxScope.SecondaryActionButton(
-  destination: MainNavigationListLocation,
+  destination: MainListRoute,
   boxHeightPx: Int,
   elevation: Dp,
-  onCameraClick: (MainNavigationListLocation) -> Unit
+  onCameraClick: (MainListRoute) -> Unit
 ) {
   val navigationType = NavigationType.rememberNavigationType()
   val secondaryButtonAlignment = remember(navigationType) {
@@ -140,7 +144,7 @@ private fun BoxScope.SecondaryActionButton(
   }
 
   AnimatedVisibility(
-    visible = destination == MainNavigationListLocation.CHATS || destination == MainNavigationListLocation.ARCHIVE,
+    visible = destination == MainListRoute.Chats || destination == MainListRoute.Archive,
     modifier = Modifier.align(secondaryButtonAlignment),
     enter = slideInVertically(initialOffsetY = offsetYProvider),
     exit = slideOutVertically(targetOffsetY = offsetYProvider)
@@ -156,7 +160,7 @@ private fun BoxScope.SecondaryActionButton(
         contentColor = MaterialTheme.colorScheme.onSurface
       ),
       onClick = {
-        onCameraClick(MainNavigationListLocation.CHATS)
+        onCameraClick(MainListRoute.Chats)
       },
       shadowElevation = animatedElevation
     )
@@ -165,24 +169,24 @@ private fun BoxScope.SecondaryActionButton(
 
 @Composable
 private fun PrimaryActionButton(
-  destination: MainNavigationListLocation,
+  destination: MainListRoute,
   elevation: Dp,
   onNewChatClick: () -> Unit = {},
-  onCameraClick: (MainNavigationListLocation) -> Unit = {},
+  onCameraClick: (MainListRoute) -> Unit = {},
   onNewCallClick: () -> Unit = {}
 ) {
   val onClick = remember(destination) {
     when (destination) {
-      MainNavigationListLocation.ARCHIVE -> onNewChatClick
-      MainNavigationListLocation.CHATS -> onNewChatClick
-      MainNavigationListLocation.CALLS -> onNewCallClick
-      MainNavigationListLocation.STORIES -> {
+      MainListRoute.Archive -> onNewChatClick
+      MainListRoute.Chats -> onNewChatClick
+      MainListRoute.Calls -> onNewCallClick
+      MainListRoute.Stories -> {
         { onCameraClick(destination) }
       }
-      // Payments tab has no FAB action (the in-PaymentsHomeFragment header has its own
-      // Add Money / Send buttons). Provide a no-op so the FAB compiles, then suppress
-      // FAB rendering at the call site by checking for PAYMENTS.
-      MainNavigationListLocation.PAYMENTS -> ({ })
+      // Radar: the Payments tab has its own Add Money / Send buttons; the FAB is hidden there.
+      MainListRoute.Payments -> {
+        {}
+      }
     }
   }
 
@@ -192,12 +196,11 @@ private fun PrimaryActionButton(
     icon = {
       AnimatedContent(destination) { targetState ->
         val (icon, contentDescriptionId) = when (targetState) {
-          MainNavigationListLocation.ARCHIVE -> R.drawable.symbol_edit_24 to R.string.conversation_list_fragment__fab_content_description
-          MainNavigationListLocation.CHATS -> R.drawable.symbol_edit_24 to R.string.conversation_list_fragment__fab_content_description
-          MainNavigationListLocation.CALLS -> R.drawable.symbol_phone_plus_24 to R.string.CallLogFragment__start_a_new_call
-          MainNavigationListLocation.STORIES -> R.drawable.symbol_camera_24 to R.string.conversation_list_fragment__open_camera_description
-          // Payments tab: placeholder icon (FAB is suppressed at the call site for PAYMENTS).
-          MainNavigationListLocation.PAYMENTS -> R.drawable.symbol_payment_24 to R.string.preferences__payments
+          MainListRoute.Archive -> CoreUiR.drawable.symbol_edit_24 to R.string.conversation_list_fragment__fab_content_description
+          MainListRoute.Chats -> CoreUiR.drawable.symbol_edit_24 to R.string.conversation_list_fragment__fab_content_description
+          MainListRoute.Calls -> R.drawable.symbol_phone_plus_24 to R.string.CallLogFragment__start_a_new_call
+          MainListRoute.Stories -> CoreUiR.drawable.symbol_camera_24 to R.string.conversation_list_fragment__open_camera_description
+          MainListRoute.Payments -> R.drawable.symbol_bitcoin_24 to R.string.preferences__payments
         }
 
         Icon(
@@ -220,7 +223,7 @@ private fun CameraButton(
     onClick = onClick,
     icon = {
       Icon(
-        imageVector = ImageVector.vectorResource(R.drawable.symbol_camera_24),
+        imageVector = SignalIcons.Camera.imageVector,
         contentDescription = stringResource(R.string.conversation_list_fragment__open_camera_description)
       )
     },
@@ -254,19 +257,19 @@ private fun MainFloatingActionButton(
 @DayNightPreviews
 @Composable
 private fun MainFloatingActionButtonsNavigationRailPreview() {
-  var currentDestination by remember { mutableStateOf(MainNavigationListLocation.CHATS) }
+  var currentDestination by remember { mutableStateOf(MainListRoute.Chats) }
   val callback = remember {
     object : MainFloatingActionButtonsCallback {
-      override fun onCameraClick(destination: MainNavigationListLocation) {
-        currentDestination = MainNavigationListLocation.CALLS
+      override fun onCameraClick(destination: MainListRoute) {
+        currentDestination = MainListRoute.Calls
       }
 
       override fun onNewChatClick() {
-        currentDestination = MainNavigationListLocation.STORIES
+        currentDestination = MainListRoute.Stories
       }
 
       override fun onNewCallClick() {
-        currentDestination = MainNavigationListLocation.CHATS
+        currentDestination = MainListRoute.Chats
       }
     }
   }
@@ -283,19 +286,19 @@ private fun MainFloatingActionButtonsNavigationRailPreview() {
 @DayNightPreviews
 @Composable
 private fun MainFloatingActionButtonsNavigationBarPreview() {
-  var currentDestination by remember { mutableStateOf(MainNavigationListLocation.CHATS) }
+  var currentDestination by remember { mutableStateOf(MainListRoute.Chats) }
   val callback = remember {
     object : MainFloatingActionButtonsCallback {
-      override fun onCameraClick(destination: MainNavigationListLocation) {
-        currentDestination = MainNavigationListLocation.CALLS
+      override fun onCameraClick(destination: MainListRoute) {
+        currentDestination = MainListRoute.Calls
       }
 
       override fun onNewChatClick() {
-        currentDestination = MainNavigationListLocation.STORIES
+        currentDestination = MainListRoute.Stories
       }
 
       override fun onNewCallClick() {
-        currentDestination = MainNavigationListLocation.CHATS
+        currentDestination = MainListRoute.Chats
       }
     }
   }

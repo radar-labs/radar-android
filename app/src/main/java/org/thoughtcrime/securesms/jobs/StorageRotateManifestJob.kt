@@ -2,13 +2,15 @@ package org.thoughtcrime.securesms.jobs
 
 import org.signal.core.models.storageservice.StorageKey
 import org.signal.core.util.logging.Log
+import org.signal.network.service.StorageServiceService
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.manifest
+import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.payments.Entropy
 import org.whispersystems.signalservice.api.storage.SignalStorageManifest
-import org.whispersystems.signalservice.api.storage.StorageServiceRepository
 import java.util.concurrent.TimeUnit
 
 /**
@@ -41,7 +43,7 @@ class StorageRotateManifestJob private constructor(parameters: Parameters) : Job
       return Result.failure()
     }
 
-    if (!SignalStore.account.isRegistered || SignalStore.account.e164 == null) {
+    if (!SignalStore.account.isRegistered || SignalStore.account.aci == null) {
       Log.w(TAG, "User not registered. Skipping.")
       return Result.failure()
     }
@@ -53,27 +55,27 @@ class StorageRotateManifestJob private constructor(parameters: Parameters) : Job
     }
 
     val storageServiceKey = SignalStore.storageService.storageKey
-    val repository = StorageServiceRepository(AppDependencies.storageServiceApi)
+    val repository = SignalNetwork.storageService
 
     val currentManifest: SignalStorageManifest = when (val result = repository.getStorageManifest(restoreKey)) {
-      is StorageServiceRepository.ManifestResult.Success -> {
+      is StorageServiceService.ManifestResult.Success -> {
         result.manifest
       }
-      is StorageServiceRepository.ManifestResult.DecryptionError -> {
+      is StorageServiceService.ManifestResult.DecryptionError -> {
         Log.w(TAG, "Failed to decrypt the manifest! Only recourse is to force push.", result.exception)
         AppDependencies.jobManager.add(StorageForcePushJob())
         return Result.failure()
       }
-      is StorageServiceRepository.ManifestResult.NetworkError -> {
+      is StorageServiceService.ManifestResult.NetworkError -> {
         Log.w(TAG, "Encountered a network error during read, retrying.", result.exception)
         return Result.retry(defaultBackoff())
       }
-      StorageServiceRepository.ManifestResult.NotFoundError -> {
+      StorageServiceService.ManifestResult.NotFoundError -> {
         Log.w(TAG, "No existing manifest was found! Force pushing.")
         AppDependencies.jobManager.add(StorageForcePushJob())
         return Result.failure()
       }
-      is StorageServiceRepository.ManifestResult.StatusCodeError -> {
+      is StorageServiceService.ManifestResult.StatusCodeError -> {
         Log.w(TAG, "Encountered a status code error during read, retrying.", result.exception)
         return Result.retry(defaultBackoff())
       }
@@ -95,7 +97,7 @@ class StorageRotateManifestJob private constructor(parameters: Parameters) : Job
     val manifestWithNewVersion = currentManifest.copy(version = currentManifest.version + 1)
 
     return when (val result = repository.writeUnchangedManifest(storageServiceKey, manifestWithNewVersion)) {
-      StorageServiceRepository.WriteStorageRecordsResult.Success -> {
+      StorageServiceService.WriteStorageRecordsResult.Success -> {
         Log.i(TAG, "Successfully rotated the manifest as version ${manifestWithNewVersion.version}.${manifestWithNewVersion.sourceDeviceId}. Clearing restore key.")
         SignalStore.svr.masterKeyForInitialDataRestore = null
 
@@ -104,18 +106,18 @@ class StorageRotateManifestJob private constructor(parameters: Parameters) : Job
 
         Result.success()
       }
-      StorageServiceRepository.WriteStorageRecordsResult.ConflictError -> {
+      StorageServiceService.WriteStorageRecordsResult.ConflictError -> {
         Log.w(TAG, "Hit a conflict! Enqueuing a sync followed by another rotation.")
         AppDependencies.jobManager.add(StorageSyncJob.forRemoteChange())
         AppDependencies.jobManager.add(StorageRotateManifestJob())
         Result.failure()
       }
-      is StorageServiceRepository.WriteStorageRecordsResult.StatusCodeError -> {
+      is StorageServiceService.WriteStorageRecordsResult.StatusCodeError -> {
         Log.w(TAG, "Encountered a non-conflict status code error during write. Failing.", result.exception)
         Result.failure()
       }
 
-      is StorageServiceRepository.WriteStorageRecordsResult.NetworkError -> {
+      is StorageServiceService.WriteStorageRecordsResult.NetworkError -> {
         Log.w(TAG, "Encountered a network error during write, retrying.", result.exception)
         Result.retry(defaultBackoff())
       }
@@ -128,7 +130,7 @@ class StorageRotateManifestJob private constructor(parameters: Parameters) : Job
    * any read failure is logged and ignored rather than blocking the rotation, mirroring iOS's
    * `try?`-guarded merge. Non-destructive — it never overwrites an entropy that's already present.
    */
-  private fun restorePaymentsEntropyIfNecessary(repository: StorageServiceRepository, storageKey: StorageKey, manifest: SignalStorageManifest) {
+  private fun restorePaymentsEntropyIfNecessary(repository: StorageServiceService, storageKey: StorageKey, manifest: SignalStorageManifest) {
     if (SignalStore.payments.paymentsEntropy != null) {
       return
     }
@@ -136,7 +138,7 @@ class StorageRotateManifestJob private constructor(parameters: Parameters) : Job
     val accountStorageId = manifest.accountStorageId.orElse(null) ?: return
 
     val record = when (val result = repository.readStorageRecords(storageKey, manifest.recordIkm, listOf(accountStorageId))) {
-      is StorageServiceRepository.StorageRecordResult.Success -> result.records.firstOrNull { it.proto.account != null }
+      is StorageServiceService.StorageRecordResult.Success -> result.records.firstOrNull { it.proto.account != null }
       else -> {
         Log.w(TAG, "Could not read account record to recover payments entropy. Skipping. Result: $result")
         null

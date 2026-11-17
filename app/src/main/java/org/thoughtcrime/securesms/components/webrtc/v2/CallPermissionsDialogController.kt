@@ -8,10 +8,10 @@ package org.thoughtcrime.securesms.components.webrtc.v2
 import android.Manifest
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import org.signal.core.ui.BottomSheetUtil
+import org.signal.core.ui.permissions.PermissionDeniedBottomSheet.Companion.showPermissionFragment
+import org.signal.core.ui.permissions.Permissions
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.permissions.PermissionDeniedBottomSheet.Companion.showPermissionFragment
-import org.thoughtcrime.securesms.permissions.Permissions
-import org.thoughtcrime.securesms.util.BottomSheetUtil
 
 /**
  * Shared dialog controller for requesting different permissions specific to calling.
@@ -63,6 +63,24 @@ class CallPermissionsDialogController {
           showPermissionFragment(R.string.WebRtcCallActivity__allow_access_microphone, R.string.WebRtcCallActivity__to_start_call, false)
             .show(activity.supportFragmentManager, BottomSheetUtil.STANDARD_BOTTOM_SHEET_FRAGMENT_TAG)
         }
+        .execute()
+    }
+  }
+
+  /**
+   * Intentionally has no rationale or denial UI since this is optional and requested on every call until granted.
+   */
+  fun requestPhoneStatePermission(
+    activity: AppCompatActivity,
+    onGranted: Runnable
+  ) {
+    if (!isAskingForPermission) {
+      isAskingForPermission = true
+      Permissions.with(activity)
+        .request(Manifest.permission.READ_PHONE_STATE)
+        .ifNecessary()
+        .onAnyResult { isAskingForPermission = false }
+        .onAllGranted(onGranted)
         .execute()
     }
   }

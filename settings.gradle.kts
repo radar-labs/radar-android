@@ -1,3 +1,34 @@
+val localProps = java.util.Properties().also { props ->
+  val localPropsFile = file("local.properties")
+  if (localPropsFile.exists()) {
+    localPropsFile.inputStream().use { props.load(it) }
+  }
+}
+
+fun optionalBuildCacheValue(envKey: String, localKey: String): String? {
+  return System.getenv(envKey)?.takeIf { it.isNotBlank() }
+    ?: localProps.getProperty(localKey)?.takeIf { it.isNotBlank() }
+}
+
+val remoteBuildCacheUrl: String? = optionalBuildCacheValue("SIGNAL_BUILD_CACHE_URL", "signal.build.cache.url")
+val remoteBuildCacheUser: String? = optionalBuildCacheValue("SIGNAL_BUILD_CACHE_USER", "signal.build.cache.user")
+val remoteBuildCachePassword: String? = optionalBuildCacheValue("SIGNAL_BUILD_CACHE_PASSWORD", "signal.build.cache.password")
+
+buildCache {
+  if (remoteBuildCacheUrl != null) {
+    remote<HttpBuildCache> {
+      url = uri(remoteBuildCacheUrl)
+      isPush = System.getenv("SIGNAL_BUILD_CACHE_PUSH") == "true"
+      if (remoteBuildCacheUser != null && remoteBuildCachePassword != null) {
+        credentials {
+          username = remoteBuildCacheUser
+          password = remoteBuildCachePassword
+        }
+      }
+    }
+  }
+}
+
 pluginManagement {
   repositories {
     google()
@@ -64,69 +95,76 @@ if (libsignalClientPath is String) {
   }
 }
 
+// Main app
 include(":app")
-include(":libsignal-service")
+
+// Core modules
+include(":core:util")
+include(":core:util-jvm")
+include(":core:network")
+include(":core:ui")
+include(":core:serialization")
+include(":core:database")
+
+// Lib modules
+include(":lib:libsignal-service")
+include(":lib:network")
+include(":lib:glide")
+include(":lib:photoview")
+include(":lib:sticky-header-grid")
+include(":lib:billing")
+include(":lib:paging")
+include(":lib:device-transfer")
+include(":lib:donations")
+include(":lib:contacts")
+include(":lib:qr")
+include(":lib:spinner")
+include(":lib:video")
+include(":lib:image-editor")
+include(":lib:debuglogs-viewer")
+include(":lib:blurhash")
+include(":lib:apng")
+include(":lib:emoji")
+include(":lib:archive")
+include(":lib:ui-components")
+include(":lib:signal-login")
+include(":lib:password-manager")
+include(":lib:storage")
+include(":lib:remote-config")
+
+// Feature modules
+include(":feature:app-settings")
+include(":feature:registration")
+include(":feature:camera")
+include(":feature:media-send")
+include(":feature:chat-settings")
+include(":feature:media-keyboard")
+include(":feature:media-viewer")
+
+// Demo apps
+include(":demo:paging")
+include(":demo:device-transfer")
+include(":demo:donations")
+include(":demo:contacts")
+include(":demo:qr")
+include(":demo:spinner")
+include(":demo:video")
+include(":demo:image-editor")
+include(":demo:debuglogs-viewer")
+include(":demo:registration")
+include(":demo:camera")
+include(":demo:media-keyboard")
+include(":demo:apng")
+include(":demo:list-detail")
+
+// Testing/Lint modules
 include(":lintchecks")
-include(":paging")
-include(":paging-app")
-include(":core-util")
-include(":core-util-jvm")
-include(":core-models")
-include(":glide-config")
-include(":device-transfer")
-include(":device-transfer-app")
-include(":image-editor")
-include(":image-editor-app")
-include(":donations")
-include(":donations-app")
-include(":debuglogs-viewer")
-include(":debuglogs-viewer-app")
-include(":spinner")
-include(":spinner-app")
-include(":contacts")
-include(":contacts-app")
-include(":qr")
-include(":qr-app")
-include(":sticky-header-grid")
-include(":photoview")
-include(":core-ui")
+include(":fast-lint")
+include(":screener")
 include(":benchmark")
+include(":baseline-profile")
 include(":microbenchmark")
-include(":video")
-include(":video-app")
-include(":billing")
-include(":registration")
-include(":registration-app")
-
+// App project name
 project(":app").name = "Signal-Android"
-project(":paging").projectDir = file("paging/lib")
-project(":paging-app").projectDir = file("paging/app")
-
-project(":device-transfer").projectDir = file("device-transfer/lib")
-project(":device-transfer-app").projectDir = file("device-transfer/app")
-
-project(":image-editor").projectDir = file("image-editor/lib")
-project(":image-editor-app").projectDir = file("image-editor/app")
-
-project(":donations").projectDir = file("donations/lib")
-project(":donations-app").projectDir = file("donations/app")
-
-project(":debuglogs-viewer").projectDir = file("debuglogs-viewer/lib")
-project(":debuglogs-viewer-app").projectDir = file("debuglogs-viewer/app")
-
-project(":spinner").projectDir = file("spinner/lib")
-project(":spinner-app").projectDir = file("spinner/app")
-
-project(":contacts").projectDir = file("contacts/lib")
-project(":contacts-app").projectDir = file("contacts/app")
-
-project(":qr").projectDir = file("qr/lib")
-project(":qr-app").projectDir = file("qr/app")
-
-project(":video").projectDir = file("video/lib")
-project(":video-app").projectDir = file("video/app")
-
-project(":registration").projectDir = file("registration/lib")
-project(":registration-app").projectDir = file("registration/app")
 
 rootProject.name = "Signal"

@@ -13,10 +13,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.mobilecoin.lib.exceptions.SerializationException;
 
+import org.signal.core.database.SQLiteDatabaseExtensionsKt;
+import org.signal.core.database.SqlUtil;
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.CursorExtensionsKt;
 import org.signal.core.util.CursorUtil;
-import org.signal.core.util.SQLiteDatabaseExtensionsKt;
-import org.signal.core.util.SqlUtil;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
 import org.thoughtcrime.securesms.database.model.MessageId;
@@ -25,7 +26,6 @@ import org.thoughtcrime.securesms.database.model.databaseprotos.CryptoValue;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.payments.*;
 import org.thoughtcrime.securesms.payments.proto.PaymentMetaData;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.livedata.LiveDataUtil;
 import org.whispersystems.signalservice.api.payments.Money;
 import org.signal.core.util.UuidUtil;
@@ -470,6 +470,12 @@ public final class PaymentTable extends DatabaseTable implements RecipientIdData
     int count = getWritableDatabase().update(TABLE_NAME, values, RECIPIENT_ID + " = ?", SqlUtil.buildArgs(fromId));
 
     Log.d(TAG, "Remapped " + fromId + " to " + toId + ". count: " + count);
+  }
+
+  @Override
+  public void onDeletedRecipient(@NonNull RecipientId recipientId) {
+    int count = getWritableDatabase().delete(TABLE_NAME, RECIPIENT_ID + " = ?", new String[] { recipientId.serialize() });
+    Log.d(TAG, "Deleted recipient: " + count);
   }
 
   public boolean markPaymentSubmitted(@NonNull UUID uuid,

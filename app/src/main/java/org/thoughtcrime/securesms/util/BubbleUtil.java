@@ -4,16 +4,18 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.WorkerThread;
 
-import com.annimon.stream.Stream;
-
+import org.signal.core.models.recipients.RecipientId;
+import org.signal.core.util.DimensionUnit;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
@@ -23,9 +25,11 @@ import org.thoughtcrime.securesms.notifications.v2.NotificationFactory;
 import org.thoughtcrime.securesms.notifications.v2.ConversationId;
 import org.thoughtcrime.securesms.preferences.widgets.NotificationPrivacyPreference;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
+
+import java.util.stream.Stream;
 
 import static org.thoughtcrime.securesms.util.ConversationUtil.CONVERSATION_SUPPORT_VERSION;
+import org.signal.core.util.ServiceUtil;
 
 /**
  * Bubble-related utility methods.
@@ -35,6 +39,8 @@ public final class BubbleUtil {
   private static final String TAG = Log.tag(BubbleUtil.class);
   private static String currentState = "";
 
+  private static final float MIN_BUBBLE_HEIGHT_DP = 600f;
+  private static final float BUBBLE_HEIGHT_SCREEN_FRACTION = 0.9f;
   private BubbleUtil() {
   }
 
@@ -110,6 +116,9 @@ public final class BubbleUtil {
       ConversationId conversationId = ConversationId.forConversation(threadId);
       SignalExecutors.BOUNDED.execute(() -> {
         if (canBubble(context, recipientId, threadId)) {
+          Recipient recipient = Recipient.resolved(recipientId);
+          ConversationUtil.ensureShortcutForRecipientSync(context, recipient);
+
           NotificationManager     notificationManager      = ServiceUtil.getNotificationManager(context);
           StatusBarNotification[] notifications            = notificationManager.getActiveNotifications();
           int                     threadNotificationId     = NotificationIds.getNotificationIdForThread(conversationId);
@@ -122,7 +131,6 @@ public final class BubbleUtil {
           if (activeThreadNotification != null && activeThreadNotification.deleteIntent != null) {
             AppDependencies.getMessageNotifier().forceBubbleNotification(context, conversationId);
           } else {
-            Recipient recipient = Recipient.resolved(recipientId);
             NotificationFactory.notifyToBubbleConversation(context, recipient, threadId);
           }
         }
@@ -133,5 +141,27 @@ public final class BubbleUtil {
   public enum BubbleState {
     SHOWN,
     HIDDEN
+  }
+
+  public static int getDesiredBubbleHeightPx(@NonNull Context context) {
+    int minHeightPx = (int) DimensionUnit.DP.toPixels(MIN_BUBBLE_HEIGHT_DP);
+    int screenHeightPx = context.getResources().getDisplayMetrics().heightPixels;
+
+    if (Build.VERSION.SDK_INT >= 30) {
+      WindowManager wm = context.getSystemService(WindowManager.class);
+      if (wm != null) {
+        Rect bounds = wm.getCurrentWindowMetrics().getBounds();
+        screenHeightPx = bounds.height();
+      }
+    }
+
+    if (screenHeightPx <= 0) {
+      return minHeightPx;
+    }
+
+    int targetPx = (int) (screenHeightPx * BUBBLE_HEIGHT_SCREEN_FRACTION);
+    int desiredPx = Math.max(minHeightPx, targetPx);
+
+    return Math.min(desiredPx, screenHeightPx);
   }
 }

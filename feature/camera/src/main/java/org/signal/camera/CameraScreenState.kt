@@ -1,0 +1,57 @@
+package org.signal.camera
+
+import android.view.Surface
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.compose.ui.geometry.Offset
+
+/**
+ * State for CameraScreen.
+ * Contains UI-related state for camera functionality.
+ */
+data class CameraScreenState(
+  val focusPoint: Offset? = null,
+  val showFocusIndicator: Boolean = false,
+  val lensFacing: Int = CameraSelector.LENS_FACING_BACK,
+  val zoomRatio: Float = 1f,
+  /** What the bound lens can reach. A single point until the camera reports otherwise. */
+  val zoomRange: ClosedFloatingPointRange<Float> = 1f..1f,
+  val flashMode: FlashMode = FlashMode.Off,
+  val isRecording: Boolean = false,
+  /** Whether the running recording keeps running without the capture button being held. */
+  val isRecordingLocked: Boolean = false,
+  /** Whether the running recording is paused, as the recorder reports it rather than as it was requested. */
+  val isRecordingPaused: Boolean = false,
+  val recordingDuration: Long = 0L,
+  val showShutter: Boolean = false,
+  val showSelfieFlash: Boolean = false,
+  val captureError: CaptureError? = null,
+  val isLandscape: Boolean = false,
+  /** Committed physical device rotation ([Surface] rotation). Drives Small-screen HUD icon rotation. */
+  val deviceRotation: Int = Surface.ROTATION_0
+)
+
+sealed interface CaptureError {
+  data class PhotoCaptureFailed(val message: String?) : CaptureError
+  data class PhotoProcessingFailed(val message: String?) : CaptureError
+}
+
+/**
+ * Flash mode for the camera.
+ */
+enum class FlashMode(val cameraxMode: Int) {
+  Off(ImageCapture.FLASH_MODE_OFF),
+  On(ImageCapture.FLASH_MODE_ON),
+  Auto(ImageCapture.FLASH_MODE_AUTO);
+
+  /**
+   * Returns the next flash mode in the cycle: OFF -> ON -> AUTO -> OFF
+   */
+  fun next(): FlashMode {
+    return when (this) {
+      Off -> On
+      On -> Auto
+      Auto -> Off
+    }
+  }
+}

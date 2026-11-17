@@ -8,13 +8,14 @@ import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.concurrent.SignalExecutors;
-import org.thoughtcrime.securesms.components.transfercontrols.TransferControlView;
 import org.thoughtcrime.securesms.conversation.ConversationMessage.ConversationMessageFactory;
 import org.thoughtcrime.securesms.database.AttachmentTable;
 import org.thoughtcrime.securesms.database.DatabaseObserver;
 import org.thoughtcrime.securesms.database.GroupReceiptTable;
 import org.thoughtcrime.securesms.database.GroupTable;
+import org.thoughtcrime.securesms.database.MessageTable;
 import org.thoughtcrime.securesms.database.NoSuchMessageException;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.documents.IdentityKeyMismatch;
@@ -25,7 +26,6 @@ import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.mms.Slide;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.whispersystems.signalservice.api.push.DistributionId;
 
 import java.util.LinkedList;
@@ -60,7 +60,7 @@ public final class MessageDetailsRepository {
     return Observable.<MessageDetails>create(emitter -> {
       DatabaseObserver.MessageObserver messageObserver = mId -> {
         try {
-          MessageRecord  messageRecord  = SignalDatabase.messages().getMessageRecord(messageId.getId());
+          MessageRecord  messageRecord  = MessageTable.withAttachmentData(SignalDatabase.messages().getMessageRecord(messageId.getId()));
           MessageDetails messageDetails = getRecipientDeliveryStatusesInternal(messageRecord);
 
           emitter.onNext(messageDetails);

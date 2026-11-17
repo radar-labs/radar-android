@@ -18,6 +18,7 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
+import androidx.annotation.MainThread
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.IntentCompat
@@ -27,15 +28,16 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.ui.permissions.Permissions
+import org.signal.core.util.DeviceProperties
 import org.signal.core.util.PendingIntentFlags
+import org.signal.core.util.SafeForegroundService
+import org.signal.core.util.ThreadUtil
+import org.signal.core.util.UnableToStartException
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.dependencies.AppDependencies
-import org.thoughtcrime.securesms.jobs.UnableToStartException
-import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
-import org.thoughtcrime.securesms.service.SafeForegroundService
-import org.thoughtcrime.securesms.util.DeviceProperties
 import org.thoughtcrime.securesms.util.TelephonyUtil
 import org.thoughtcrime.securesms.webrtc.CallNotificationBuilder
 import org.thoughtcrime.securesms.webrtc.UncaughtExceptionHandlerManager
@@ -127,6 +129,13 @@ class ActiveCallManager(
     }
 
     @JvmStatic
+    fun onPhoneStatePermissionGranted() {
+      activeCallManagerLock.withLock {
+        activeCallManager?.retryPstnCallAnsweredListener()
+      }
+    }
+
+    @JvmStatic
     fun changePowerButtonReceiver(context: Context, register: Boolean) {
       activeCallManagerLock.withLock {
         if (activeCallManager == null) {
@@ -145,6 +154,10 @@ class ActiveCallManager(
   private var signalAudioManager: SignalAudioManager? = null
   private var previousNotificationId = -1
   private var previousNotificationDisposable = Disposable.disposed()
+
+  @Suppress("DEPRECATION")
+  private var pstnCallAnsweredListener: PhoneStateListener? = null
+  private var shouldListenForPstnCallAnswered = false
 
   init {
     Log.i(TAG, "init(bkgRestricted: ${DeviceProperties.isBackgroundRestricted()})")
@@ -169,6 +182,7 @@ class ActiveCallManager(
 
     unregisterNetworkReceiver()
     unregisterPowerButtonReceiver()
+    unregisterPstnCallAnsweredListener()
 
     AppDependencies.authWebSocket.removeKeepAliveToken(WEBSOCKET_KEEP_ALIVE_TOKEN)
     AppDependencies.unauthWebSocket.removeKeepAliveToken(WEBSOCKET_KEEP_ALIVE_TOKEN)
@@ -207,12 +221,29 @@ class ActiveCallManager(
       }
     } else {
       ActiveCallForegroundService.update(application, type, recipientId, isVideoCall)
+      ThreadUtil.runOnMain {
+        if (!shouldListenForPstnCallAnswered) {
+          shouldListenForPstnCallAnswered = true
+          registerPstnCallAnsweredListener()
+        }
+      }
     }
+  }
+
+  private fun retryPstnCallAnsweredListener() {
+    ThreadUtil.runOnMain { registerPstnCallAnsweredListener() }
   }
 
   fun sendAudioCommand(audioCommand: AudioManagerCommand) {
     if (signalAudioManager == null) {
-      signalAudioManager = create(application, this)
+      val canUseTelecom = if (audioCommand is AudioManagerCommand.Initialize) {
+        !audioCommand.isGroupCall
+      } else {
+        Log.w(TAG, "First AudioCommand received was not Initialize, skipping Telecom usage, command: ${audioCommand.javaClass.simpleName}")
+        false
+      }
+
+      signalAudioManager = create(context = application, eventListener = this, canUseTelecom = canUseTelecom)
     }
 
     Log.i(TAG, "Sending audio command [" + audioCommand.javaClass.simpleName + "] to " + signalAudioManager?.javaClass?.simpleName)
@@ -261,12 +292,63 @@ class ActiveCallManager(
     }
   }
 
+  @MainThread
+  private fun registerPstnCallAnsweredListener() {
+    if (pstnCallAnsweredListener != null || !shouldListenForPstnCallAnswered || AndroidTelecomUtil.telecomSupported) {
+      return
+    }
+
+    val listener = HangUpRtcOnPstnCallAnsweredListener()
+    try {
+      @Suppress("DEPRECATION")
+      TelephonyUtil.getManager(application).listen(listener, PhoneStateListener.LISTEN_CALL_STATE)
+      pstnCallAnsweredListener = listener
+    } catch (e: SecurityException) {
+      Log.w(TAG, "Failed to listen to PSTN call answers!", e)
+    }
+  }
+
+  private fun unregisterPstnCallAnsweredListener() {
+    ThreadUtil.runOnMain {
+      shouldListenForPstnCallAnswered = false
+      pstnCallAnsweredListener?.let {
+        @Suppress("DEPRECATION")
+        TelephonyUtil.getManager(application).listen(it, PhoneStateListener.LISTEN_NONE)
+      }
+      pstnCallAnsweredListener = null
+    }
+  }
+
   override fun onAudioDeviceChanged(activeDevice: SignalAudioManager.AudioDevice, devices: Set<SignalAudioManager.AudioDevice>) {
     callManager.onAudioDeviceChanged(activeDevice, devices)
   }
 
+  override fun onAudioDeviceChangeFailed() {
+    callManager.onAudioDeviceChangeFailed()
+  }
+
+  override fun onAudioReadyForAccept() {
+    callManager.onAudioReadyForAccept()
+  }
+
   override fun onBluetoothPermissionDenied() {
     callManager.onBluetoothPermissionDenied()
+  }
+
+  override fun onMicrophoneSilencedChanged(silenced: Boolean) {
+    callManager.onMicrophoneSilencedChanged(silenced)
+  }
+
+  @Suppress("deprecation")
+  private class HangUpRtcOnPstnCallAnsweredListener : PhoneStateListener() {
+    @Deprecated("Deprecated in Java")
+    override fun onCallStateChanged(state: Int, phoneNumber: String) {
+      super.onCallStateChanged(state, phoneNumber)
+      if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
+        Log.i(TAG, "Device phone call ended Signal call.")
+        AppDependencies.signalCallManager.localHangup()
+      }
+    }
   }
 
   /** Foreground service started only after a call is established */
@@ -277,12 +359,16 @@ class ActiveCallManager(
       private const val EXTRA_RECIPIENT_ID = "RECIPIENT_ID"
       private const val EXTRA_IS_VIDEO_CALL = "IS_VIDEO_CALL"
       private const val EXTRA_TYPE = "TYPE"
+      private const val EXTRA_SCREEN_SHARING = "SCREEN_SHARING"
 
-      fun update(context: Context, @CallNotificationBuilder.CallNotificationType type: Int, recipientId: RecipientId, isVideoCall: Boolean) {
+      @JvmStatic
+      @JvmOverloads
+      fun update(context: Context, @CallNotificationBuilder.CallNotificationType type: Int, recipientId: RecipientId, isVideoCall: Boolean, isScreenSharing: Boolean = false) {
         val extras = bundleOf(
           EXTRA_TYPE to type,
           EXTRA_RECIPIENT_ID to recipientId,
-          EXTRA_IS_VIDEO_CALL to isVideoCall
+          EXTRA_IS_VIDEO_CALL to isVideoCall,
+          EXTRA_SCREEN_SHARING to isScreenSharing
         )
 
         if (!SafeForegroundService.update(context, ActiveCallForegroundService::class.java, extras)) {
@@ -297,30 +383,14 @@ class ActiveCallManager(
       }
     }
 
+    private var isScreenSharing: Boolean = false
+
     override val tag: String
       get() = TAG
 
     override val notificationId: Int
       get() = CallNotificationBuilder.WEBRTC_NOTIFICATION
 
-    @get:RequiresApi(30)
-    override val serviceType: Int
-      get() {
-        var type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-
-        if (Permissions.hasAll(this, Manifest.permission.RECORD_AUDIO)) {
-          type = type or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
-        }
-
-        if (Permissions.hasAll(this, Manifest.permission.CAMERA)) {
-          type = type or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
-        }
-
-        return type
-      }
-
-    @Suppress("DEPRECATION")
-    private var hangUpRtcOnDeviceCallAnswered: PhoneStateListener? = null
     private var notificationDisposable: Disposable = Disposable.disposed()
 
     @Volatile
@@ -331,20 +401,6 @@ class ActiveCallManager(
 
     @Volatile
     private var lastAsyncServiceNotificationType: Int = -1
-
-    override fun onCreate() {
-      super.onCreate()
-      hangUpRtcOnDeviceCallAnswered = HangUpRtcOnPstnCallAnsweredListener()
-
-      if (!AndroidTelecomUtil.telecomSupported) {
-        try {
-          @Suppress("DEPRECATION")
-          TelephonyUtil.getManager(application).listen(hangUpRtcOnDeviceCallAnswered, PhoneStateListener.LISTEN_CALL_STATE)
-        } catch (e: SecurityException) {
-          Log.w(TAG, "Failed to listen to PSTN call answers!", e)
-        }
-      }
-    }
 
     override fun onServiceStopCommandReceived(intent: Intent) {
       notificationDisposable.dispose()
@@ -359,13 +415,29 @@ class ActiveCallManager(
       }
     }
 
-    override fun onDestroy() {
-      super.onDestroy()
+    @RequiresApi(30)
+    override fun serviceType(intent: Intent): Int {
+      val telecom = Build.VERSION.SDK_INT >= 36 && AndroidTelecomUtil.hasActiveController()
 
-      if (!AndroidTelecomUtil.telecomSupported) {
-        @Suppress("DEPRECATION")
-        TelephonyUtil.getManager(application).listen(hangUpRtcOnDeviceCallAnswered, PhoneStateListener.LISTEN_NONE)
+      var type = if (telecom) {
+        ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
+      } else {
+        ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
       }
+
+      if (Permissions.hasAll(this, Manifest.permission.RECORD_AUDIO)) {
+        type = type or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
+      }
+
+      if (Permissions.hasAll(this, Manifest.permission.CAMERA)) {
+        type = type or ServiceInfo.FOREGROUND_SERVICE_TYPE_CAMERA
+      }
+
+      if (intent.getBooleanExtra(EXTRA_SCREEN_SHARING, false)) {
+        type = type or ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION
+      }
+
+      return type
     }
 
     override fun getForegroundNotification(intent: Intent): Notification {
@@ -385,25 +457,32 @@ class ActiveCallManager(
       val recipient: Recipient = Recipient.resolved(IntentCompat.getParcelableExtra(intent, EXTRA_RECIPIENT_ID, RecipientId::class.java)!!)
       val isVideoCall = intent.getBooleanExtra(EXTRA_IS_VIDEO_CALL, false)
 
-      if (requiresAsyncNotificationLoad) {
-        if (asyncServiceNotification != null && lastAsyncServiceNotificationType == type) {
-          return asyncServiceNotification!!
-        }
-
-        val requestTime = System.currentTimeMillis()
-        lastAsyncServiceNotificationRequestTime = requestTime
-        notificationDisposable = Single.fromCallable { createNotification(type, recipient, isVideoCall, skipAvatarLoad = false) }
-          .subscribeOn(Schedulers.io())
-          .filter { requestTime == lastAsyncServiceNotificationRequestTime }
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribeBy { notification ->
-            lastAsyncServiceNotificationType = type
-            asyncServiceNotification = notification
-            update(this, type, recipient.id, isVideoCall)
-          }
+      if (asyncServiceNotification != null && lastAsyncServiceNotificationType == type) {
+        return asyncServiceNotification!!
       }
 
-      return createNotification(type, recipient, isVideoCall, skipAvatarLoad = requiresAsyncNotificationLoad)
+      val requestTime = System.currentTimeMillis()
+      lastAsyncServiceNotificationRequestTime = requestTime
+      notificationDisposable = Single.fromCallable { createNotification(type, recipient, isVideoCall, skipAvatarLoad = false) }
+        .subscribeOn(Schedulers.io())
+        .filter { requestTime == lastAsyncServiceNotificationRequestTime }
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeBy { notification ->
+          lastAsyncServiceNotificationType = type
+          asyncServiceNotification = notification
+          update(this, type, recipient.id, isVideoCall)
+        }
+
+      return createNotification(type, recipient, isVideoCall, skipAvatarLoad = true)
+    }
+
+    override fun onServiceUpdateCommandReceived(intent: Intent) {
+      val wasScreenSharing = isScreenSharing
+      isScreenSharing = intent.getBooleanExtra(EXTRA_SCREEN_SHARING, false)
+
+      if (isScreenSharing && !wasScreenSharing) {
+        AppDependencies.signalCallManager.onScreenSharingServiceReady()
+      }
     }
 
     private fun createNotification(type: Int, recipient: Recipient, isVideoCall: Boolean, skipAvatarLoad: Boolean): Notification {
@@ -414,22 +493,6 @@ class ActiveCallManager(
         isVideoCall,
         skipAvatarLoad
       )
-    }
-
-    @Suppress("deprecation")
-    private class HangUpRtcOnPstnCallAnsweredListener : PhoneStateListener() {
-      @Deprecated("Deprecated in Java")
-      override fun onCallStateChanged(state: Int, phoneNumber: String) {
-        super.onCallStateChanged(state, phoneNumber)
-        if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
-          hangup()
-          Log.i(TAG, "Device phone call ended Signal call.")
-        }
-      }
-
-      private fun hangup() {
-        AppDependencies.signalCallManager.localHangup()
-      }
     }
   }
 

@@ -12,10 +12,10 @@ import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import org.signal.core.util.Debouncer
 import org.signal.core.util.Result
 import org.signal.core.util.isAbsent
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.util.Debouncer
 import org.thoughtcrime.securesms.util.delegate
 import org.thoughtcrime.securesms.util.rx.RxStore
 import java.util.Optional
@@ -71,6 +71,19 @@ class LinkPreviewViewModelV2(
     userCancelled = false
 
     return currentState.linkPreview.map { listOf(it) }.orElse(emptyList())
+  }
+
+  /**
+   * Adopt a link preview that has already been resolved elsewhere (e.g. the text story link entry
+   * dialog) so that a subsequent [onTextChanged] for the same URL short-circuits instead of kicking
+   * off a redundant fetch.
+   */
+  fun onLinkPreviewResolved(resolvedState: LinkPreviewState) {
+    activeRequest.dispose()
+    debouncer.clear()
+    userCancelled = false
+    activeUrl = resolvedState.url
+    setLinkPreviewState(resolvedState)
   }
 
   fun onTextChanged(text: String, cursorStart: Int, cursorEnd: Int) {

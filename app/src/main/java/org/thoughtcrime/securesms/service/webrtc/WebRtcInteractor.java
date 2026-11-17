@@ -6,17 +6,17 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.ringrtc.CallId;
 import org.signal.ringrtc.CallManager;
 import org.signal.ringrtc.GroupCall;
 import org.thoughtcrime.securesms.database.CallTable;
 import org.thoughtcrime.securesms.groups.GroupId;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.ringrtc.CameraEventListener;
 import org.thoughtcrime.securesms.ringrtc.RemotePeer;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceState;
-import org.thoughtcrime.securesms.util.AppForegroundObserver;
+import org.signal.core.util.AppForegroundObserver;
 import org.thoughtcrime.securesms.webrtc.audio.AudioManagerCommand;
 import org.thoughtcrime.securesms.webrtc.audio.SignalAudioManager;
 import org.thoughtcrime.securesms.webrtc.locks.LockManager;
@@ -138,8 +138,8 @@ public class WebRtcInteractor {
     ActiveCallManager.sendAudioManagerCommand(context, new AudioManagerCommand.SilenceIncomingRinger());
   }
 
-  void initializeAudioForCall() {
-    ActiveCallManager.sendAudioManagerCommand(context, new AudioManagerCommand.Initialize());
+  void initializeAudioForCall(boolean isGroupCall) {
+    ActiveCallManager.sendAudioManagerCommand(context, new AudioManagerCommand.Initialize(isGroupCall));
   }
 
   void startIncomingRinger(@Nullable Uri ringtoneUri, boolean vibrate) {
@@ -152,6 +152,10 @@ public class WebRtcInteractor {
 
   void stopAudio(boolean playDisconnect) {
     ActiveCallManager.sendAudioManagerCommand(context, new AudioManagerCommand.Stop(playDisconnect));
+  }
+
+  void prepareAudioForAccept() {
+    ActiveCallManager.sendAudioManagerCommand(context, new AudioManagerCommand.PrepareForAccept());
   }
 
   void startAudioCommunication() {
@@ -184,6 +188,10 @@ public class WebRtcInteractor {
 
   public void terminateCall(RecipientId recipientId) {
     AndroidTelecomUtil.terminateCall(recipientId);
+  }
+
+  public void terminateCall(RecipientId recipientId, int disconnectCause) {
+    AndroidTelecomUtil.terminateCall(recipientId, disconnectCause);
   }
 
   public boolean addNewIncomingCall(RecipientId recipientId, long callId, boolean remoteVideoOffer) {

@@ -42,11 +42,12 @@ import androidx.compose.ui.unit.sp
 import org.signal.core.models.AccountEntropyPool
 import org.signal.core.ui.compose.Buttons
 import org.signal.core.ui.compose.horizontalGutters
+import org.signal.passwordmanager.compose.attachPasswordAutoFillHelper
+import org.signal.passwordmanager.compose.passwordAutoFillHelper
 import org.thoughtcrime.securesms.R
+import org.thoughtcrime.securesms.components.TemporaryScreenshotSecurity
 import org.thoughtcrime.securesms.fonts.MonoTypeface
 import org.thoughtcrime.securesms.registration.ui.restore.BackupKeyVisualTransformation
-import org.thoughtcrime.securesms.registration.ui.restore.attachBackupKeyAutoFillHelper
-import org.thoughtcrime.securesms.registration.ui.restore.backupKeyAutoFillHelper
 
 /**
  * Screen to enter backup key with an option to view the backup key again
@@ -59,6 +60,8 @@ fun EnterKeyScreen(
   captionContent: @Composable () -> Unit,
   seeKeyButton: @Composable () -> Unit
 ) {
+  TemporaryScreenshotSecurity.bind()
+
   Column(
     verticalArrangement = Arrangement.SpaceBetween,
     modifier = Modifier
@@ -90,12 +93,13 @@ fun EnterKeyScreen(
 
       val updateEnteredBackupKey = { input: String ->
         enteredBackupKey = AccountEntropyPool.removeIllegalCharacters(input).uppercase()
-        isBackupKeyValid = enteredBackupKey == backupKey
+        val normalized = AccountEntropyPool.formatForStorage(enteredBackupKey)
+        isBackupKeyValid = normalized.equals(AccountEntropyPool.formatForStorage(backupKey), ignoreCase = true)
         showError = !isBackupKeyValid && enteredBackupKey.length >= backupKey.length
       }
 
       var requestFocus: Boolean by remember { mutableStateOf(true) }
-      val autoFillHelper = backupKeyAutoFillHelper { updateEnteredBackupKey(it) }
+      val autoFillHelper = passwordAutoFillHelper { updateEnteredBackupKey(it) }
 
       TextField(
         value = enteredBackupKey,
@@ -136,7 +140,7 @@ fun EnterKeyScreen(
           .testTag("message-backups-key-verify-screen-backup-key-input-field")
           .fillMaxWidth()
           .focusRequester(focusRequester)
-          .attachBackupKeyAutoFillHelper(autoFillHelper)
+          .attachPasswordAutoFillHelper(autoFillHelper)
           .onGloballyPositioned {
             if (requestFocus) {
               focusRequester.requestFocus()

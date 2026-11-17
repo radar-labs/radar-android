@@ -1,7 +1,6 @@
 package org.thoughtcrime.securesms.util;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -9,11 +8,15 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import org.signal.core.util.ResourceUtil;
+import org.signal.core.util.Util;
 import org.thoughtcrime.securesms.BuildConfig;
 import org.thoughtcrime.securesms.R;
+import org.thoughtcrime.securesms.backup.v2.MessageBackupTier;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
+import org.thoughtcrime.securesms.recipients.Recipient;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public final class SupportEmailUtil {
 
@@ -44,18 +47,28 @@ public final class SupportEmailUtil {
                                                          @Nullable String suffix)
   {
     filterSuffix = Util.emptyIfNull(filterSuffix);
-    prefix       = Util.emptyIfNull(prefix);
-    suffix       = Util.emptyIfNull(suffix);
 
-    return String.format("%s\n%s\n%s", prefix, buildSystemInfo(context, filter, filterSuffix), suffix);
+    return generateSupportEmailBody(context, ResourceUtil.getEnglishResources(context).getString(filter) + filterSuffix, prefix, suffix);
   }
 
-  private static @NonNull String buildSystemInfo(@NonNull Context context, @StringRes int filter, @NonNull String filterSuffix) {
-    Resources englishResources = ResourceUtil.getEnglishResources(context);
+  /**
+   * Generates a support email body with system info near the top, using the given already-resolved filter text.
+   */
+  public static @NonNull String generateSupportEmailBody(@NonNull Context context,
+                                                         @NonNull String filter,
+                                                         @Nullable String prefix,
+                                                         @Nullable String suffix)
+  {
+    prefix = Util.emptyIfNull(prefix);
+    suffix = Util.emptyIfNull(suffix);
 
+    return String.format("%s\n%s\n%s", prefix, buildSystemInfo(context, filter), suffix);
+  }
+
+  private static @NonNull String buildSystemInfo(@NonNull Context context, @NonNull String filter) {
     return "--- " + context.getString(R.string.HelpFragment__support_info) + " ---" +
            "\n" +
-           context.getString(R.string.SupportEmailUtil_filter) + " " + englishResources.getString(filter) + filterSuffix +
+           context.getString(R.string.SupportEmailUtil_filter) + " " + filter +
            "\n" +
            context.getString(R.string.SupportEmailUtil_device_info) + " " + getDeviceInfo() +
            "\n" +
@@ -67,7 +80,13 @@ public final class SupportEmailUtil {
            "\n" +
            context.getString(R.string.SupportEmailUtil_registration_lock) + " " + getRegistrationLockEnabled() +
            "\n" +
-           context.getString(R.string.SupportEmailUtil_locale) + " " + Locale.getDefault().toString();
+           context.getString(R.string.SupportEmailUtil_locale) + " " + Locale.getDefault().toString() +
+           "\n" +
+           context.getString(R.string.SupportEmailUtil_challenge_received) + " " + getChallengeReceived() +
+           "\n" +
+           context.getString(R.string.SupportEmailUtil_registered) + " " + getRegistered() +
+           "\n" +
+           context.getString(R.string.SupportEmailUtil_backups) + " " + getBackupTier();
   }
 
   private static CharSequence getDeviceInfo() {
@@ -88,5 +107,31 @@ public final class SupportEmailUtil {
 
   private static CharSequence getRegistrationLockEnabled() {
     return String.valueOf(SignalStore.svr().isRegistrationLockEnabled());
+  }
+
+  private static String getChallengeReceived() {
+    long    captchaLastViewedAt = SignalStore.misc().getCaptchaLastViewedAt();
+    boolean receivedRecently    = captchaLastViewedAt > 0 && (System.currentTimeMillis() - captchaLastViewedAt) <= TimeUnit.DAYS.toMillis(3);
+
+    return receivedRecently ? "yes" : "no";
+  }
+
+  private static String getRegistered() {
+    boolean registered = SignalStore.account().isRegistered() && !SignalStore.account().isUnauthorizedReceived();
+    return registered ? "yes" : "no";
+  }
+
+  private static String getBackupTier() {
+    MessageBackupTier tier = SignalStore.backup().getBackupTier();
+
+    if (tier == null) {
+      return "D1";
+    }
+
+    switch (tier) {
+      case FREE: return "U1";
+      case PAID: return "P1";
+      default:   return "D1";
+    }
   }
 }

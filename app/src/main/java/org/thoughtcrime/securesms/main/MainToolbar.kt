@@ -22,13 +22,13 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -66,31 +66,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.DropdownMenus
 import org.signal.core.ui.compose.IconButtons
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.ui.compose.TextFields
 import org.signal.core.ui.compose.Tooltips
 import org.signal.core.ui.compose.circularReveal
+import org.signal.core.ui.compose.statusBarsCompat
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.avatar.AvatarImage
 import org.thoughtcrime.securesms.calls.log.CallLogFilter
 import org.thoughtcrime.securesms.components.compose.ActionModeTopBar
 import org.thoughtcrime.securesms.components.settings.app.subscription.BadgeImageSmall
 import org.thoughtcrime.securesms.conversationlist.model.ConversationFilter
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.rememberRecipientField
+import org.signal.core.ui.R as CoreUiR
 
 interface MainToolbarCallback {
   fun onNewGroupClick()
   fun onClearPassphraseClick()
   fun onMarkReadClick()
-  fun onInviteFriendsClick()
   fun onFilterUnreadChatsClick()
   fun onClearUnreadChatsFilterClick()
+  fun onOpenArchiveClick()
   fun onSettingsClick()
+  fun onDonateClick()
   fun onNotificationProfileClick()
   fun onProxyClick()
   fun onSearchClick()
@@ -98,20 +104,24 @@ interface MainToolbarCallback {
   fun onFilterMissedCallsClick()
   fun onClearCallFilterClick()
   fun onStoryPrivacyClick()
+  fun onStoryArchiveClick()
   fun onCloseSearchClick()
   fun onCloseArchiveClick()
   fun onCloseActionModeClick()
   fun onSearchQueryUpdated(query: String)
+  fun onSearchFilterClick()
+  fun onStarredMessagesClick()
   fun onNotificationProfileTooltipDismissed()
 
   object Empty : MainToolbarCallback {
     override fun onNewGroupClick() = Unit
     override fun onClearPassphraseClick() = Unit
     override fun onMarkReadClick() = Unit
-    override fun onInviteFriendsClick() = Unit
     override fun onFilterUnreadChatsClick() = Unit
     override fun onClearUnreadChatsFilterClick() = Unit
+    override fun onOpenArchiveClick() = Unit
     override fun onSettingsClick() = Unit
+    override fun onDonateClick() = Unit
     override fun onNotificationProfileClick() = Unit
     override fun onProxyClick() = Unit
     override fun onSearchClick() = Unit
@@ -119,10 +129,13 @@ interface MainToolbarCallback {
     override fun onFilterMissedCallsClick() = Unit
     override fun onClearCallFilterClick() = Unit
     override fun onStoryPrivacyClick() = Unit
+    override fun onStoryArchiveClick() = Unit
     override fun onCloseSearchClick() = Unit
     override fun onCloseArchiveClick() = Unit
     override fun onCloseActionModeClick() = Unit
     override fun onSearchQueryUpdated(query: String) = Unit
+    override fun onSearchFilterClick() = Unit
+    override fun onStarredMessagesClick() = Unit
     override fun onNotificationProfileTooltipDismissed() = Unit
   }
 }
@@ -142,13 +155,19 @@ enum class MainToolbarMode(val crossFadeKey: CrossFadeKey) {
     FULL,
     BASIC
   }
+
+  /**
+   * The search bar is inset from the start edge of the list pane, so the pane it sits in has to be too.
+   */
+  val listPaddingStart: Dp
+    get() = if (this == SEARCH) 24.dp else 0.dp
 }
 
 data class MainToolbarState(
   val toolbarColor: Color? = null,
   val self: Recipient = Recipient.UNKNOWN,
   val mode: MainToolbarMode = MainToolbarMode.FULL,
-  val destination: MainNavigationListLocation = MainNavigationListLocation.CHATS,
+  val destination: MainListRoute = MainListRoute.Chats,
   val chatFilter: ConversationFilter = ConversationFilter.OFF,
   val callFilter: CallLogFilter = CallLogFilter.ALL,
   val hasUnreadPayments: Boolean = false,
@@ -160,6 +179,7 @@ data class MainToolbarState(
   val proxyState: ProxyState = ProxyState.NONE,
   @StringRes val searchHint: Int = R.string.SearchToolbar_search,
   val searchQuery: String = "",
+  val hasActiveSearchFilter: Boolean = false,
   val actionModeCount: Int = 0
 ) {
   enum class ProxyState(@DrawableRes val icon: Int) {
@@ -212,7 +232,7 @@ fun MainToolbar(
               state = state,
               callback = callback,
               modifier = Modifier
-                .windowInsetsPadding(WindowInsets.statusBars)
+                .windowInsetsPadding(WindowInsets.statusBarsCompat)
                 .circularReveal(visibility, revealOffset)
             )
           }
@@ -255,26 +275,46 @@ private fun SearchToolbar(
           onClick = callback::onCloseSearchClick
         ) {
           Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.symbol_arrow_start_24),
+            imageVector = SignalIcons.ArrowStart.imageVector,
             contentDescription = stringResource(R.string.MainToolbar__close_search_content_description)
           )
         }
       },
-      trailingIcon = if (state.searchQuery.isNotEmpty()) {
-        {
-          IconButtons.IconButton(
-            onClick = {
-              callback.onSearchQueryUpdated("")
+      trailingIcon = {
+        Row {
+          if (SignalStore.labs.betterSearch) {
+            Box(contentAlignment = Alignment.TopEnd) {
+              IconButtons.IconButton(
+                onClick = callback::onSearchFilterClick
+              ) {
+                Icon(
+                  imageVector = ImageVector.vectorResource(R.drawable.symbol_filter_24),
+                  contentDescription = stringResource(R.string.MainToolbar__search_filter_content_description)
+                )
+              }
+              if (state.hasActiveSearchFilter) {
+                Box(
+                  modifier = Modifier
+                    .padding(top = 8.dp, end = 8.dp)
+                    .size(8.dp)
+                    .background(color = MaterialTheme.colorScheme.primary, shape = CircleShape)
+                )
+              }
             }
-          ) {
-            Icon(
-              imageVector = ImageVector.vectorResource(R.drawable.ic_x_20),
-              contentDescription = stringResource(R.string.MainToolbar__clear_search_content_description)
-            )
+          }
+          if (state.searchQuery.isNotEmpty()) {
+            IconButtons.IconButton(
+              onClick = {
+                callback.onSearchQueryUpdated("")
+              }
+            ) {
+              Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_x_20),
+                contentDescription = stringResource(R.string.MainToolbar__clear_search_content_description)
+              )
+            }
           }
         }
-      } else {
-        null
       },
       contentPadding = PaddingValues(0.dp),
       colors = TextFieldDefaults.colors(
@@ -326,7 +366,7 @@ private fun ArchiveToolbar(
         callback.onCloseArchiveClick()
       }) {
         Icon(
-          imageVector = ImageVector.vectorResource(R.drawable.symbol_arrow_start_24),
+          imageVector = SignalIcons.ArrowStart.imageVector,
           contentDescription = stringResource(R.string.CallScreenTopBar__go_back)
         )
       }
@@ -404,6 +444,17 @@ private fun PrimaryToolbar(
       NotificationProfileAction(state, callback)
       ProxyAction(state, callback)
 
+      if (state.destination == MainListRoute.Stories && SignalStore.labs.storyArchive) {
+        IconButtons.IconButton(
+          onClick = callback::onStoryArchiveClick
+        ) {
+          Icon(
+            imageVector = ImageVector.vectorResource(R.drawable.symbol_story_archive_24),
+            contentDescription = stringResource(R.string.StoryArchive__story_archive)
+          )
+        }
+      }
+
       IconButtons.IconButton(
         onClick = callback::onSearchClick,
         modifier = Modifier.onPlaced {
@@ -411,7 +462,7 @@ private fun PrimaryToolbar(
         }
       ) {
         Icon(
-          imageVector = ImageVector.vectorResource(R.drawable.symbol_search_24),
+          imageVector = SignalIcons.Search.imageVector,
           contentDescription = stringResource(R.string.conversation_list_search_description)
         )
       }
@@ -429,12 +480,12 @@ private fun PrimaryToolbar(
         controller = controller
       ) {
         when (state.destination) {
-          MainNavigationListLocation.ARCHIVE -> Unit
-          MainNavigationListLocation.CHATS -> ChatDropdownItems(state, callback, dismiss)
-          MainNavigationListLocation.CALLS -> CallDropdownItems(state.callFilter, callback, dismiss)
-          MainNavigationListLocation.STORIES -> StoryDropDownItems(callback, dismiss)
-          // Payments has its own toolbar (in PaymentsHomeFragment) — no MainToolbar dropdown items.
-          MainNavigationListLocation.PAYMENTS -> Unit
+          MainListRoute.Archive -> Unit
+          MainListRoute.Chats -> ChatDropdownItems(state, callback, dismiss)
+          MainListRoute.Calls -> CallDropdownItems(state.callFilter, callback, dismiss)
+          MainListRoute.Stories -> StoryDropDownItems(callback, dismiss)
+          // Radar: the Payments tab has its own toolbar.
+          MainListRoute.Payments -> Unit
         }
       }
     }
@@ -447,9 +498,10 @@ private fun TooltipOverflowButton(
   onDismiss: () -> Unit,
   isTooltipVisible: Boolean
 ) {
-  Tooltips.PlainBelowAnchor(
+  Tooltips.Popup(
     onDismiss = onDismiss,
     isTooltipVisible = isTooltipVisible,
+    position = Tooltips.Position.Below,
     tooltipContent = {
       Text(text = stringResource(R.string.ConversationListFragment__turn_your_notification_profile_on_or_off_here))
     },
@@ -529,8 +581,25 @@ private fun HeadsUpIndicator(state: MainToolbarState, modifier: Modifier = Modif
 }
 
 @Composable
+private fun DonateDropdownItem(callback: MainToolbarCallback, onOptionSelected: () -> Unit) {
+  DropdownMenus.Item(
+    leadingIconResId = R.drawable.symbol_heart_24,
+    text = {
+      Text(
+        text = stringResource(R.string.MainToolbar__donate)
+      )
+    },
+    onClick = {
+      callback.onDonateClick()
+      onOptionSelected()
+    }
+  )
+}
+
+@Composable
 private fun StoryDropDownItems(callback: MainToolbarCallback, onOptionSelected: () -> Unit) {
   DropdownMenus.Item(
+    leadingIconResId = CoreUiR.drawable.symbol_lock_24,
     text = {
       Text(
         text = stringResource(R.string.StoriesLandingFragment__story_privacy)
@@ -541,11 +610,14 @@ private fun StoryDropDownItems(callback: MainToolbarCallback, onOptionSelected: 
       onOptionSelected()
     }
   )
+
+  DonateDropdownItem(callback, onOptionSelected)
 }
 
 @Composable
 private fun CallDropdownItems(callFilter: CallLogFilter, callback: MainToolbarCallback, onOptionSelected: () -> Unit) {
   DropdownMenus.Item(
+    leadingIconResId = R.drawable.symbol_x_circle_24,
     text = {
       Text(
         text = stringResource(R.string.CallLogFragment__clear_call_history)
@@ -559,6 +631,7 @@ private fun CallDropdownItems(callFilter: CallLogFilter, callback: MainToolbarCa
 
   if (callFilter == CallLogFilter.ALL) {
     DropdownMenus.Item(
+      leadingIconResId = R.drawable.symbol_filter_24,
       text = {
         Text(
           text = stringResource(R.string.CallLogFragment__filter_missed_calls)
@@ -571,6 +644,7 @@ private fun CallDropdownItems(callFilter: CallLogFilter, callback: MainToolbarCa
     )
   } else {
     DropdownMenus.Item(
+      leadingIconResId = R.drawable.symbol_filter_24,
       text = {
         Text(
           text = stringResource(R.string.CallLogFragment__clear_filter)
@@ -584,18 +658,7 @@ private fun CallDropdownItems(callFilter: CallLogFilter, callback: MainToolbarCa
   }
 
   DropdownMenus.Item(
-    text = {
-      Text(
-        text = stringResource(R.string.text_secure_normal__menu_settings)
-      )
-    },
-    onClick = {
-      callback.onSettingsClick()
-      onOptionSelected()
-    }
-  )
-
-  DropdownMenus.Item(
+    leadingIconResId = R.drawable.symbol_bell_sleep_24,
     text = {
       Text(
         text = stringResource(R.string.ConversationListFragment__notification_profile)
@@ -606,11 +669,27 @@ private fun CallDropdownItems(callFilter: CallLogFilter, callback: MainToolbarCa
       onOptionSelected()
     }
   )
+
+  DonateDropdownItem(callback, onOptionSelected)
+
+  DropdownMenus.Item(
+    leadingIconResId = CoreUiR.drawable.symbol_settings_android_24,
+    text = {
+      Text(
+        text = stringResource(R.string.text_secure_normal__menu_settings)
+      )
+    },
+    onClick = {
+      callback.onSettingsClick()
+      onOptionSelected()
+    }
+  )
 }
 
 @Composable
 private fun ChatDropdownItems(state: MainToolbarState, callback: MainToolbarCallback, onOptionSelected: () -> Unit) {
   DropdownMenus.Item(
+    leadingIconResId = R.drawable.symbol_group_24,
     text = {
       Text(
         text = stringResource(R.string.text_secure_normal__menu_new_group)
@@ -624,6 +703,7 @@ private fun ChatDropdownItems(state: MainToolbarState, callback: MainToolbarCall
 
   if (state.hasPassphrase) {
     DropdownMenus.Item(
+      leadingIconResId = CoreUiR.drawable.symbol_lock_24,
       text = {
         Text(
           text = stringResource(R.string.text_secure_normal__menu_clear_passphrase)
@@ -637,6 +717,7 @@ private fun ChatDropdownItems(state: MainToolbarState, callback: MainToolbarCall
   }
 
   DropdownMenus.Item(
+    leadingIconResId = R.drawable.symbol_chat_check,
     text = {
       Text(
         text = stringResource(R.string.text_secure_normal__mark_all_as_read)
@@ -648,20 +729,9 @@ private fun ChatDropdownItems(state: MainToolbarState, callback: MainToolbarCall
     }
   )
 
-  DropdownMenus.Item(
-    text = {
-      Text(
-        text = stringResource(R.string.text_secure_normal__invite_friends)
-      )
-    },
-    onClick = {
-      callback.onInviteFriendsClick()
-      onOptionSelected()
-    }
-  )
-
   if (state.chatFilter == ConversationFilter.OFF) {
     DropdownMenus.Item(
+      leadingIconResId = R.drawable.symbol_filter_24,
       text = {
         Text(
           text = stringResource(R.string.text_secure_normal__filter_unread_chats)
@@ -674,6 +744,7 @@ private fun ChatDropdownItems(state: MainToolbarState, callback: MainToolbarCall
     )
   } else {
     DropdownMenus.Item(
+      leadingIconResId = R.drawable.symbol_filter_24,
       text = {
         Text(
           text = stringResource(R.string.text_secure_normal__clear_unread_filter)
@@ -687,18 +758,7 @@ private fun ChatDropdownItems(state: MainToolbarState, callback: MainToolbarCall
   }
 
   DropdownMenus.Item(
-    text = {
-      Text(
-        text = stringResource(R.string.text_secure_normal__menu_settings)
-      )
-    },
-    onClick = {
-      callback.onSettingsClick()
-      onOptionSelected()
-    }
-  )
-
-  DropdownMenus.Item(
+    leadingIconResId = R.drawable.symbol_bell_sleep_24,
     text = {
       Text(
         text = stringResource(R.string.ConversationListFragment__notification_profile)
@@ -706,6 +766,49 @@ private fun ChatDropdownItems(state: MainToolbarState, callback: MainToolbarCall
     },
     onClick = {
       callback.onNotificationProfileClick()
+      onOptionSelected()
+    }
+  )
+
+  DropdownMenus.Item(
+    leadingIconResId = R.drawable.symbol_archive_24,
+    text = {
+      Text(
+        text = stringResource(R.string.AndroidManifest_archived_conversations)
+      )
+    },
+    onClick = {
+      callback.onOpenArchiveClick()
+      onOptionSelected()
+    }
+  )
+
+  if (SignalStore.labs.starredMessages) {
+    DropdownMenus.Item(
+      leadingIconResId = R.drawable.symbol_star_24,
+      text = {
+        Text(
+          text = stringResource(R.string.text_secure_normal__starred_messages)
+        )
+      },
+      onClick = {
+        callback.onStarredMessagesClick()
+        onOptionSelected()
+      }
+    )
+  }
+
+  DonateDropdownItem(callback, onOptionSelected)
+
+  DropdownMenus.Item(
+    leadingIconResId = CoreUiR.drawable.symbol_settings_android_24,
+    text = {
+      Text(
+        text = stringResource(R.string.text_secure_normal__menu_settings)
+      )
+    },
+    onClick = {
+      callback.onSettingsClick()
       onOptionSelected()
     }
   )
@@ -721,7 +824,7 @@ private fun FullMainToolbarPreview() {
       state = MainToolbarState(
         self = Recipient(isResolving = false),
         mode = mode,
-        destination = MainNavigationListLocation.CHATS,
+        destination = MainListRoute.Chats,
         hasEnabledNotificationProfile = true,
         proxyState = MainToolbarState.ProxyState.CONNECTED,
         hasFailedBackups = true,

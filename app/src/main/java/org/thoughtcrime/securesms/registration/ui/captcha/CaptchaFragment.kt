@@ -11,12 +11,13 @@ import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.findNavController
+import org.signal.core.ui.logging.LoggingFragment
 import org.thoughtcrime.securesms.BuildConfig
-import org.thoughtcrime.securesms.LoggingFragment
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.ViewBinderDelegate
 import org.thoughtcrime.securesms.databinding.FragmentRegistrationCaptchaBinding
 import org.thoughtcrime.securesms.registration.fragments.RegistrationConstants
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter
 
 abstract class CaptchaFragment : LoggingFragment(R.layout.fragment_registration_captcha) {
 
@@ -25,6 +26,7 @@ abstract class CaptchaFragment : LoggingFragment(R.layout.fragment_registration_
   @SuppressLint("SetJavaScriptEnabled")
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    SystemWindowInsetsSetter.attach(view, viewLifecycleOwner)
     binding.registrationCaptchaWebView.settings.javaScriptEnabled = true
     binding.registrationCaptchaWebView.clearCache(true)
 

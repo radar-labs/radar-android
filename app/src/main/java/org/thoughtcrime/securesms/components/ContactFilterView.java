@@ -22,10 +22,10 @@ import androidx.annotation.StringRes;
 import androidx.core.widget.TextViewCompat;
 
 import org.thoughtcrime.securesms.R;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.util.EditTextExtensionsKt;
-import org.thoughtcrime.securesms.util.ServiceUtil;
-import org.thoughtcrime.securesms.util.TextSecurePreferences;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.signal.core.util.ServiceUtil;
+import org.signal.core.ui.util.ViewUtil;
 
 /**
  * A search input field for finding recipients.
@@ -66,7 +66,7 @@ public final class ContactFilterView extends FrameLayout {
     this.pasteToggle     = findViewById(R.id.search_paste);
     this.toggleContainer = findViewById(R.id.toggle_container);
 
-    EditTextExtensionsKt.setIncognitoKeyboardEnabled(searchText, TextSecurePreferences.isIncognitoKeyboardEnabled(context));
+    EditTextExtensionsKt.setIncognitoKeyboardEnabled(searchText, SignalStore.settings().isIncognitoKeyboardEnabled());
 
     this.keyboardToggle.setOnClickListener(new View.OnClickListener() {
       @Override

@@ -10,18 +10,27 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import androidx.annotation.VisibleForTesting
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import org.signal.core.models.database.AttachmentId
 import org.signal.core.util.bytes
+import org.signal.core.util.concurrent.SignalDispatchers
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.logging.Log
+import org.signal.core.util.safeUnregisterReceiver
 import org.signal.core.util.throttleLatest
 import org.thoughtcrime.securesms.BuildConfig
-import org.thoughtcrime.securesms.attachments.AttachmentId
 import org.thoughtcrime.securesms.backup.RestoreState
 import org.thoughtcrime.securesms.database.DatabaseObserver
 import org.thoughtcrime.securesms.database.SignalDatabase
@@ -30,8 +39,10 @@ import org.thoughtcrime.securesms.jobmanager.impl.BatteryNotLowConstraint
 import org.thoughtcrime.securesms.jobmanager.impl.DiskSpaceNotLowConstraint
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.jobmanager.impl.WifiConstraint
+import org.thoughtcrime.securesms.jobs.CheckRestoreMediaLeftJob
+import org.thoughtcrime.securesms.jobs.RestoreAttachmentJob
+import org.thoughtcrime.securesms.jobs.RestoreLocalAttachmentJob
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.util.safeUnregisterReceiver
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
@@ -49,29 +60,24 @@ import kotlin.time.DurationUnit
 object ArchiveRestoreProgress {
   private val TAG = Log.tag(ArchiveRestoreProgress::class.java)
 
+  private val THROTTLED_UPDATE_INTERVAL = 1.seconds
+
   private var listenersRegistered = false
   private val listenerLock = ReentrantLock()
 
+  private val throttledUpdateRequests = MutableSharedFlow<Unit>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+
   private val attachmentObserver = DatabaseObserver.Observer {
-    update()
+    throttledUpdateRequests.tryEmit(Unit)
   }
 
   private val networkChangeReceiver = object : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-      update()
+      throttledUpdateRequests.tryEmit(Unit)
     }
   }
 
-  private val store = MutableStateFlow(
-    ArchiveRestoreProgressState(
-      restoreState = SignalStore.backup.restoreState,
-      remainingRestoreSize = SignalStore.backup.totalRestorableAttachmentSize.bytes,
-      totalRestoreSize = SignalStore.backup.totalRestorableAttachmentSize.bytes,
-      hasActivelyRestoredThisRun = SignalStore.backup.totalRestorableAttachmentSize > 0,
-      totalToRestoreThisRun = SignalStore.backup.totalRestorableAttachmentSize.bytes,
-      restoreStatus = ArchiveRestoreProgressState.RestoreStatus.NONE
-    )
-  )
+  private val store = MutableStateFlow(createInitialState())
 
   val state: ArchiveRestoreProgressState
     get() = store.value
@@ -79,10 +85,49 @@ object ArchiveRestoreProgress {
   val stateFlow: Flow<ArchiveRestoreProgressState> = store
     .throttleLatest(1.seconds)
     .distinctUntilChanged()
-    .flowOn(Dispatchers.IO)
+    .flowOn(Dispatchers.Default)
 
   init {
     SignalExecutors.BOUNDED.execute { update() }
+
+    throttledUpdateRequests
+      .throttleLatest(THROTTLED_UPDATE_INTERVAL)
+      .onEach { update() }
+      .launchIn(CoroutineScope(SupervisorJob() + SignalDispatchers.IO))
+  }
+
+  /**
+   * Rebuilds the in-memory state from disk, as if the process had just started.
+   */
+  @VisibleForTesting
+  internal fun resetForTesting() {
+    store.value = createInitialState()
+  }
+
+  private fun createInitialState(): ArchiveRestoreProgressState {
+    return ArchiveRestoreProgressState(
+      restoreState = getAndRepairRestoreState(),
+      remainingRestoreSize = SignalStore.backup.totalRestorableAttachmentSize.bytes,
+      totalRestoreSize = SignalStore.backup.totalRestorableAttachmentSize.bytes,
+      hasActivelyRestoredThisRun = SignalStore.backup.totalRestorableAttachmentSize > 0,
+      totalToRestoreThisRun = SignalStore.backup.totalRestorableAttachmentSize.bytes,
+      restoreStatus = ArchiveRestoreProgressState.RestoreStatus.NONE
+    )
+  }
+
+  /**
+   * Retrieves the persisted restore state, resetting it if necessary.
+   */
+  private fun getAndRepairRestoreState(): RestoreState {
+    val persisted = SignalStore.backup.restoreState
+
+    if (persisted.isStateOnlyInMemory) {
+      Log.w(TAG, "Found a stale $persisted restore state left over from a previous app session. Clearing it.")
+      SignalStore.backup.restoreState = RestoreState.NONE
+      return RestoreState.NONE
+    }
+
+    return persisted
   }
 
   fun onRestorePending() {
@@ -95,6 +140,14 @@ object ArchiveRestoreProgress {
     Log.i(TAG, "onRestoreFailed")
     SignalStore.backup.restoreState = RestoreState.NONE
     update()
+  }
+
+  fun onRestoreCanceled() {
+    if (SignalStore.backup.restoreState.isStateOnlyInMemory) {
+      Log.i(TAG, "onRestoreCanceled")
+      SignalStore.backup.restoreState = RestoreState.NONE
+      update()
+    }
   }
 
   fun onStartMediaRestore() {
@@ -157,12 +210,48 @@ object ArchiveRestoreProgress {
     update()
   }
 
+  /**
+   * Self-heal hook for restores that appear active (banner showing, media still remaining) but have no jobs left actually working on them.
+   */
+  fun checkForStalledRestore() {
+    SignalExecutors.BOUNDED.execute {
+      val stalled = SignalStore.backup.restoreState.isMediaRestoreOperation &&
+        SignalDatabase.attachments.getRemainingRestorableAttachmentSize() > 0L &&
+        AppDependencies.jobManager.areFactoriesEmpty(setOf(RestoreAttachmentJob.KEY, RestoreLocalAttachmentJob.KEY, CheckRestoreMediaLeftJob.KEY))
+
+      if (stalled) {
+        Log.w(TAG, "Detected a stalled media restore with no active jobs. Enqueueing a check job to recover.")
+        CheckRestoreMediaLeftJob.enqueueStalledRecoveryCheck()
+      }
+    }
+  }
+
+  fun clearLocalRestoreDirectoryError() {
+    SignalStore.backup.localRestoreDirectoryError = false
+    update()
+  }
+
+  /**
+   * Dismisses the "restore complete" status. Also clears any lingering persisted restorable size, which would otherwise bring the status back on next launch.
+   */
   fun clearFinishedStatus() {
+    val currentState = state
+
+    if (currentState.restoreStatus != ArchiveRestoreProgressState.RestoreStatus.FINISHED) {
+      return
+    }
+
+    if (currentState.remainingRestoreSize == 0.bytes && SignalStore.backup.restoreState == RestoreState.NONE && SignalStore.backup.totalRestorableAttachmentSize > 0) {
+      Log.i(TAG, "Clearing lingering restorable attachment size after the finished status was dismissed.")
+      SignalStore.backup.totalRestorableAttachmentSize = 0
+    }
+
     store.update { state ->
       if (state.restoreStatus == ArchiveRestoreProgressState.RestoreStatus.FINISHED) {
         state.copy(
           restoreStatus = ArchiveRestoreProgressState.RestoreStatus.NONE,
           hasActivelyRestoredThisRun = false,
+          totalRestoreSize = 0.bytes,
           totalToRestoreThisRun = 0.bytes
         )
       } else {
@@ -193,7 +282,12 @@ object ArchiveRestoreProgress {
         !NetworkConstraint.isMet(AppDependencies.application) -> ArchiveRestoreProgressState.RestoreStatus.WAITING_FOR_INTERNET
         !BatteryNotLowConstraint.isMet() -> ArchiveRestoreProgressState.RestoreStatus.LOW_BATTERY
         !DiskSpaceNotLowConstraint.isMet() -> ArchiveRestoreProgressState.RestoreStatus.NOT_ENOUGH_DISK_SPACE
-        restoreState == RestoreState.NONE -> if (state.hasActivelyRestoredThisRun) ArchiveRestoreProgressState.RestoreStatus.FINISHED else ArchiveRestoreProgressState.RestoreStatus.NONE
+        restoreState == RestoreState.NONE -> when {
+          SignalStore.backup.localRestoreDirectoryError -> ArchiveRestoreProgressState.RestoreStatus.LOCAL_RESTORE_DIRECTORY_UNAVAILABLE
+          state.hasActivelyRestoredThisRun -> ArchiveRestoreProgressState.RestoreStatus.FINISHED
+          else -> ArchiveRestoreProgressState.RestoreStatus.NONE
+        }
+
         else -> {
           val availableBytes = SignalStore.backup.spaceAvailableOnDiskBytes
 

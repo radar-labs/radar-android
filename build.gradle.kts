@@ -11,6 +11,8 @@ plugins {
   alias(libs.plugins.jetbrains.kotlin.jvm) apply false
   alias(libs.plugins.compose.compiler) apply false
   alias(libs.plugins.ktlint)
+  alias(benchmarkLibs.plugins.baselineprofile) apply false
+  id("dependency-verification")
 }
 
 buildscript {
@@ -29,7 +31,7 @@ buildscript {
     classpath(libs.gradle)
     classpath(libs.androidx.navigation.safe.args.gradle.plugin)
     classpath(libs.protobuf.gradle.plugin)
-    classpath("com.squareup.wire:wire-gradle-plugin:4.4.3") {
+    classpath("com.squareup.wire:wire-gradle-plugin:6.4.5") {
       exclude(group = "com.squareup.wire", module = "wire-swift-generator")
       exclude(group = "com.squareup.wire", module = "wire-grpc-client")
       exclude(group = "com.squareup.wire", module = "wire-grpc-jvm")
@@ -46,8 +48,6 @@ tasks.withType<Wrapper> {
   distributionType = Wrapper.DistributionType.ALL
 }
 
-apply(from = "$rootDir/constants.gradle.kts")
-
 subprojects {
   if (JavaVersion.current().isJava8Compatible) {
     allprojects {
@@ -57,18 +57,25 @@ subprojects {
     }
   }
 
-  val skipQa = setOf("Signal-Android", "libsignal-service", "lintchecks", "benchmark", "core-util-jvm", "core-models", "logging")
+  tasks.withType<Test>().configureEach {
+    if (name.contains("ScreenshotTest")) {
+      // Compose preview screenshot testing does not support parallel execution.
+      maxParallelForks = 1
 
-  if (project.name !in skipQa && !project.name.endsWith("-app")) {
-    tasks.register("qa") {
-      group = "Verification"
-      description = "Quality Assurance. Run before pushing"
-      dependsOn("clean", "testReleaseUnitTest", "lintRelease")
+      // The plugin creates this task for every module, but most have no previews to validate.
+      failOnNoDiscoveredTests = false
+    } else {
+      maxParallelForks = (Runtime.getRuntime().availableProcessors() / 4).coerceAtLeast(1)
     }
+
+    // Raised for robolectric
+    maxHeapSize = "2g"
   }
 
-  tasks.withType<Test>().configureEach {
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+  // The reference images aren't tracked as outputs, so without this the task is skipped after they change on disk.
+  tasks.matching { it.name.startsWith("update") && it.name.endsWith("ScreenshotTest") }.configureEach {
+    outputs.upToDateWhen { false }
+    outputs.doNotCacheIf("Reference images are not tracked outputs") { true }
   }
 }
 
@@ -84,22 +91,128 @@ tasks.register("buildQa") {
 
 tasks.register("qa") {
   group = "Verification"
-  description = "Quality Assurance. Run before pushing."
-  dependsOn(
-    "clean",
-    "checkStopship",
-    "buildQa",
-    ":Signal-Android:testPlayProdPerfUnitTest",
-    ":Signal-Android:lintPlayProdRelease",
-    "Signal-Android:ktlintCheck",
-    ":libsignal-service:test",
-    ":libsignal-service:ktlintCheck",
-    ":Signal-Android:assemblePlayProdRelease",
-    ":Signal-Android:compilePlayProdInstrumentationAndroidTestSources",
-    ":microbenchmark:compileReleaseAndroidTestSources",
-    ":core-util-jvm:test",
-    ":core-util-jvm:ktlintCheck"
-  )
+  description = "Quality Assurance. Run before release."
+  dependsOn("clean")
+}
+
+tasks.register("ci") {
+  group = "Verification"
+  description = "Faster version of qa that's intended to be run on PRs. Uses a :fast-lint instead of full lint."
+  dependsOn("clean")
+}
+
+tasks.register("validateScreenshots") {
+  group = "Verification"
+  description = "Validates Compose screenshot tests. Intended to run only on CI, not local builds."
+}
+
+tasks.register("updateScreenshots") {
+  group = "Verification"
+  description = "Regenerates Compose screenshot reference images."
+}
+
+tasks.register("qaRemote") {
+  group = "Verification"
+  description = "Full qa plus screenshot validation. Intended to run on CI, not local builds."
+  dependsOn("qa")
+  dependsOn("validateScreenshots")
+}
+
+tasks.register("ciRemote") {
+  group = "Verification"
+  description = "Faster PR verification (ci) plus screenshot validation. Intended to run on CI, not local builds."
+  dependsOn("ci")
+  dependsOn("validateScreenshots")
+}
+
+// Wire up QA dependencies after all projects are evaluated
+gradle.projectsEvaluated {
+  val appTestTask = tasks.findByPath(":Signal-Android:testPlayProdDebugUnitTest")!!
+  val appLintTask = tasks.findByPath(":Signal-Android:lintPlayProdDebug")!!
+  val appCompileInstrumentationTask = tasks.findByPath(":Signal-Android:compilePlayProdDebugAndroidTestSources")
+
+  tasks.named("qa") {
+    dependsOn("ktlintCheck")
+    dependsOn("buildQa")
+    dependsOn("checkStopship")
+
+    // Main app tasks
+    dependsOn(appTestTask)
+    dependsOn(appLintTask)
+
+    // Instrumentation
+    appCompileInstrumentationTask?.let { dependsOn(it) }
+
+    // All subproject ktlint checks
+    subprojects.forEach { subproject ->
+      subproject.tasks.findByName("ktlintCheck")?.let { dependsOn(it) }
+    }
+
+    // Library module tasks
+    subprojects.filter { it.name != "Signal-Android" }.forEach { subproject ->
+      val testTask = subproject.tasks.findByName("testDebugUnitTest") ?: subproject.tasks.findByName("test")
+      testTask?.let { dependsOn(it) }
+
+      subproject.tasks.findByName("lintDebug")?.let { dependsOn(it) }
+    }
+  }
+
+  // All modules get screenshotTests enabled by default, but the validate task fails if there's no tests.
+  // So we just filter out the modules that have no tests ourselves.
+  val screenshotTestTargets = subprojects
+    .filter { it.file("src/screenshotTest").isDirectory }
+    .map { it to if (it.name == "Signal-Android") "PlayProdDebug" else "Debug" }
+
+  tasks.named("validateScreenshots") {
+    screenshotTestTargets.forEach { (subproject, variant) ->
+      subproject.tasks.findByName("validate${variant}ScreenshotTest")?.let { dependsOn(it) }
+    }
+  }
+
+  tasks.named("updateScreenshots") {
+    screenshotTestTargets.forEach { (subproject, variant) ->
+      subproject.tasks.findByName("update${variant}ScreenshotTest")?.let { dependsOn(it) }
+    }
+  }
+
+  tasks.named("ci") {
+    dependsOn("ktlintCheck")
+    dependsOn("buildQa")
+    dependsOn("checkStopship")
+
+    dependsOn(appTestTask)
+    appCompileInstrumentationTask?.let { dependsOn(it) }
+
+    dependsOn(":fast-lint:fastLint")
+
+    subprojects.forEach { subproject ->
+      subproject.tasks.findByName("ktlintCheck")?.let { dependsOn(it) }
+    }
+
+    subprojects.filter { it.name != "Signal-Android" }.forEach { subproject ->
+      val testTask = subproject.tasks.findByName("testDebugUnitTest") ?: subproject.tasks.findByName("test")
+      testTask?.let { dependsOn(it) }
+    }
+  }
+
+  // Ensure clean runs before everything else
+  rootProject.allprojects.forEach { project ->
+    project.tasks.matching { it.name != "clean" }.configureEach {
+      mustRunAfter("clean")
+    }
+  }
+
+  // If you let all of these things run in parallel, gradle will likely OOM.
+  // To avoid this, we put non-app tests and lints behind the much heavier app tests and lints.
+  subprojects.filter { it.name != "Signal-Android" }.forEach { subproject ->
+    appTestTask.let { task ->
+      subproject.tasks.findByName("testDebugUnitTest")?.mustRunAfter(task)
+      subproject.tasks.findByName("test")?.mustRunAfter(task)
+    }
+    appLintTask.let { task ->
+      subproject.tasks.findByName("lintDebug")?.mustRunAfter(task)
+    }
+  }
 }
 
 tasks.register("clean", Delete::class) {
@@ -112,7 +225,7 @@ tasks.register("format") {
   dependsOn(
     gradle.includedBuild("build-logic").task(":plugins:ktlintFormat"),
     gradle.includedBuild("build-logic").task(":tools:ktlintFormat"),
-    *subprojects.mapNotNull { tasks.findByPath(":${it.name}:ktlintFormat") }.toTypedArray()
+    *subprojects.mapNotNull { tasks.findByPath(":${it.path}:ktlintFormat") }.toTypedArray()
   )
 }
 
@@ -121,17 +234,17 @@ tasks.register("checkStopship") {
   doLast {
     val excludedFiles = listOf(
       "build.gradle.kts",
-      "app/lint.xml"
+      "lint.xml"
     )
 
     val excludedDirectories = listOf(
-      "app/build",
-      "libsignal-service/build"
+      ".idea"
     )
 
     val allowedExtensions = setOf("kt", "kts", "java", "xml")
 
     val allFiles = cachedProjectDir.walkTopDown()
+      .onEnter { it.name != "build" || it.relativeTo(cachedProjectDir).path.contains("src") }
       .asSequence()
       .filter { it.isFile && it.extension in allowedExtensions }
       .filterNot {

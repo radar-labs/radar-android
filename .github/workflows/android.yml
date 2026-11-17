@@ -5,37 +5,67 @@ on:
   push:
     branches:
     - 'main'
-    - '7.**'
+    - '8.**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read # to fetch code (actions/checkout)
 
 jobs:
   build:
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
+    if: ${{ github.repository_owner == 'signalapp' }}
 
     runs-on: ubuntu-latest-8-cores
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # gh api repos/actions/checkout/commits/v6 --jq '.sha'
       with:
           submodules: true
+          lfs: true
 
     - name: set up JDK 21
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5
+      # gh api repos/actions/setup-java/commits/v5 --jq '.sha'
       with:
         distribution: temurin
         java-version: 21
-        cache: gradle
 
     - name: Validate Gradle Wrapper
-      uses: gradle/actions/wrapper-validation@v5
+      uses: gradle/actions/wrapper-validation@3f131e8634966bd73d06cc69884922b02e6faf92 # v6
+      # gh api repos/gradle/actions/commits/v6 --jq '.sha'
 
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@3f131e8634966bd73d06cc69884922b02e6faf92 # v6
+      # gh api repos/gradle/actions/commits/v6 --jq '.sha'
+      with:
+        # Only 8.** branch builds write to the cache; everything else (PRs, etc.) reads only.
+        cache-read-only: ${{ !startsWith(github.ref, 'refs/heads/8.') }}
+        # Required to persist the Gradle configuration cache across runs.
+        cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+    # Pull requests run the fast custom linter (ciRemote); pushes to main / 8.x branches run the
+    # full Android lint (qaRemote). Both include screenshot validation, which is deliberately kept
+    # out of the local qa/ci tasks because screenshot rendering is host-OS dependent.
     - name: Build with Gradle
-      run: ./gradlew qa
+      env:
+        SIGNAL_BUILD_CACHE_URL: ${{ secrets.SIGNAL_BUILD_CACHE_URL }}
+        SIGNAL_BUILD_CACHE_USER: ${{ secrets.SIGNAL_BUILD_CACHE_USER }}
+        SIGNAL_BUILD_CACHE_PASSWORD: ${{ secrets.SIGNAL_BUILD_CACHE_PASSWORD }}
+        SIGNAL_BUILD_CACHE_PUSH: ${{ startsWith(github.ref, 'refs/heads/8.') }}
+      run: ./gradlew ${{ github.event_name == 'pull_request' && 'ciRemote' || 'qaRemote' }}
 
     - name: Archive reports for failed build
       if: ${{ failure() }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      # gh api repos/actions/upload-artifact/commits/v7 --jq '.sha'
       with:
         name: reports
-        path: '*/build/reports'
+        path: |
+          **/build/reports
+          **/build/test-results
+        if-no-files-found: ignore

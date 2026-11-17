@@ -13,13 +13,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import org.signal.core.ui.logging.LoggingFragment;
+import org.signal.core.util.concurrent.LifecycleDisposable;
 import org.signal.core.util.logging.Log;
 import org.signal.qr.QrScannerView;
-import org.thoughtcrime.securesms.LoggingFragment;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.mediasend.camerax.CameraXModelBlocklist;
 import org.thoughtcrime.securesms.payments.MobileCoinPublicAddress;
-import org.signal.core.util.concurrent.LifecycleDisposable;
 import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -97,7 +96,7 @@ public final class PaymentsTransferQrScanFragment extends LoggingFragment {
     Toolbar toolbar = view.findViewById(R.id.payments_transfer_scan_qr);
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-    scannerView.start(getViewLifecycleOwner(), CameraXModelBlocklist.isBlocklisted());
+    scannerView.start(getViewLifecycleOwner());
 
     lifecycleDisposable.bindTo(getViewLifecycleOwner());
 

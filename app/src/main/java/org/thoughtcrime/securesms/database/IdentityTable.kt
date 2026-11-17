@@ -18,28 +18,29 @@ package org.thoughtcrime.securesms.database
 
 import android.content.Context
 import androidx.core.content.contentValuesOf
-import org.greenrobot.eventbus.EventBus
+import org.signal.core.database.delete
+import org.signal.core.database.exists
+import org.signal.core.database.select
+import org.signal.core.database.update
 import org.signal.core.models.ServiceId
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64
 import org.signal.core.util.UuidUtil
-import org.signal.core.util.delete
-import org.signal.core.util.exists
+import org.signal.core.util.eventbus.EventBus
 import org.signal.core.util.firstOrNull
 import org.signal.core.util.logging.Log
 import org.signal.core.util.requireBoolean
 import org.signal.core.util.requireInt
 import org.signal.core.util.requireLong
 import org.signal.core.util.requireNonNullString
-import org.signal.core.util.select
 import org.signal.core.util.toOptional
-import org.signal.core.util.update
 import org.signal.libsignal.protocol.IdentityKey
 import org.thoughtcrime.securesms.database.SignalDatabase.Companion.recipients
 import org.thoughtcrime.securesms.database.model.IdentityRecord
 import org.thoughtcrime.securesms.database.model.IdentityStoreRecord
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
+import org.thoughtcrime.securesms.recipients.RecipientIds
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.thoughtcrime.securesms.util.IdentityUtil
 import java.lang.AssertionError
@@ -49,6 +50,16 @@ class IdentityTable internal constructor(context: Context?, databaseHelper: Sign
 
   companion object {
     private val TAG = Log.tag(IdentityTable::class.java)
+
+    /**
+     * When set, [saveIdentity] will skip its per-recipient `markNeedsSync` + `scheduleSyncForDataChange`
+     * side effects and instead deposit the affected [RecipientId] into the set. The caller is then
+     * responsible for performing a single bulk follow-up (storage-id rotation, cache invalidate,
+     * storage-sync schedule).
+     */
+    @JvmField
+    val SUPPRESS_RECIPIENT_REFRESH: ThreadLocal<MutableSet<RecipientId>> = ThreadLocal()
+
     const val TABLE_NAME = "identities"
     private const val ID = "_id"
     const val ADDRESS = "address"
@@ -125,8 +136,14 @@ class IdentityTable internal constructor(context: Context?, databaseHelper: Sign
     nonBlockingApproval: Boolean
   ) {
     saveIdentityInternal(addressName, recipientId, identityKey, verifiedStatus, firstUse, timestamp, nonBlockingApproval)
-    recipients.markNeedsSync(recipientId)
-    StorageSyncHelper.scheduleSyncForDataChange()
+
+    val deferred = SUPPRESS_RECIPIENT_REFRESH.get()
+    if (deferred != null) {
+      deferred += recipientId
+    } else {
+      recipients.markNeedsSync(recipientId)
+      StorageSyncHelper.scheduleSyncForDataChange()
+    }
   }
 
   fun setApproval(addressName: String, recipientId: RecipientId, nonBlockingApproval: Boolean) {
@@ -152,7 +169,7 @@ class IdentityTable internal constructor(context: Context?, databaseHelper: Sign
     if (updated > 0) {
       val record = getIdentityRecord(addressName)
       if (record.isPresent) {
-        EventBus.getDefault().post(record.get())
+        EventBus.default.post(record.get())
       }
       recipients.markNeedsSync(recipientId)
       StorageSyncHelper.scheduleSyncForDataChange()
@@ -170,7 +187,7 @@ class IdentityTable internal constructor(context: Context?, databaseHelper: Sign
 
       val record = getIdentityRecord(addressName)
       if (record.isPresent) {
-        EventBus.getDefault().post(record.get())
+        EventBus.default.post(record.get())
       }
 
       AppDependencies.protocolStore.aci().identities().invalidate(addressName)
@@ -197,7 +214,7 @@ class IdentityTable internal constructor(context: Context?, databaseHelper: Sign
       .run()
       .firstOrNull { cursor ->
         IdentityRecord(
-          recipientId = RecipientId.fromSidOrE164(cursor.requireNonNullString(ADDRESS)),
+          recipientId = RecipientIds.fromSidOrE164(cursor.requireNonNullString(ADDRESS)),
           identityKey = IdentityKey(Base64.decode(cursor.requireNonNullString(IDENTITY_KEY)), 0),
           verifiedStatus = VerifiedStatus.forState(cursor.requireInt(VERIFIED)),
           firstUse = cursor.requireBoolean(FIRST_USE),
@@ -240,7 +257,7 @@ class IdentityTable internal constructor(context: Context?, databaseHelper: Sign
       FIRST_USE to if (firstUse) 1 else 0
     )
     writableDatabase.replace(TABLE_NAME, null, contentValues)
-    EventBus.getDefault().post(IdentityRecord(recipientId, identityKey, verifiedStatus, firstUse, timestamp, nonBlockingApproval))
+    EventBus.default.post(IdentityRecord(recipientId, identityKey, verifiedStatus, firstUse, timestamp, nonBlockingApproval))
   }
 
   enum class VerifiedStatus {

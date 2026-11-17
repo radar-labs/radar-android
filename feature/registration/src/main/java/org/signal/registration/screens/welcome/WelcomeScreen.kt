@@ -1,0 +1,685 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+@file:OptIn(ExperimentalMaterial3Api::class)
+
+package org.signal.registration.screens.welcome
+
+import android.content.pm.PackageManager
+import android.util.DisplayMetrics
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.SpaceAround
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.window.layout.WindowMetricsCalculator
+import kotlinx.coroutines.CoroutineScope
+import org.signal.core.ui.WindowBreakpoint
+import org.signal.core.ui.compose.AllDevicePreviews
+import org.signal.core.ui.compose.BottomSheets
+import org.signal.core.ui.compose.Buttons
+import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.SignalIcons
+import org.signal.core.ui.compose.TabletPortraitDayPreview
+import org.signal.core.ui.compose.dismissWithAnimation
+import org.signal.core.ui.compose.horizontalGutters
+import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.core.ui.isWidthExpanded
+import org.signal.core.ui.rememberWindowBreakpoint
+import org.signal.registration.R
+import org.signal.registration.screens.RegistrationScaffold
+import org.signal.registration.screens.attachDebugLogHelper
+import org.signal.registration.test.TestTags
+import kotlin.math.pow
+import kotlin.math.sqrt
+import org.signal.core.ui.R as CoreR
+
+/**
+ * Welcome screen for the registration flow.
+ * This is the initial screen users see when starting the registration process.
+ */
+@Composable
+fun WelcomeScreen(
+  state: WelcomeScreenState,
+  onEvent: (WelcomeScreenEvents) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  var showBottomSheet by remember { mutableStateOf(false) }
+  val windowBreakpoint = rememberWindowBreakpoint()
+  val onRestoreOrTransferClick = { showBottomSheet = true }
+  val displayLinkAsPrimaryOption by rememberDisplayLinkAndSyncAsPrimaryPath(state.isLinkAndSyncAvailable)
+
+  when (windowBreakpoint) {
+    is WindowBreakpoint.Small -> {
+      CompactLayout(
+        state = state,
+        onEvent = onEvent,
+        onRestoreOrTransferClick = onRestoreOrTransferClick,
+        modifier = modifier
+      )
+    }
+
+    is WindowBreakpoint.Medium -> {
+      MediumLayout(
+        state = state,
+        onEvent = onEvent,
+        onRestoreOrTransferClick = onRestoreOrTransferClick,
+        modifier = modifier
+      )
+    }
+
+    is WindowBreakpoint.Large -> {
+      LargeLayout(
+        state = state,
+        onEvent = onEvent,
+        displayLinkAsPrimaryOption = displayLinkAsPrimaryOption,
+        onRestoreOrTransferClick = onRestoreOrTransferClick,
+        modifier = modifier
+      )
+    }
+  }
+
+  if (showBottomSheet) {
+    RestoreOrTransferBottomSheet(
+      onEvent = {
+        showBottomSheet = false
+        onEvent(it)
+      },
+      onDismiss = { showBottomSheet = false }
+    )
+  }
+}
+
+@Composable
+private fun CompactLayout(
+  state: WelcomeScreenState,
+  onEvent: (WelcomeScreenEvents) -> Unit,
+  onRestoreOrTransferClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  RegistrationScaffold(
+    modifier = modifier
+      .fillMaxSize()
+      .testTag(TestTags.WELCOME_SCREEN),
+    content = {
+      // Radar: laid out from the top like Radar 1.0.9's welcome (fragment_registration_welcome_v3.xml): the icon
+      // 80dp below the status bar, the wordmark 24dp under it and the headline 48dp under that. On short screens
+      // the top gap, the icon and the gap above the headline shrink in proportion (never growing past those
+      // sizes), so the headline stays on screen.
+      Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+      ) {
+        Spacer(
+          modifier = Modifier
+            .weight(80f, fill = false)
+            .height(80.dp)
+        )
+
+        RadarLogo(
+          modifier = Modifier
+            .weight(120f, fill = false)
+            .sizeIn(maxWidth = 120.dp, maxHeight = 120.dp)
+            .aspectRatio(1f)
+            .attachDebugLogHelper()
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        RadarWordmark()
+
+        Spacer(
+          modifier = Modifier
+            .weight(48f, fill = false)
+            .height(48.dp)
+        )
+
+        Headline(
+          textAlign = TextAlign.Center,
+          modifier = Modifier.padding(horizontal = 32.dp)
+        )
+      }
+    },
+    footer = {
+      // Radar: full-width buttons with 32dp side margins and the terms link 24dp above them, as in 1.0.9.
+      Column(
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+      ) {
+        TermsAndPrivacy(onEvent)
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        PrimaryDeviceCallToActionButtons(
+          onEvent = onEvent,
+          onRestoreOrTransferClick = onRestoreOrTransferClick,
+          showRestoreOrTransfer = state.showRestoreOrTransfer
+        )
+
+        Spacer(modifier = Modifier.height(48.dp))
+      }
+    }
+  )
+}
+
+@Composable
+private fun MediumLayout(
+  state: WelcomeScreenState,
+  onEvent: (WelcomeScreenEvents) -> Unit,
+  onRestoreOrTransferClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  RegistrationScaffold(
+    modifier = modifier
+      .fillMaxSize()
+      .padding(bottom = 56.dp),
+    content = {
+      Box {
+        Row(modifier = Modifier.fillMaxWidth()) {
+          HeroImage(
+            modifier = Modifier
+              .fillMaxHeight()
+              .weight(1f)
+              .padding(horizontal = 24.dp)
+          )
+
+          Headline(
+            modifier = Modifier
+              .align(Alignment.CenterVertically)
+              .weight(1f)
+              .padding(horizontal = 24.dp)
+          )
+        }
+
+        TermsAndPrivacy(
+          onEvent = onEvent,
+          modifier = Modifier
+            .align(Alignment.BottomCenter)
+            .padding(bottom = 24.dp)
+        )
+      }
+    },
+    footer = {
+      val isWidthExpanded = currentWindowAdaptiveInfo().windowSizeClass.isWidthExpanded
+
+      Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+        Column(
+          modifier = Modifier
+            .widthIn(max = if (isWidthExpanded) 412.dp else 320.dp),
+          horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+          PrimaryDeviceCallToActionButtons(
+            onEvent = onEvent,
+            onRestoreOrTransferClick = onRestoreOrTransferClick,
+            showRestoreOrTransfer = state.showRestoreOrTransfer
+          )
+        }
+      }
+    }
+  )
+}
+
+@Composable
+private fun LargeLayout(
+  state: WelcomeScreenState,
+  onEvent: (WelcomeScreenEvents) -> Unit,
+  displayLinkAsPrimaryOption: Boolean,
+  onRestoreOrTransferClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  RegistrationScaffold(
+    modifier = modifier.fillMaxSize(),
+    content = {
+      Row(
+        horizontalArrangement = SpaceAround,
+        modifier = Modifier.padding(horizontal = 32.dp, vertical = 56.dp)
+      ) {
+        HeroImage(
+          modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
+        )
+
+        Box(
+          contentAlignment = Alignment.Center,
+          modifier = Modifier
+            .weight(1f)
+        ) {
+          Column(
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+              .fillMaxHeight()
+              .widthIn(max = 320.dp)
+              .fillMaxWidth()
+          ) {
+            Headline(
+              style = MaterialTheme.typography.headlineLarge
+            )
+
+            Spacer(modifier = Modifier.height(77.dp))
+
+            TermsAndPrivacy(
+              onEvent = onEvent,
+              modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 8.dp)
+            )
+
+            if (displayLinkAsPrimaryOption) {
+              SecondaryDeviceCallToActionButtons(
+                onEvent = onEvent
+              )
+            } else {
+              PrimaryDeviceCallToActionButtons(
+                onEvent = onEvent,
+                onRestoreOrTransferClick = onRestoreOrTransferClick,
+                showRestoreOrTransfer = state.showRestoreOrTransfer
+              )
+            }
+          }
+        }
+      }
+    }
+  )
+}
+
+@Composable
+private fun HeroImage(
+  modifier: Modifier = Modifier
+) {
+  // Radar: the Radar icon and wordmark instead of Signal's welcome illustration (as in Radar 1.0.9).
+  Column(
+    modifier = modifier.attachDebugLogHelper(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center
+  ) {
+    RadarLogo(modifier = Modifier.size(120.dp))
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    RadarWordmark()
+  }
+}
+
+@Composable
+private fun RadarLogo(
+  modifier: Modifier = Modifier
+) {
+  Image(
+    painter = painterResource(R.drawable.radar_logo_icon),
+    contentDescription = null,
+    contentScale = ContentScale.Fit,
+    modifier = modifier
+  )
+}
+
+/**
+ * The "Radar." wordmark, 132dp wide and tinted Radar orange like 1.0.9's. FillWidth rather than Fit: with only
+ * the width set, Fit never scales the bitmap up, so the wordmark was drawn at its raw pixel size (about half of
+ * 1.0.9's 132dp).
+ */
+@Composable
+private fun RadarWordmark(
+  modifier: Modifier = Modifier
+) {
+  Image(
+    painter = painterResource(R.drawable.radar_logo_wordmark),
+    contentDescription = null,
+    contentScale = ContentScale.FillWidth,
+    colorFilter = ColorFilter.tint(colorResource(R.color.radar_orange)),
+    modifier = modifier.width(132.dp)
+  )
+}
+
+@Composable
+private fun Headline(
+  modifier: Modifier = Modifier,
+  style: TextStyle = MaterialTheme.typography.headlineMedium,
+  textAlign: TextAlign = TextAlign.Start
+) {
+  Text(
+    text = stringResource(R.string.RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message),
+    style = style,
+    textAlign = textAlign,
+    modifier = modifier
+      .testTag(TestTags.WELCOME_HEADLINE)
+      .attachDebugLogHelper()
+  )
+}
+
+@Composable
+private fun TermsAndPrivacy(
+  onEvent: (WelcomeScreenEvents) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  TextButton(
+    onClick = { onEvent(WelcomeScreenEvents.ViewTermsAndPrivacy) },
+    colors = ButtonDefaults.textButtonColors(
+      contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+    ),
+    modifier = modifier
+  ) {
+    // Radar: plain "Terms & Privacy Policy"; upstream's string also says "Signal is a 501c3 nonprofit".
+    Text(
+      text = stringResource(R.string.RegistrationActivity_radar_terms_and_privacy),
+      textAlign = TextAlign.Center
+    )
+  }
+}
+
+@Composable
+private fun PrimaryDeviceCallToActionButtons(
+  onEvent: (WelcomeScreenEvents) -> Unit,
+  onRestoreOrTransferClick: () -> Unit,
+  showRestoreOrTransfer: Boolean
+) {
+  // Radar: "I'm new to Radar" opens Radar's sign-up screen (create an account or use a Signal account). Both
+  // buttons are 52dp tall and "I'm new to Radar" is Radar orange, as on 1.0.9's welcome screen.
+  Buttons.LargePrimary(
+    onClick = { onEvent(WelcomeScreenEvents.SignUp) },
+    colors = ButtonDefaults.buttonColors(
+      containerColor = colorResource(R.color.radar_orange),
+      contentColor = colorResource(R.color.radar_on_orange)
+    ),
+    modifier = Modifier
+      .fillMaxWidth()
+      .heightIn(min = 52.dp)
+      .testTag(TestTags.WELCOME_GET_STARTED_BUTTON)
+  ) {
+    Text(stringResource(R.string.RegistrationActivity_im_new_to_radar))
+  }
+
+  if (showRestoreOrTransfer) {
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Buttons.LargeTonal(
+      onClick = onRestoreOrTransferClick,
+      colors = ButtonDefaults.filledTonalButtonColors(
+        containerColor = SignalTheme.colors.colorSurface2,
+        // Radar: the label colour 1.0.9's (View) tonal welcome button had.
+        contentColor = colorResource(CoreR.color.signal_colorOnPrimaryContainer)
+      ),
+      modifier = Modifier
+        .fillMaxWidth()
+        .heightIn(min = 52.dp)
+        .testTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON)
+    ) {
+      Text(stringResource(R.string.RegistrationActivity_i_already_have_an_account))
+    }
+  }
+}
+
+@Composable
+private fun ColumnScope.SecondaryDeviceCallToActionButtons(
+  onEvent: (WelcomeScreenEvents) -> Unit
+) {
+  Buttons.LargeTonal(
+    onClick = { onEvent(WelcomeScreenEvents.LinkDevice) },
+    modifier = Modifier
+      .fillMaxWidth()
+      .testTag(TestTags.WELCOME_LINK_DEVICE_BUTTON)
+  ) {
+    Text(stringResource(R.string.WelcomeScreen__link_your_account))
+  }
+
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = Modifier.align(Alignment.CenterHorizontally)
+  ) {
+    Text(
+      text = stringResource(R.string.WelcomeScreen__not_on_signal_yet),
+      style = MaterialTheme.typography.bodyMedium,
+      color = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+
+    TextButton(
+      onClick = { onEvent(WelcomeScreenEvents.Continue) },
+      modifier = Modifier.testTag(TestTags.WELCOME_GET_STARTED_BUTTON)
+    ) {
+      Text(
+        text = stringResource(R.string.WelcomeScreen__create_account)
+      )
+    }
+  }
+}
+
+/**
+ * Bottom sheet for restore or transfer options.
+ */
+@Composable
+private fun RestoreOrTransferBottomSheet(
+  onEvent: (WelcomeScreenEvents) -> Unit,
+  onDismiss: () -> Unit
+) {
+  val sheetState = rememberModalBottomSheetState()
+  val scope = rememberCoroutineScope()
+
+  BottomSheets.BottomSheet(
+    onDismissRequest = { sheetState.dismissWithAnimation(scope, onComplete = onDismiss) },
+    sheetState = sheetState
+  ) {
+    RestoreOrTransferBottomSheetContent(
+      sheetState = sheetState,
+      onEvent = onEvent,
+      scope = scope
+    )
+  }
+}
+
+/**
+ * Bottom sheet content for restore or transfer options (needs to be separate for preview).
+ */
+@Composable
+private fun RestoreOrTransferBottomSheetContent(
+  sheetState: SheetState,
+  scope: CoroutineScope,
+  onEvent: (WelcomeScreenEvents) -> Unit
+) {
+  Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(bottom = 54.dp)
+  ) {
+    Spacer(modifier = Modifier.size(26.dp))
+
+    RadarRestoreOptions(
+      onOptionClick = { event ->
+        sheetState.dismissWithAnimation(scope) {
+          onEvent(event)
+        }
+      }
+    )
+  }
+}
+
+@Composable
+internal fun RestoreActionRow(
+  icon: Painter,
+  title: String,
+  subtitle: String,
+  modifier: Modifier = Modifier,
+  iconTint: Color = MaterialTheme.colorScheme.primary,
+  onRowClick: () -> Unit = {}
+) {
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier
+      .horizontalGutters()
+      .padding(vertical = 8.dp)
+      .fillMaxWidth()
+      .clip(RoundedCornerShape(18.dp))
+      .background(MaterialTheme.colorScheme.background)
+      .clickable(enabled = true, onClick = onRowClick)
+      .padding(horizontal = 24.dp, vertical = 16.dp)
+  ) {
+    Icon(
+      painter = icon,
+      tint = iconTint,
+      contentDescription = null,
+      modifier = Modifier.size(44.dp)
+    )
+
+    Column(
+      modifier = Modifier
+        .padding(start = 16.dp)
+        .weight(1f)
+    ) {
+      Text(
+        text = title,
+        style = MaterialTheme.typography.bodyLarge
+      )
+
+      Text(
+        text = subtitle,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant
+      )
+    }
+
+    Icon(
+      painter = SignalIcons.ChevronRight.painter,
+      tint = MaterialTheme.colorScheme.onSurfaceVariant,
+      contentDescription = null,
+      modifier = Modifier.padding(start = 8.dp)
+    )
+  }
+}
+
+/**
+ * Radar: the "I already have an account" options, as in Radar 1.0.9 — migrate from Signal (restore a Signal
+ * backup on this phone), set up a new phone from the old one (QR code: transfer or restore), or link this device.
+ */
+@Composable
+internal fun RadarRestoreOptions(
+  onOptionClick: (WelcomeScreenEvents) -> Unit
+) {
+  RestoreActionRow(
+    icon = painterResource(R.drawable.welcome_signal_app_icon),
+    iconTint = Color.Unspecified,
+    title = stringResource(R.string.WelcomeFragment_restore_action_migrate_from_signal),
+    subtitle = stringResource(R.string.WelcomeFragment_restore_action_migrate_from_signal_subtitle),
+    modifier = Modifier.testTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON),
+    onRowClick = { onOptionClick(WelcomeScreenEvents.MigrateFromSignal) }
+  )
+
+  RestoreActionRow(
+    icon = painterResource(R.drawable.welcome_transfer_phone_44),
+    title = stringResource(R.string.WelcomeFragment_restore_action_set_up_new_phone),
+    subtitle = stringResource(R.string.WelcomeFragment_restore_action_set_up_new_phone_subtitle),
+    modifier = Modifier.testTag(TestTags.WELCOME_RESTORE_HAS_OLD_PHONE_BUTTON),
+    onRowClick = { onOptionClick(WelcomeScreenEvents.HasOldPhone) }
+  )
+
+  RestoreActionRow(
+    icon = painterResource(R.drawable.welcome_link_44),
+    title = stringResource(R.string.WelcomeFragment_restore_action_link_device),
+    subtitle = stringResource(R.string.WelcomeFragment_restore_action_link_device_subtitle),
+    onRowClick = { onOptionClick(WelcomeScreenEvents.LinkDevice) }
+  )
+}
+
+private const val TABLET_MIN_DIAGONAL_INCHES = 7f
+
+@Composable
+private fun rememberDisplayLinkAndSyncAsPrimaryPath(isLinkAndSyncAvailable: Boolean): State<Boolean> {
+  val context = LocalContext.current
+  val hasHinge = currentWindowAdaptiveInfo().windowPosture.hingeList.isNotEmpty()
+
+  val supportsTelephony = remember(context) {
+    context.packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
+  }
+
+  val isLargeDevice = remember(context) {
+    val metrics = WindowMetricsCalculator.getOrCreate().computeMaximumWindowMetrics(context)
+    val dpi = metrics.density * DisplayMetrics.DENSITY_DEFAULT
+    val widthInches = metrics.bounds.width() / dpi
+    val heightInches = metrics.bounds.height() / dpi
+    sqrt(widthInches.pow(2) + heightInches.pow(2)) >= TABLET_MIN_DIAGONAL_INCHES
+  }
+
+  // A hinge means a foldable, which counts as a phone rather than a tablet.
+  return rememberUpdatedState(isLinkAndSyncAvailable && (!supportsTelephony || (isLargeDevice && !hasHinge)))
+}
+
+@AllDevicePreviews
+@Composable
+private fun WelcomeScreenPreview() {
+  Previews.Preview {
+    WelcomeScreen(state = WelcomeScreenState(), onEvent = {})
+  }
+}
+
+@TabletPortraitDayPreview
+@Composable
+private fun WelcomeScreenLinkedDevicePreview() {
+  Previews.Preview {
+    WelcomeScreen(state = WelcomeScreenState(isLinkAndSyncAvailable = true), onEvent = {})
+  }
+}
+
+@AllDevicePreviews
+@Composable
+private fun RestoreOrTransferBottomSheetPreview() {
+  Previews.BottomSheetPreview {
+    RestoreOrTransferBottomSheetContent(
+      sheetState = rememberModalBottomSheetState(),
+      scope = rememberCoroutineScope(),
+      onEvent = {}
+    )
+  }
+}

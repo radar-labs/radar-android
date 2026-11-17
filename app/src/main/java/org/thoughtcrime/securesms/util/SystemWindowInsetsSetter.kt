@@ -1,63 +1,152 @@
 package org.thoughtcrime.securesms.util
 
-import android.os.Build
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewParent
 import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import org.signal.core.ui.util.ViewUtil
+import org.thoughtcrime.securesms.R
 
 object SystemWindowInsetsSetter {
+
   /**
-   * Updates the view whenever a layout occurs to properly set the system bar insets. setPadding is safe here because it will only trigger an extra layout
-   * call IF the values actually changed.
+   * Radar: marks [host] as a container that already insets everything inside it for [handledTypes], so views
+   * attached below it leave those types to the host instead of adding them a second time. Used by the payments
+   * hosts, which inset their screens themselves as in Radar 1.0.9: the Payments tab in MainActivity (its
+   * Compose pane pads the status bar, the bottom navigation covers the navigation bar) and the payments
+   * activities (`fitsSystemWindows` roots). Views with no marked ancestor are unaffected.
    */
-  fun attach(view: View, lifecycleOwner: LifecycleOwner, @WindowInsetsCompat.Type.InsetsType insetType: Int = WindowInsetsCompat.Type.systemBars()) {
-    val listener = view.doOnEachLayout {
-      val insets: Insets? = ViewCompat.getRootWindowInsets(view)?.getInsets(insetType)
-      val canTrustInsets = Build.VERSION.SDK_INT > 29 || (WindowInsetsCompat.Type.ime() and insetType == 0)
+  @JvmStatic
+  fun markInsetByHost(host: View, @WindowInsetsCompat.Type.InsetsType handledTypes: Int) {
+    host.setTag(R.id.radar_insets_handled_by_host, handledTypes)
+  }
 
-      if (canTrustInsets && insets != null && !insets.isEmpty()) {
-        view.post {
-          view.setPadding(
-            insets.left,
-            insets.top,
-            insets.right,
-            insets.bottom
-          )
-        }
-      } else {
-        val top = if (insetType and WindowInsetsCompat.Type.statusBars() != 0) {
-          ViewUtil.getStatusBarHeight(view)
-        } else {
-          0
-        }
+  /** The inset types the nearest marked ancestor of [view] applies itself, or 0 when there is none. */
+  private fun typesHandledByHost(view: View): Int {
+    var current: ViewParent? = view.parent
+    while (current is View) {
+      val handled = current.getTag(R.id.radar_insets_handled_by_host)
+      if (handled is Int) {
+        return handled
+      }
+      current = current.parent
+    }
+    return 0
+  }
 
-        val bottom = if (insetType and WindowInsetsCompat.Type.navigationBars() != 0) {
-          ViewUtil.getNavigationBarHeight(view)
-        } else {
-          0
-        }
+  /**
+   * The safe area for a screen root that contains text input. The host windows are edge-to-edge, so
+   * `adjustResize` no longer shrinks the window when the keyboard opens and the root has to carry the
+   * IME inset itself. Bottom resolves to the keyboard height or the navigation bar, whichever is larger.
+   */
+  @JvmField
+  val SAFE_AREA_WITH_KEYBOARD: Int = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime()
 
-        view.post {
-          view.setPadding(
-            0,
-            top,
-            0,
-            bottom
-          )
+  /**
+   * How the resolved system-bar insets are applied to the target view. In both modes the view's
+   * original padding/margin (captured when [attach] is called) is preserved and the insets are
+   * added on top, so a view keeps its designed spacing and still clears the system bars.
+   */
+  enum class ApplyMode {
+    PADDING,
+    MARGIN
+  }
+
+  /**
+   * Accounts for the system bar insets by adding them on top of the view's original padding
+   * ([ApplyMode.PADDING]) or margin ([ApplyMode.MARGIN]).
+   *
+   * Applied from two places. Primarily from the inset dispatch, which runs before measure and layout, so the
+   * first frame is already inset instead of visibly shifting a frame later. That dispatch doesn't reach every
+   * view though (an ancestor may consume the insets first), so each layout re-applies as a fallback, posted
+   * because a layout-time `requestLayout()` is dropped by the framework. Both paths are safe to run
+   * repeatedly: they only trigger another layout if the values actually changed.
+   */
+  @JvmStatic
+  @JvmOverloads
+  fun attach(
+    view: View,
+    lifecycleOwner: LifecycleOwner,
+    @WindowInsetsCompat.Type.InsetsType insetType: Int = WindowInsetsCompat.Type.systemBars(),
+    applyMode: ApplyMode = ApplyMode.PADDING
+  ) {
+    val base: Insets = if (applyMode == ApplyMode.MARGIN) {
+      val params = view.layoutParams as? ViewGroup.MarginLayoutParams
+      Insets.of(params?.leftMargin ?: 0, params?.topMargin ?: 0, params?.rightMargin ?: 0, params?.bottomMargin ?: 0)
+    } else {
+      Insets.of(view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom)
+    }
+
+    val applyInsets = {
+      val insets = resolveInsets(view, insetType)
+      val left = base.left + insets.left
+      val top = base.top + insets.top
+      val right = base.right + insets.right
+      val bottom = base.bottom + insets.bottom
+
+      when (applyMode) {
+        ApplyMode.PADDING -> view.setPadding(left, top, right, bottom)
+
+        ApplyMode.MARGIN -> {
+          val params = view.layoutParams as? ViewGroup.MarginLayoutParams
+          if (params != null && (params.leftMargin != left || params.topMargin != top || params.rightMargin != right || params.bottomMargin != bottom)) {
+            params.setMargins(left, top, right, bottom)
+            view.layoutParams = params
+          }
         }
       }
+    }
+
+    ViewCompat.setOnApplyWindowInsetsListener(view) { target, windowInsets ->
+      // Let the view dispatch on down to its children first, then apply ours on top.
+      val result = ViewCompat.onApplyWindowInsets(target, windowInsets)
+      applyInsets()
+      result
+    }
+
+    val listener = view.doOnEachLayout {
+      view.post { applyInsets() }
     }
 
     val lifecycleObserver = object : DefaultLifecycleObserver {
       override fun onDestroy(owner: LifecycleOwner) {
         view.removeOnLayoutChangeListener(listener)
+        ViewCompat.setOnApplyWindowInsetsListener(view, null)
       }
     }
 
     lifecycleOwner.lifecycle.addObserver(lifecycleObserver)
+  }
+
+  /**
+   * Resolves the insets to apply for [insetType], falling back to [ViewUtil] bar heights when
+   * [ViewCompat.getRootWindowInsets] reports nothing.
+   *
+   * On API < 30 there is no platform IME inset, but [WindowInsetsCompat] derives one from the difference between
+   * the system window insets and the stable insets, which is exactly what the (edge-to-edge, and therefore never
+   * resized) window reports while the keyboard is up.
+   */
+  private fun resolveInsets(view: View, @WindowInsetsCompat.Type.InsetsType requestedType: Int): Insets {
+    // Radar: types an enclosing host already applies (see markInsetByHost) are not applied again.
+    val insetType = requestedType and typesHandledByHost(view).inv()
+    if (insetType == 0) {
+      return Insets.NONE
+    }
+
+    val rootInsets = ViewCompat.getRootWindowInsets(view)
+    val insets: Insets? = rootInsets?.getInsets(insetType)
+
+    if (insets != null && (!insets.isEmpty() || ViewUtil.isGestureNavigation(view.resources, rootInsets))) {
+      return insets
+    }
+
+    val top = if (insetType and WindowInsetsCompat.Type.statusBars() != 0) ViewUtil.getStatusBarHeight(view) else 0
+    val bottom = if (insetType and WindowInsetsCompat.Type.navigationBars() != 0) ViewUtil.getNavigationBarHeight(view) else 0
+    return Insets.of(0, top, 0, bottom)
   }
 
   private fun Insets.isEmpty(): Boolean {

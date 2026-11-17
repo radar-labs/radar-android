@@ -12,15 +12,21 @@ import android.content.pm.PackageManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import org.greenrobot.eventbus.EventBus
+import kotlinx.coroutines.runBlocking
+import org.signal.core.models.database.AttachmentId
 import org.signal.core.util.Base64.decodeBase64OrThrow
 import org.signal.core.util.PendingIntentFlags
+import org.signal.core.util.eventbus.EventBus
 import org.signal.core.util.isNotNullOrBlank
 import org.signal.core.util.logging.Log
 import org.signal.libsignal.protocol.InvalidMacException
 import org.signal.libsignal.protocol.InvalidMessageException
+import org.signal.network.exceptions.NonSuccessfulResponseCodeException
+import org.signal.network.exceptions.PushNetworkException
+import org.signal.network.service.ArchiveService
+import org.signal.network.service.successOrThrow
+import org.signal.remoteconfig.RemoteConfig
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.attachments.AttachmentId
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.attachments.InvalidAttachmentException
 import org.thoughtcrime.securesms.backup.v2.ArchiveDatabaseExecutor
@@ -45,19 +51,17 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.logsubmit.SubmitDebugLogActivity
 import org.thoughtcrime.securesms.mms.MmsException
 import org.thoughtcrime.securesms.mms.PartAuthority
+import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.notifications.NotificationChannels
 import org.thoughtcrime.securesms.notifications.NotificationIds
 import org.thoughtcrime.securesms.service.BackupMediaRestoreService
 import org.thoughtcrime.securesms.stickers.StickerLocator
 import org.thoughtcrime.securesms.transport.RetryLaterException
-import org.thoughtcrime.securesms.util.RemoteConfig
 import org.thoughtcrime.securesms.util.SignalLocalMetrics
 import org.whispersystems.signalservice.api.crypto.AttachmentCipherInputStream.IntegrityCheck
 import org.whispersystems.signalservice.api.messages.AttachmentTransferProgress
 import org.whispersystems.signalservice.api.messages.SignalServiceAttachment
 import org.whispersystems.signalservice.api.push.exceptions.MissingConfigurationException
-import org.whispersystems.signalservice.api.push.exceptions.NonSuccessfulResponseCodeException
-import org.whispersystems.signalservice.api.push.exceptions.PushNetworkException
 import org.whispersystems.signalservice.api.push.exceptions.RangeException
 import java.io.File
 import java.io.IOException
@@ -277,14 +281,14 @@ class RestoreAttachmentJob private constructor(
 
     SignalLocalMetrics.ArchiveAttachmentRestore.start(attachmentId)
 
-    val progressServiceController = BackupMediaRestoreService.start(context, context.getString(R.string.BackupStatus__restoring_media))
+    val progressServiceController = if (!manual) BackupMediaRestoreService.start(context, context.getString(R.string.BackupStatus__restoring_media)) else null
 
     if (progressServiceController != null) {
       progressServiceController.use {
         retrieveAttachment(messageId, attachmentId, attachment)
       }
     } else {
-      Log.w(TAG, "Continuing without service.")
+      Log.w(TAG, "Continuing without service. manual: $manual")
       retrieveAttachment(messageId, attachmentId, attachment)
     }
 
@@ -333,7 +337,8 @@ class RestoreAttachmentJob private constructor(
     messageId: Long,
     attachmentId: AttachmentId,
     attachment: DatabaseAttachment,
-    forceTransitTier: Boolean = false
+    forceTransitTier: Boolean = false,
+    forceFallbackArchiveCdn: Boolean = false
   ) {
     val maxReceiveSize: Long = RemoteConfig.maxAttachmentReceiveSizeBytes
     val attachmentFile: File = ArchiveDatabaseExecutor.runBlocking {
@@ -359,15 +364,16 @@ class RestoreAttachmentJob private constructor(
       }
 
       if (useArchiveCdn && attachment.archiveTransferState != AttachmentTable.ArchiveTransferState.FINISHED) {
-        throw InvalidAttachmentException("[$attachmentId] Invalid attachment configuration! backsUpMedia: ${SignalStore.backup.backsUpMedia}, forceTransitTier: $forceTransitTier, archiveTransferState: ${attachment.archiveTransferState}")
+        Log.w(TAG, "[$attachmentId] Archive state was not FINISHED, but we backup media and have a dataHash, so we should try anyway. archiveTransferState: ${attachment.archiveTransferState}")
       }
 
       val messageReceiver = AppDependencies.signalServiceMessageReceiver
-      val pointer = attachment.createArchiveAttachmentPointer(useArchiveCdn)
+      val archiveCdnOverride = RemoteConfig.backupFallbackArchiveCdn.takeIf { forceFallbackArchiveCdn }
+      val pointer = attachment.createArchiveAttachmentPointer(useArchiveCdn, archiveCdnOverride)
 
       val progressListener = object : SignalServiceAttachment.ProgressListener {
         override fun onAttachmentProgress(progress: AttachmentTransferProgress) {
-          EventBus.getDefault().postSticky(PartProgressEvent(attachment, PartProgressEvent.Type.NETWORK, progress))
+          EventBus.default.postSticky(PartProgressEvent(attachment, PartProgressEvent.Type.NETWORK, progress))
         }
 
         override fun shouldCancel(): Boolean {
@@ -377,7 +383,7 @@ class RestoreAttachmentJob private constructor(
 
       ArchiveRestoreProgress.onDownloadStart(attachmentId)
       val decryptingStream = if (useArchiveCdn) {
-        val cdnCredentials = BackupRepository.getCdnReadCredentials(BackupRepository.CredentialType.MEDIA, attachment.archiveCdn ?: RemoteConfig.backupFallbackArchiveCdn).successOrThrow().headers
+        val cdnCredentials = runBlocking { SignalNetwork.archiveService.getCdnReadCredentials(ArchiveService.CredentialType.MEDIA, pointer.cdnNumber) }.successOrThrow().headers
 
         messageReceiver
           .retrieveArchivedAttachment(
@@ -410,12 +416,14 @@ class RestoreAttachmentJob private constructor(
             inputStream = input,
             offloadRestoredAt = if (manual) System.currentTimeMillis().milliseconds else null,
             archiveRestore = true,
+            restoredFromArchiveCdn = useArchiveCdn,
             notify = manual
           )
         ArchiveDatabaseExecutor.throttledNotifyAttachmentAndChatListObservers()
       }
 
-      if (useArchiveCdn && attachment.archiveCdn == null) {
+      if (useArchiveCdn && attachment.archiveCdn != pointer.cdnNumber) {
+        Log.i(TAG, "[$attachmentId] Recording the archive CDN we actually downloaded from. Was: ${attachment.archiveCdn}, now: ${pointer.cdnNumber}")
         ArchiveDatabaseExecutor.runBlocking {
           SignalDatabase.attachments.setArchiveCdn(attachmentId, pointer.cdnNumber)
         }
@@ -441,6 +449,12 @@ class RestoreAttachmentJob private constructor(
             if (attachment.dataHash != null) {
               maybePostFailedToDownloadFromArchiveAndTransitNotification()
             }
+            markPermanentlyFailed(attachmentId)
+            return
+          } else if (useArchiveCdn && !forceFallbackArchiveCdn && attachment.archiveCdn != null && attachment.archiveCdn != RemoteConfig.backupFallbackArchiveCdn) {
+            // A stored CDN can be stale
+            Log.w(TAG, "[$attachmentId] Archive CDN ${attachment.archiveCdn} returned a 404. Retrying against the fallback CDN before falling back to transit.")
+            return retrieveAttachment(messageId, attachmentId, attachment, forceFallbackArchiveCdn = true)
           } else if (SignalStore.backup.backsUpMedia && attachment.remoteLocation.isNotNullOrBlank()) {
             Log.w(TAG, "[$attachmentId] Failed to download attachment from the archive CDN! Retrying download from transit CDN. hasPlaintextHash: ${attachment.dataHash != null}")
             if (attachment.dataHash != null) {
@@ -453,8 +467,12 @@ class RestoreAttachmentJob private constructor(
             if (attachment.dataHash != null) {
               maybePostFailedToDownloadFromArchiveAndTransitNotification()
             }
+            markPermanentlyFailed(attachmentId)
+            return
           } else if (attachment.remoteLocation.isNotNullOrBlank()) {
             Log.w(TAG, "[$attachmentId] Failed to restore an attachment for a free tier user. Likely just older than 45 days.")
+            markPermanentlyFailed(attachmentId)
+            return
           }
         }
         401 -> {
@@ -491,21 +509,31 @@ class RestoreAttachmentJob private constructor(
         SignalDatabase.attachments.clearIncrementalMacsForAttachmentAndAnyDuplicates(attachmentId, attachment.remoteKey, attachment.dataHash)
       }
       markFailed(attachmentId)
+    } finally {
+      attachmentFile.delete()
     }
-
-    attachmentFile.delete()
   }
 
   private fun markFailed(attachmentId: AttachmentId) {
     ArchiveDatabaseExecutor.runBlocking {
       SignalDatabase.attachments.setRestoreTransferState(attachmentId, AttachmentTable.TRANSFER_PROGRESS_FAILED)
     }
+    maybeRequestBackfill()
   }
 
   private fun markPermanentlyFailed(attachmentId: AttachmentId) {
     ArchiveDatabaseExecutor.runBlocking {
       SignalDatabase.attachments.setRestoreTransferState(attachmentId, AttachmentTable.TRANSFER_PROGRESS_PERMANENT_FAILURE)
     }
+    maybeRequestBackfill()
+  }
+
+  private fun maybeRequestBackfill() {
+    if (SignalStore.account.isPrimaryDevice || !manual) {
+      return
+    }
+    val attachment = SignalDatabase.attachments.getAttachment(attachmentId) ?: return
+    AttachmentBackfill.maybeRequest(messageId, attachment)
   }
 
   private fun maybePostFailedToDownloadFromArchiveNotification() {

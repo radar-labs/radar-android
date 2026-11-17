@@ -1,16 +1,16 @@
 package org.thoughtcrime.securesms.database.model
 
 import androidx.annotation.WorkerThread
+import org.signal.core.models.recipients.RecipientId
 import org.signal.libsignal.zkgroup.groups.GroupMasterKey
-import org.signal.storageservice.protos.groups.AccessControl
-import org.signal.storageservice.protos.groups.local.EnabledState
+import org.signal.storageservice.storage.protos.groups.AccessControl
+import org.signal.storageservice.storage.protos.groups.local.EnabledState
 import org.thoughtcrime.securesms.database.GroupTable
 import org.thoughtcrime.securesms.database.RecipientTable
 import org.thoughtcrime.securesms.groups.GroupAccessControl
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.whispersystems.signalservice.api.groupsv2.DecryptedGroupUtil
 import org.whispersystems.signalservice.api.push.DistributionId
 import java.util.Optional
@@ -24,12 +24,14 @@ class GroupRecord(
   val avatarId: Long,
   val avatarKey: ByteArray?,
   val avatarContentType: String?,
-  val isActive: Boolean,
+  val isMember: Boolean,
+  private val terminatedBy: Long = 0,
   val avatarDigest: ByteArray?,
   val isMms: Boolean,
   groupMasterKeyBytes: ByteArray?,
   groupRevision: Int,
   decryptedGroupBytes: ByteArray?,
+  val verifiedNameHash: ByteArray? = null,
   val distributionId: DistributionId?,
   val lastForceUpdateTimestamp: Long,
   val groupSendEndorsementExpiration: Long
@@ -61,6 +63,15 @@ class GroupRecord(
     }
   }
 
+  val isTerminated: Boolean
+    get() = terminatedBy != 0L
+
+  val terminatedByRecipientId: RecipientId?
+    get() = if (terminatedBy > 0) RecipientId.from(terminatedBy) else null
+
+  val isActive: Boolean
+    get() = isMember && !isTerminated
+
   val description: String
     get() = v2GroupProperties?.decryptedGroup?.description ?: ""
 
@@ -71,6 +82,9 @@ class GroupRecord(
     get() = !isMms && !isV2Group
 
   val isV2Group: Boolean
+    get() = id.isV2
+
+  val hasV2GroupProperties: Boolean
     get() = v2GroupProperties != null
 
   @get:WorkerThread
@@ -87,7 +101,7 @@ class GroupRecord(
   /** Who is allowed to add to the membership of this group. */
   val membershipAdditionAccessControl: GroupAccessControl
     get() {
-      return if (isV2Group) {
+      return if (hasV2GroupProperties) {
         if ((requireV2GroupProperties().decryptedGroup.accessControl ?: AccessControl()).members == AccessControl.AccessRequired.MEMBER) {
           GroupAccessControl.ALL_MEMBERS
         } else {
@@ -102,10 +116,26 @@ class GroupRecord(
       }
     }
 
+  /** Whether this group's invite link exists and is currently open to anyone holding it. */
+  val isGroupLinkEnabled: Boolean
+    get() {
+      if (!hasV2GroupProperties) {
+        return false
+      }
+
+      val decryptedGroup = requireV2GroupProperties().decryptedGroup
+      if (decryptedGroup.inviteLinkPassword.size == 0) {
+        return false
+      }
+
+      val addFromInviteLink = decryptedGroup.accessControl?.addFromInviteLink ?: return false
+      return addFromInviteLink == AccessControl.AccessRequired.ANY || addFromInviteLink == AccessControl.AccessRequired.ADMINISTRATOR
+    }
+
   /** Who is allowed to modify the attributes of this group, name/avatar/timer etc. */
   val attributesAccessControl: GroupAccessControl
     get() {
-      return if (isV2Group) {
+      return if (hasV2GroupProperties) {
         if ((requireV2GroupProperties().decryptedGroup.accessControl ?: AccessControl()).attributes == AccessControl.AccessRequired.MEMBER) {
           GroupAccessControl.ALL_MEMBERS
         } else {
@@ -118,8 +148,29 @@ class GroupRecord(
       }
     }
 
+  /**
+   * Who is allowed to add member labels in this group.
+   *
+   * Defaults to ALL_MEMBERS for groups created before this permission was added.
+   */
+  val memberLabelAccessControl: GroupAccessControl
+    get() {
+      if (!hasV2GroupProperties) {
+        return GroupAccessControl.ALL_MEMBERS
+      }
+
+      return when ((requireV2GroupProperties().decryptedGroup.accessControl ?: AccessControl()).memberLabel) {
+        AccessControl.AccessRequired.ADMINISTRATOR -> GroupAccessControl.ONLY_ADMINS
+
+        AccessControl.AccessRequired.MEMBER,
+        AccessControl.AccessRequired.UNKNOWN, // groups predating this permission
+        AccessControl.AccessRequired.ANY,
+        AccessControl.AccessRequired.UNSATISFIABLE -> GroupAccessControl.ALL_MEMBERS
+      }
+    }
+
   val actionableRequestingMembersCount: Int by lazy {
-    if (isV2Group && memberLevel(Recipient.self()) == GroupTable.MemberLevel.ADMINISTRATOR) {
+    if (hasV2GroupProperties && memberLevel(Recipient.self()) == GroupTable.MemberLevel.ADMINISTRATOR) {
       requireV2GroupProperties()
         .decryptedGroup
         .requestingMembers.size
@@ -129,7 +180,7 @@ class GroupRecord(
   }
 
   val gv1MigrationSuggestions: List<RecipientId> by lazy {
-    if (!isActive || !isV2Group || isPendingMember(Recipient.self())) {
+    if (!isActive || !hasV2GroupProperties || isPendingMember(Recipient.self())) {
       emptyList()
     } else {
       unmigratedV1Members
@@ -149,11 +200,11 @@ class GroupRecord(
   }
 
   fun isAdmin(recipient: Recipient): Boolean {
-    return isV2Group && requireV2GroupProperties().isAdmin(recipient)
+    return hasV2GroupProperties && requireV2GroupProperties().isAdmin(recipient)
   }
 
   fun memberLevel(recipient: Recipient): GroupTable.MemberLevel {
-    return if (isV2Group) {
+    return if (hasV2GroupProperties) {
       val memberLevel = requireV2GroupProperties().memberLevel(recipient.serviceId)
       if (recipient.isSelf && memberLevel == GroupTable.MemberLevel.NOT_A_MEMBER) {
         requireV2GroupProperties().memberLevel(Optional.ofNullable(SignalStore.account.pni))
@@ -173,7 +224,7 @@ class GroupRecord(
    * Whether or not the recipient is a pending member.
    */
   fun isPendingMember(recipient: Recipient): Boolean {
-    if (isV2Group) {
+    if (hasV2GroupProperties) {
       val serviceId = recipient.serviceId
       if (serviceId.isPresent) {
         return DecryptedGroupUtil.findPendingByServiceId(requireV2GroupProperties().decryptedGroup.pendingMembers, serviceId.get())

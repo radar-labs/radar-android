@@ -18,6 +18,9 @@ import org.signal.core.util.money.FiatMoney
 import org.signal.donations.InAppPaymentType
 import org.signal.donations.PaymentSourceType
 import org.signal.libsignal.zkgroup.receipts.ReceiptCredentialResponse
+import org.signal.network.exceptions.NonSuccessfulResponseCodeException
+import org.signal.network.util.JsonUtil
+import org.signal.remoteconfig.RemoteConfig
 import org.thoughtcrime.securesms.components.settings.app.subscription.DonationSerializationHelper.toFiatValue
 import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentsRepository.toPaymentMethodType
 import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentsRepository.toPaymentSourceType
@@ -27,13 +30,10 @@ import org.thoughtcrime.securesms.database.model.InAppPaymentSubscriberRecord
 import org.thoughtcrime.securesms.database.model.databaseprotos.InAppPaymentData
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.util.RemoteConfig
-import org.whispersystems.signalservice.api.push.exceptions.NonSuccessfulResponseCodeException
 import org.whispersystems.signalservice.api.subscriptions.ActiveSubscription
 import org.whispersystems.signalservice.api.subscriptions.ActiveSubscription.ChargeFailure
 import org.whispersystems.signalservice.internal.ServiceResponse
 import org.whispersystems.signalservice.internal.push.SubscriptionsConfiguration
-import org.whispersystems.signalservice.internal.util.JsonUtil
 import java.math.BigDecimal
 import java.util.Currency
 import java.util.concurrent.atomic.AtomicReference
@@ -66,9 +66,9 @@ class InAppPaymentsTestRule : ExternalResource() {
     mockkObject(InAppDonations)
     every { InAppDonations.isPayPalAvailable() } returns true
     every { InAppDonations.isGooglePayAvailable() } returns true
-    every { InAppDonations.isSEPADebitAvailable() } returns true
+    every { InAppDonations.isSEPADebitAvailable(any()) } returns true
     every { InAppDonations.isCreditCardAvailable() } returns true
-    every { InAppDonations.isIDEALAvailable() } returns true
+    every { InAppDonations.isIDEALAvailable(any()) } returns true
 
     mockkObject(SignalDatabase.Companion)
     every { SignalDatabase.Companion.donationReceipts } returns mockk {

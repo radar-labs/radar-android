@@ -7,8 +7,9 @@ package org.thoughtcrime.securesms.attachments
 
 import android.net.Uri
 import android.os.Parcel
+import org.signal.blurhash.BlurHash
 import org.signal.core.util.Base64
-import org.thoughtcrime.securesms.blurhash.BlurHash
+import org.thoughtcrime.securesms.audio.AudioHash
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.stickers.StickerLocator
 import java.util.UUID
@@ -24,6 +25,9 @@ class ArchivedAttachment : Attachment {
 
   @JvmField
   val plaintextHash: ByteArray
+
+  @JvmField
+  val localBackupKey: ByteArray?
 
   constructor(
     contentType: String?,
@@ -47,7 +51,9 @@ class ArchivedAttachment : Attachment {
     quote: Boolean,
     quoteTargetContentType: String?,
     uuid: UUID?,
-    fileName: String?
+    fileName: String?,
+    localBackupKey: ByteArray?,
+    audioHash: AudioHash? = null
   ) : super(
     contentType = contentType ?: "",
     quote = quote,
@@ -71,23 +77,26 @@ class ArchivedAttachment : Attachment {
     caption = caption,
     stickerLocator = stickerLocator,
     blurHash = BlurHash.parseOrNull(blurHash),
-    audioHash = null,
+    audioHash = audioHash,
     transformProperties = null,
     uuid = uuid
   ) {
     this.archiveCdn = archiveCdn
     this.plaintextHash = plaintextHash
+    this.localBackupKey = localBackupKey
   }
 
   constructor(parcel: Parcel) : super(parcel) {
     archiveCdn = parcel.readInt().takeIf { it != NO_ARCHIVE_CDN }
     plaintextHash = parcel.createByteArray()!!
+    localBackupKey = parcel.createByteArray()
   }
 
   override fun writeToParcel(dest: Parcel, flags: Int) {
     super.writeToParcel(dest, flags)
     dest.writeInt(archiveCdn ?: NO_ARCHIVE_CDN)
     dest.writeByteArray(plaintextHash)
+    dest.writeByteArray(localBackupKey)
   }
 
   override val uri: Uri? = null

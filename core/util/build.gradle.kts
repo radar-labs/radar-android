@@ -1,0 +1,42 @@
+plugins {
+  id("signal-library")
+  id("com.squareup.wire")
+  id("kotlin-parcelize")
+  alias(libs.plugins.kotlinx.serialization)
+}
+
+android {
+  namespace = "org.signal.core.util"
+}
+
+dependencies {
+  api(project(":core:util-jvm"))
+
+  implementation(platform(libs.androidx.compose.bom))
+  implementation(libs.androidx.compose.runtime.annotation)
+  implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.documentfile)
+  implementation(libs.google.jsr305)
+  implementation(libs.androidx.lifecycle.process)
+  implementation(libs.androidx.exifinterface)
+  implementation(libs.kotlinx.serialization.json)
+  implementation(libs.jackson.core)
+  implementation(libs.jackson.module.kotlin)
+  implementation(libs.google.libphonenumber)
+  implementation(libs.google.play.services.base)
+
+  testImplementation(testLibs.junit.junit)
+  testImplementation(testLibs.assertk)
+  testImplementation(testLibs.mockk)
+  testImplementation(testLibs.robolectric.robolectric)
+}
+
+wire {
+  kotlin {
+    javaInterop = true
+  }
+
+  sourcePath {
+    srcDir("src/main/protowire")
+  }
+}

@@ -27,12 +27,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.contactshare.SimpleTextWatcher;
+import org.thoughtcrime.securesms.keyvalue.PinValuesUtil;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.lock.v2.CreateSvrPinActivity;
 import org.thoughtcrime.securesms.lock.v2.SvrConstants;
-import org.thoughtcrime.securesms.util.ServiceUtil;
-import org.thoughtcrime.securesms.util.ViewUtil;
-import org.whispersystems.signalservice.api.kbs.PinHashUtil;
+import org.signal.core.util.ServiceUtil;
+import org.signal.core.ui.util.ViewUtil;
+import org.signal.core.util.PinHashUtil;
 
 import java.util.Objects;
 
@@ -72,11 +73,12 @@ public final class SignalPinReminderDialog {
 
     ViewUtil.focusAndShowKeyboard(pinEditText);
 
-    SignalStore.pin().getKeyboardType().applyInputTypeTo(pinEditText);
+    PinValuesUtil.getKeyboardType(SignalStore.pin()).applyInputTypeTo(pinEditText);
 
     ClickableSpan clickableSpan = new ClickableSpan() {
       @Override
       public void onClick(@NonNull View widget) {
+        ViewUtil.hideKeyboard(context, pinEditText);
         dialog.dismiss();
         launcher.launch(CreateSvrPinActivity.getIntentForPinChangeFromForgotPin(context), CreateSvrPinActivity.REQUEST_NEW_PIN);
       }
@@ -91,6 +93,7 @@ public final class SignalPinReminderDialog {
     PinVerifier          verifier = new V2PinVerifier();
 
     skip.setOnClickListener(v -> {
+      ViewUtil.hideKeyboard(context, pinEditText);
       dialog.dismiss();
       mainCallback.onReminderDismissed(callback.hadWrongGuess());
     });
@@ -112,6 +115,7 @@ public final class SignalPinReminderDialog {
           submit.setEnabled(true);
 
           if (PinHashUtil.verifyLocalPinHash(localHash, text)) {
+            ViewUtil.hideKeyboard(context, pinEditText);
             dialog.dismiss();
             mainCallback.onReminderCompleted(text, callback.hadWrongGuess());
           }
@@ -134,6 +138,7 @@ public final class SignalPinReminderDialog {
       @Override
       public void onPinCorrect(@NonNull String pin) {
         Log.i(TAG, "Correct PIN entry.");
+        ViewUtil.hideKeyboard(context, inputText);
         dialog.dismiss();
         mainCallback.onReminderCompleted(pin, hadWrongGuess);
       }

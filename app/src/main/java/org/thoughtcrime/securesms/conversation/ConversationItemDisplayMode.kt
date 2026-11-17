@@ -13,8 +13,11 @@ sealed class ConversationItemDisplayMode(val messageMode: MessageMode = MessageM
   /** Less length restrictions. Used to show more info in message details. */
   object Detailed : ConversationItemDisplayMode()
 
+  /** Standalone messages with starred source labels. Used for starred messages. */
+  object Starred : ConversationItemDisplayMode()
+
   fun displayWallpaper(): Boolean {
-    return this == Standard || this == Detailed
+    return this == Standard
   }
 
   enum class MessageMode {

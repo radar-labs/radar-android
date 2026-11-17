@@ -4,6 +4,7 @@ import android.graphics.Color
 import org.signal.core.util.Base64
 import org.signal.core.util.UuidUtil
 import org.signal.core.util.orNull
+import org.signal.remoteconfig.RemoteConfig
 import org.thoughtcrime.securesms.database.MessageTable.InsertResult
 import org.thoughtcrime.securesms.database.MessageType
 import org.thoughtcrime.securesms.database.SignalDatabase
@@ -20,7 +21,6 @@ import org.thoughtcrime.securesms.mms.IncomingMessage
 import org.thoughtcrime.securesms.mms.MmsException
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.stories.Stories
-import org.thoughtcrime.securesms.util.RemoteConfig
 import org.whispersystems.signalservice.api.crypto.EnvelopeMetadata
 import org.whispersystems.signalservice.internal.push.Content
 import org.whispersystems.signalservice.internal.push.Envelope
@@ -33,20 +33,28 @@ object StoryMessageProcessor {
   fun process(envelope: Envelope, content: Content, metadata: EnvelopeMetadata, senderRecipient: Recipient, threadRecipient: Recipient) {
     val storyMessage = content.storyMessage!!
 
-    log(envelope.timestamp!!, "Story message.")
+    log(envelope.clientTimestamp!!, "Story message.")
 
     if (threadRecipient.isInactiveGroup) {
-      warn(envelope.timestamp!!, "Dropping a group story from a group we're no longer in.")
+      warn(envelope.clientTimestamp!!, "Dropping a group story from a group we're no longer in.")
       return
     }
 
     if (threadRecipient.isGroup && !SignalDatabase.groups.isCurrentMember(threadRecipient.requireGroupId().requirePush(), senderRecipient.id)) {
-      warn(envelope.timestamp!!, "Dropping a group story from a user who's no longer a member.")
+      warn(envelope.clientTimestamp!!, "Dropping a group story from a user who's no longer a member.")
       return
     }
 
+    if (threadRecipient.isGroup) {
+      val groupRecord = SignalDatabase.groups.getGroup(threadRecipient.requireGroupId()).orNull()
+      if (groupRecord != null && groupRecord.isAnnouncementGroup && !groupRecord.isAdmin(senderRecipient)) {
+        warn(envelope.clientTimestamp!!, "Dropping a group story from a non-admin in an announcement-only group.")
+        return
+      }
+    }
+
     if (!threadRecipient.isGroup && !(senderRecipient.isProfileSharing || senderRecipient.isSystemContact)) {
-      warn(envelope.timestamp!!, "Dropping story from an untrusted source.")
+      warn(envelope.clientTimestamp!!, "Dropping story from an untrusted source.")
       return
     }
 
@@ -64,7 +72,7 @@ object StoryMessageProcessor {
       val mediaMessage = IncomingMessage(
         type = MessageType.NORMAL,
         from = senderRecipient.id,
-        sentTimeMillis = envelope.timestamp!!,
+        sentTimeMillis = envelope.clientTimestamp!!,
         serverTimeMillis = envelope.serverTimestamp!!,
         receivedTimeMillis = System.currentTimeMillis(),
         storyType = storyType,
@@ -82,9 +90,8 @@ object StoryMessageProcessor {
       )
 
       insertResult = SignalDatabase.messages.insertMessageInbox(mediaMessage, -1).orNull()
-      if (insertResult != null) {
-        SignalDatabase.messages.setTransactionSuccessful()
-      }
+
+      SignalDatabase.messages.setTransactionSuccessful()
     } catch (e: MmsException) {
       throw StorageFailedException(e, metadata.sourceServiceId.toString(), metadata.sourceDeviceId)
     } finally {
@@ -92,8 +99,10 @@ object StoryMessageProcessor {
     }
 
     if (insertResult != null) {
-      Stories.enqueueNextStoriesForDownload(threadRecipient.id, false, RemoteConfig.storiesAutoDownloadMaximum)
-      AppDependencies.expireStoriesManager.scheduleIfNecessary()
+      SignalDatabase.runPostSuccessfulTransaction("story-download-${threadRecipient.id}") {
+        Stories.enqueueNextStoriesForDownload(threadRecipient.id, false, RemoteConfig.storiesAutoDownloadMaximum)
+        AppDependencies.expireStoriesManager.scheduleIfNecessary()
+      }
     }
   }
 

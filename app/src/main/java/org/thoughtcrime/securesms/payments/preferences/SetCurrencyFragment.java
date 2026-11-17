@@ -4,20 +4,23 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.thoughtcrime.securesms.LoggingFragment;
+import org.signal.core.ui.logging.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.settings.BaseSettingsAdapter;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
 import org.thoughtcrime.securesms.components.settings.SettingHeader;
 import org.thoughtcrime.securesms.components.settings.SingleSelectSetting;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel;
@@ -46,6 +49,12 @@ public final class SetCurrencyFragment extends LoggingFragment {
 
     toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
     setupSearchMenu(toolbar);
+
+    toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    SystemWindowInsetsSetter.attach(toolbar, getViewLifecycleOwner(), WindowInsetsCompat.Type.statusBars());
+
+    list.setClipToPadding(false);
+    SystemWindowInsetsSetter.attach(list, getViewLifecycleOwner(), WindowInsetsCompat.Type.navigationBars());
 
     SetCurrencyViewModel viewModel = new ViewModelProvider(this, new SetCurrencyViewModel.Factory()).get(SetCurrencyViewModel.class);
 
@@ -79,7 +88,7 @@ public final class SetCurrencyFragment extends LoggingFragment {
     Drawable icon = searchItem.getIcon();
     if (icon != null) {
       icon = DrawableCompat.wrap(icon.mutate());
-      DrawableCompat.setTint(icon, ContextCompat.getColor(requireContext(), R.color.signal_colorOnSurface));
+      DrawableCompat.setTint(icon, ContextCompat.getColor(requireContext(), org.signal.core.ui.R.color.signal_colorOnSurface));
       searchItem.setIcon(icon);
     }
 

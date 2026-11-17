@@ -1,13 +1,14 @@
 package org.thoughtcrime.securesms.components.settings.app.subscription.donate.gateway
 
 import io.reactivex.rxjava3.core.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.signal.core.util.money.FiatMoney
-import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentsRepository
 import org.thoughtcrime.securesms.components.settings.app.subscription.getAvailablePaymentMethods
 import org.thoughtcrime.securesms.database.InAppPaymentTable
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.databaseprotos.InAppPaymentData
-import org.thoughtcrime.securesms.dependencies.AppDependencies
+import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.payments.currency.CurrencyUtil
 import org.whispersystems.signalservice.internal.push.SubscriptionsConfiguration
 import java.util.Locale
@@ -15,7 +16,7 @@ import java.util.Locale
 object GatewaySelectorRepository {
   fun getAvailableGatewayConfiguration(currencyCode: String): Single<GatewayConfiguration> {
     return Single.fromCallable {
-      AppDependencies.donationsService.getDonationsConfiguration(Locale.getDefault())
+      SignalNetwork.donationsService.getDonationsConfiguration(Locale.getDefault())
     }.flatMap { it.flattenResult() }
       .map { configuration ->
         val available = configuration.getAvailablePaymentMethods(currencyCode).map {
@@ -30,13 +31,13 @@ object GatewaySelectorRepository {
 
         GatewayConfiguration(
           availableGateways = available,
-          sepaEuroMaximum = if (configuration.sepaMaximumEuros != null) FiatMoney(configuration.sepaMaximumEuros, CurrencyUtil.EURO) else null
+          sepaEuroMaximum = configuration.sepaMaximumEuros?.let { FiatMoney(it, CurrencyUtil.EURO) }
         )
       }
   }
 
-  fun setInAppPaymentMethodType(inAppPayment: InAppPaymentTable.InAppPayment, paymentMethodType: InAppPaymentData.PaymentMethodType): Single<InAppPaymentTable.InAppPayment> {
-    return Single.fromCallable {
+  suspend fun setInAppPaymentMethodType(inAppPayment: InAppPaymentTable.InAppPayment, paymentMethodType: InAppPaymentData.PaymentMethodType): InAppPaymentTable.InAppPayment {
+    return withContext(Dispatchers.Default) {
       SignalDatabase.inAppPayments.update(
         inAppPayment.copy(
           data = inAppPayment.data.copy(
@@ -44,7 +45,9 @@ object GatewaySelectorRepository {
           )
         )
       )
-    }.flatMap { InAppPaymentsRepository.requireInAppPayment(inAppPayment.id) }
+
+      SignalDatabase.inAppPayments.getById(inAppPayment.id) ?: throw Exception("Not found.")
+    }
   }
 
   data class GatewayConfiguration(

@@ -26,6 +26,7 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
@@ -40,12 +41,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
@@ -58,25 +58,27 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import org.signal.core.ui.biometrics.BiometricDeviceAuthentication
+import org.signal.core.ui.biometrics.BiometricDeviceLockContract
+import org.signal.core.ui.biometrics.DevicePinAuthEducationSheet
 import org.signal.core.ui.compose.Buttons
+import org.signal.core.ui.compose.ComposeFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Dialogs
 import org.signal.core.ui.compose.Dividers
 import org.signal.core.ui.compose.DropdownMenus
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.util.logging.Log
-import org.thoughtcrime.securesms.BiometricDeviceAuthentication
-import org.thoughtcrime.securesms.BiometricDeviceLockContract
-import org.thoughtcrime.securesms.DevicePinAuthEducationSheet
+import org.signal.remoteconfig.RemoteConfig
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.ComposeFragment
 import org.thoughtcrime.securesms.linkdevice.LinkDeviceSettingsState.DialogState
 import org.thoughtcrime.securesms.util.CommunicationActions
 import org.thoughtcrime.securesms.util.DateUtils
 import org.thoughtcrime.securesms.util.SupportEmailUtil
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
-import java.util.Locale
+import org.signal.core.ui.R as CoreUiR
 
 private const val PLACEHOLDER = "__ICON_PLACEHOLDER__"
 
@@ -105,8 +107,7 @@ class LinkDeviceFragment : ComposeFragment() {
       }
     }
 
-    val promptInfo = BiometricPrompt.PromptInfo.Builder()
-      .setAllowedAuthenticators(BiometricDeviceAuthentication.ALLOWED_AUTHENTICATORS)
+    val promptInfo = BiometricDeviceAuthentication.createPromptInfoBuilder()
       .setTitle(requireContext().getString(R.string.LinkDeviceFragment__unlock_to_link))
       .setConfirmationRequired(true)
       .build()
@@ -129,6 +130,7 @@ class LinkDeviceFragment : ComposeFragment() {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val navController: NavController by remember { mutableStateOf(findNavController()) }
     val context = LocalContext.current
+    val atDeviceLimit = state.devices.size >= RemoteConfig.maxLinkedDevices
 
     LaunchedEffect(state.dialogState) {
       when (state.dialogState) {
@@ -150,16 +152,19 @@ class LinkDeviceFragment : ComposeFragment() {
           Unit
         }
         is LinkDeviceSettingsState.OneTimeEvent.ToastLinked -> {
-          Toast.makeText(context, context.getString(R.string.LinkDeviceFragment__s_linked, event.name), Toast.LENGTH_LONG).show()
+          Toast.makeText(requireContext(), getString(R.string.LinkDeviceFragment__s_linked, event.name), Toast.LENGTH_LONG).show()
         }
         is LinkDeviceSettingsState.OneTimeEvent.ToastUnlinked -> {
-          Toast.makeText(context, context.getString(R.string.LinkDeviceFragment__s_unlinked, event.name), Toast.LENGTH_LONG).show()
+          Toast.makeText(requireContext(), getString(R.string.LinkDeviceFragment__s_unlinked, event.name), Toast.LENGTH_LONG).show()
         }
         LinkDeviceSettingsState.OneTimeEvent.SnackbarLinkCancelled -> {
-          Snackbar.make(requireView(), context.getString(R.string.LinkDeviceFragment__linking_cancelled), Snackbar.LENGTH_LONG).show()
+          Snackbar.make(requireView(), getString(R.string.LinkDeviceFragment__linking_cancelled), Snackbar.LENGTH_LONG).show()
+        }
+        LinkDeviceSettingsState.OneTimeEvent.SnackbarDeviceLimitReached -> {
+          Snackbar.make(requireView(), getString(R.string.LinkDeviceFragment__you_can_only_have_d_linked_devices, RemoteConfig.maxLinkedDevices), Snackbar.LENGTH_LONG).show()
         }
         LinkDeviceSettingsState.OneTimeEvent.ToastNetworkFailed -> {
-          Toast.makeText(context, context.getString(R.string.DeviceListActivity_network_failed), Toast.LENGTH_LONG).show()
+          Toast.makeText(requireContext(), getString(R.string.DeviceListActivity_network_failed), Toast.LENGTH_LONG).show()
         }
         LinkDeviceSettingsState.OneTimeEvent.LaunchQrCodeScanner -> {
           navController.navigateToQrScannerIfAuthed()
@@ -189,16 +194,21 @@ class LinkDeviceFragment : ComposeFragment() {
     Scaffolds.Settings(
       title = stringResource(id = R.string.preferences__linked_devices),
       onNavigationClick = { navController.popOrFinish() },
-      navigationIcon = ImageVector.vectorResource(id = R.drawable.symbol_arrow_start_24),
-      navigationContentDescription = stringResource(id = R.string.Material3SearchToolbar__close)
+      navigationIcon = SignalIcons.ArrowStart.imageVector,
+      navigationContentDescription = stringResource(id = CoreUiR.string.CloseButton__content_description)
     ) { contentPadding: PaddingValues ->
       DeviceListScreen(
         state = state,
         modifier = Modifier.padding(contentPadding),
+        atDeviceLimit = atDeviceLimit,
         onLearnMoreClicked = { navController.safeNavigate(R.id.action_linkDeviceFragment_to_linkDeviceLearnMoreBottomSheet) },
         onLinkNewDeviceClicked = {
-          viewModel.stopExistingPolling()
-          navController.navigateToQrScannerIfAuthed()
+          if (atDeviceLimit) {
+            viewModel.onDeviceLimitReached()
+          } else {
+            viewModel.stopExistingPolling()
+            navController.navigateToQrScannerIfAuthed()
+          }
         },
         onDeviceSelectedForRemoval = { device -> viewModel.setDeviceToRemove(device) },
         onDeviceRemovalConfirmed = { device -> viewModel.removeDevice(device) },
@@ -272,6 +282,7 @@ class LinkDeviceFragment : ComposeFragment() {
 fun DeviceListScreen(
   state: LinkDeviceSettingsState,
   modifier: Modifier = Modifier,
+  atDeviceLimit: Boolean = false,
   onLearnMoreClicked: () -> Unit = {},
   onLinkNewDeviceClicked: () -> Unit = {},
   onDeviceSelectedForRemoval: (Device?) -> Unit = {},
@@ -316,7 +327,7 @@ fun DeviceListScreen(
               onPositive = onSyncFailureContactSupport,
               neutral = stringResource(R.string.LinkDeviceFragment__learn_more),
               onNeutral = onSyncFailureLearnMore,
-              negative = stringResource(R.string.LinkDeviceFragment__continue),
+              negative = stringResource(CoreUiR.string.LinkDeviceFragment__continue),
               onNegative = onSyncFailureIgnored
             )
           }
@@ -353,7 +364,8 @@ fun DeviceListScreen(
         )
       }
       is DialogState.DeviceUnlinked -> {
-        val createdAt = DateUtils.getDateTimeString(LocalContext.current, Locale.getDefault(), state.dialogState.deviceCreatedAt)
+        val locale = LocalLocale.current.platformLocale
+        val createdAt = DateUtils.getDateTimeString(LocalContext.current, locale, state.dialogState.deviceCreatedAt)
         Dialogs.SimpleMessageDialog(
           title = stringResource(id = R.string.LinkDeviceFragment__device_unlinked),
           message = stringResource(id = R.string.LinkDeviceFragment__the_device_that_was, createdAt),
@@ -402,7 +414,7 @@ fun DeviceListScreen(
       modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 4.dp)
     )
     ClickableText(
-      text = AnnotatedString(stringResource(id = R.string.LearnMoreTextView_learn_more)),
+      text = AnnotatedString(stringResource(id = CoreUiR.string.LearnMoreTextView_learn_more)),
       style = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.primary)
     ) {
       onLearnMoreClicked()
@@ -410,8 +422,17 @@ fun DeviceListScreen(
 
     Spacer(modifier = Modifier.size(20.dp))
 
+    val linkButtonColors = ButtonDefaults.filledTonalButtonColors()
     Buttons.LargeTonal(
       onClick = onLinkNewDeviceClicked,
+      colors = if (atDeviceLimit) {
+        linkButtonColors.copy(
+          containerColor = linkButtonColors.disabledContainerColor,
+          contentColor = linkButtonColors.disabledContentColor
+        )
+      } else {
+        linkButtonColors
+      },
       modifier = Modifier
         .defaultMinSize(300.dp)
         .padding(bottom = 8.dp)
@@ -449,7 +470,7 @@ fun DeviceListScreen(
         )
       } else {
         state.devices.forEach { device ->
-          DeviceRow(device, onDeviceSelectedForRemoval, onEditDevice)
+          DeviceRow(device, state.isInternalUser, onDeviceSelectedForRemoval, onEditDevice)
         }
       }
     }
@@ -470,7 +491,7 @@ fun DeviceListScreen(
         val inlineContentMap = mapOf(
           "icon" to InlineTextContent(Placeholder(16.sp, 16.sp, PlaceholderVerticalAlign.Center)) {
             Image(
-              imageVector = ImageVector.vectorResource(id = R.drawable.symbol_lock_24),
+              imageVector = SignalIcons.Lock.imageVector,
               contentDescription = null,
               modifier = Modifier.fillMaxSize(),
               colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
@@ -493,17 +514,17 @@ fun DeviceListScreen(
 }
 
 @Composable
-fun DeviceRow(device: Device, setDeviceToRemove: (Device) -> Unit, onEditDevice: (Device) -> Unit) {
+fun DeviceRow(device: Device, isInternalUser: Boolean, setDeviceToRemove: (Device) -> Unit, onEditDevice: (Device) -> Unit) {
   val titleString = if (device.name.isNullOrEmpty()) stringResource(R.string.DeviceListItem_unnamed_device) else device.name
-  val linkedDate = device.createdMillis?.let { DateUtils.getDayPrecisionTimeSpanString(LocalContext.current, Locale.getDefault(), device.createdMillis) }
-  val lastActive = DateUtils.getDayPrecisionTimeSpanString(LocalContext.current, Locale.getDefault(), device.lastSeenMillis)
+  val linkedDate = device.createdMillis?.let { DateUtils.getDayPrecisionTimeSpanString(LocalContext.current, LocalLocale.current.platformLocale, device.createdMillis) }
+  val lastActive = DateUtils.getDayPrecisionTimeSpanString(LocalContext.current, LocalLocale.current.platformLocale, device.lastSeenMillis)
   val menuController = remember { DropdownMenus.MenuController() }
   Row(
     modifier = Modifier
       .fillMaxWidth()
   ) {
     Image(
-      painter = painterResource(id = R.drawable.symbol_devices_24),
+      painter = painterResource(id = CoreUiR.drawable.symbol_devices_24),
       contentDescription = null,
       colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
       contentScale = ContentScale.Inside,
@@ -524,6 +545,9 @@ fun DeviceRow(device: Device, setDeviceToRemove: (Device) -> Unit, onEditDevice:
         .weight(1f)
     ) {
       Text(text = titleString, style = MaterialTheme.typography.bodyLarge)
+      if (isInternalUser) {
+        Text("[Internal] DeviceId: ${device.id}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+      }
       if (linkedDate != null) {
         Text(stringResource(R.string.DeviceListItem_linked_s, linkedDate), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
       }
@@ -572,7 +596,7 @@ fun DeviceRow(device: Device, setDeviceToRemove: (Device) -> Unit, onEditDevice:
               modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
               Icon(
-                painter = painterResource(id = R.drawable.symbol_edit_24),
+                painter = SignalIcons.Edit.painter,
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
               )

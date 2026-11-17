@@ -67,10 +67,14 @@ class AccountConsistencyWorkerJob private constructor(parameters: Parameters) : 
     if (aciProfile.identityKey != encodedAciPublicKey) {
       Log.w(TAG, "ACI identity key on profile differed from the one we have locally! Marking ourselves unregistered.")
 
-      SignalStore.account.setRegistered(false)
-      SignalStore.registration.clearRegistrationComplete()
-      SignalStore.registration.hasUploadedProfile = false
+      markUnregistered()
 
+      SignalStore.misc.lastConsistencyCheckTime = System.currentTimeMillis()
+      return
+    }
+
+    if (SignalStore.account.pni == null) {
+      Log.i(TAG, "Phonenumberless account, skipping the rest.")
       SignalStore.misc.lastConsistencyCheckTime = System.currentTimeMillis()
       return
     }
@@ -79,17 +83,24 @@ class AccountConsistencyWorkerJob private constructor(parameters: Parameters) : 
     val encodedPniPublicKey = Base64.encodeWithPadding(SignalStore.account.pniIdentityKey.publicKey.serialize())
 
     if (pniProfile.identityKey != encodedPniPublicKey) {
-      Log.w(TAG, "PNI identity key on profile differed from the one we have locally!")
+      Log.w(TAG, "PNI identity key on profile differed from the one we have locally! Marking ourselves unregistered.")
 
-      SignalStore.account.setRegistered(false)
-      SignalStore.registration.clearRegistrationComplete()
-      SignalStore.registration.hasUploadedProfile = false
+      markUnregistered()
+
+      SignalStore.misc.lastConsistencyCheckTime = System.currentTimeMillis()
       return
     }
 
     Log.i(TAG, "Everything matched.")
 
     SignalStore.misc.lastConsistencyCheckTime = System.currentTimeMillis()
+  }
+
+  /** Marks the account unregistered so the user is prompted to re-register. */
+  private fun markUnregistered() {
+    SignalStore.account.setRegistered(false)
+    SignalStore.registration.clearRegistrationComplete()
+    SignalStore.registration.hasUploadedProfile = false
   }
 
   override fun onShouldRetry(e: Exception): Boolean {

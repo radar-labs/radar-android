@@ -1,0 +1,110 @@
+/*
+ * Copyright 2026 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.thoughtcrime.securesms.stickers.manage
+
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
+import org.signal.core.ui.compose.list.ReorderListEvent
+import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.core.ui.viewModel
+import org.thoughtcrime.securesms.PassphraseRequiredActivity
+import org.thoughtcrime.securesms.R
+import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragment
+import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragmentArgs
+import org.thoughtcrime.securesms.database.model.StickerPackId
+import org.thoughtcrime.securesms.database.model.StickerPackKey
+import org.thoughtcrime.securesms.sharing.MultiShareArgs
+import org.thoughtcrime.securesms.stickers.StickerUrl
+import org.thoughtcrime.securesms.stickers.preview.StickerPackPreviewActivityV2
+
+/**
+ * Activity implementation of [StickerManagementScreen].
+ */
+class StickerManagementActivity : PassphraseRequiredActivity() {
+  companion object {
+    @JvmStatic
+    fun createIntent(context: Context): Intent = Intent(context, StickerManagementActivity::class.java)
+  }
+
+  private val viewModel by viewModel { StickerManagementViewModel() }
+
+  override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
+    super.onCreate(savedInstanceState, ready)
+
+    lifecycleScope.launch {
+      repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewModel.onScreenVisible()
+      }
+    }
+
+    setContent {
+      val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+      SignalTheme {
+        StickerManagementScreen(
+          uiState = uiState,
+          onNavigateBack = ::supportFinishAfterTransition,
+          onSetMultiSelectModeEnabled = viewModel::setMultiSelectEnabled,
+          onSetSearchModeEnabled = viewModel::setSearchModeEnabled,
+          onSearchQueryChange = viewModel::onSearchQueryChanged,
+          onSnackbarDismiss = viewModel::onSnackbarDismiss,
+          onUndoHideClick = viewModel::unhideStickerPack,
+          callbacks = remember {
+            object : StickerManagementContentCallbacks {
+              override fun onForwardClick(pack: StickerPack) = openShareSheet(pack.id, pack.key)
+              override fun onInstallClick(pack: StickerPack) = viewModel.installStickerPack(pack)
+              override fun onCopyClick(pack: StickerPack) = viewModel.onCopyPack(pack.id, pack.key)
+              override fun onHideClick(pack: StickerPack) = viewModel.onHideStickerPackRequested(pack)
+              override fun onHideStickerPackConfirmed(pack: StickerPack) = viewModel.onHideStickerPackConfirmed(pack)
+              override fun onHideStickerPackCanceled() = viewModel.onHideStickerPackCanceled()
+              override fun onRemoveClick(packIds: Set<StickerPackId>) = viewModel.onUninstallStickerPacksRequested(packIds)
+              override fun onRemoveStickerPacksConfirmed(packIds: Set<StickerPackId>) = viewModel.onUninstallStickerPacksConfirmed(packIds)
+              override fun onRemoveStickerPacksCanceled() = viewModel.onUninstallStickerPacksCanceled()
+              override fun onSelectionToggle(pack: StickerPack) = viewModel.toggleSelection(pack)
+              override fun onSelectAllToggle() = viewModel.toggleSelectAll()
+              override fun onReorderableEvent(event: ReorderListEvent) {
+                when (event) {
+                  is ReorderListEvent.ItemMoved -> viewModel.updatePosition(event.fromIndex, event.toIndex)
+                  is ReorderListEvent.ItemDropped -> viewModel.saveInstalledPacksSortOrder()
+                  is ReorderListEvent.DragCanceled -> {}
+                }
+              }
+
+              override fun onShowPreviewClick(pack: StickerPack) = navigateToStickerPreview(pack.id, pack.key)
+            }
+          }
+        )
+      }
+    }
+  }
+
+  private fun openShareSheet(packId: StickerPackId, packKey: StickerPackKey) {
+    MultiselectForwardFragment.showBottomSheet(
+      supportFragmentManager = supportFragmentManager,
+      multiselectForwardFragmentArgs = MultiselectForwardFragmentArgs(
+        multiShareArgs = listOf(
+          MultiShareArgs.Builder()
+            .withDraftText(StickerUrl.createShareLink(packId.value, packKey.value))
+            .build()
+        ),
+        title = R.string.StickerManagement_share_sheet_title
+      )
+    )
+  }
+
+  private fun navigateToStickerPreview(packId: StickerPackId, packKey: StickerPackKey) {
+    startActivity(StickerPackPreviewActivityV2.createIntent(packId, packKey))
+  }
+}

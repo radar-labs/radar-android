@@ -13,7 +13,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,28 +30,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.ui.compose.AllDevicePreviews
 import org.signal.core.ui.compose.Buttons
 import org.signal.core.ui.compose.Dialogs
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.theme.SignalTheme
 import org.signal.core.util.getParcelableArrayListExtraCompat
 import org.signal.core.util.getParcelableExtraCompat
 import org.signal.core.util.nullIfBlank
+import org.signal.remoteconfig.SelectionLimits
 import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.PushContactSelectionActivity
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsEvent
-import org.thoughtcrime.securesms.compose.SignalTheme
+import org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsAction
 import org.thoughtcrime.securesms.contacts.SelectedContact
 import org.thoughtcrime.securesms.database.model.GroupRecord
 import org.thoughtcrime.securesms.groups.GroupId
-import org.thoughtcrime.securesms.groups.SelectionLimits
 import org.thoughtcrime.securesms.groups.ui.addmembers.AddMembersUiState.UserMessage
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.ui.RecipientLookupFailureMessage
 import org.thoughtcrime.securesms.recipients.ui.RecipientPicker
 import org.thoughtcrime.securesms.recipients.ui.RecipientPickerCallbacks
-import org.thoughtcrime.securesms.recipients.ui.RecipientPickerScaffold
 import org.thoughtcrime.securesms.recipients.ui.RecipientSelection
 import org.thoughtcrime.securesms.recipients.ui.findby.FindByActivity
 import org.thoughtcrime.securesms.recipients.ui.findby.FindByMode
@@ -62,9 +61,6 @@ import java.text.NumberFormat
  * Allows members to be added to an existing Signal group by selecting from a list of recipients.
  */
 class AddMembersActivity : PassphraseRequiredActivity() {
-  /** Draws edge to edge and positions its own content against the insets. */
-  override fun fitsSystemBars(): Boolean = false
-
   companion object {
     private const val EXTRA_GROUP_ID = "group_id"
     private const val EXTRA_SELECTION_LIMITS = "selection_limits"
@@ -72,18 +68,17 @@ class AddMembersActivity : PassphraseRequiredActivity() {
 
     fun createIntent(
       context: Context,
-      event: ConversationSettingsEvent.AddMembersToGroup
+      action: ConversationSettingsAction.AddMembersToGroup
     ): Intent {
       return Intent(context, AddMembersActivity::class.java).apply {
-        putExtra(EXTRA_GROUP_ID, event.groupId)
-        putExtra(EXTRA_SELECTION_LIMITS, event.selectionLimits)
-        putParcelableArrayListExtra(EXTRA_PRESELECTED_RECIPIENTS, ArrayList(event.groupMembersWithoutSelf))
+        putExtra(EXTRA_GROUP_ID, action.groupId)
+        putExtra(EXTRA_SELECTION_LIMITS, action.selectionLimits)
+        putParcelableArrayListExtra(EXTRA_PRESELECTED_RECIPIENTS, ArrayList(action.groupMembersWithoutSelf))
       }
     }
   }
 
   override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
-    enableEdgeToEdge()
     super.onCreate(savedInstanceState, ready)
 
     setContent {
@@ -119,7 +114,7 @@ private fun AddMembersScreen(
   )
 
   val callbacks = remember {
-    object : UiCallbacks {
+    object : AddMembersUiCallbacks {
       override fun onSearchQueryChanged(query: String) = viewModel.onSearchQueryChanged(query)
       override fun onFindByUsername() = findByLauncher.launch(FindByMode.USERNAME)
       override fun onFindByPhoneNumber() = findByLauncher.launch(FindByMode.PHONE_NUMBER)
@@ -154,7 +149,7 @@ private fun AddMembersScreen(
 @Composable
 private fun AddMembersScreenUi(
   uiState: AddMembersUiState,
-  callbacks: UiCallbacks
+  callbacks: AddMembersUiCallbacks
 ) {
   val title = if (uiState.totalMembersCount > 0) {
     pluralStringResource(
@@ -166,9 +161,8 @@ private fun AddMembersScreenUi(
     stringResource(R.string.AddMembersActivity__add_members)
   }
 
-  RecipientPickerScaffold(
+  Scaffolds.TitlePane(
     title = title,
-    forceSplitPane = uiState.forceSplitPane,
     onNavigateUpClick = callbacks::onBackPressed,
     topAppBarActions = {},
     snackbarHostState = remember { SnackbarHostState() },
@@ -202,7 +196,7 @@ private fun AddMembersScreenUi(
 @Composable
 private fun AddMembersRecipientPicker(
   uiState: AddMembersUiState,
-  callbacks: UiCallbacks,
+  callbacks: AddMembersUiCallbacks,
   modifier: Modifier = Modifier
 ) {
   RecipientPicker(
@@ -223,7 +217,7 @@ private fun AddMembersRecipientPicker(
   )
 }
 
-private interface UiCallbacks :
+private interface AddMembersUiCallbacks :
   RecipientPickerCallbacks.ListActions,
   RecipientPickerCallbacks.FindByUsername,
   RecipientPickerCallbacks.FindByPhoneNumber {
@@ -234,7 +228,7 @@ private interface UiCallbacks :
   fun onUserMessageDismissed(userMessage: UserMessage)
   fun onBackPressed()
 
-  object Empty : UiCallbacks {
+  object Empty : AddMembersUiCallbacks {
     override fun onSearchQueryChanged(query: String) = Unit
     override fun onFindByUsername() = Unit
     override fun onFindByPhoneNumber() = Unit
@@ -323,10 +317,9 @@ private fun AddMembersScreenPreview() {
   Previews.Preview {
     AddMembersScreenUi(
       uiState = AddMembersUiState(
-        forceSplitPane = false,
         selectionLimits = SelectionLimits.NO_LIMITS
       ),
-      callbacks = UiCallbacks.Empty
+      callbacks = AddMembersUiCallbacks.Empty
     )
   }
 }

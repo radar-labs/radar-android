@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 
-import androidx.annotation.AnyThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
@@ -18,7 +17,8 @@ import androidx.annotation.WorkerThread;
 import org.signal.core.util.PendingIntentFlags;
 import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.util.ServiceUtil;
+import org.signal.core.util.ServiceUtil;
+import org.signal.remoteconfig.RemoteConfig;
 
 /**
  * Class to help manage scheduling events to happen in the future, whether the app is open or not.
@@ -83,7 +83,7 @@ public abstract class TimedEventManager<E> {
    * Schedules an alarm to call {@link #scheduleIfNecessary()} after the specified delay. You can
    * use {@link #setAlarm(Context, long, Class)} as a helper method.
    */
-  @AnyThread
+  @WorkerThread
   protected abstract void scheduleAlarm(@NonNull Application application, E event, long delay);
 
   /**
@@ -94,6 +94,11 @@ public abstract class TimedEventManager<E> {
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntentFlags.mutable());
     AlarmManager  alarmManager  = ServiceUtil.getAlarmManager(context);
 
+    if (pendingIntent == null) {
+      Log.w(TAG, "Unable to create pending intent for " + alarmClass.getSimpleName());
+      return;
+    }
+
     alarmManager.cancel(pendingIntent);
     alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delay, pendingIntent);
   }
@@ -103,12 +108,23 @@ public abstract class TimedEventManager<E> {
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntentFlags.mutable());
     AlarmManager  alarmManager  = ServiceUtil.getAlarmManager(context);
 
+    if (pendingIntent == null) {
+      Log.w(TAG, "Unable to create pending intent for " + alarmClass.getSimpleName());
+      return;
+    }
+
     alarmManager.cancel(pendingIntent);
 
     boolean hasManagerPermission = Build.VERSION.SDK_INT < 31 || alarmManager.canScheduleExactAlarms();
     if (hasManagerPermission) {
       try {
-        alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(timestamp, showIntent), pendingIntent);
+        if (Build.VERSION.SDK_INT >= 31 && RemoteConfig.exactAlarm()) {
+          Log.d(TAG, "[trySetExactAlarm] Using setExactAndAllowWhileIdle(), API: " + Build.VERSION.SDK_INT);
+          alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timestamp, pendingIntent);
+        } else {
+          Log.d(TAG, "[trySetExactAlarm] Using setAlarmClock(), API: " + Build.VERSION.SDK_INT);
+          alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(timestamp, showIntent), pendingIntent);
+        }
         return;
       } catch (Exception e) {
         Log.w(TAG, e);
@@ -122,6 +138,11 @@ public abstract class TimedEventManager<E> {
   protected static void cancelAlarm(@NonNull Context context, @NonNull Class<? extends BroadcastReceiver> alarmClass) {
     Intent        intent        = new Intent(context, alarmClass);
     PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntentFlags.mutable());
+
+    if (pendingIntent == null) {
+      Log.w(TAG, "Unable to create pending intent for " + alarmClass.getSimpleName());
+      return;
+    }
 
     try {
       pendingIntent.cancel();

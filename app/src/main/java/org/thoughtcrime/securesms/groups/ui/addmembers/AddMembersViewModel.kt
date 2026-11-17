@@ -14,16 +14,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.signal.core.models.recipients.RecipientId
+import org.signal.remoteconfig.SelectionLimits
 import org.thoughtcrime.securesms.contacts.SelectedContact
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.GroupRecord
 import org.thoughtcrime.securesms.groups.GroupId
-import org.thoughtcrime.securesms.groups.SelectionLimits
 import org.thoughtcrime.securesms.groups.ui.addmembers.AddMembersUiState.UserMessage
-import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.PhoneNumber
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.RecipientRepository
 import org.thoughtcrime.securesms.recipients.ui.RecipientSelection
 import kotlin.collections.plus
@@ -50,7 +49,7 @@ class AddMembersViewModel(
 
   suspend fun shouldAllowSelection(selection: RecipientSelection): Boolean {
     val recipientHasE164 = selection is RecipientSelection.HasId &&
-      withContext(Dispatchers.IO) { Recipient.resolved(selection.id) }.hasE164
+      withContext(Dispatchers.Default) { Recipient.resolved(selection.id) }.hasE164
 
     return when {
       groupId.isV1 && !recipientHasE164 -> {
@@ -101,7 +100,7 @@ class AddMembersViewModel(
       val confirmAddMessage = if (uiState.value.newSelections.size == 1) {
         UserMessage.ConfirmAddMember(
           group = group,
-          recipient = withContext(Dispatchers.IO) {
+          recipient = withContext(Dispatchers.Default) {
             Recipient.resolved(uiState.value.newSelections.single().orCreateRecipientId)
           }
         )
@@ -134,7 +133,6 @@ class AddMembersViewModel(
 }
 
 data class AddMembersUiState(
-  val forceSplitPane: Boolean = SignalStore.internal.forceSplitPane,
   val searchQuery: String = "",
   val existingMembersMinusSelf: Set<RecipientId> = emptySet(),
   val selectionLimits: SelectionLimits,

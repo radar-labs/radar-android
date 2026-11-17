@@ -6,6 +6,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.signal.core.models.media.Media
 import org.signal.core.util.Base64
 import org.signal.core.util.StreamUtil
 import org.signal.core.util.concurrent.MaybeCompat
@@ -29,9 +30,10 @@ import org.thoughtcrime.securesms.database.model.MessageId
 import org.thoughtcrime.securesms.database.model.MessageRecord
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList
+import org.thoughtcrime.securesms.database.withAttachments
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyboard.KeyboardUtil
-import org.thoughtcrime.securesms.mediasend.Media
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.mms.GifSlide
 import org.thoughtcrime.securesms.mms.ImageSlide
 import org.thoughtcrime.securesms.mms.PartAuthority
@@ -39,7 +41,6 @@ import org.thoughtcrime.securesms.mms.QuoteId
 import org.thoughtcrime.securesms.mms.Slide
 import org.thoughtcrime.securesms.mms.SlideFactory
 import org.thoughtcrime.securesms.mms.StickerSlide
-import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.concurrent.SerialMonoLifoExecutor
@@ -60,8 +61,8 @@ class DraftRepository(
     val TAG = Log.tag(DraftRepository::class.java)
   }
 
-  fun getShareOrDraftData(lastShareDataTimestamp: Long): Maybe<Pair<ShareOrDraftData?, Drafts?>> {
-    return MaybeCompat.fromCallable { getShareOrDraftDataInternal(lastShareDataTimestamp) }
+  fun getShareOrDraftData(): Maybe<Pair<ShareOrDraftData?, Drafts?>> {
+    return MaybeCompat.fromCallable { getShareOrDraftDataInternal() }
       .observeOn(Schedulers.io())
   }
 
@@ -72,14 +73,19 @@ class DraftRepository(
    * Note: Voice note drafts are handled differently and via the [DraftViewModel.state]
    */
   @Suppress("ConvertTwoComparisonsToRangeCheck")
-  private fun getShareOrDraftDataInternal(lastShareDataTimestamp: Long): Pair<ShareOrDraftData?, Drafts?>? {
+  private fun getShareOrDraftDataInternal(): Pair<ShareOrDraftData?, Drafts?>? {
     val sharedDataTimestamp: Long = conversationArguments?.shareDataTimestamp ?: -1
+    val lastShareDataTimestamp: Long = SignalStore.misc.lastProcessedShareDataTimestamp
     Log.d(TAG, "Shared this data at $sharedDataTimestamp and last processed share data at $lastShareDataTimestamp")
     if (sharedDataTimestamp > 0 && sharedDataTimestamp <= lastShareDataTimestamp) {
-      Log.d(TAG, "Already processed this share data. Skipping.")
-      return null
+      Log.d(TAG, "Already processed this share data. Falling back to database drafts.")
+      return loadDatabaseDraftData()
     } else {
       Log.d(TAG, "Have not processed this share data. Proceeding.")
+    }
+
+    if (sharedDataTimestamp > 0) {
+      SignalStore.misc.lastProcessedShareDataTimestamp = sharedDataTimestamp
     }
 
     val shareText = conversationArguments?.draftText
@@ -127,40 +133,52 @@ class DraftRepository(
     }
 
     if (conversationArguments?.canInitializeFromDatabase() == true) {
-      val (drafts, updatedText) = loadDraftsInternal(conversationArguments.threadId)
-
-      val draftText: CharSequence? = drafts.firstOrNull { it.type == DraftTable.Draft.TEXT }?.let { updatedText ?: it.value }
-
-      val messageEdit: ConversationMessage? = drafts.firstOrNull { it.type == DraftTable.Draft.MESSAGE_EDIT }?.let { loadDraftMessageEditInternal(it.value) }
-      if (messageEdit != null) {
-        return ShareOrDraftData.SetEditMessage(messageEdit, draftText, clearQuote = drafts.none { it.type == DraftTable.Draft.QUOTE }) to drafts
-      }
-
-      val location: SignalPlace? = drafts.firstOrNull { it.type == DraftTable.Draft.LOCATION }?.let { SignalPlace.deserialize(it.value) }
-      if (location != null) {
-        return ShareOrDraftData.SetLocation(location, draftText) to drafts
-      }
-
-      val quote: ConversationMessage? = drafts.firstOrNull { it.type == DraftTable.Draft.QUOTE }?.let { loadDraftQuoteInternal(it.value) }
-      if (quote != null) {
-        return ShareOrDraftData.SetQuote(quote, draftText) to drafts
-      }
-
-      if (draftText != null) {
-        return ShareOrDraftData.SetText(draftText) to drafts
-      }
-
-      return null to drafts
+      return loadDatabaseDraftData()
     }
 
     // no share or draft
     return null
   }
 
+  /**
+   * Loads the drafts stored for this conversation, ignoring any share payload in [conversationArguments].
+   */
+  private fun loadDatabaseDraftData(): Pair<ShareOrDraftData?, Drafts?>? {
+    val threadId: Long = conversationArguments?.threadId ?: -1
+    if (threadId <= 0) {
+      return null
+    }
+
+    val (drafts, updatedText) = loadDraftsInternal(threadId)
+
+    val draftText: CharSequence? = drafts.firstOrNull { it.type == DraftTable.Draft.TEXT }?.let { updatedText ?: it.value }
+
+    val messageEdit: ConversationMessage? = drafts.firstOrNull { it.type == DraftTable.Draft.MESSAGE_EDIT }?.let { loadDraftMessageEditInternal(it.value) }
+    if (messageEdit != null) {
+      return ShareOrDraftData.SetEditMessage(messageEdit, draftText, clearQuote = drafts.none { it.type == DraftTable.Draft.QUOTE }) to drafts
+    }
+
+    val location: SignalPlace? = drafts.firstOrNull { it.type == DraftTable.Draft.LOCATION }?.let { SignalPlace.deserialize(it.value) }
+    if (location != null) {
+      return ShareOrDraftData.SetLocation(location, draftText) to drafts
+    }
+
+    val quote: ConversationMessage? = drafts.firstOrNull { it.type == DraftTable.Draft.QUOTE }?.let { loadDraftQuoteInternal(it.value) }
+    if (quote != null) {
+      return ShareOrDraftData.SetQuote(quote, draftText) to drafts
+    }
+
+    if (draftText != null) {
+      return ShareOrDraftData.SetText(draftText) to drafts
+    }
+
+    return null to drafts
+  }
+
   fun deleteVoiceNoteDraftData(draft: DraftTable.Draft?) {
     if (draft != null) {
       SignalExecutors.BOUNDED.execute {
-        BlobProvider.getInstance().delete(context, Uri.parse(draft.value).buildUpon().clearQuery().build())
+        AppDependencies.blobs.delete(context, Uri.parse(draft.value).buildUpon().clearQuery().build())
       }
     }
   }
@@ -219,7 +237,8 @@ class DraftRepository(
 
   private fun loadDraftMessageEditInternal(serialized: String): ConversationMessage? {
     val messageId = MessageId.deserialize(serialized)
-    val messageRecord: MessageRecord = SignalDatabase.messages.getMessageRecordOrNull(messageId.id) ?: return null
+    var messageRecord: MessageRecord = SignalDatabase.messages.getMessageRecordOrNull(messageId.id) ?: return null
+    messageRecord = messageRecord.withAttachments()
     val threadRecipient: Recipient = requireNotNull(SignalDatabase.threads.getRecipientForThreadId(messageRecord.threadId))
     if (messageRecord.hasTextSlide()) {
       val textSlide = messageRecord.requireTextSlide()

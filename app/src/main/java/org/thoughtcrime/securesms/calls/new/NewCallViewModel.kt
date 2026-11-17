@@ -14,7 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.logging.Log
+import org.signal.network.NetworkResult
 import org.thoughtcrime.securesms.calls.new.NewCallUiState.CallType
 import org.thoughtcrime.securesms.calls.new.NewCallUiState.UserMessage
 import org.thoughtcrime.securesms.contacts.sync.ContactDiscovery
@@ -22,10 +24,8 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.PhoneNumber
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.RecipientRepository
 import org.thoughtcrime.securesms.recipients.ui.RecipientSelection
-import org.whispersystems.signalservice.api.NetworkResult
 
 class NewCallViewModel : ViewModel() {
   companion object {
@@ -53,7 +53,7 @@ class NewCallViewModel : ViewModel() {
   }
 
   private suspend fun resolveAndStartCall(id: RecipientId) {
-    val recipient = withContext(Dispatchers.IO) {
+    val recipient = withContext(Dispatchers.Default) {
       Recipient.resolved(id)
     }
     openCall(recipient)
@@ -151,7 +151,6 @@ class NewCallViewModel : ViewModel() {
 }
 
 data class NewCallUiState(
-  val forceSplitPane: Boolean = SignalStore.internal.forceSplitPane,
   val searchQuery: String = "",
   val isLookingUpRecipient: Boolean = false,
   val isRefreshingContacts: Boolean = false,

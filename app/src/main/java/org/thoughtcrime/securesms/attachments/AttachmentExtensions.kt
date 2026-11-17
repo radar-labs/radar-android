@@ -9,9 +9,9 @@ import android.content.Context
 import android.text.TextUtils
 import okio.ByteString.Companion.toByteString
 import org.signal.core.util.Base64
+import org.signal.core.util.Util
 import org.signal.core.util.toByteArray
 import org.thoughtcrime.securesms.util.MediaUtil
-import org.thoughtcrime.securesms.util.Util
 import org.whispersystems.signalservice.api.messages.SignalServiceAttachmentRemoteId
 import org.whispersystems.signalservice.internal.push.AttachmentPointer
 import java.io.IOException
@@ -31,7 +31,7 @@ fun Attachment.toAttachmentPointer(context: Context): AttachmentPointer? {
   }
 
   try {
-    val remoteId = SignalServiceAttachmentRemoteId.from(attachment.remoteLocation!!)
+    val remoteId = SignalServiceAttachmentRemoteId.from(attachment.remoteLocation!!, attachment.cdn.cdnNumber)
 
     var attachmentWidth = attachment.width
     var attachmentHeight = attachment.height
@@ -61,6 +61,8 @@ fun Attachment.toAttachmentPointer(context: Context): AttachmentPointer? {
       caption = attachment.caption
       blurHash = attachment.blurHash?.hash
       clientUuid = attachment.uuid?.toByteArray()?.toByteString()
+      audioWaveform = attachment.audioHash?.waveFormBytes?.toByteString()
+      audioDurationSeconds = attachment.audioHash?.durationSeconds
 
       if (remoteId is SignalServiceAttachmentRemoteId.V2) {
         cdnId = remoteId.cdnId

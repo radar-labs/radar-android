@@ -2,6 +2,7 @@ package org.thoughtcrime.securesms.crypto.storage;
 
 import androidx.annotation.NonNull;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.libsignal.protocol.IdentityKey;
 import org.signal.libsignal.protocol.IdentityKeyPair;
 import org.signal.libsignal.protocol.SignalProtocolAddress;
@@ -10,7 +11,6 @@ import org.thoughtcrime.securesms.database.IdentityTable.VerifiedStatus;
 import org.thoughtcrime.securesms.database.identity.IdentityRecordList;
 import org.thoughtcrime.securesms.database.model.IdentityRecord;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.signal.core.models.ServiceId;
 
 import java.util.List;
@@ -73,6 +73,10 @@ public class SignalIdentityKeyStore implements IdentityKeyStore {
 
   public @NonNull Optional<IdentityRecord> getIdentityRecord(@NonNull RecipientId recipientId) {
     return baseStore.getIdentityRecord(recipientId);
+  }
+
+  public @NonNull Optional<IdentityRecord> getIdentityRecord(@NonNull Recipient recipient) {
+    return baseStore.getIdentityRecord(recipient);
   }
 
   public @NonNull IdentityRecordList getIdentityRecords(@NonNull List<Recipient> recipients) {

@@ -5,14 +5,14 @@
 
 package org.thoughtcrime.securesms.backup.v2.importer
 
+import org.signal.archive.proto.DistributionList
+import org.signal.archive.proto.DistributionListItem
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.UuidUtil
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.backup.v2.ImportState
-import org.thoughtcrime.securesms.backup.v2.proto.DistributionList
-import org.thoughtcrime.securesms.backup.v2.proto.DistributionListItem
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.DistributionListPrivacyMode
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.whispersystems.signalservice.api.push.DistributionId
 
 /**
@@ -23,13 +23,14 @@ object DistributionListArchiveImporter {
   private val TAG = Log.tag(DistributionListArchiveImporter.javaClass)
 
   fun import(dlistItem: DistributionListItem, importState: ImportState): RecipientId? {
-    if (dlistItem.deletionTimestamp != null && dlistItem.deletionTimestamp > 0) {
+    val deletionTimestamp = dlistItem.deletionTimestamp
+    if (deletionTimestamp != null && deletionTimestamp > 0) {
       val dlistId = SignalDatabase.distributionLists.createList(
         name = "",
         members = emptyList(),
         distributionId = DistributionId.from(UuidUtil.fromByteString(dlistItem.distributionId)),
         allowsReplies = false,
-        deletionTimestamp = dlistItem.deletionTimestamp,
+        deletionTimestamp = deletionTimestamp,
         storageId = null,
         privacyMode = DistributionListPrivacyMode.ONLY_WITH
       )!!

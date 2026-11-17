@@ -11,64 +11,68 @@ import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.content.ContextCompat;
 
+import org.signal.archive.proto.GenericGroupUpdate;
+import org.signal.archive.proto.GroupAdminStatusUpdate;
+import org.signal.archive.proto.GroupAnnouncementOnlyChangeUpdate;
+import org.signal.archive.proto.GroupAttributesAccessLevelChangeUpdate;
+import org.signal.archive.proto.GroupAvatarUpdate;
+import org.signal.archive.proto.GroupChangeChatUpdate;
+import org.signal.archive.proto.GroupCreationUpdate;
+import org.signal.archive.proto.GroupDescriptionUpdate;
+import org.signal.archive.proto.GroupExpirationTimerUpdate;
+import org.signal.archive.proto.GroupInvitationAcceptedUpdate;
+import org.signal.archive.proto.GroupInvitationDeclinedUpdate;
+import org.signal.archive.proto.GroupInvitationRevokedUpdate;
+import org.signal.archive.proto.GroupInviteLinkAdminApprovalUpdate;
+import org.signal.archive.proto.GroupInviteLinkDisabledUpdate;
+import org.signal.archive.proto.GroupInviteLinkEnabledUpdate;
+import org.signal.archive.proto.GroupInviteLinkResetUpdate;
+import org.signal.archive.proto.GroupJoinRequestApprovalUpdate;
+import org.signal.archive.proto.GroupJoinRequestCanceledUpdate;
+import org.signal.archive.proto.GroupJoinRequestUpdate;
+import org.signal.archive.proto.GroupMemberAddedUpdate;
+import org.signal.archive.proto.GroupMemberJoinedByLinkUpdate;
+import org.signal.archive.proto.GroupMemberJoinedUpdate;
+import org.signal.archive.proto.GroupMemberLabelAccessLevelChangeUpdate;
+import org.signal.archive.proto.GroupMemberLeftUpdate;
+import org.signal.archive.proto.GroupMemberRemovedUpdate;
+import org.signal.archive.proto.GroupMembershipAccessLevelChangeUpdate;
+import org.signal.archive.proto.GroupNameUpdate;
+import org.signal.archive.proto.GroupSelfInvitationRevokedUpdate;
+import org.signal.archive.proto.GroupSequenceOfRequestsAndCancelsUpdate;
+import org.signal.archive.proto.GroupTerminateChangeUpdate;
+import org.signal.archive.proto.GroupUnknownInviteeUpdate;
+import org.signal.archive.proto.GroupV2AccessLevel;
+import org.signal.archive.proto.GroupV2MigrationDroppedMembersUpdate;
+import org.signal.archive.proto.GroupV2MigrationInvitedMembersUpdate;
+import org.signal.archive.proto.GroupV2MigrationSelfInvitedUpdate;
+import org.signal.archive.proto.GroupV2MigrationUpdate;
+import org.signal.archive.proto.SelfInvitedOtherUserToGroupUpdate;
+import org.signal.archive.proto.SelfInvitedToGroupUpdate;
+import org.signal.core.models.ServiceId;
+import org.signal.core.models.recipients.RecipientId;
+import org.signal.core.ui.fonts.SignalSymbols.Glyph;
 import org.signal.core.util.BidiUtil;
-import org.signal.storageservice.protos.groups.AccessControl;
-import org.signal.storageservice.protos.groups.Member;
-import org.signal.storageservice.protos.groups.local.DecryptedApproveMember;
-import org.signal.storageservice.protos.groups.local.DecryptedGroup;
-import org.signal.storageservice.protos.groups.local.DecryptedGroupChange;
-import org.signal.storageservice.protos.groups.local.DecryptedMember;
-import org.signal.storageservice.protos.groups.local.DecryptedModifyMemberRole;
-import org.signal.storageservice.protos.groups.local.DecryptedPendingMember;
-import org.signal.storageservice.protos.groups.local.DecryptedPendingMemberRemoval;
-import org.signal.storageservice.protos.groups.local.DecryptedRequestingMember;
-import org.signal.storageservice.protos.groups.local.EnabledState;
+import org.signal.core.util.UuidUtil;
+import org.signal.storageservice.storage.protos.groups.AccessControl;
+import org.signal.storageservice.storage.protos.groups.Member;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedApproveMember;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroup;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroupChange;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedMember;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedModifyMemberRole;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedPendingMember;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedPendingMemberRemoval;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedRequestingMember;
+import org.signal.storageservice.storage.protos.groups.local.EnabledState;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.backup.v2.proto.GenericGroupUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupAdminStatusUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupAnnouncementOnlyChangeUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupAttributesAccessLevelChangeUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupAvatarUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupChangeChatUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupCreationUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupDescriptionUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupExpirationTimerUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupInvitationAcceptedUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupInvitationDeclinedUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupInvitationRevokedUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupInviteLinkAdminApprovalUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupInviteLinkDisabledUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupInviteLinkEnabledUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupInviteLinkResetUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupJoinRequestApprovalUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupJoinRequestCanceledUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupJoinRequestUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupMemberAddedUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupMemberJoinedByLinkUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupMemberJoinedUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupMemberLeftUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupMemberRemovedUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupMembershipAccessLevelChangeUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupNameUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupSelfInvitationRevokedUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupUnknownInviteeUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupV2AccessLevel;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupV2MigrationDroppedMembersUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupV2MigrationInvitedMembersUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupV2MigrationSelfInvitedUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupV2MigrationUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.SelfInvitedOtherUserToGroupUpdate;
-import org.thoughtcrime.securesms.backup.v2.proto.SelfInvitedToGroupUpdate;
-import org.thoughtcrime.securesms.fonts.SignalSymbols.Glyph;
 import org.thoughtcrime.securesms.groups.GV2AccessLevelUtil;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.util.ExpirationUtil;
-import org.thoughtcrime.securesms.util.SpanUtil;
+import org.thoughtcrime.securesms.recipients.RecipientIds;
+import org.signal.core.ui.util.ExpirationUtil;
+import org.signal.core.ui.util.SpanUtil;
 import org.whispersystems.signalservice.api.groupsv2.DecryptedGroupUtil;
-import org.signal.core.models.ServiceId;
 import org.whispersystems.signalservice.api.push.ServiceIds;
-import org.signal.core.util.UuidUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -165,6 +169,8 @@ final class GroupsV2UpdateMessageProducer {
       describeGroupMembershipAccessLevelChange(update.groupMembershipAccessLevelChangeUpdate, updates);
     } else if (update.groupAttributesAccessLevelChangeUpdate != null) {
       describeGroupAttributesAccessLevelChange(update.groupAttributesAccessLevelChangeUpdate, updates);
+    } else if (update.groupMemberLabelAccessLevelChangeUpdate != null) {
+      describeGroupMemberLabelAccessLevelChange(update.groupMemberLabelAccessLevelChangeUpdate, updates);
     } else if (update.groupAnnouncementOnlyChangeUpdate != null) {
       describeGroupAnnouncementOnlyUpdate(update.groupAnnouncementOnlyChangeUpdate, updates);
     } else if (update.groupAdminStatusUpdate != null) {
@@ -195,6 +201,8 @@ final class GroupsV2UpdateMessageProducer {
       describeGroupJoinRequestApprovedUpdate(update.groupJoinRequestApprovalUpdate, updates);
     } else if (update.groupJoinRequestCanceledUpdate != null) {
       describeGroupJoinRequestCanceledUpdate(update.groupJoinRequestCanceledUpdate, updates);
+    } else if (update.groupSequenceOfRequestsAndCancelsUpdate != null) {
+      describeGroupSequenceOfRequestsAndCancelsUpdate(update.groupSequenceOfRequestsAndCancelsUpdate, updates);
     } else if (update.groupInviteLinkResetUpdate != null) {
       describeInviteLinkResetUpdate(update.groupInviteLinkResetUpdate, updates);
     } else if (update.groupInviteLinkEnabledUpdate != null) {
@@ -217,6 +225,8 @@ final class GroupsV2UpdateMessageProducer {
       describeGroupExpirationTimerUpdate(update.groupExpirationTimerUpdate, updates);
     } else if (update.groupSelfInvitationRevokedUpdate != null) {
       describeGroupSelfInvitationRevokedUpdate(update.groupSelfInvitationRevokedUpdate, updates);
+    } else if (update.groupTerminateChangeUpdate != null) {
+      describeGroupTerminateUpdate(update.groupTerminateChangeUpdate, updates);
     }
   }
 
@@ -225,6 +235,18 @@ final class GroupsV2UpdateMessageProducer {
       updates.add(updateDescription(context.getString(R.string.MessageRecord_an_admin_revoked_your_invitation_to_the_group), Glyph.PERSON_X));
     } else {
       updates.add(updateDescription(R.string.MessageRecord_s_revoked_your_invitation_to_the_group, update.revokerAci, Glyph.PERSON_X));
+    }
+  }
+
+  private void describeGroupTerminateUpdate(@NonNull GroupTerminateChangeUpdate update, @NonNull List<UpdateDescription> updates) {
+    if (update.updaterAci == null) {
+      updates.add(updateDescription(context.getString(R.string.MessageRecord_the_group_was_terminated), Glyph.GROUP_X));
+    } else {
+      if (selfIds.matches(update.updaterAci)) {
+        updates.add(updateDescription(context.getString(R.string.MessageRecord_you_terminated_the_group), Glyph.GROUP_X));
+      } else {
+        updates.add(updateDescription(R.string.MessageRecord_s_terminated_the_group, update.updaterAci, Glyph.GROUP_X));
+      }
     }
   }
 
@@ -357,6 +379,18 @@ final class GroupsV2UpdateMessageProducer {
       updates.add(updateDescription(context.getString(R.string.MessageRecord_you_canceled_your_request_to_join_the_group), Glyph.PERSON_X));
     } else {
       updates.add(updateDescription(R.string.MessageRecord_s_canceled_their_request_to_join_the_group, update.requestorAci, Glyph.PERSON_X));
+    }
+  }
+
+  private void describeGroupSequenceOfRequestsAndCancelsUpdate(@NonNull GroupSequenceOfRequestsAndCancelsUpdate update, @NonNull List<UpdateDescription> updates) {
+    if (selfIds.matches(update.requestorAci)) {
+      updates.add(updateDescription(context.getString(R.string.MessageRecord_you_canceled_your_request_to_join_the_group), Glyph.GROUP));
+    } else {
+      updates.add(updateDescription(R.plurals.MessageRecord_s_requested_and_cancelled_their_request_to_join_via_the_group_link,
+                                    update.count,
+                                    update.requestorAci,
+                                    update.count,
+                                    Glyph.GROUP));
     }
   }
 
@@ -592,6 +626,24 @@ final class GroupsV2UpdateMessageProducer {
     }
   }
 
+  private void describeGroupMemberLabelAccessLevelChange(@NonNull GroupMemberLabelAccessLevelChangeUpdate update, @NonNull List<UpdateDescription> updates) {
+    if (update.accessLevel == GroupV2AccessLevel.UNKNOWN) {
+      return;
+    }
+
+    String accessLevel = GV2AccessLevelUtil.toString(context, backupGv2AccessLevelToGroups(update.accessLevel));
+    if (update.updaterAci == null) {
+      updates.add(updateDescription(context.getString(R.string.MessageRecord_unknown_admin_changed_who_can_add_member_labels_to_s, accessLevel), Glyph.MEGAPHONE));
+    } else {
+      boolean editorIsYou = selfIds.matches(update.updaterAci);
+      if (editorIsYou) {
+        updates.add(updateDescription(context.getString(R.string.MessageRecord_you_changed_who_can_add_member_labels_to_s, accessLevel), Glyph.MEGAPHONE));
+      } else {
+        updates.add(updateDescription(R.string.MessageRecord_s_changed_who_can_add_member_labels_to_s, update.updaterAci, accessLevel, Glyph.MEGAPHONE));
+      }
+    }
+  }
+
   private void describeGroupAnnouncementOnlyUpdate(@NonNull GroupAnnouncementOnlyChangeUpdate update, @NonNull List<UpdateDescription> updates) {
     if (update.updaterAci == null) {
       if (update.isAnnouncementOnly) {
@@ -707,6 +759,7 @@ final class GroupsV2UpdateMessageProducer {
       describeUnknownEditorNewTimer(change, updates);
       describeUnknownEditorNewAttributeAccess(change, updates);
       describeUnknownEditorNewMembershipAccess(change, updates);
+      describeUnknownEditorNewMemberLabelAccess(change, updates);
       describeUnknownEditorNewGroupInviteLinkAccess(previousGroupState, change, updates);
       describeRequestingMembers(change, updates);
       describeUnknownEditorRequestingMembersApprovals(change, updates);
@@ -733,6 +786,7 @@ final class GroupsV2UpdateMessageProducer {
       describeNewTimer(change, updates);
       describeNewAttributeAccess(change, updates);
       describeNewMembershipAccess(change, updates);
+      describeNewMemberLabelAccess(change, updates);
       describeNewGroupInviteLinkAccess(previousGroupState, change, updates);
       describeRequestingMembers(change, updates);
       describeRequestingMembersApprovals(change, updates);
@@ -1223,6 +1277,26 @@ final class GroupsV2UpdateMessageProducer {
     }
   }
 
+  private void describeNewMemberLabelAccess(@NonNull DecryptedGroupChange change, @NonNull List<UpdateDescription> updates) {
+    boolean editorIsYou = selfIds.matches(change.editorServiceIdBytes);
+
+    if (change.newMemberLabelAccess != AccessControl.AccessRequired.UNKNOWN) {
+      String accessLevel = GV2AccessLevelUtil.toString(context, change.newMemberLabelAccess);
+      if (editorIsYou) {
+        updates.add(updateDescription(context.getString(R.string.MessageRecord_you_changed_who_can_add_member_labels_to_s, accessLevel), Glyph.MEGAPHONE));
+      } else {
+        updates.add(updateDescription(R.string.MessageRecord_s_changed_who_can_add_member_labels_to_s, change.editorServiceIdBytes, accessLevel, Glyph.MEGAPHONE));
+      }
+    }
+  }
+
+  private void describeUnknownEditorNewMemberLabelAccess(@NonNull DecryptedGroupChange change, @NonNull List<UpdateDescription> updates) {
+    if (change.newMemberLabelAccess != AccessControl.AccessRequired.UNKNOWN) {
+      String accessLevel = GV2AccessLevelUtil.toString(context, change.newMemberLabelAccess);
+      updates.add(updateDescription(context.getString(R.string.MessageRecord_unknown_admin_changed_who_can_add_member_labels_to_s, accessLevel), Glyph.MEGAPHONE));
+    }
+  }
+
   private void describeNewGroupInviteLinkAccess(@Nullable DecryptedGroup previousGroupState,
                                                 @NonNull DecryptedGroupChange change,
                                                 @NonNull List<UpdateDescription> updates)
@@ -1493,7 +1567,7 @@ final class GroupsV2UpdateMessageProducer {
                                               Glyph glyph)
   {
     ServiceId   serviceId   = ServiceId.parseOrUnknown(serviceId1Bytes);
-    RecipientId recipientId = RecipientId.from(serviceId);
+    RecipientId recipientId = RecipientIds.from(serviceId);
 
     return UpdateDescription.mentioning(
         Collections.singletonList(serviceId),
@@ -1514,8 +1588,8 @@ final class GroupsV2UpdateMessageProducer {
     ServiceId serviceId1 = ServiceId.parseOrUnknown(serviceId1Bytes);
     ServiceId serviceId2 = ServiceId.parseOrUnknown(serviceId2Bytes);
 
-    RecipientId recipientId1 = RecipientId.from(serviceId1);
-    RecipientId recipientId2 = RecipientId.from(serviceId2);
+    RecipientId recipientId1 = RecipientIds.from(serviceId1);
+    RecipientId recipientId2 = RecipientIds.from(serviceId2);
 
     return UpdateDescription.mentioning(
         Arrays.asList(serviceId1, serviceId2),
@@ -1535,7 +1609,7 @@ final class GroupsV2UpdateMessageProducer {
                                               Glyph glyph)
   {
     ServiceId   serviceId   = ServiceId.parseOrUnknown(serviceId1Bytes);
-    RecipientId recipientId = RecipientId.from(serviceId);
+    RecipientId recipientId = RecipientIds.from(serviceId);
 
     return UpdateDescription.mentioning(
         Collections.singletonList(serviceId),
@@ -1556,7 +1630,7 @@ final class GroupsV2UpdateMessageProducer {
                                               Glyph glyph)
   {
     ServiceId   serviceId   = ServiceId.parseOrUnknown(serviceId1Bytes);
-    RecipientId recipientId = RecipientId.from(serviceId);
+    RecipientId recipientId = RecipientIds.from(serviceId);
 
     return UpdateDescription.mentioning(
         Collections.singletonList(serviceId),

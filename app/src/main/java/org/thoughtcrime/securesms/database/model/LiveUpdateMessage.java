@@ -13,20 +13,22 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 
-import com.annimon.stream.Stream;
+import java.util.stream.Collectors;
 
+import org.signal.core.models.recipients.RecipientId;
+import org.signal.core.ui.fonts.SignalSymbols;
+import org.signal.core.ui.util.ThemeUtil;
+import org.signal.core.util.BidiUtil;
+import org.signal.core.ui.fonts.SignalSymbols.Glyph;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.fonts.SignalSymbols;
-import org.thoughtcrime.securesms.fonts.SignalSymbols.Glyph;
-import org.thoughtcrime.securesms.fonts.SignalSymbols.Weight;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.util.SpanUtil;
-import org.thoughtcrime.securesms.util.ThemeUtil;
+import org.thoughtcrime.securesms.recipients.RecipientIds;
+import org.signal.core.ui.util.SpanUtil;
 import org.thoughtcrime.securesms.util.livedata.LiveDataUtil;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class LiveUpdateMessage {
 
@@ -44,14 +46,13 @@ public final class LiveUpdateMessage {
       return LiveDataUtil.just(toSpannable(context, updateDescription, updateDescription.getStaticSpannable(), defaultTint, adjustPosition));
     }
 
-    List<LiveData<Recipient>> allMentionedRecipients = Stream.of(updateDescription.getMentioned())
-                                                             .map(uuid -> Recipient.resolved(RecipientId.from(uuid)).live().getLiveData())
-                                                             .toList();
+    List<LiveData<Recipient>> allMentionedRecipients = updateDescription.getMentioned().stream()
+                                                                        .map(uuid -> Recipient.live(RecipientIds.from(uuid)).getLiveDataResolved()).collect(Collectors.toList());
 
     LiveData<?> mentionedRecipientChangeStream = allMentionedRecipients.isEmpty() ? LiveDataUtil.just(new Object())
                                                                                   : LiveDataUtil.merge(allMentionedRecipients);
 
-    return Transformations.map(mentionedRecipientChangeStream, event -> toSpannable(context, updateDescription, updateDescription.getSpannable(), defaultTint, adjustPosition));
+    return LiveDataUtil.mapAsync(mentionedRecipientChangeStream, event -> toSpannable(context, updateDescription, updateDescription.getSpannable(), defaultTint, adjustPosition));
   }
 
   /**
@@ -65,9 +66,9 @@ public final class LiveUpdateMessage {
   }
 
   private static @NonNull SpannableString toSpannable(@NonNull Context context, @NonNull UpdateDescription updateDescription, @NonNull Spannable string, @ColorInt int defaultTint, boolean adjustPosition) {
-    boolean isDarkTheme = ThemeUtil.isDarkTheme(context);
-    Glyph   glyph       = updateDescription.getGlyph();
-    int     tint        = isDarkTheme ? updateDescription.getDarkTint() : updateDescription.getLightTint();
+    boolean             isDarkTheme = ThemeUtil.isDarkTheme(context);
+    SignalSymbols.Glyph glyph       = updateDescription.getGlyph();
+    int                 tint        = isDarkTheme ? updateDescription.getDarkTint() : updateDescription.getLightTint();
 
     if (tint == 0) {
       tint = defaultTint;
@@ -91,9 +92,11 @@ public final class LiveUpdateMessage {
       return new SpannableString(builder);
     } else {
       SpannableStringBuilder builder   = new SpannableStringBuilder();
-      CharSequence           glyphChar = SignalSymbols.getSpannedString(context, Weight.REGULAR, glyph, -1);
+      CharSequence           glyphChar = SignalSymbols.getSpannedString(context, SignalSymbols.Weight.REGULAR, glyph, -1);
 
+      builder.append(BidiUtil.BidiCodepoint.LRI);
       builder.append(glyphChar);
+      builder.append(BidiUtil.BidiCodepoint.PDI);
       builder.append(" ");
       builder.append(string);
 

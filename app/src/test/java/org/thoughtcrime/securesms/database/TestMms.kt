@@ -1,12 +1,11 @@
 package org.thoughtcrime.securesms.database
 
 import android.content.ContentValues
-import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import org.signal.core.models.recipients.RecipientId
 import org.thoughtcrime.securesms.database.model.StoryType
 import org.thoughtcrime.securesms.mms.OutgoingMessage
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 
 /**
  * Helper methods for inserting an MMS message into the MMS table.
@@ -100,18 +99,5 @@ object TestMms {
     }
 
     return db.insert(MessageTable.TABLE_NAME, 0, contentValues)
-  }
-
-  fun markAsRemoteDelete(db: SQLiteDatabase, messageId: Long) {
-    val values = ContentValues()
-    values.put(MessageTable.REMOTE_DELETED, 1)
-    values.putNull(MessageTable.BODY)
-    values.putNull(MessageTable.QUOTE_BODY)
-    values.putNull(MessageTable.QUOTE_AUTHOR)
-    values.put(MessageTable.QUOTE_TYPE, -1)
-    values.putNull(MessageTable.QUOTE_ID)
-    values.putNull(MessageTable.LINK_PREVIEWS)
-    values.putNull(MessageTable.SHARED_CONTACTS)
-    db.update(MessageTable.TABLE_NAME, values, DatabaseTable.ID_WHERE, arrayOf(messageId.toString()))
   }
 }

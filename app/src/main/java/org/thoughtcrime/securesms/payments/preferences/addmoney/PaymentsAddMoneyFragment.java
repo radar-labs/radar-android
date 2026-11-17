@@ -16,6 +16,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,15 +31,16 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import org.signal.core.ui.logging.LoggingFragment;
+import org.thoughtcrime.securesms.R;
+import org.thoughtcrime.securesms.components.qr.QrView;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.thoughtcrime.securesms.util.views.LearnMoreTextView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.LoggingFragment;
-import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.components.qr.QrView;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.payments.onboarding.PaymentsOnboardingDepositReceivedFragment;
 import org.thoughtcrime.securesms.payments.preferences.PaymentsHomeRepository;
@@ -113,6 +115,9 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
   @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
+    ((ViewGroup) view).setClipToPadding(false);
+    SystemWindowInsetsSetter.attach(view, getViewLifecycleOwner());
+
     viewModel = new ViewModelProvider(this, new PaymentsAddMoneyViewModel.Factory()).get(PaymentsAddMoneyViewModel.class);
 
     isOnboarding = getArguments() != null && getArguments().getBoolean(ARG_ONBOARDING, false);
@@ -139,7 +144,7 @@ public final class PaymentsAddMoneyFragment extends LoggingFragment {
     Drawable shareIcon = shareItem.getIcon();
     if (shareIcon != null) {
       shareIcon = DrawableCompat.wrap(shareIcon.mutate());
-      DrawableCompat.setTint(shareIcon, ContextCompat.getColor(requireContext(), R.color.signal_colorOnSurface));
+      DrawableCompat.setTint(shareIcon, ContextCompat.getColor(requireContext(), org.signal.core.ui.R.color.signal_colorOnSurface));
       shareItem.setIcon(shareIcon);
     }
 

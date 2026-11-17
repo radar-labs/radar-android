@@ -9,8 +9,8 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.signal.core.models.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.rx.RxStore
 
 /**
@@ -70,6 +70,12 @@ class ContactChipViewModel : ViewModel() {
     store.update { list ->
       list.filterNot { it.selectedContact.matches(selectedContact) }
     }
+  }
+
+  fun isSelf(selectedContact: SelectedContact): Single<Boolean> {
+    return Single.fromCallable { Recipient.self().id == selectedContact.getOrCreateRecipientId() }
+      .subscribeOn(Schedulers.io())
+      .observeOn(AndroidSchedulers.mainThread())
   }
 
   private fun getOrCreateRecipientId(selectedContact: SelectedContact): Single<RecipientId> {

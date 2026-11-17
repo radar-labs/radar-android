@@ -2,15 +2,16 @@ package org.thoughtcrime.securesms.testing
 
 import okio.ByteString
 import okio.ByteString.Companion.toByteString
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64
 import org.signal.core.util.UuidUtil
 import org.signal.core.util.toByteArray
+import org.signal.libsignal.protocol.message.CiphertextMessage
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.buildWith
 import org.thoughtcrime.securesms.messages.TestMessage
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.whispersystems.signalservice.api.crypto.EnvelopeMetadata
 import org.whispersystems.signalservice.internal.push.AddressableMessage
 import org.whispersystems.signalservice.internal.push.AttachmentPointer
@@ -40,11 +41,12 @@ object MessageContentFuzzer {
   /**
    * Create an [Envelope].
    */
-  fun envelope(timestamp: Long, serverGuid: UUID = UUID.randomUUID()): Envelope {
+  fun envelope(timestamp: Long, serverGuid: UUID = UUID.randomUUID(), updatedPniBinary: ByteString? = null): Envelope {
     return Envelope.Builder()
-      .timestamp(timestamp)
+      .clientTimestamp(timestamp)
       .serverTimestamp(timestamp + 5)
       .serverGuidBinary(serverGuid.toByteArray().toByteString())
+      .also { if (updatedPniBinary != null) it.updatedPniBinary(updatedPniBinary) }
       .build()
   }
 
@@ -58,7 +60,8 @@ object MessageContentFuzzer {
       sourceDeviceId = sourceDeviceId,
       sealedSender = true,
       groupId = groupId?.decodedId,
-      destinationServiceId = Recipient.resolved(destination).requireServiceId()
+      destinationServiceId = Recipient.resolved(destination).requireServiceId(),
+      ciphertextMessageType = CiphertextMessage.WHISPER_TYPE
     )
   }
 
@@ -133,6 +136,26 @@ object MessageContentFuzzer {
                 }
               }
             )
+          }
+        }
+      ).build()
+  }
+
+  /**
+   * Create a 1:1 call event sync message.
+   */
+  fun syncCallEventMessage(callId: Long, timestamp: Long, peer: RecipientId, type: SyncMessage.CallEvent.Type, direction: SyncMessage.CallEvent.Direction, event: SyncMessage.CallEvent.Event): Content {
+    return Content
+      .Builder()
+      .syncMessage(
+        SyncMessage.Builder().buildWith {
+          callEvent = SyncMessage.CallEvent.Builder().buildWith {
+            this.conversationId = Recipient.resolved(peer).requireAci().toByteString()
+            this.callId = callId
+            this.timestamp = timestamp
+            this.type = type
+            this.direction = direction
+            this.event = event
           }
         }
       ).build()
@@ -290,7 +313,7 @@ object MessageContentFuzzer {
             body = string()
             val quoted = quoteAble.random(random)
             quote = DataMessage.Quote.Builder().buildWith {
-              id = quoted.envelope.timestamp
+              id = quoted.envelope.clientTimestamp
               authorAciBinary = quoted.metadata.sourceServiceId.toByteString()
               text = quoted.content.dataMessage?.body
               attachments(quoted.content.dataMessage?.attachments ?: emptyList())
@@ -302,7 +325,7 @@ object MessageContentFuzzer {
           if (random.nextFloat() < 0.1 && quoteAble.isNotEmpty()) {
             val quoted = quoteAble.random(random)
             quote = DataMessage.Quote.Builder().buildWith {
-              id = random.nextLong(quoted.envelope.timestamp!! - 1000000, quoted.envelope.timestamp!!)
+              id = random.nextLong(quoted.envelope.clientTimestamp!! - 1000000, quoted.envelope.clientTimestamp!!)
               authorAciBinary = quoted.metadata.sourceServiceId.toByteString()
               text = quoted.content.dataMessage?.body
             }
@@ -331,7 +354,7 @@ object MessageContentFuzzer {
               emoji = emojis.random(random)
               remove = false
               targetAuthorAciBinary = reactTo.metadata.sourceServiceId.toByteString()
-              targetSentTimestamp = reactTo.envelope.timestamp
+              targetSentTimestamp = reactTo.envelope.clientTimestamp
             }
           }
         }

@@ -6,21 +6,22 @@ package org.thoughtcrime.securesms.jobs
 
 import android.net.Uri
 import org.signal.core.models.backup.MediaName
+import org.signal.core.models.database.AttachmentId
 import org.signal.core.util.Base64
 import org.signal.core.util.StreamUtil
 import org.signal.core.util.androidx.DocumentFileInfo
 import org.signal.core.util.logging.Log
 import org.signal.libsignal.protocol.InvalidMacException
 import org.signal.libsignal.protocol.InvalidMessageException
-import org.thoughtcrime.securesms.attachments.AttachmentId
 import org.thoughtcrime.securesms.backup.v2.ArchiveRestoreProgress
 import org.thoughtcrime.securesms.backup.v2.local.ArchiveFileSystem
 import org.thoughtcrime.securesms.database.AttachmentTable
-import org.thoughtcrime.securesms.database.AttachmentTable.RestorableAttachment
+import org.thoughtcrime.securesms.database.AttachmentTable.LocalRestorableAttachment
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobs.protos.RestoreLocalAttachmentJobData
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.mms.MmsException
 import org.whispersystems.signalservice.api.crypto.AttachmentCipherInputStream
 import org.whispersystems.signalservice.api.crypto.AttachmentCipherInputStream.IntegrityCheck
@@ -46,16 +47,22 @@ class RestoreLocalAttachmentJob private constructor(
     fun enqueueRestoreLocalAttachmentsJobs(mediaNameToFileInfo: Map<String, DocumentFileInfo>) {
       val jobManager = AppDependencies.jobManager
 
+      SignalStore.backup.localRestoreReconcilePending = true
+
+      val orphanedCount = SignalDatabase.attachments.markRestorableAttachmentsWithoutMessageAsFailed()
+      if (orphanedCount > 0) {
+        Log.w(TAG, "Failed $orphanedCount orphaned restorable attachment(s) with no backing message before enqueueing restores.")
+      }
+
       do {
-        val possibleRestorableAttachments: List<RestorableAttachment> = SignalDatabase.attachments.getRestorableAttachments(500)
+        val possibleRestorableAttachments: List<LocalRestorableAttachment> = SignalDatabase.attachments.getRestorableLocalAttachments(500)
         val notRestorableAttachments = ArrayList<AttachmentId>(possibleRestorableAttachments.size)
         val restoreAttachmentJobs: MutableList<Job> = ArrayList(possibleRestorableAttachments.size)
 
         possibleRestorableAttachments
           .forEachIndexed { index, attachment ->
-            val fileInfo = if (attachment.plaintextHash != null && attachment.remoteKey != null) {
-              val mediaName = MediaName.fromPlaintextHashAndRemoteKey(attachment.plaintextHash, attachment.remoteKey).name
-              mediaNameToFileInfo[mediaName]
+            val fileInfo = if (attachment.plaintextHash != null && attachment.localBackupKey != null) {
+              mediaNameToFileInfo[MediaName.forLocalBackupFilename(attachment.plaintextHash, attachment.localBackupKey.key).name]
             } else {
               null
             }
@@ -73,7 +80,7 @@ class RestoreLocalAttachmentJob private constructor(
         // Intentionally enqueues one at a time for safer attachment transfer state management
         Log.d(TAG, "Adding ${restoreAttachmentJobs.size} restore local attachment jobs")
         restoreAttachmentJobs.forEach { jobManager.add(it) }
-      } while (restoreAttachmentJobs.isNotEmpty())
+      } while (possibleRestorableAttachments.isNotEmpty())
 
       ArchiveRestoreProgress.onRestoringMedia()
 
@@ -90,7 +97,7 @@ class RestoreLocalAttachmentJob private constructor(
     }
   }
 
-  private constructor(queue: String, attachment: RestorableAttachment, info: DocumentFileInfo) : this(
+  private constructor(queue: String, attachment: LocalRestorableAttachment, info: DocumentFileInfo) : this(
     Parameters.Builder()
       .setQueue(queue)
       .setLifespan(Parameters.IMMORTAL)
@@ -122,30 +129,26 @@ class RestoreLocalAttachmentJob private constructor(
   override fun run(): Result {
     Log.i(TAG, "onRun() messageId: $messageId  attachmentId: $attachmentId")
 
-    val attachment = SignalDatabase.attachments.getAttachment(attachmentId)
+    val attachment = SignalDatabase.attachments.getAttachmentWithMetadata(attachmentId)
 
     if (attachment == null) {
       Log.w(TAG, "attachment no longer exists.")
       return Result.failure()
     }
 
-    if (attachment.remoteDigest == null || attachment.remoteKey == null) {
-      Log.w(TAG, "Attachment no longer has a remote digest or key")
+    if (attachment.dataHash == null || attachment.metadata?.localBackupKey == null) {
+      Log.w(TAG, "Attachment no longer has a plaintext hash or local backup key")
       return Result.failure()
     }
 
-    if (attachment.isPermanentlyFailed) {
-      Log.w(TAG, "Attachment was marked as a permanent failure. Refusing to download.")
-      return Result.failure()
-    }
-
-    if (attachment.transferState != AttachmentTable.TRANSFER_NEEDS_RESTORE && attachment.transferState != AttachmentTable.TRANSFER_RESTORE_IN_PROGRESS) {
+    if (attachment.transferState == AttachmentTable.TRANSFER_PROGRESS_DONE) {
       Log.w(TAG, "Attachment does not need to be restored.")
       return Result.success()
     }
 
-    val combinedKey = Base64.decode(attachment.remoteKey)
-    val streamSupplier = StreamSupplier { ArchiveFileSystem.openInputStream(context, restoreUri) ?: throw IOException("Unable to open stream") }
+    val streamSupplier = StreamSupplier {
+      ArchiveFileSystem.openInputStream(context, restoreUri) ?: throw IOException("Unable to open stream for $restoreUri")
+    }
 
     try {
       val iv = ByteArray(16)
@@ -154,10 +157,9 @@ class RestoreLocalAttachmentJob private constructor(
         streamSupplier = streamSupplier,
         streamLength = size,
         plaintextLength = attachment.size,
-        combinedKeyMaterial = combinedKey,
-        integrityCheck = IntegrityCheck.forEncryptedDigestAndPlaintextHash(
-          encryptedDigest = attachment.remoteDigest,
-          plaintextHash = attachment.dataHash
+        combinedKeyMaterial = attachment.metadata.localBackupKey.key,
+        integrityCheck = IntegrityCheck.forPlaintextHash(
+          plaintextHash = Base64.decode(attachment.dataHash)
         ),
         incrementalDigest = null,
         incrementalMacChunkSize = 0
@@ -184,6 +186,10 @@ class RestoreLocalAttachmentJob private constructor(
     } catch (e: IOException) {
       Log.w(TAG, "Experienced an exception while trying to read attachment.", e)
       return Result.retry(defaultBackoff())
+    } catch (e: SecurityException) {
+      Log.w(TAG, "Lost access to the backup directory. Unable to restore attachment.", e)
+      SignalStore.backup.localRestoreDirectoryError = true
+      return Result.failure()
     }
 
     return Result.success()

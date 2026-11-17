@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
@@ -14,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import kotlinx.coroutines.launch
+import org.signal.core.ui.permissions.Permissions
+import org.signal.core.ui.util.ViewUtil
+import org.signal.core.ui.view.Stub
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.thoughtcrime.securesms.MainActivity
 import org.thoughtcrime.securesms.R
@@ -24,30 +26,28 @@ import org.thoughtcrime.securesms.components.settings.DSLConfiguration
 import org.thoughtcrime.securesms.components.settings.DSLSettingsFragment
 import org.thoughtcrime.securesms.components.settings.DSLSettingsText
 import org.thoughtcrime.securesms.components.settings.configure
+import org.thoughtcrime.securesms.components.snackbars.SnackbarState
 import org.thoughtcrime.securesms.conversation.ConversationIntents
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragment
 import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragmentArgs
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.StoryViewState
 import org.thoughtcrime.securesms.dependencies.AppDependencies
-import org.thoughtcrime.securesms.main.MainNavigationListLocation
+import org.thoughtcrime.securesms.main.MainDetailRoute
+import org.thoughtcrime.securesms.main.MainListRoute
+import org.thoughtcrime.securesms.main.MainNavigationEvents
 import org.thoughtcrime.securesms.main.MainNavigationViewModel
-import org.thoughtcrime.securesms.main.MainToolbarMode
+import org.thoughtcrime.securesms.main.MainSnackbarHostKey
 import org.thoughtcrime.securesms.main.MainToolbarViewModel
 import org.thoughtcrime.securesms.main.Material3OnScrollHelperBinder
-import org.thoughtcrime.securesms.main.SnackbarState
-import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.safety.SafetyNumberBottomSheet
 import org.thoughtcrime.securesms.stories.StoryTextPostModel
 import org.thoughtcrime.securesms.stories.StoryViewerArgs
 import org.thoughtcrime.securesms.stories.dialogs.StoryContextMenu
 import org.thoughtcrime.securesms.stories.dialogs.StoryDialogs
-import org.thoughtcrime.securesms.stories.my.MyStoriesActivity
 import org.thoughtcrime.securesms.stories.viewer.StoryViewerActivity
-import org.thoughtcrime.securesms.util.ViewUtil
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.fragments.requireListener
-import org.thoughtcrime.securesms.util.views.Stub
 import org.thoughtcrime.securesms.util.visible
 
 /**
@@ -148,19 +148,8 @@ class StoriesLandingFragment : DSLSettingsFragment(layoutId = R.layout.stories_l
       }
     }
 
-    requireActivity().onBackPressedDispatcher.addCallback(
-      viewLifecycleOwner,
-      object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-          if (!closeSearchIfOpen()) {
-            mainNavigationViewModel.onChatsSelected()
-          }
-        }
-      }
-    )
-
     lifecycleDisposable += mainNavigationViewModel.tabClickEventsObservable
-      .filter { it == MainNavigationListLocation.STORIES }
+      .filter { it == MainListRoute.Stories }
       .subscribeBy(onNext = {
         val layoutManager = recyclerView?.layoutManager as? LinearLayoutManager ?: return@subscribeBy
         if (layoutManager.findFirstVisibleItemPosition() <= LIST_SMOOTH_SCROLL_TO_TOP_THRESHOLD) {
@@ -200,7 +189,7 @@ class StoriesLandingFragment : DSLSettingsFragment(layoutId = R.layout.stories_l
           MyStoriesItem.Model(
             lifecycleOwner = viewLifecycleOwner,
             onClick = {
-              mainNavigationViewModel.goToCameraFirstStoryCapture()
+              mainNavigationViewModel.onEvent(MainNavigationEvents.GoToCameraFirstStoryCapture)
             }
           )
         )
@@ -270,7 +259,7 @@ class StoriesLandingFragment : DSLSettingsFragment(layoutId = R.layout.stories_l
         openStoryViewer(model, preview, true)
       },
       onAvatarClick = {
-        mainNavigationViewModel.goToCameraFirstStoryCapture()
+        mainNavigationViewModel.onEvent(MainNavigationEvents.GoToCameraFirstStoryCapture)
       },
       onLockList = {
         recyclerView?.suppressLayout(true)
@@ -283,11 +272,11 @@ class StoriesLandingFragment : DSLSettingsFragment(layoutId = R.layout.stories_l
 
   private fun openStoryViewer(model: StoriesLandingItem.Model, preview: View, isFromInfoContextMenuAction: Boolean) {
     if (model.data.storyRecipient.isMyStory) {
-      startActivityIfAble(Intent(requireContext(), MyStoriesActivity::class.java))
+      mainNavigationViewModel.onEvent(MainNavigationEvents.GoToDetail(MainDetailRoute.Stories.MyStories))
     } else if (model.data.primaryStory.messageRecord.isOutgoing && model.data.primaryStory.messageRecord.isFailed) {
       if (model.data.primaryStory.messageRecord.isIdentityMismatchFailure) {
         SafetyNumberBottomSheet
-          .forMessageRecord(requireContext(), model.data.primaryStory.messageRecord)
+          .forOutgoingMessageRecord(requireContext(), model.data.primaryStory.messageRecord)
           .show(childFragmentManager)
       } else {
         StoryDialogs.resendStory(requireContext()) {
@@ -326,15 +315,16 @@ class StoriesLandingFragment : DSLSettingsFragment(layoutId = R.layout.stories_l
   }
 
   private fun handleDeleteStory(model: StoriesLandingItem.Model) {
-    lifecycleDisposable += StoryContextMenu.delete(requireContext(), setOf(model.data.primaryStory.messageRecord)).subscribe()
+    lifecycleDisposable += StoryContextMenu.delete(requireContext(), model.data.primaryStory.messageRecord).subscribe()
   }
 
   private fun handleHideStory(model: StoriesLandingItem.Model) {
     StoryDialogs.hideStory(requireContext(), model.data.storyRecipient.getShortDisplayName(requireContext())) {
       viewModel.setHideStory(model.data.storyRecipient, true).subscribe {
-        mainNavigationViewModel.setSnackbar(
+        mainNavigationViewModel.snackbarRegistry.emit(
           SnackbarState(
-            message = getString(R.string.StoriesLandingFragment__story_hidden)
+            message = getString(R.string.StoriesLandingFragment__story_hidden),
+            hostKey = MainSnackbarHostKey.MainChrome
           )
         )
       }
@@ -353,21 +343,5 @@ class StoriesLandingFragment : DSLSettingsFragment(layoutId = R.layout.stories_l
 
     viewModel.isTransitioningToAnotherScreen = true
     startActivity(intent, options)
-  }
-
-  private fun isSearchOpen(): Boolean {
-    return isSearchVisible()
-  }
-
-  private fun isSearchVisible(): Boolean {
-    return mainToolbarViewModel.state.value.mode == MainToolbarMode.SEARCH
-  }
-
-  private fun closeSearchIfOpen(): Boolean {
-    if (isSearchOpen()) {
-      mainToolbarViewModel.setToolbarMode(MainToolbarMode.FULL)
-      return true
-    }
-    return false
   }
 }

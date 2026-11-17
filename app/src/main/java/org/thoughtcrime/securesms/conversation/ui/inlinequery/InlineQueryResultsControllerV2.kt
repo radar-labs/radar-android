@@ -6,9 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowSizeClass
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.ui.isHeightCompact
 import org.signal.core.util.DimensionUnit
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.signal.core.util.concurrent.addTo
@@ -24,6 +25,7 @@ import org.thoughtcrime.securesms.util.doOnEachLayout
 class InlineQueryResultsControllerV2(
   private val parentFragment: Fragment,
   private val threadId: Long,
+  private val recipientId: RecipientId,
   private val viewModel: InlineQueryViewModelV2,
   private val anchor: View,
   private val container: ViewGroup,
@@ -73,7 +75,7 @@ class InlineQueryResultsControllerV2(
   }
 
   fun onWindowSizeClassChanged(windowSizeClass: WindowSizeClass) {
-    this.shouldHideForWindowSizeClass = windowSizeClass.windowHeightSizeClass == WindowHeightSizeClass.COMPACT
+    this.shouldHideForWindowSizeClass = windowSizeClass.isHeightCompact
 
     if (shouldHideForWindowSizeClass) {
       dismiss()
@@ -111,7 +113,7 @@ class InlineQueryResultsControllerV2(
     if (mentionFragment == null) {
       mentionFragment = parentFragment.childFragmentManager.findFragmentByTag(MENTION_TAG) as? MentionsPickerFragmentV2
       if (mentionFragment == null) {
-        mentionFragment = MentionsPickerFragmentV2.create(threadId)
+        mentionFragment = MentionsPickerFragmentV2.create(threadId, recipientId)
         parentFragment.childFragmentManager.commit {
           replace(R.id.mention_fragment_container, mentionFragment!!)
           runOnCommit { mentionFragment!!.updateList(results.results) }

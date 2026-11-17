@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import arrow.core.Either
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -22,9 +23,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import org.signal.core.models.ServiceId.ACI
+import org.signal.archive.stream.EncryptedBackupReader
+import org.signal.archive.stream.EncryptedBackupReader.Companion.MAC_SIZE
+import org.signal.core.models.ServiceId
 import org.signal.core.models.backup.MessageBackupKey
+import org.signal.core.models.database.AttachmentId
 import org.signal.core.util.Hex
 import org.signal.core.util.ThreadUtil
 import org.signal.core.util.bytes
@@ -35,33 +40,26 @@ import org.signal.core.util.readNBytesOrThrow
 import org.signal.core.util.roundedString
 import org.signal.core.util.stream.LimitedInputStream
 import org.signal.libsignal.zkgroup.profiles.ProfileKey
-import org.thoughtcrime.securesms.attachments.AttachmentId
+import org.signal.network.api.SvrBApi
+import org.signal.network.service.ArchiveError
+import org.signal.network.service.ArchiveService.DebugBackupMetadata
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.backup.ArchiveUploadProgress
+import org.thoughtcrime.securesms.backup.LocalExportProgress
 import org.thoughtcrime.securesms.backup.v2.ArchiveValidator
 import org.thoughtcrime.securesms.backup.v2.BackupRepository
-import org.thoughtcrime.securesms.backup.v2.DebugBackupMetadata
 import org.thoughtcrime.securesms.backup.v2.MessageBackupTier
 import org.thoughtcrime.securesms.backup.v2.RemoteRestoreResult
-import org.thoughtcrime.securesms.backup.v2.local.ArchiveFileSystem
-import org.thoughtcrime.securesms.backup.v2.local.ArchiveResult
-import org.thoughtcrime.securesms.backup.v2.local.LocalArchiver
-import org.thoughtcrime.securesms.backup.v2.local.LocalArchiver.FailureCause
-import org.thoughtcrime.securesms.backup.v2.local.SnapshotFileSystem
-import org.thoughtcrime.securesms.backup.v2.stream.EncryptedBackupReader
-import org.thoughtcrime.securesms.backup.v2.stream.EncryptedBackupReader.Companion.MAC_SIZE
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.database.AttachmentTable.DebugAttachmentStats
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobs.BackupMessagesJob
-import org.thoughtcrime.securesms.jobs.RestoreLocalAttachmentJob
+import org.thoughtcrime.securesms.jobs.LocalBackupJob
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.protos.LocalBackupCreationProgress
 import org.thoughtcrime.securesms.net.SignalNetwork
-import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.whispersystems.signalservice.api.NetworkResult
-import org.whispersystems.signalservice.api.svr.SvrBApi
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -94,9 +92,12 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
 
   val statsState: MutableStateFlow<StatsState> = MutableStateFlow(StatsState())
 
-  enum class DialogState {
-    None,
-    ImportCredentials
+  init {
+    viewModelScope.launch {
+      LocalExportProgress.plaintextProgress.collect { progress ->
+        _state.value = _state.value.copy(plaintextProgress = progress)
+      }
+    }
   }
 
   fun exportEncrypted(openStream: () -> OutputStream, appendStream: () -> OutputStream) {
@@ -115,26 +116,28 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
       }
   }
 
-  fun exportPlaintext(openStream: () -> OutputStream, appendStream: () -> OutputStream) {
-    _state.value = _state.value.copy(statusMessage = "Exporting plaintext backup to disk...")
-    disposables += Single
-      .fromCallable {
-        BackupRepository.exportForDebugging(
-          outputStream = openStream(),
-          append = { bytes -> appendStream().use { it.write(bytes) } },
-          plaintext = true
-        )
-      }
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribe { data ->
-        _state.value = _state.value.copy(statusMessage = "Plaintext backup complete!")
-      }
+  private var plaintextIncludeMedia: Boolean = false
+
+  fun showPlaintextExportDialog() {
+    _state.value = _state.value.copy(dialog = DialogState.PlaintextExportMediaChoice)
+  }
+
+  fun dismissPlaintextExportDialog() {
+    _state.value = _state.value.copy(dialog = DialogState.None)
+  }
+
+  fun onPlaintextExportMediaChoiceSelected(includeMedia: Boolean) {
+    plaintextIncludeMedia = includeMedia
+    _state.value = _state.value.copy(dialog = DialogState.None)
+  }
+
+  fun exportPlaintextZip(directoryUri: Uri) {
+    LocalBackupJob.enqueuePlaintextArchive(directoryUri.toString(), plaintextIncludeMedia)
   }
 
   fun validateBackup() {
     _state.value = _state.value.copy(statusMessage = "Exporting to a temporary file...")
-    val tempFile = BlobProvider.getInstance().forNonAutoEncryptingSingleSessionOnDisk(AppDependencies.application)
+    val tempFile = AppDependencies.blobs.forNonAutoEncryptingSingleSessionOnDisk(AppDependencies.application)
 
     disposables += Single
       .fromCallable {
@@ -182,7 +185,7 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
 
     val self = Recipient.self()
     val aci = customCredentials?.aci ?: self.aci.get()
-    val selfData = BackupRepository.SelfData(aci, self.pni.get(), self.e164.get(), ProfileKey(self.profileKey))
+    val selfData = BackupRepository.SelfData(aci, self.pni.orElse(null), self.e164.orElse(null), ProfileKey(self.profileKey))
     val backupKey = customCredentials?.messageBackupKey ?: SignalStore.backup.messageBackupKey
 
     disposables += Single.fromCallable { BackupRepository.importForDebugging(length, inputStreamFactory, selfData, backupKey) }
@@ -190,29 +193,6 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
       .observeOn(AndroidSchedulers.mainThread())
       .subscribeBy {
         _state.value = _state.value.copy(statusMessage = "Encrypted backup import complete!")
-      }
-  }
-
-  fun import(uri: Uri) {
-    _state.value = _state.value.copy(statusMessage = "Importing new-style local backup...")
-
-    val self = Recipient.self()
-    val selfData = BackupRepository.SelfData(self.aci.get(), self.pni.get(), self.e164.get(), ProfileKey(self.profileKey))
-
-    disposables += Single.fromCallable {
-      val archiveFileSystem = ArchiveFileSystem.fromUri(AppDependencies.application, uri)!!
-      val snapshotInfo = archiveFileSystem.listSnapshots().firstOrNull() ?: return@fromCallable ArchiveResult.failure(FailureCause.MAIN_STREAM)
-      val snapshotFileSystem = SnapshotFileSystem(AppDependencies.application, snapshotInfo.file)
-
-      LocalArchiver.import(snapshotFileSystem, selfData)
-
-      val mediaNameToFileInfo = archiveFileSystem.filesFileSystem.allFiles()
-      RestoreLocalAttachmentJob.enqueueRestoreLocalAttachmentsJobs(mediaNameToFileInfo)
-    }
-      .subscribeOn(Schedulers.io())
-      .observeOn(AndroidSchedulers.mainThread())
-      .subscribeBy {
-        _state.value = _state.value.copy(statusMessage = "New-style local backup import complete!")
       }
   }
 
@@ -228,13 +208,13 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
 
     SignalExecutors.BOUNDED_IO.execute {
       Log.d(TAG, "Downloading file...")
-      val tempBackupFile = BlobProvider.getInstance().forNonAutoEncryptingSingleSessionOnDisk(AppDependencies.application)
+      val tempBackupFile = AppDependencies.blobs.forNonAutoEncryptingSingleSessionOnDisk(AppDependencies.application)
 
       when (val result = BackupRepository.downloadBackupFile(tempBackupFile)) {
-        is NetworkResult.Success -> Log.i(TAG, "Download successful")
-        else -> {
-          Log.w(TAG, "Failed to download backup file", result.getCause())
-          throw IOException(result.getCause())
+        is Either.Right -> Log.i(TAG, "Download successful")
+        is Either.Left -> {
+          Log.w(TAG, "Failed to download backup file", result.value.cause)
+          throw IOException("Failed to download backup file: ${result.value}", result.value.cause)
         }
       }
 
@@ -243,12 +223,12 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
         throw IOException("Failed to read forward secrecy metadata!")
       }
 
-      val svrBAuth = when (val result = BackupRepository.getSvrBAuth()) {
-        is NetworkResult.Success -> result.result
-        else -> throw IOException("Failed to read forward secrecy metadata!")
+      val svrBAuth = when (val result = runBlocking { SignalNetwork.archiveService.getSvrBAuth() }) {
+        is Either.Right -> result.value
+        is Either.Left -> throw IOException("Failed to read forward secrecy metadata!")
       }
 
-      val forwardSecrecyToken = when (val result = SignalNetwork.svrB.restore(svrBAuth, SignalStore.backup.messageBackupKey, forwardSecrecyMetadata)) {
+      val forwardSecrecyToken = when (val result = SignalNetwork.svrBApi.restore(svrBAuth, SignalStore.backup.messageBackupKey, forwardSecrecyMetadata)) {
         is SvrBApi.RestoreResult.Success -> result.data.forwardSecrecyToken
         else -> throw IOException("Failed to read forward secrecy metadata! $result")
       }
@@ -283,23 +263,24 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
     disposables += Single
       .fromCallable {
         BackupRepository.restoreBackupFileTimestamp()
-        BackupRepository.debugGetRemoteBackupState()
+        runBlocking { SignalNetwork.archiveService.debugGetRemoteBackupState() }
       }
       .subscribeOn(Schedulers.io())
       .subscribe { result ->
         when {
-          result is NetworkResult.Success -> {
+          result is Either.Right -> {
+            val metadata = result.value
             _state.value = _state.value.copy(
-              statusMessage = "Remote backup exists. ${result.result.mediaCount} media items, using ${result.result.usedSpace} bytes (${result.result.usedSpace.bytes.inMebiBytes.roundedString(3)} MiB)"
+              statusMessage = "Remote backup exists. ${metadata.mediaCount} media items, using ${metadata.usedSpace} bytes (${metadata.usedSpace.bytes.inMebiBytes.roundedString(3)} MiB)"
             )
           }
 
-          result is NetworkResult.StatusCodeError && result.code == 404 -> {
+          result is Either.Left && result.value is ArchiveError.CredentialError.NotFound -> {
             _state.value = _state.value.copy(statusMessage = "Remote backup does not exists.")
           }
 
           else -> {
-            Log.w(TAG, "Error checking remote backup state", result.getCause())
+            Log.w(TAG, "Error checking remote backup state: ${(result as Either.Left).value}", result.value.cause)
             _state.value = _state.value.copy(statusMessage = "Failed to fetch remote backup state.")
           }
         }
@@ -309,6 +290,7 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
   fun wipeAllDataAndRestoreFromRemote(afterDbRestoreCallback: () -> Unit) {
     SignalExecutors.BOUNDED_IO.execute {
       SignalStore.backup.restoreWithCellular = false
+      SignalStore.backup.clearArchiveVerificationState()
       restoreFromRemote(afterDbRestoreCallback)
     }
   }
@@ -319,7 +301,7 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
 
   /** True if data is valid, else false */
   fun onImportConfirmed(aci: String, backupKey: String): Boolean {
-    val parsedAci: ACI? = ACI.parseOrNull(aci)
+    val parsedAci: ServiceId.ACI? = ServiceId.ACI.parseOrNull(aci)
 
     if (aci.isNotBlank() && parsedAci == null) {
       _state.value = _state.value.copy(statusMessage = "Invalid ACI! Cannot import.")
@@ -358,10 +340,11 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
 
     viewModelScope.launch {
       when (val result = BackupRepository.restoreRemoteBackup()) {
-        RemoteRestoreResult.Success -> {
+        is RemoteRestoreResult.Success -> {
           _state.value = _state.value.copy(statusMessage = "Import complete!")
           ThreadUtil.runOnMain { afterDbRestoreCallback() }
         }
+
         RemoteRestoreResult.Canceled,
         RemoteRestoreResult.Failure,
         RemoteRestoreResult.PermanentSvrBFailure,
@@ -373,7 +356,7 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
   }
 
   fun loadStats() {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       launch {
         var stats = SignalDatabase.attachments.debugGetAttachmentStats()
 
@@ -386,9 +369,9 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
     viewModelScope.launch(Dispatchers.IO) {
       launch {
         statsState.update { it.copy(loadingRemoteStats = true) }
-        val (remoteState: DebugBackupMetadata?, errorMsg: String?) = when (val result = BackupRepository.debugGetRemoteBackupState()) {
-          is NetworkResult.Success -> result.result to null
-          else -> null to result.toString()
+        val (remoteState: DebugBackupMetadata?, errorMsg: String?) = when (val result = SignalNetwork.archiveService.debugGetRemoteBackupState()) {
+          is Either.Right -> result.value to null
+          is Either.Left -> null to result.value.toString()
         }
         statsState.update { it.copy(remoteState = remoteState, remoteFailureMsg = errorMsg, loadingRemoteStats = false) }
       }
@@ -397,28 +380,30 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
 
   suspend fun deleteRemoteBackupData(): Boolean = withContext(Dispatchers.IO) {
     when (val result = BackupRepository.debugDeleteAllArchivedMedia()) {
-      is NetworkResult.Success -> Log.i(TAG, "Remote data deleted")
-      else -> {
-        Log.w(TAG, "Unable to delete media", result.getCause())
+      is Either.Right -> Log.i(TAG, "Remote data deleted")
+      is Either.Left -> {
+        Log.w(TAG, "Unable to delete media", result.value.cause)
         return@withContext false
       }
     }
 
-    when (val result = BackupRepository.deleteBackup()) {
-      is NetworkResult.Success -> {
-        SignalStore.backup.backupsInitialized = false
+    when (val result = SignalNetwork.archiveService.deleteMessageBackup()) {
+      is Either.Right -> {
+        SignalStore.backup.messageBackupInitialized = false
+        SignalStore.backup.mediaBackupInitialized = false
         SignalStore.backup.messageCredentials.clearAll()
         SignalStore.backup.mediaCredentials.clearAll()
         SignalStore.backup.cachedMediaCdnPath = null
         return@withContext true
       }
-      else -> Log.w(TAG, "Unable to delete remote data", result.getCause())
+
+      is Either.Left -> Log.w(TAG, "Unable to delete remote data", result.value.cause)
     }
 
     return@withContext false
   }
 
-  suspend fun clearLocalMediaBackupState() = withContext(Dispatchers.IO) {
+  suspend fun clearLocalMediaBackupState() = withContext(Dispatchers.Default) {
     SignalDatabase.attachments.clearAllArchiveData()
   }
 
@@ -430,6 +415,7 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
     val canReadWriteBackupDirectory: Boolean = false,
     val backupTier: MessageBackupTier? = null,
     val statusMessage: String? = null,
+    val plaintextProgress: LocalBackupCreationProgress = LocalBackupCreationProgress(),
     val customBackupCredentials: ImportCredentials? = null,
     val dialog: DialogState = DialogState.None
   )
@@ -500,7 +486,7 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
 
   data class ImportCredentials(
     val messageBackupKey: MessageBackupKey,
-    val aci: ACI
+    val aci: ServiceId.ACI
   )
 
   data class StatsState(
@@ -510,5 +496,11 @@ class InternalBackupPlaygroundViewModel : ViewModel() {
     val remoteFailureMsg: String? = null
   ) {
     val valid = attachmentStats != null
+  }
+
+  enum class DialogState {
+    None,
+    ImportCredentials,
+    PlaintextExportMediaChoice
   }
 }

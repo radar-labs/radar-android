@@ -27,6 +27,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -47,6 +48,7 @@ import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.loaders.MediaLoader;
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
 import org.signal.core.util.concurrent.SimpleTask;
 
 import java.util.ArrayList;
@@ -128,7 +130,7 @@ public final class MediaOverviewActivity extends PassphraseRequiredActivity {
       }
     });
 
-    viewPager.setCurrentItem(allThreads ? 3 : 0);
+    viewPager.setCurrentItem(allThreads ? viewPager.getAdapter().getCount() - 1 : 0);
   }
 
   private static boolean allowGridSelectionOnPage(int page) {
@@ -196,6 +198,9 @@ public final class MediaOverviewActivity extends PassphraseRequiredActivity {
   }
 
   private void initializeToolbar() {
+    toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    SystemWindowInsetsSetter.attach(toolbar, this, WindowInsetsCompat.Type.statusBars());
+
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -250,8 +255,11 @@ public final class MediaOverviewActivity extends PassphraseRequiredActivity {
         maxWidth = Math.max(maxWidth, tabWidth);
       }
 
-      int viewWidth = right - left;
-      if (totalWidth < viewWidth) {
+      int viewWidth    = right - left;
+      int tabCount     = tabLayout.getTabCount();
+      int fixedTabSize = tabCount > 0 ? viewWidth / tabCount : 0;
+
+      if (totalWidth < viewWidth && maxWidth <= fixedTabSize) {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
       }
     });
@@ -264,10 +272,15 @@ public final class MediaOverviewActivity extends PassphraseRequiredActivity {
     MediaOverviewPagerAdapter(FragmentManager fragmentManager) {
       super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-      pages = new ArrayList<>(4);
+      boolean allThreads = threadId == MediaTable.ALL_THREADS;
+
+      pages = new ArrayList<>(allThreads ? 4 : 5);
       pages.add(new Pair<>(MediaLoader.MediaType.GALLERY,  getString(R.string.MediaOverviewActivity_Media)));
       pages.add(new Pair<>(MediaLoader.MediaType.DOCUMENT, getString(R.string.MediaOverviewActivity_Files)));
       pages.add(new Pair<>(MediaLoader.MediaType.AUDIO,    getString(R.string.MediaOverviewActivity_Audio)));
+      if (!allThreads) {
+        pages.add(new Pair<>(MediaLoader.MediaType.LINK,   getString(R.string.MediaOverviewActivity_Links)));
+      }
       pages.add(new Pair<>(MediaLoader.MediaType.ALL,      getString(R.string.MediaOverviewActivity_All)));
     }
 

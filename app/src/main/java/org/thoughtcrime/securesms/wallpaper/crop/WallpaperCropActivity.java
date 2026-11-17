@@ -2,10 +2,11 @@ package org.thoughtcrime.securesms.wallpaper.crop;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -20,7 +21,10 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.window.layout.WindowMetricsCalculator;
 
+import org.signal.core.models.recipients.RecipientId;
+import org.signal.core.ui.WindowBreakpoint;
 import org.signal.core.util.logging.Log;
 import org.signal.imageeditor.core.ImageEditorView;
 import org.signal.imageeditor.core.model.EditorElement;
@@ -30,18 +34,19 @@ import org.thoughtcrime.securesms.BaseActivity;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.ProgressCard;
 import org.thoughtcrime.securesms.conversation.colors.ColorizerView;
-import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.scribbles.UriGlideRenderer;
+import org.signal.imageeditor.core.renderers.UriGlideRenderer;
 import org.thoughtcrime.securesms.util.AsynchronousCallback;
 import org.thoughtcrime.securesms.util.DynamicTheme;
 import org.thoughtcrime.securesms.util.Projection;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.signal.core.ui.util.ViewUtil;
 import org.thoughtcrime.securesms.wallpaper.ChatWallpaper;
 import org.thoughtcrime.securesms.wallpaper.ChatWallpaperPreviewActivity;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Objects;
+
+import static org.signal.core.ui.WindowSizeClassExtensionsKt.getWindowBreakpoint;
 
 public final class WallpaperCropActivity extends BaseActivity {
 
@@ -75,6 +80,11 @@ public final class WallpaperCropActivity extends BaseActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    if (!(getWindowBreakpoint(getResources()) instanceof WindowBreakpoint.Small)) {
+      setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
     dynamicTheme.onCreate(this);
     setContentView(R.layout.chat_wallpaper_crop_activity);
 
@@ -102,7 +112,7 @@ public final class WallpaperCropActivity extends BaseActivity {
     Toolbar toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     ActionBar supportActionBar = Objects.requireNonNull(getSupportActionBar());
-    supportActionBar.setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.symbol_arrow_start_24));
+    supportActionBar.setHomeAsUpIndicator(ContextCompat.getDrawable(this, org.signal.core.ui.R.drawable.symbol_arrow_start_24));
     supportActionBar.setDisplayHomeAsUpEnabled(true);
 
     blur.setOnCheckedChangeListener((v, checked) -> viewModel.setBlur(checked));
@@ -182,13 +192,12 @@ public final class WallpaperCropActivity extends BaseActivity {
   }
 
   private void setupImageEditor(@NonNull Uri imageUri) {
-    DisplayMetrics displayMetrics = new DisplayMetrics();
-    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-    int   height = displayMetrics.heightPixels;
-    int   width  = displayMetrics.widthPixels;
+    Rect  bounds = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(this).getBounds();
+    int   height = bounds.height();
+    int   width  = bounds.width();
     float ratio  = width / (float) height;
 
-    EditorModel editorModel = EditorModel.createForWallpaperEditing(ratio, ContextCompat.getColor(this, R.color.signal_colorBackground));
+    EditorModel editorModel = EditorModel.createForWallpaperEditing(ratio, ContextCompat.getColor(this, org.signal.core.ui.R.color.signal_colorBackground));
 
     EditorElement image = new EditorElement(new UriGlideRenderer(imageUri, true, width, height, UriGlideRenderer.WEAK_BLUR));
     image.getFlags()

@@ -16,12 +16,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import org.signal.core.models.recipients.RecipientId
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.InAppPaymentSubscriberRecord
 import org.thoughtcrime.securesms.database.model.databaseprotos.InAppPaymentData
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.thoughtcrime.securesms.testutil.MockAppDependenciesRule
 import org.thoughtcrime.securesms.testutil.RxPluginsRule
@@ -62,6 +62,7 @@ class RecurringInAppPaymentRepositoryTest {
     every { StorageSyncHelper.scheduleSyncForDataChange() } returns Unit
 
     every { AppDependencies.donationsService.putSubscription(any()) } returns ServiceResponse.forResult(EmptyResponse.INSTANCE, 200, "")
+    every { AppDependencies.donationsService.createSubscriber(any()) } returns ServiceResponse.forResult(EmptyResponse.INSTANCE, 200, "")
     every { AppDependencies.donationsService.updateSubscriptionLevel(any(), any(), any(), any(), any()) } returns ServiceResponse.forResult(EmptyResponse.INSTANCE, 200, "")
   }
 
@@ -96,6 +97,8 @@ class RecurringInAppPaymentRepositoryTest {
     val newSubscriber = ref.get()
 
     assertThat(newSubscriber).isNotEqualTo(initialSubscriber)
+    verify { AppDependencies.donationsService.createSubscriber(any()) }
+    verify(inverse = true) { AppDependencies.donationsService.putSubscription(any()) }
   }
 
   @Test
@@ -111,6 +114,8 @@ class RecurringInAppPaymentRepositoryTest {
     val newSubscriber = ref.get()
 
     assertThat(newSubscriber).isNotEqualTo(initialSubscriber)
+    verify { AppDependencies.donationsService.createSubscriber(any()) }
+    verify(inverse = true) { AppDependencies.donationsService.putSubscription(any()) }
   }
 
   @Test

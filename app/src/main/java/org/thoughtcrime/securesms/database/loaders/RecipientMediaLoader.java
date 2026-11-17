@@ -6,10 +6,10 @@ import android.database.Cursor;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.thoughtcrime.securesms.database.MediaTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 
 /**
  * It is more efficient to use the {@link ThreadMediaLoader} if you know the thread id already.
@@ -37,7 +37,7 @@ public final class RecipientMediaLoader extends MediaLoader {
 
     long threadId = SignalDatabase.threads().getOrCreateThreadIdFor(Recipient.resolved(recipientId));
 
-    return ThreadMediaLoader.createThreadMediaCursor(context, threadId, mediaType, sorting);
+    return ThreadMediaLoader.createThreadMediaCursor(context, threadId, mediaType, sorting, 0);
   }
 
 }

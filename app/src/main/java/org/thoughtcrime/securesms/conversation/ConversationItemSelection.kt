@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import org.signal.core.util.DimensionUnit
 import org.thoughtcrime.securesms.conversation.v2.items.InteractiveConversationElement
 import org.thoughtcrime.securesms.database.model.MessageRecord
-import org.thoughtcrime.securesms.giph.mp4.GiphyMp4Playable
 import org.thoughtcrime.securesms.util.hasNoBubble
 
 object ConversationItemSelection {
+
+  const val MAX_SIZE: Long = 4096 * 4096
 
   @JvmStatic
   fun snapshotView(
@@ -45,7 +46,7 @@ object ConversationItemSelection {
   ): Bitmap {
     val snapshotStrategy = target.getSnapshotStrategy()
     if (snapshotStrategy != null) {
-      return createBitmap(target.root.width, target.root.height).applyCanvas {
+      return createSafeBitmap(target.root.width, target.root.height).applyCanvas {
         snapshotStrategy.snapshot(this)
       }
     }
@@ -64,7 +65,7 @@ object ConversationItemSelection {
     val xTranslation = -target.root.x - bodyBubble.x
     val yTranslation = -target.root.y - bodyBubble.y
 
-    val mp4Projection = (target as? GiphyMp4Playable)?.getGiphyMp4PlayableProjection(list)
+    val mp4Projection = (target as? ConversationItem)?.getInlineVideoProjection(list)
 
     var scaledVideoBitmap: Bitmap? = null
     if (videoBitmap != null && mp4Projection != null) {
@@ -94,7 +95,7 @@ object ConversationItemSelection {
     if (hasReaction) {
       bitmapHeight += (reactionsView.height - DimensionUnit.DP.toPixels(4f)).toInt()
     }
-    return createBitmap(bodyBubble.width, bitmapHeight).applyCanvas {
+    return createSafeBitmap(bodyBubble.width, bitmapHeight).applyCanvas {
       if (drawConversationItem) {
         bodyBubble.draw(this)
       }
@@ -119,6 +120,16 @@ object ConversationItemSelection {
       mp4Projection?.release()
       bodyBubble.scaleX = originalScale
       bodyBubble.scaleY = originalScale
+    }
+  }
+
+  private fun createSafeBitmap(width: Int, height: Int): Bitmap {
+    return if (width * height < MAX_SIZE) {
+      createBitmap(width, height)
+    } else {
+      // Since this is only called in rare cases where the height is incredibly large / 'Read more' has not been triggered yet,
+      // used a general solution instead of something more algorithmic.
+      createBitmap(width, height / 2)
     }
   }
 }

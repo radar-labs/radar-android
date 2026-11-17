@@ -1,0 +1,273 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.registration
+
+import assertk.assertThat
+import assertk.assertions.isEqualTo
+import assertk.assertions.isNull
+import kotlinx.serialization.json.Json
+import org.junit.Test
+import org.signal.core.models.AccountEntropyPool
+import org.signal.core.models.MasterKey
+import org.signal.core.models.ServiceId.ACI
+import org.signal.network.api.RegistrationApiV2.SessionMetadata
+import org.signal.network.api.RegistrationApiV2.SvrCredentials
+import java.util.UUID
+
+class PersistedFlowStateTest {
+
+  private val json = Json { ignoreUnknownKeys = true }
+
+  @Test
+  fun `round-trip serialization with simple backstack`() {
+    val state = PersistedFlowState(
+      backStack = listOf(RegistrationRoute.Welcome, RegistrationRoute.PhoneNumberEntry),
+      sessionMetadata = null,
+      sessionE164 = null,
+      doNotAttemptRecoveryPassword = false
+    )
+
+    val encoded = json.encodeToString(PersistedFlowState.serializer(), state)
+    val decoded = json.decodeFromString(PersistedFlowState.serializer(), encoded)
+
+    assertThat(decoded).isEqualTo(state)
+  }
+
+  @Test
+  fun `round-trip serialization with nested Permissions route`() {
+    val state = PersistedFlowState(
+      backStack = listOf(
+        RegistrationRoute.Welcome,
+        RegistrationRoute.Permissions(nextRoute = RegistrationRoute.PhoneNumberEntry),
+        RegistrationRoute.PhoneNumberEntry
+      ),
+      sessionMetadata = null,
+      sessionE164 = "+15551234567",
+      doNotAttemptRecoveryPassword = false
+    )
+
+    val encoded = json.encodeToString(PersistedFlowState.serializer(), state)
+    val decoded = json.decodeFromString(PersistedFlowState.serializer(), encoded)
+
+    assertThat(decoded).isEqualTo(state)
+  }
+
+  @Test
+  fun `round-trip serialization with VerificationCodeEntry`() {
+    val session = SessionMetadata(
+      id = "session-123",
+      nextSms = 1000L,
+      nextCall = 2000L,
+      nextVerificationAttempt = 3000L,
+      allowedToRequestCode = true,
+      requestedInformation = listOf("pushChallenge"),
+      verified = false
+    )
+
+    val state = PersistedFlowState(
+      backStack = listOf(
+        RegistrationRoute.Welcome,
+        RegistrationRoute.Permissions(nextRoute = RegistrationRoute.PhoneNumberEntry),
+        RegistrationRoute.PhoneNumberEntry,
+        RegistrationRoute.VerificationCodeEntry
+      ),
+      sessionMetadata = session,
+      sessionE164 = "+15551234567",
+      doNotAttemptRecoveryPassword = false,
+      smsVerificationCodeRequest = VerificationCodeRequest("+15551234567", 1_700_000_060_000),
+      callVerificationCodeRequest = VerificationCodeRequest("+15551234567", 1_700_000_120_000)
+    )
+
+    val encoded = json.encodeToString(PersistedFlowState.serializer(), state)
+    val decoded = json.decodeFromString(PersistedFlowState.serializer(), encoded)
+
+    assertThat(decoded).isEqualTo(state)
+  }
+
+  @Test
+  fun `round-trip serialization with post-registration routes`() {
+    val state = PersistedFlowState(
+      backStack = listOf(
+        RegistrationRoute.Welcome,
+        RegistrationRoute.PinCreate,
+        RegistrationRoute.ArchiveRestoreSelection.forManualRestore()
+      ),
+      sessionMetadata = null,
+      sessionE164 = "+15551234567",
+      doNotAttemptRecoveryPassword = true
+    )
+
+    val encoded = json.encodeToString(PersistedFlowState.serializer(), state)
+    val decoded = json.decodeFromString(PersistedFlowState.serializer(), encoded)
+
+    assertThat(decoded).isEqualTo(state)
+  }
+
+  @Test
+  fun `round-trip serialization with PinEntryForRegistrationLock`() {
+    val creds = SvrCredentials(username = "user", password = "pass")
+    val state = PersistedFlowState(
+      backStack = listOf(
+        RegistrationRoute.Welcome,
+        RegistrationRoute.PinEntryForRegistrationLock(timeRemaining = 86400000L, svrCredentials = creds)
+      ),
+      sessionMetadata = null,
+      sessionE164 = "+15551234567",
+      doNotAttemptRecoveryPassword = false
+    )
+
+    val encoded = json.encodeToString(PersistedFlowState.serializer(), state)
+    val decoded = json.decodeFromString(PersistedFlowState.serializer(), encoded)
+
+    assertThat(decoded).isEqualTo(state)
+  }
+
+  @Test
+  fun `round-trip serialization with Captcha route`() {
+    val session = SessionMetadata(
+      id = "session-456",
+      nextSms = null,
+      nextCall = null,
+      nextVerificationAttempt = null,
+      allowedToRequestCode = false,
+      requestedInformation = listOf("captcha"),
+      verified = false
+    )
+
+    val state = PersistedFlowState(
+      backStack = listOf(
+        RegistrationRoute.Welcome,
+        RegistrationRoute.PhoneNumberEntry,
+        RegistrationRoute.Captcha(session = session)
+      ),
+      sessionMetadata = session,
+      sessionE164 = "+15551234567",
+      doNotAttemptRecoveryPassword = false
+    )
+
+    val encoded = json.encodeToString(PersistedFlowState.serializer(), state)
+    val decoded = json.decodeFromString(PersistedFlowState.serializer(), encoded)
+
+    assertThat(decoded).isEqualTo(state)
+  }
+
+  @Test
+  fun `round-trip serialization with SignalLoginCredentialEntry`() {
+    val state = PersistedFlowState(
+      backStack = listOf(
+        RegistrationRoute.Welcome,
+        RegistrationRoute.SignalLoginCredentialEntry("a6b284822e3283d07f2391360a4c2b91")
+      ),
+      sessionMetadata = null,
+      sessionE164 = null,
+      doNotAttemptRecoveryPassword = false
+    )
+
+    val encoded = json.encodeToString(PersistedFlowState.serializer(), state)
+    val decoded = json.decodeFromString(PersistedFlowState.serializer(), encoded)
+
+    assertThat(decoded).isEqualTo(state)
+  }
+
+  @Test
+  fun `deserialization ignores unknown keys for forward compatibility`() {
+    val validJson = """{"backStack":[{"type":"org.signal.registration.RegistrationRoute.Welcome"}],"sessionMetadata":null,"sessionE164":null,"doNotAttemptRecoveryPassword":false,"unknownField":"value"}"""
+    val decoded = json.decodeFromString(PersistedFlowState.serializer(), validJson)
+
+    assertThat(decoded.backStack).isEqualTo(listOf(RegistrationRoute.Welcome))
+    assertThat(decoded.sessionMetadata).isNull()
+  }
+
+  @Test
+  fun `toPersistedFlowState captures correct fields`() {
+    val session = SessionMetadata(
+      id = "session-789",
+      nextSms = null,
+      nextCall = null,
+      nextVerificationAttempt = null,
+      allowedToRequestCode = true,
+      requestedInformation = emptyList(),
+      verified = true
+    )
+
+    val flowState = RegistrationFlowState(
+      backStack = listOf(RegistrationRoute.Welcome, RegistrationRoute.PinCreate),
+      sessionMetadata = session,
+      sessionE164 = "+15551234567",
+      submittedVerificationCode = "123456",
+      accountEntropyPool = AccountEntropyPool.generate(),
+      aci = ACI.from(UUID.fromString("3f8b6a90-8f9c-4a3e-9c7d-1f2e3a4b5c6d")),
+      storageCapable = true,
+      isPhoneNumberlessAccount = true,
+      temporaryMasterKey = MasterKey(ByteArray(32)),
+      doNotAttemptRecoveryPassword = true,
+      lastSmsVerificationCodeRequest = VerificationCodeRequest("+15551234567", 12_345L),
+      lastCallVerificationCodeRequest = VerificationCodeRequest("+15551234567", 23_456L)
+    )
+
+    val persisted = flowState.toPersistedFlowState()
+
+    assertThat(persisted.backStack).isEqualTo(flowState.backStack)
+    assertThat(persisted.sessionMetadata).isEqualTo(session)
+    assertThat(persisted.sessionE164).isEqualTo("+15551234567")
+    assertThat(persisted.submittedVerificationCode).isEqualTo("123456")
+    assertThat(persisted.aci).isEqualTo("3f8b6a90-8f9c-4a3e-9c7d-1f2e3a4b5c6d")
+    assertThat(persisted.doNotAttemptRecoveryPassword).isEqualTo(true)
+    assertThat(persisted.storageCapable).isEqualTo(true)
+    assertThat(persisted.phoneNumberlessAccount).isEqualTo(true)
+    assertThat(persisted.smsVerificationCodeRequest).isEqualTo(VerificationCodeRequest("+15551234567", 12_345L))
+    assertThat(persisted.callVerificationCodeRequest).isEqualTo(VerificationCodeRequest("+15551234567", 23_456L))
+  }
+
+  @Test
+  fun `toRegistrationFlowState reconstructs all fields`() {
+    val session = SessionMetadata(
+      id = "session-101",
+      nextSms = null,
+      nextCall = null,
+      nextVerificationAttempt = null,
+      allowedToRequestCode = true,
+      requestedInformation = emptyList(),
+      verified = true
+    )
+
+    val persisted = PersistedFlowState(
+      backStack = listOf(RegistrationRoute.Welcome, RegistrationRoute.PinCreate),
+      sessionMetadata = session,
+      sessionE164 = "+15551234567",
+      submittedVerificationCode = "123456",
+      aci = "3f8b6a90-8f9c-4a3e-9c7d-1f2e3a4b5c6d",
+      doNotAttemptRecoveryPassword = true,
+      storageCapable = true,
+      phoneNumberlessAccount = true,
+      smsVerificationCodeRequest = VerificationCodeRequest("+15551234567", 12_345L),
+      callVerificationCodeRequest = VerificationCodeRequest("+15551234567", 23_456L)
+    )
+
+    val aep = AccountEntropyPool.generate()
+    val masterKey = MasterKey(ByteArray(32))
+
+    val flowState = persisted.toRegistrationFlowState(
+      accountEntropyPool = aep,
+      temporaryMasterKey = masterKey,
+      preExistingRegistrationData = null
+    )
+
+    assertThat(flowState.backStack).isEqualTo(persisted.backStack)
+    assertThat(flowState.sessionMetadata).isEqualTo(session)
+    assertThat(flowState.sessionE164).isEqualTo("+15551234567")
+    assertThat(flowState.submittedVerificationCode).isEqualTo("123456")
+    assertThat(flowState.accountEntropyPool).isEqualTo(aep)
+    assertThat(flowState.aci).isEqualTo(ACI.from(UUID.fromString("3f8b6a90-8f9c-4a3e-9c7d-1f2e3a4b5c6d")))
+    assertThat(flowState.temporaryMasterKey).isEqualTo(masterKey)
+    assertThat(flowState.preExistingRegistrationData).isNull()
+    assertThat(flowState.doNotAttemptRecoveryPassword).isEqualTo(true)
+    assertThat(flowState.storageCapable).isEqualTo(true)
+    assertThat(flowState.isPhoneNumberlessAccount).isEqualTo(true)
+    assertThat(flowState.lastSmsVerificationCodeRequest).isEqualTo(VerificationCodeRequest("+15551234567", 12_345L))
+    assertThat(flowState.lastCallVerificationCodeRequest).isEqualTo(VerificationCodeRequest("+15551234567", 23_456L))
+  }
+}

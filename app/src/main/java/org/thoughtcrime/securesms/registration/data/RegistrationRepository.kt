@@ -9,7 +9,6 @@ import android.app.backup.BackupManager
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
-import androidx.core.app.NotificationManagerCompat
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,19 +16,25 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import org.signal.core.models.AccountEntropyPool
 import org.signal.core.models.MasterKey
 import org.signal.core.models.ServiceId
 import org.signal.core.models.ServiceId.ACI
 import org.signal.core.models.ServiceId.PNI
 import org.signal.core.models.backup.MediaRootBackupKey
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64
+import org.signal.core.util.PinHashUtil
+import org.signal.core.util.crypto.DeviceNameCipher
+import org.signal.core.util.eventbus.EventBus
 import org.signal.core.util.logging.Log
 import org.signal.libsignal.protocol.IdentityKeyPair
 import org.signal.libsignal.protocol.util.KeyHelper
 import org.signal.libsignal.zkgroup.profiles.ProfileKey
+import org.signal.network.NetworkResult
+import org.signal.network.crypto.UnidentifiedAccess
+import org.signal.storage.keyvalue.PhoneNumberPrivacyValues
+import org.signal.storage.protos.LocalRegistrationMetadata
 import org.thoughtcrime.securesms.AppCapabilities
 import org.thoughtcrime.securesms.crypto.PreKeyUtil
 import org.thoughtcrime.securesms.crypto.ProfileKeyUtil
@@ -38,25 +43,22 @@ import org.thoughtcrime.securesms.crypto.storage.PreKeyMetadataStore
 import org.thoughtcrime.securesms.crypto.storage.SignalServiceAccountDataStoreImpl
 import org.thoughtcrime.securesms.database.IdentityTable
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.database.model.databaseprotos.LocalRegistrationMetadata
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.gcm.FcmUtil
 import org.thoughtcrime.securesms.jobmanager.runJobBlocking
+import org.thoughtcrime.securesms.jobs.CheckKeyTransparencyJob
 import org.thoughtcrime.securesms.jobs.DirectoryRefreshJob
 import org.thoughtcrime.securesms.jobs.PreKeysSyncJob
 import org.thoughtcrime.securesms.jobs.RefreshOwnProfileJob
 import org.thoughtcrime.securesms.jobs.RotateCertificateJob
-import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.net.SignalNetwork
-import org.thoughtcrime.securesms.notifications.NotificationIds
 import org.thoughtcrime.securesms.pin.Svr3Migration
 import org.thoughtcrime.securesms.pin.SvrRepository
 import org.thoughtcrime.securesms.pin.SvrWrongPinException
 import org.thoughtcrime.securesms.profiles.AvatarHelper
 import org.thoughtcrime.securesms.push.AccountManagerFactory
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.registration.data.LocalRegistrationMetadataUtil.getAciIdentityKeyPair
 import org.thoughtcrime.securesms.registration.data.LocalRegistrationMetadataUtil.getAciPreKeyCollection
 import org.thoughtcrime.securesms.registration.data.LocalRegistrationMetadataUtil.getPniIdentityKeyPair
@@ -68,17 +70,13 @@ import org.thoughtcrime.securesms.registration.data.network.RegistrationSessionC
 import org.thoughtcrime.securesms.registration.data.network.RegistrationSessionResult
 import org.thoughtcrime.securesms.registration.data.network.VerificationCodeRequestResult
 import org.thoughtcrime.securesms.registration.fcm.PushChallengeRequest
-import org.thoughtcrime.securesms.registration.secondary.DeviceNameCipher
 import org.thoughtcrime.securesms.registration.viewmodel.SvrAuthCredentialSet
 import org.thoughtcrime.securesms.service.DirectoryRefreshListener
 import org.thoughtcrime.securesms.service.RotateSignedPreKeyListener
-import org.thoughtcrime.securesms.util.TextSecurePreferences
-import org.whispersystems.signalservice.api.NetworkResult
 import org.whispersystems.signalservice.api.SvrNoDataException
 import org.whispersystems.signalservice.api.account.AccountAttributes
+import org.whispersystems.signalservice.api.account.DeviceAttributes
 import org.whispersystems.signalservice.api.account.PreKeyCollection
-import org.whispersystems.signalservice.api.crypto.UnidentifiedAccess
-import org.whispersystems.signalservice.api.kbs.PinHashUtil
 import org.whispersystems.signalservice.api.link.TransferArchiveResponse
 import org.whispersystems.signalservice.api.push.SignalServiceAddress
 import org.whispersystems.signalservice.api.registration.RegistrationApi
@@ -96,6 +94,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.coroutineContext
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
 
 /**
@@ -146,7 +145,7 @@ object RegistrationRepository {
    * Queries, and creates if needed, the local profile key.
    */
   @JvmStatic
-  suspend fun getProfileKey(e164: String): ProfileKey = withContext(Dispatchers.IO) {
+  suspend fun getProfileKey(e164: String): ProfileKey = withContext(Dispatchers.Default) {
     // TODO [regv2]: make creation more explicit instead of hiding it in this getter
     val recipientTable = SignalDatabase.recipients
     val recipient = recipientTable.getByE164(e164)
@@ -168,9 +167,10 @@ object RegistrationRepository {
   @JvmStatic
   suspend fun registerAccountLocally(context: Context, data: LocalRegistrationMetadata) = withContext(Dispatchers.IO) {
     Log.v(TAG, "registerAccountLocally()")
-    if (data.linkedDeviceInfo != null) {
-      SignalStore.account.deviceId = data.linkedDeviceInfo.deviceId
-      SignalStore.account.deviceName = data.linkedDeviceInfo.deviceName
+    val linkedDeviceInfo = data.linkedDeviceInfo
+    if (linkedDeviceInfo != null) {
+      SignalStore.account.deviceId = linkedDeviceInfo.deviceId
+      SignalStore.account.deviceName = linkedDeviceInfo.deviceName
     }
 
     val aciIdentityKeyPair = data.getAciIdentityKeyPair()
@@ -183,6 +183,7 @@ object RegistrationRepository {
     val aci: ACI = ACI.parseOrThrow(data.aci)
     val pni: PNI = PNI.parseOrThrow(data.pni)
     val hasPin: Boolean = data.hasPin
+    val isAciChanged: Boolean = SignalStore.account.aci != aci
 
     SignalStore.account.setAci(aci)
     SignalStore.account.setPni(pni)
@@ -209,6 +210,7 @@ object RegistrationRepository {
     recipientTable.markRegisteredOrThrow(selfId, aci)
     recipientTable.linkIdsForSelf(aci, pni, data.e164)
     recipientTable.setProfileKey(selfId, ProfileKey(data.profileKey.toByteArray()))
+    SignalStore.account.notSyncedRotatedSelfProfileKey = null
 
     AppDependencies.recipientCache.clearSelf()
 
@@ -220,28 +222,30 @@ object RegistrationRepository {
     saveOwnIdentityKey(selfId, aci, aciProtocolStore, now)
     saveOwnIdentityKey(selfId, pni, pniProtocolStore, now)
 
-    if (data.linkedDeviceInfo != null) {
-      if (data.linkedDeviceInfo.accountEntropyPool != null) {
-        SignalStore.account.setAccountEntropyPoolFromPrimaryDevice(AccountEntropyPool(data.linkedDeviceInfo.accountEntropyPool))
+    if (linkedDeviceInfo != null) {
+      linkedDeviceInfo.accountEntropyPool?.let {
+        SignalStore.account.setAccountEntropyPoolFromPrimaryDevice(AccountEntropyPool(it))
       }
 
-      if (data.linkedDeviceInfo.mediaRootBackupKey != null) {
-        SignalStore.backup.mediaRootBackupKey = MediaRootBackupKey(data.linkedDeviceInfo.mediaRootBackupKey.toByteArray())
+      linkedDeviceInfo.mediaRootBackupKey?.let {
+        SignalStore.backup.mediaRootBackupKey = MediaRootBackupKey(it.toByteArray())
       }
     }
 
     SignalStore.account.setServicePassword(data.servicePassword)
-    SignalStore.account.setRegistered(true)
-    TextSecurePreferences.setPromptedPushRegistration(context, true)
-    TextSecurePreferences.setUnauthorizedReceived(context, false)
-    NotificationManagerCompat.from(context).cancel(NotificationIds.UNREGISTERED_NOTIFICATION_ID)
+    SignalStore.account.setRegistered(registered = true, isAciChanged = isAciChanged)
+    SignalStore.registration.hasPromptedPushRegistration = true
+    SignalStore.account.isUnauthorizedReceived = false
 
-    val masterKey = if (data.masterKey != null) MasterKey(data.masterKey.toByteArray()) else null
+    val masterKey = data.masterKey?.let { MasterKey(it.toByteArray()) }
     SvrRepository.onRegistrationComplete(masterKey, data.pin, hasPin, data.reglockEnabled, SignalStore.account.restoredAccountEntropyPool)
 
     AppDependencies.resetNetwork()
     AppDependencies.startNetwork()
     PreKeysSyncJob.enqueue()
+
+    recipientTable.clearSelfKeyTransparencyData()
+    CheckKeyTransparencyJob.enqueueIfNecessary(addDelay = true)
 
     val jobManager = AppDependencies.jobManager
 
@@ -414,7 +418,7 @@ object RegistrationRepository {
     Log.v(TAG, "registerAccount()")
     val api: RegistrationApi = AccountManagerFactory.getInstance().createUnauthenticated(context, registrationData.e164, SignalServiceAddress.DEFAULT_DEVICE_ID, registrationData.password).registrationApi
 
-    val universalUnidentifiedAccess: Boolean = TextSecurePreferences.isUniversalUnidentifiedAccess(context)
+    val universalUnidentifiedAccess: Boolean = SignalStore.settings.isUniversalUnidentifiedAccess
     val unidentifiedAccessKey: ByteArray = UnidentifiedAccess.deriveAccessKeyFrom(registrationData.profileKey)
 
     val masterKey: MasterKey?
@@ -456,10 +460,10 @@ object RegistrationRepository {
     val result: NetworkResult<AccountRegistrationResult> = api.registerAccount(sessionId, registrationData.recoveryPassword, accountAttributes, aciPreKeyCollection, pniPreKeyCollection, registrationData.fcmToken, true)
       .map { accountRegistrationResponse: VerifyAccountResponse ->
         AccountRegistrationResult(
-          uuid = accountRegistrationResponse.uuid,
-          pni = accountRegistrationResponse.pni,
+          uuid = accountRegistrationResponse.uuid!!,
+          pni = accountRegistrationResponse.pni!!,
           storageCapable = accountRegistrationResponse.storageCapable,
-          number = accountRegistrationResponse.number,
+          number = accountRegistrationResponse.number!!,
           masterKey = masterKey,
           pin = pin,
           aciPreKeyCollection = aciPreKeyCollection,
@@ -483,23 +487,46 @@ object RegistrationRepository {
     val aci = message.aciBinary?.let { ACI.parseOrThrow(it) } ?: ACI.parseOrThrow(message.aci)
     val pni = message.pniBinary?.let { PNI.parseOrThrow(it) } ?: PNI.parseOrThrow(message.pni)
 
-    val universalUnidentifiedAccess = TextSecurePreferences.isUniversalUnidentifiedAccess(context)
-    val unidentifiedAccessKey = UnidentifiedAccess.deriveAccessKeyFrom(registrationData.profileKey)
+    return registerAsLinkedDevice(
+      context = context,
+      deviceName = deviceName,
+      number = message.number!!,
+      provisioningCode = message.provisioningCode!!,
+      aci = aci,
+      pni = pni,
+      accountEntropyPool = AccountEntropyPool(message.accountEntropyPool!!),
+      registrationData = registrationData,
+      aciIdentityKeyPair = aciIdentityKeyPair,
+      pniIdentityKeyPair = pniIdentityKeyPair
+    )
+  }
 
+  /**
+   * Registers this device as a linked (secondary) device using discrete fields rather than a raw
+   * [ProvisionMessage]. This is the form used by the regv5 registration module, which works with a
+   * decoupled provisioning message.
+   */
+  @WorkerThread
+  fun registerAsLinkedDevice(
+    context: Context,
+    deviceName: String,
+    number: String,
+    provisioningCode: String,
+    aci: ACI,
+    pni: PNI,
+    accountEntropyPool: AccountEntropyPool,
+    registrationData: RegistrationData,
+    aciIdentityKeyPair: IdentityKeyPair,
+    pniIdentityKeyPair: IdentityKeyPair
+  ): NetworkResult<RegisterAsLinkedDeviceResponse> {
     val encryptedDeviceName = DeviceNameCipher.encryptDeviceName(deviceName.toByteArray(StandardCharsets.UTF_8), aciIdentityKeyPair)
 
-    val accountAttributes = AccountAttributes(
-      signalingKey = null,
-      registrationId = getRegistrationId(),
+    val deviceAttributes = DeviceAttributes(
       fetchesMessages = registrationData.fcmToken == null,
-      registrationLock = null,
-      unidentifiedAccessKey = unidentifiedAccessKey,
-      unrestrictedUnidentifiedAccess = universalUnidentifiedAccess,
-      capabilities = AppCapabilities.getCapabilities(false),
-      discoverableByPhoneNumber = false,
-      name = Base64.encodeWithPadding(encryptedDeviceName),
+      registrationId = getRegistrationId(),
       pniRegistrationId = getPniRegistrationId(),
-      recoveryPassword = null
+      name = Base64.encodeWithPadding(encryptedDeviceName),
+      capabilities = AppCapabilities.getCapabilities(false)
     )
 
     val aciPreKeys = generateSignedAndLastResortPreKeys(aciIdentityKeyPair, SignalStore.account.aciPreKeys)
@@ -507,18 +534,18 @@ object RegistrationRepository {
 
     return AccountManagerFactory
       .getInstance()
-      .createUnauthenticated(context, message.number!!, -1, registrationData.password)
+      .createUnauthenticated(context, number, -1, registrationData.password)
       .registrationApi
-      .registerAsSecondaryDevice(message.provisioningCode!!, accountAttributes, aciPreKeys, pniPreKeys, registrationData.fcmToken)
-      .map { respone ->
+      .registerAsSecondaryDevice(provisioningCode, deviceAttributes, aciPreKeys, pniPreKeys, registrationData.fcmToken)
+      .map { response ->
         RegisterAsLinkedDeviceResponse(
-          deviceId = respone.deviceId.toInt(),
+          deviceId = response.deviceId.toInt(),
           accountRegistrationResult = AccountRegistrationResult(
             uuid = aci.toString(),
             pni = pni.toString(),
             storageCapable = false,
-            number = message.number!!,
-            masterKey = MasterKey(message.masterKey!!.toByteArray()),
+            number = number,
+            masterKey = accountEntropyPool.deriveMasterKey(),
             pin = null,
             aciPreKeyCollection = aciPreKeys,
             pniPreKeyCollection = pniPreKeys,
@@ -531,8 +558,7 @@ object RegistrationRepository {
   private suspend fun createSessionAndBlockForPushChallenge(accountManager: RegistrationApi, fcmToken: String, mcc: String?, mnc: String?): NetworkResult<RegistrationSessionMetadataResponse> = withContext(Dispatchers.IO) {
     // TODO [regv2]: do not use event bus nor latch
     val subscriber = PushTokenChallengeSubscriber()
-    val eventBus = EventBus.getDefault()
-    eventBus.register(subscriber)
+    val subscription = EventBus.default.subscribe<PushChallengeRequest.PushChallengeEvent>(handler = subscriber::onChallengeEvent)
 
     try {
       Log.d(TAG, "Requesting a registration session with FCM token…")
@@ -542,7 +568,6 @@ object RegistrationRepository {
       }
 
       val receivedPush = subscriber.latch.await(PUSH_REQUEST_TIMEOUT, TimeUnit.MILLISECONDS)
-      eventBus.unregister(subscriber)
 
       if (receivedPush) {
         val challenge = subscriber.challenge
@@ -560,6 +585,8 @@ object RegistrationRepository {
     } catch (ex: Exception) {
       Log.w(TAG, "Exception caught, but the earlier try block should have caught it?", ex)
       return@withContext NetworkResult.ApplicationError<RegistrationSessionMetadataResponse>(ex)
+    } finally {
+      subscription.unsubscribe()
     }
   }
 
@@ -667,16 +694,17 @@ object RegistrationRepository {
     return Recipient.self().profileName.isEmpty || !AvatarHelper.hasAvatar(AppDependencies.application, Recipient.self().id)
   }
 
-  suspend fun waitForLinkAndSyncBackupDetails(maxWaitTime: Duration = 60.seconds): TransferArchiveResponse? {
+  suspend fun waitForLinkAndSyncBackupDetails(maxWaitTime: Duration = 1.hours): TransferArchiveResponse? {
     val startTime = System.currentTimeMillis()
     var timeRemaining = maxWaitTime.inWholeMilliseconds
 
     while (timeRemaining > 0 && coroutineContext.isActive) {
       Log.d(TAG, "[waitForLinkAndSyncBackupDetails] Willing to wait for $timeRemaining ms...")
 
-      when (val result = SignalNetwork.linkDevice.waitForPrimaryDevice(timeout = 60.seconds)) {
+      when (val result = SignalNetwork.linkDeviceApi.waitForPrimaryDevice(timeout = 60.seconds)) {
         is NetworkResult.Success -> {
-          Log.i(TAG, "[waitForLinkAndSyncBackupDetails] Transfer archive data provided by primary")
+          // The primary has responded: either with an archive location, or an error telling us not to expect one.
+          Log.i(TAG, "[waitForLinkAndSyncBackupDetails] Primary responded (hasArchive=${result.result.hasArchive}, error=${result.result.error})")
           return result.result
         }
         is NetworkResult.ApplicationError -> {
@@ -693,10 +721,9 @@ object RegistrationRepository {
               return null
             }
             429 -> {
-              Log.w(TAG, "[waitForLinkAndSyncBackupDetails] Hit a rate-limit. Will try to wait again after delay: ${result.retryAfter()}.")
-              result.retryAfter()?.let { retryAfter ->
-                delay(retryAfter)
-              }
+              val retryAfter = result.retryAfter() ?: 5.seconds
+              Log.w(TAG, "[waitForLinkAndSyncBackupDetails] Hit a rate-limit. Will try to wait again after delay: $retryAfter.")
+              delay(retryAfter)
             }
             else -> {
               Log.w(TAG, "[waitForLinkAndSyncBackupDetails] Hit an unknown status code of ${result.code}. Will try to wait again.")
@@ -727,7 +754,6 @@ object RegistrationRepository {
     var challenge: String? = null
     val latch = CountDownLatch(1)
 
-    @Subscribe
     fun onChallengeEvent(pushChallengeEvent: PushChallengeRequest.PushChallengeEvent) {
       Log.d(TAG, "Push challenge received!")
       challenge = pushChallengeEvent.challenge

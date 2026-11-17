@@ -6,6 +6,7 @@
 package org.thoughtcrime.securesms.components.settings.app.changenumber
 
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.keyboardType
 import org.thoughtcrime.securesms.lock.v2.PinKeyboardType
 import org.thoughtcrime.securesms.registration.data.network.Challenge
 import org.thoughtcrime.securesms.registration.data.network.VerificationCodeRequestResult
@@ -43,8 +44,7 @@ data class ChangeNumberState(
 )
 
 sealed interface ChangeNumberOutcome {
-  data object RecoveryPasswordWorked : ChangeNumberOutcome
-  data object VerificationCodeWorked : ChangeNumberOutcome
+  data object Succeeded : ChangeNumberOutcome
   class ChangeNumberRequestOutcome(val result: VerificationCodeRequestResult) : ChangeNumberOutcome
 }
 

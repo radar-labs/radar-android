@@ -9,16 +9,24 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.media3.common.MimeTypes;
 
-import org.greenrobot.eventbus.EventBus;
+import org.signal.core.models.database.AttachmentId;
+import org.signal.core.models.media.TransformProperties;
+import org.signal.core.util.MemoryFileDescriptor.MemoryFileException;
+import org.signal.core.util.bitmaps.BitmapDecodingException;
+import org.signal.core.util.crypto.AttachmentSecret;
+import org.signal.core.util.crypto.AttachmentSecretProvider;
+import org.signal.core.util.crypto.ModernDecryptingPartInputStream;
+import org.signal.core.util.crypto.ModernEncryptingPartOutputStream;
+import org.signal.core.util.eventbus.EventBus;
 import org.signal.core.util.logging.Log;
+import org.signal.glide.decryptableuri.DecryptableUri;
+import org.signal.mediasend.MediaConstraints;
+import org.signal.core.models.media.SentMediaQuality;
+import org.signal.remoteconfig.RemoteConfig;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.attachments.Attachment;
-import org.thoughtcrime.securesms.attachments.AttachmentId;
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment;
-import org.thoughtcrime.securesms.crypto.AttachmentSecret;
-import org.thoughtcrime.securesms.crypto.AttachmentSecretProvider;
-import org.thoughtcrime.securesms.crypto.ModernDecryptingPartInputStream;
-import org.thoughtcrime.securesms.crypto.ModernEncryptingPartOutputStream;
+import org.thoughtcrime.securesms.crypto.AppAttachmentSecretStore;
 import org.thoughtcrime.securesms.database.AttachmentTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.events.PartProgressEvent;
@@ -26,24 +34,20 @@ import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobmanager.JsonJobData;
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint;
 import org.thoughtcrime.securesms.jobmanager.persistence.JobSpec;
-import org.thoughtcrime.securesms.mms.DecryptableUri;
-import org.thoughtcrime.securesms.mms.MediaConstraints;
 import org.thoughtcrime.securesms.mms.MediaStream;
 import org.thoughtcrime.securesms.mms.MmsException;
-import org.thoughtcrime.securesms.mms.SentMediaQuality;
+import org.thoughtcrime.securesms.mms.PushMediaConstraints;
 import org.thoughtcrime.securesms.service.AttachmentProgressService;
 import org.thoughtcrime.securesms.transport.UndeliverableMessageException;
-import org.thoughtcrime.securesms.util.BitmapDecodingException;
 import org.thoughtcrime.securesms.util.ImageCompressionUtil;
 import org.thoughtcrime.securesms.util.MediaUtil;
-import org.thoughtcrime.securesms.util.MemoryFileDescriptor.MemoryFileException;
-import org.thoughtcrime.securesms.util.RemoteConfig;
 import org.thoughtcrime.securesms.video.StreamingTranscoder;
 import org.thoughtcrime.securesms.video.TranscoderOptions;
 import org.thoughtcrime.securesms.video.exceptions.VideoPostProcessingException;
 import org.thoughtcrime.securesms.video.exceptions.VideoSourceException;
 import org.thoughtcrime.securesms.video.interfaces.TranscoderCancelationSignal;
 import org.thoughtcrime.securesms.video.postprocessing.Mp4FaststartPostProcessor;
+import org.thoughtcrime.securesms.video.videoconverter.exceptions.CodecUnavailableException;
 import org.thoughtcrime.securesms.video.videoconverter.exceptions.EncodingException;
 
 import java.io.ByteArrayInputStream;
@@ -73,7 +77,7 @@ public final class AttachmentCompressionJob extends BaseJob {
                                                         int mmsSubscriptionId)
   {
     return new AttachmentCompressionJob(databaseAttachment.attachmentId,
-                                        MediaUtil.isVideo(databaseAttachment) && MediaConstraints.isVideoTranscodeAvailable(),
+                                        MediaUtil.isVideo(databaseAttachment) && !databaseAttachment.videoGif && MediaConstraints.isVideoTranscodeAvailable(),
                                         mms,
                                         mmsSubscriptionId);
   }
@@ -149,11 +153,11 @@ public final class AttachmentCompressionJob extends BaseJob {
       throw new UndeliverableMessageException("Cannot find the specified attachment.");
     }
 
-    AttachmentTable.TransformProperties transformProperties = databaseAttachment.transformProperties;
+    TransformProperties transformProperties = databaseAttachment.transformProperties;
 
     if (transformProperties == null) {
       Log.i(TAG, "TransformProperties were null! Using empty TransformProperties.");
-      transformProperties = AttachmentTable.TransformProperties.empty();
+      transformProperties = TransformProperties.empty();
     }
 
     if (transformProperties.shouldSkipTransform()) {
@@ -161,7 +165,7 @@ public final class AttachmentCompressionJob extends BaseJob {
       return;
     }
 
-    MediaConstraints mediaConstraints = MediaConstraints.getPushMediaConstraints(SentMediaQuality.fromCode(transformProperties.sentMediaQuality));
+    MediaConstraints mediaConstraints = new PushMediaConstraints(SentMediaQuality.fromCode(transformProperties.sentMediaQuality));
 
     compress(database, mediaConstraints, databaseAttachment);
   }
@@ -194,16 +198,16 @@ public final class AttachmentCompressionJob extends BaseJob {
       } else if (MediaUtil.isVideo(attachment)) {
         Log.i(TAG, "Compressing video.");
         attachment = transcodeVideoIfNeededToDatabase(context, attachmentDatabase, attachment, constraints, EventBus.getDefault(), this::isCanceled);
-        if (!constraints.isSatisfied(context, attachment)) {
+        if (!isConstraintsSatisfied(context, attachment, constraints)) {
           throw new UndeliverableMessageException("Size constraints could not be met on video!");
         }
-      } else if (constraints.canResize(attachment)) {
+      } else if (constraints.canResize(attachment.contentType)) {
         Log.i(TAG, "Compressing image.");
         try (MediaStream converted = compressImage(context, attachment, constraints)) {
           attachmentDatabase.updateAttachmentData(attachment, converted);
         }
         attachmentDatabase.markAttachmentAsTransformed(attachmentId, false);
-      } else if (constraints.isSatisfied(context, attachment)) {
+      } else if (isConstraintsSatisfied(context, attachment, constraints)) {
         Log.i(TAG, "Not compressing.");
         attachmentDatabase.markAttachmentAsTransformed(attachmentId, false);
       } else {
@@ -227,7 +231,7 @@ public final class AttachmentCompressionJob extends BaseJob {
       throw new UndeliverableMessageException("Job is canceled!");
     }
 
-    AttachmentTable.TransformProperties transformProperties = attachment.transformProperties;
+    TransformProperties transformProperties = attachment.transformProperties;
 
     boolean allowSkipOnFailure = false;
 
@@ -248,19 +252,21 @@ public final class AttachmentCompressionJob extends BaseJob {
           throw new UndeliverableMessageException("Cannot get media data source for attachment.");
         }
 
-        TranscoderOptions options = null;
+        TranscoderOptions options   = null;
+        boolean           muteAudio = false;
         if (transformProperties != null) {
           allowSkipOnFailure = !transformProperties.getVideoEdited();
+          muteAudio          = transformProperties.videoMuted;
           if (transformProperties.videoTrim) {
             options = new TranscoderOptions(transformProperties.videoTrimStartTimeUs, transformProperties.videoTrimEndTimeUs);
           }
         }
 
-        StreamingTranscoder transcoder = new StreamingTranscoder(dataSource, options, constraints.getVideoTranscodingSettings(), constraints.getCompressedVideoMaxSize(context), RemoteConfig.allowAudioRemuxing());
+        StreamingTranscoder transcoder = new StreamingTranscoder(dataSource, options, constraints.getVideoTranscodingSettings(), AttachmentUploadJob.getMaxPlaintextSize(), RemoteConfig.allowAudioRemuxing(), muteAudio);
 
         if (transcoder.isTranscodeRequired()) {
           Log.i(TAG, "Compressing with streaming muxer");
-          AttachmentSecret attachmentSecret = AttachmentSecretProvider.getInstance(context).getOrCreateAttachmentSecret();
+          AttachmentSecret attachmentSecret = AttachmentSecretProvider.getInstance(context, AppAttachmentSecretStore.INSTANCE).getOrCreateAttachmentSecret();
 
           File file = AttachmentTable.newDataFile(context);
           file.deleteOnExit();
@@ -279,6 +285,11 @@ public final class AttachmentCompressionJob extends BaseJob {
                                                           percent));
               }, outputStream, cancelationSignal);
             } catch (EncodingException e) {
+              Log.w(TAG, "Video encoding failed"
+                  + " (hdr=" + e.isHdrInput
+                  + ", toneMap=" + e.toneMapApplied
+                  + ", decoder=" + e.decoderName
+                  + ", encoder=" + e.encoderName + ")", e);
               throw new UndeliverableMessageException("Failure during encoding", e);
             }
 
@@ -332,6 +343,16 @@ public final class AttachmentCompressionJob extends BaseJob {
         }
       }
     } catch (VideoSourceException | EncodingException | MemoryFileException e) {
+      if (e instanceof EncodingException) {
+        EncodingException ee = (EncodingException) e;
+        Log.w(TAG, "Video encoding failed"
+            + " (hdr=" + ee.isHdrInput
+            + ", toneMap=" + ee.toneMapApplied
+            + ", decoder=" + ee.decoderName
+            + ", encoder=" + ee.encoderName + ")", e);
+      } else {
+        Log.w(TAG, "Video transcode failed: " + e.getClass().getSimpleName(), e);
+      }
       if (attachment.size > constraints.getVideoMaxSize()) {
         throw new UndeliverableMessageException("Duration not found, attachment too large to skip transcode", e);
       } else {
@@ -342,8 +363,14 @@ public final class AttachmentCompressionJob extends BaseJob {
         }
       }
     } catch (IOException | MmsException e) {
+      if (e instanceof CodecUnavailableException) {
+        Log.w(TAG, "All video codecs exhausted for this content: " + e.getMessage(), e);
+      } else {
+        Log.w(TAG, "Video transcode failed: " + e.getClass().getSimpleName(), e);
+      }
       throw new UndeliverableMessageException("Failed to transcode", e);
     } catch (RuntimeException e) {
+      Log.w(TAG, "Video transcode failed with runtime exception", e);
       if (e.getCause() instanceof IOException) {
         throw new UndeliverableMessageException("Failed to transcode", e);
       } else {
@@ -351,6 +378,17 @@ public final class AttachmentCompressionJob extends BaseJob {
       }
     }
     return attachment;
+  }
+
+  private static boolean isConstraintsSatisfied(@NonNull Context context,
+                                                @NonNull Attachment attachment,
+                                                @NonNull MediaConstraints mediaConstraints)
+  {
+    if (attachment.getUri() == null || attachment.contentType == null) {
+      return false;
+    }
+
+    return mediaConstraints.isSatisfied(context, attachment.getUri(), attachment.contentType, attachment.size);
   }
 
   /**
@@ -372,13 +410,13 @@ public final class AttachmentCompressionJob extends BaseJob {
     ImageCompressionUtil.Result result = null;
 
     try {
-      for (int size : mediaConstraints.getImageDimensionTargets(context)) {
+      for (int size : mediaConstraints.getImageDimensionTargets()) {
         result = ImageCompressionUtil.compressWithinConstraints(context,
                                                                 attachment.contentType,
                                                                 new DecryptableUri(uri),
                                                                 size,
-                                                                mediaConstraints.getImageMaxSize(context),
-                                                                mediaConstraints.getImageCompressionQualitySetting(context));
+                                                                mediaConstraints.getImageMaxSize(),
+                                                                mediaConstraints.getImageCompressionQualitySetting());
         if (result != null) {
           break;
         }

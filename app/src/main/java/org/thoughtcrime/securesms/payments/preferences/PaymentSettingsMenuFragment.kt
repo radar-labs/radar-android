@@ -23,7 +23,7 @@ import org.thoughtcrime.securesms.help.HelpFragment
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.payments.PaymentSnippetRefresher
 import org.thoughtcrime.securesms.payments.backup.RecoveryPhraseStates
-import org.thoughtcrime.securesms.util.SpanUtil
+import org.signal.core.ui.util.SpanUtil
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
 import org.whispersystems.signalservice.api.payments.Money

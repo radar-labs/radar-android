@@ -1,23 +1,37 @@
 package org.thoughtcrime.securesms.conversation.mutiselect.forward
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
+import org.signal.core.ui.enableEdgeToEdge
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.components.FullScreenDialogFragment
-import org.thoughtcrime.securesms.conversation.mutiselect.forward.MultiselectForwardFragment.Companion.DIALOG_TITLE
 import org.thoughtcrime.securesms.stories.Stories
 import org.thoughtcrime.securesms.util.fragments.findListener
 
-class MultiselectForwardFullScreenDialogFragment : FullScreenDialogFragment(), MultiselectForwardFragment.Callback {
-  override fun getTitle(): Int = requireArguments().getInt(DIALOG_TITLE)
+class MultiselectForwardFullScreenDialogFragment : DialogFragment(), MultiselectForwardFragment.Callback {
 
-  override fun getDialogLayoutResource(): Int = R.layout.fragment_container
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    setStyle(STYLE_NO_FRAME, R.style.Signal_DayNight_Dialog_FullScreen)
+  }
+
+  override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
+    return super.onGetLayoutInflater(savedInstanceState).also {
+      dialog?.window?.enableEdgeToEdge()
+    }
+  }
 
   override fun onFinishForwardAction() {
     findListener<Callback>()?.onFinishForwardAction()
+  }
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    return inflater.inflate(R.layout.multiselect_forward_activity, container, false)
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,10 +51,6 @@ class MultiselectForwardFullScreenDialogFragment : FullScreenDialogFragment(), M
 
   override fun getStorySendRequirements(): Stories.MediaTransform.SendRequirements? {
     return findListener<Callback>()?.getStorySendRequirements()
-  }
-
-  override fun getContainer(): ViewGroup {
-    return requireView().findViewById(R.id.full_screen_dialog_content) as ViewGroup
   }
 
   override fun setResult(bundle: Bundle) {

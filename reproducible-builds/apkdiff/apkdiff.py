@@ -1,40 +1,25 @@
 #! /usr/bin/env python3
 
+import difflib
+import subprocess
 import sys
-import re
 import logging
-from xml.etree.ElementTree import Element
 from zipfile import ZipFile
-import xml.etree.ElementTree as ET
-from dataclasses import dataclass
-from typing import Optional
-from collections import defaultdict
 
-from androguard.core import axml
-from loguru import logger
+from loguru import logger  # ty:ignore[unresolved-import]
+from lxml import etree  # ty:ignore[unresolved-import]
+from androguard.core.axml import AXMLPrinter  # ty:ignore[unresolved-import]
 
-from util import deep_compare, format_differences
-from tqdm import tqdm
-
-logging.getLogger("deepdiff").setLevel(logging.ERROR)
-
+logging.getLogger("apkdiff").setLevel(logging.ERROR)
 logger.disable("androguard")
 
 
-@dataclass
-class XmlDifference:
-    """Represents a difference between two XML elements."""
-
-    diff_type: str  # "tag", "attribute", "text", "child_count"
-    path: str
-    attribute_name: Optional[str] = None
-    first_value: Optional[str] = None
-    second_value: Optional[str] = None
-    child_tag: Optional[str] = None
+def android_attr(name: str) -> str:
+    return f"{{http://schemas.android.com/apk/res/android}}{name}"
 
 
+# Related to app signing. Not expected to be present in unsigned builds. Doesn't affect app code.
 IGNORE_FILES = [
-    # Related to app signing. Not expected to be present in unsigned builds. Doesn"t affect app code.
     "META-INF/MANIFEST.MF",
     "META-INF/CERTIFIC.SF",
     "META-INF/CERTIFIC.RSA",
@@ -46,7 +31,20 @@ IGNORE_FILES = [
     "stamp-cert-sha256",
 ]
 
-ALLOWED_ARSC_DIFF_PATHS = [".res1"]
+
+# Play Store may add or modify attributes as part of the bundle process. Doesn't affect app code.
+MANIFEST_IGNORE_ATTRIBUTES: dict[str, set[str]] = {
+    "uses-sdk": {
+        android_attr("minSdkVersion"),
+    }
+}
+
+# Play Store may add or modify metadata as part of the bundle process. Doesn't affect app code.
+MANIFEST_IGNORE_METADATA: list[str] = [
+    "com.android.stamp.source",
+    "com.android.stamp.type",
+    "com.android.vending.derived.apk.id",
+]
 
 
 def compare(apk1, apk2) -> bool:
@@ -56,7 +54,23 @@ def compare(apk1, apk2) -> bool:
     zip1 = ZipFile(apk1, "r")
     zip2 = ZipFile(apk2, "r")
 
-    return compare_entry_names(zip1, zip2) and compare_entry_contents(zip1, zip2) == True
+    entry_names = compare_entry_names(zip1, zip2)
+    entry_contents = compare_entry_contents(zip1, zip2)
+
+    # Some splits (e.g. ABI config splits) contain no resource table. Compare when both APKs have one, treat both
+    # missing as a match, and fail if only one of them has it.
+    has_arsc_1 = "resources.arsc" in zip1.namelist()
+    has_arsc_2 = "resources.arsc" in zip2.namelist()
+
+    if has_arsc_1 and has_arsc_2:
+        resources = compare_resources_arsc(apk1, apk2)
+    elif has_arsc_1 != has_arsc_2:
+        print("resources.arsc is present in only one of the APKs!")
+        resources = False
+    else:
+        resources = True
+
+    return entry_names and entry_contents and resources
 
 
 def compare_entry_names(zip1: ZipFile, zip2: ZipFile) -> bool:
@@ -70,37 +84,68 @@ def compare_entry_names(zip1: ZipFile, zip2: ZipFile) -> bool:
         while ignoreFile in name_list_sorted_2:
             name_list_sorted_2.remove(ignoreFile)
 
+    success = True
     if len(name_list_sorted_1) != len(name_list_sorted_2):
-        print("Manifest lengths differ!")
+        print(
+            f"Manifest lengths differ! {len(name_list_sorted_1)} vs {len(name_list_sorted_2)}"
+        )
+        success = False
 
-    for entry_name_1, entry_name_2 in zip(name_list_sorted_1, name_list_sorted_2):
-        if entry_name_1 != entry_name_2:
-            print("Sorted manifests don't match, %s vs %s" % (entry_name_1, entry_name_2))
-            return False
+    only_in_first = sorted(list(set(name_list_sorted_1) - set(name_list_sorted_2)))
+    only_in_second = sorted(list(set(name_list_sorted_2) - set(name_list_sorted_1)))
 
-    return True
+    if only_in_first:
+        print(f"Files present only in {zip1.filename}:")
+        for name in only_in_first:
+            print(f"  - {name}")
+        success = False
+
+    if only_in_second:
+        print(f"Files present only in {zip2.filename}:")
+        for name in only_in_second:
+            print(f"  - {name}")
+        success = False
+
+    # If sets are identical but ordering differs, still report ordering mismatches
+    if success:
+        for entry_name_1, entry_name_2 in zip(name_list_sorted_1, name_list_sorted_2):
+            if entry_name_1 != entry_name_2:
+                print(f"Sorted manifests don't match: {entry_name_1} vs {entry_name_2}")
+                success = False
+
+    return success
 
 
 def compare_entry_contents(zip1: ZipFile, zip2: ZipFile) -> bool:
     print("Comparing zip entry contents...")
-    info_list_1 = list(filter(lambda info: info.filename not in IGNORE_FILES, zip1.infolist()))
-    info_list_2 = list(filter(lambda info: info.filename not in IGNORE_FILES, zip2.infolist()))
-
-    if len(info_list_1) != len(info_list_2):
-        print("APK info lists of different length!")
-        return False
+    info_list_1 = list(
+        filter(lambda info: info.filename not in IGNORE_FILES, zip1.infolist())
+    )
+    info_list_2 = list(
+        filter(lambda info: info.filename not in IGNORE_FILES, zip2.infolist())
+    )
 
     success = True
+    if len(info_list_1) != len(info_list_2):
+        print(
+            f"APK info lists of different length! {len(info_list_1)} vs {len(info_list_2)}"
+        )
+        success = False
+
     for entry_info_1 in info_list_1:
         for entry_info_2 in list(info_list_2):
             if entry_info_1.filename == entry_info_2.filename:
                 entry_bytes_1 = zip1.read(entry_info_1.filename)
                 entry_bytes_2 = zip2.read(entry_info_2.filename)
 
-                if entry_bytes_1 != entry_bytes_2 and not handle_special_cases(entry_info_1.filename, entry_bytes_1, entry_bytes_2):
+                if entry_bytes_1 != entry_bytes_2 and not handle_special_cases(
+                    entry_info_1.filename, entry_bytes_1, entry_bytes_2
+                ):
                     zip1.extract(entry_info_1, "mismatches/first")
                     zip2.extract(entry_info_2, "mismatches/second")
-                    print(f"APKs differ on file {entry_info_1.filename}! Files extracted to the mismatches/ directory.")
+                    print(
+                        f"APKs differ on file {entry_info_1.filename}! Files extracted to the mismatches/ directory."
+                    )
                     success = False
 
                 info_list_2.remove(entry_info_2)
@@ -118,239 +163,88 @@ def handle_special_cases(filename: str, bytes1: bytes, bytes2: bytes):
     """
     if filename == "AndroidManifest.xml":
         print("Comparing AndroidManifest.xml...")
-        return compare_android_xml(bytes1, bytes2)
+        return axml_diff(filename, bytes1, bytes2)
     elif filename == "resources.arsc":
-        print("Comparing resources.arsc (may take a while)...")
-        return compare_resources_arsc(bytes1, bytes2)
-    elif re.match("res/xml/splits[0-9]+\\.xml", filename):
-        print(f"Comparing {filename}...")
-        return compare_split_xml(bytes1, bytes2)
+        # we will compare resources.arsc separately with aapt2, so we can ignore any differences here
+        return True
 
     return False
 
 
-def compare_android_xml(bytes1: bytes, bytes2: bytes) -> bool:
-    all_differences = compare_xml(bytes1, bytes2)
-    bad_differences = []
+def compare_resources_arsc(apk1: str, apk2: str) -> bool:
+    print("Comparing resources.arsc...")
 
-    for diff in all_differences:
-        is_split_attr = diff.diff_type == "attribute" and diff.path in ["manifest", "manifest/application"] and "split" in diff.attribute_name.lower()
-        is_meta_attr = diff.diff_type == "attribute" and diff.path == "manifest/application/meta-data"
-        is_meta_child_count = diff.diff_type == "child_count" and diff.child_tag == "meta-data"
+    resources1 = dump_resources(apk1)
+    resources2 = dump_resources(apk2)
 
-        if not is_split_attr and not is_meta_attr and not is_meta_child_count and not is_meta_attr:
-            bad_differences.append(diff)
-
-    if bad_differences:
-        print(bad_differences)
-        return False
-
-    return True
-
-
-def compare_split_xml(bytes1: bytes, bytes2: bytes) -> bool:
-    all_differences = compare_xml(bytes1, bytes2)
-    bad_differences = []
-
-    for diff in all_differences:
-        is_language = diff.diff_type == "attribute" and diff.path == "splits/module/language/entry"
-
-        if not is_language:
-            bad_differences.append(diff)
-
-    if bad_differences:
-        print(bad_differences)
-        return False
-
-    return True
-
-
-def compare_resources_arsc(first_entry_bytes: bytes, second_entry_bytes: bytes) -> bool:
-    """
-    Compares two resources.arsc files.
-    Largely taken from https://github.com/TheTechZone/reproducible-tests/blob/d8c73772b87fbe337eb852e338238c95703d59d6/comparators/arsc_compare.py
-    """
-    first_arsc = axml.ARSCParser(first_entry_bytes)
-    second_arsc = axml.ARSCParser(second_entry_bytes)
-
-    all_package_names = sorted(set(first_arsc.packages.keys()) | set(second_arsc.packages.keys()))
-    total_diffs = defaultdict(list)
-
-    success = True
-
-    for package_name in all_package_names:
-        # Check if package exists in both files
-        if package_name not in first_arsc.packages:
-            print(f"Package only in source file: {package_name}")
-            success = False
-            continue
-
-        if package_name not in second_arsc.packages:
-            print(f"Package only in target file: {package_name}")
-            success = False
-            continue
-
-        packages1 = first_arsc.packages[package_name]
-        packages2 = second_arsc.packages[package_name]
-
-        # Check package length
-        if len(packages1) != len(packages2):
-            print(f"Package length mismatch: {len(packages1)} vs {len(packages2)}")
-            success = False
-            continue
-
-        # Compare each package element
-        for i in tqdm(range(len(packages1))):
-            pkg1 = packages1[i]
-            pkg2 = packages2[i]
-
-            if type(pkg1) != type(pkg2):
-                print(f"Element type mismatch at index {i}: {type(pkg1).__name__} vs {type(pkg2).__name__}")
-                success = False
-                continue
-
-            # Different comparison strategies based on type
-            if isinstance(pkg1, axml.ARSCResTablePackage):
-                diffs = deep_compare(pkg1, pkg2)
-                if diffs:
-                    print(f"Differences in ARSCResTablePackage at index {i}:")
-                    total_diffs["ARSCResTablePackage"].append((i, diffs))
-                    success = False
-
-            elif isinstance(pkg1, axml.StringBlock):
-                diffs = deep_compare(pkg1, pkg2)
-                if diffs:
-                    print(f"Differences in StringBlock at index {i}:")
-                    total_diffs["StringBlock"].append((i, diffs))
-                    success = False
-
-            elif isinstance(pkg1, axml.ARSCHeader):
-                diffs = deep_compare(pkg1, pkg2)
-                if diffs:
-                    print(f"Differences in ARSCHeader at index {i}:")
-                    total_diffs["ARSCHeader"].append((i, diffs))
-                    success = False
-
-            elif isinstance(pkg1, axml.ARSCResTypeSpec):
-                diffs = deep_compare(pkg1, pkg2)
-
-                if diffs and not all(path in ALLOWED_ARSC_DIFF_PATHS for path in diffs.keys()):
-                    print(f"Disallowed differences in ARSCResTypeSpec at index {i}:")
-                    print(format_differences(diffs))
-                    total_diffs["ARSCResTypeSpec"].append((i, diffs))
-                    success = False
-
-            elif isinstance(pkg1, axml.ARSCResTableEntry):
-                # Use string representation for comparison
-                if pkg1.__repr__() != pkg2.__repr__():
-                    print(f"Differences in ARSCResTableEntry at index {i}")
-                    print(f"Target: {pkg1.__repr__()}", 3)
-                    print(f"Source: {pkg2.__repr__()}", 3)
-                    total_diffs["ARSCResTableEntry"].append((i, {"representation": f"{pkg1.__repr__()} vs {pkg2.__repr__()}"}))
-                    success = False
-
-            elif isinstance(pkg1, list):
-                if pkg1 != pkg2:
-                    print(f"List difference at index {i}")
-                    total_diffs["list"].append((i, {"diff": "Lists differ"}))
-                    success = False
-
-            elif isinstance(pkg1, axml.ARSCResType):
-                diffs = deep_compare(pkg1, pkg2)
-                if diffs:
-                    print(f"Differences in ARSCResType at index {i}:")
-                    total_diffs["ARSCResType"].append((i, diffs))
-                    success = False
-            else:
-                # Other types
-                print(f"Unhandled type: {type(pkg1).__name__} at index {i}")
-                diffs = deep_compare(pkg1, pkg2)
-                if diffs:
-                    total_diffs[type(pkg1).__name__].append((i, diffs))
-                    success = False
-
-    for type_name, diffs in total_diffs.items():
-        if diffs:
-            print(f"  {type_name}: {len(diffs)}", 1)
-
-    if not success:
-        print("Files have differences beyond the allowed .res1 differences.")
-    return True
-
-
-def compare_xml(bytes1: bytes, bytes2: bytes) -> list[XmlDifference]:
-    printer = axml.AXMLPrinter(bytes1)
-    entry_text_1 = printer.get_xml().decode("utf-8")
-
-    printer = axml.AXMLPrinter(bytes2)
-    entry_text_2 = printer.get_xml().decode("utf-8")
-
-    if entry_text_1 == entry_text_2:
+    if resources1 == resources2:
         return True
+    else:
+        print("resources.arsc files differ!")
+        diff = difflib.unified_diff(
+            resources1,
+            resources2,
+            fromfile=apk1,
+            tofile=apk2,
+            lineterm="",
+        )
+        for line in diff:
+            print(line)
+        return False
 
-    root1 = ET.fromstring(entry_text_1)
-    root2 = ET.fromstring(entry_text_2)
 
-    return compare_xml_elements(root1, root2)
+def dump_resources(apk):
+    try:
+        with subprocess.Popen(
+            ["aapt2", "dump", "resources", apk],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        ) as process:
+            stdout, stderr = process.communicate()
+            if process.returncode != 0:
+                raise RuntimeError(f"aapt2 failed with error: {stderr.strip()}")
+    except FileNotFoundError:
+        raise RuntimeError("aapt2 is not installed or not in the PATH.")
+
+    return stdout.strip().splitlines()
 
 
-def compare_xml_elements(elem1: Element, elem2: Element, path: str = "") -> list[XmlDifference]:
-    """Recursively compare two XML elements and return list of XmlDifference objects."""
-    differences: list[XmlDifference] = []
+def filter_tree(root: etree._Element) -> etree._Element:
+    for element in root.findall(".//meta-data"):
+        name = element.get(android_attr("name"), "")
+        if any(name.startswith(prefix) for prefix in MANIFEST_IGNORE_METADATA):
+            element.getparent().remove(element)
 
-    # Build current path
-    current_path = f"{path}/{elem1.tag}" if path else elem1.tag
+    for element in root.iter():
+        for attr in MANIFEST_IGNORE_ATTRIBUTES.get(element.tag, ()):
+            element.attrib.pop(attr, None)
 
-    # Compare tags
-    if elem1.tag != elem2.tag:
-        differences.append(XmlDifference(diff_type="tag", path=path, first_value=elem1.tag, second_value=elem2.tag))
-        return differences
+    return root
 
-    # Compare attributes
-    attrs1 = elem1.attrib
-    attrs2 = elem2.attrib
 
-    all_keys = set(attrs1.keys()) | set(attrs2.keys())
-    for key in sorted(all_keys):
-        val1 = attrs1.get(key)
-        val2 = attrs2.get(key)
+def axml_diff(filename: str, bytes1: bytes, bytes2: bytes) -> bool:
+    root_a = AXMLPrinter(bytes1).get_xml_obj()
+    root_b = AXMLPrinter(bytes2).get_xml_obj()
 
-        if val1 != val2:
-            differences.append(XmlDifference(diff_type="attribute", path=current_path, attribute_name=key, first_value=val1, second_value=val2))
+    filtered_a = filter_tree(root_a)
+    filtered_b = filter_tree(root_b)
 
-    # Compare text content
-    text1 = (elem1.text or "").strip()
-    text2 = (elem2.text or "").strip()
-    if text1 != text2:
-        differences.append(XmlDifference(diff_type="text", path=current_path, first_value=text1, second_value=text2))
+    pretty_a = etree.tostring(filtered_a, pretty_print=True, encoding="unicode")
+    pretty_b = etree.tostring(filtered_b, pretty_print=True, encoding="unicode")
 
-    # Compare children
-    children1 = list(elem1)
-    children2 = list(elem2)
-
-    # Try to match children by tag name for comparison
-    children1_by_tag = {}
-    for child in children1:
-        children1_by_tag.setdefault(child.tag, []).append(child)
-
-    children2_by_tag = {}
-    for child in children2:
-        children2_by_tag.setdefault(child.tag, []).append(child)
-
-    # Compare children with matching tags
-    all_child_tags = set(children1_by_tag.keys()) | set(children2_by_tag.keys())
-    for tag in sorted(all_child_tags):
-        list1 = children1_by_tag.get(tag, [])
-        list2 = children2_by_tag.get(tag, [])
-
-        if len(list1) != len(list2):
-            differences.append(XmlDifference(diff_type="child_count", path=current_path, child_tag=tag, first_value=str(len(list1)), second_value=str(len(list2))))
-
-        # Compare matching elements recursively
-        for child1, child2 in zip(list1, list2):
-            differences.extend(compare_xml_elements(child1, child2, current_path))
-
-    return differences
+    if pretty_a == pretty_b:
+        return True
+    else:
+        print(f"{filename} files differ!")
+        diff = difflib.unified_diff(
+            a=pretty_a.splitlines(keepends=True),
+            b=pretty_b.splitlines(keepends=True),
+            fromfile="a/" + filename,
+            tofile="b/" + filename,
+        )
+        sys.stdout.writelines(diff)
+        return False
 
 
 if __name__ == "__main__":

@@ -11,8 +11,8 @@ package signal;
 option java_package        = "org.thoughtcrime.securesms.database.model.databaseprotos";
 option java_multiple_files = true;
 
-import Backup.proto;
-import SignalServiceLegacy.proto;
+import "Backup.proto";
+import "SignalServiceLegacy.proto";
 
 // DEPRECATED -- only here for database migrations
 message ReactionList {
@@ -63,8 +63,9 @@ message TemporalAuthCredentialResponses {
 }
 
 message AudioWaveFormData {
-    int64 durationUs = 1;
-    bytes waveForm   = 2;
+    int64 durationUs     = 1;
+    bytes waveForm       = 2;
+    bool  senderProvided = 3;
 }
 
 message ProfileChangeDetails {
@@ -77,6 +78,7 @@ message ProfileChangeDetails {
         oneof PreviouslyKnownAs {
             string e164 = 1;
             string username = 2;
+            string sharedName = 3;
         }
     }
 
@@ -254,10 +256,6 @@ message GiftBadge {
     RedemptionState redemptionState = 2;
 }
 
-message SignalStoreList {
-    repeated string contents = 1;
-}
-
 message PendingChangeNumberMetadata {
     bytes  previousPni                = 1;
     bytes  pniIdentityKeyPair         = 2;
@@ -364,6 +362,7 @@ message InAppPaymentData {
         string stripeIntentId      = 1;
         string stripeClientSecret  = 2;
         bool   checkedVerification = 3;
+        uint64 enteredAt           = 4;
     }
 
     message RedemptionState {
@@ -536,6 +535,7 @@ message MessageExtras {
         PaymentTombstone paymentTombstone = 4;
         PollTerminate pollTerminate = 5;
         PinnedMessage pinnedMessage = 6;
+        AdminDeleteStatus adminDeleteStatus = 7;
     }
 }
 
@@ -548,6 +548,15 @@ message PaymentTombstone {
     optional string note = 1;
     CryptoValue amount = 2;
     CryptoValue fee = 3;
+}
+
+message AdminDeleteStatus {
+    enum Status {
+        PENDING = 0;
+        DONE = 1;
+        FAILED = 2;
+    }
+    Status status = 1;
 }
 
 message PollTerminate {
@@ -563,49 +572,3 @@ message PinnedMessage {
     uint64 pinDurationInSeconds = 4; // Long.MAX_VALUE if pin is forever
 }
 
-message LocalRegistrationMetadata {
-    bytes aciIdentityKeyPair = 1;
-    bytes aciSignedPreKey = 2;
-    bytes aciLastRestoreKyberPreKey = 3;
-    bytes pniIdentityKeyPair = 4;
-    bytes pniSignedPreKey = 5;
-    bytes pniLastRestoreKyberPreKey = 6;
-    string aci = 7;
-    string pni = 8;
-    bool hasPin = 9;
-    optional string pin = 10;
-    optional bytes masterKey = 11;
-    string e164 = 12;
-    bool fcmEnabled = 13;
-    string fcmToken = 14;
-    bytes profileKey = 15;
-    string servicePassword = 16;
-    bool reglockEnabled = 17;
-    LinkedDeviceInfo linkedDeviceInfo = 18;
-}
-
-message LinkedDeviceInfo {
-    uint32 deviceId = 1;
-    string deviceName = 2;
-    optional bytes ephemeralBackupKey = 3;
-    optional string accountEntropyPool = 4;
-    optional bytes mediaRootBackupKey = 5;
-}
-
-message RestoreDecisionState {
-    enum State {
-        START = 0;
-        INTEND_TO_RESTORE = 1;
-        NEW_ACCOUNT = 2;
-        SKIPPED = 3;
-        COMPLETED = 4;
-    }
-
-    message IntendToRestoreData {
-        bool hasOldDevice = 1;
-        optional bool fromRemote = 2;
-    }
-
-    State decisionState = 1;
-    optional IntendToRestoreData intendToRestoreData = 2;
-}

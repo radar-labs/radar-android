@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.button.MaterialButton
-import org.thoughtcrime.securesms.LoggingFragment
+import org.signal.core.ui.logging.LoggingFragment
 import org.thoughtcrime.securesms.R
 
 /** Shown when a deposit arrives during onboarding. Mirrors iOS DepositReceivedViewController. */

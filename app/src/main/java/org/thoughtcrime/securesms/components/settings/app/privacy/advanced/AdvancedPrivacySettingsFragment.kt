@@ -32,19 +32,19 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.preference.PreferenceManager
 import kotlinx.coroutines.launch
+import org.signal.core.ui.compose.ComposeFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Dividers
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Rows
 import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.ui.compose.Texts
+import org.signal.core.ui.viewModel
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.ComposeFragment
-import org.thoughtcrime.securesms.compose.rememberStatusBarColorNestedScrollModifier
 import org.thoughtcrime.securesms.util.CommunicationActions
-import org.thoughtcrime.securesms.util.viewModel
+import org.signal.core.ui.R as CoreUiR
 
 /**
  * Displays advanced privacy controls such as call relaying and
@@ -53,13 +53,7 @@ import org.thoughtcrime.securesms.util.viewModel
 class AdvancedPrivacySettingsFragment : ComposeFragment() {
 
   private val viewModel: AdvancedPrivacySettingsViewModel by viewModel {
-    val repository = AdvancedPrivacySettingsRepository(requireContext())
-    val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-    AdvancedPrivacySettingsViewModel(
-      preferences,
-      repository
-    )
+    AdvancedPrivacySettingsViewModel(AdvancedPrivacySettingsRepository())
   }
 
   private var networkReceiver: NetworkReceiver? = null
@@ -151,6 +145,17 @@ class AdvancedPrivacySettingsFragment : ComposeFragment() {
         getString(R.string.AdvancedPrivacySettingsFragment__sealed_sender_link)
       )
     }
+
+    override fun onAllowAutomaticVerificationChanged(enabled: Boolean) {
+      viewModel.setAllowAutomaticVerification(enabled)
+    }
+
+    override fun onAutomaticVerificationLearnMoreClick() {
+      CommunicationActions.openBrowserLink(
+        requireContext(),
+        getString(R.string.verify_display_fragment__link)
+      )
+    }
   }
 }
 
@@ -162,6 +167,8 @@ private interface AdvancedPrivacySettingsCallbacks {
   fun onShowStatusIconForSealedSenderChanged(enabled: Boolean) = Unit
   fun onAllowSealedSenderFromAnyoneChanged(enabled: Boolean) = Unit
   fun onSealedSenderLearnMoreClick() = Unit
+  fun onAutomaticVerificationLearnMoreClick() = Unit
+  fun onAllowAutomaticVerificationChanged(enabled: Boolean) = Unit
 
   object Empty : AdvancedPrivacySettingsCallbacks
 }
@@ -174,12 +181,11 @@ private fun AdvancedPrivacySettingsScreen(
   Scaffolds.Settings(
     title = stringResource(R.string.preferences__advanced),
     onNavigationClick = callbacks::onNavigationClick,
-    navigationIcon = ImageVector.vectorResource(R.drawable.symbol_arrow_start_24)
+    navigationIcon = SignalIcons.ArrowStart.imageVector
   ) { paddingValues ->
     LazyColumn(
       modifier = Modifier
         .padding(paddingValues)
-        .then(rememberStatusBarColorNestedScrollModifier())
     ) {
       item {
         Rows.ToggleRow(
@@ -259,13 +265,15 @@ private fun AdvancedPrivacySettingsScreen(
         )
       }
 
-      item {
-        Rows.ToggleRow(
-          checked = state.allowSealedSenderFromAnyone,
-          text = stringResource(R.string.preferences_communication__sealed_sender_allow_from_anyone),
-          label = stringResource(R.string.preferences_communication__sealed_sender_allow_from_anyone_description),
-          onCheckChanged = callbacks::onAllowSealedSenderFromAnyoneChanged
-        )
+      if (state.isPrimaryDevice) {
+        item {
+          Rows.ToggleRow(
+            checked = state.allowSealedSenderFromAnyone,
+            text = stringResource(R.string.preferences_communication__sealed_sender_allow_from_anyone),
+            label = stringResource(R.string.preferences_communication__sealed_sender_allow_from_anyone_description),
+            onCheckChanged = callbacks::onAllowSealedSenderFromAnyoneChanged
+          )
+        }
       }
 
       item {
@@ -275,12 +283,37 @@ private fun AdvancedPrivacySettingsScreen(
               callbacks.onSealedSenderLearnMoreClick()
             })
           ) {
-            append(stringResource(R.string.LearnMoreTextView_learn_more))
+            append(stringResource(CoreUiR.string.LearnMoreTextView_learn_more))
           }
         }
 
         Rows.TextRow(
           text = sealedSenderSummary
+        )
+      }
+
+      item {
+        Dividers.Default()
+      }
+
+      item {
+        val label = buildAnnotatedString {
+          append(stringResource(R.string.preferences_automatic_key_verification_body))
+          append(" ")
+          withLink(
+            LinkAnnotation.Clickable("learn-more", linkInteractionListener = {
+              callbacks.onAutomaticVerificationLearnMoreClick()
+            })
+          ) {
+            append(stringResource(CoreUiR.string.LearnMoreTextView_learn_more))
+          }
+        }
+
+        Rows.ToggleRow(
+          checked = state.allowAutomaticKeyVerification,
+          text = AnnotatedString(stringResource(R.string.preferences_automatic_key_verification)),
+          label = label,
+          onCheckChanged = callbacks::onAllowAutomaticVerificationChanged
         )
       }
     }
@@ -299,7 +332,9 @@ private fun AdvancedPrivacySettingsScreenPreview() {
         censorshipCircumventionEnabled = false,
         showSealedSenderStatusIcon = false,
         allowSealedSenderFromAnyone = false,
-        showProgressSpinner = false
+        showProgressSpinner = false,
+        allowAutomaticKeyVerification = false,
+        isPrimaryDevice = true
       ),
       callbacks = AdvancedPrivacySettingsCallbacks.Empty
     )

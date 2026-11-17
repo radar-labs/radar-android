@@ -1,0 +1,51 @@
+/*
+ * Copyright 2026 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.mediasend
+
+import android.app.Application
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
+import org.junit.rules.ExternalResource
+import org.signal.camera.CameraDependencies
+import org.signal.core.models.media.SentMediaQuality
+import org.signal.mediasend.screens.edit.image.BrushWidths
+import org.signal.remoteconfig.FakeRemoteConfigDependencies
+import org.signal.remoteconfig.RemoteConfig
+import kotlin.time.Duration.Companion.seconds
+
+/**
+ * Stands up the module dependency graph that [MediaSendFlowState] reaches into for its own defaults, so tests can build a
+ * state without an app around them.
+ */
+class MediaSendDependenciesRule(private val application: Application) : ExternalResource() {
+
+  val mediaSendRepository: MediaSendRepository = mockk(relaxed = true) {
+    every { sentMediaQuality } returns SentMediaQuality.STANDARD
+    every { getMediaConstraints() } returns PreviewMediaConstraints
+    every { storyMaxVideoDuration } returns 30.seconds
+    every { brushWidths } returns BrushWidths()
+  }
+
+  override fun before() {
+    RemoteConfig.initDependencies(FakeRemoteConfigDependencies())
+    mockkObject(RemoteConfig)
+    every { RemoteConfig.maxAttachmentCount } returns 32
+
+    CameraDependencies.init(application, mockk(relaxed = true))
+    MediaSendDependencies.init(
+      application,
+      mockk(relaxed = true) {
+        every { provideMediaSendRepository() } returns mediaSendRepository
+      }
+    )
+  }
+
+  override fun after() {
+    unmockkObject(RemoteConfig)
+  }
+}

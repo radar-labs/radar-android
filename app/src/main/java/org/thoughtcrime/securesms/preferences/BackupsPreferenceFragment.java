@@ -18,37 +18,41 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.compose.ui.platform.ComposeView;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import org.signal.core.ui.permissions.Permissions;
+import org.signal.core.ui.util.StorageUtil;
+import org.signal.core.util.NoExternalStorageException;
 import org.signal.core.util.ThreadUtil;
+import org.signal.core.util.eventbus.EventBus;
+import org.signal.core.util.eventbus.ThreadMode;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.backup.BackupDialog;
 import org.thoughtcrime.securesms.backup.BackupEvent;
-import org.thoughtcrime.securesms.database.NoExternalStorageException;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobs.LocalBackupJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.permissions.Permissions;
+import org.thoughtcrime.securesms.preferences.widgets.UpgradeLocalBackupCard;
 import org.thoughtcrime.securesms.service.LocalBackupListener;
 import org.thoughtcrime.securesms.util.BackupUtil;
-import org.thoughtcrime.securesms.util.JavaTimeExtensionsKt;
-import org.thoughtcrime.securesms.util.RemoteConfig;
-import org.thoughtcrime.securesms.util.StorageUtil;
-import org.thoughtcrime.securesms.util.TextSecurePreferences;
+import org.thoughtcrime.securesms.util.Environment;
+import org.thoughtcrime.securesms.util.LocalTimeExtensionsKt;
 
 import java.text.NumberFormat;
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Objects;
+
+import kotlin.Pair;
+import kotlin.Unit;
 
 public class BackupsPreferenceFragment extends Fragment {
 
@@ -67,8 +71,12 @@ public class BackupsPreferenceFragment extends Fragment {
   private TextView    folderName;
   private ProgressBar progress;
   private TextView    progressSummary;
+  private ComposeView upgradeCard;
 
   private final NumberFormat formatter = NumberFormat.getInstance();
+
+  private BackupsPreferenceViewModel viewModel;
+  private EventBus.Subscription      backupEventSubscription;
 
   @Override
   public @Nullable View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,6 +99,7 @@ public class BackupsPreferenceFragment extends Fragment {
     folderName      = view.findViewById(R.id.fragment_backup_folder_name);
     progress        = view.findViewById(R.id.fragment_backup_progress);
     progressSummary = view.findViewById(R.id.fragment_backup_progress_summary);
+    upgradeCard     = view.findViewById(R.id.upgrade_to_improved_backups_card);
 
     toggle.setOnClickListener(unused -> onToggleClicked());
     create.setOnClickListener(unused -> onCreateClicked());
@@ -100,7 +109,16 @@ public class BackupsPreferenceFragment extends Fragment {
     formatter.setMinimumFractionDigits(1);
     formatter.setMaximumFractionDigits(1);
 
-    EventBus.getDefault().register(this);
+    backupEventSubscription = EventBus.getDefault().subscribe(BackupEvent.class, ThreadMode.MAIN, this::onBackupEvent);
+
+    viewModel = new ViewModelProvider(this).get(BackupsPreferenceViewModel.class);
+    viewModel.getBackupsEnabled().observe(getViewLifecycleOwner(), enabled -> {
+      if (enabled) {
+        setBackupsEnabled();
+      } else {
+        setBackupsDisabled();
+      }
+    });
 
     updateToggle();
   }
@@ -109,15 +127,16 @@ public class BackupsPreferenceFragment extends Fragment {
   public void onResume() {
     super.onResume();
 
-    setBackupStatus();
+    viewModel.refreshBackupStatus();
     setBackupSummary();
     setInfo();
+    setUpdateState();
   }
 
   @Override
   public void onDestroyView() {
     super.onDestroyView();
-    EventBus.getDefault().unregister(this);
+    backupEventSubscription.unsubscribe();
   }
 
   @Override
@@ -142,8 +161,7 @@ public class BackupsPreferenceFragment extends Fragment {
     }
   }
 
-  @Subscribe(threadMode = ThreadMode.MAIN)
-  public void onEvent(BackupEvent event) {
+  private void onBackupEvent(BackupEvent event) {
     if (event.getType() == BackupEvent.Type.PROGRESS || event.getType() == BackupEvent.Type.PROGRESS_VERIFYING) {
       create.setEnabled(false);
       summary.setText(getString(event.getType() == BackupEvent.Type.PROGRESS ? R.string.BackupsPreferenceFragment__in_progress
@@ -171,23 +189,10 @@ public class BackupsPreferenceFragment extends Fragment {
     }
   }
 
-  private void setBackupStatus() {
-    if (SignalStore.settings().isBackupEnabled()) {
-      if (BackupUtil.canUserAccessBackupDirectory(requireContext())) {
-        setBackupsEnabled();
-      } else {
-        Log.w(TAG, "Cannot access backup directory. Disabling backups.");
-
-        BackupUtil.disableBackups(requireContext());
-        setBackupsDisabled();
-      }
-    } else {
-      setBackupsDisabled();
-    }
-  }
-
   private void setBackupSummary() {
-    summary.setText(getString(R.string.BackupsPreferenceFragment__last_backup, BackupUtil.getLastBackupTime(requireContext(), Locale.getDefault())));
+    Pair<String, String> date = BackupUtil.getLastBackupTime(requireContext(), Locale.getDefault());
+    summary.setText(getString(R.string.BackupsPreferenceFragment__last_backup, date.getFirst()));
+    summary.setContentDescription(getString(R.string.BackupsPreferenceFragment__last_backup, date.getSecond()));
   }
 
   private void setBackupFolderName() {
@@ -218,6 +223,24 @@ public class BackupsPreferenceFragment extends Fragment {
 
     info.setText(HtmlCompat.fromHtml(infoText, 0));
     info.setMovementMethod(LinkMovementMethod.getInstance());
+  }
+
+  private void setUpdateState() {
+    if (SignalStore.settings().isBackupEnabled() && Environment.Backups.isNewFormatSupportedForLocalBackup()) {
+      UpgradeLocalBackupCard.bind(upgradeCard, () -> {
+        Navigation.findNavController(requireView())
+                  .navigate(BackupsPreferenceFragmentDirections.actionBackupsPreferenceFragmentToLocalBackupsFragment()
+                                                               .setTriggerUpdateFlow(true));
+        return Unit.INSTANCE;
+      });
+      upgradeCard.setVisibility(View.VISIBLE);
+    } else {
+      upgradeCard.setVisibility(View.GONE);
+    }
+
+    if (SignalStore.backup().getNewLocalBackupsEnabled()) {
+      Navigation.findNavController(requireView()).popBackStack();
+    }
   }
 
   private void onToggleClicked() {
@@ -279,7 +302,7 @@ public class BackupsPreferenceFragment extends Fragment {
       int minute = timePickerFragment.getMinute();
       SignalStore.settings().setBackupSchedule(hour, minute);
       updateTimeLabel();
-      TextSecurePreferences.setNextBackupTime(requireContext(), 0);
+      SignalStore.settings().setLocalBackupNextTime(0);
       LocalBackupListener.schedule(requireContext());
     });
     timePickerFragment.show(getChildFragmentManager(), "TIME_PICKER");
@@ -301,11 +324,11 @@ public class BackupsPreferenceFragment extends Fragment {
     final int backupHour   = SignalStore.settings().getBackupHour();
     final int backupMinute = SignalStore.settings().getBackupMinute();
     LocalTime time         = LocalTime.of(backupHour, backupMinute);
-    timeLabel.setText(JavaTimeExtensionsKt.formatHours(time, requireContext()));
+    timeLabel.setText(LocalTimeExtensionsKt.formatHours(time, requireContext()));
   }
 
   private void updateToggle() {
-    boolean userUnregistered          = TextSecurePreferences.isUnauthorizedReceived(AppDependencies.getApplication()) || !SignalStore.account().isRegistered();
+    boolean userUnregistered          = SignalStore.account().isUnauthorizedReceived() || !SignalStore.account().isRegistered();
     boolean clientDeprecated          = SignalStore.misc().isClientDeprecated();
     boolean legacyLocalBackupsEnabled = SignalStore.settings().isBackupEnabled() && BackupUtil.canUserAccessBackupDirectory(AppDependencies.getApplication());
 

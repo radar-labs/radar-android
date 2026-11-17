@@ -39,6 +39,10 @@ object ExportSkips {
     return log(sentTimestamp, "Failed to parse GiftBadge.")
   }
 
+  fun invalidGiftBadgeReceiptCredentialPresentation(sentTimestamp: Long): String {
+    return log(sentTimestamp, "GiftBadge had an invalid receipt credential presentation.")
+  }
+
   fun failedToParseGroupUpdate(sentTimestamp: Long): String {
     return log(sentTimestamp, "Failed to parse GroupUpdate.")
   }
@@ -73,6 +77,14 @@ object ExportSkips {
 
   fun invalidStickerPackKey(): String {
     return log(0, "Sticker pack  had an invalid packKey.")
+  }
+
+  fun invalidFavoriteStickerPackId(): String {
+    return log(0, "Favorite sticker had an invalid packId.")
+  }
+
+  fun invalidFavoriteStickerPackKey(): String {
+    return log(0, "Favorite sticker had an invalid packKey.")
   }
 
   fun identityUpdateForSelf(sentTimestamp: Long): String {
@@ -135,12 +147,16 @@ object ExportSkips {
     return log(sentTimestamp, "Poll option was invalid.")
   }
 
-  fun pollNotInGroupChat(sentTimestamp: Long): String {
-    return log(sentTimestamp, "Poll was not in a group chat.")
+  fun pinMessageIsInvalid(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Pin message update was invalid.")
   }
 
   fun individualChatUpdateInWrongTypeOfChat(sentTimestamp: Long): String {
     return log(sentTimestamp, "A chat update that only makes sense for individual chats was found in a different kind of chat.")
+  }
+
+  fun groupChatUpdateInWrongTypeOfChat(sentTimestamp: Long): String {
+    return log(sentTimestamp, "A chat update that only makes sense for group chats was found in a different kind of chat.")
   }
 
   fun individualChatUpdateNotAuthoredBySelf(sentTimestamp: Long): String {
@@ -149,6 +165,10 @@ object ExportSkips {
 
   fun incomingMessageAuthorDoesNotHaveAciOrE164(sentTimestamp: Long): String {
     return log(sentTimestamp, "An incoming message author did not have an aci or e164.")
+  }
+
+  fun directionlessMessageAuthorDoesNotHaveAciOrE164(sentTimestamp: Long): String {
+    return log(sentTimestamp, "A directionlessmessage author did not have an aci or e164.")
   }
 
   fun outgoingMessageToReleaseNotesChat(sentTimestamp: Long): String {
@@ -161,6 +181,14 @@ object ExportSkips {
 
   fun duplicateRecipientId(recipientId: Long): String {
     return log(0, "Tried to export multiple recipients with RecipientId::$recipientId")
+  }
+
+  fun invalidE164InSessionSwitchover(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Invalid e164 in sessions switchover event. Exporting an empty event.")
+  }
+
+  fun donationRequestNotInReleaseNotesChat(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Donation request not in Release Notes chat.")
   }
 
   private fun log(sentTimestamp: Long, message: String): String {
@@ -180,6 +208,10 @@ object ExportOddities {
 
   fun mismatchedRevisionHistory(sentTimestamp: Long): String {
     return log(sentTimestamp, "Revisions for this message contained items of a different type than the parent item. Ignoring mismatched revisions.")
+  }
+
+  fun mismatchedRevisionAuthor(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Revisions for this message contained items with a different author than the parent item. Ignoring mismatched revisions.")
   }
 
   fun outgoingMessageWasSentButTimerNotStarted(sentTimestamp: Long): String {
@@ -206,12 +238,16 @@ object ExportOddities {
     return log(0, "Distribution list had self as a member. Removing it.")
   }
 
-  fun emptyQuote(sentTimestamp: Long): String {
-    return log(sentTimestamp, "Quote had no text or attachments. Removing it.")
+  fun quoteAuthorNotFound(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Quote author was not found in the exported recipients. Removing the quote.")
   }
 
-  fun invalidE164InSessionSwitchover(sentTimestamp: Long): String {
-    return log(sentTimestamp, "Invalid e164 in sessions switchover event. Exporting an empty event.")
+  fun quoteAuthorHasNoAciOrE164(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Quote author has neither an ACI nor an E164. Removing the quote.")
+  }
+
+  fun emptyQuote(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Quote had no text or attachments. Removing it.")
   }
 
   fun undownloadedLongTextAttachment(sentTimestamp: Long): String {
@@ -234,6 +270,10 @@ object ExportOddities {
     return log(0, "No release channel recipient was found.")
   }
 
+  fun adminDeleteInNonGroupChat(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Message was deleted by someone other than the author, but it isn't in a group chat. Exporting it as a normal remote delete.")
+  }
+
   private fun log(sentTimestamp: Long, message: String): String {
     return "[ODDITY][$sentTimestamp] $message"
   }
@@ -245,6 +285,10 @@ object ExportOddities {
 object ImportSkips {
   fun recipientWithoutId(): String {
     return log(0, " No aci, pni, or e164 available for recipient")
+  }
+
+  fun contactMatchesSelf(): String {
+    return log(0, "Contact frame matches the self recipient. Skipping so we don't overwrite our own data.")
   }
 
   fun fromRecipientNotFound(sentTimestamp: Long): String {
@@ -277,6 +321,18 @@ object ImportSkips {
 
   fun missingChatRecipient(chatId: Long): String {
     return log(0, "Missing recipient for chat $chatId")
+  }
+
+  fun messageExpired(sentTimestamp: Long): String {
+    return log(sentTimestamp, "Message has already expired.")
+  }
+
+  fun missingAdminDeleteRecipient(sentTimestamp: Long, chatId: Long): String {
+    return log(sentTimestamp, "Missing admin delete recipient for chat $chatId")
+  }
+
+  fun invalidFavoriteSticker(): String {
+    return log(0, "Favorite sticker was missing or had an invalid packId, packKey, or favoritedAtTimestamp.")
   }
 
   private fun log(sentTimestamp: Long, message: String): String {

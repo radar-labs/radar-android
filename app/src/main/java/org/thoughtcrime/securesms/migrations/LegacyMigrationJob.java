@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment;
-import org.thoughtcrime.securesms.crypto.MasterSecret;
 import org.thoughtcrime.securesms.database.AttachmentTable;
 import org.thoughtcrime.securesms.database.MessageTable;
 import org.thoughtcrime.securesms.database.MessageTable.MmsReader;
@@ -23,10 +22,8 @@ import org.thoughtcrime.securesms.jobs.DirectoryRefreshJob;
 import org.thoughtcrime.securesms.jobs.PreKeysSyncJob;
 import org.thoughtcrime.securesms.jobs.RefreshAttributesJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.service.KeyCachingService;
 import org.thoughtcrime.securesms.transport.RetryLaterException;
 import org.thoughtcrime.securesms.util.FileUtils;
-import org.thoughtcrime.securesms.util.TextSecurePreferences;
 import org.thoughtcrime.securesms.util.VersionTracker;
 
 import java.io.File;
@@ -97,16 +94,7 @@ public class LegacyMigrationJob extends MigrationJob {
   @Override
   void performMigration() throws RetryLaterException {
     Log.i(TAG, "Running background upgrade..");
-    int          lastSeenVersion = VersionTracker.getLastSeenVersion(context);
-    MasterSecret masterSecret    = KeyCachingService.getMasterSecret(context);
-    
-    if (lastSeenVersion < SQLCIPHER && masterSecret != null) {
-      SignalDatabase.onApplicationLevelUpgrade(context, masterSecret, lastSeenVersion, (progress, total) -> {
-        Log.i(TAG, "onApplicationLevelUpgrade: " + progress + "/" + total);
-      });
-    } else if (lastSeenVersion < SQLCIPHER) {
-      throw new RetryLaterException();
-    }
+    int          lastSeenVersion = VersionTracker.getLastSeenVersion();
 
     if (lastSeenVersion < NO_V1_VERSION) {
       File v1sessions = new File(context.getFilesDir(), "sessions");
@@ -161,8 +149,8 @@ public class LegacyMigrationJob extends MigrationJob {
     }
 
     if (lastSeenVersion < SCREENSHOTS) {
-      boolean screenSecurity = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(TextSecurePreferences.SCREEN_SECURITY_PREF, true);
-      TextSecurePreferences.setScreenSecurityEnabled(context, screenSecurity);
+      boolean screenSecurity = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("pref_screen_security", true);
+      SignalStore.settings().setScreenSecurityEnabled(screenSecurity);
     }
 
     if (lastSeenVersion < PERSISTENT_BLOBS) {
@@ -177,7 +165,7 @@ public class LegacyMigrationJob extends MigrationJob {
 
     if (lastSeenVersion < INTERNALIZE_CONTACTS) {
       if (SignalStore.account().isRegistered()) {
-        TextSecurePreferences.setHasSuccessfullyRetrievedDirectory(context, true);
+        SignalStore.misc().setHasSuccessfullyRetrievedDirectory(true);
       }
     }
 
@@ -217,12 +205,12 @@ public class LegacyMigrationJob extends MigrationJob {
 //        }
 //      }
 
-    if (lastSeenVersion < COLOR_MIGRATION) {
-      long startTime = System.currentTimeMillis();
-      //noinspection deprecation
-      SignalDatabase.recipients().updateSystemContactColors();
-      Log.i(TAG, "Color migration took " + (System.currentTimeMillis() - startTime) + " ms");
-    }
+//    if (lastSeenVersion < COLOR_MIGRATION) {
+//      long startTime = System.currentTimeMillis();
+//      //noinspection deprecation
+//      SignalDatabase.recipients().updateSystemContactColors();
+//      Log.i(TAG, "Color migration took " + (System.currentTimeMillis() - startTime) + " ms");
+//    }
 
     if (lastSeenVersion < UNIDENTIFIED_DELIVERY) {
       Log.i(TAG, "Scheduling UD attributes refresh.");

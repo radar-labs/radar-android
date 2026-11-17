@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.Singles
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -53,13 +54,17 @@ class ConversationGroupViewModel(
 
   init {
     disposables += _groupRecord.subscribe { groupRecord ->
-      _groupActiveState.onNext(ConversationGroupActiveState(groupRecord.isActive, groupRecord.isV2Group))
+      _groupActiveState.onNext(ConversationGroupActiveState(groupRecord.isActive, groupRecord.hasV2GroupProperties))
       _memberLevel.onNext(ConversationGroupMemberLevel(groupRecord.memberLevel(Recipient.self()), groupRecord.isAnnouncementGroup, groupRecord.attributesAccessControl == GroupAccessControl.ALL_MEMBERS))
     }
   }
 
   override fun onCleared() {
     disposables.clear()
+  }
+
+  fun isAdmin(): Boolean {
+    return _memberLevel.value?.groupTableMemberLevel == GroupTable.MemberLevel.ADMINISTRATOR
   }
 
   fun isNonAdminInAnnouncementGroup(): Boolean {
@@ -69,7 +74,7 @@ class ConversationGroupViewModel(
 
   fun canEditGroupInfo(): Boolean {
     val memberLevel = _memberLevel.value ?: return true
-    return memberLevel.groupTableMemberLevel == GroupTable.MemberLevel.ADMINISTRATOR || memberLevel.allMembersCanEditGroupInfo
+    return groupRecordSnapshot?.isActive == true && (memberLevel.groupTableMemberLevel == GroupTable.MemberLevel.ADMINISTRATOR || memberLevel.allMembersCanEditGroupInfo)
   }
 
   fun blockJoinRequests(recipient: Recipient): Single<GroupBlockJoinRequestResult> {
@@ -122,17 +127,18 @@ class ConversationGroupViewModel(
   }
 
   fun updateGroupStateIfNeeded() {
-    recipientRepository
-      .conversationRecipient
-      .firstOrError()
+    Singles
+      .zip(recipientRepository.conversationRecipient.firstOrError(), recipientRepository.groupRecord.firstOrError())
       .onErrorComplete()
-      .filter { it.isPushV2Group && !it.isBlocked }
-      .subscribe {
-        val groupId = it.requireGroupId().requireV2()
-        AppDependencies.jobManager
-          .startChain(RequestGroupV2InfoJob(groupId))
-          .then(GroupV2UpdateSelfProfileKeyJob.withoutLimits(groupId))
-          .enqueue()
+      .filter { (recipient, groupRecord) -> recipient.isPushV2Group && !recipient.isBlocked && groupRecord.isPresent }
+      .subscribe { (recipient, groupRecord) ->
+        val groupId = recipient.requireGroupId().requireV2()
+        if (GroupStateRefreshThrottle.shouldRefresh(groupRecord.get())) {
+          AppDependencies.jobManager
+            .startChain(RequestGroupV2InfoJob(groupId))
+            .then(GroupV2UpdateSelfProfileKeyJob.withoutLimits(groupId))
+            .enqueue()
+        }
 
         ForceUpdateGroupV2Job.enqueueIfNecessary(groupId)
       }

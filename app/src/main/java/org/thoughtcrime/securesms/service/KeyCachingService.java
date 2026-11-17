@@ -18,12 +18,14 @@ package org.thoughtcrime.securesms.service;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.ForegroundServiceStartNotAllowedException;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
 
@@ -32,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import org.signal.core.ui.compose.SignalIcons;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.BuildConfig;
@@ -45,10 +48,11 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.migrations.ApplicationMigrations;
 import org.thoughtcrime.securesms.notifications.NotificationChannels;
-import org.thoughtcrime.securesms.util.AppForegroundObserver;
-import org.thoughtcrime.securesms.util.DynamicLanguage;
-import org.thoughtcrime.securesms.util.ServiceUtil;
+import org.thoughtcrime.securesms.notifications.NotificationIds;
+import org.signal.core.util.AppForegroundObserver;
+import org.signal.core.util.ServiceUtil;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -61,8 +65,6 @@ public class KeyCachingService extends Service {
 
   private static final String TAG = Log.tag(KeyCachingService.class);
 
-  public static final int SERVICE_RUNNING_ID = 4141;
-
   public  static final String KEY_PERMISSION           = BuildConfig.APPLICATION_ID + ".ACCESS_SECRETS";
   public  static final String NEW_KEY_EVENT            = BuildConfig.APPLICATION_ID + ".service.action.NEW_KEY_EVENT";
   public  static final String CLEAR_KEY_EVENT          = BuildConfig.APPLICATION_ID + ".service.action.CLEAR_KEY_EVENT";
@@ -70,9 +72,6 @@ public class KeyCachingService extends Service {
   private static final String PASSPHRASE_EXPIRED_EVENT = BuildConfig.APPLICATION_ID + ".service.action.PASSPHRASE_EXPIRED_EVENT";
   public  static final String CLEAR_KEY_ACTION         = BuildConfig.APPLICATION_ID + ".service.action.CLEAR_KEY";
   public  static final String DISABLE_ACTION           = BuildConfig.APPLICATION_ID + ".service.action.DISABLE";
-  public  static final String LOCALE_CHANGE_EVENT      = BuildConfig.APPLICATION_ID + ".service.action.LOCALE_CHANGE_EVENT";
-
-  private DynamicLanguage dynamicLanguage = new DynamicLanguage();
 
   private final IBinder binder  = new KeySetBinder();
 
@@ -139,7 +138,6 @@ public class KeyCachingService extends Service {
         case CLEAR_KEY_ACTION:         handleClearKey();        break;
         case PASSPHRASE_EXPIRED_EVENT: handleClearKey();        break;
         case DISABLE_ACTION:           handleDisableService();  break;
-        case LOCALE_CHANGE_EVENT:      handleLocaleChanged();   break;
         case LOCK_TOGGLED_EVENT:       handleLockToggled();     break;
       }
     }
@@ -215,11 +213,6 @@ public class KeyCachingService extends Service {
     }
   }
 
-  private void handleLocaleChanged() {
-    dynamicLanguage.updateServiceLocale(this);
-    foregroundService();
-  }
-
   private static void startTimeoutIfAppropriate(@NonNull Context context) {
     boolean appVisible       = AppForegroundObserver.isForegrounded();
     boolean secretSet        = KeyCachingService.masterSecret != null;
@@ -274,16 +267,25 @@ public class KeyCachingService extends Service {
     builder.setContentTitle(getString(R.string.KeyCachingService_passphrase_cached));
     builder.setContentText(getString(R.string.KeyCachingService_signal_passphrase_cached));
     builder.setSmallIcon(R.drawable.ic_notification_unlocked);
-    builder.setColor(ContextCompat.getColor(this, R.color.signal_light_colorSecondary));
+    builder.setColor(ContextCompat.getColor(this, org.signal.core.ui.R.color.signal_light_colorSecondary));
     builder.setWhen(0);
     builder.setPriority(Notification.PRIORITY_MIN);
     builder.setOngoing(true);
 
-    builder.addAction(R.drawable.symbol_lock_24, getString(R.string.KeyCachingService_lock), buildLockIntent());
+    builder.addAction(org.signal.core.ui.R.drawable.symbol_lock_24, getString(R.string.KeyCachingService_lock), buildLockIntent());
     builder.setContentIntent(buildLaunchIntent());
 
     stopForeground(true);
-    startForeground(SERVICE_RUNNING_ID, builder.build());
+
+    try {
+      startForeground(NotificationIds.KEY_CACHING_SERVICE, builder.build());
+    } catch (Exception e) {
+      if (Build.VERSION.SDK_INT >= 31 && e instanceof ForegroundServiceStartNotAllowedException) {
+        Log.w(TAG, "Not allowed to start foreground service.", e);
+      } else {
+        throw e;
+      }
+    }
   }
 
   private void broadcastNewSecret() {

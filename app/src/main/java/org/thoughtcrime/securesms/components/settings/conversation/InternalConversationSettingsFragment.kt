@@ -16,17 +16,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.signal.core.database.withinTransaction
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.ui.compose.ComposeFragment
+import org.signal.core.util.Util
+import org.signal.core.util.bitmaps.BitmapUtil
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.isAbsent
 import org.signal.core.util.logging.Log
 import org.signal.core.util.orNull
 import org.signal.core.util.roundedString
-import org.signal.core.util.withinTransaction
 import org.signal.libsignal.zkgroup.profiles.ProfileKey
 import org.thoughtcrime.securesms.MainActivity
 import org.thoughtcrime.securesms.attachments.Attachment
 import org.thoughtcrime.securesms.attachments.UriAttachment
-import org.thoughtcrime.securesms.compose.ComposeFragment
+import org.thoughtcrime.securesms.components.SignalProgressDialog
 import org.thoughtcrime.securesms.database.AttachmentTable
 import org.thoughtcrime.securesms.database.MessageType
 import org.thoughtcrime.securesms.database.SignalDatabase
@@ -36,13 +40,9 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.mms.IncomingMessage
 import org.thoughtcrime.securesms.mms.OutgoingMessage
 import org.thoughtcrime.securesms.profiles.AvatarHelper
-import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientForeverObserver
-import org.thoughtcrime.securesms.recipients.RecipientId
-import org.thoughtcrime.securesms.util.BitmapUtil
 import org.thoughtcrime.securesms.util.MediaUtil
-import org.thoughtcrime.securesms.util.Util
 import java.util.Objects
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.nanoseconds
@@ -87,7 +87,7 @@ class InternalConversationSettingsFragment : ComposeFragment(), InternalConversa
     )
     val stream = BitmapUtil.toCompressedJpeg(bitmap)
     val bytes = stream.readBytes()
-    val uri = BlobProvider.getInstance().forData(bytes).createForSingleSessionOnDisk(requireContext())
+    val uri = AppDependencies.blobs.forData(bytes).createForSingleSessionOnDisk(requireContext())
     return UriAttachment(
       uri = uri,
       contentType = MediaUtil.IMAGE_JPEG,
@@ -174,11 +174,11 @@ class InternalConversationSettingsFragment : ComposeFragment(), InternalConversa
   }
 
   override fun add1000Messages(recipientId: RecipientId) {
-    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
       val recipient = Recipient.live(recipientId).get()
       val messageCount = 1000
       val startTime = System.currentTimeMillis() - messageCount
-      SignalDatabase.rawDatabase.withinTransaction {
+      SignalDatabase.writableDatabase.withinTransaction {
         val targetThread = SignalDatabase.threads.getOrCreateThreadIdFor(recipient)
         for (i in 1..messageCount) {
           val time = startTime + i
@@ -187,7 +187,7 @@ class InternalConversationSettingsFragment : ComposeFragment(), InternalConversa
               message = OutgoingMessage(threadRecipient = recipient, sentTimeMillis = time, body = "Outgoing: $i"),
               threadId = targetThread
             ).messageId
-            SignalDatabase.messages.markAsSent(id, true)
+            SignalDatabase.messages.markAsSent(id)
           } else {
             SignalDatabase.messages.insertMessageInbox(
               retrieved = IncomingMessage(type = MessageType.NORMAL, from = recipient.id, sentTimeMillis = time, serverTimeMillis = time, receivedTimeMillis = System.currentTimeMillis(), body = "Incoming: $i"),
@@ -208,7 +208,7 @@ class InternalConversationSettingsFragment : ComposeFragment(), InternalConversa
       val recipient = Recipient.live(recipientId).get()
       val messageCount = 100
       val startTime = System.currentTimeMillis() - messageCount
-      SignalDatabase.rawDatabase.withinTransaction {
+      SignalDatabase.writableDatabase.withinTransaction {
         val targetThread = SignalDatabase.threads.getOrCreateThreadIdFor(recipient)
         for (i in 1..messageCount) {
           val time = startTime + i
@@ -217,7 +217,7 @@ class InternalConversationSettingsFragment : ComposeFragment(), InternalConversa
             message = OutgoingMessage(threadRecipient = recipient, sentTimeMillis = time, body = "Outgoing: $i", attachments = listOf(attachment)),
             threadId = targetThread
           ).messageId
-          SignalDatabase.messages.markAsSent(id, true)
+          SignalDatabase.messages.markAsSent(id)
           SignalDatabase.attachments.getAttachmentsForMessage(id).forEach {
             SignalDatabase.attachments.debugMakeValidForArchive(it.attachmentId)
             SignalDatabase.attachments.createRemoteKeyIfNecessary(it.attachmentId)
@@ -251,7 +251,7 @@ class InternalConversationSettingsFragment : ComposeFragment(), InternalConversa
       false,
       null
     ).messageId
-    SignalDatabase.messages.markAsSent(messageId, true)
+    SignalDatabase.messages.markAsSent(messageId)
 
     SignalDatabase.threads.update(splitThreadId, true)
 
@@ -294,6 +294,41 @@ class InternalConversationSettingsFragment : ComposeFragment(), InternalConversa
     }
 
     SignalDatabase.senderKeyShared.deleteAllFor(group.distributionId)
+  }
+
+  override fun clearSenderKeyAndArchiveSessions(recipientId: RecipientId) {
+    lifecycleScope.launch {
+      val dialog = withContext(Dispatchers.Main) {
+        SignalProgressDialog.show(requireContext(), "Clearing...", cancelable = false, indeterminate = true)
+      }
+
+      withContext(Dispatchers.Default) {
+        clearSenderKey(recipientId)
+
+        val group = SignalDatabase.groups.getGroup(recipientId).orNull()
+        if (group == null) {
+          Log.w(TAG, "Couldn't find group for recipientId: $recipientId")
+          return@withContext
+        }
+
+        group.members.forEach { memberId ->
+          archiveSessions(memberId)
+
+          val member = Recipient.resolved(memberId)
+          if (member.hasAci) {
+            AppDependencies.protocolStore.aci().identities().delete(member.requireAci().toString())
+          }
+
+          if (member.hasPni) {
+            AppDependencies.protocolStore.aci().identities().delete(member.requirePni().toString())
+          }
+        }
+      }
+
+      withContext(Dispatchers.Main) {
+        dialog.dismiss()
+      }
+    }
   }
 
   class InternalViewModel(

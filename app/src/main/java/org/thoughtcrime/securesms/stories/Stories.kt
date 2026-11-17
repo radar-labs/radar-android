@@ -10,31 +10,30 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.signal.core.models.media.Media
+import org.signal.core.models.media.SentMediaQuality
+import org.signal.core.models.media.TransformProperties
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.ui.BottomSheetUtil
 import org.signal.core.util.ThreadUtil
 import org.signal.core.util.logging.Log
 import org.signal.core.util.orNull
+import org.signal.mediasend.MediaConstraints
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.contacts.HeaderAction
-import org.thoughtcrime.securesms.database.AttachmentTable
-import org.thoughtcrime.securesms.database.AttachmentTable.TransformProperties
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.DistributionListId
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobs.AttachmentDownloadJob
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mediasend.v2.stories.ChooseStoryTypeBottomSheet
-import org.thoughtcrime.securesms.mms.MediaConstraints
 import org.thoughtcrime.securesms.mms.OutgoingMessage
-import org.thoughtcrime.securesms.mms.SentMediaQuality
 import org.thoughtcrime.securesms.mms.VideoSlide
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.RecipientUtil
 import org.thoughtcrime.securesms.sms.MessageSender
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
-import org.thoughtcrime.securesms.util.BottomSheetUtil
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.hasLinkPreview
 import java.util.concurrent.CountDownLatch
@@ -120,7 +119,7 @@ object Stories {
     Log.d(TAG, "Enqueuing downloads for up to $limit stories for $recipientId (force: $force)")
     SignalDatabase.messages.getUnreadStories(recipientId, limit).use { reader ->
       reader.forEach {
-        enqueueAttachmentsFromStoryForDownloadSync(it as MmsMessageRecord, false)
+        enqueueAttachmentsFromStoryForDownloadSync(it as MmsMessageRecord, force)
       }
     }
   }
@@ -243,11 +242,14 @@ object Stories {
     }
 
     private fun getContentDuration(media: Media): DurationResult {
+      val transforms = media.transformProperties
       return if (MediaUtil.isVideo(media.contentType)) {
-        val mediaDuration = if (media.duration == 0L && media.transformProperties?.shouldSkipTransform() ?: true) {
+        val mediaDuration = if (media.duration == 0L && transforms?.shouldSkipTransform() ?: true) {
           getVideoDuration(media.uri)
-        } else if (media.transformProperties?.videoTrim ?: false) {
-          TimeUnit.MICROSECONDS.toMillis(media.transformProperties.videoTrimEndTimeUs - media.transformProperties.videoTrimStartTimeUs)
+        } else if (transforms?.videoTrim ?: false) {
+          TimeUnit.MICROSECONDS.toMillis(transforms.videoTrimEndTimeUs - transforms.videoTrimStartTimeUs)
+        } else if (media.duration == 0L) {
+          getVideoDuration(media.uri)
         } else {
           media.duration
         }
@@ -324,8 +326,9 @@ object Stories {
     @WorkerThread
     fun clipMediaToStoryDuration(media: Media): List<Media> {
       val storyDurationUs = TimeUnit.MILLISECONDS.toMicros(MAX_VIDEO_DURATION_MILLIS)
-      val startOffsetUs = media.transformProperties?.videoTrimStartTimeUs ?: 0L
-      val endOffsetUs = media.transformProperties?.videoTrimEndTimeUs ?: TimeUnit.MILLISECONDS.toMicros(getVideoDuration(media.uri))
+      val pendingTrim = media.transformProperties?.takeIf { it.videoTrim && !it.skipTransform }
+      val startOffsetUs = pendingTrim?.videoTrimStartTimeUs ?: 0L
+      val endOffsetUs = pendingTrim?.videoTrimEndTimeUs ?: TimeUnit.MILLISECONDS.toMicros(getVideoDuration(media.uri))
       val durationUs = endOffsetUs - startOffsetUs
 
       if (durationUs <= 0L) {
@@ -341,11 +344,11 @@ object Stories {
           error("Illegal clip: $startTimeUs > $endTimeUs for clip $clipIndex")
         }
 
-        AttachmentTable.TransformProperties(false, true, startTimeUs, endTimeUs, SentMediaQuality.STANDARD.code, false)
+        TransformProperties(false, true, startTimeUs, endTimeUs, media.transformProperties?.sentMediaQuality ?: SentMediaQuality.STANDARD.code, false)
       }.map { transformMedia(media, it) }
     }
 
-    private fun transformMedia(media: Media, transformProperties: AttachmentTable.TransformProperties): Media {
+    private fun transformMedia(media: Media, transformProperties: TransformProperties): Media {
       Log.d(TAG, "Transforming media clip: ${transformProperties.videoTrimStartTimeUs.microseconds.inWholeSeconds}s to ${transformProperties.videoTrimEndTimeUs.microseconds.inWholeSeconds}s")
       return Media(
         uri = media.uri,
@@ -399,7 +402,7 @@ object Stories {
         isVideoGif = videoSlide.isVideoGif,
         bucketId = null,
         caption = videoSlide.caption.orNull(),
-        transformProperties = null,
+        transformProperties = videoSlide.asAttachment().transformProperties,
         fileName = null
       )
     }

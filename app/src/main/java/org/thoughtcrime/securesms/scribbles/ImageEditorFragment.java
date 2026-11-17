@@ -2,7 +2,6 @@ package org.thoughtcrime.securesms.scribbles;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -17,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.load.DataSource;
@@ -31,59 +32,54 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.signal.core.ui.permissions.Permissions;
 import org.signal.core.util.FontUtil;
+import org.signal.core.util.ParcelUtil;
+import org.signal.core.util.ThrottledDebouncer;
 import org.signal.core.util.concurrent.LifecycleDisposable;
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
-import org.signal.imageeditor.core.Bounds;
+import org.signal.imageeditor.core.AndroidFaceDetector;
 import org.signal.imageeditor.core.ColorableRenderer;
+import org.signal.imageeditor.core.FaceDetector;
 import org.signal.imageeditor.core.ImageEditorView;
 import org.signal.imageeditor.core.Renderer;
 import org.signal.imageeditor.core.SelectableRenderer;
+import org.signal.imageeditor.core.TappableRenderer;
 import org.signal.imageeditor.core.model.EditorElement;
 import org.signal.imageeditor.core.model.EditorModel;
 import org.signal.imageeditor.core.renderers.BezierDrawingRenderer;
-import org.signal.imageeditor.core.renderers.FaceBlurRenderer;
 import org.signal.imageeditor.core.renderers.MultiLineTextRenderer;
+import org.signal.imageeditor.core.renderers.UriGlideRenderer;
+import org.signal.mediasend.MediaConstraints;
+import org.signal.core.models.media.SentMediaQuality;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.animation.ResizeAnimation;
 import org.thoughtcrime.securesms.attachments.AttachmentSaver;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.fonts.FontTypefaceProvider;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.mediasend.MediaSendPageFragment;
 import org.thoughtcrime.securesms.mediasend.v2.MediaAnimations;
-import org.thoughtcrime.securesms.mms.MediaConstraints;
 import org.thoughtcrime.securesms.mms.PushMediaConstraints;
-import org.thoughtcrime.securesms.mms.SentMediaQuality;
-import org.thoughtcrime.securesms.permissions.Permissions;
-import org.thoughtcrime.securesms.providers.BlobProvider;
-import org.thoughtcrime.securesms.scribbles.stickers.AnalogClockStickerRenderer;
-import org.thoughtcrime.securesms.scribbles.stickers.DigitalClockStickerRenderer;
-import org.thoughtcrime.securesms.scribbles.stickers.FeatureSticker;
-import org.thoughtcrime.securesms.scribbles.stickers.TappableRenderer;
+import org.thoughtcrime.securesms.stickers.search.StickerSearchContract;
 import org.thoughtcrime.securesms.util.MediaUtil;
-import org.thoughtcrime.securesms.util.ParcelUtil;
 import org.thoughtcrime.securesms.util.SaveAttachmentUtil;
-import org.thoughtcrime.securesms.util.TextSecurePreferences;
-import org.thoughtcrime.securesms.util.ThrottledDebouncer;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.signal.core.ui.util.ViewUtil;
 import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import kotlin.Pair;
+import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
-import static android.app.Activity.RESULT_OK;
+import kotlin.Pair;
+import kotlin.Unit;
 
 public final class ImageEditorFragment extends Fragment implements ImageEditorHudV2.EventListener,
-                                                                   MediaSendPageFragment,
                                                                    TextEntryDialogFragment.Controller
 {
 
@@ -96,13 +92,13 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
   private static final String KEY_IMAGE_URI = "image_uri";
   private static final String KEY_MODE      = "mode";
 
-  private static final int SELECT_STICKER_REQUEST_CODE = 124;
-
   private static final int DRAW_HUD_PROTECTION = ViewUtil.dpToPx(72);
   private static final int CROP_HUD_PROTECTION = ViewUtil.dpToPx(144);
   private static final int CONTROLS_PROTECTION = ViewUtil.dpToPx(74);
 
   private final LifecycleDisposable lifecycleDisposable = new LifecycleDisposable();
+
+  private final ActivityResultLauncher<Unit> stickerLauncher = registerForActivityResult(new StickerSearchContract(), this::onStickerSelected);
 
   private EditorModel restoredModel;
 
@@ -128,7 +124,7 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
       this(new Bundle());
     }
 
-    void writeModel(@NonNull EditorModel model) {
+    public void writeModel(@NonNull EditorModel model) {
       byte[] bytes = ParcelUtil.serialize(model);
       bundle.putByteArray("MODEL", bytes);
     }
@@ -216,8 +212,8 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
 
     MediaConstraints mediaConstraints = new PushMediaConstraints(SentMediaQuality.HIGH);
 
-    imageMaxWidth  = mediaConstraints.getImageMaxWidth(requireContext());
-    imageMaxHeight = mediaConstraints.getImageMaxHeight(requireContext());
+    imageMaxWidth  = mediaConstraints.getImageMaxWidth();
+    imageMaxHeight = mediaConstraints.getImageMaxHeight();
   }
 
   @Nullable
@@ -235,12 +231,7 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
     Mode mode = Mode.getByCode(requireArguments().getString(KEY_MODE));
 
     if (mode == Mode.AVATAR_CAPTURE || mode == Mode.AVATAR_EDIT) {
-      view.setPadding(
-          0,
-          ViewUtil.getStatusBarHeight(view),
-          0,
-          ViewUtil.getNavigationBarHeight(view)
-      );
+      SystemWindowInsetsSetter.attach(view, getViewLifecycleOwner(), WindowInsetsCompat.Type.systemBars());
     }
 
     imageEditorHud  = view.findViewById(R.id.scribble_hud);
@@ -271,7 +262,7 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
       restoredModel = null;
     }
 
-    @ColorInt int blackoutColor = ContextCompat.getColor(requireContext(), R.color.signal_colorBackground);
+    @ColorInt int blackoutColor = ContextCompat.getColor(requireContext(), org.signal.core.ui.R.color.signal_colorBackground);
     if (editorModel == null) {
       switch (mode) {
         case AVATAR_EDIT:
@@ -316,25 +307,21 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
     requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
   }
 
-  @Override
   public void setUri(@NonNull Uri uri) {
     this.imageUri = uri;
   }
 
   @NonNull
-  @Override
   public Uri getUri() {
     return imageUri;
   }
 
-  @Override
   public Object saveState() {
     Data data = new Data();
     data.writeModel(imageEditorView.getModel());
     return data;
   }
 
-  @Override
   public void restoreState(@NonNull Object state) {
     if (state instanceof Data) {
 
@@ -354,10 +341,6 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
     }
   }
 
-  @Override
-  public void notifyHidden() {
-  }
-
   private void changeEntityColor(int selectedColor) {
     if (currentSelection != null) {
       Renderer renderer = currentSelection.getRenderer();
@@ -374,7 +357,7 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
     TextEntryDialogFragment.Companion.show(
         getChildFragmentManager(),
         textElement,
-        TextSecurePreferences.isIncognitoKeyboardEnabled(requireContext()),
+        SignalStore.settings().isIncognitoKeyboardEnabled(),
         selectAll,
         imageEditorHud.getColorIndex()
     );
@@ -418,34 +401,14 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
     startTextEntityEditing(element, true);
   }
 
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == RESULT_OK && requestCode == SELECT_STICKER_REQUEST_CODE && data != null) {
-      Renderer renderer = null;
-      if (data.hasExtra(ImageEditorStickerSelectActivity.EXTRA_FEATURE_STICKER)) {
-        FeatureSticker sticker = FeatureSticker.fromType(data.getStringExtra(ImageEditorStickerSelectActivity.EXTRA_FEATURE_STICKER));
-        switch (sticker) {
-          case DIGITAL_CLOCK:
-            renderer = new DigitalClockStickerRenderer(System.currentTimeMillis());
-            break;
-          case ANALOG_CLOCK:
-            renderer = new AnalogClockStickerRenderer(System.currentTimeMillis());
-            break;
-        }
-      } else {
-        final Uri uri = data.getData();
-        if (uri != null) {
-          renderer = new UriGlideRenderer(uri, true, imageMaxWidth, imageMaxHeight);
-        }
-      }
-      if (renderer != null) {
-        EditorElement element = new EditorElement(renderer, EditorModel.Z_STICKERS);
-        imageEditorView.getModel().addElementCentered(element, 0.4f);
-        setCurrentSelection(element);
-        hasMadeAnEditThisSession = true;
-        imageEditorHud.setMode(ImageEditorHudV2.Mode.MOVE_STICKER);
-      }
+  private void onStickerSelected(@Nullable StickerSelectResult result) {
+    if (result != null) {
+      Renderer      renderer = StickerSelectResults.toRenderer(result, imageMaxWidth, imageMaxHeight);
+      EditorElement element  = new EditorElement(renderer, EditorModel.Z_STICKERS);
+      imageEditorView.getModel().addElementCentered(element, 0.4f);
+      setCurrentSelection(element);
+      hasMadeAnEditThisSession = true;
+      imageEditorHud.setMode(ImageEditorHudV2.Mode.MOVE_STICKER);
     } else {
       imageEditorHud.setMode(ImageEditorHudV2.Mode.DRAW);
     }
@@ -498,8 +461,7 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
       }
 
       case INSERT_STICKER: {
-        Intent intent = new Intent(getContext(), ImageEditorStickerSelectActivity.class);
-        startActivityForResult(intent, SELECT_STICKER_REQUEST_CODE);
+        stickerLauncher.launch(Unit.INSTANCE);
         break;
       }
 
@@ -812,10 +774,24 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
     image.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
     image.recycle();
 
-    return BlobProvider.getInstance()
-                       .forData(outputStream.toByteArray())
-                       .withMimeType(MediaUtil.IMAGE_JPEG)
-                       .createForSingleUseInMemory();
+    return AppDependencies.getBlobs()
+                          .forData(outputStream.toByteArray())
+                          .withMimeType(MediaUtil.IMAGE_JPEG)
+                          .createForSingleUseInMemory();
+  }
+
+  @WorkerThread
+  public static @NonNull Uri renderToSingleSessionBlob(@NonNull Context context, @NonNull EditorModel editorModel) {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    Bitmap                image        = editorModel.render(context, new FontTypefaceProvider());
+
+    image.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
+    image.recycle();
+
+    return AppDependencies.getBlobs()
+                          .forData(outputStream.toByteArray())
+                          .withMimeType(MediaUtil.IMAGE_JPEG)
+                          .createForSingleSessionInMemory();
   }
 
   private void onDrawingChanged(boolean stillTouching, boolean isUserEdit) {
@@ -830,34 +806,12 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
   }
 
   private void renderFaceBlurs(@NonNull FaceDetectionResult result) {
-    List<FaceDetector.Face> faces = result.faces;
-
-    if (faces.isEmpty()) {
+    if (result.faces.isEmpty()) {
       cachedFaceDetection = null;
       return;
     }
 
-    imageEditorView.getModel().pushUndoPoint();
-
-    Matrix faceMatrix = new Matrix();
-
-    for (FaceDetector.Face face : faces) {
-      Renderer      faceBlurRenderer = new FaceBlurRenderer();
-      EditorElement element          = new EditorElement(faceBlurRenderer, EditorModel.Z_MASK);
-      Matrix        localMatrix      = element.getLocalMatrix();
-
-      faceMatrix.setRectToRect(Bounds.FULL_BOUNDS, face.getBounds(), Matrix.ScaleToFit.FILL);
-
-      localMatrix.set(result.position);
-      localMatrix.preConcat(faceMatrix);
-
-      element.getFlags().setEditable(false)
-             .setSelectable(false)
-             .persist();
-
-      imageEditorView.getModel().addElementWithoutPushUndo(element);
-    }
-
+    imageEditorView.getModel().addFaceBlurs(result.faces, result.imageSize, result.position);
     imageEditorView.invalidate();
 
     cachedFaceDetection = new Pair<>(getUri(), result);
@@ -1091,16 +1045,14 @@ public final class ImageEditorFragment extends Fragment implements ImageEditorHu
   }
 
   private static class FaceDetectionResult {
-    private final List<FaceDetector.Face> faces;
-    private final Matrix                  position;
+    private final List<RectF> faces;
+    private final Point       imageSize;
+    private final Matrix      position;
 
     private FaceDetectionResult(@NonNull List<FaceDetector.Face> faces, @NonNull Point imageSize, @NonNull Matrix position) {
-      this.faces    = faces;
-      this.position = new Matrix(position);
-
-      Matrix imageProjectionMatrix = new Matrix();
-      imageProjectionMatrix.setRectToRect(new RectF(0, 0, imageSize.x, imageSize.y), Bounds.FULL_BOUNDS, Matrix.ScaleToFit.FILL);
-      this.position.preConcat(imageProjectionMatrix);
+      this.faces     = faces.stream().map(FaceDetector.Face::getBounds).collect(Collectors.toList());
+      this.imageSize = imageSize;
+      this.position  = new Matrix(position);
     }
   }
 

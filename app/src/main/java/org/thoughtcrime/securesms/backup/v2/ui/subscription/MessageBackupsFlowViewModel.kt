@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 import org.signal.core.util.billing.BillingPurchaseResult
 import org.signal.core.util.concurrent.SignalDispatchers
 import org.signal.core.util.logging.Log
+import org.signal.core.util.next
 import org.signal.donations.InAppPaymentType
 import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.backup.DeletionState
@@ -44,9 +45,9 @@ import org.thoughtcrime.securesms.database.model.databaseprotos.InAppPaymentData
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobs.InAppPaymentPurchaseTokenJob
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
-import org.thoughtcrime.securesms.util.next
 import org.whispersystems.signalservice.api.storage.IAPSubscriptionId
 import org.whispersystems.signalservice.internal.push.SubscriptionsConfiguration
 import kotlin.time.Duration.Companion.seconds
@@ -54,6 +55,8 @@ import kotlin.time.Duration.Companion.seconds
 class MessageBackupsFlowViewModel(
   private val initialTierSelection: MessageBackupTier?,
   googlePlayApiAvailability: Int,
+  private val isCredentialManagerSupported: Boolean,
+  private val isPhoneNumberless: Boolean,
   startScreen: MessageBackupsStage = if (SignalStore.backup.backupTier == null) MessageBackupsStage.EDUCATION else MessageBackupsStage.TYPE_SELECTION
 ) : ViewModel(), BackupKeyCredentialManagerHandler {
 
@@ -68,7 +71,8 @@ class MessageBackupsFlowViewModel(
       googlePlayApiAvailability = GooglePlayServicesAvailability.fromCode(googlePlayApiAvailability),
       currentMessageBackupTier = SignalStore.backup.backupTier,
       selectedMessageBackupTier = resolveSelectedTier(initialTierSelection, SignalStore.backup.backupTier),
-      startScreen = startScreen
+      startScreen = startScreen,
+      isPhoneNumberless = isPhoneNumberless
     )
   )
 
@@ -85,19 +89,18 @@ class MessageBackupsFlowViewModel(
     }
 
     viewModelScope.launch {
-      val result = withContext(SignalDispatchers.IO) {
-        BackupRepository.triggerBackupIdReservation()
-      }
-
-      result.runIfSuccessful {
-        Log.d(TAG, "Successfully triggered backup id reservation.")
-        internalStateFlow.update { it.copy(paymentReadyState = MessageBackupsFlowState.PaymentReadyState.READY) }
-      }
-
-      result.runOnStatusCodeError { code ->
-        Log.w(TAG, "Failed to trigger backup id reservation. ($code)")
-        internalStateFlow.update { it.copy(paymentReadyState = MessageBackupsFlowState.PaymentReadyState.FAILED) }
-      }
+      SignalNetwork.archiveService
+        .triggerBackupIdReservation()
+        .onRight {
+          Log.d(TAG, "Successfully triggered backup id reservation.")
+          internalStateFlow.update { it.copy(paymentReadyState = MessageBackupsFlowState.PaymentReadyState.READY) }
+        }
+        .onLeft { error ->
+          if (error.isServerRejection) {
+            Log.w(TAG, "Failed to trigger backup id reservation. (${error::class.simpleName})")
+            internalStateFlow.update { it.copy(paymentReadyState = MessageBackupsFlowState.PaymentReadyState.FAILED) }
+          }
+        }
     }
 
     viewModelScope.launch {
@@ -150,7 +153,7 @@ class MessageBackupsFlowViewModel(
               }
             } catch (e: Exception) {
               Log.d(TAG, "Failed to handle purchase.", e)
-              withContext(SignalDispatchers.IO) {
+              withContext(SignalDispatchers.Default) {
                 InAppPaymentsRepository.handlePipelineError(
                   inAppPaymentId = id,
                   error = e
@@ -188,7 +191,7 @@ class MessageBackupsFlowViewModel(
         }
 
         activeSubscription.runIfSuccessful { subscription ->
-          if (subscription.willCancelAtPeriodEnd()) {
+          if (subscription.willCancelAtPeriodEnd) {
             Log.d(TAG, "Active subscription is cancelled. Clearing tier.")
             internalStateFlow.update {
               it.copy(
@@ -243,10 +246,13 @@ class MessageBackupsFlowViewModel(
     internalStateFlow.update {
       when (it.stage) {
         MessageBackupsStage.CANCEL -> error("Unsupported state transition from terminal state CANCEL")
-        MessageBackupsStage.EDUCATION -> it.copy(stage = MessageBackupsStage.BACKUP_KEY_EDUCATION)
-        MessageBackupsStage.BACKUP_KEY_EDUCATION -> it.copy(stage = MessageBackupsStage.BACKUP_KEY_RECORD)
-        MessageBackupsStage.BACKUP_KEY_RECORD -> it.copy(stage = MessageBackupsStage.BACKUP_KEY_VERIFY)
+        MessageBackupsStage.EDUCATION -> it.copy(stage = if (isPhoneNumberless) MessageBackupsStage.CONFIRM_RECOVERY_KEY else MessageBackupsStage.BACKUP_KEY_EDUCATION)
+        MessageBackupsStage.BACKUP_KEY_EDUCATION -> it.copy(stage = if (isCredentialManagerSupported) MessageBackupsStage.BACKUP_KEY_RECORD else MessageBackupsStage.BACKUP_KEY_RECORD_MANUALLY)
+        MessageBackupsStage.BACKUP_KEY_RECORD -> it.copy(stage = MessageBackupsStage.TYPE_SELECTION)
+        MessageBackupsStage.BACKUP_KEY_RECORD_MANUALLY -> it.copy(stage = MessageBackupsStage.BACKUP_KEY_VERIFY)
         MessageBackupsStage.BACKUP_KEY_VERIFY -> it.copy(stage = MessageBackupsStage.TYPE_SELECTION)
+        MessageBackupsStage.CONFIRM_RECOVERY_KEY -> it.copy(stage = MessageBackupsStage.TYPE_SELECTION)
+        MessageBackupsStage.SIGNAL_LOGIN_VIEW_DETAILS -> error("Unsupported state transition from SIGNAL_LOGIN_VIEW_DETAILS")
         MessageBackupsStage.TYPE_SELECTION -> validateTypeAndUpdateState(it)
         MessageBackupsStage.CHECKOUT_SHEET -> it.copy(stage = MessageBackupsStage.PROCESS_PAYMENT)
         MessageBackupsStage.CREATING_IN_APP_PAYMENT -> error("This is driven by an async coroutine.")
@@ -268,8 +274,11 @@ class MessageBackupsFlowViewModel(
           MessageBackupsStage.EDUCATION -> MessageBackupsStage.CANCEL
           MessageBackupsStage.BACKUP_KEY_EDUCATION -> MessageBackupsStage.EDUCATION
           MessageBackupsStage.BACKUP_KEY_RECORD -> MessageBackupsStage.BACKUP_KEY_EDUCATION
-          MessageBackupsStage.BACKUP_KEY_VERIFY -> MessageBackupsStage.BACKUP_KEY_RECORD
-          MessageBackupsStage.TYPE_SELECTION -> MessageBackupsStage.BACKUP_KEY_RECORD
+          MessageBackupsStage.BACKUP_KEY_RECORD_MANUALLY -> if (isCredentialManagerSupported) MessageBackupsStage.BACKUP_KEY_RECORD else MessageBackupsStage.BACKUP_KEY_EDUCATION
+          MessageBackupsStage.BACKUP_KEY_VERIFY -> if (isPhoneNumberless) MessageBackupsStage.CONFIRM_RECOVERY_KEY else MessageBackupsStage.BACKUP_KEY_RECORD_MANUALLY
+          MessageBackupsStage.CONFIRM_RECOVERY_KEY -> MessageBackupsStage.EDUCATION
+          MessageBackupsStage.SIGNAL_LOGIN_VIEW_DETAILS -> MessageBackupsStage.CONFIRM_RECOVERY_KEY
+          MessageBackupsStage.TYPE_SELECTION -> if (isPhoneNumberless) MessageBackupsStage.CONFIRM_RECOVERY_KEY else MessageBackupsStage.BACKUP_KEY_RECORD
           MessageBackupsStage.CHECKOUT_SHEET -> MessageBackupsStage.TYPE_SELECTION
           MessageBackupsStage.CREATING_IN_APP_PAYMENT -> MessageBackupsStage.CREATING_IN_APP_PAYMENT
           MessageBackupsStage.PROCESS_PAYMENT -> MessageBackupsStage.PROCESS_PAYMENT
@@ -283,6 +292,37 @@ class MessageBackupsFlowViewModel(
     }
   }
 
+  fun onBackupKeySavedToPasswordManager() {
+    SignalStore.backup.lastVerifyKeyTime = System.currentTimeMillis()
+    goToNextStage()
+  }
+
+  fun goToRecordManually() {
+    internalStateFlow.update {
+      it.copy(stage = MessageBackupsStage.BACKUP_KEY_RECORD_MANUALLY)
+    }
+  }
+
+  /** The user asked to see the full keys that make up their Signal Login. */
+  fun goToSignalLoginViewDetails() {
+    internalStateFlow.update {
+      it.copy(stage = MessageBackupsStage.SIGNAL_LOGIN_VIEW_DETAILS)
+    }
+  }
+
+  /** The user chose to type their recovery key in by hand instead of pulling it from their password manager. */
+  fun goToEnterRecoveryKeyManually() {
+    internalStateFlow.update {
+      it.copy(stage = MessageBackupsStage.BACKUP_KEY_VERIFY)
+    }
+  }
+
+  /** The recovery key stored in the user's password manager matched the one on this device. */
+  fun onRecoveryKeyConfirmed() {
+    SignalStore.backup.lastVerifyKeyTime = System.currentTimeMillis()
+    goToNextStage()
+  }
+
   fun onMessageBackupTierUpdated(messageBackupTier: MessageBackupTier) {
     internalStateFlow.update {
       it.copy(
@@ -294,7 +334,7 @@ class MessageBackupsFlowViewModel(
   private fun validateTypeAndUpdateState(state: MessageBackupsFlowState): MessageBackupsFlowState {
     return when (state.selectedMessageBackupTier!!) {
       MessageBackupTier.FREE -> {
-        viewModelScope.launch(SignalDispatchers.IO) {
+        viewModelScope.launch(SignalDispatchers.Default) {
           SignalDatabase.recipients.markNeedsSync(Recipient.self().id)
           StorageSyncHelper.scheduleSyncForDataChange()
         }

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,18 +23,22 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import org.signal.core.ui.compose.Buttons
+import org.signal.core.ui.compose.ComposeFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Scaffolds
+import org.signal.remoteconfig.RemoteConfig
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.ComposeFragment
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
+import kotlin.time.Duration.Companion.milliseconds
+import org.signal.appsettings.R as AppSettingsR
+import org.signal.core.ui.R as CoreUiR
 
 class ChangeNumberFragment : ComposeFragment() {
 
@@ -44,9 +50,24 @@ class ChangeNumberFragment : ComposeFragment() {
         navController.popBackStack()
       },
       onContinueClick = {
-        navController.safeNavigate(ChangeNumberFragmentDirections.actionChangePhoneNumberFragmentToEnterPhoneNumberChangeFragment())
+        val remainingWaitSeconds = remainingPostRegistrationWaitSeconds()
+        if (remainingWaitSeconds > 0) {
+          ChangeNumberPostRegistrationWaitSheet.show(parentFragmentManager, remainingWaitSeconds)
+        } else {
+          navController.safeNavigate(ChangeNumberFragmentDirections.actionChangePhoneNumberFragmentToEnterPhoneNumberChangeFragment())
+        }
       }
     )
+  }
+
+  private fun remainingPostRegistrationWaitSeconds(): Long {
+    val registeredAt = SignalStore.account.registeredAtTimestamp
+    if (registeredAt <= 0) {
+      return 0
+    }
+    val waitingPeriodSeconds = RemoteConfig.changeNumberPostRegistrationWaitingPeriodSeconds
+    val elapsedSeconds = (System.currentTimeMillis() - registeredAt).milliseconds.inWholeSeconds
+    return (waitingPeriodSeconds - elapsedSeconds).coerceAtLeast(0)
   }
 }
 
@@ -59,27 +80,28 @@ fun ChangeNumberScreen(
     title = "",
     onNavigationClick = onNavigationIconClick,
     navigationIcon = ImageVector.vectorResource(id = R.drawable.ic_arrow_left_24),
-    navigationContentDescription = stringResource(id = R.string.Material3SearchToolbar__close)
+    navigationContentDescription = stringResource(id = CoreUiR.string.CloseButton__content_description)
   ) {
+    val scrollState = rememberScrollState()
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
       modifier = Modifier
         .fillMaxSize()
         .padding(it)
+        .verticalScroll(scrollState)
         .padding(horizontal = 32.dp)
     ) {
       Image(
-        painter = painterResource(id = R.drawable.change_number_hero_image),
+        painter = painterResource(id = R.drawable.change_number),
         contentDescription = null,
         modifier = Modifier
           .padding(top = 20.dp)
       )
 
       Text(
-        text = stringResource(id = R.string.AccountSettingsFragment__change_phone_number),
+        text = stringResource(id = AppSettingsR.string.AccountSettingsFragment__change_phone_number),
         style = MaterialTheme.typography.headlineMedium,
         textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(top = 24.dp)
       )
 

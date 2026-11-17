@@ -19,8 +19,11 @@ import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.badges.BadgeImageView;
 import org.thoughtcrime.securesms.components.AvatarImageView;
 import org.thoughtcrime.securesms.components.emoji.EmojiTextView;
+import org.thoughtcrime.securesms.conversation.colors.NameColor;
+import org.thoughtcrime.securesms.groups.memberlabel.MemberLabel;
+import org.thoughtcrime.securesms.groups.memberlabel.MemberLabelPillView;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.util.Util;
+import org.signal.core.util.Util;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,7 +35,6 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
   private static final int FULL_MEMBER                = 0;
   private static final int OWN_INVITE_PENDING         = 1;
   private static final int OTHER_INVITE_PENDING_COUNT = 2;
-  private static final int NEW_GROUP_CANDIDATE        = 3;
   private static final int REQUESTING_MEMBER          = 4;
 
   private final List<GroupMemberEntry>  data                    = new ArrayList<>();
@@ -113,14 +115,6 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
                                                        selectionChangeListener,
                                                        selectable,
                                                        lifecycleOwner);
-      case NEW_GROUP_CANDIDATE:
-        return new NewGroupInviteeViewHolder(LayoutInflater.from(parent.getContext())
-                                                           .inflate(R.layout.group_new_candidate_recipient_list_item, parent, false),
-                                             recipientClickListener,
-                                             recipientLongClickListener,
-                                             selectionChangeListener,
-                                             selectable,
-                                             lifecycleOwner);
       case REQUESTING_MEMBER:
         return new RequestingMemberViewHolder(LayoutInflater.from(parent.getContext())
                                                            .inflate(R.layout.group_recipient_requesting_list_item, parent, false),
@@ -168,8 +162,6 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
       return OWN_INVITE_PENDING;
     } else if (groupMemberEntry instanceof GroupMemberEntry.UnknownPendingMemberCount) {
       return OTHER_INVITE_PENDING_COUNT;
-    } else if (groupMemberEntry instanceof GroupMemberEntry.NewGroupCandidate) {
-      return NEW_GROUP_CANDIDATE;
     } else if (groupMemberEntry instanceof GroupMemberEntry.RequestingMember) {
       return REQUESTING_MEMBER;
     }
@@ -194,6 +186,8 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
               final View                       popupMenuContainer;
               final ProgressBar                busyProgress;
     @Nullable final View                       admin;
+    @Nullable final MemberLabelPillView        memberLabelView;
+    @Nullable final View                       addMemberLabel;
               final SelectionChangeListener    selectionChangeListener;
     @Nullable final RecipientClickListener     recipientClickListener;
     @Nullable final AdminActionsListener       adminActionsListener;
@@ -224,6 +218,8 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
       this.popupMenuContainer         = itemView.findViewById(R.id.popupMenuProgressContainer);
       this.busyProgress               = itemView.findViewById(R.id.menuBusyProgress);
       this.admin                      = itemView.findViewById(R.id.admin);
+      this.memberLabelView            = itemView.findViewById(R.id.recipient_member_label);
+      this.addMemberLabel             = itemView.findViewById(R.id.add_member_label);
       this.recipientClickListener     = recipientClickListener;
       this.recipientLongClickListener = recipientLongClickListener;
       this.adminActionsListener       = adminActionsListener;
@@ -296,6 +292,9 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
       if (admin != null) {
         admin.setVisibility(View.GONE);
       }
+      if (addMemberLabel != null) {
+        addMemberLabel.setVisibility(View.GONE);
+      }
       hideMenu();
 
       itemView.setOnClickListener(null);
@@ -346,40 +345,21 @@ final class GroupMemberListAdapter extends RecyclerView.Adapter<GroupMemberListA
       if (admin != null) {
         admin.setVisibility(fullMember.isAdmin() ? View.VISIBLE : View.INVISIBLE);
       }
+
+      MemberLabel label     = fullMember.getMemberLabel();
+      NameColor   nameColor = fullMember.getNameColor();
+      if (memberLabelView != null) {
+        if (label != null && nameColor != null) {
+          memberLabelView.setStyle(MemberLabelPillView.Style.Compact);
+          memberLabelView.setLabel(label, nameColor.getColor(context));
+          memberLabelView.setVisibility(View.VISIBLE);
+          if (about != null) about.setVisibility(View.GONE);
+        } else {
+          memberLabelView.setVisibility(View.GONE);
+        }
+      }
     }
   }
-  final static class NewGroupInviteeViewHolder extends ViewHolder {
-
-    private final View smsContact;
-    private final View smsWarning;
-
-    NewGroupInviteeViewHolder(@NonNull View itemView,
-                              @Nullable RecipientClickListener recipientClickListener,
-                              @Nullable RecipientLongClickListener recipientLongClickListener,
-                              @NonNull SelectionChangeListener selectionChangeListener,
-                              boolean selectable,
-                              @NonNull LifecycleOwner lifecycleOwner)
-    {
-      super(itemView, recipientClickListener, recipientLongClickListener, null, selectionChangeListener, selectable, lifecycleOwner);
-
-      smsContact = itemView.findViewById(R.id.sms_contact);
-      smsWarning = itemView.findViewById(R.id.sms_warning);
-    }
-
-    @Override
-    void bind(@NonNull GroupMemberEntry memberEntry, boolean isSelected) {
-      GroupMemberEntry.NewGroupCandidate newGroupCandidate = (GroupMemberEntry.NewGroupCandidate) memberEntry;
-
-      bindRecipient(newGroupCandidate.getMember());
-      bindRecipientClick(newGroupCandidate.getMember());
-
-      int smsWarningVisibility = newGroupCandidate.getMember().isRegistered() ? View.GONE : View.VISIBLE;
-
-      smsContact.setVisibility(smsWarningVisibility);
-      smsWarning.setVisibility(smsWarningVisibility);
-    }
-  }
-
   final static class OwnInvitePendingMemberViewHolder extends ViewHolder {
 
     OwnInvitePendingMemberViewHolder(@NonNull View itemView,

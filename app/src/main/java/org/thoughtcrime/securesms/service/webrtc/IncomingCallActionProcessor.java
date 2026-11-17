@@ -7,7 +7,9 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.logging.Log;
+import org.signal.remoteconfig.RemoteConfig;
 import org.signal.ringrtc.CallException;
 import org.signal.ringrtc.CallId;
 import org.signal.ringrtc.CallManager;
@@ -20,15 +22,15 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.notifications.DoNotDisturbUtil;
 import org.thoughtcrime.securesms.notifications.NotificationChannels;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.ringrtc.CallState;
+import org.thoughtcrime.securesms.ringrtc.OutgoingVideoSourceRouter;
 import org.thoughtcrime.securesms.ringrtc.RemotePeer;
 import org.thoughtcrime.securesms.service.webrtc.state.CallSetupState;
 import org.thoughtcrime.securesms.service.webrtc.state.VideoState;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceState;
-import org.thoughtcrime.securesms.util.AppForegroundObserver;
+import org.signal.core.util.AppForegroundObserver;
 import org.thoughtcrime.securesms.util.NetworkUtil;
-import org.thoughtcrime.securesms.util.Util;
+import org.signal.core.util.Util;
 import org.thoughtcrime.securesms.webrtc.locks.LockManager;
 import org.webrtc.PeerConnection;
 
@@ -95,6 +97,7 @@ public class IncomingCallActionProcessor extends DeviceAwareActionProcessor {
       return currentState;
     }
 
+    byte            dredDuration    = (byte) RemoteConfig.dredDuration();
     boolean         hideIp          = !activePeer.getRecipient().isProfileSharing() || callSetupState.isAlwaysTurnServers();
     VideoState      videoState      = currentState.getVideoState();
     CallParticipant callParticipant = Objects.requireNonNull(currentState.getCallInfoState().getRemoteCallParticipant(activePeer.getRecipient()));
@@ -104,14 +107,17 @@ public class IncomingCallActionProcessor extends DeviceAwareActionProcessor {
                                                 context,
                                                 videoState.getLockableEglBase().require(),
                                                 RingRtcDynamicConfiguration.getAudioConfig(),
+                                                RingRtcDynamicConfiguration.getVideoConfig(),
                                                 videoState.requireLocalSink(),
                                                 callParticipant.getVideoSink(),
-                                                videoState.requireCamera(),
+                                                videoState.requireRouter(),
                                                 callSetupState.getIceServers(),
                                                 hideIp,
                                                 NetworkUtil.getCallingDataMode(context),
                                                 AUDIO_LEVELS_INTERVAL,
-                                                false);
+                                                dredDuration,
+                                                false,
+                                                RingRtcDynamicConfiguration.getStatsIntervalSecs());
     } catch (CallException e) {
       return callFailure(currentState, "Unable to proceed with call: ", e);
     }
@@ -131,11 +137,45 @@ public class IncomingCallActionProcessor extends DeviceAwareActionProcessor {
   protected @NonNull WebRtcServiceState handleAcceptCall(@NonNull WebRtcServiceState currentState, boolean answerWithVideo) {
     RemotePeer activePeer = currentState.getCallInfoState().requireActivePeer();
 
-    Log.i(TAG, "handleAcceptCall(): call_id: " + activePeer.getCallId());
+    Log.i(TAG, "handleAcceptCall(): call_id: " + activePeer.getCallId() + " answerWithVideo: " + answerWithVideo);
+
+    OutgoingVideoSourceRouter router = currentState.getVideoState().requireRouter();
+    router.setVanitySink(null);
+
+    if (!answerWithVideo && currentState.getLocalDeviceState().getCameraState().isEnabled()) {
+      router.setEnabled(false);
+      currentState = currentState.builder()
+                                 .changeLocalDeviceState()
+                                 .cameraState(router.getCameraState())
+                                 .build();
+    }
 
     currentState = currentState.builder()
                                .changeCallSetupState(activePeer.getCallId())
                                .acceptWithVideo(answerWithVideo)
+                               .accepted(true)
+                               .waitForAudio(true)
+                               .build();
+
+    webRtcInteractor.prepareAudioForAccept();
+
+    return currentState;
+  }
+
+  @Override
+  protected @NonNull WebRtcServiceState handleAudioReadyForAccept(@NonNull WebRtcServiceState currentState) {
+    RemotePeer activePeer = currentState.getCallInfoState().getActivePeer();
+
+    if (activePeer == null || !currentState.getCallSetupState(activePeer.getCallId()).shouldWaitForAudio()) {
+      Log.w(TAG, "handleAudioReadyForAccept(): call is no longer waiting to be accepted, ignoring");
+      return currentState;
+    }
+
+    Log.i(TAG, "handleAudioReadyForAccept(): call_id: " + activePeer.getCallId());
+
+    currentState = currentState.builder()
+                               .changeCallSetupState(activePeer.getCallId())
+                               .waitForAudio(false)
                                .build();
 
     try {
@@ -155,7 +195,18 @@ public class IncomingCallActionProcessor extends DeviceAwareActionProcessor {
       return currentState;
     }
 
+    // Reject deny if the call has already been fully accepted by RingRTC
+    if (currentState.getCallSetupState(activePeer).isAccepted() && !currentState.getCallSetupState(activePeer).shouldWaitForAudio()) {
+      Log.w(TAG, "Cannot deny after call has been accepted!");
+      return currentState;
+    }
+
     Log.i(TAG, "handleDenyCall():");
+
+    OutgoingVideoSourceRouter router = currentState.getVideoState().getRouter();
+    if (router != null) {
+      router.setVanitySink(null);
+    }
 
     webRtcInteractor.sendNotAcceptedCallEventSyncMessage(activePeer,
                                                          false,
@@ -164,40 +215,96 @@ public class IncomingCallActionProcessor extends DeviceAwareActionProcessor {
     try {
       webRtcInteractor.rejectIncomingCall(activePeer.getId());
       webRtcInteractor.getCallManager().hangup();
+
+      currentState = currentState.builder()
+                                 .changeCallInfoState()
+                                 .callState(WebRtcViewModel.State.CALL_DISCONNECTED)
+                                 .build();
+
+      webRtcInteractor.postStateUpdate(currentState);
+
       return terminate(currentState, activePeer);
     } catch (CallException e) {
       return callFailure(currentState, "hangup() failed: ", e);
     }
   }
 
-  protected @NonNull WebRtcServiceState handleLocalRinging(@NonNull WebRtcServiceState currentState, @NonNull RemotePeer remotePeer) {
-    Log.i(TAG, "handleLocalRinging(): call_id: " + remotePeer.getCallId());
+  @Override
+  protected @NonNull WebRtcServiceState handleSetIncomingRingingVanity(@NonNull WebRtcServiceState currentState, boolean enabled) {
+    RemotePeer     activePeer     = currentState.getCallInfoState().requireActivePeer();
+    CallSetupState callSetupState = currentState.getCallSetupState(activePeer);
 
+    if (!callSetupState.isRemoteVideoOffer()) {
+      return currentState;
+    }
+
+    if (callSetupState.isAccepted()) {
+      Log.w(TAG, "handleSetIncomingRingingVanity(): call has already been accepted, ignoring");
+      return currentState;
+    }
+
+    boolean cameraAlreadyEnabled = currentState.getLocalDeviceState().getCameraState().isEnabled();
+
+    if (enabled && cameraAlreadyEnabled) {
+      return currentState;
+    }
+
+    if (!enabled && !cameraAlreadyEnabled) {
+      return currentState;
+    }
+
+    OutgoingVideoSourceRouter router = currentState.getVideoState().requireRouter();
+
+    if (enabled) {
+      Log.i(TAG, "handleSetIncomingRingingVanity(): enabling vanity camera");
+      router.setVanitySink(currentState.getVideoState().requireLocalSink());
+      router.setEnabled(true);
+    } else {
+      Log.i(TAG, "handleSetIncomingRingingVanity(): disabling vanity camera");
+      router.setVanitySink(null);
+      router.setEnabled(false);
+    }
+
+    return currentState.builder()
+                       .changeLocalDeviceState()
+                       .cameraState(router.getCameraState())
+                       .build();
+  }
+
+  protected @NonNull WebRtcServiceState handleLocalRinging(@NonNull WebRtcServiceState currentState, @NonNull RemotePeer remotePeer) {
     RemotePeer activePeer                = currentState.getCallInfoState().requireActivePeer();
     Recipient  recipient                 = remotePeer.getRecipient();
     boolean    shouldDisturbUserWithCall = DoNotDisturbUtil.shouldDisturbUserWithCall(context.getApplicationContext(), recipient);
+
+    Log.i(TAG, "handleLocalRinging(): call_id: " + remotePeer.getCallId() + " shouldDisturbUser: " + shouldDisturbUserWithCall);
 
     activePeer.localRinging();
 
     SignalDatabase.calls().insertOneToOneCall(remotePeer.getCallId().longValue(),
                                               System.currentTimeMillis(),
                                               remotePeer.getId(),
-                                      currentState.getCallSetupState(activePeer).isRemoteVideoOffer() ? CallTable.Type.VIDEO_CALL : CallTable.Type.AUDIO_CALL,
+                                              currentState.getCallSetupState(activePeer).isRemoteVideoOffer() ? CallTable.Type.VIDEO_CALL : CallTable.Type.AUDIO_CALL,
                                               CallTable.Direction.INCOMING,
-                                              CallTable.Event.ONGOING);
+                                              CallTable.Event.ONGOING,
+                                              false);
 
+    if (!shouldDisturbUserWithCall) {
+      Log.i(TAG, "Silently ignoring call due to mute settings.");
+      return currentState.builder()
+                         .changeCallInfoState()
+                         .callState(WebRtcViewModel.State.CALL_INCOMING)
+                         .build();
+    }
 
-    if (shouldDisturbUserWithCall) {
-      webRtcInteractor.updatePhoneState(LockManager.PhoneState.INTERACTIVE);
-      boolean started = webRtcInteractor.startWebRtcCallActivityIfPossible();
-      if (!started) {
-        Log.i(TAG, "Unable to start call activity due to OS version or not being in the foreground");
-        AppForegroundObserver.addListener(webRtcInteractor.getForegroundListener());
-      }
+    webRtcInteractor.updatePhoneState(LockManager.PhoneState.INTERACTIVE);
+    boolean started = webRtcInteractor.startWebRtcCallActivityIfPossible();
+    if (!started) {
+      Log.i(TAG, "Unable to start call activity due to OS version or not being in the foreground");
+      AppForegroundObserver.addListener(webRtcInteractor.getForegroundListener());
     }
 
     boolean isCallNotificationsEnabled = SignalStore.settings().isCallNotificationsEnabled() && NotificationChannels.getInstance().areNotificationsEnabled();
-    if (shouldDisturbUserWithCall && isCallNotificationsEnabled) {
+    if (isCallNotificationsEnabled) {
       Uri                         ringtone     = recipient.resolve().getCallRingtone();
       RecipientTable.VibrateState vibrateState = recipient.resolve().getCallVibrate();
 

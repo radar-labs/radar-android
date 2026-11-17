@@ -4,14 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import com.annimon.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.signal.core.util.Util;
 import org.signal.core.util.logging.Log;
+import org.signal.remoteconfig.RemoteConfig;
 import org.thoughtcrime.securesms.BuildConfig;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.stream.Stream;
+import org.signal.core.util.JsonUtils;
+import org.signal.core.util.SemanticVersion;
 
 public final class RemoteDeprecation {
 
@@ -55,7 +60,7 @@ public final class RemoteDeprecation {
       ClientExpiration expiration = Stream.of(expirations)
                                           .filter(c -> c.getVersion() != null && c.getExpiration() != -1)
                                           .filter(c -> c.requireVersion().compareTo(ourVersion) > 0)
-                                          .sortBy(ClientExpiration::getExpiration)
+                                          .sorted(Comparator.comparing(ClientExpiration::getExpiration))
                                           .findFirst()
                                           .orElse(null);
 

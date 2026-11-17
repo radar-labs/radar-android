@@ -5,11 +5,15 @@ import android.app.Application
 import android.content.ContentValues
 import net.zetetic.database.sqlcipher.SQLiteDatabase
 import net.zetetic.database.sqlcipher.SQLiteOpenHelper
+import org.signal.core.database.SqlUtil
 import org.signal.core.util.CursorUtil
-import org.signal.core.util.SqlUtil
 import org.signal.core.util.logging.Log
-import org.thoughtcrime.securesms.crypto.DatabaseSecret
-import org.thoughtcrime.securesms.crypto.DatabaseSecretProvider
+import org.signal.core.util.readToList
+import org.signal.storage.database.DatabaseSecret
+import org.signal.storage.database.DatabaseSecretProvider
+import org.signal.storage.database.SignalDatabaseOpenHelper
+import org.signal.storage.database.SqlCipherDatabaseHook
+import org.signal.storage.database.SqlCipherLibraryLoader
 import org.thoughtcrime.securesms.database.model.LocalMetricsEvent
 import java.util.concurrent.TimeUnit
 
@@ -30,7 +34,7 @@ class LocalMetricsDatabase private constructor(
   SQLiteOpenHelper(
     application,
     DATABASE_NAME,
-    databaseSecret.asString(),
+    databaseSecret.asHex(),
     null,
     DATABASE_VERSION,
     0,
@@ -118,9 +122,8 @@ class LocalMetricsDatabase private constructor(
     db.setForeignKeyConstraintsEnabled(true)
   }
 
-  override fun getSqlCipherDatabase(): SQLiteDatabase {
-    return writableDatabase
-  }
+  override val sqlCipherDatabase: SQLiteDatabase
+    get() = writableDatabase
 
   fun insert(currentTime: Long, event: LocalMetricsEvent) {
     val db = writableDatabase
@@ -163,36 +166,30 @@ class LocalMetricsDatabase private constructor(
     }
   }
 
+  /** When the most recent [limit] events named [eventName] were recorded, newest first. */
+  fun getEventTimes(eventName: String, limit: Int): List<Long> {
+    return readableDatabase.rawQuery("SELECT $CREATED_AT FROM $TABLE_NAME WHERE $EVENT_NAME = ? ORDER BY $CREATED_AT DESC LIMIT $limit", SqlUtil.buildArgs(eventName)).readToList { it.getLong(0) }
+  }
+
   fun getMetrics(): List<EventMetrics> {
-    val db = readableDatabase
+    val events: Map<String, List<String>> = getUniqueEventNames()
 
-    db.beginTransaction()
-    try {
-      val events: Map<String, List<String>> = getUniqueEventNames()
-
-      val metrics: List<EventMetrics> = events.map { (eventName: String, splits: List<String>) ->
-        EventMetrics(
-          name = eventName,
-          count = getCount(eventName),
-          p50 = eventPercent(eventName, 50),
-          p90 = eventPercent(eventName, 90),
-          p99 = eventPercent(eventName, 99),
-          splits = splits.map { splitName ->
-            SplitMetrics(
-              name = splitName,
-              p50 = splitPercent(eventName, splitName, 50),
-              p90 = splitPercent(eventName, splitName, 90),
-              p99 = splitPercent(eventName, splitName, 99)
-            )
-          }
-        )
-      }
-
-      db.setTransactionSuccessful()
-
-      return metrics
-    } finally {
-      db.endTransaction()
+    return events.map { (eventName: String, splits: List<String>) ->
+      EventMetrics(
+        name = eventName,
+        count = getCount(eventName),
+        p50 = eventPercent(eventName, 50),
+        p90 = eventPercent(eventName, 90),
+        p99 = eventPercent(eventName, 99),
+        splits = splits.map { splitName ->
+          SplitMetrics(
+            name = splitName,
+            p50 = splitPercent(eventName, splitName, 50),
+            p90 = splitPercent(eventName, splitName, 90),
+            p99 = splitPercent(eventName, splitName, 99)
+          )
+        }
+      )
     }
   }
 

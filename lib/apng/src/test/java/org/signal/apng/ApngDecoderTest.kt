@@ -1,0 +1,571 @@
+/*
+ * Copyright 2024 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.apng
+
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
+
+@RunWith(RobolectricTestRunner::class)
+class ApngDecoderTest {
+
+  // -- isApng --
+
+  @Test
+  fun `isApng returns false for static PNG`() {
+    assertFalse(ApngDecoder.isApng(open("test00.png")))
+  }
+
+  @Test
+  fun `isApng returns true for single-frame APNG using default image`() {
+    assertTrue(ApngDecoder.isApng(open("test01.png")))
+  }
+
+  @Test
+  fun `isApng returns true for single-frame APNG ignoring default image`() {
+    assertTrue(ApngDecoder.isApng(open("test02.png")))
+  }
+
+  @Test
+  fun `isApng returns true for multi-frame APNG`() {
+    assertTrue(ApngDecoder.isApng(open("test07.png")))
+  }
+
+  @Test
+  fun `isApng returns true for real-world image`() {
+    assertTrue(ApngDecoder.isApng(open("ball.png")))
+  }
+
+  // -- Basic parsing --
+
+  @Test
+  fun `test01 - single frame using default image`() {
+    val result = decode("test01.png")
+    assertNotNull(result.metadata)
+    assertEquals(1, result.frames.size)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test02 - single frame ignoring default image`() {
+    val result = decode("test02.png")
+    assertNotNull(result.metadata)
+    assertEquals(1, result.frames.size)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Split IDAT and fdAT --
+
+  @Test
+  fun `test03 - split IDAT is not APNG`() {
+    assertFalse(ApngDecoder.isApng(open("test03.png")))
+  }
+
+  @Test
+  fun `test04 - split IDAT with zero-length chunk is not APNG`() {
+    assertFalse(ApngDecoder.isApng(open("test04.png")))
+  }
+
+  @Test
+  fun `test05 - split fdAT parses successfully`() {
+    val result = decode("test05.png")
+    assertNotNull(result.metadata)
+    assertEquals(1, result.frames.size)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test06 - split fdAT with zero-length chunk parses successfully`() {
+    val result = decode("test06.png")
+    assertNotNull(result.metadata)
+    assertEquals(1, result.frames.size)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Dispose ops --
+
+  @Test
+  fun `test07 - DISPOSE_OP_NONE basic`() {
+    val result = decode("test07.png")
+    assertTrue(result.frames.size >= 2)
+    assertTrue(result.frames.any { it.fcTL.disposeOp == ApngDecoder.Chunk.fcTL.DisposeOp.NONE })
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test08 - DISPOSE_OP_BACKGROUND basic`() {
+    val result = decode("test08.png")
+    assertTrue(result.frames.size >= 2)
+    assertTrue(result.frames.any { it.fcTL.disposeOp == ApngDecoder.Chunk.fcTL.DisposeOp.BACKGROUND })
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test09 - DISPOSE_OP_BACKGROUND final frame`() {
+    val result = decode("test09.png")
+    assertTrue(result.frames.size >= 2)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test10 - DISPOSE_OP_PREVIOUS basic`() {
+    val result = decode("test10.png")
+    assertTrue(result.frames.size >= 2)
+    assertTrue(result.frames.any { it.fcTL.disposeOp == ApngDecoder.Chunk.fcTL.DisposeOp.PREVIOUS })
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test11 - DISPOSE_OP_PREVIOUS final frame`() {
+    val result = decode("test11.png")
+    assertTrue(result.frames.size >= 2)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test12 - DISPOSE_OP_PREVIOUS first frame`() {
+    val result = decode("test12.png")
+    assertTrue(result.frames.size >= 2)
+    assertEquals(ApngDecoder.Chunk.fcTL.DisposeOp.PREVIOUS, result.frames[0].fcTL.disposeOp)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Dispose ops with regions --
+
+  @Test
+  fun `test13 - DISPOSE_OP_NONE in region`() {
+    val result = decode("test13.png")
+    assertTrue(result.frames.size >= 2)
+    val subFrame = result.frames.find { it.fcTL.width != result.metadata.width.toUInt() || it.fcTL.height != result.metadata.height.toUInt() }
+    assertNotNull("Expected at least one sub-region frame", subFrame)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test14 - DISPOSE_OP_BACKGROUND before region`() {
+    val result = decode("test14.png")
+    assertTrue(result.frames.size >= 2)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test15 - DISPOSE_OP_BACKGROUND in region`() {
+    val result = decode("test15.png")
+    assertTrue(result.frames.size >= 2)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test16 - DISPOSE_OP_PREVIOUS in region`() {
+    val result = decode("test16.png")
+    assertTrue(result.frames.size >= 2)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Blend ops --
+
+  @Test
+  fun `test17 - BLEND_OP_SOURCE on solid colour`() {
+    val result = decode("test17.png")
+    assertTrue(result.frames.size >= 2)
+    assertTrue(result.frames.any { it.fcTL.blendOp == ApngDecoder.Chunk.fcTL.BlendOp.SOURCE })
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test18 - BLEND_OP_SOURCE on transparent colour`() {
+    val result = decode("test18.png")
+    assertTrue(result.frames.size >= 2)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test19 - BLEND_OP_SOURCE on nearly-transparent colour`() {
+    val result = decode("test19.png")
+    assertTrue(result.frames.size >= 2)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test20 - BLEND_OP_OVER on solid and transparent colours`() {
+    val result = decode("test20.png")
+    assertTrue(result.frames.size >= 2)
+    assertTrue(result.frames.any { it.fcTL.blendOp == ApngDecoder.Chunk.fcTL.BlendOp.OVER })
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test21 - BLEND_OP_OVER repeatedly with nearly-transparent colours`() {
+    val result = decode("test21.png")
+    assertTrue(result.frames.size >= 2)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Blending and gamma --
+
+  @Test
+  fun `test22 - BLEND_OP_OVER with gamma`() {
+    val result = decode("test22.png")
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test23 - BLEND_OP_OVER with gamma nearly black`() {
+    val result = decode("test23.png")
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Chunk ordering --
+
+  @Test
+  fun `test24 - fcTL before acTL parses successfully`() {
+    val result = decode("test24.png")
+    assertNotNull(result.metadata)
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Delays --
+
+  @Test
+  fun `test25 - basic delays`() {
+    val result = decode("test25.png")
+    assertTrue(result.frames.size >= 2)
+
+    val delaysMs = result.frames.map { it.delayMs }
+    assertTrue("Expected at least one 500ms delay", delaysMs.any { it == 500L })
+    assertTrue("Expected at least one 1000ms delay", delaysMs.any { it == 1000L })
+  }
+
+  @Test
+  fun `test26 - rounding of division`() {
+    val result = decode("test26.png")
+    assertTrue(result.frames.size >= 2)
+
+    val delaysMs = result.frames.map { it.delayMs }
+    assertTrue("Expected at least one 500ms delay", delaysMs.any { it == 500L })
+    assertTrue("Expected at least one 1000ms delay", delaysMs.any { it == 1000L })
+  }
+
+  @Test
+  fun `test27 - 16-bit numerator and denominator`() {
+    val result = decode("test27.png")
+    assertTrue(result.frames.size >= 2)
+
+    val delaysMs = result.frames.map { it.delayMs }
+    assertTrue("Expected at least one 500ms delay", delaysMs.any { it == 500L })
+    assertTrue("Expected at least one 1000ms delay", delaysMs.any { it == 1000L })
+  }
+
+  @Test
+  fun `test28 - zero denominator treated as 100`() {
+    val result = decode("test28.png")
+    assertTrue(result.frames.size >= 2)
+
+    val delaysMs = result.frames.map { it.delayMs }
+    assertTrue("Expected at least one 500ms delay", delaysMs.any { it == 500L })
+    assertTrue("Expected at least one 1000ms delay", delaysMs.any { it == 1000L })
+
+    result.frames.forEach {
+      val den = it.fcTL.delayDen.toInt()
+      if (den == 0) {
+        val expectedMs = it.fcTL.delayNum.toInt() * 1000 / 100
+        assertEquals(expectedMs.toLong(), it.delayMs)
+      }
+    }
+  }
+
+  @Test
+  fun `test29 - zero numerator`() {
+    val result = decode("test29.png")
+    assertTrue(result.frames.size >= 2)
+    assertTrue("Expected at least one zero-delay frame", result.frames.any { it.fcTL.delayNum.toInt() == 0 })
+  }
+
+  // -- num_plays --
+
+  @Test
+  fun `test30 - num_plays 0 means infinite`() {
+    val result = decode("test30.png")
+    assertEquals(Int.MAX_VALUE, result.metadata.numPlays)
+  }
+
+  @Test
+  fun `test31 - num_plays 1`() {
+    val result = decode("test31.png")
+    assertEquals(1, result.metadata.numPlays)
+  }
+
+  @Test
+  fun `test32 - num_plays 2`() {
+    val result = decode("test32.png")
+    assertEquals(2, result.metadata.numPlays)
+  }
+
+  // -- Other color depths and types --
+
+  @Test
+  fun `test33 - 16-bit colour`() {
+    val result = decode("test33.png")
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test34 - 8-bit greyscale`() {
+    val result = decode("test34.png")
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test35 - 8-bit greyscale and alpha with blending`() {
+    val result = decode("test35.png")
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test36 - 2-color palette`() {
+    val result = decode("test36.png")
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test37 - 2-bit palette and alpha`() {
+    val result = decode("test37.png")
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `test38 - 1-bit palette and alpha with blending`() {
+    val result = decode("test38.png")
+    assertTrue(result.frames.isNotEmpty())
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Real-world samples --
+
+  @Test
+  fun `ball - real world bouncing ball`() {
+    val result = decode("ball.png")
+    assertNotNull(result.metadata)
+    assertTrue(result.frames.size > 1)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `clock - real world clock with BLEND_OP_OVER`() {
+    val result = decode("clock.png")
+    assertNotNull(result.metadata)
+    assertTrue(result.frames.size > 1)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  @Test
+  fun `elephant - real world elephant`() {
+    val result = decode("elephant.png")
+    assertNotNull(result.metadata)
+    assertTrue(result.frames.size > 1)
+    result.frames.forEachIndexed { i, _ -> assertNotNull(result.decoder.decodeFrame(i)) }
+  }
+
+  // -- Malicious / malformed input --
+
+  @Test(expected = IOException::class)
+  fun `create rejects chunk with oversized declared length instead of allocating`() {
+    val malicious = ByteArrayOutputStream().apply {
+      write(byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)) // PNG magic
+      write(byteArrayOf(0x7F, 0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte())) // declared chunk length = 0x7FFFFFFF
+      write("IHDR".toByteArray(Charsets.US_ASCII))
+    }.toByteArray()
+
+    ApngDecoder.create { ByteArrayInputStream(malicious) }
+  }
+
+  @Test(expected = IOException::class)
+  fun `create rejects chunk longer than the known content length even when under the absolute ceiling`() {
+    val malicious = ByteArrayOutputStream().apply {
+      write(byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)) // PNG magic
+      write(byteArrayOf(0x00, 0x0F, 0x42, 0x40)) // declared chunk length = 1,000,000
+      write("IHDR".toByteArray(Charsets.US_ASCII))
+    }.toByteArray()
+
+    ApngDecoder.create(contentLength = 1024) { ByteArrayInputStream(malicious) }
+  }
+
+  @Test(expected = IOException::class)
+  fun `create rejects a non-PNG with IOException rather than an unchecked exception`() {
+    ApngDecoder.create { ByteArrayInputStream(ByteArray(32)) }
+  }
+
+  @Test
+  fun `isApng returns false for a chunk length that overruns the end of the file`() {
+    val malicious = ByteArrayOutputStream().apply {
+      write(byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)) // PNG magic
+      write(byteArrayOf(0x7F, 0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte())) // declared chunk length = 0x7FFFFFFF
+      write("junk".toByteArray(Charsets.US_ASCII))
+    }.toByteArray()
+
+    assertFalse(isApngWithoutLeaking(malicious))
+  }
+
+  @Test
+  fun `isApng returns false for input shorter than the PNG magic`() {
+    assertFalse(isApngWithoutLeaking(ByteArray(3)))
+    assertFalse(isApngWithoutLeaking(ByteArray(0)))
+  }
+
+  @Test
+  fun `isApng returns false for a truncated chunk header`() {
+    val magic = byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)
+    assertFalse(isApngWithoutLeaking(magic + byteArrayOf(0x00, 0x00)))
+  }
+
+  @Test
+  fun `isApng returns a clean result for truncation at every byte boundary of a real APNG`() {
+    val full = open("test07.png").use { it.readBytes() }
+    for (length in 0 until full.size) {
+      isApngWithoutLeaking(full.copyOf(length))
+    }
+  }
+
+  /** Runs [ApngDecoder.isApng], failing the test if anything other than a clean true/false comes back. */
+  private fun isApngWithoutLeaking(bytes: ByteArray): Boolean {
+    try {
+      return ApngDecoder.isApng(ByteArrayInputStream(bytes))
+    } catch (e: Throwable) {
+      throw AssertionError("isApng leaked ${e.javaClass.name}", e)
+    }
+  }
+
+  // -- Bounds checking --
+
+  @Test(expected = IOException::class)
+  fun `create rejects APNG with oversized IHDR canvas dimensions`() {
+    ApngDecoder.create { ByteArrayInputStream(apngWithIhdrDimensions(0x7FFFFFFF, 0x7FFFFFFF)) }
+  }
+
+  @Test(expected = IOException::class)
+  fun `create rejects IHDR with a declared length other than 13`() {
+    val malicious = ByteArrayOutputStream().apply {
+      write(byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)) // PNG magic
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x09)) // declared IHDR length = 9 (should be 13)
+      write("IHDR".toByteArray(Charsets.US_ASCII))
+      write(ByteArray(9))
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x00)) // CRC
+    }.toByteArray()
+
+    ApngDecoder.create { ByteArrayInputStream(malicious) }
+  }
+
+  @Test(expected = IOException::class)
+  fun `create rejects acTL that is too short`() {
+    val malicious = ByteArrayOutputStream().apply {
+      write(apngWithIhdrDimensions(1, 1)) // PNG magic + valid 1x1 IHDR
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x04)) // declared acTL length = 4 (should be 8)
+      write("acTL".toByteArray(Charsets.US_ASCII))
+      write(ByteArray(4))
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x00)) // CRC
+    }.toByteArray()
+
+    ApngDecoder.create { ByteArrayInputStream(malicious) }
+  }
+
+  @Test(expected = IOException::class)
+  fun `create rejects APNG that has an acTL but no valid frames`() {
+    // acTL is present (so isApng returns true and scanning proceeds), but there is no fcTL before IDAT and no fcTL/fdAT
+    // pairs afterward, so the frame list ends up empty. This used to construct an ApngDrawable that crashed on the first
+    // render when it indexed frames[0].
+    val malicious = ByteArrayOutputStream().apply {
+      write(apngWithIhdrDimensions(1, 1)) // PNG magic + valid 1x1 IHDR
+
+      // acTL: 1 frame, 0 plays
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x08)) // length = 8
+      write("acTL".toByteArray(Charsets.US_ASCII))
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x01)) // numFrames
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x00)) // numPlays
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x00)) // CRC
+
+      // IDAT with no preceding fcTL, so it is only the default image and not a frame
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x01)) // length = 1
+      write("IDAT".toByteArray(Charsets.US_ASCII))
+      write(byteArrayOf(0x00)) // data
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x00)) // CRC
+
+      // IEND
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x00)) // length = 0
+      write("IEND".toByteArray(Charsets.US_ASCII))
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x00)) // CRC
+    }.toByteArray()
+
+    ApngDecoder.create { ByteArrayInputStream(malicious) }
+  }
+
+  // -- Helpers --
+
+  private fun open(filename: String): InputStream {
+    return javaClass.classLoader!!.getResourceAsStream("apng/$filename")
+      ?: throw IllegalStateException("Test resource not found: apng/$filename")
+  }
+
+  private fun decode(filename: String): DecodeResult {
+    val decoder = ApngDecoder.create { open(filename) }
+    return DecodeResult(decoder, decoder.metadata, decoder.frames)
+  }
+
+  /**
+   * Builds the leading bytes of an APNG (PNG magic + a single IHDR chunk) with the given canvas dimensions.
+   * Enough for the decoder to read and validate the IHDR before anything else.
+   */
+  private fun apngWithIhdrDimensions(width: Int, height: Int): ByteArray {
+    val ihdrData = ByteArray(13).apply {
+      this[0] = (width ushr 24).toByte()
+      this[1] = (width ushr 16).toByte()
+      this[2] = (width ushr 8).toByte()
+      this[3] = width.toByte()
+      this[4] = (height ushr 24).toByte()
+      this[5] = (height ushr 16).toByte()
+      this[6] = (height ushr 8).toByte()
+      this[7] = height.toByte()
+      this[8] = 8 // bitDepth
+      this[9] = 6 // colorType
+    }
+
+    return ByteArrayOutputStream().apply {
+      write(byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)) // PNG magic
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x0D)) // IHDR length = 13
+      write("IHDR".toByteArray(Charsets.US_ASCII))
+      write(ihdrData)
+      write(byteArrayOf(0x00, 0x00, 0x00, 0x00)) // CRC (not validated by the decoder)
+    }.toByteArray()
+  }
+
+  private val ApngDecoder.Frame.delayMs: Long
+    get() {
+      val delayNumerator = fcTL.delayNum.toInt()
+      val delayDenominator = fcTL.delayDen.toInt().takeIf { it > 0 } ?: 100
+      return (delayNumerator * 1000L / delayDenominator)
+    }
+
+  private data class DecodeResult(
+    val decoder: ApngDecoder,
+    val metadata: ApngDecoder.Metadata,
+    val frames: List<ApngDecoder.Frame>
+  )
+}

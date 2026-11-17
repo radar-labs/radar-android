@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +13,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.RequestManager;
 
+import org.signal.core.ui.view.Stub;
 import org.signal.ringrtc.CallLinkRootKey;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.avatar.fallback.FallbackAvatar;
 import org.thoughtcrime.securesms.avatar.fallback.FallbackAvatarDrawable;
 import org.thoughtcrime.securesms.calls.links.CallLinks;
+import org.thoughtcrime.securesms.components.emoji.EmojiTextView;
 import org.thoughtcrime.securesms.conversation.colors.AvatarColorHash;
 import org.thoughtcrime.securesms.linkpreview.LinkPreview;
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewRepository;
 import org.thoughtcrime.securesms.mms.ImageSlide;
 import org.thoughtcrime.securesms.mms.SlidesClickedListener;
-import org.thoughtcrime.securesms.util.Util;
-import org.thoughtcrime.securesms.util.ViewUtil;
-import org.thoughtcrime.securesms.util.views.Stub;
+import org.thoughtcrime.securesms.stickers.StickerUrl;
+import org.signal.core.util.Util;
+import org.signal.core.ui.util.ViewUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,16 +44,15 @@ import okhttp3.HttpUrl;
  */
 public class LinkPreviewView extends FrameLayout {
 
-  private static final String STATE_ROOT = "linkPreviewView.state.root";
-  private static final String STATE_STATE = "linkPreviewView.state.state";
-
   private static final int TYPE_CONVERSATION = 0;
   private static final int TYPE_COMPOSE      = 1;
+
+  public static final int NO_MAX_DESCRIPTION_HEIGHT = -1;
 
   private ViewGroup                   container;
   private Stub<OutlinedThumbnailView> thumbnail;
   private TextView                    title;
-  private TextView                    description;
+  private EmojiTextView               description;
   private TextView                    site;
   private View                        divider;
   private View                        closeButton;
@@ -102,7 +102,7 @@ public class LinkPreviewView extends FrameLayout {
       divider.setVisibility(VISIBLE);
       closeButton.setVisibility(VISIBLE);
       title.setMaxLines(2);
-      description.setMaxLines(2);
+      description.bindGestureListener();
 
       closeButton.setOnClickListener(v -> {
         if (closeClickedListener != null) {
@@ -112,30 +112,6 @@ public class LinkPreviewView extends FrameLayout {
     }
 
     setWillNotDraw(false);
-  }
-
-  @Override
-  protected @NonNull Parcelable onSaveInstanceState() {
-    Parcelable root   = super.onSaveInstanceState();
-    Bundle     bundle = new Bundle();
-
-    bundle.putParcelable(STATE_ROOT, root);
-    bundle.putParcelable(STATE_STATE, thumbnailState);
-
-    return bundle;
-  }
-
-  @Override
-  protected void onRestoreInstanceState(Parcelable state) {
-    if (state instanceof Bundle) {
-      Parcelable root = ((Bundle) state).getParcelable(STATE_ROOT);
-      thumbnailState = ((Bundle) state).getParcelable(STATE_STATE);
-
-      thumbnailState.applyState(thumbnail);
-      super.onRestoreInstanceState(root);
-    } else {
-      super.onRestoreInstanceState(state);
-    }
   }
 
   @Override
@@ -172,11 +148,11 @@ public class LinkPreviewView extends FrameLayout {
     spinner.setVisibility(GONE);
     noPreview.setVisibility(GONE);
 
-    CallLinks.CallLinkParseResult linkParseResult = CallLinks.parseUrl(linkPreview.getUrl());
+    CallLinkRootKey callLinkRootKey = CallLinks.isCallLink(linkPreview.getUrl()) ? CallLinks.parseUrl(linkPreview.getUrl()) : null;
     if (!Util.isEmpty(linkPreview.getTitle())) {
       title.setText(linkPreview.getTitle());
       title.setVisibility(VISIBLE);
-    } else if (linkParseResult != null) {
+    } else if (callLinkRootKey != null) {
       title.setText(R.string.Recipient_signal_call);
       title.setVisibility(VISIBLE);
     } else {
@@ -186,7 +162,8 @@ public class LinkPreviewView extends FrameLayout {
     if (showDescription && !Util.isEmpty(linkPreview.getDescription())) {
       description.setText(linkPreview.getDescription());
       description.setVisibility(VISIBLE);
-    } else if (linkParseResult != null) {
+      description.scrollTo(0, 0);
+    } else if (callLinkRootKey != null) {
       description.setText(R.string.LinkPreviewView__use_this_link_to_join_a_signal_call);
       description.setVisibility(VISIBLE);
     } else {
@@ -221,14 +198,14 @@ public class LinkPreviewView extends FrameLayout {
       thumbnail.get().setImageResource(requestManager, new ImageSlide(linkPreview.getThumbnail().get()), type == TYPE_CONVERSATION && !scheduleMessageMode, false);
       thumbnail.get().showSecondaryText(false);
       thumbnail.get().setOutlineEnabled(true);
-    } else if (linkParseResult != null) {
+    } else if (callLinkRootKey != null) {
       thumbnail.setVisibility(VISIBLE);
       thumbnailState.applyState(thumbnail);
       thumbnail.get().setImageDrawable(
           requestManager,
           new FallbackAvatarDrawable(
               getContext(),
-              new FallbackAvatar.Resource.CallLink(AvatarColorHash.forCallLink(linkParseResult.getRootKey().getKeyBytes()))
+              new FallbackAvatar.Resource.CallLink(AvatarColorHash.forCallLink(callLinkRootKey.getKeyBytes()))
           ).circleCrop()
       );
       thumbnail.get().showSecondaryText(false);
@@ -236,6 +213,102 @@ public class LinkPreviewView extends FrameLayout {
     } else {
       thumbnail.setVisibility(GONE);
     }
+
+    boolean thumbnailVisible     = (showThumbnail && linkPreview.getThumbnail().isPresent()) || callLinkRootKey != null;
+    boolean stackBesideThumbnail = thumbnailVisible && StickerUrl.isValidShareLink(linkPreview.getUrl());
+    alignTitleWithThumbnail(thumbnailVisible, stackBesideThumbnail);
+    alignDetailsWithThumbnail(stackBesideThumbnail);
+  }
+
+  private void alignTitleWithThumbnail(boolean thumbnailVisible, boolean stackBesideThumbnail) {
+    ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) title.getLayoutParams();
+    if (stackBesideThumbnail) {
+      params.topToTop           = R.id.linkpreview_thumbnail;
+      params.bottomToBottom     = ConstraintLayout.LayoutParams.UNSET;
+      params.bottomToTop        = R.id.linkpreview_description;
+      params.startToEnd         = R.id.linkpreview_thumbnail;
+      params.startToStart       = ConstraintLayout.LayoutParams.UNSET;
+      params.verticalChainStyle = ConstraintLayout.LayoutParams.CHAIN_PACKED;
+      params.setMarginStart(ViewUtil.dpToPx(8));
+    } else if (thumbnailVisible) {
+      params.topToTop       = R.id.linkpreview_thumbnail;
+      params.bottomToBottom = R.id.linkpreview_thumbnail;
+      params.bottomToTop    = ConstraintLayout.LayoutParams.UNSET;
+      params.startToEnd     = R.id.linkpreview_thumbnail;
+      params.startToStart   = ConstraintLayout.LayoutParams.UNSET;
+      params.setMarginStart(ViewUtil.dpToPx(8));
+    } else {
+      params.topToTop       = ConstraintLayout.LayoutParams.PARENT_ID;
+      params.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+      params.bottomToTop    = ConstraintLayout.LayoutParams.UNSET;
+      params.startToEnd     = ConstraintLayout.LayoutParams.UNSET;
+      params.startToStart   = ConstraintLayout.LayoutParams.PARENT_ID;
+      params.setMarginStart(0);
+    }
+    title.setLayoutParams(params);
+    title.setMaxLines(stackBesideThumbnail ? 1 : 2);
+  }
+
+  private void alignDetailsWithThumbnail(boolean stackBesideThumbnail) {
+    ConstraintLayout.LayoutParams descriptionParams = (ConstraintLayout.LayoutParams) description.getLayoutParams();
+    ConstraintLayout.LayoutParams siteParams        = (ConstraintLayout.LayoutParams) site.getLayoutParams();
+
+    if (stackBesideThumbnail) {
+      descriptionParams.topToBottom  = R.id.linkpreview_title;
+      descriptionParams.bottomToTop  = R.id.linkpreview_site;
+      descriptionParams.startToEnd   = R.id.linkpreview_thumbnail;
+      descriptionParams.startToStart = ConstraintLayout.LayoutParams.UNSET;
+      descriptionParams.topMargin    = 0;
+      descriptionParams.setMarginStart(ViewUtil.dpToPx(8));
+
+      siteParams.topToBottom    = R.id.linkpreview_description;
+      siteParams.bottomToBottom = R.id.linkpreview_thumbnail;
+      siteParams.startToEnd     = R.id.linkpreview_thumbnail;
+      siteParams.startToStart   = ConstraintLayout.LayoutParams.UNSET;
+      siteParams.setMarginStart(ViewUtil.dpToPx(8));
+    } else {
+      descriptionParams.topToBottom  = R.id.linkpreview_header_barrier;
+      descriptionParams.bottomToTop  = ConstraintLayout.LayoutParams.UNSET;
+      descriptionParams.startToEnd   = ConstraintLayout.LayoutParams.UNSET;
+      descriptionParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+      descriptionParams.topMargin    = ViewUtil.dpToPx(8);
+      descriptionParams.setMarginStart(0);
+
+      siteParams.topToBottom    = R.id.linkpreview_description;
+      siteParams.bottomToBottom = ConstraintLayout.LayoutParams.UNSET;
+      siteParams.startToEnd     = ConstraintLayout.LayoutParams.UNSET;
+      siteParams.startToStart   = ConstraintLayout.LayoutParams.PARENT_ID;
+      siteParams.setMarginStart(0);
+    }
+
+    description.setLayoutParams(descriptionParams);
+    description.setMaxLines(stackBesideThumbnail ? 1 : 15);
+    site.setLayoutParams(siteParams);
+    site.setMaxLines(stackBesideThumbnail ? 1 : 2);
+  }
+
+  public int getDescriptionHeight() {
+    return description.getVisibility() == VISIBLE ? description.getMeasuredHeight() : 0;
+  }
+
+  /**
+   * Limits the description to the given height, scrolling within it, without requesting a layout so it can be called
+   * while the parent is measuring.
+   */
+  public void setMaxDescriptionHeight(int maxHeight) {
+    ViewGroup.LayoutParams params = description.getLayoutParams();
+    int                    height = maxHeight == NO_MAX_DESCRIPTION_HEIGHT ? ViewGroup.LayoutParams.WRAP_CONTENT : Math.max(maxHeight, getMinDescriptionHeight());
+
+    if (params.height != height) {
+      params.height = height;
+      description.forceLayout();
+      container.forceLayout();
+      forceLayout();
+    }
+  }
+
+  private int getMinDescriptionHeight() {
+    return description.getLineHeight() + description.getCompoundPaddingTop() + description.getCompoundPaddingBottom();
   }
 
   public void setCorners(int topStart, int topEnd) {
@@ -251,7 +324,7 @@ public class LinkPreviewView extends FrameLayout {
       thumbnailState.applyState(thumbnail);
     } else {
       cornerMask.setRadii(topStart, topEnd, 0, 0);
-      thumbnailState.copy(
+      thumbnailState = thumbnailState.copy(
           topStart,
           defaultRadius,
           defaultRadius,
@@ -272,7 +345,7 @@ public class LinkPreviewView extends FrameLayout {
     thumbnailState.applyState(thumbnail);
   }
 
-  private  @StringRes static int getLinkPreviewErrorString(@Nullable LinkPreviewRepository.Error customError) {
+  private @StringRes static int getLinkPreviewErrorString(@Nullable LinkPreviewRepository.Error customError) {
     return customError == LinkPreviewRepository.Error.GROUP_LINK_INACTIVE ? R.string.LinkPreviewView_this_group_link_is_not_active
                                                                           : R.string.LinkPreviewView_no_link_preview_available;
   }

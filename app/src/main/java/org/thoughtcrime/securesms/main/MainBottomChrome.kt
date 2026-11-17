@@ -5,45 +5,33 @@
 
 package org.thoughtcrime.securesms.main
 
-import androidx.annotation.ColorRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.material3.SnackbarDuration
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.signal.core.ui.compose.AllDevicePreviews
-import org.signal.core.ui.compose.Dialogs
+import androidx.compose.ui.platform.LocalResources
+import org.signal.core.ui.NavigationType
+import org.signal.core.ui.compose.BreakpointPreviews
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Snackbars
-import org.thoughtcrime.securesms.R
+import org.signal.core.ui.compose.navigationBarsCompat
+import org.signal.core.ui.compose.showSnackbar
+import org.signal.core.ui.rememberIsSplitPane
+import org.thoughtcrime.securesms.components.snackbars.SnackbarHostKey
+import org.thoughtcrime.securesms.components.snackbars.rememberSnackbarState
 import org.thoughtcrime.securesms.megaphone.Megaphone
 import org.thoughtcrime.securesms.megaphone.MegaphoneActionController
 import org.thoughtcrime.securesms.megaphone.Megaphones
-import org.thoughtcrime.securesms.window.NavigationType
-import org.thoughtcrime.securesms.window.isSplitPane
-
-data class SnackbarState(
-  val message: String,
-  val actionState: ActionState? = null,
-  val showProgress: Boolean = false,
-  val duration: SnackbarDuration = SnackbarDuration.Long
-) {
-  data class ActionState(
-    val action: String,
-    @ColorRes val color: Int = R.color.core_white,
-    val onActionClick: () -> Unit
-  )
-}
 
 interface MainBottomChromeCallback : MainFloatingActionButtonsCallback {
   fun onMegaphoneVisible(megaphone: Megaphone)
@@ -52,16 +40,15 @@ interface MainBottomChromeCallback : MainFloatingActionButtonsCallback {
   object Empty : MainBottomChromeCallback {
     override fun onNewChatClick() = Unit
     override fun onNewCallClick() = Unit
-    override fun onCameraClick(destination: MainNavigationListLocation) = Unit
+    override fun onCameraClick(destination: MainListRoute) = Unit
     override fun onMegaphoneVisible(megaphone: Megaphone) = Unit
     override fun onSnackbarDismissed() = Unit
   }
 }
 
 data class MainBottomChromeState(
-  val destination: MainNavigationListLocation = MainNavigationListLocation.CHATS,
+  val destination: MainListRoute = MainListRoute.Chats,
   val megaphoneState: MainMegaphoneState = MainMegaphoneState(),
-  val snackbarState: SnackbarState? = null,
   val mainToolbarMode: MainToolbarMode = MainToolbarMode.FULL
 )
 
@@ -78,13 +65,14 @@ fun MainBottomChrome(
   megaphoneActionController: MegaphoneActionController,
   modifier: Modifier = Modifier
 ) {
-  val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+  val isSplitPane = LocalResources.current.rememberIsSplitPane()
   val navigationType = NavigationType.rememberNavigationType()
 
   Column(
     modifier = modifier
       .fillMaxWidth()
       .animateContentSize()
+      .then(if (navigationType == NavigationType.RAIL) Modifier.windowInsetsPadding(WindowInsets.navigationBarsCompat) else Modifier)
   ) {
     if (state.mainToolbarMode == MainToolbarMode.FULL && navigationType != NavigationType.RAIL) {
       Box(
@@ -106,18 +94,17 @@ fun MainBottomChrome(
       )
     }
 
-    if (windowSizeClass.isSplitPane()) {
+    if (isSplitPane) {
       return@Column
     }
 
-    val snackBarModifier = if (state.mainToolbarMode == MainToolbarMode.BASIC) {
-      Modifier.navigationBarsPadding()
+    val snackBarModifier = if (state.mainToolbarMode == MainToolbarMode.BASIC && navigationType != NavigationType.RAIL) {
+      Modifier.windowInsetsPadding(WindowInsets.navigationBarsCompat)
     } else {
       Modifier
     }
 
     MainSnackbar(
-      snackbarState = state.snackbarState,
       onDismissed = callback::onSnackbarDismissed,
       modifier = snackBarModifier
     )
@@ -126,20 +113,18 @@ fun MainBottomChrome(
 
 @Composable
 fun MainSnackbar(
-  snackbarState: SnackbarState?,
   onDismissed: () -> Unit,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  hostKey: SnackbarHostKey = MainSnackbarHostKey.MainChrome
 ) {
   val hostState = remember { SnackbarHostState() }
+  val stateHolder = rememberSnackbarState(hostKey)
+  val snackbarState = stateHolder.value
 
   Snackbars.Host(
     hostState,
     modifier = modifier
   )
-
-  if (snackbarState?.showProgress == true) {
-    Dialogs.IndeterminateProgressDialog()
-  }
 
   LaunchedEffect(snackbarState) {
     if (snackbarState != null) {
@@ -154,12 +139,13 @@ fun MainSnackbar(
         SnackbarResult.ActionPerformed -> snackbarState.actionState?.onActionClick?.invoke()
       }
 
+      stateHolder.clear()
       onDismissed()
     }
   }
 }
 
-@AllDevicePreviews
+@BreakpointPreviews
 @Composable
 fun MainBottomChromePreview() {
   Previews.Preview {
@@ -175,13 +161,6 @@ fun MainBottomChromePreview() {
         state = MainBottomChromeState(
           megaphoneState = MainMegaphoneState(
             megaphone = megaphone
-          ),
-          snackbarState = SnackbarState(
-            message = "Test Message",
-            actionState = SnackbarState.ActionState(
-              action = "Ok",
-              onActionClick = {}
-            )
           )
         ),
         callback = MainBottomChromeCallback.Empty,

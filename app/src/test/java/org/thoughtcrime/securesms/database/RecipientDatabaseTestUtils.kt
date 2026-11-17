@@ -2,9 +2,10 @@ package org.thoughtcrime.securesms.database
 
 import android.net.Uri
 import org.signal.core.models.ServiceId.ACI
+import org.signal.core.models.badges.Badge
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.toOptional
 import org.signal.libsignal.zkgroup.profiles.ExpiringProfileKeyCredential
-import org.thoughtcrime.securesms.badges.models.Badge
 import org.thoughtcrime.securesms.conversation.colors.AvatarColor
 import org.thoughtcrime.securesms.conversation.colors.ChatColors
 import org.thoughtcrime.securesms.database.model.GroupRecord
@@ -14,7 +15,6 @@ import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.profiles.ProfileName
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.RecipientCreator
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.wallpaper.ChatWallpaper
 import java.util.UUID
 import kotlin.random.Random
@@ -37,6 +37,7 @@ object RecipientDatabaseTestUtils {
     groupId: GroupId? = null,
     groupType: RecipientTable.RecipientType = RecipientTable.RecipientType.INDIVIDUAL,
     blocked: Boolean = false,
+    blockedAt: Long = 0,
     muteUntil: Long = -1,
     messageVibrateState: RecipientTable.VibrateState = RecipientTable.VibrateState.DEFAULT,
     callVibrateState: RecipientTable.VibrateState = RecipientTable.VibrateState.DEFAULT,
@@ -56,12 +57,11 @@ object RecipientDatabaseTestUtils {
     signalProfileAvatar: String? = null,
     profileAvatarFileDetails: ProfileAvatarFileDetails = ProfileAvatarFileDetails.NO_DETAILS,
     profileSharing: Boolean = false,
-    lastProfileFetch: Long = 0L,
     notificationChannel: String? = null,
     sealedSenderAccessMode: RecipientTable.SealedSenderAccessMode = RecipientTable.SealedSenderAccessMode.UNKNOWN,
     capabilities: Long = 0L,
     storageId: ByteArray? = null,
-    mentionSetting: RecipientTable.MentionSetting = RecipientTable.MentionSetting.ALWAYS_NOTIFY,
+    mentionSetting: RecipientTable.NotificationSetting = RecipientTable.NotificationSetting.ALWAYS_NOTIFY,
     wallpaper: ChatWallpaper? = null,
     chatColors: ChatColors? = null,
     avatarColor: AvatarColor = AvatarColor.A100,
@@ -101,6 +101,7 @@ object RecipientDatabaseTestUtils {
       distributionListId = null,
       recipientType = groupType,
       isBlocked = blocked,
+      blockedAt = blockedAt,
       muteUntil = muteUntil,
       messageVibrateState = messageVibrateState,
       callVibrateState = callVibrateState,
@@ -120,14 +121,18 @@ object RecipientDatabaseTestUtils {
       signalProfileAvatar = signalProfileAvatar,
       profileAvatarFileDetails = profileAvatarFileDetails,
       profileSharing = profileSharing,
-      lastProfileFetch = lastProfileFetch,
       notificationChannel = notificationChannel,
       sealedSenderAccessMode = sealedSenderAccessMode,
       capabilities = RecipientRecord.Capabilities(
-        rawBits = capabilities
+        rawBits = capabilities,
+        usernameSyncMessages = Recipient.Capability.SUPPORTED,
+        optionalPhoneNumber = Recipient.Capability.SUPPORTED
       ),
       storageId = storageId,
       mentionSetting = mentionSetting,
+      callNotificationSetting = RecipientTable.NotificationSetting.ALWAYS_NOTIFY,
+      replyNotificationSetting = RecipientTable.NotificationSetting.ALWAYS_NOTIFY,
+      unreadReminder = RecipientTable.NotificationSetting.ALWAYS_NOTIFY,
       wallpaper = wallpaper,
       chatColors = chatColors,
       avatarColor = avatarColor,
@@ -142,7 +147,8 @@ object RecipientDatabaseTestUtils {
       callLinkRoomId = null,
       phoneNumberSharing = RecipientTable.PhoneNumberSharingState.UNKNOWN,
       nickname = ProfileName.EMPTY,
-      note = null
+      note = null,
+      sharedName = ProfileName.EMPTY
     ),
     participantIds = participants,
     isReleaseChannel = isReleaseChannel,

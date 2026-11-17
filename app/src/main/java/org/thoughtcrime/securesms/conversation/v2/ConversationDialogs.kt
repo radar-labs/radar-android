@@ -8,12 +8,17 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.concurrent.SimpleTask
+import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity
+import org.thoughtcrime.securesms.conversation.v2.data.DeletedMessageTombstoneCache
+import org.thoughtcrime.securesms.database.SignalDatabase
+import org.thoughtcrime.securesms.database.model.InMemoryMessageRecord
 import org.thoughtcrime.securesms.database.model.MessageRecord
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.sms.MessageSender
+import org.thoughtcrime.securesms.util.MessageConstraintsUtil
 import org.thoughtcrime.securesms.verify.VerifyIdentityActivity
 
 /**
@@ -21,6 +26,9 @@ import org.thoughtcrime.securesms.verify.VerifyIdentityActivity
  * conversation fragment.
  */
 object ConversationDialogs {
+
+  private val TAG = Log.tag(ConversationDialogs::class.java)
+
   /**
    * Dialog which is displayed when the user attempts to start a video call
    * as a non-admin in an announcement group.
@@ -29,6 +37,20 @@ object ConversationDialogs {
     MaterialAlertDialogBuilder(context).setTitle(R.string.ConversationActivity_cant_start_group_call)
       .setMessage(R.string.ConversationActivity_only_admins_of_this_group_can_start_a_call)
       .setPositiveButton(android.R.string.ok) { d: DialogInterface, w: Int -> d.dismiss() }
+      .show()
+  }
+
+  fun displayCannotStartGroupCallDueToNoLongerAMemberDialog(context: Context) {
+    MaterialAlertDialogBuilder(context).setTitle(R.string.ConversationActivity_cant_start_group_call)
+      .setMessage(R.string.CallLogFragment__cant_start_call_no_longer_a_member)
+      .setPositiveButton(android.R.string.ok) { d: DialogInterface, _: Int -> d.dismiss() }
+      .show()
+  }
+
+  fun displayCannotStartGroupCallDueToGroupEndedDialog(context: Context) {
+    MaterialAlertDialogBuilder(context).setTitle(R.string.ConversationActivity_cant_start_group_call)
+      .setMessage(R.string.conversation_activity__group_action_not_allowed_group_ended)
+      .setPositiveButton(android.R.string.ok) { d: DialogInterface, _: Int -> d.dismiss() }
       .show()
   }
 
@@ -80,7 +102,55 @@ object ConversationDialogs {
     dialog.show()
   }
 
-  fun displayInMemoryMessageDialog(context: Context, messageRecord: MessageRecord) = Unit
+  fun displayInMemoryMessageDialog(context: Context, messageRecord: MessageRecord) {
+    if (messageRecord is InMemoryMessageRecord.DeletedMessageTombstone) {
+      displayDeletedMessageTombstoneDialog(context, messageRecord)
+    }
+  }
+
+  /**
+   * Dialog which is displayed when the user taps on a deleted message tombstone, allowing them
+   * to promote the local deletion to a "delete for everyone".
+   */
+  private fun displayDeletedMessageTombstoneDialog(context: Context, messageRecord: InMemoryMessageRecord.DeletedMessageTombstone) {
+    MaterialAlertDialogBuilder(context)
+      .setTitle(R.string.ConversationFragment_delete_for_everyone_title)
+      .setMessage(R.string.ConversationFragment_this_message_will_be_deleted_for_everyone_in_the_conversation)
+      .setPositiveButton(R.string.ConversationFragment_delete_for_everyone) { _, _ ->
+        promoteTombstoneToRemoteDelete(messageRecord)
+      }
+      .setNegativeButton(android.R.string.cancel, null)
+      .show()
+  }
+
+  private fun promoteTombstoneToRemoteDelete(messageRecord: InMemoryMessageRecord.DeletedMessageTombstone) {
+    SignalExecutors.BOUNDED.execute {
+      if (!MessageConstraintsUtil.isValidRemoteDeleteSend(messageRecord.dateSent, System.currentTimeMillis())) {
+        Log.w(TAG, "No longer eligible for a remote delete. Ignoring.")
+        DeletedMessageTombstoneCache.remove(messageRecord.threadId, messageRecord.id)
+        return@execute
+      }
+
+      val restored = SignalDatabase.messages.restoreDeletedOutgoingMessage(
+        messageId = messageRecord.id,
+        threadId = messageRecord.threadId,
+        toRecipientId = messageRecord.toRecipient.id,
+        dateSent = messageRecord.dateSent,
+        dateReceived = messageRecord.dateReceived,
+        type = messageRecord.type,
+        expiresIn = messageRecord.expiresIn,
+        expireStarted = messageRecord.expireStarted,
+        expireTimerVersion = messageRecord.expireTimerVersion
+      )
+
+      if (restored) {
+        DeletedMessageTombstoneCache.remove(messageRecord.threadId, messageRecord.id)
+        MessageSender.sendRemoteDelete(messageRecord.id)
+      } else {
+        Log.w(TAG, "Failed to restore deleted message ${messageRecord.id} for remote delete.")
+      }
+    }
+  }
 
   fun displayMessageCouldNotBeSentDialog(context: Context, messageRecord: MessageRecord) {
     MaterialAlertDialogBuilder(context)
@@ -92,6 +162,37 @@ object ConversationDialogs {
         }
       }
       .show()
+  }
+
+  fun displayTerminatedGroupSendFailedDialog(context: Context, messageRecord: MessageRecord) {
+    MaterialAlertDialogBuilder(context)
+      .setMessage(R.string.conversation_activity__send_failed_group_ended)
+      .setNegativeButton(R.string.ConversationFragment_delete_for_me) { _, _ ->
+        SignalExecutors.BOUNDED.execute {
+          SignalDatabase.messages.deleteMessage(messageRecord.id)
+        }
+      }
+      .setPositiveButton(android.R.string.ok, null)
+      .show()
+  }
+
+  fun displayDeletionFailedDialog(context: Context, messageRecord: MessageRecord, canRetry: Boolean) {
+    if (canRetry) {
+      MaterialAlertDialogBuilder(context)
+        .setMessage(R.string.conversation_activity__message_failed_to_delete_retry)
+        .setNegativeButton(android.R.string.cancel, null)
+        .setPositiveButton(R.string.conversation_activity__send) { _, _ ->
+          SignalExecutors.BOUNDED.execute {
+            MessageSender.resendAdminDelete(messageRecord, messageRecord.networkFailures.map { it.recipientId })
+          }
+        }
+        .show()
+    } else {
+      MaterialAlertDialogBuilder(context)
+        .setMessage(R.string.conversation_activity__message_failed_to_delete)
+        .setPositiveButton(android.R.string.ok, null)
+        .show()
+    }
   }
 
   @JvmStatic

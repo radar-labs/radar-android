@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.button.MaterialButton
-import org.thoughtcrime.securesms.LoggingFragment
+import org.signal.core.ui.logging.LoggingFragment
 import org.thoughtcrime.securesms.R
 
 /** First step of the payments onboarding flow: introduces Radar payments. Mirrors iOS PaymentsIntroViewController. */

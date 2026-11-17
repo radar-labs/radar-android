@@ -9,6 +9,7 @@ import org.signal.core.util.Hex
 import org.signal.core.util.ThreadUtil
 import org.signal.core.util.UuidUtil
 import org.signal.core.util.logging.Log
+import org.signal.storage.keyvalue.PlainTextKeyValueStore
 import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.conversationlist.model.ConversationFilter
 import org.thoughtcrime.securesms.database.MessageTable
@@ -25,7 +26,6 @@ import org.thoughtcrime.securesms.jobmanager.JsonJobData
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.notifications.v2.ConversationId
-import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.releasechannel.ReleaseChannel
 import org.thoughtcrime.securesms.s3.S3
@@ -35,8 +35,12 @@ import org.whispersystems.signalservice.internal.ServiceResponse
 import java.io.IOException
 import java.lang.Integer.max
 import java.security.MessageDigest
+import java.time.LocalTime
+import java.time.ZonedDateTime
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Retrieves and processes release channel messages.
@@ -52,9 +56,17 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
     private val TAG = Log.tag(RetrieveRemoteAnnouncementsJob::class.java)
     private val RETRIEVE_FREQUENCY = TimeUnit.DAYS.toMillis(3)
 
+    private val WINDOW_START = LocalTime.of(9, 0)
+    private val WINDOW_END = LocalTime.of(21, 0)
+
     @JvmStatic
     @JvmOverloads
     fun enqueue(force: Boolean = false) {
+      if (!BuildConfig.REMOTE_ANNOUNCEMENTS_ENABLED) {
+        Log.i(TAG, "Remote announcements are disabled in this build, skipping.")
+        return
+      }
+
       if (!SignalStore.account.isRegistered) {
         Log.i(TAG, "Not registered, skipping.")
         return
@@ -65,13 +77,18 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
         return
       }
 
+      val windowDelay = calculateTimeToNextWindow()
+      if (windowDelay > Duration.ZERO) {
+        Log.i(TAG, "Outside window, delaying ${windowDelay.inWholeMinutes} minutes")
+      }
+
       val job = RetrieveRemoteAnnouncementsJob(
         force,
         Parameters.Builder()
           .setQueue("RetrieveReleaseChannelJob")
-          .setMaxInstancesForFactory(1)
           .setMaxAttempts(3)
           .addConstraint(NetworkConstraint.KEY)
+          .setInitialDelay(windowDelay.inWholeMilliseconds)
           .build()
       )
 
@@ -79,6 +96,23 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
         .startChain(CreateReleaseChannelJob.create())
         .then(job)
         .enqueue()
+    }
+
+    private fun calculateTimeToNextWindow(): Duration {
+      val now = ZonedDateTime.now()
+      val time = now.toLocalTime()
+
+      if (time.isAfter(WINDOW_START) && time.isBefore(WINDOW_END)) {
+        return Duration.ZERO
+      }
+
+      val next9am = if (time.isBefore(WINDOW_START)) {
+        now.with(WINDOW_START)
+      } else {
+        now.plusDays(1).with(WINDOW_START)
+      }
+
+      return (next9am.toInstant().toEpochMilli() - System.currentTimeMillis()).milliseconds
     }
   }
 
@@ -89,6 +123,12 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
   override fun onFailure() = Unit
 
   override fun onRun() {
+    // Radar: also covers a job that an older build already queued.
+    if (!BuildConfig.REMOTE_ANNOUNCEMENTS_ENABLED) {
+      Log.i(TAG, "Remote announcements are disabled in this build, skipping.")
+      return
+    }
+
     if (!SignalStore.account.isRegistered) {
       Log.i(TAG, "Not registered, skipping.")
       return
@@ -103,6 +143,13 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
 
     if (!force && System.currentTimeMillis() < values.nextScheduledCheck) {
       Log.i(TAG, "Too soon to check for updated release notes")
+      return
+    }
+
+    val delay = calculateTimeToNextWindow()
+    if (delay > Duration.ZERO) {
+      Log.i(TAG, "Outside window, re-enqueuing")
+      enqueue(force = force)
       return
     }
 
@@ -145,7 +192,7 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
   private fun updateReleaseNotes(announcements: List<ReleaseNote>) {
     val values = SignalStore.releaseChannel
 
-    if (Recipient.resolved(values.releaseChannelRecipientId!!).isBlocked) {
+    if (SignalDatabase.recipients.getRecord(values.releaseChannelRecipientId!!).isBlocked) {
       Log.i(TAG, "Release channel is blocked, do not bother with updates")
       values.highestVersionNoteReceived = announcements.mapNotNull { it.androidMinVersion?.toIntOrNull() }.maxOrNull() ?: values.highestVersionNoteReceived
       return
@@ -325,7 +372,7 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
       for ((uuid, megaphone) in megaphonesToDelete) {
         SignalDatabase.remoteMegaphones.clear(uuid)
         if (megaphone.imageUri != null) {
-          BlobProvider.getInstance().delete(context, megaphone.imageUri)
+          AppDependencies.blobs.delete(context, megaphone.imageUri)
         }
       }
     }
@@ -370,8 +417,8 @@ class RetrieveRemoteAnnouncementsJob private constructor(private val force: Bool
 
     val potentialNoteUrls = mutableListOf<String>()
 
-    if (SignalStore.settings.language != "zz") {
-      potentialNoteUrls += "$this/${SignalStore.settings.language}.json"
+    if (PlainTextKeyValueStore.language != "zz") {
+      potentialNoteUrls += "$this/${PlainTextKeyValueStore.language}.json"
     }
 
     for (index in 0 until localeList.size()) {

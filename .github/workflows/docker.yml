@@ -1,21 +1,61 @@
-name: Reproducible Build Check
+name: Check reproducible-build Dockerfile
 
 on:
   schedule:
-    - cron: '0 5 * * *'
+    - cron: "0 5 * * *"
 
 permissions:
   contents: read # to fetch code (actions/checkout)
 
 jobs:
   build:
-
+    # Radar: upstream Signal workflow, gated to signalapp repositories.
+    if: ${{ github.repository_owner == 'signalapp' }}
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build image
-      run: cd reproducible-builds && docker build -t signal-android . && cd ..
-
-    - name: Test build
-      run: docker run --rm -v $(pwd):/project -w /project signal-android ./gradlew clean assemblePlayProdRelease
+      - name: Free up disk space
+        run: |
+          # The build runs entirely inside the Docker container, which ships its
+          # own JDK, Android SDK, and NDK. None of the host toolchains are needed.
+          sudo rm -rf /usr/lib/jvm
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /usr/local/julia*
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/local/share/chromium
+          sudo rm -rf /opt/microsoft /opt/google
+          sudo rm -rf /opt/az
+          sudo rm -rf /usr/local/share/powershell
+          sudo rm -rf /opt/hostedtoolcache
+          docker system prune -af || true
+          docker builder prune -af || true
+      - name: Disk usage after cleanup
+        if: always()
+        run: |
+          df -h
+          docker system df || true
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        # gh api repos/actions/checkout/commits/v6 --jq '.sha'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+      - name: Build image
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+        with:
+          context: reproducible-builds
+          tags: signal-android
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Disk usage after image build
+        if: always()
+        run: |
+          df -h
+          docker system df || true
+      - name: Test build
+        run: docker run --memory=12g --rm -v "$(pwd)":/project -w /project signal-android ./gradlew --no-daemon --max-workers=1 -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=512m" -Dkotlin.compiler.execution.strategy=in-process bundlePlayProdRelease
+      - name: Disk usage after test build
+        if: always()
+        run: |
+          df -h
+          docker system df || true

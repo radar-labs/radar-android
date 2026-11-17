@@ -7,17 +7,18 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.card.MaterialCardView
+import org.signal.blurhash.BlurHash
 import org.signal.core.util.DimensionUnit
+import org.signal.glide.decryptableuri.DecryptableUri
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.animation.transitions.CrossfaderTransition
-import org.thoughtcrime.securesms.blurhash.BlurHash
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
-import org.thoughtcrime.securesms.mms.DecryptableUri
 import org.thoughtcrime.securesms.stories.StoryTextPostModel
 import kotlin.reflect.KProperty
 
@@ -66,6 +67,7 @@ class StoriesSharedElementCrossFaderView @JvmOverloads constructor(
         }
       )
       .placeholder(storyTextPostModel.getPlaceholder())
+      .priority(Priority.IMMEDIATE)
       .dontAnimate()
       .centerCrop()
       .into(sourceView)
@@ -88,6 +90,7 @@ class StoriesSharedElementCrossFaderView @JvmOverloads constructor(
           isSourceReady = true
         }
       )
+      .priority(Priority.IMMEDIATE)
       .dontAnimate()
       .centerCrop()
       .into(sourceView)
@@ -103,6 +106,7 @@ class StoriesSharedElementCrossFaderView @JvmOverloads constructor(
             isSourceBlurReady = true
           }
         )
+        .priority(Priority.IMMEDIATE)
         .dontAnimate()
         .centerCrop()
         .into(sourceBlurView)
@@ -135,6 +139,7 @@ class StoriesSharedElementCrossFaderView @JvmOverloads constructor(
           isTargetReady = true
         }
       )
+      .priority(Priority.IMMEDIATE)
       .dontAnimate()
       .placeholder(storyTextPostModel.getPlaceholder())
       .centerCrop()
@@ -158,6 +163,7 @@ class StoriesSharedElementCrossFaderView @JvmOverloads constructor(
           isTargetReady = true
         }
       )
+      .priority(Priority.IMMEDIATE)
       .dontAnimate()
       .fitCenter()
       .into(targetView)
@@ -173,6 +179,7 @@ class StoriesSharedElementCrossFaderView @JvmOverloads constructor(
             isTargetBlurReady = true
           }
         )
+        .priority(Priority.IMMEDIATE)
         .dontAnimate()
         .centerCrop()
         .into(targetBlurView)
@@ -214,6 +221,7 @@ class StoriesSharedElementCrossFaderView @JvmOverloads constructor(
   }
 
   override fun onCrossfadeStarted(reverse: Boolean) {
+    animate().cancel()
     alpha = 1f
 
     sourceView.alpha = if (reverse) 0f else 1f

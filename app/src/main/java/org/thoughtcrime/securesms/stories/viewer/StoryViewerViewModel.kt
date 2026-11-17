@@ -13,11 +13,11 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import org.signal.core.models.recipients.RecipientId
+import org.signal.remoteconfig.RemoteConfig
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.stories.Stories
 import org.thoughtcrime.securesms.stories.StoryViewerArgs
-import org.thoughtcrime.securesms.util.RemoteConfig
 import org.thoughtcrime.securesms.util.rx.RxStore
 import java.util.concurrent.TimeUnit
 import kotlin.math.max
@@ -36,7 +36,9 @@ class StoryViewerViewModel(
         storyViewerArgs.storyThumbUri != null -> StoryViewerState.CrossfadeSource.ImageUri(storyViewerArgs.storyThumbUri, storyViewerArgs.storyThumbBlur)
         else -> StoryViewerState.CrossfadeSource.None
       },
-      skipCrossfade = storyViewerArgs.isFromNotification || storyViewerArgs.isFromQuote
+      skipCrossfade = storyViewerArgs.isFromNotification ||
+        storyViewerArgs.isFromQuote ||
+        (storyViewerArgs.isFromArchive && storyViewerArgs.storyThumbTextModel == null && storyViewerArgs.storyThumbUri == null)
     )
   )
 
@@ -128,7 +130,9 @@ class StoryViewerViewModel(
   }
 
   private fun getStories(): Single<List<RecipientId>> {
-    return if (storyViewerArgs.recipientIds.isNotEmpty()) {
+    return if (storyViewerArgs.isFromArchive) {
+      Single.just(listOf(storyViewerArgs.recipientId))
+    } else if (storyViewerArgs.recipientIds.isNotEmpty()) {
       Single.just(storyViewerArgs.recipientIds - hidden)
     } else {
       repository.getStories(

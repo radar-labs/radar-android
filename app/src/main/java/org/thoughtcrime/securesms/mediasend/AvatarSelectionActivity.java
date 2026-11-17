@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.WindowManager;
-import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,20 +14,22 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import org.signal.core.models.media.Media;
 import org.signal.imageeditor.core.model.EditorModel;
+import org.signal.mediasend.MediaConstraints;
+import org.signal.mediasend.screens.capture.CameraFragment;
+import org.signal.mediasend.screens.capture.CameraXFragment;
 import org.thoughtcrime.securesms.R;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.mediasend.v2.gallery.MediaGalleryFragment;
-import org.thoughtcrime.securesms.mms.MediaConstraints;
+import org.thoughtcrime.securesms.mms.PushMediaConstraints;
 import org.thoughtcrime.securesms.profiles.AvatarHelper;
-import org.thoughtcrime.securesms.providers.BlobProvider;
+import org.signal.core.util.contentproviders.BlobProvider;
 import org.thoughtcrime.securesms.scribbles.ImageEditorFragment;
 import org.thoughtcrime.securesms.util.MediaUtil;
 
-import java.io.FileDescriptor;
+import org.signal.core.util.SeekableFileDescriptor;
 import java.util.Collections;
-import java.util.Optional;
-
-import io.reactivex.rxjava3.core.Flowable;
 
 public class AvatarSelectionActivity extends AppCompatActivity implements CameraFragment.Controller, ImageEditorFragment.Controller, MediaGalleryFragment.Callbacks {
 
@@ -62,11 +63,8 @@ public class AvatarSelectionActivity extends AppCompatActivity implements Camera
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
+    EdgeToEdge.enable(this);
     super.onCreate(savedInstanceState);
-
-    getWindow().addFlags(
-        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-    );
 
     setContentView(R.layout.avatar_selection_activity);
 
@@ -78,17 +76,11 @@ public class AvatarSelectionActivity extends AppCompatActivity implements Camera
   }
 
   @Override
-  public void onCameraError() {
-    Toast.makeText(this, androidx.biometric.R.string.default_error_msg, Toast.LENGTH_SHORT).show();
-    finish();
-  }
-
-  @Override
   public void onImageCaptured(@NonNull byte[] data, int width, int height) {
-    Uri blobUri = BlobProvider.getInstance()
-                              .forData(data)
-                              .withMimeType(MediaUtil.IMAGE_JPEG)
-                              .createForSingleSessionInMemory();
+    Uri blobUri = AppDependencies.getBlobs()
+                                 .forData(data)
+                                 .withMimeType(MediaUtil.IMAGE_JPEG)
+                                 .createForSingleSessionInMemory();
 
     onMediaSelected(new Media(blobUri,
                               MediaUtil.IMAGE_JPEG,
@@ -106,7 +98,7 @@ public class AvatarSelectionActivity extends AppCompatActivity implements Camera
   }
 
   @Override
-  public void onVideoCaptured(@NonNull FileDescriptor fd) {
+  public void onVideoCaptured(@NonNull SeekableFileDescriptor fd, long durationMs) {
     throw new UnsupportedOperationException("Cannot set profile as video");
   }
 
@@ -133,18 +125,13 @@ public class AvatarSelectionActivity extends AppCompatActivity implements Camera
   }
 
   @Override
-  public void onCameraCountButtonClicked() {
-    throw new UnsupportedOperationException("Cannot select more than one photo");
-  }
-
-  @Override
-  public @NonNull Flowable<Optional<Media>> getMostRecentMediaItem() {
-    return Flowable.just(Optional.empty());
+  public void onCameraCloseClicked() {
+    finish();
   }
 
   @Override
   public @NonNull MediaConstraints getMediaConstraints() {
-    return MediaConstraints.getPushMediaConstraints();
+    return new PushMediaConstraints(null);
   }
 
   @Override
@@ -264,7 +251,7 @@ public class AvatarSelectionActivity extends AppCompatActivity implements Camera
       return;
     }
 
-    Fragment            fragment    = CameraFragment.newInstanceForAvatarCapture();
+    Fragment            fragment    = CameraXFragment.newInstanceForAvatarCapture();
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
                                                                  .replace(R.id.fragment_container, fragment, IMAGE_CAPTURE);
 

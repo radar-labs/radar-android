@@ -11,6 +11,7 @@ import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.conversation.ConversationMessage;
 import org.thoughtcrime.securesms.database.MessageTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
+import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
 
 import java.util.Optional;
@@ -36,7 +37,7 @@ class LongMessageRepository {
     Optional<MmsMessageRecord> record = getMmsMessage(mmsDatabase, messageId);
     if (record.isPresent()) {
       final ConversationMessage resolvedMessage = LongMessageResolveerKt.resolveBody(record.get(), context);
-      return  Optional.of(new LongMessage(resolvedMessage));
+      return  Optional.of(new LongMessage(resolvedMessage, context));
     } else {
       return Optional.empty();
     }
@@ -45,7 +46,11 @@ class LongMessageRepository {
   @WorkerThread
   private Optional<MmsMessageRecord> getMmsMessage(@NonNull MessageTable mmsDatabase, long messageId) {
     try (Cursor cursor = mmsDatabase.getMessageCursor(messageId)) {
-      return Optional.ofNullable((MmsMessageRecord) MessageTable.mmsReaderFor(cursor).getNext());
+      MessageRecord record = MessageTable.mmsReaderFor(cursor).getNext();
+      if (record != null) {
+        record = MessageTable.withAttachmentData(record);
+      }
+      return Optional.ofNullable((MmsMessageRecord) record);
     }
   }
 

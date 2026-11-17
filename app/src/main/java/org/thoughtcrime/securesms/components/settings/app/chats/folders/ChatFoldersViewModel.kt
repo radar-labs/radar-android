@@ -8,12 +8,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.swap
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.contacts.paged.ChatType
 import org.thoughtcrime.securesms.database.SignalDatabase
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 
 /**
  * Maintains the state of the [ChatFoldersFragment] and [CreateFoldersFragment]
@@ -24,7 +26,7 @@ class ChatFoldersViewModel : ViewModel() {
   val state = internalState.asStateFlow()
 
   fun loadCurrentFolders(context: Context) {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       val folders = ChatFoldersRepository.getCurrentFolders()
       val suggestedFolders = getSuggestedFolders(context, folders)
 
@@ -36,6 +38,16 @@ class ChatFoldersViewModel : ViewModel() {
           originalFolder = ChatFolder()
         )
       }
+    }
+  }
+
+  suspend fun shouldShowEducationSheet(): Boolean {
+    if (SignalStore.uiHints.hasSeenChatFoldersEducationSheet) {
+      return false
+    }
+
+    return withContext(Dispatchers.Default) {
+      ChatFoldersRepository.getFolderCount() == 1
     }
   }
 
@@ -93,7 +105,7 @@ class ChatFoldersViewModel : ViewModel() {
   }
 
   fun setCurrentFolder(folder: ChatFolderRecord) {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       val includedRecipients = folder.includedChats.mapNotNull { threadId ->
         SignalDatabase.threads.getRecipientForThreadId(threadId)
       }
@@ -150,7 +162,7 @@ class ChatFoldersViewModel : ViewModel() {
   }
 
   fun deleteFolder(context: Context) {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       ChatFoldersRepository.deleteFolder(internalState.value.originalFolder.folderRecord)
 
       loadCurrentFolders(context)
@@ -167,7 +179,7 @@ class ChatFoldersViewModel : ViewModel() {
   }
 
   fun createFolder(context: Context, folder: ChatFolderRecord? = null) {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       val currentFolder = if (folder != null) ChatFolder(folder) else internalState.value.currentFolder
       ChatFoldersRepository.createFolder(currentFolder.folderRecord, currentFolder.includedRecipients, currentFolder.excludedRecipients)
       loadCurrentFolders(context)
@@ -192,13 +204,13 @@ class ChatFoldersViewModel : ViewModel() {
     val updatedFolders = state.value.folders.mapIndexed { index, chatFolderRecord ->
       chatFolderRecord.copy(position = index)
     }
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       ChatFoldersRepository.updatePositions(updatedFolders)
     }
   }
 
   fun updateFolder(context: Context) {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       val currentFolder = internalState.value.currentFolder
       ChatFoldersRepository.updateFolder(currentFolder.folderRecord, currentFolder.includedRecipients, currentFolder.excludedRecipients)
       loadCurrentFolders(context)
@@ -210,7 +222,7 @@ class ChatFoldersViewModel : ViewModel() {
   }
 
   fun setPendingChats() {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       val currentFolder = internalState.value.currentFolder
       val includedChats = currentFolder.includedRecipients.map { recipient -> recipient.id }.toMutableSet()
       val excludedChats = currentFolder.excludedRecipients.map { recipient -> recipient.id }.toMutableSet()
@@ -304,7 +316,7 @@ class ChatFoldersViewModel : ViewModel() {
   }
 
   fun savePendingChats() {
-    viewModelScope.launch(Dispatchers.IO) {
+    viewModelScope.launch(Dispatchers.Default) {
       val updatedFolder = internalState.value.currentFolder
       val includedChatIds = internalState.value.pendingIncludedRecipients
       val excludedChatIds = internalState.value.pendingExcludedRecipients
@@ -346,7 +358,7 @@ class ChatFoldersViewModel : ViewModel() {
 
   fun setCurrentFolderId(folderId: Long) {
     if (folderId != -1L) {
-      viewModelScope.launch(Dispatchers.IO) {
+      viewModelScope.launch(Dispatchers.Default) {
         val folder = ChatFoldersRepository.getFolder(folderId)
         setCurrentFolder(folder)
       }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,21 +24,22 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.signal.core.util.ThreadUtil;
+import org.signal.core.util.eventbus.EventBus;
+import org.signal.core.util.eventbus.RestartableSubscription;
+import org.signal.core.util.eventbus.ThreadMode;
 import org.signal.core.util.logging.Log;
 import org.signal.devicetransfer.DeviceToDeviceTransferService;
 import org.signal.devicetransfer.TransferStatus;
 import org.signal.devicetransfer.WifiDirect;
-import org.thoughtcrime.securesms.LoggingFragment;
+import org.signal.core.ui.logging.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.logsubmit.SubmitDebugLogActivity;
-import org.thoughtcrime.securesms.permissions.Permissions;
+import org.signal.core.ui.permissions.Permissions;
 import org.thoughtcrime.securesms.util.CommunicationActions;
-import org.thoughtcrime.securesms.util.SpanUtil;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.signal.core.ui.util.SpanUtil;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.signal.core.ui.util.ViewUtil;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -63,6 +65,7 @@ public abstract class DeviceTransferSetupFragment extends LoggingFragment {
   private final OnBackPressed                onBackPressed = new OnBackPressed();
   private       DeviceTransferSetupViewModel viewModel;
   private       Runnable                     takingTooLong;
+  private final RestartableSubscription      transferStatusSubscription = new RestartableSubscription(() -> EventBus.getDefault().subscribeSticky(TransferStatus.class, ThreadMode.MAIN, viewModel::onTransferEvent));
 
   public DeviceTransferSetupFragment() {
     super(R.layout.device_transfer_setup_fragment);
@@ -70,6 +73,10 @@ public abstract class DeviceTransferSetupFragment extends LoggingFragment {
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    SystemWindowInsetsSetter.attach(view, getViewLifecycleOwner());
+
+    requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
     Group          progressGroup   = view.findViewById(R.id.device_transfer_setup_fragment_progress_group);
     Group          errorGroup      = view.findViewById(R.id.device_transfer_setup_fragment_error_group);
     View           verifyGroup     = view.findViewById(R.id.device_transfer_setup_fragment_verify);
@@ -97,6 +104,7 @@ public abstract class DeviceTransferSetupFragment extends LoggingFragment {
       switch (step) {
         case INITIAL:
           status.setText("");
+          // fall through so the INITIAL state checks permissions
         case PERMISSIONS_CHECK:
           requestRequiredPermission();
           break;
@@ -153,7 +161,7 @@ public abstract class DeviceTransferSetupFragment extends LoggingFragment {
             new MaterialAlertDialogBuilder(requireContext()).setTitle(R.string.DeviceTransferSetup__the_numbers_do_not_match)
                                                             .setMessage(R.string.DeviceTransferSetup__if_the_numbers_on_your_devices_do_not_match_its_possible_you_connected_to_the_wrong_device)
                                                             .setPositiveButton(R.string.DeviceTransferSetup__stop_transfer, (d, w) -> {
-                                                              EventBus.getDefault().unregister(this);
+                                                              transferStatusSubscription.stop();
                                                               DeviceToDeviceTransferService.setAuthenticationCodeVerified(requireContext(), false);
                                                               DeviceToDeviceTransferService.stop(requireContext());
                                                               EventBus.getDefault().removeStickyEvent(TransferStatus.class);
@@ -214,12 +222,12 @@ public abstract class DeviceTransferSetupFragment extends LoggingFragment {
                                                    .setMessage(getStatusTextForStep(step, false))
                                                    .setPositiveButton(R.string.DeviceTransferSetup__retry, (d, w) -> viewModel.checkPermissions())
                                                    .setNegativeButton(android.R.string.cancel, (d, w) -> {
-                                                     EventBus.getDefault().unregister(this);
+                                                     transferStatusSubscription.stop();
                                                      EventBus.getDefault().removeStickyEvent(TransferStatus.class);
                                                      navigateAwayFromTransfer();
                                                    })
                                                    .setNeutralButton(R.string.DeviceTransferSetup__submit_debug_logs, (d, w) -> {
-                                                     EventBus.getDefault().unregister(this);
+                                                     transferStatusSubscription.stop();
                                                      EventBus.getDefault().removeStickyEvent(TransferStatus.class);
                                                      navigateAwayFromTransfer();
                                                      startActivity(new Intent(requireContext(), SubmitDebugLogActivity.class));
@@ -257,7 +265,7 @@ public abstract class DeviceTransferSetupFragment extends LoggingFragment {
       Log.i(TAG, "Sticky event already exists for transfer, assuming service is running and we are reattaching");
     }
 
-    EventBus.getDefault().register(this);
+    transferStatusSubscription.start();
   }
 
   @Override
@@ -273,8 +281,9 @@ public abstract class DeviceTransferSetupFragment extends LoggingFragment {
 
   @Override
   public void onDestroyView() {
+    requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     cancelTakingTooLong();
-    EventBus.getDefault().unregister(this);
+    transferStatusSubscription.stop();
     super.onDestroyView();
   }
 
@@ -353,11 +362,6 @@ public abstract class DeviceTransferSetupFragment extends LoggingFragment {
 
   private void gotoSupport() {
     CommunicationActions.openBrowserLink(requireContext(), getString(R.string.transfer_support_url));
-  }
-
-  @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-  public void onEventMainThread(@NonNull TransferStatus event) {
-    viewModel.onTransferEvent(event);
   }
 
   private void startTakingTooLong(@NonNull Runnable runnable, long tooLong) {

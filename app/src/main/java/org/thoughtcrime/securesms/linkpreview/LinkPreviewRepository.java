@@ -12,16 +12,17 @@ import androidx.core.util.Consumer;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.signal.core.util.ByteUnit;
 import org.signal.core.util.Hex;
 import org.signal.core.util.Result;
+import org.signal.core.util.bitmaps.BitmapDecodingException;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.InvalidMessageException;
 import org.signal.libsignal.zkgroup.VerificationFailedException;
 import org.signal.libsignal.zkgroup.groups.GroupMasterKey;
-import org.signal.ringrtc.CallLinkEpoch;
 import org.signal.ringrtc.CallLinkRootKey;
-import org.signal.storageservice.protos.groups.local.DecryptedGroupJoinInfo;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroupJoinInfo;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.attachments.Attachment;
 import org.thoughtcrime.securesms.attachments.UriAttachment;
@@ -39,18 +40,16 @@ import org.thoughtcrime.securesms.linkpreview.LinkPreviewUtil.OpenGraph;
 import org.thoughtcrime.securesms.mms.PushMediaConstraints;
 import org.thoughtcrime.securesms.net.CallRequestController;
 import org.thoughtcrime.securesms.net.CompositeRequestController;
+import org.thoughtcrime.securesms.net.LinkPreviewRedirectValidationInterceptor;
 import org.thoughtcrime.securesms.net.RequestController;
 import org.thoughtcrime.securesms.net.UserAgentInterceptor;
 import org.thoughtcrime.securesms.profiles.AvatarHelper;
-import org.thoughtcrime.securesms.providers.BlobProvider;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkCredentials;
 import org.thoughtcrime.securesms.service.webrtc.links.ReadCallLinkResult;
 import org.thoughtcrime.securesms.stickers.StickerRemoteUri;
 import org.thoughtcrime.securesms.stickers.StickerUrl;
 import org.thoughtcrime.securesms.util.AvatarUtil;
-import org.thoughtcrime.securesms.util.BitmapDecodingException;
-import org.thoughtcrime.securesms.util.ByteUnit;
 import org.thoughtcrime.securesms.util.ImageCompressionUtil;
 import org.thoughtcrime.securesms.util.LinkUtil;
 import org.thoughtcrime.securesms.util.MediaUtil;
@@ -68,11 +67,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-import kotlin.Pair;
-
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import kotlin.Pair;
 import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -91,9 +89,10 @@ public class LinkPreviewRepository {
   private final OkHttpClient client;
 
   public LinkPreviewRepository() {
-    this.client = new OkHttpClient.Builder()
+    this.client = AppDependencies.getOkHttpClient().newBuilder()
                                   .cache(null)
                                   .addInterceptor(new UserAgentInterceptor("WhatsApp/2"))
+                                  .addNetworkInterceptor(new LinkPreviewRedirectValidationInterceptor())
                                   .build();
   }
 
@@ -296,7 +295,10 @@ public class LinkPreviewRepository {
         SignalServiceMessageReceiver receiver = AppDependencies.getSignalServiceMessageReceiver();
         SignalServiceStickerManifest manifest = receiver.retrieveStickerManifest(packIdBytes, packKeyBytes);
 
-        String                title        = OptionalUtil.or(manifest.getTitle(), manifest.getAuthor()).orElse("");
+        Optional<String>      packTitle    = manifest.getTitle().flatMap(OptionalUtil::absentIfEmpty);
+        Optional<String>      packAuthor   = manifest.getAuthor().flatMap(OptionalUtil::absentIfEmpty);
+        String                title        = getStickerPackTitle(context, packTitle, packAuthor);
+        String                description  = getStickerPackDescription(context, packTitle, packAuthor);
         Optional<StickerInfo> firstSticker = Optional.ofNullable(manifest.getStickers().size() > 0 ? manifest.getStickers().get(0) : null);
         Optional<StickerInfo> cover        = OptionalUtil.or(manifest.getCover(), firstSticker);
 
@@ -311,7 +313,7 @@ public class LinkPreviewRepository {
 
           Optional<Attachment> thumbnail = bitmapToAttachment(bitmap, Bitmap.CompressFormat.WEBP, MediaUtil.IMAGE_WEBP);
 
-          callback.onSuccess(new LinkPreview(packUrl, title, "", 0, thumbnail));
+          callback.onSuccess(new LinkPreview(packUrl, title, description, 0, thumbnail));
         } else {
           callback.onError(Error.PREVIEW_NOT_AVAILABLE);
         }
@@ -328,20 +330,15 @@ public class LinkPreviewRepository {
                                                         @NonNull String callLinkUrl,
                                                         @NonNull Callback callback) {
 
-    CallLinks.CallLinkParseResult linkParseResult = CallLinks.parseUrl(callLinkUrl);
-    if (linkParseResult == null) {
+    CallLinkRootKey callLinkRootKey = CallLinks.parseUrl(callLinkUrl);
+    if (callLinkRootKey == null) {
       callback.onError(Error.PREVIEW_NOT_AVAILABLE);
       return () -> { };
     }
 
-    CallLinkEpoch epoch = linkParseResult.getEpoch();
-    byte[] epochBytes = epoch != null ? epoch.getBytes() : null;
-
     Disposable disposable = AppDependencies.getSignalCallManager()
                                            .getCallLinkManager()
-                                           .readCallLink(new CallLinkCredentials(linkParseResult.getRootKey().getKeyBytes(),
-                                                                                 epochBytes,
-                                                                                 null))
+                                           .readCallLink(new CallLinkCredentials(callLinkRootKey.getKeyBytes(), null))
                                            .observeOn(Schedulers.io())
                                            .subscribe(
                                                         result -> {
@@ -443,6 +440,24 @@ public class LinkPreviewRepository {
     return () -> Log.i(TAG, "Cancelled group link preview fetch -- no effect.");
   }
 
+  private static @NonNull String getStickerPackTitle(@NonNull Context context, @NonNull Optional<String> packTitle, @NonNull Optional<String> packAuthor) {
+    if (packTitle.isPresent()) {
+      return packTitle.get();
+    } else if (packAuthor.isPresent()) {
+      return context.getString(R.string.LinkPreviewRepository_sticker_pack_by_s, packAuthor.get());
+    } else {
+      return context.getString(R.string.LinkPreviewRepository_sticker_pack);
+    }
+  }
+
+  private static @NonNull String getStickerPackDescription(@NonNull Context context, @NonNull Optional<String> packTitle, @NonNull Optional<String> packAuthor) {
+    if (packTitle.isPresent() && packAuthor.isPresent()) {
+      return context.getString(R.string.LinkPreviewRepository_sticker_pack_by_s, packAuthor.get());
+    } else {
+      return "";
+    }
+  }
+
   private static @NonNull String getMemberCountDescription(@NonNull Context context, int memberCount) {
     return context.getResources()
                   .getQuantityString(R.plurals.LinkPreviewRepository_d_members,
@@ -471,7 +486,7 @@ public class LinkPreviewRepository {
                                               int height,
                                               @NonNull String contentType) {
 
-    Uri uri = BlobProvider.getInstance().forData(bytes).createForSingleSessionInMemory();
+    Uri uri = AppDependencies.getBlobs().forData(bytes).createForSingleSessionInMemory();
 
     return new UriAttachment(uri,
                              contentType,

@@ -4,6 +4,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import org.signal.core.ui.BottomSheetUtil
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.signal.core.util.dp
 import org.thoughtcrime.securesms.R
@@ -14,20 +16,21 @@ import org.thoughtcrime.securesms.components.settings.DSLSettingsAdapter
 import org.thoughtcrime.securesms.components.settings.DSLSettingsFragment
 import org.thoughtcrime.securesms.components.settings.DSLSettingsText
 import org.thoughtcrime.securesms.components.settings.configure
-import org.thoughtcrime.securesms.contacts.paged.ContactSearchAdapter
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchKey
+import org.thoughtcrime.securesms.contacts.paged.ContactSearchModels
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchPagedDataSourceRepository
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.mediasend.v2.stories.ChooseGroupStoryBottomSheet
 import org.thoughtcrime.securesms.mediasend.v2.stories.ChooseStoryTypeBottomSheet
 import org.thoughtcrime.securesms.stories.GroupStoryEducationSheet
+import org.thoughtcrime.securesms.stories.archive.StoryArchiveDuration
 import org.thoughtcrime.securesms.stories.dialogs.StoryDialogs
 import org.thoughtcrime.securesms.stories.settings.create.CreateStoryFlowDialogFragment
 import org.thoughtcrime.securesms.stories.settings.create.CreateStoryWithViewersFragment
-import org.thoughtcrime.securesms.util.BottomSheetUtil
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.adapter.mapping.PagingMappingAdapter
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
+import org.signal.core.ui.R as CoreUiR
 
 /**
  * Allows the user to view their stories they can send to and modify settings.
@@ -58,14 +61,8 @@ class StoriesPrivacySettingsFragment :
 
     val (top, middle, bottom) = adapter.adapters
 
-    findNavController().addOnDestinationChangedListener { _, destination, _ ->
-      if (destination.id == R.id.storiesPrivacySettingsFragment) {
-        viewModel.pagingController.onDataInvalidated()
-      }
-    }
-
     @Suppress("UNCHECKED_CAST")
-    ContactSearchAdapter.registerStoryItems(
+    ContactSearchModels.registerStoryItems(
       mappingAdapter = middle as PagingMappingAdapter<ContactSearchKey>,
       storyListener = { _, story, _ ->
         when {
@@ -102,6 +99,11 @@ class StoriesPrivacySettingsFragment :
     }
   }
 
+  override fun onResume() {
+    super.onResume()
+    viewModel.pagingController.onDataInvalidated()
+  }
+
   private fun getTopConfiguration(state: StoriesPrivacySettingsState): DSLConfiguration {
     return configure {
       if (state.areStoriesEnabled) {
@@ -110,8 +112,8 @@ class StoriesPrivacySettingsFragment :
         noPadTextPref(
           title = DSLSettingsText.from(
             R.string.StoriesPrivacySettingsFragment__story_updates_automatically_disappear,
-            DSLSettingsText.TextAppearanceModifier(R.style.Signal_Text_BodyMedium),
-            DSLSettingsText.ColorModifier(ContextCompat.getColor(requireContext(), R.color.signal_colorOnSurfaceVariant))
+            DSLSettingsText.TextAppearanceModifier(CoreUiR.style.Signal_Text_BodyMedium),
+            DSLSettingsText.ColorModifier(ContextCompat.getColor(requireContext(), CoreUiR.color.signal_colorOnSurfaceVariant))
           )
         )
 
@@ -139,7 +141,7 @@ class StoriesPrivacySettingsFragment :
   private fun getMiddleConfiguration(state: StoriesPrivacySettingsState): DSLConfiguration {
     return if (state.areStoriesEnabled) {
       configure {
-        ContactSearchAdapter.toMappingModelList(
+        ContactSearchModels.toMappingModelList(
           state.storyContactItems,
           emptySet(),
           null
@@ -166,14 +168,50 @@ class StoriesPrivacySettingsFragment :
           }
         )
 
+        if (SignalStore.labs.storyArchive) {
+          dividerPref()
+
+          sectionHeaderPref(R.string.StoryArchive__archive)
+
+          switchPref(
+            title = DSLSettingsText.from(R.string.StoryArchive__keep_stories_in_archive),
+            summary = DSLSettingsText.from(R.string.StoryArchive__save_stories_after_they_expire),
+            isChecked = state.isArchiveEnabled,
+            onClick = {
+              viewModel.toggleArchiveEnabled()
+            }
+          )
+
+          if (state.isArchiveEnabled) {
+            clickPref(
+              title = DSLSettingsText.from(R.string.StoryArchive__keep_stories_for),
+              summary = DSLSettingsText.from(state.archiveDuration.labelRes),
+              onClick = {
+                val durations = StoryArchiveDuration.entries.toTypedArray()
+                val labels = durations.map { getString(it.labelRes) }.toTypedArray()
+                val checkedIndex = durations.indexOf(state.archiveDuration)
+
+                MaterialAlertDialogBuilder(requireContext())
+                  .setTitle(R.string.StoryArchive__keep_stories_for)
+                  .setSingleChoiceItems(labels, checkedIndex) { dialog, which ->
+                    viewModel.setArchiveDuration(durations[which])
+                    dialog.dismiss()
+                  }
+                  .setNegativeButton(android.R.string.cancel, null)
+                  .show()
+              }
+            )
+          }
+        }
+
         dividerPref()
 
         clickPref(
           title = DSLSettingsText.from(R.string.StoriesPrivacySettingsFragment__turn_off_stories),
           summary = DSLSettingsText.from(
             R.string.StoriesPrivacySettingsFragment__if_you_opt_out,
-            DSLSettingsText.TextAppearanceModifier(R.style.Signal_Text_BodyMedium),
-            DSLSettingsText.ColorModifier(ContextCompat.getColor(requireContext(), R.color.signal_colorOnSurfaceVariant))
+            DSLSettingsText.TextAppearanceModifier(CoreUiR.style.Signal_Text_BodyMedium),
+            DSLSettingsText.ColorModifier(ContextCompat.getColor(requireContext(), CoreUiR.color.signal_colorOnSurfaceVariant))
           ),
           onClick = {
             StoryDialogs.disableStories(requireContext(), viewModel.userHasActiveStories) {

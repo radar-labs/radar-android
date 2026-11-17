@@ -4,12 +4,12 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import io.mockk.every
-import io.mockk.mockkStatic
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.signal.core.models.recipients.RecipientId
+import org.signal.libsignal.protocol.message.CiphertextMessage
 import org.thoughtcrime.securesms.database.MessageTable
 import org.thoughtcrime.securesms.database.MessageType
 import org.thoughtcrime.securesms.database.SignalDatabase
@@ -18,12 +18,10 @@ import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.mms.IncomingMessage
 import org.thoughtcrime.securesms.polls.Voter
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.testing.GroupTestingUtils
 import org.thoughtcrime.securesms.testing.GroupTestingUtils.asMember
 import org.thoughtcrime.securesms.testing.MessageContentFuzzer
 import org.thoughtcrime.securesms.testing.SignalActivityRule
-import org.thoughtcrime.securesms.util.RemoteConfig
 import org.whispersystems.signalservice.api.crypto.EnvelopeMetadata
 import org.whispersystems.signalservice.internal.push.DataMessage
 
@@ -42,10 +40,6 @@ class DataMessageProcessorTest_polls {
 
   @Before
   fun setUp() {
-    mockkStatic(RemoteConfig::class)
-
-    every { RemoteConfig.receivePolls } returns true
-
     alice = Recipient.resolved(harness.others[0])
     bob = Recipient.resolved(harness.others[1])
     charlie = Recipient.resolved(harness.others[2])
@@ -106,10 +100,11 @@ class DataMessageProcessorTest_polls {
       envelope = MessageContentFuzzer.envelope(200),
       message = DataMessage(pollTerminate = DataMessage.PollTerminate(targetSentTimestamp = 100)),
       senderRecipient = alice,
-      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId()),
-      threadRecipient = bob,
+      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId(), CiphertextMessage.WHISPER_TYPE),
+      threadRecipient = Recipient.resolved(groupRecipientId),
       groupId = groupId,
-      receivedTime = 200
+      receivedTime = 200,
+      batchCache = OneTimeBatchCache()
     )
 
     assert(insertResult?.messageId != null)
@@ -127,10 +122,11 @@ class DataMessageProcessorTest_polls {
       envelope = MessageContentFuzzer.envelope(200),
       message = DataMessage(pollTerminate = DataMessage.PollTerminate(200)),
       senderRecipient = alice,
-      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId()),
+      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId(), CiphertextMessage.WHISPER_TYPE),
       threadRecipient = bob,
       groupId = groupId,
-      receivedTime = 200
+      receivedTime = 200,
+      batchCache = OneTimeBatchCache()
     )
 
     assert(insertResult == null)
@@ -145,10 +141,11 @@ class DataMessageProcessorTest_polls {
       envelope = MessageContentFuzzer.envelope(200),
       message = DataMessage(pollTerminate = DataMessage.PollTerminate(100)),
       senderRecipient = bob,
-      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId()),
+      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId(), CiphertextMessage.WHISPER_TYPE),
       threadRecipient = bob,
       groupId = groupId,
-      receivedTime = 200
+      receivedTime = 200,
+      batchCache = OneTimeBatchCache()
     )
 
     assert(insertResult == null)
@@ -161,10 +158,11 @@ class DataMessageProcessorTest_polls {
       envelope = MessageContentFuzzer.envelope(200),
       message = DataMessage(pollTerminate = DataMessage.PollTerminate(100)),
       senderRecipient = alice,
-      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId()),
+      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId(), CiphertextMessage.WHISPER_TYPE),
       threadRecipient = bob,
       groupId = groupId,
-      receivedTime = 200
+      receivedTime = 200,
+      batchCache = OneTimeBatchCache()
     )
 
     assert(insertResult == null)
@@ -306,7 +304,7 @@ class DataMessageProcessorTest_polls {
       groupId = groupId,
       receivedTime = 0,
       context = ApplicationProvider.getApplicationContext(),
-      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId())
+      metadata = EnvelopeMetadata(alice.requireServiceId(), null, 1, false, null, harness.self.requireServiceId(), CiphertextMessage.WHISPER_TYPE)
     )
   }
 
@@ -316,13 +314,15 @@ class DataMessageProcessorTest_polls {
       envelope = MessageContentFuzzer.envelope(100),
       message = DataMessage(pollVote = pollVote),
       senderRecipient = senderRecipient,
-      earlyMessageCacheEntry = null
+      threadRecipient = Recipient.resolved(groupRecipientId),
+      earlyMessageCacheEntry = null,
+      batchCache = OneTimeBatchCache()
     )
   }
 
   private fun insertPoll(allowMultiple: Boolean = true): Long {
     val envelope = MessageContentFuzzer.envelope(100)
-    val pollMessage = IncomingMessage(type = MessageType.NORMAL, from = alice.id, sentTimeMillis = envelope.timestamp!!, serverTimeMillis = envelope.serverTimestamp!!, receivedTimeMillis = 0, groupId = groupId)
+    val pollMessage = IncomingMessage(type = MessageType.NORMAL, from = alice.id, sentTimeMillis = envelope.clientTimestamp!!, serverTimeMillis = envelope.serverTimestamp!!, receivedTimeMillis = 0, groupId = groupId)
     val messageId = SignalDatabase.messages.insertMessageInbox(pollMessage).get()
     SignalDatabase.polls.insertPoll("question?", allowMultiple, listOf("a", "b", "c"), alice.id.toLong(), messageId.messageId)
     return messageId.messageId

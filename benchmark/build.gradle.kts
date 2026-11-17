@@ -3,42 +3,36 @@
 import com.android.build.api.dsl.ManagedVirtualDevice
 import org.gradle.api.JavaVersion
 import org.gradle.kotlin.dsl.extra
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val benchmarkLibs = the<org.gradle.accessors.dm.LibrariesForBenchmarkLibs>()
 
-val signalBuildToolsVersion: String by rootProject.extra
-val signalCompileSdkVersion: String by rootProject.extra
-val signalTargetSdkVersion: Int by rootProject.extra
-val signalMinSdkVersion: Int by rootProject.extra
-val signalJavaVersion: JavaVersion by rootProject.extra
-val signalKotlinJvmTarget: String by rootProject.extra
-
 plugins {
     id("com.android.test")
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
     namespace = "org.signal.benchmark"
-    compileSdkVersion = signalCompileSdkVersion
 
-    compileOptions {
-        sourceCompatibility = signalJavaVersion
-        targetCompatibility = signalJavaVersion
+    compileSdk {
+      version = release(libs.versions.compileSdk.get().toInt())
     }
 
-    kotlinOptions {
-        jvmTarget = signalKotlinJvmTarget
+    compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVersion.get())
     }
 
     defaultConfig {
         minSdk = 23
-        targetSdk = signalTargetSdkVersion
+        targetSdk = libs.versions.targetSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         missingDimensionStrategy("environment", "prod")
         missingDimensionStrategy("distribution", "play")
+
+        testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR"
     }
 
     buildTypes {
@@ -54,17 +48,24 @@ android {
 
     testOptions {
         managedDevices {
-            devices {
-                create("api31", ManagedVirtualDevice::class) {
+            localDevices {
+                create("api31") {
                     device = "Pixel 6"
+                    testedAbi = "x86_64"
                     apiLevel = 31
                     systemImageSource = "aosp"
-                    require64Bit = false
+                    require64Bit = true
                 }
             }
         }
     }
 
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.fromTarget(libs.versions.kotlinJvmTarget.get())
+    }
 }
 
 dependencies {

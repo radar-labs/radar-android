@@ -2,6 +2,7 @@ package org.thoughtcrime.securesms.components
 
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Build
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
@@ -10,10 +11,10 @@ import androidx.core.graphics.Insets
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
+import org.signal.core.ui.util.ViewUtil
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.util.ViewUtil
 
 /**
  * A specialized [ConstraintLayout] that sets guidelines based on the window insets provided
@@ -63,6 +64,7 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
 
   private var insets: WindowInsetsCompat? = null
   private var windowTypes: Int = InsetAwareConstraintLayout.windowTypes
+  private var navigationBarInsetOverride: Int? = null
 
   private val windowInsetsListener = androidx.core.view.OnApplyWindowInsetsListener { _, insets ->
     this.insets = insets
@@ -113,6 +115,23 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
     }
   }
 
+  fun setNavigationBarInsetOverride(inset: Int?) {
+    if (navigationBarInsetOverride == inset) return
+    navigationBarInsetOverride = inset
+    if (inset != null) {
+      // Apply immediately so layout is correct before next inset dispatch (important for
+      // Android 15 bubble where insets can arrive late or with different values).
+      navigationBarGuideline?.setGuidelineEnd(inset)
+      if (!isKeyboardShowing) {
+        keyboardGuideline?.setGuidelineEnd(inset)
+      }
+      requestLayout()
+    }
+    if (insets != null) {
+      applyInsets(insets!!.getInsets(windowTypes), insets!!.getInsets(keyboardType))
+    }
+  }
+
   fun addKeyboardStateListener(listener: KeyboardStateListener) {
     keyboardStateListeners += listener
   }
@@ -129,11 +148,30 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
     windowInsetsListeners.remove(listener)
   }
 
+  /**
+   * A guideline's begin and end measure from the left and right edges in either direction, while the views constrained
+   * to these two use start and end. In RTL that inverts the span, collapsing every view sized by it.
+   */
+  private fun applyHorizontalGuidelines(isLtr: Boolean, parentStart: Int, parentEnd: Int) {
+    if (isLtr) {
+      parentStartGuideline?.setGuidelineBegin(parentStart)
+      parentEndGuideline?.setGuidelineEnd(parentEnd)
+    } else {
+      parentStartGuideline?.setGuidelineEnd(parentStart)
+      parentEndGuideline?.setGuidelineBegin(parentEnd)
+    }
+  }
+
   private fun applyInsets(windowInsets: Insets, keyboardInsets: Insets) {
     val isLtr = ViewUtil.isLtr(this)
 
     val statusBar = windowInsets.top
-    val navigationBar = windowInsets.bottom
+    val navigationBar = navigationBarInsetOverride ?: if (windowInsets.bottom == 0 && Build.VERSION.SDK_INT <= 29 && !ViewUtil.isGestureNavigation(resources, insets)) {
+      ViewUtil.getNavigationBarHeight(resources)
+    } else {
+      windowInsets.bottom
+    }
+
     val parentStart = if (isLtr) windowInsets.left else windowInsets.right
     val parentEnd = if (isLtr) windowInsets.right else windowInsets.left
 
@@ -142,8 +180,7 @@ open class InsetAwareConstraintLayout @JvmOverloads constructor(
     if (!statusBarShrinking) {
       statusBarGuideline?.setGuidelineBegin(statusBar)
       navigationBarGuideline?.setGuidelineEnd(navigationBar)
-      parentStartGuideline?.setGuidelineBegin(parentStart)
-      parentEndGuideline?.setGuidelineEnd(parentEnd)
+      applyHorizontalGuidelines(isLtr, parentStart, parentEnd)
 
       windowInsetsListeners.forEach {
         it.onApplyWindowInsets(statusBar, navigationBar, parentStart, parentEnd)

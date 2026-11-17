@@ -2,6 +2,7 @@ package org.thoughtcrime.securesms.jobs
 
 import androidx.annotation.VisibleForTesting
 import kotlinx.collections.immutable.toImmutableSet
+import org.signal.core.util.LRUCache
 import org.signal.core.util.Stopwatch
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.database.JobDatabase
@@ -11,7 +12,6 @@ import org.thoughtcrime.securesms.jobmanager.persistence.DependencySpec
 import org.thoughtcrime.securesms.jobmanager.persistence.FullSpec
 import org.thoughtcrime.securesms.jobmanager.persistence.JobSpec
 import org.thoughtcrime.securesms.jobmanager.persistence.JobStorage
-import org.thoughtcrime.securesms.util.LRUCache
 import java.util.TreeSet
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.function.Predicate
@@ -22,6 +22,9 @@ class FastJobStorage(private val jobDatabase: JobDatabase) : JobStorage {
     private val TAG = Log.tag(FastJobStorage::class)
     private const val JOB_CACHE_LIMIT = 1000
     private const val DEBUG = false
+
+    /** Max number of items we'll print for any single collection in [debugAdditionalDetails], to avoid OOM'ing while building the string. */
+    private const val DEBUG_ITEM_LIMIT = 500
   }
 
   /** We keep a trimmed down version of every job in memory. */
@@ -130,6 +133,11 @@ class FastJobStorage(private val jobDatabase: JobDatabase) : JobStorage {
   @Synchronized
   override fun getAllMatchingFilter(predicate: Predicate<JobSpec>): List<JobSpec> {
     return jobDatabase.getAllMatchingFilter(predicate)
+  }
+
+  @Synchronized
+  override fun getAllMinimalJobSpecsMatchingFilter(predicate: Predicate<MinimalJobSpec>): List<MinimalJobSpec> {
+    return minimalJobs.filter { predicate.test(it) }
   }
 
   @Synchronized
@@ -432,13 +440,23 @@ class FastJobStorage(private val jobDatabase: JobDatabase) : JobStorage {
     val nonEmptyDependencies = dependenciesByJobId.filterValues { it.isNotEmpty() }
 
     return buildString {
-      appendLine("minimalJobs: Size(${minimalJobs.size}), Items(${minimalJobs.joinToString(", ") { it.toLogString() }})")
-      appendLine("jobSpecCache: Size(${jobSpecCache.size}), Items(${jobSpecCache.keys.joinToString(", ") { it.toLogString() }})")
-      appendLine("eligibleJobs: Size(${eligibleJobs.size}), Items(${eligibleJobs.joinToString(", ") { it.toLogString() }})")
-      appendLine("migrationJobs: Size(${migrationJobs.size}), Items(${migrationJobs.joinToString(", ") { it.toLogString() }})")
-      appendLine("mostEligibleForQueue: Size(${mostEligibleJobForQueue.size}), Items(${mostEligibleJobForQueue.entries.joinToString(", ") { "[${it.key} => ${it.value.toLogString()}]" }})")
-      appendLine("constraintsByJobId: Size(${constraintsByJobId.size}), Items(${constraintsByJobId.entries.joinToString(", ") { "[${it.key.toLogString()} => ${it.value.joinToString(", ") { c -> c.toLogString() }}]" }})")
-      appendLine("dependenciesByJobId: Size(${nonEmptyDependencies.size}), Items(${nonEmptyDependencies.entries.joinToString(", ") { "[${it.key.toLogString()} => ${it.value.map { d -> d.toLogString() }}]" }})")
+      appendLine("minimalJobs: Size(${minimalJobs.size}), Items(${minimalJobs.toTruncatedLogString { it.toLogString() }})")
+      appendLine("jobSpecCache: Size(${jobSpecCache.size}), Items(${jobSpecCache.keys.toTruncatedLogString { it.toLogString() }})")
+      appendLine("eligibleJobs: Size(${eligibleJobs.size}), Items(${eligibleJobs.toTruncatedLogString { it.toLogString() }})")
+      appendLine("migrationJobs: Size(${migrationJobs.size}), Items(${migrationJobs.toTruncatedLogString { it.toLogString() }})")
+      appendLine("mostEligibleForQueue: Size(${mostEligibleJobForQueue.size}), Items(${mostEligibleJobForQueue.entries.toTruncatedLogString { "[${it.key} => ${it.value.toLogString()}]" }})")
+      appendLine("constraintsByJobId: Size(${constraintsByJobId.size}), Items(${constraintsByJobId.entries.toTruncatedLogString { "[${it.key.toLogString()} => ${it.value.joinToString(", ") { c -> c.toLogString() }}]" }})")
+      appendLine("dependenciesByJobId: Size(${nonEmptyDependencies.size}), Items(${nonEmptyDependencies.entries.toTruncatedLogString { "[${it.key.toLogString()} => ${it.value.map { d -> d.toLogString() }}]" }})")
+    }
+  }
+
+  private fun <T> Collection<T>.toTruncatedLogString(transform: (T) -> CharSequence): String {
+    val rendered = this.asSequence().take(DEBUG_ITEM_LIMIT).joinToString(", ", transform = transform)
+
+    return if (this.size > DEBUG_ITEM_LIMIT) {
+      "$rendered, ...TRUNCATED, showing first $DEBUG_ITEM_LIMIT of ${this.size}"
+    } else {
+      rendered
     }
   }
 
@@ -492,6 +510,10 @@ class FastJobStorage(private val jobDatabase: JobDatabase) : JobStorage {
   private fun placeJobInEligibleList(jobCandidate: MinimalJobSpec) {
     val existingJobInQueue = jobCandidate.queueKey?.let { mostEligibleJobForQueue[it] }
     if (existingJobInQueue != null) {
+      if (existingJobInQueue.isRunning) {
+        return
+      }
+
       if (jobCandidate.globalPriority < existingJobInQueue.globalPriority) {
         return
       }

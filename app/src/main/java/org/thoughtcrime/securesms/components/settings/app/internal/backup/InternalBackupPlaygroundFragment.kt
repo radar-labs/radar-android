@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,7 +45,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -59,32 +59,38 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.signal.appsettings.backups.BackupCreationProgressRow
+import org.signal.core.ui.compose.ComposeFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Dividers
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Rows
+import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.ui.compose.Snackbars
 import org.signal.core.ui.compose.TextFields.TextField
 import org.signal.core.util.Base64
 import org.signal.core.util.Hex
+import org.signal.core.util.Util
 import org.signal.core.util.getLength
 import org.thoughtcrime.securesms.MainActivity
-import org.thoughtcrime.securesms.R
+import org.thoughtcrime.securesms.backup.isIdle
+import org.thoughtcrime.securesms.backup.toBackupCreationProgress
+import org.thoughtcrime.securesms.backup.v2.ArchiveRestoreProgress
 import org.thoughtcrime.securesms.backup.v2.BackupRepository
 import org.thoughtcrime.securesms.backup.v2.ui.BackupAlert
 import org.thoughtcrime.securesms.backup.v2.ui.BackupAlertBottomSheet
 import org.thoughtcrime.securesms.components.settings.app.internal.backup.InternalBackupPlaygroundViewModel.DialogState
 import org.thoughtcrime.securesms.components.settings.app.internal.backup.InternalBackupPlaygroundViewModel.ScreenState
-import org.thoughtcrime.securesms.compose.ComposeFragment
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobs.ArchiveAttachmentBackfillJob
 import org.thoughtcrime.securesms.jobs.ArchiveAttachmentReconciliationJob
+import org.thoughtcrime.securesms.jobs.ArchiveCommitAttachmentDeletesJob
 import org.thoughtcrime.securesms.jobs.ArchiveThumbnailBackfillJob
 import org.thoughtcrime.securesms.jobs.BackupRestoreMediaJob
 import org.thoughtcrime.securesms.jobs.LocalBackupJob
+import org.thoughtcrime.securesms.jobs.OptimizeMediaJob
 import org.thoughtcrime.securesms.keyvalue.BackupValues
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.util.Util
 
 class InternalBackupPlaygroundFragment : ComposeFragment() {
 
@@ -111,10 +117,7 @@ class InternalBackupPlaygroundFragment : ComposeFragment() {
     savePlaintextBackupToDiskLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
       if (result.resultCode == RESULT_OK) {
         result.data?.data?.let { uri ->
-          viewModel.exportPlaintext(
-            openStream = { requireContext().contentResolver.openOutputStream(uri)!! },
-            appendStream = { requireContext().contentResolver.openOutputStream(uri, "wa")!! }
-          )
+          viewModel.exportPlaintextZip(uri)
         } ?: Toast.makeText(requireContext(), "No URI selected", Toast.LENGTH_SHORT).show()
       }
     }
@@ -160,6 +163,8 @@ class InternalBackupPlaygroundFragment : ComposeFragment() {
           onEnqueueAttachmentBackfillJob = { AppDependencies.jobManager.add(ArchiveAttachmentBackfillJob()) },
           onEnqueueThumbnailBackfillJob = { AppDependencies.jobManager.add(ArchiveThumbnailBackfillJob()) },
           onEnqueueMediaRestoreClicked = { AppDependencies.jobManager.add(BackupRestoreMediaJob()) },
+          onEnqueueOptimizeMediaClicked = { AppDependencies.jobManager.add(OptimizeMediaJob()) },
+          onEnqueueCommitDeletesClicked = { AppDependencies.jobManager.add(ArchiveCommitAttachmentDeletesJob()) },
           onHaltAllBackupJobsClicked = { viewModel.haltAllJobs() },
           onValidateBackupClicked = { viewModel.validateBackup() },
           onSaveEncryptedBackupToDiskClicked = {
@@ -173,14 +178,20 @@ class InternalBackupPlaygroundFragment : ComposeFragment() {
             saveEncryptedBackupToDiskLauncher.launch(intent)
           },
           onSavePlaintextBackupToDiskClicked = {
-            val intent = Intent().apply {
-              action = Intent.ACTION_CREATE_DOCUMENT
-              type = "application/octet-stream"
-              addCategory(Intent.CATEGORY_OPENABLE)
-              putExtra(Intent.EXTRA_TITLE, "backup-plaintext-${System.currentTimeMillis()}.bin")
-            }
-
+            viewModel.showPlaintextExportDialog()
+          },
+          onPlaintextExportWithMedia = {
+            viewModel.onPlaintextExportMediaChoiceSelected(includeMedia = true)
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
             savePlaintextBackupToDiskLauncher.launch(intent)
+          },
+          onPlaintextExportWithoutMedia = {
+            viewModel.onPlaintextExportMediaChoiceSelected(includeMedia = false)
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+            savePlaintextBackupToDiskLauncher.launch(intent)
+          },
+          onPlaintextExportDismissed = {
+            viewModel.dismissPlaintextExportDialog()
           },
           onSavePlaintextCopyOfRemoteBackupClicked = {
             val intent = Intent().apply {
@@ -192,7 +203,7 @@ class InternalBackupPlaygroundFragment : ComposeFragment() {
 
             savePlaintextCopyLauncher.launch(intent)
           },
-          onExportNewStyleLocalBackupClicked = { LocalBackupJob.enqueueArchive() },
+          onExportNewStyleLocalBackupClicked = { LocalBackupJob.enqueueArchive(false) },
           onWipeDataAndRestoreFromRemoteClicked = {
             MaterialAlertDialogBuilder(context)
               .setTitle("Are you sure?")
@@ -225,13 +236,6 @@ class InternalBackupPlaygroundFragment : ComposeFragment() {
               Toast.makeText(context, "Invalid credentials!", Toast.LENGTH_SHORT).show()
             }
           },
-          onImportNewStyleLocalBackupClicked = {
-            MaterialAlertDialogBuilder(context)
-              .setTitle("Are you sure?")
-              .setMessage("After you choose a file to import, this will delete all of your chats, then restore them from the file! Only do this on a test device!")
-              .setPositiveButton("Wipe and restore") { _, _ -> viewModel.import(SignalStore.settings.signalBackupDirectory!!) }
-              .show()
-          },
           onDeleteRemoteBackup = {
             MaterialAlertDialogBuilder(context)
               .setTitle("Are you sure?")
@@ -261,6 +265,10 @@ class InternalBackupPlaygroundFragment : ComposeFragment() {
               }
               .setNegativeButton("Cancel", null)
               .show()
+          },
+          onTriggerLocalRestoreDirectoryError = {
+            SignalStore.backup.localRestoreDirectoryError = true
+            ArchiveRestoreProgress.forceUpdate()
           },
           onDisplayInitialBackupFailureSheet = {
             BackupRepository.displayInitialBackupFailureNotification()
@@ -305,7 +313,7 @@ fun Tabs(
           navigationIcon = {
             IconButton(onClick = onBack) {
               Icon(
-                painter = painterResource(R.drawable.symbol_arrow_start_24),
+                painter = SignalIcons.ArrowStart.painter,
                 tint = MaterialTheme.colorScheme.onSurface,
                 contentDescription = null
               )
@@ -337,24 +345,29 @@ fun Tabs(
 fun Screen(
   state: ScreenState,
   onExportNewStyleLocalBackupClicked: () -> Unit = {},
-  onImportNewStyleLocalBackupClicked: () -> Unit = {},
   onCheckRemoteBackupStateClicked: () -> Unit = {},
   onEnqueueRemoteBackupClicked: () -> Unit = {},
   onEnqueueReconciliationClicked: () -> Unit = {},
   onEnqueueMediaRestoreClicked: () -> Unit = {},
   onEnqueueAttachmentBackfillJob: () -> Unit = {},
   onEnqueueThumbnailBackfillJob: () -> Unit = {},
+  onEnqueueOptimizeMediaClicked: () -> Unit = {},
+  onEnqueueCommitDeletesClicked: () -> Unit = {},
   onWipeDataAndRestoreFromRemoteClicked: () -> Unit = {},
   onHaltAllBackupJobsClicked: () -> Unit = {},
   onSavePlaintextCopyOfRemoteBackupClicked: () -> Unit = {},
   onValidateBackupClicked: () -> Unit = {},
   onSaveEncryptedBackupToDiskClicked: () -> Unit = {},
   onSavePlaintextBackupToDiskClicked: () -> Unit = {},
+  onPlaintextExportWithMedia: () -> Unit = {},
+  onPlaintextExportWithoutMedia: () -> Unit = {},
+  onPlaintextExportDismissed: () -> Unit = {},
   onImportEncryptedBackupFromDiskClicked: () -> Unit = {},
   onImportEncryptedBackupFromDiskDismissed: () -> Unit = {},
   onImportEncryptedBackupFromDiskConfirmed: (aci: String, backupKey: String) -> Unit = { _, _ -> },
   onClearLocalMediaBackupState: () -> Unit = {},
   onDeleteRemoteBackup: () -> Unit = {},
+  onTriggerLocalRestoreDirectoryError: () -> Unit = {},
   onDisplayInitialBackupFailureSheet: () -> Unit = {}
 ) {
   val context = LocalContext.current
@@ -366,6 +379,19 @@ fun Screen(
       ImportCredentialsDialog(
         onSubmit = onImportEncryptedBackupFromDiskConfirmed,
         onDismissed = onImportEncryptedBackupFromDiskDismissed
+      )
+    }
+    DialogState.PlaintextExportMediaChoice -> {
+      AlertDialog(
+        onDismissRequest = onPlaintextExportDismissed,
+        title = { Text("Plaintext backup") },
+        text = { Text("Include media in the backup?") },
+        confirmButton = {
+          TextButton(onClick = onPlaintextExportWithMedia) { Text("With media") }
+        },
+        dismissButton = {
+          TextButton(onClick = onPlaintextExportWithoutMedia) { Text("Without media") }
+        }
       )
     }
   }
@@ -427,6 +453,18 @@ fun Screen(
       )
 
       Rows.TextRow(
+        text = "Enqueue optimize media job",
+        label = "Schedules a job that will offload local copies of media the archive CDN has confirmed. Normally only runs after a backup.",
+        onClick = onEnqueueOptimizeMediaClicked
+      )
+
+      Rows.TextRow(
+        text = "Enqueue commit deletes job",
+        label = "Schedules a job that will delete unreferenced media from the archive CDN. Normally only runs after a backup.",
+        onClick = onEnqueueCommitDeletesClicked
+      )
+
+      Rows.TextRow(
         text = "Halt all backup jobs",
         label = "Stops all backup-related jobs to the best of our ability.",
         onClick = onHaltAllBackupJobsClicked
@@ -444,11 +482,18 @@ fun Screen(
         onClick = onSaveEncryptedBackupToDiskClicked
       )
 
-      Rows.TextRow(
-        text = "Save plaintext backup to disk",
-        label = "Generates a plaintext, uncompressed backup and saves it to your local disk.",
-        onClick = onSavePlaintextBackupToDiskClicked
-      )
+      if (state.plaintextProgress.isIdle) {
+        Rows.TextRow(
+          text = "Save plaintext backup to disk",
+          label = "Generates a plaintext backup as a zip file in the selected directory.",
+          onClick = onSavePlaintextBackupToDiskClicked
+        )
+      } else {
+        BackupCreationProgressRow(
+          progress = state.plaintextProgress.toBackupCreationProgress(),
+          isRemote = false
+        )
+      }
 
       Rows.TextRow(
         text = "Save plaintext copy of remote backup",
@@ -466,7 +511,7 @@ fun Screen(
         text = "Copy Account Entropy Pool (AEP)",
         label = "Copies the Account Entropy Pool (AEP) to the clipboard, which is labeled as the \"Backup Key\" in the designs.",
         onClick = {
-          Util.copyToClipboard(context, SignalStore.account.accountEntropyPool.value)
+          Util.copyToClipboard(context, SignalStore.account.accountEntropyPool.displayValue)
           Toast.makeText(context, "Copied!", Toast.LENGTH_SHORT).show()
         }
       )
@@ -516,7 +561,8 @@ fun Screen(
         text = "Clear backup init flag",
         label = "Clears our local state around whether backups have been initialized or not. Will force us to make request to claim backupId and set public keys.",
         onClick = {
-          SignalStore.backup.backupsInitialized = false
+          SignalStore.backup.messageBackupInitialized = false
+          SignalStore.backup.mediaBackupInitialized = false
         }
       )
 
@@ -536,12 +582,6 @@ fun Screen(
       )
 
       Rows.TextRow(
-        text = "Wipe all data and restore a new-style local backup",
-        label = "Erases all content on your device, followed by a restore of a previously-generated new-style local backup.",
-        onClick = onImportNewStyleLocalBackupClicked
-      )
-
-      Rows.TextRow(
         text = "Delete all backup data on server",
         label = "Erases all content on the server.",
         onClick = onDeleteRemoteBackup
@@ -551,6 +591,12 @@ fun Screen(
         text = "Clear local media backup state",
         label = "Resets local state tracking so you think you haven't uploaded any media. The media still exists on the server.",
         onClick = onClearLocalMediaBackupState
+      )
+
+      Rows.TextRow(
+        text = "Trigger local restore directory error",
+        label = "Simulates the restore directory becoming inaccessible during a local backup restore.",
+        onClick = onTriggerLocalRestoreDirectoryError
       )
 
       Dividers.Default()
@@ -600,7 +646,7 @@ private fun ImportCredentialsDialog(onSubmit: (aci: String, backupKey: String) -
     keyboardType = KeyboardType.Ascii,
     imeAction = ImeAction.Next
   )
-  androidx.compose.material3.AlertDialog(
+  AlertDialog(
     onDismissRequest = onDismissed,
     title = { Text(text = "Are you sure?") },
     text = {

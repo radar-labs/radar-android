@@ -7,9 +7,9 @@ import org.signal.core.util.concurrent.SignalExecutors;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.util.SignalProxyUtil;
-import org.thoughtcrime.securesms.util.Util;
+import org.signal.core.util.Util;
 import org.whispersystems.signalservice.api.websocket.WebSocketConnectionState;
-import org.whispersystems.signalservice.internal.configuration.SignalProxy;
+import org.signal.network.config.SignalProxy;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,9 +31,10 @@ public class EditProxyViewModel extends ViewModel {
     this.events    = PublishSubject.create();
     this.uiState   = BehaviorSubject.create();
     this.saveState = BehaviorSubject.createDefault(SaveState.IDLE);
-    this.pipeState = SignalStore.account().getE164() == null ? Flowable.empty()
-                                                             : AppDependencies.getWebSocketObserver()
-                                                                              .toFlowable(BackpressureStrategy.LATEST);
+    this.pipeState = !SignalStore.account().isRegistered() || SignalStore.account().getAci() == null
+                     ? Flowable.empty()
+                     : AppDependencies.getWebSocketObserver()
+                                      .toFlowable(BackpressureStrategy.LATEST);
 
     if (SignalStore.proxy().isProxyEnabled()) {
       uiState.onNext(UiState.ALL_ENABLED);
@@ -44,10 +45,10 @@ public class EditProxyViewModel extends ViewModel {
 
   void onToggleProxy(boolean enabled, String text) {
     if (enabled) {
-      SignalProxy currentProxy = SignalStore.proxy().getProxy();
+      String currentHost = SignalStore.proxy().getProxyHost();
 
-      if (currentProxy != null && !Util.isEmpty(currentProxy.getHost())) {
-        SignalProxyUtil.enableProxy(currentProxy);
+      if (!Util.isEmpty(currentHost)) {
+        SignalProxyUtil.enableProxy(new SignalProxy(currentHost, SignalStore.proxy().getProxyPort()));
       }
       uiState.onNext(UiState.ALL_ENABLED);
     } else if (Util.isEmpty(text)) {

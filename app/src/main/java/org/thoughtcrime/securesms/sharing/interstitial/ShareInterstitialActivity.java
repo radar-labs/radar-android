@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.annimon.stream.Stream;
 import com.bumptech.glide.Glide;
 
 import org.thoughtcrime.securesms.PassphraseRequiredActivity;
@@ -25,7 +26,8 @@ import org.thoughtcrime.securesms.sharing.MultiShareDialogs;
 import org.thoughtcrime.securesms.sharing.ShareFlowConstants;
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.signal.core.ui.util.ViewUtil;
 import org.thoughtcrime.securesms.util.text.AfterTextChanged;
 import org.thoughtcrime.securesms.util.views.CircularProgressMaterialButton;
 
@@ -86,8 +88,8 @@ public class ShareInterstitialActivity extends PassphraseRequiredActivity {
 
     linkPreviewViewModel = new ViewModelProvider(this, linkPreviewViewModelFactory).get(LinkPreviewViewModel.class);
 
-    boolean hasSms = Stream.of(args.getRecipientSearchKeys())
-                           .anyMatch(c -> {
+    boolean hasSms = args.getRecipientSearchKeys().stream()
+                         .anyMatch(c -> {
                              Recipient recipient = Recipient.resolved(c.getRecipientId());
                              if (recipient.isDistributionList()) {
                                return false;
@@ -107,6 +109,10 @@ public class ShareInterstitialActivity extends PassphraseRequiredActivity {
     preview = findViewById(R.id.link_preview);
 
     confirm.setOnClickListener(unused -> onConfirm());
+
+    toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    SystemWindowInsetsSetter.attach(toolbar, this, WindowInsetsCompat.Type.statusBars());
+    SystemWindowInsetsSetter.attach(confirm, this, WindowInsetsCompat.Type.navigationBars() | WindowInsetsCompat.Type.ime(), SystemWindowInsetsSetter.ApplyMode.MARGIN);
 
     SelectionAwareEmojiEditText text = findViewById(R.id.text);
 

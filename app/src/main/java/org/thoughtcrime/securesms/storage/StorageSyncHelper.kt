@@ -1,14 +1,16 @@
 package org.thoughtcrime.securesms.storage
 
-import android.content.Context
 import androidx.annotation.VisibleForTesting
 import okio.ByteString
 import okio.ByteString.Companion.toByteString
+import org.signal.core.database.SqlUtil
 import org.signal.core.util.Base64.encodeWithPadding
-import org.signal.core.util.SqlUtil
+import org.signal.core.util.Util
 import org.signal.core.util.UuidUtil
 import org.signal.core.util.logging.Log
 import org.signal.core.util.toByteArray
+import org.signal.libsignal.net.KeyTransparency
+import org.signal.storage.keyvalue.PhoneNumberPrivacyValues.PhoneNumberDiscoverabilityMode
 import org.thoughtcrime.securesms.backup.v2.MessageBackupTier
 import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentsRepository.getSubscriber
 import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaymentsRepository.isUserManuallyCancelled
@@ -16,19 +18,22 @@ import org.thoughtcrime.securesms.components.settings.app.subscription.InAppPaym
 import org.thoughtcrime.securesms.database.NotificationProfileTables
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.InAppPaymentSubscriberRecord
+import org.thoughtcrime.securesms.database.model.KeyTransparencyStore
 import org.thoughtcrime.securesms.database.model.RecipientRecord
 import org.thoughtcrime.securesms.dependencies.AppDependencies
+import org.thoughtcrime.securesms.dependencies.KeyTransparencyApi
+import org.thoughtcrime.securesms.jobs.BackupTierDowngradeCheckJob
+import org.thoughtcrime.securesms.jobs.RefreshAttributesJob
 import org.thoughtcrime.securesms.jobs.RetrieveProfileAvatarJob
 import org.thoughtcrime.securesms.jobs.StorageSyncJob
 import org.thoughtcrime.securesms.keyvalue.AccountValues
-import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues.PhoneNumberDiscoverabilityMode
+import org.thoughtcrime.securesms.keyvalue.SettingsValues
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.reactions
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfileId
 import org.thoughtcrime.securesms.payments.Entropy
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.Recipient.Companion.self
-import org.thoughtcrime.securesms.util.TextSecurePreferences
-import org.thoughtcrime.securesms.util.Util
 import org.whispersystems.signalservice.api.push.UsernameLinkComponents
 import org.whispersystems.signalservice.api.storage.SignalAccountRecord
 import org.whispersystems.signalservice.api.storage.SignalContactRecord
@@ -52,7 +57,7 @@ object StorageSyncHelper {
 
   private var keyGenerator = KEY_GENERATOR
 
-  private val REFRESH_INTERVAL = TimeUnit.HOURS.toMillis(2)
+  private val REFRESH_INTERVAL = TimeUnit.DAYS.toMillis(1)
 
   /**
    * Given a list of all the local and remote keys you know about, this will return a result telling
@@ -111,8 +116,21 @@ object StorageSyncHelper {
     return update.old.proto.profileKey != update.new.proto.profileKey
   }
 
+  /**
+   * Iff successfully written records carried the expected rotation, clears the content.
+   */
   @JvmStatic
-  fun buildAccountRecord(context: Context, self: Recipient): SignalStorageRecord {
+  fun clearRotatedProfileKeyIfSynced(written: List<SignalStorageRecord>) {
+    val rotated = SignalStore.account.notSyncedRotatedSelfProfileKey ?: return
+
+    if (written.any { it.proto.account?.profileKey?.toByteArray().contentEquals(rotated) }) {
+      Log.i(TAG, "Published our rotated profile key.")
+      SignalStore.account.notSyncedRotatedSelfProfileKey = null
+    }
+  }
+
+  @JvmStatic
+  fun buildAccountRecord(self: Recipient): SignalStorageRecord {
     var self = self
     var selfRecord: RecipientRecord? = SignalDatabase.recipients.getRecordForSync(self.id)
     val pinned: List<RecipientRecord> = SignalDatabase.threads.getPinnedRecipientIds()
@@ -139,6 +157,8 @@ object StorageSyncHelper {
 
     val storageId = selfRecord?.storageId ?: self.storageId
 
+    val releaseChannelRecord: RecipientRecord? = SignalStore.releaseChannel.releaseChannelRecipientId?.let { SignalDatabase.recipients.getRecordForSync(it) }
+
     val accountRecord = SignalAccountRecord.newBuilder(selfRecord?.syncExtras?.storageProto).apply {
       profileKey = self.profileKey?.toByteString() ?: ByteString.EMPTY
       givenName = self.profileName.givenName
@@ -146,9 +166,9 @@ object StorageSyncHelper {
       avatarUrlPath = self.profileAvatar ?: ""
       noteToSelfArchived = selfRecord != null && selfRecord.syncExtras.isArchived
       noteToSelfMarkedUnread = selfRecord != null && selfRecord.syncExtras.isForcedUnread
-      typingIndicators = TextSecurePreferences.isTypingIndicatorsEnabled(context)
-      readReceipts = TextSecurePreferences.isReadReceiptsEnabled(context)
-      sealedSenderIndicators = TextSecurePreferences.isShowUnidentifiedDeliveryIndicatorsEnabled(context)
+      typingIndicators = SignalStore.settings.isTypingIndicatorsEnabled
+      readReceipts = SignalStore.settings.isReadReceiptsEnabled
+      sealedSenderIndicators = SignalStore.settings.isShowUnidentifiedDeliveryIndicatorsEnabled
       linkPreviews = SignalStore.settings.isLinkPreviewsEnabled
       unlistedPhoneNumber = SignalStore.phoneNumberPrivacy.phoneNumberDiscoverabilityMode == PhoneNumberDiscoverabilityMode.NOT_DISCOVERABLE
       phoneNumberSharingMode = StorageSyncModels.localToRemotePhoneNumberSharingMode(SignalStore.phoneNumberPrivacy.phoneNumberSharingMode)
@@ -159,7 +179,7 @@ object StorageSyncHelper {
       preferredReactionEmoji = SignalStore.emoji.reactions
       displayBadgesOnProfile = SignalStore.inAppPayments.getDisplayBadgesOnProfile()
       subscriptionManuallyCancelled = isUserManuallyCancelled(InAppPaymentSubscriberRecord.Type.DONATION)
-      keepMutedChatsArchived = SignalStore.settings.shouldKeepMutedChatsArchived()
+      keepMutedChatsArchived = SignalStore.settings.keepMutedChatsArchived
       hasSetMyStoriesPrivacy = SignalStore.story.userHasBeenNotifiedAboutStories
       hasViewedOnboardingStory = SignalStore.story.userHasViewedOnboardingStory
       storiesDisabled = SignalStore.story.isFeatureDisabled
@@ -176,15 +196,14 @@ object StorageSyncHelper {
         )
       }
 
-      hasBackup = SignalStore.backup.areBackupsEnabled && SignalStore.backup.hasBackupBeenUploaded
       backupTier = when {
-        SignalStore.account.isLinkedDevice -> null
-        SignalStore.backup.areBackupsEnabled && SignalStore.backup.backupTier != null -> getBackupLevelValue(SignalStore.backup.backupTier!!)
-        SignalStore.backup.backupTierInternalOverride != null -> getBackupLevelValue(SignalStore.backup.backupTierInternalOverride!!)
+        SignalStore.backup.areBackupsEnabled && SignalStore.backup.backupTier != null -> SignalStore.backup.backupTier!!.toBackupLevel()
+        SignalStore.backup.backupTierInternalOverride != null -> SignalStore.backup.backupTierInternalOverride!!.toBackupLevel()
         else -> null
       }
 
       notificationProfileManualOverride = getNotificationProfileManualOverride()
+      notificationProfileSyncDisabled = SignalStore.notificationProfile.syncDisabled
 
       getSubscriber(InAppPaymentSubscriberRecord.Type.DONATION)?.let {
         safeSetSubscriber(it.subscriberId.bytes.toByteString(), it.currency?.currencyCode ?: "")
@@ -195,20 +214,30 @@ object StorageSyncHelper {
       }
 
       safeSetPayments(SignalStore.payments.mobileCoinPaymentsEnabled(), Optional.ofNullable(SignalStore.payments.paymentsEntropy).map { obj: Entropy -> obj.bytes }.orElse(null))
+      automaticKeyVerificationDisabled = !SignalStore.settings.automaticVerificationEnabled
+      hasSeenAdminDeleteEducationDialog = SignalStore.uiHints.hasSeenAdminDeleteEducationDialog()
+
+      if (releaseChannelRecord != null) {
+        releaseNotesChatArchived = releaseChannelRecord.syncExtras.isArchived == true
+        releaseNotesChatMutedUntilTimestamp = releaseChannelRecord.muteUntil
+        releaseNotesChatBlocked = releaseChannelRecord.isBlocked == true
+        releaseNotesChatMarkedUnread = releaseChannelRecord.syncExtras.isForcedUnread == true
+        releaseNotesChatBlockedAt = releaseChannelRecord.blockedAt.takeIf { it != 0L }
+      }
+      unreadBadgeType = SignalStore.settings.unreadBadgeType.toRemoteBadgeType()
+      includeMutedChatsInBadge = SignalStore.settings.includeMutedInBadgeCount.toOptionalBool()
+      notifyForCallsIfMuted = SignalStore.settings.allowCallsWhileMuted.toOptionalBool()
+      notifyForMentionsIfMuted = SignalStore.settings.allowMentionsWhileMuted.toOptionalBool()
+      notifyForRepliesIfMuted = SignalStore.settings.allowRepliesWhileMuted.toOptionalBool()
+      reactionNotifications = SignalStore.settings.reactionNotifications.toOptionalBool()
+      showUnreadReminders = SignalStore.settings.unreadReminderEnabled.toOptionalBool()
+      notifyWhenContactJoins = SignalStore.settings.isNotifyWhenContactJoinsSignal.toOptionalBool()
     }
 
     return accountRecord.toSignalAccountRecord(StorageId.forAccount(storageId)).toSignalStorageRecord()
   }
 
-  // TODO: Currently we don't have access to the private values of the BackupLevel. Update when it becomes available.
-  private fun getBackupLevelValue(tier: MessageBackupTier): Long {
-    return when (tier) {
-      MessageBackupTier.FREE -> 200
-      MessageBackupTier.PAID -> 201
-    }
-  }
-
-  private fun getNotificationProfileManualOverride(): AccountRecord.NotificationProfileManualOverride {
+  private fun getNotificationProfileManualOverride(): AccountRecord.NotificationProfileManualOverride? {
     val profile = SignalDatabase.notificationProfiles.getProfile(SignalStore.notificationProfile.manuallyEnabledProfile)
     return if (profile != null && profile.deletedTimestampMs == 0L) {
       Log.i(TAG, "Setting a manually enabled profile ${profile.id}")
@@ -226,37 +255,59 @@ object StorageSyncHelper {
         disabledAtTimestampMs = SignalStore.notificationProfile.manuallyDisabledAt
       )
     } else {
-      AccountRecord.NotificationProfileManualOverride()
+      null
     }
   }
 
   @JvmStatic
-  fun applyAccountStorageSyncUpdates(context: Context, self: Recipient, updatedRecord: SignalAccountRecord, fetchProfile: Boolean) {
-    val localRecord = buildAccountRecord(context, self).let { it.proto.account!!.toSignalAccountRecord(it.id) }
-    applyAccountStorageSyncUpdates(context, self, StorageRecordUpdate(localRecord, updatedRecord), fetchProfile)
+  fun applyAccountStorageSyncUpdates(self: Recipient, updatedRecord: SignalAccountRecord, fetchProfile: Boolean) {
+    val localRecord = buildAccountRecord(self).let { it.proto.account!!.toSignalAccountRecord(it.id) }
+    applyAccountStorageSyncUpdates(self, StorageRecordUpdate(localRecord, updatedRecord), fetchProfile)
   }
 
   @JvmStatic
-  fun applyAccountStorageSyncUpdates(context: Context, self: Recipient, update: StorageRecordUpdate<SignalAccountRecord>, fetchProfile: Boolean) {
+  fun applyAccountStorageSyncUpdates(self: Recipient, update: StorageRecordUpdate<SignalAccountRecord>, fetchProfile: Boolean) {
     SignalDatabase.recipients.applyStorageSyncAccountUpdate(update)
 
-    TextSecurePreferences.setReadReceiptsEnabled(context, update.new.proto.readReceipts)
-    TextSecurePreferences.setTypingIndicatorsEnabled(context, update.new.proto.typingIndicators)
-    TextSecurePreferences.setShowUnidentifiedDeliveryIndicatorsEnabled(context, update.new.proto.sealedSenderIndicators)
+    SignalStore.settings.isReadReceiptsEnabled = update.new.proto.readReceipts
+    SignalStore.settings.isTypingIndicatorsEnabled = update.new.proto.typingIndicators
+    SignalStore.settings.isShowUnidentifiedDeliveryIndicatorsEnabled = update.new.proto.sealedSenderIndicators
     SignalStore.settings.isLinkPreviewsEnabled = update.new.proto.linkPreviews
     SignalStore.phoneNumberPrivacy.phoneNumberDiscoverabilityMode = if (update.new.proto.unlistedPhoneNumber) PhoneNumberDiscoverabilityMode.NOT_DISCOVERABLE else PhoneNumberDiscoverabilityMode.DISCOVERABLE
     SignalStore.phoneNumberPrivacy.phoneNumberSharingMode = StorageSyncModels.remoteToLocalPhoneNumberSharingMode(update.new.proto.phoneNumberSharingMode)
     SignalStore.settings.isPreferSystemContactPhotos = update.new.proto.preferContactAvatars
     SignalStore.payments.setEnabledAndEntropy(update.new.proto.payments?.enabled == true, Entropy.fromBytes(update.new.proto.payments?.entropy?.toByteArray()))
     SignalStore.settings.universalExpireTimer = update.new.proto.universalExpireTimer
-    SignalStore.emoji.reactions = update.new.proto.preferredReactionEmoji
+    SignalStore.emoji.rawReactions = update.new.proto.preferredReactionEmoji
     SignalStore.inAppPayments.setDisplayBadgesOnProfile(update.new.proto.displayBadgesOnProfile)
-    SignalStore.settings.setKeepMutedChatsArchived(update.new.proto.keepMutedChatsArchived)
+    SignalStore.settings.keepMutedChatsArchived = update.new.proto.keepMutedChatsArchived
     SignalStore.story.userHasBeenNotifiedAboutStories = update.new.proto.hasSetMyStoriesPrivacy
     SignalStore.story.userHasViewedOnboardingStory = update.new.proto.hasViewedOnboardingStory
     SignalStore.story.isFeatureDisabled = update.new.proto.storiesDisabled
     SignalStore.story.userHasSeenGroupStoryEducationSheet = update.new.proto.hasSeenGroupStoryEducationSheet
     SignalStore.uiHints.setHasCompletedUsernameOnboarding(update.new.proto.hasCompletedUsernameOnboarding)
+    SignalStore.settings.setUnreadBadgeType(update.new.proto.unreadBadgeType.value)
+    update.new.proto.includeMutedChatsInBadge.toBool()?.let { SignalStore.settings.setIncludeMutedInBadgeCount(it) }
+    update.new.proto.notifyForCallsIfMuted.toBool()?.let { SignalStore.settings.allowCallsWhileMuted = it }
+    update.new.proto.notifyForMentionsIfMuted.toBool()?.let { SignalStore.settings.allowMentionsWhileMuted = it }
+    update.new.proto.notifyForRepliesIfMuted.toBool()?.let { SignalStore.settings.allowRepliesWhileMuted = it }
+    update.new.proto.reactionNotifications.toBool()?.let { SignalStore.settings.reactionNotifications = it }
+    update.new.proto.showUnreadReminders.toBool()?.let { SignalStore.settings.unreadReminderEnabled = it }
+    update.new.proto.notifyWhenContactJoins.toBool()?.let { SignalStore.settings.isNotifyWhenContactJoinsSignal = it }
+
+    if (update.new.proto.unlistedPhoneNumber != update.old.proto.unlistedPhoneNumber && SignalStore.account.isPrimaryDevice) {
+      Log.i(TAG, "Phone number discoverability changed via storage service. Refreshing attributes to push the change to the server.")
+      AppDependencies.jobManager.add(RefreshAttributesJob())
+    }
+
+    if (SignalStore.settings.automaticVerificationEnabled && update.new.proto.automaticKeyVerificationDisabled) {
+      SignalDatabase.recipients.clearAllKeyTransparencyData()
+    }
+    SignalStore.settings.automaticVerificationEnabled = !update.new.proto.automaticKeyVerificationDisabled
+
+    if (update.new.proto.hasSeenAdminDeleteEducationDialog) {
+      SignalStore.uiHints.setHasSeenAdminDeleteEducationDialog()
+    }
 
     if (update.new.proto.storyViewReceiptsEnabled == OptionalBool.UNSET) {
       SignalStore.story.viewedReceiptsEnabled = update.new.proto.readReceipts
@@ -274,6 +325,20 @@ object StorageSyncHelper {
       setSubscriber(remoteBackupsSubscriber)
     }
 
+    if (SignalStore.account.isLinkedDevice) {
+      val remoteBackupTier = MessageBackupTier.fromBackupLevel(update.new.proto.backupTier)
+      val localBackupTier = SignalStore.backup.backupTier
+
+      if (remoteBackupTier != localBackupTier) {
+        if (isBackupTierDowngrade(from = localBackupTier, to = remoteBackupTier)) {
+          Log.w(TAG, "Remote account record downgrades our backup tier ($localBackupTier -> $remoteBackupTier). Confirming with the service before applying it.")
+          BackupTierDowngradeCheckJob.enqueue(update.new.proto.backupTier)
+        } else {
+          SignalStore.backup.backupTier = remoteBackupTier
+        }
+      }
+    }
+
     if (update.new.proto.subscriptionManuallyCancelled && !update.old.proto.subscriptionManuallyCancelled) {
       SignalStore.inAppPayments.updateLocalStateForManualCancellation(InAppPaymentSubscriberRecord.Type.DONATION)
     }
@@ -286,17 +351,36 @@ object StorageSyncHelper {
       SignalStore.account.username = update.new.proto.username
       SignalStore.account.usernameSyncState = AccountValues.UsernameSyncState.IN_SYNC
       SignalStore.account.usernameSyncErrorCount = 0
+
+      Log.i(TAG, "Resetting KT data due to username change in storage service.")
+      KeyTransparencyApi.reset(aci = SignalStore.account.requireAci().libSignalAci, field = KeyTransparency.AccountDataField.USERNAME_HASH, keyTransparencyStore = KeyTransparencyStore)
     }
 
     if (update.new.proto.usernameLink != null) {
-      SignalStore.account.usernameLink = UsernameLinkComponents(
-        update.new.proto.usernameLink!!.entropy.toByteArray(),
-        UuidUtil.parseOrThrow(update.new.proto.usernameLink!!.serverId.toByteArray())
-      )
+      val remoteServerId = UuidUtil.parseOrNull(update.new.proto.usernameLink!!.serverId.toByteArray())
 
-      SignalStore.misc.usernameQrCodeColorScheme = StorageSyncModels.remoteToLocalUsernameColor(update.new.proto.usernameLink!!.color)
+      if (remoteServerId != null) {
+        SignalStore.account.usernameLink = UsernameLinkComponents(
+          update.new.proto.usernameLink!!.entropy.toByteArray(),
+          remoteServerId
+        )
+
+        SignalStore.misc.usernameQrCodeColorScheme = StorageSyncModels.remoteToLocalUsernameColor(update.new.proto.usernameLink!!.color)
+      } else {
+        Log.w(TAG, "Remote username link had a malformed serverId. Ignoring the username link.")
+      }
     }
 
+    SignalStore.releaseChannel.releaseChannelRecipientId?.let { releaseChannelId ->
+      update.new.proto.releaseNotesChatBlocked?.let { blocked -> SignalDatabase.recipients.setBlocked(releaseChannelId, blocked, if (blocked) update.new.proto.releaseNotesChatBlockedAt ?: 0 else 0) }
+      update.new.proto.releaseNotesChatMutedUntilTimestamp?.let { SignalDatabase.recipients.setMuted(releaseChannelId, it) }
+      if (update.new.proto.releaseNotesChatArchived != null && update.new.proto.releaseNotesChatMarkedUnread != null) {
+        SignalDatabase.threads.applyStorageSyncReleaseChannelUpdate(releaseChannelId, update.new.proto.releaseNotesChatArchived!!, update.new.proto.releaseNotesChatMarkedUnread!!)
+      }
+      Recipient.live(releaseChannelId).refresh()
+    }
+
+    SignalStore.notificationProfile.syncDisabled = update.new.proto.notificationProfileSyncDisabled
     if (update.new.proto.notificationProfileManualOverride != null) {
       if (update.new.proto.notificationProfileManualOverride!!.enabled != null) {
         Log.i(TAG, "Found a remote enabled notification override")
@@ -346,6 +430,46 @@ object StorageSyncHelper {
       AppDependencies.jobManager.add(StorageSyncJob.forRemoteChange())
     } else {
       Log.d(TAG, "No need for sync. Last sync was $timeSinceLastSync ms ago.")
+    }
+  }
+
+  private fun isBackupTierDowngrade(from: MessageBackupTier?, to: MessageBackupTier?): Boolean {
+    return when (from) {
+      null -> false
+      MessageBackupTier.FREE -> to == null
+      MessageBackupTier.PAID -> to == null || to == MessageBackupTier.FREE
+    }
+  }
+
+  private fun SettingsValues.UnreadBadgeType.toRemoteBadgeType(): AccountRecord.UnreadBadgeType {
+    return when (this) {
+      SettingsValues.UnreadBadgeType.UNKNOWN_BADGE_TYPE -> AccountRecord.UnreadBadgeType.UNKNOWN_BADGE_TYPE
+      SettingsValues.UnreadBadgeType.UNREAD_MESSAGES -> AccountRecord.UnreadBadgeType.UNREAD_MESSAGES
+      SettingsValues.UnreadBadgeType.UNREAD_CHATS -> AccountRecord.UnreadBadgeType.UNREAD_CHATS
+    }
+  }
+
+  fun getOptionalBool(remote: OptionalBool, local: OptionalBool): OptionalBool {
+    return if (remote == OptionalBool.UNSET) {
+      local
+    } else {
+      remote
+    }
+  }
+
+  fun Boolean?.toOptionalBool(): OptionalBool {
+    return when (this) {
+      null -> OptionalBool.UNSET
+      true -> OptionalBool.ENABLED
+      false -> OptionalBool.DISABLED
+    }
+  }
+
+  fun OptionalBool.toBool(): Boolean? {
+    return when (this) {
+      OptionalBool.UNSET -> null
+      OptionalBool.ENABLED -> true
+      OptionalBool.DISABLED -> false
     }
   }
 

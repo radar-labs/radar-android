@@ -12,7 +12,9 @@ import org.thoughtcrime.securesms.database.MessageTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.ThreadTable;
 import org.thoughtcrime.securesms.database.model.GroupRecord;
+import org.thoughtcrime.securesms.database.model.MessageId;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
+import org.thoughtcrime.securesms.database.model.MmsMessageRecord;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobs.MultiDeviceViewedUpdateJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
@@ -38,7 +40,7 @@ public class ConversationRepository {
 
   private static final String TAG = Log.tag(ConversationRepository.class);
 
-  private final Context  context;
+  private final Context context;
 
   public ConversationRepository() {
     this.context = AppDependencies.getApplication();
@@ -48,24 +50,25 @@ public class ConversationRepository {
   public @NonNull ConversationData getConversationData(long threadId, @NonNull Recipient conversationRecipient, int jumpToPosition) {
     ThreadTable.ConversationMetadata    metadata                       = SignalDatabase.threads().getConversationMetadata(threadId);
     int                                 threadSize                     = SignalDatabase.messages().getMessageCountForThread(threadId);
-    long                                lastSeen                       = metadata.getLastSeen();
-    int                                 lastSeenPosition               = 0;
+    MessageTable.OldestUnread           oldestUnread                   = metadata.getUnreadCount() > 0 ? SignalDatabase.messages().getOldestUnread(threadId) : null;
+    long                                firstUnreadId                  = oldestUnread != null ? oldestUnread.getId() : -1;
+    long                                firstUnreadDateReceived        = oldestUnread != null ? oldestUnread.getDateReceived() : 0;
+    int                                 firstUnreadPosition            = 0;
     long                                lastScrolled                   = metadata.getLastScrolled();
     int                                 lastScrolledPosition           = 0;
-    boolean                             isMessageRequestAccepted       = RecipientUtil.isMessageRequestAccepted(context, threadId);
+    boolean                             isMessageRequestAccepted       = RecipientUtil.isMessageRequestAccepted(threadId);
     boolean                             isConversationHidden           = RecipientUtil.isRecipientHidden(threadId);
     ConversationData.MessageRequestData messageRequestData             = new ConversationData.MessageRequestData(isMessageRequestAccepted, isConversationHidden);
     boolean                             showUniversalExpireTimerUpdate = false;
 
-    if (lastSeen > 0) {
-      lastSeenPosition = SignalDatabase.messages().getMessagePositionByDateReceivedTimestamp(threadId, lastSeen, false);
+    if (firstUnreadDateReceived > 0) {
+      firstUnreadPosition = SignalDatabase.messages().getMessagePositionByDateReceivedTimestamp(threadId, firstUnreadDateReceived, false);
     }
 
-    if (lastSeenPosition <= 0) {
-      lastSeen = 0;
-    }
+    // A position of 0 means the oldest unread message is the newest message in the thread (e.g. a single unread). That
+    // is a valid divider anchor, so we keep firstUnreadId; it just means we don't scroll up to reach it.
 
-    if (lastSeen == 0 && lastScrolled > 0) {
+    if (firstUnreadDateReceived == 0 && lastScrolled > 0) {
       lastScrolledPosition = SignalDatabase.messages().getMessagePositionByDateReceivedTimestamp(threadId, lastScrolled, true);
     }
 
@@ -106,7 +109,7 @@ public class ConversationRepository {
       showUniversalExpireTimerUpdate = true;
     }
 
-    return new ConversationData(conversationRecipient, threadId, lastSeen, lastSeenPosition, lastScrolledPosition, jumpToPosition, threadSize, messageRequestData, showUniversalExpireTimerUpdate, metadata.getUnreadCount(), groupMemberAcis);
+    return new ConversationData(conversationRecipient, threadId, firstUnreadId, firstUnreadPosition, lastScrolledPosition, jumpToPosition, threadSize, messageRequestData, showUniversalExpireTimerUpdate, metadata.getUnreadCount(), groupMemberAcis);
   }
 
   public void markGiftBadgeRevealed(long messageId) {
@@ -125,11 +128,23 @@ public class ConversationRepository {
   @NonNull
   public Single<ConversationMessage> resolveMessageToEdit(@NonNull ConversationMessage message) {
     return Single.fromCallable(() -> {
-                   MessageRecord messageRecord = message.getMessageRecord();
+                   ConversationMessage latestMessage = message;
+                   MessageRecord       messageRecord = latestMessage.getMessageRecord();
+
+                   MessageId latestRevisionId = messageRecord.isMms() ? ((MmsMessageRecord) messageRecord).getLatestRevisionId() : null;
+                   if (latestRevisionId != null) {
+                     MessageRecord latestRecord = SignalDatabase.messages().getMessageRecordOrNull(latestRevisionId.getId());
+                     if (latestRecord != null) {
+                       Log.e(TAG, "Resolving edit to latest revision: " + latestRevisionId.getId() + " (was: " + messageRecord.getId() + ")");
+                       messageRecord = latestRecord;
+                       latestMessage = ConversationMessage.ConversationMessageFactory.createWithUnresolvedData(context, messageRecord, messageRecord.getDisplayBody(context).toString(), message.getThreadRecipient());
+                     }
+                   }
+
                    if (MessageRecordUtil.hasTextSlide(messageRecord)) {
                      TextSlide textSlide = MessageRecordUtil.requireTextSlide(messageRecord);
                      if (textSlide.getUri() == null) {
-                       return message;
+                       return latestMessage;
                      }
 
                      try (InputStream stream = PartAuthority.getAttachmentStream(context, textSlide.getUri())) {
@@ -139,7 +154,7 @@ public class ConversationRepository {
                        Log.w(TAG, "Failed to read text slide data.");
                      }
                    }
-                   return message;
+                   return latestMessage;
                  }).subscribeOn(Schedulers.io())
                  .observeOn(AndroidSchedulers.mainThread());
   }

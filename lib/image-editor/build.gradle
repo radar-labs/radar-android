@@ -1,0 +1,18 @@
+plugins {
+    id("signal-library")
+}
+
+android {
+    namespace = "org.signal.imageeditor"
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+}
+
+dependencies {
+    implementation(project(":core:util"))
+    implementation(project(":lib:glide"))
+}

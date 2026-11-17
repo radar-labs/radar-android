@@ -10,11 +10,11 @@ import assertk.assertions.rootCause
 import okio.ByteString
 import org.junit.Test
 import org.signal.core.util.Base64.encodeUrlSafeWithoutPadding
+import org.signal.core.util.Util
 import org.signal.libsignal.zkgroup.InvalidInputException
-import org.signal.storageservice.protos.groups.GroupInviteLink
+import org.signal.storageservice.storage.protos.groups.GroupInviteLink
 import org.thoughtcrime.securesms.groups.v2.GroupInviteLinkUrl.InvalidGroupLinkException
 import org.thoughtcrime.securesms.groups.v2.GroupInviteLinkUrl.UnknownGroupLinkVersionException
-import org.thoughtcrime.securesms.util.Util
 import java.io.IOException
 
 @Suppress("ClassName")
@@ -77,6 +77,15 @@ class GroupInviteLinkUrl_InvalidGroupLinkException_Test {
   }
 
   @Test
+  fun one_character_base64_ref() {
+    val uri = "https://signal.group/#A"
+    assertFailure { GroupInviteLinkUrl.fromUri(uri) }
+      .isInstanceOf<InvalidGroupLinkException>()
+      .rootCause()
+      .isInstanceOf<IllegalArgumentException>()
+  }
+
+  @Test
   fun bad_protobuf() {
     val uri = "https://signal.group/#CAESNAogpQEzURH6BON1bCS264cmTi37Yi6HTOReXZUEHdsBIgSEPCLfiL7k4wCXmwVi31USVY"
     assertFailure {
@@ -116,7 +125,7 @@ class GroupInviteLinkUrl_InvalidGroupLinkException_Test {
     ): String {
       return encodeUrlSafeWithoutPadding(
         GroupInviteLink.Builder()
-          .v1Contents(
+          .contentsV1(
             GroupInviteLink.GroupInviteLinkContentsV1.Builder()
               .groupMasterKey(ByteString.of(*groupMasterKey))
               .inviteLinkPassword(ByteString.of(*passwordBytes))

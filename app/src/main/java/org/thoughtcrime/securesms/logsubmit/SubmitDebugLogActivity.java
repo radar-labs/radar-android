@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.style.URLSpan;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,11 +21,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ShareCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.text.util.LinkifyCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.signal.core.util.Linkifier;
 import org.signal.core.util.ThreadUtil;
 import org.signal.debuglogsviewer.DebugLogsViewer;
 import org.thoughtcrime.securesms.BaseActivity;
@@ -38,8 +39,8 @@ import org.thoughtcrime.securesms.components.SearchView;
 import org.thoughtcrime.securesms.util.DynamicTheme;
 import org.thoughtcrime.securesms.util.LongClickCopySpan;
 import org.thoughtcrime.securesms.util.LongClickMovementMethod;
-import org.thoughtcrime.securesms.util.ThemeUtil;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.signal.core.ui.util.ThemeUtil;
+import org.signal.core.ui.util.ViewUtil;
 import org.thoughtcrime.securesms.util.views.CircularProgressMaterialButton;
 
 import java.util.ArrayList;
@@ -99,7 +100,14 @@ public class SubmitDebugLogActivity extends BaseActivity {
     dynamicTheme.onCreate(this);
     setContentView(R.layout.submit_debug_log_activity);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setTitle(R.string.HelpSettingsFragment__debug_log);
+    getSupportActionBar().setTitle(org.signal.appsettings.R.string.HelpSettingsFragment__debug_log);
+
+    // Insets are re-dispatched by appcompat's ActionBarOverlayLayout with the action bar height folded into the top inset.
+    ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+      Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+      v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+      return WindowInsetsCompat.CONSUMED;
+    });
 
     this.viewModel = new ViewModelProvider(this, new SubmitDebugLogViewModel.Factory()).get(SubmitDebugLogViewModel.class);
 
@@ -306,13 +314,6 @@ public class SubmitDebugLogActivity extends BaseActivity {
   }
 
   @Override
-  public void onBackPressed() {
-    if (!viewModel.onBackPressed()) {
-      super.onBackPressed();
-    }
-  }
-
-  @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
 
@@ -355,6 +356,16 @@ public class SubmitDebugLogActivity extends BaseActivity {
   private void initViewModel() {
     viewModel.getMode().observe(this, this::presentMode);
     viewModel.getEvents().observe(this, this::presentEvents);
+    viewModel.getSlowPrefixWarning().observe(this, this::presentSlowPrefixWarning);
+  }
+
+  private void presentSlowPrefixWarning(@NonNull Long durationMillis) {
+    int durationSeconds = (int) Math.round(durationMillis / 1000.0);
+    new MaterialAlertDialogBuilder(this)
+        .setTitle(R.string.SubmitDebugLogActivity_slow_log_title)
+        .setMessage(getString(R.string.SubmitDebugLogActivity_slow_log_message, durationSeconds))
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
   }
 
   private void subscribeToLogLines() {
@@ -449,15 +460,8 @@ public class SubmitDebugLogActivity extends BaseActivity {
     TextView          dialogView          = new TextView(builder.getContext());
     LongClickCopySpan longClickUrl        = new LongClickCopySpan(url);
 
-
-    LinkifyCompat.addLinks(spannableDialogText, Linkify.WEB_URLS);
-
-    URLSpan[] spans = spannableDialogText.getSpans(0, spannableDialogText.length(), URLSpan.class);
-    for (URLSpan span : spans) {
-      int start = spannableDialogText.getSpanStart(span);
-      int end   = spannableDialogText.getSpanEnd(span);
-
-      spannableDialogText.setSpan(longClickUrl, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    for (Linkifier.DetectedLink link : Linkifier.findLinks(dialogText)) {
+      spannableDialogText.setSpan(longClickUrl, link.getStart(), link.getEnd(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     dialogView.setText(spannableDialogText);

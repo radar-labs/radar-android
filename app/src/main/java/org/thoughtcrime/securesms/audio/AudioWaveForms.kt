@@ -7,9 +7,9 @@ import androidx.annotation.AnyThread
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.SingleSubject
+import org.signal.core.models.database.AttachmentId
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.attachments.Attachment
-import org.thoughtcrime.securesms.attachments.AttachmentId
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.databaseprotos.AudioWaveFormData
@@ -35,6 +35,11 @@ object AudioWaveForms {
   fun getWaveForm(context: Context, attachment: Attachment): Single<AudioFileInfo> {
     val uri = attachment.uri
     if (uri == null) {
+      val senderProvided = attachment.audioHash?.audioWaveForm?.takeIf { it.senderProvided }
+      if (senderProvided != null) {
+        return Single.just(AudioFileInfo.fromDatabaseProtobuf(senderProvided))
+      }
+
       Log.i(TAG, "No uri")
       return Single.error(IllegalArgumentException("No uri from attachment"))
     }
@@ -91,7 +96,7 @@ object AudioWaveForms {
     if (audioFileInfo.waveForm.isEmpty()) {
       Log.w(TAG, "Recovering from a wave form generation error  $cacheKey")
       return Failure
-    } else if (audioFileInfo.waveForm.size != AudioWaveFormGenerator.BAR_COUNT) {
+    } else if (!audioFileInfo.isSenderProvided && audioFileInfo.barCount != AudioWaveFormGenerator.BAR_COUNT) {
       Log.w(TAG, "Wave form from database does not match bar count, regenerating $cacheKey")
     } else {
       cache.put(cacheKey, audioFileInfo)

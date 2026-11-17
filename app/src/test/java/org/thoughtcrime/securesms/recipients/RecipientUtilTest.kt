@@ -1,6 +1,5 @@
 package org.thoughtcrime.securesms.recipients
 
-import android.content.Context
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -12,13 +11,13 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
+import org.signal.core.models.recipients.RecipientId
 import org.thoughtcrime.securesms.database.MessageTable
 import org.thoughtcrime.securesms.database.RecipientTable
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.ThreadTable
 
 class RecipientUtilTest {
-  private val context = mockk<Context>()
   private val recipient = mockk<Recipient>(relaxed = true)
   private val mockThreadTable = mockk<ThreadTable>(relaxed = true)
   private val mockMessageTable = mockk<MessageTable>()
@@ -27,7 +26,7 @@ class RecipientUtilTest {
   @Before
   fun setUp() {
     mockkObject(SignalDatabase.Companion)
-    every { SignalDatabase.Companion.instance } returns mockk {
+    every { SignalDatabase.instance } returns mockk {
       every { threadTable } returns mockThreadTable
       every { messageTable } returns mockMessageTable
       every { recipientTable } returns mockRecipientTable
@@ -45,7 +44,7 @@ class RecipientUtilTest {
   @Test
   fun givenThreadIsNegativeOne_whenIsThreadMessageRequestAccepted_thenIExpectTrue() {
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, -1L)
+    val result = RecipientUtil.isMessageRequestAccepted(-1L)
 
     // THEN
     assertTrue(result)
@@ -54,7 +53,7 @@ class RecipientUtilTest {
   @Test
   fun givenRecipientIsNullForThreadId_whenIsThreadMessageRequestAccepted_thenIExpectTrue() {
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, 1L)
+    val result = RecipientUtil.isMessageRequestAccepted(1L)
 
     // THEN
     assertTrue(result)
@@ -67,7 +66,7 @@ class RecipientUtilTest {
     every { mockMessageTable.getOutgoingSecureMessageCount(1L) } returns 5
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, 1L)
+    val result = RecipientUtil.isMessageRequestAccepted(1L)
 
     // THEN
     assertTrue(result)
@@ -81,7 +80,7 @@ class RecipientUtilTest {
     every { mockMessageTable.getOutgoingSecureMessageCount(1L) } returns 0
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, 1L)
+    val result = RecipientUtil.isMessageRequestAccepted(1L)
 
     // THEN
     assertTrue(result)
@@ -95,7 +94,7 @@ class RecipientUtilTest {
     every { mockMessageTable.getOutgoingSecureMessageCount(1L) } returns 0
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, 1L)
+    val result = RecipientUtil.isMessageRequestAccepted(1L)
 
     // THEN
     assertTrue(result)
@@ -110,7 +109,7 @@ class RecipientUtilTest {
     every { mockMessageTable.getSecureMessageCount(1L) } returns 5
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, 1L)
+    val result = RecipientUtil.isMessageRequestAccepted(1L)
 
     // THEN
     assertFalse(result)
@@ -124,7 +123,7 @@ class RecipientUtilTest {
     every { mockMessageTable.getSecureMessageCount(1L) } returns 0
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, 1L)
+    val result = RecipientUtil.isMessageRequestAccepted(1L)
 
     // THEN
     assertTrue(result)
@@ -133,7 +132,7 @@ class RecipientUtilTest {
   @Test
   fun givenRecipientIsNull_whenIsRecipientMessageRequestAccepted_thenIExpectTrue() {
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, null)
+    val result = RecipientUtil.isMessageRequestAccepted(null)
 
     // THEN
     assertTrue(result)
@@ -145,7 +144,7 @@ class RecipientUtilTest {
     every { mockMessageTable.getOutgoingSecureMessageCount(any()) } returns 1
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, recipient)
+    val result = RecipientUtil.isMessageRequestAccepted(recipient)
 
     // THEN
     assertTrue(result)
@@ -157,7 +156,7 @@ class RecipientUtilTest {
     every { recipient.isProfileSharing } returns true
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, recipient)
+    val result = RecipientUtil.isMessageRequestAccepted(recipient)
 
     // THEN
     assertTrue(result)
@@ -169,7 +168,7 @@ class RecipientUtilTest {
     every { recipient.isSystemContact } returns true
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, recipient)
+    val result = RecipientUtil.isMessageRequestAccepted(recipient)
 
     // THEN
     assertTrue(result)
@@ -183,7 +182,7 @@ class RecipientUtilTest {
     every { mockMessageTable.getSecureMessageCount(any()) } returns 5
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, recipient)
+    val result = RecipientUtil.isMessageRequestAccepted(recipient)
 
     // THEN
     assertFalse(result)
@@ -195,7 +194,59 @@ class RecipientUtilTest {
     every { mockMessageTable.getSecureMessageCount(any()) } returns 0
 
     // WHEN
-    val result = RecipientUtil.isMessageRequestAccepted(context, recipient)
+    val result = RecipientUtil.isMessageRequestAccepted(recipient)
+
+    // THEN
+    assertTrue(result)
+  }
+
+  @Test
+  fun givenNonZeroOutgoingSecureMessageCountAndRecipientIsHidden_whenIsCallRequestAccepted_thenIExpectFalse() {
+    // GIVEN
+    every { recipient.isHidden } returns true
+    every { mockMessageTable.getOutgoingSecureMessageCount(any()) } returns 1
+
+    // WHEN
+    val result = RecipientUtil.isCallRequestAccepted(recipient)
+
+    // THEN
+    assertFalse(result)
+  }
+
+  @Test
+  fun givenNonZeroOutgoingSecureMessageCountAndRecipientIsNotHidden_whenIsCallRequestAccepted_thenIExpectTrue() {
+    // GIVEN
+    every { recipient.isHidden } returns false
+    every { mockMessageTable.getOutgoingSecureMessageCount(any()) } returns 1
+
+    // WHEN
+    val result = RecipientUtil.isCallRequestAccepted(recipient)
+
+    // THEN
+    assertTrue(result)
+  }
+
+  @Test
+  fun givenRecipientIsHiddenAndProfileSharing_whenIsCallRequestAccepted_thenIExpectTrue() {
+    // GIVEN
+    every { recipient.isHidden } returns true
+    every { recipient.isProfileSharing } returns true
+
+    // WHEN
+    val result = RecipientUtil.isCallRequestAccepted(recipient)
+
+    // THEN
+    assertTrue(result)
+  }
+
+  @Test
+  fun givenRecipientIsHiddenAndSystemContact_whenIsCallRequestAccepted_thenIExpectTrue() {
+    // GIVEN
+    every { recipient.isHidden } returns true
+    every { recipient.isSystemContact } returns true
+
+    // WHEN
+    val result = RecipientUtil.isCallRequestAccepted(recipient)
 
     // THEN
     assertTrue(result)

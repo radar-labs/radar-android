@@ -3,8 +3,8 @@ package org.thoughtcrime.securesms.avatar
 import android.content.Context
 import android.net.Uri
 import android.webkit.MimeTypeMap
+import org.signal.core.models.media.Media
 import org.thoughtcrime.securesms.database.SignalDatabase
-import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mms.PartAuthority
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.storage.FileStorage
@@ -38,8 +38,8 @@ object AvatarPickerStorage {
       .getAllAvatars()
       .filterIsInstance<Avatar.Photo>()
 
-    val inDatabaseFileNames = photoAvatars.map { PartAuthority.getAvatarPickerFilename(it.uri) }
-    val onDiskFileNames = avatarFiles.map { it.name }
+    val inDatabaseFileNames = photoAvatars.mapTo(mutableSetOf()) { PartAuthority.getAvatarPickerFilename(it.uri) }
+    val onDiskFileNames = avatarFiles.mapTo(mutableSetOf()) { it.name }
 
     val inDatabaseButNotOnDisk = inDatabaseFileNames - onDiskFileNames
     val onDiskButNotInDatabase = onDiskFileNames - inDatabaseFileNames

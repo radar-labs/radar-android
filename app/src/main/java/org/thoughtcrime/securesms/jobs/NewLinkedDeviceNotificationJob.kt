@@ -3,6 +3,7 @@ package org.thoughtcrime.securesms.jobs
 import android.app.PendingIntent
 import androidx.core.app.NotificationCompat
 import org.signal.core.util.PendingIntentFlags.cancelCurrent
+import org.signal.core.util.ServiceUtil
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity
@@ -15,7 +16,6 @@ import org.thoughtcrime.securesms.notifications.NotificationChannels
 import org.thoughtcrime.securesms.notifications.NotificationIds
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.util.DateUtils
-import org.thoughtcrime.securesms.util.ServiceUtil
 import java.util.Locale
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.days
@@ -77,6 +77,7 @@ class NewLinkedDeviceNotificationJob private constructor(
         .setContentTitle(context.getString(R.string.NewLinkedDeviceNotification__you_linked_new_device))
         .setContentText(context.getString(R.string.NewLinkedDeviceNotification__a_new_device_was_linked, DateUtils.getDateTimeString(context, Locale.getDefault(), data.deviceCreatedAt)))
         .setContentIntent(pendingIntent)
+        .setAutoCancel(true)
 
       ServiceUtil.getNotificationManager(context).notify(NotificationIds.NEW_LINKED_DEVICE, builder.build())
     }

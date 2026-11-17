@@ -1,9 +1,9 @@
 package org.thoughtcrime.securesms.components.webrtc
 
 import android.content.Context
+import androidx.annotation.Discouraged
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
-import com.annimon.stream.OptionalLong
 import kotlinx.collections.immutable.toImmutableList
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.webrtc.WebRtcControls.FoldableState
@@ -14,11 +14,11 @@ import org.thoughtcrime.securesms.events.GroupCallRaiseHandEvent
 import org.thoughtcrime.securesms.events.GroupCallReactionEvent
 import org.thoughtcrime.securesms.events.WebRtcViewModel
 import org.thoughtcrime.securesms.groups.ui.GroupMemberEntry
-import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.ringrtc.CameraState
 import org.thoughtcrime.securesms.service.webrtc.collections.ParticipantCollection
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcEphemeralState
+import java.util.Optional
 import java.util.concurrent.TimeUnit
 
 /**
@@ -37,7 +37,7 @@ data class CallParticipantsState(
   val isInPipMode: Boolean = false,
   private val showVideoForOutgoing: Boolean = false,
   val isViewingFocusedParticipant: Boolean = false,
-  val remoteDevicesCount: OptionalLong = OptionalLong.empty(),
+  val remoteDevicesCount: Optional<Long> = Optional.empty(),
   private val foldableState: FoldableState = FoldableState.flat(),
   val isInOutgoingRingingMode: Boolean = false,
   val recipient: Recipient = Recipient.UNKNOWN,
@@ -49,8 +49,11 @@ data class CallParticipantsState(
 
   val allRemoteParticipants: List<CallParticipant> = remoteParticipants.allParticipants
   val isFolded: Boolean = foldableState.isFolded
-  val isLargeVideoGroup: Boolean = allRemoteParticipants.size > SMALL_GROUP_MAX && !isInPipMode && !isFolded
   val hideAvatar: Boolean = callState.isIncomingOrHandledElsewhere
+
+  @get:Discouraged("Only for backwards-compatibility with View code. Compose UI determines large group dynamically.")
+  val isLargeGroup: Boolean
+    get() = allRemoteParticipants.size > SMALL_GROUP_MAX
 
   val raisedHands: List<GroupCallRaiseHandEvent>
     get() {
@@ -79,18 +82,16 @@ data class CallParticipantsState(
       } else {
         listParticipants.addAll(remoteParticipants.listParticipants)
       }
-      if (foldableState.isFlat && !SignalStore.internal.newCallingUi) {
-        listParticipants.add(CallParticipant.EMPTY)
-      }
+
       listParticipants.reverse()
       return listParticipants
     }
 
-  val participantCount: OptionalLong
+  val participantCount: Optional<Long>
     get() {
       val includeSelf = groupCallState == WebRtcViewModel.GroupCallState.CONNECTED_AND_JOINED
       return remoteDevicesCount.map { l: Long -> l + if (includeSelf) 1L else 0L }
-        .or { if (includeSelf) OptionalLong.of(1L) else OptionalLong.empty() }
+        .or { if (includeSelf) Optional.of(1L) else Optional.empty() }
     }
 
   fun getPreJoinGroupDescription(context: Context): String? {
@@ -196,6 +197,7 @@ data class CallParticipantsState(
 
   companion object {
     const val SMALL_GROUP_MAX = 6
+    const val PRE_JOIN_MUTE_THRESHOLD = 8
 
     @JvmField
     val MAX_OUTGOING_GROUP_RING_DURATION = TimeUnit.MINUTES.toMillis(1)
@@ -356,7 +358,7 @@ data class CallParticipantsState(
       @PluralsRes multipleParticipants: Int,
       members: List<GroupMemberEntry.FullMember>
     ): String {
-      val eligibleMembers: List<GroupMemberEntry.FullMember> = members.filterNot { it.member.isSelf || it.member.isBlocked }
+      val eligibleMembers: List<GroupMemberEntry.FullMember> = members.filterNot { it.member.isSelf || it.member.isBlocked || it.member.isUnregistered }
 
       return when (eligibleMembers.size) {
         0 -> noParticipants?.let { context.getString(noParticipants) } ?: ""

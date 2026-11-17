@@ -13,6 +13,8 @@ import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.updateLayoutParams
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.ui.util.ViewUtil
 import org.signal.core.util.DimensionUnit
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.AlertView
@@ -26,11 +28,9 @@ import org.thoughtcrime.securesms.components.menu.ActionItem
 import org.thoughtcrime.securesms.components.menu.SignalContextMenu
 import org.thoughtcrime.securesms.database.model.MessageRecord
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.AvatarUtil
 import org.thoughtcrime.securesms.util.DateUtils
 import org.thoughtcrime.securesms.util.LongClickMovementMethod
-import org.thoughtcrime.securesms.util.ViewUtil
 import org.thoughtcrime.securesms.util.adapter.mapping.LayoutFactory
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel
@@ -39,6 +39,7 @@ import org.thoughtcrime.securesms.util.changeConstraints
 import org.thoughtcrime.securesms.util.padding
 import org.thoughtcrime.securesms.util.visible
 import java.util.Locale
+import org.signal.core.ui.R as CoreUiR
 
 typealias OnCopyClick = (CharSequence) -> Unit
 typealias OnDeleteClick = (MessageRecord) -> Unit
@@ -182,9 +183,11 @@ object StoryGroupReplyItem {
         alertView.setNone()
         itemView.setOnClickListener(null)
 
-        val dateText = DateUtils.getBriefRelativeTimeSpanString(context, Locale.getDefault(), model.sentAtMillis)
+        val (dateText, dateContentDesc) = DateUtils.getBriefRelativeTimeSpanString(context, Locale.getDefault(), model.sentAtMillis)
         date.text = dateText
+        date.contentDescription = dateContentDesc
         dateBelow.text = dateText
+        dateBelow.contentDescription = dateContentDesc
       }
 
       itemView.post {
@@ -203,7 +206,7 @@ object StoryGroupReplyItem {
 
       val actions = mutableListOf<ActionItem>()
       if (model.onCopyClick != null) {
-        actions += ActionItem(R.drawable.symbol_copy_android_24, context.getString(R.string.StoryGroupReplyItem__copy)) {
+        actions += ActionItem(CoreUiR.drawable.symbol_copy_android_24, context.getString(R.string.StoryGroupReplyItem__copy)) {
           val toCopy: CharSequence = when (model) {
             is TextModel -> model.text.message.getDisplayBody(context)
             else -> model.messageRecord.getDisplayBody(context)
@@ -211,7 +214,7 @@ object StoryGroupReplyItem {
           model.onCopyClick.invoke(toCopy)
         }
       }
-      actions += ActionItem(R.drawable.symbol_trash_24, context.getString(R.string.StoryGroupReplyItem__delete)) { model.onDeleteClick(model.messageRecord) }
+      actions += ActionItem(CoreUiR.drawable.symbol_trash_24, context.getString(R.string.StoryGroupReplyItem__delete)) { model.onDeleteClick(model.messageRecord) }
 
       SignalContextMenu.Builder(itemView, itemView.rootView as ViewGroup)
         .preferredHorizontalPosition(SignalContextMenu.HorizontalPosition.START)

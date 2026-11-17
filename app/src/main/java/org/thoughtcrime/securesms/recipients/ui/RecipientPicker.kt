@@ -32,15 +32,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.fragment.compose.rememberFragmentState
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Fragments
 import org.signal.core.util.DimensionUnit
 import org.signal.core.util.orNull
+import org.signal.remoteconfig.SelectionLimits
 import org.thoughtcrime.securesms.ContactSelectionListFragment
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.menu.ActionItem
@@ -51,14 +52,13 @@ import org.thoughtcrime.securesms.contacts.paged.ChatType
 import org.thoughtcrime.securesms.contacts.paged.ContactSearchKey
 import org.thoughtcrime.securesms.contacts.selection.ContactSelectionArguments
 import org.thoughtcrime.securesms.conversation.RecipientSearchBar
-import org.thoughtcrime.securesms.groups.SelectionLimits
 import org.thoughtcrime.securesms.recipients.PhoneNumber
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.ui.RecipientPicker.DisplayMode.Companion.flag
 import org.thoughtcrime.securesms.recipients.ui.RecipientPicker.KeyboardType
 import java.util.Optional
 import java.util.function.Consumer
+import org.signal.core.ui.R as CoreUiR
 
 private typealias AndroidKeyboardType = androidx.compose.ui.text.input.KeyboardType
 
@@ -83,7 +83,8 @@ fun RecipientPicker(
   listBottomPadding: Dp? = null,
   clipListToPadding: Boolean = ContactSelectionArguments.Defaults.RECYCLER_CHILD_CLIPPING,
   callbacks: RecipientPickerCallbacks,
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
+  belowSearchBar: @Composable () -> Unit = {}
 ) {
   Column(
     modifier = modifier
@@ -113,6 +114,8 @@ fun RecipientPicker(
         .fillMaxWidth()
         .padding(horizontal = 16.dp)
     )
+
+    belowSearchBar()
 
     RecipientSearchResultsList(
       displayModes = displayModes,
@@ -294,34 +297,33 @@ private fun ContactSelectionListFragment.setUpCallbacks(
     }
   })
 
-  fragment.setOnItemLongClickListener { anchorView, contactSearchKey, recyclerView ->
+  fragment.setOnItemLongClickListener { anchorView, contactSearchKey, setIsDisplayingContextMenu ->
     if (callbacks.contextMenu != null) {
-      coroutineScope.launch { showItemContextMenu(anchorView, contactSearchKey, recyclerView, callbacks.contextMenu) }
+      coroutineScope.launch { showItemContextMenu(anchorView, contactSearchKey, setIsDisplayingContextMenu, callbacks.contextMenu) }
       true
     }
     return@setOnItemLongClickListener false
   }
 
   fragment.setOnRefreshListener { callbacks.refresh?.onRefresh() }
-  fragment.setScrollCallback { clearFocus() }
 }
 
 private suspend fun showItemContextMenu(
   anchorView: View,
   contactSearchKey: ContactSearchKey,
-  recyclerView: RecyclerView,
+  setIsDisplayingContextMenu: Consumer<Boolean>,
   callbacks: RecipientPickerCallbacks.ContextMenu
 ) {
   val context = anchorView.context
-  val recipient = withContext(Dispatchers.IO) {
+  val recipient = withContext(Dispatchers.Default) {
     Recipient.resolved(contactSearchKey.requireRecipientSearchKey().recipientId)
   }
 
   val actions = buildList {
     val messageItem = ActionItem(
-      iconRes = R.drawable.ic_chat_message_24,
+      iconRes = CoreUiR.drawable.ic_chat_message_24,
       title = context.getString(R.string.NewConversationActivity__message),
-      tintRes = R.color.signal_colorOnSurface,
+      tintRes = CoreUiR.color.signal_colorOnSurface,
       action = { callbacks.onMessage(recipient.id) }
     )
     add(messageItem)
@@ -330,7 +332,7 @@ private suspend fun showItemContextMenu(
       val voiceCallItem = ActionItem(
         iconRes = R.drawable.ic_phone_right_24,
         title = context.getString(R.string.NewConversationActivity__audio_call),
-        tintRes = R.color.signal_colorOnSurface,
+        tintRes = CoreUiR.color.signal_colorOnSurface,
         action = { callbacks.onVoiceCall(recipient) }
       )
       add(voiceCallItem)
@@ -340,7 +342,7 @@ private suspend fun showItemContextMenu(
       val videoCallItem = ActionItem(
         iconRes = R.drawable.ic_video_call_24,
         title = context.getString(R.string.NewConversationActivity__video_call),
-        tintRes = R.color.signal_colorOnSurface,
+        tintRes = CoreUiR.color.signal_colorOnSurface,
         action = { callbacks.onVideoCall(recipient) }
       )
       add(videoCallItem)
@@ -350,7 +352,7 @@ private suspend fun showItemContextMenu(
       val removeItem = ActionItem(
         iconRes = R.drawable.ic_minus_circle_20,
         title = context.getString(R.string.NewConversationActivity__remove),
-        tintRes = R.color.signal_colorOnSurface,
+        tintRes = CoreUiR.color.signal_colorOnSurface,
         action = { callbacks.onRemove(recipient) }
       )
       add(removeItem)
@@ -360,7 +362,7 @@ private suspend fun showItemContextMenu(
       val blockItem = ActionItem(
         iconRes = R.drawable.ic_block_tinted_24,
         title = context.getString(R.string.NewConversationActivity__block),
-        tintRes = R.color.signal_colorError,
+        tintRes = CoreUiR.color.signal_colorError,
         action = { callbacks.onBlock(recipient) }
       )
       add(blockItem)
@@ -372,10 +374,10 @@ private suspend fun showItemContextMenu(
     .preferredHorizontalPosition(SignalContextMenu.HorizontalPosition.START)
     .offsetX(DimensionUnit.DP.toPixels(12f).toInt())
     .offsetY(DimensionUnit.DP.toPixels(12f).toInt())
-    .onDismiss { recyclerView.suppressLayout(false) }
+    .onDismiss { setIsDisplayingContextMenu.accept(false) }
     .show(actions)
 
-  recyclerView.suppressLayout(true)
+  setIsDisplayingContextMenu.accept(true)
 }
 
 @DayNightPreviews

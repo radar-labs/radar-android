@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.OneShotPreDrawListener
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import org.signal.core.ui.util.ViewUtil
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.signal.qr.QrScannerView
 import org.signal.qr.kitkat.ScanListener
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.ShapeScrim
-import org.thoughtcrime.securesms.mediasend.camerax.CameraXModelBlocklist
-import org.thoughtcrime.securesms.util.ViewUtil
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter
 import org.thoughtcrime.securesms.util.fragments.findListener
 
 /**
@@ -35,13 +37,16 @@ class VerifyScanFragment : Fragment() {
     cameraView = view.findViewById(R.id.scanner)
     cameraScrim = view.findViewById(R.id.camera_scrim)
     cameraMarks = view.findViewById(R.id.camera_marks)
+
+    SystemWindowInsetsSetter.attach(view.findViewById<TextView>(R.id.information), viewLifecycleOwner, WindowInsetsCompat.Type.navigationBars(), SystemWindowInsetsSetter.ApplyMode.MARGIN)
+
     OneShotPreDrawListener.add(cameraScrim) {
       val width = cameraScrim.scrimWidth
       val height = cameraScrim.scrimHeight
       ViewUtil.updateLayoutParams(cameraMarks, width, height)
     }
 
-    cameraView.start(viewLifecycleOwner, CameraXModelBlocklist.isBlocklisted())
+    cameraView.start(viewLifecycleOwner)
 
     lifecycleDisposable.bindTo(viewLifecycleOwner)
 

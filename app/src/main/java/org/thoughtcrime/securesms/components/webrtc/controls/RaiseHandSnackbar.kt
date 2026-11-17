@@ -40,15 +40,17 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
+import org.signal.core.ui.compose.AllNightPreviews
+import org.signal.core.ui.compose.SignalPreviewWrapper
+import org.signal.core.ui.compose.theme.SignalTheme
 import org.signal.ringrtc.GroupCall
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.webrtc.v2.WebRtcCallViewModel
-import org.thoughtcrime.securesms.compose.SignalTheme
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.events.CallParticipant
 import org.thoughtcrime.securesms.events.GroupCallRaiseHandEvent
@@ -118,7 +120,8 @@ object RaiseHandSnackbar {
   }
 }
 
-@Preview
+@PreviewWrapper(SignalPreviewWrapper::class)
+@AllNightPreviews
 @Composable
 private fun RaiseHandSnackbarPreview() {
   RaiseHand(
@@ -139,67 +142,63 @@ private fun RaiseHand(
     exit = shrinkOut(shrinkTowards = Alignment.CenterEnd) + fadeOut(),
     modifier = modifier
   ) {
-    SignalTheme(
-      isDarkMode = true
+    Surface(
+      modifier = Modifier
+        .padding(horizontal = 16.dp)
+        .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
+        .background(SignalTheme.colors.colorSurface1)
+        .animateContentSize()
     ) {
-      Surface(
-        modifier = Modifier
-          .padding(horizontal = 16.dp)
-          .clip(shape = RoundedCornerShape(16.dp, 16.dp, 16.dp, 16.dp))
-          .background(SignalTheme.colors.colorSurface1)
-          .animateContentSize()
+      val boxModifier = Modifier
+        .padding(horizontal = 16.dp)
+        .clickable(
+          !state.isExpanded,
+          stringResource(id = R.string.CallOverflowPopupWindow__expand_snackbar_accessibility_label),
+          Role.Button
+        ) { setExpanded(true) }
+
+      Box(
+        contentAlignment = Alignment.CenterStart,
+        modifier = if (state.isExpanded) {
+          boxModifier.fillMaxWidth()
+        } else {
+          boxModifier.wrapContentWidth()
+        }
       ) {
-        val boxModifier = Modifier
-          .padding(horizontal = 16.dp)
-          .clickable(
-            !state.isExpanded,
-            stringResource(id = R.string.CallOverflowPopupWindow__expand_snackbar_accessibility_label),
-            Role.Button
-          ) { setExpanded(true) }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+          Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.symbol_raise_hand_24),
+            contentDescription = null,
+            modifier = Modifier
+              .align(Alignment.CenterVertically)
+              .padding(vertical = 8.dp)
+          )
 
-        Box(
-          contentAlignment = Alignment.CenterStart,
-          modifier = if (state.isExpanded) {
-            boxModifier.fillMaxWidth()
-          } else {
-            boxModifier.wrapContentWidth()
-          }
-        ) {
-          Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-              imageVector = ImageVector.vectorResource(id = R.drawable.symbol_raise_hand_24),
-              contentDescription = null,
-              modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .padding(vertical = 8.dp)
-            )
-
-            Text(
-              text = getSnackbarText(state),
-              color = MaterialTheme.colorScheme.onSurface,
-              modifier = Modifier
-                .padding(start = 16.dp)
-                .weight(1f, fill = state.isExpanded)
-                .wrapContentWidth(Alignment.Start)
-                .padding(vertical = 16.dp)
-            )
-            if (state.isExpanded) {
-              if (state.raisedHands.any { it.sender.isSelf && it.sender.isPrimary }) {
-                TextButton(
-                  onClick = {
-                    AppDependencies.signalCallManager.raiseHand(false)
-                  },
-                  modifier = Modifier.wrapContentWidth(Alignment.End)
-                ) {
-                  Text(text = stringResource(id = R.string.CallOverflowPopupWindow__lower_hand), maxLines = 1)
-                }
-              } else {
-                TextButton(
-                  onClick = showCallInfoListener,
-                  modifier = Modifier.wrapContentWidth(Alignment.End)
-                ) {
-                  Text(text = stringResource(id = R.string.CallOverflowPopupWindow__view), maxLines = 1)
-                }
+          Text(
+            text = getSnackbarText(state),
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier
+              .padding(start = 16.dp)
+              .weight(1f, fill = state.isExpanded)
+              .wrapContentWidth(Alignment.Start)
+              .padding(vertical = 16.dp)
+          )
+          if (state.isExpanded) {
+            if (state.raisedHands.any { it.sender.isSelf && it.sender.isPrimary }) {
+              TextButton(
+                onClick = {
+                  AppDependencies.signalCallManager.raiseHand(false)
+                },
+                modifier = Modifier.wrapContentWidth(Alignment.End)
+              ) {
+                Text(text = stringResource(id = R.string.CallOverflowPopupWindow__lower_hand), maxLines = 1)
+              }
+            } else {
+              TextButton(
+                onClick = showCallInfoListener,
+                modifier = Modifier.wrapContentWidth(Alignment.End)
+              ) {
+                Text(text = stringResource(id = R.string.CallOverflowPopupWindow__view), maxLines = 1)
               }
             }
           }
@@ -217,11 +216,11 @@ private fun getSnackbarText(state: RaiseHandState): String {
 
   val shouldDisplayLowerYourHand = remember(state) {
     val now = System.currentTimeMillis().milliseconds
-    val hasUnexpiredSelf = state.raisedHands.any { it.sender.isSelf && it.sender.isPrimary && it.getCollapseTimestamp() >= now }
+    val hasSelfRaisedHand = state.raisedHands.any { it.sender.isSelf && it.sender.isPrimary }
     val expiration = state.speechEvent?.getCollapseTimestamp() ?: Duration.ZERO
     val isUnexpired = expiration >= now
 
-    state.speechEvent?.speechEvent == GroupCall.SpeechEvent.LOWER_HAND_SUGGESTION && isUnexpired && hasUnexpiredSelf
+    state.speechEvent?.speechEvent == GroupCall.SpeechEvent.LOWER_HAND_SUGGESTION && isUnexpired && hasSelfRaisedHand
   }
 
   if (shouldDisplayLowerYourHand && state.isExpanded) {

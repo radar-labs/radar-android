@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.annimon.stream.Stream;
 
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.payments.Payment;
@@ -18,7 +17,7 @@ import org.thoughtcrime.securesms.payments.State;
 import org.thoughtcrime.securesms.payments.preferences.PaymentType;
 import org.thoughtcrime.securesms.payments.preferences.details.PaymentDetailsParcelable;
 import org.thoughtcrime.securesms.util.DateUtils;
-import org.thoughtcrime.securesms.util.SpanUtil;
+import org.signal.core.ui.util.SpanUtil;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModelList;
 import org.whispersystems.signalservice.api.payments.FormatterOptions;
@@ -35,7 +34,7 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
   private final PaymentType paymentType;
 
   public static @NonNull MappingModelList fromPayment(@NonNull List<Payment> transactions) {
-    return Stream.of(transactions)
+    return transactions.stream()
                  .map(PaymentItem::fromPayment)
                  .collect(MappingModelList.toMappingModelList());
   }
@@ -106,9 +105,9 @@ public final class PaymentItem implements MappingModel<PaymentItem> {
     } else if (payment.getState() == State.FAILED) {
       return R.color.signal_text_secondary;
     } else if (paymentType == PaymentType.REQUEST) {
-      return R.color.core_grey_45;
+      return org.signal.core.ui.R.color.core_grey_45;
     } else if (payment.getDirection().isReceived()) {
-      return R.color.core_green;
+      return org.signal.core.ui.R.color.core_green;
     } else {
       return R.color.signal_text_primary;
     }

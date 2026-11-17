@@ -1,21 +1,22 @@
 package org.thoughtcrime.securesms.jobs
 
 import org.signal.core.util.logging.Log
+import org.signal.network.exceptions.PushNetworkException
+import org.signal.network.service.StorageServiceService
+import org.signal.network.service.StorageServiceService.ManifestResult
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
+import org.thoughtcrime.securesms.keyvalue.manifest
 import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.profiles.manage.UsernameRepository.reclaimUsernameIfNecessary
 import org.thoughtcrime.securesms.recipients.Recipient.Companion.self
 import org.thoughtcrime.securesms.storage.StorageSyncHelper
-import org.whispersystems.signalservice.api.push.exceptions.PushNetworkException
 import org.whispersystems.signalservice.api.storage.SignalAccountRecord
 import org.whispersystems.signalservice.api.storage.SignalStorageManifest
 import org.whispersystems.signalservice.api.storage.SignalStorageRecord
-import org.whispersystems.signalservice.api.storage.StorageServiceRepository
-import org.whispersystems.signalservice.api.storage.StorageServiceRepository.ManifestResult
 import java.util.concurrent.TimeUnit
 
 /**
@@ -56,7 +57,7 @@ class StorageAccountRestoreJob private constructor(parameters: Parameters) : Bas
       SignalStore.storageService.storageKey
     }
 
-    val repository = StorageServiceRepository(SignalNetwork.storageService)
+    val repository = SignalNetwork.storageService
 
     Log.i(TAG, "Retrieving manifest...")
     val manifest: SignalStorageManifest? = when (val result = repository.getStorageManifest(storageServiceKey)) {
@@ -85,14 +86,14 @@ class StorageAccountRestoreJob private constructor(parameters: Parameters) : Bas
 
     Log.i(TAG, "Retrieving account record...")
     val records: List<SignalStorageRecord> = when (val result = repository.readStorageRecords(storageServiceKey, manifest.recordIkm, listOf(accountId.get()))) {
-      is StorageServiceRepository.StorageRecordResult.Success -> result.records
-      is StorageServiceRepository.StorageRecordResult.DecryptionError -> {
+      is StorageServiceService.StorageRecordResult.Success -> result.records
+      is StorageServiceService.StorageRecordResult.DecryptionError -> {
         Log.w(TAG, "Account record was undecryptable. Not restoring. Force-pushing.")
         AppDependencies.jobManager.add(StorageForcePushJob())
         return
       }
-      is StorageServiceRepository.StorageRecordResult.NetworkError -> throw result.exception
-      is StorageServiceRepository.StorageRecordResult.StatusCodeError -> throw result.exception
+      is StorageServiceService.StorageRecordResult.NetworkError -> throw result.exception
+      is StorageServiceService.StorageRecordResult.StatusCodeError -> throw result.exception
     }
 
     val record = if (records.isNotEmpty()) records[0] else null
@@ -110,12 +111,12 @@ class StorageAccountRestoreJob private constructor(parameters: Parameters) : Bas
     val accountRecord = SignalAccountRecord(record.id, record.proto.account!!)
 
     Log.i(TAG, "Applying changes locally...")
-    SignalDatabase.rawDatabase.beginTransaction()
+    SignalDatabase.writableDatabase.beginTransaction()
     try {
-      StorageSyncHelper.applyAccountStorageSyncUpdates(context, self().fresh(), accountRecord, false)
-      SignalDatabase.rawDatabase.setTransactionSuccessful()
+      StorageSyncHelper.applyAccountStorageSyncUpdates(self().fresh(), accountRecord, false)
+      SignalDatabase.writableDatabase.setTransactionSuccessful()
     } finally {
-      SignalDatabase.rawDatabase.endTransaction()
+      SignalDatabase.writableDatabase.endTransaction()
     }
 
     // We will try to reclaim the username here, as early as possible, but the registration flow also enqueues a username restore job,

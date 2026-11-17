@@ -6,6 +6,7 @@
 package org.thoughtcrime.securesms.profiles.username
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,19 +22,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.Buttons
+import org.signal.core.ui.compose.ComposeDialogFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.SignalIcons
+import org.signal.core.ui.enableEdgeToEdge
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.ComposeDialogFragment
 import org.thoughtcrime.securesms.profiles.manage.EditProfileActivity
 import org.signal.core.ui.R as CoreUiR
 
@@ -47,6 +48,12 @@ class NewWaysToConnectDialogFragment : ComposeDialogFragment() {
     super.onCreate(savedInstanceState)
 
     setStyle(STYLE_NO_FRAME, R.style.Signal_DayNight_Dialog_FullScreen)
+  }
+
+  override fun onGetLayoutInflater(savedInstanceState: Bundle?): LayoutInflater {
+    return super.onGetLayoutInflater(savedInstanceState).also {
+      dialog?.window?.enableEdgeToEdge()
+    }
   }
 
   @Composable
@@ -80,7 +87,7 @@ private fun NewWaysToConnectDialogContent(
   Scaffolds.Settings(
     title = "",
     onNavigationClick = onNotNowClick,
-    navigationIcon = ImageVector.vectorResource(id = R.drawable.symbol_x_24)
+    navigationIcon = SignalIcons.X.imageVector
   ) {
     Column(modifier = Modifier.padding(it)) {
       LazyColumn(modifier = Modifier.weight(1f)) {

@@ -4,9 +4,12 @@ import androidx.annotation.WorkerThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64.decode
 import org.signal.core.util.Stopwatch
+import org.signal.core.util.Util
 import org.signal.core.util.concurrent.SignalExecutors
+import org.signal.core.util.crypto.InvalidCiphertextException
 import org.signal.core.util.logging.Log
 import org.signal.libsignal.protocol.IdentityKey
 import org.signal.libsignal.protocol.InvalidKeyException
@@ -21,23 +24,24 @@ import org.thoughtcrime.securesms.database.RecipientTable.Companion.maskCapabili
 import org.thoughtcrime.securesms.database.RecipientTable.PhoneNumberSharingState
 import org.thoughtcrime.securesms.database.RecipientTable.SealedSenderAccessMode
 import org.thoughtcrime.securesms.database.SignalDatabase
+import org.thoughtcrime.securesms.database.model.IdentityRecord
 import org.thoughtcrime.securesms.database.model.RecipientRecord
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.JsonJobData
+import org.thoughtcrime.securesms.jobmanager.impl.DataRestoreConstraint
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.net.SignalNetwork
 import org.thoughtcrime.securesms.notifications.v2.ConversationId.Companion.forConversation
 import org.thoughtcrime.securesms.profiles.ProfileName
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
+import org.thoughtcrime.securesms.recipients.RecipientCreator
 import org.thoughtcrime.securesms.recipients.RecipientUtil
+import org.thoughtcrime.securesms.storage.StorageSyncHelper
 import org.thoughtcrime.securesms.transport.RetryLaterException
 import org.thoughtcrime.securesms.util.IdentityUtil
 import org.thoughtcrime.securesms.util.ProfileUtil
-import org.thoughtcrime.securesms.util.Util
-import org.whispersystems.signalservice.api.crypto.InvalidCiphertextException
 import org.whispersystems.signalservice.api.crypto.ProfileCipher
 import org.whispersystems.signalservice.api.profiles.ProfileRepository
 import org.whispersystems.signalservice.api.profiles.ProfileRepository.IdProfilePair
@@ -47,15 +51,18 @@ import org.whispersystems.signalservice.api.profiles.ProfileRepository.SignalSer
 import org.whispersystems.signalservice.api.profiles.SignalServiceProfile
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 
 /**
  * Retrieves a users profile and sets the appropriate local fields.
  */
-class RetrieveProfileJob private constructor(parameters: Parameters, private val recipientIds: MutableSet<RecipientId>, private val skipDebounce: Boolean) : BaseJob(parameters) {
-  private constructor(recipientIds: Set<RecipientId>, skipDebounce: Boolean) : this(
+class RetrieveProfileJob private constructor(parameters: Parameters, private val recipientIds: MutableSet<RecipientId>, private val skipDebounce: Boolean, private val syncConfirmedIdentityKey: Boolean) : BaseJob(parameters) {
+  private constructor(recipientIds: Set<RecipientId>, skipDebounce: Boolean, syncConfirmedIdentityKey: Boolean = false) : this(
     parameters = Parameters.Builder()
       .addConstraint(NetworkConstraint.KEY)
+      .addConstraint(DataRestoreConstraint.KEY)
       .apply {
         if (recipientIds.size < 5) {
           setQueue(recipientIds.map { it.toLong() }.sorted().joinToString(separator = "_", prefix = QUEUE_PREFIX))
@@ -65,13 +72,15 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
       .setMaxAttempts(3)
       .build(),
     recipientIds = recipientIds.toMutableSet(),
-    skipDebounce = skipDebounce
+    skipDebounce = skipDebounce,
+    syncConfirmedIdentityKey = syncConfirmedIdentityKey
   )
 
   override fun serialize(): ByteArray? {
     return JsonJobData.Builder()
       .putStringListAsArray(KEY_RECIPIENTS, recipientIds.map { it.serialize() })
       .putBoolean(KEY_SKIP_DEBOUNCE, skipDebounce)
+      .putBoolean(KEY_SYNC_CONFIRMED_IDENTITY_KEY, syncConfirmedIdentityKey)
       .serialize()
   }
 
@@ -88,32 +97,27 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
 
     val stopwatch = Stopwatch("RetrieveProfile")
 
-    val recipients = recipientIds.map { Recipient.live(it).refresh().resolve() }
+    val now = System.currentTimeMillis().milliseconds
+    val debounceThreshold = if (skipDebounce) null else now - PROFILE_FETCH_DEBOUNCE_TIME
+    val unregisteredDebounceThreshold = if (skipDebounce) null else now - UNREGISTERED_PROFILE_FETCH_DEBOUNCE_TIME
+    val recipientsToFetch = SignalDatabase
+      .recipients
+      .getRecordsForProfileFetch(recipientIds, debounceThreshold, unregisteredDebounceThreshold)
+      .map { RecipientCreator.forRecord(it) }
 
-    RecipientUtil.ensureUuidsAreAvailable(
-      context,
-      recipients.filter { it.registered != RecipientTable.RegisteredState.NOT_REGISTERED }
-    )
-
-    stopwatch.split("resolve-ensure")
-
-    val currentTime = System.currentTimeMillis()
-    val debounceThreshold = currentTime - PROFILE_FETCH_DEBOUNCE_TIME_MS
-    val recipientsToFetch = recipients.filter { recipient ->
-      recipient.hasServiceId && (skipDebounce || recipient.lastProfileFetchTime < debounceThreshold)
-    }
+    stopwatch.split("resolve")
 
     if (recipientsToFetch.isEmpty()) {
-      Log.i(TAG, "All ${recipients.size} recipients have been fetched recently (within ${PROFILE_FETCH_DEBOUNCE_TIME_MS}ms). Skipping network requests.")
+      Log.i(TAG, "All ${recipientIds.size} recipients have been fetched recently (within $PROFILE_FETCH_DEBOUNCE_TIME) or are not eligible. Skipping network requests.")
       return
     }
 
-    if (recipientsToFetch.size < recipients.size) {
-      Log.i(TAG, "Debouncing: Fetching ${recipientsToFetch.size} of ${recipients.size} recipients (${recipients.size - recipientsToFetch.size} were fetched recently)")
+    if (recipientsToFetch.size < recipientIds.size) {
+      Log.i(TAG, "Fetching ${recipientsToFetch.size} of ${recipientIds.size} recipients (${recipientIds.size - recipientsToFetch.size} were ineligible or fetched recently)")
     }
 
     val fetchingRecipientIds = recipientsToFetch.map { it.id }.toSet()
-    val recipientsById: Map<RecipientId, Recipient> = recipients.associateBy { it.id }
+    val recipientsById: Map<RecipientId, Recipient> = recipientsToFetch.associateBy { it.id }
 
     val requests: List<ProfileFetchRequest<RecipientId>> = recipientsToFetch
       .map { recipient ->
@@ -121,7 +125,7 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
           id = recipient.id,
           serviceId = recipient.requireServiceId(),
           profileKey = recipient.profileKey?.let { ProfileKey(it) },
-          sealedSenderAccess = SealedSenderAccessUtil.getSealedSenderAccessFor(recipient),
+          sealedSenderAccess = SealedSenderAccessUtil.getSealedSenderAccessForProfileFetch(recipient, true),
           // This payments fork stores the payment address at a fixed profile version (see
           // ProfileUtil.LIGHTNING_PROFILE_VERSION), which becomes the account's "current" version on the
           // server. The server only issues an expiring profile key credential for the current version, so a
@@ -137,7 +141,7 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
 
     val response: ProfileFetchResult<RecipientId> = runBlocking {
       withContext(Dispatchers.IO) {
-        ProfileRepository(SignalNetwork.profile).fetchProfiles(requests)
+        ProfileRepository(SignalNetwork.profileApi).fetchProfiles(requests)
       }
     }
     stopwatch.split("responses")
@@ -173,16 +177,17 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
     stopwatch.split("filter")
 
     Log.d(TAG, "Committing updates to " + updatedProfiles.size + " of " + response.successes.size + " retrieved profiles.")
+    val avatarJobs = mutableListOf<RetrieveProfileAvatarJob>()
     updatedProfiles.chunked(150).forEach { list: List<IdProfilePair<RecipientId>> ->
       SignalDatabase.runInTransaction {
         for (idProfilePair in list) {
-          process(recipientsById[idProfilePair.id]!!, idProfilePair.profileWithCredential)
+          process(recipientsById[idProfilePair.id]!!, idProfilePair.profileWithCredential, avatarJobs)
         }
       }
     }
     stopwatch.split("process")
 
-    SignalDatabase.recipients.markProfilesFetched(successIds, System.currentTimeMillis())
+    SignalDatabase.recipients.markProfilesFetched(successIds + response.unregistered, System.currentTimeMillis())
     stopwatch.split("mark-fetched")
 
     if (newlyRegisteredIds.isNotEmpty()) {
@@ -191,9 +196,7 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
     }
     if (response.unregistered.isNotEmpty()) {
       Log.i(TAG, "Marking ${response.unregistered.size} users as unregistered.")
-      for (recipientId in response.unregistered) {
-        SignalDatabase.recipients.markUnregistered(recipientId)
-      }
+      SignalDatabase.recipients.markUnregistered(response.unregistered)
     }
     stopwatch.split("registered-update")
 
@@ -212,8 +215,16 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
 
     val keyCount = response.successes.mapNotNull { recipientsById[it.id] }.mapNotNull { it.profileKey }.count()
 
-    Log.d(TAG, "Started with ${recipients.size} recipient(s). Of those, ${recipientsToFetch.size} were outside the cache period. Found ${response.successes.size} profile(s), and had keys for $keyCount of them. Will retry ${response.retryableFailures.size}.")
+    Log.d(TAG, "Started with ${recipientIds.size} recipient(s). Of those, ${recipientsToFetch.size} were outside the cache period. Found ${response.successes.size} profile(s), and had keys for $keyCount of them. Will retry ${response.retryableFailures.size}.")
     stopwatch.stop(TAG)
+
+    if (avatarJobs.isNotEmpty()) {
+      AppDependencies.jobManager.addAll(avatarJobs)
+    }
+
+    if (updatedProfiles.isNotEmpty()) {
+      StorageSyncHelper.scheduleSyncForDataChange()
+    }
 
     recipientIds.clear()
     recipientIds.addAll(response.retryableFailures)
@@ -243,11 +254,12 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
       return true
     }
 
-    if (localRecipientRecord.badges != remoteProfile.badges.map { Badges.fromServiceBadge(it) }) {
+    if (localRecipientRecord.badges != remoteProfile.badges.orEmpty().map { Badges.fromServiceBadge(it) }) {
       return true
     }
 
-    if (localRecipientRecord.capabilities.rawBits != maskCapabilitiesToLong(remoteProfile.capabilities)) {
+    val remoteCapabilities = remoteProfile.capabilities
+    if (remoteCapabilities != null && localRecipientRecord.capabilities.rawBits != maskCapabilitiesToLong(remoteCapabilities)) {
       return true
     }
 
@@ -255,7 +267,7 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
     val accessMode = deriveUnidentifiedAccessMode(
       profileKey = profileKey,
       unidentifiedAccessVerifier = remoteProfile.unidentifiedAccess,
-      unrestrictedUnidentifiedAccess = remoteProfile.isUnrestrictedUnidentifiedAccess
+      unrestrictedUnidentifiedAccess = remoteProfile.unrestrictedUnidentifiedAccess
     )
 
     if (localRecipientRecord.sealedSenderAccessMode != accessMode) {
@@ -290,46 +302,59 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
     return false
   }
 
-  private fun process(recipient: Recipient, profileAndCredential: SignalServiceProfileWithCredential) {
+  private fun process(recipient: Recipient, profileAndCredential: SignalServiceProfileWithCredential, avatarJobs: MutableList<RetrieveProfileAvatarJob>) {
     val (profile, expiringCredential) = profileAndCredential
     val recipientProfileKey = ProfileKeyUtil.profileKeyOrNull(recipient.profileKey)
-    val wroteNewProfileName = setProfileName(recipient, profile.name)
 
-    setProfileAbout(recipient, profile.about, profile.aboutEmoji)
-    setProfileAvatar(recipient, profile.avatar)
-    setProfileBadges(recipient, profile.badges)
-    setProfileCapabilities(recipient, profile.capabilities)
-    setUnidentifiedAccessMode(recipient, profile.unidentifiedAccess, profile.isUnrestrictedUnidentifiedAccess)
-    setPhoneNumberSharingMode(recipient, profile.phoneNumberSharing)
+    val badges = profile.badges?.map { Badges.fromServiceBadge(it) }
+    val accessMode = deriveUnidentifiedAccessMode(recipientProfileKey, profile.unidentifiedAccess, profile.unrestrictedUnidentifiedAccess)
 
-    if (recipientProfileKey != null) {
-      expiringCredential?. let { credential -> setExpiringProfileKeyCredential(recipient, recipientProfileKey, credential) }
-    }
-
-    if (recipient.hasNonUsernameDisplayName(context) || wroteNewProfileName) {
-      clearUsername(recipient)
-    }
-  }
-
-  private fun setProfileBadges(recipient: Recipient, serviceBadges: List<SignalServiceProfile.Badge>?) {
-    if (serviceBadges == null) {
-      return
-    }
-
-    val badges = serviceBadges.map { Badges.fromServiceBadge(it) }
-    if (badges.size != recipient.badges.size) {
+    if (badges != null && badges.size != recipient.badges.size) {
       Log.i(TAG, "Likely change in badges for ${recipient.id}. Going from ${recipient.badges.size} badge(s) to ${badges.size}.")
     }
 
-    SignalDatabase.recipients.setBadges(recipient.id, badges)
-  }
+    if (accessMode != recipient.sealedSenderAccessMode) {
+      when {
+        accessMode === SealedSenderAccessMode.UNRESTRICTED -> Log.i(TAG, "Marking recipient UD status as unrestricted.")
+        recipientProfileKey == null || profile.unidentifiedAccess == null -> Log.i(TAG, "Marking recipient UD status as disabled.")
+        else -> Log.i(TAG, "Marking recipient UD status as " + accessMode.name + " after verification.")
+      }
+    }
 
-  private fun setExpiringProfileKeyCredential(
-    recipient: Recipient,
-    recipientProfileKey: ProfileKey,
-    credential: ExpiringProfileKeyCredential
-  ) {
-    SignalDatabase.recipients.setProfileKeyCredential(recipient.id, recipientProfileKey, credential)
+    if (recipientProfileKey != null) {
+      val profileNameResult = resolveProfileName(recipient, recipientProfileKey, profile.name)
+      val aboutResult = resolveProfileAbout(recipientProfileKey, profile.about, profile.aboutEmoji)
+      val phoneNumberSharing = resolvePhoneNumberSharing(recipient, recipientProfileKey, profile.phoneNumberSharing)
+      val clearUsername = (recipient.username.isPresent && recipient.hasPersistentDisplayName(context)) || profileNameResult?.changed == true
+      val clearSharedName = (!recipient.sharedName.isEmpty && recipient.hasDisplayNameOutrankingSharedName()) || profileNameResult?.changed == true
+
+      val update = RecipientTable.ProfileUpdate(
+        profileName = if (profileNameResult?.changed == true) profileNameResult.remoteProfileName else null,
+        about = aboutResult,
+        badges = badges,
+        capabilities = profile.capabilities,
+        sealedSenderAccessMode = if (accessMode != recipient.sealedSenderAccessMode) accessMode else null,
+        phoneNumberSharing = phoneNumberSharing,
+        expiringProfileKeyCredential = expiringCredential?.let { Pair(recipientProfileKey, it) },
+        clearUsername = clearUsername,
+        clearSharedName = clearSharedName
+      )
+
+      SignalDatabase.recipients.applyProfileUpdate(recipient.id, update)
+      profileNameResult?.let { handleProfileNameSideEffects(recipient, it) }
+    } else {
+      val update = RecipientTable.ProfileUpdate(
+        badges = badges,
+        capabilities = profile.capabilities,
+        sealedSenderAccessMode = if (accessMode != recipient.sealedSenderAccessMode) accessMode else null
+      )
+
+      SignalDatabase.recipients.applyProfileUpdate(recipient.id, update)
+    }
+
+    if (recipient.profileKey != null && profile.avatar != recipient.profileAvatar) {
+      avatarJobs += RetrieveProfileAvatarJob(recipient, profile.avatar)
+    }
   }
 
   private fun setIdentityKey(recipient: Recipient, identityKeyValue: String?) {
@@ -340,8 +365,21 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
       }
 
       val identityKey = IdentityKey(decode(identityKeyValue), 0)
-      if (!AppDependencies.protocolStore.aci().identities().getIdentityRecord(recipient.id).isPresent) {
+      val existingIdentityKey = AppDependencies.protocolStore.aci().identities().getIdentityRecord(recipient)
+        .map { (_, identityKey): IdentityRecord -> identityKey }
+        .orElse(null)
+
+      if (existingIdentityKey == null) {
         Log.w(TAG, "Still first use for ${recipient.id}")
+        return
+      }
+
+      if (existingIdentityKey == identityKey) {
+        if (syncConfirmedIdentityKey) {
+          Log.i(TAG, "Server confirmed our identity key for ${recipient.id}. Syncing it so the conflicting peer record is replaced.")
+          SignalDatabase.recipients.markNeedsSync(recipient.id)
+          StorageSyncHelper.scheduleSyncForDataChange()
+        }
         return
       }
 
@@ -350,23 +388,6 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
       Log.w(TAG, e)
     } catch (e: IOException) {
       Log.w(TAG, e)
-    }
-  }
-
-  private fun setUnidentifiedAccessMode(recipient: Recipient, unidentifiedAccessVerifier: String?, unrestrictedUnidentifiedAccess: Boolean) {
-    val profileKey = ProfileKeyUtil.profileKeyOrNull(recipient.profileKey)
-    val newMode = deriveUnidentifiedAccessMode(profileKey, unidentifiedAccessVerifier, unrestrictedUnidentifiedAccess)
-
-    if (recipient.sealedSenderAccessMode !== newMode) {
-      if (newMode === SealedSenderAccessMode.UNRESTRICTED) {
-        Log.i(TAG, "Marking recipient UD status as unrestricted.")
-      } else if (profileKey == null || unidentifiedAccessVerifier == null) {
-        Log.i(TAG, "Marking recipient UD status as disabled.")
-      } else {
-        Log.i(TAG, "Marking recipient UD status as " + newMode.name + " after verification.")
-      }
-
-      SignalDatabase.recipients.setSealedSenderAccessMode(recipient.id, newMode)
     }
   }
 
@@ -392,147 +413,155 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
     }
   }
 
-  private fun setProfileName(recipient: Recipient, profileName: String?): Boolean {
+  private fun resolveProfileName(recipient: Recipient, profileKey: ProfileKey, encryptedProfileName: String?): ProfileNameResult? {
     try {
-      val profileKey = ProfileKeyUtil.profileKeyOrNull(recipient.profileKey) ?: return false
-      val plaintextProfileName = Util.emptyIfNull(ProfileUtil.decryptString(profileKey, profileName))
+      val plaintextProfileName = Util.emptyIfNull(ProfileUtil.decryptString(profileKey, encryptedProfileName))
 
-      if (plaintextProfileName.isNullOrBlank()) {
+      if (plaintextProfileName.isBlank()) {
         Log.w(TAG, "No name set on the profile for ${recipient.id} -- Leaving it alone")
-        return false
+        return null
       }
 
       val remoteProfileName = ProfileName.fromSerialized(plaintextProfileName)
       val localProfileName = recipient.profileName
+      val changed = remoteProfileName != localProfileName
 
-      if (localProfileName.isEmpty &&
+      val learnedFirstTime = localProfileName.isEmpty &&
         !recipient.isSystemContact &&
         recipient.isProfileSharing &&
         !recipient.isGroup &&
         !recipient.isSelf
-      ) {
-        val username = SignalDatabase.recipients.getUsername(recipient.id)
-        val e164 = if (username == null) SignalDatabase.recipients.getE164sForIds(listOf(recipient.id)).firstOrNull() else null
 
-        if (username != null || e164 != null) {
-          Log.i(TAG, "Learned profile name for first time, inserting event")
-          SignalDatabase.messages.insertLearnedProfileNameChangeMessage(recipient, e164, username)
-        } else {
-          Log.w(TAG, "Learned profile name for first time, but do not have username or e164 for ${recipient.id}")
-        }
+      val previousName: PreviousName? = if (learnedFirstTime) {
+        recipient.sharedName.takeUnless { it.isEmpty }?.let { PreviousName.SharedName(it.toString()) }
+          ?: SignalDatabase.recipients.getUsername(recipient.id)?.let { PreviousName.Username(it) }
+          ?: SignalDatabase.recipients.getE164sForIds(listOf(recipient.id)).firstOrNull()?.let { PreviousName.E164(it) }
+      } else {
+        null
       }
 
-      if (remoteProfileName != localProfileName) {
-        Log.i(TAG, "Profile name updated. Writing new value.")
-        SignalDatabase.recipients.setProfileName(recipient.id, remoteProfileName)
-
-        val remoteDisplayName = remoteProfileName.toString()
-        val localDisplayName = localProfileName.toString()
-        val writeChangeEvent = !recipient.isBlocked &&
-          !recipient.isGroup &&
-          !recipient.isSelf &&
-          localDisplayName.isNotEmpty() &&
-          remoteDisplayName != localDisplayName
-
-        if (writeChangeEvent) {
-          Log.i(TAG, "Writing a profile name change event for ${recipient.id}")
-          SignalDatabase.messages.insertProfileNameChangeMessages(recipient, remoteDisplayName, localDisplayName)
-        } else {
-          Log.i(TAG, "Name changed, but wasn't relevant to write an event. blocked: ${recipient.isBlocked}, group: ${recipient.isGroup}, self: ${recipient.isSelf}, firstSet: ${localDisplayName.isEmpty()}, displayChange: ${remoteDisplayName != localDisplayName}")
-        }
-
-        if (recipient.isIndividual &&
-          !recipient.isSystemContact &&
-          !recipient.nickname.isEmpty &&
-          !recipient.isProfileSharing &&
-          !recipient.isBlocked &&
-          !recipient.isSelf &&
-          !recipient.isHidden
-        ) {
-          val threadId = SignalDatabase.threads.getThreadIdFor(recipient.id)
-          if (threadId != null && !RecipientUtil.isMessageRequestAccepted(threadId, recipient)) {
-            SignalDatabase.nameCollisions.handleIndividualNameCollision(recipient.id)
-          }
-        }
-
-        if (writeChangeEvent || localDisplayName.isEmpty()) {
-          AppDependencies.databaseObserver.notifyConversationListListeners()
-          val threadId = SignalDatabase.threads.getThreadIdFor(recipient.id)
-          if (threadId != null) {
-            SignalDatabase.runPostSuccessfulTransaction {
-              AppDependencies.messageNotifier.updateNotification(context, forConversation(threadId))
-            }
-          }
-        }
-
-        return true
+      return if (changed) {
+        ProfileNameResult(remoteProfileName, localProfileName, changed = true, learnedFirstTime, previousName)
+      } else if (learnedFirstTime) {
+        ProfileNameResult(remoteProfileName, localProfileName, changed = false, learnedFirstTime, previousName)
+      } else {
+        null
       }
     } catch (e: InvalidCiphertextException) {
       Log.w(TAG, "Bad profile key for ${recipient.id}")
     } catch (e: IOException) {
       Log.w(TAG, e)
     }
-
-    return false
+    return null
   }
 
-  private fun setProfileAbout(recipient: Recipient, encryptedAbout: String?, encryptedEmoji: String?) {
+  private fun resolveProfileAbout(profileKey: ProfileKey, encryptedAbout: String?, encryptedEmoji: String?): Pair<String?, String?>? {
     try {
-      val profileKey = ProfileKeyUtil.profileKeyOrNull(recipient.profileKey) ?: return
       val plaintextAbout = ProfileUtil.decryptString(profileKey, encryptedAbout)
       val plaintextEmoji = ProfileUtil.decryptString(profileKey, encryptedEmoji)
-
-      SignalDatabase.recipients.setAbout(recipient.id, plaintextAbout, plaintextEmoji)
+      return Pair(plaintextAbout, plaintextEmoji)
     } catch (e: InvalidCiphertextException) {
       Log.w(TAG, e)
     } catch (e: IOException) {
       Log.w(TAG, e)
     }
+    return null
   }
 
-  private fun clearUsername(recipient: Recipient) {
-    SignalDatabase.recipients.setUsername(recipient.id, null)
-  }
-
-  private fun setProfileCapabilities(recipient: Recipient, capabilities: SignalServiceProfile.Capabilities?) {
-    if (capabilities == null) {
-      return
-    }
-
-    SignalDatabase.recipients.setCapabilities(recipient.id, capabilities)
-  }
-
-  private fun setPhoneNumberSharingMode(recipient: Recipient, phoneNumberSharing: String?) {
-    val profileKey = ProfileKeyUtil.profileKeyOrNull(recipient.profileKey) ?: return
-
+  private fun resolvePhoneNumberSharing(recipient: Recipient, profileKey: ProfileKey, phoneNumberSharing: String?): PhoneNumberSharingState? {
     try {
       val remotePhoneNumberSharing = ProfileUtil.decryptBoolean(profileKey, phoneNumberSharing)
         .map { value: Boolean -> if (value) PhoneNumberSharingState.ENABLED else PhoneNumberSharingState.DISABLED }
         .orElse(PhoneNumberSharingState.UNKNOWN)
 
-      if (recipient.phoneNumberSharing !== remotePhoneNumberSharing) {
+      return if (recipient.phoneNumberSharing !== remotePhoneNumberSharing) {
         Log.i(TAG, "Updating phone number sharing state for " + recipient.id + " to " + remotePhoneNumberSharing)
-        SignalDatabase.recipients.setPhoneNumberSharing(recipient.id, remotePhoneNumberSharing)
+        remotePhoneNumberSharing
+      } else {
+        null
       }
     } catch (e: InvalidCiphertextException) {
       Log.w(TAG, "Failed to set the phone number sharing setting!", e)
     } catch (e: IOException) {
       Log.w(TAG, "Failed to set the phone number sharing setting!", e)
     }
+    return null
   }
 
-  private fun setProfileAvatar(recipient: Recipient, profileAvatar: String?) {
-    if (recipient.profileKey == null) {
-      return
-    }
-
-    if (profileAvatar != recipient.profileAvatar) {
-      SignalDatabase.runPostSuccessfulTransaction(DEDUPE_KEY_RETRIEVE_AVATAR + recipient.id) {
-        SignalExecutors.BOUNDED.execute {
-          AppDependencies.jobManager.add(RetrieveProfileAvatarJob(recipient, profileAvatar))
+  private fun handleProfileNameSideEffects(recipient: Recipient, result: ProfileNameResult) {
+    if (result.learnedFirstTime) {
+      val previous = result.previousName
+      if (previous == null) {
+        Log.w(TAG, "Learned profile name for first time, but have no previous name for ${recipient.id}")
+      } else {
+        Log.i(TAG, "Learned profile name for first time, inserting event")
+        when (previous) {
+          is PreviousName.SharedName -> SignalDatabase.messages.insertLearnedProfileNameChangeMessage(recipient, sharedName = previous.sharedName)
+          is PreviousName.Username -> SignalDatabase.messages.insertLearnedProfileNameChangeMessage(recipient, username = previous.username)
+          is PreviousName.E164 -> SignalDatabase.messages.insertLearnedProfileNameChangeMessage(recipient, e164 = previous.e164)
         }
       }
     }
+
+    if (result.changed) {
+      Log.i(TAG, "Profile name updated. Writing new value.")
+
+      val remoteDisplayName = result.remoteProfileName.toString()
+      val localDisplayName = result.localProfileName.toString()
+      val writeChangeEvent = !recipient.isBlocked &&
+        !recipient.isGroup &&
+        !recipient.isSelf &&
+        localDisplayName.isNotEmpty() &&
+        remoteDisplayName != localDisplayName
+
+      if (writeChangeEvent) {
+        Log.i(TAG, "Writing a profile name change event for ${recipient.id}")
+        SignalDatabase.messages.insertProfileNameChangeMessages(recipient, remoteDisplayName, localDisplayName)
+      } else {
+        Log.i(TAG, "Name changed, but wasn't relevant to write an event. blocked: ${recipient.isBlocked}, group: ${recipient.isGroup}, self: ${recipient.isSelf}, firstSet: ${localDisplayName.isEmpty()}, displayChange: ${remoteDisplayName != localDisplayName}")
+      }
+
+      val individualCollisionsEnabled = false
+      if (individualCollisionsEnabled &&
+        recipient.isIndividual &&
+        !recipient.isSystemContact &&
+        recipient.nickname.isEmpty &&
+        !recipient.isProfileSharing &&
+        !recipient.isBlocked &&
+        !recipient.isSelf &&
+        !recipient.isHidden
+      ) {
+        val threadId = SignalDatabase.threads.getThreadIdFor(recipient.id)
+        if (threadId != null && !RecipientUtil.isMessageRequestAccepted(threadId, recipient)) {
+          SignalDatabase.nameCollisions.handleIndividualNameCollision(recipient.id)
+        }
+      }
+
+      if (writeChangeEvent || localDisplayName.isEmpty()) {
+        AppDependencies.databaseObserver.notifyConversationListListeners()
+        val threadId = SignalDatabase.threads.getThreadIdFor(recipient.id)
+        if (threadId != null) {
+          SignalDatabase.runPostSuccessfulTransaction {
+            AppDependencies.messageNotifier.updateNotification(context, forConversation(threadId))
+          }
+        }
+      }
+    }
+  }
+
+  private data class ProfileNameResult(
+    val remoteProfileName: ProfileName,
+    val localProfileName: ProfileName,
+    val changed: Boolean,
+    val learnedFirstTime: Boolean,
+    val previousName: PreviousName?
+  )
+
+  /** The name a chat displayed before we learned a profile name. */
+  private sealed interface PreviousName {
+    data class SharedName(val sharedName: String) : PreviousName
+    data class Username(val username: String) : PreviousName
+    data class E164(val e164: String) : PreviousName
   }
 
   class Factory : Job.Factory<RetrieveProfileJob?> {
@@ -540,8 +569,9 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
       val data = JsonJobData.deserialize(serializedData)
       val recipientIds: MutableSet<RecipientId> = data.getStringArray(KEY_RECIPIENTS).map { RecipientId.from(it) }.toMutableSet()
       val skipDebounce: Boolean = data.getBooleanOrDefault(KEY_SKIP_DEBOUNCE, false)
+      val syncConfirmedIdentityKey: Boolean = data.getBooleanOrDefault(KEY_SYNC_CONFIRMED_IDENTITY_KEY, false)
 
-      return RetrieveProfileJob(parameters, recipientIds, skipDebounce)
+      return RetrieveProfileJob(parameters, recipientIds, skipDebounce, syncConfirmedIdentityKey)
     }
   }
 
@@ -550,10 +580,11 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
     private val TAG = Log.tag(RetrieveProfileJob::class.java)
     private const val KEY_RECIPIENTS = "recipients"
     private const val KEY_SKIP_DEBOUNCE = "skip_debounce"
-    private const val DEDUPE_KEY_RETRIEVE_AVATAR = KEY + "_RETRIEVE_PROFILE_AVATAR"
+    private const val KEY_SYNC_CONFIRMED_IDENTITY_KEY = "sync_confirmed_identity_key"
     private const val QUEUE_PREFIX = "RetrieveProfileJob_"
 
-    private val PROFILE_FETCH_DEBOUNCE_TIME_MS = 5.minutes.inWholeMilliseconds
+    private val PROFILE_FETCH_DEBOUNCE_TIME = 5.minutes
+    private val UNREGISTERED_PROFILE_FETCH_DEBOUNCE_TIME = 6.hours
 
     /**
      * Submits the necessary job to refresh the profile of the requested recipient. Works for any
@@ -611,6 +642,15 @@ class RetrieveProfileJob private constructor(parameters: Parameters, private val
           add(RetrieveProfileJob(combined, skipDebounce))
         }
       }
+    }
+
+    /**
+     * Only to be used when confirming an identity key change indicated by storage service. The recipient must be an individual and is used as-is. If
+     * the identity key matches we will write to storage service.
+     */
+    @WorkerThread
+    fun enqueueToResolveIdentityKeyConflict(recipientId: RecipientId) {
+      AppDependencies.jobManager.add(RetrieveProfileJob(setOf(recipientId), skipDebounce = true, syncConfirmedIdentityKey = true))
     }
 
     /**

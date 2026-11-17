@@ -4,14 +4,15 @@ import android.net.Uri
 import org.signal.core.models.ServiceId
 import org.signal.core.models.ServiceId.ACI
 import org.signal.core.models.ServiceId.PNI
+import org.signal.core.models.badges.Badge
+import org.signal.core.models.recipients.RecipientId
 import org.signal.libsignal.zkgroup.groups.GroupMasterKey
 import org.signal.libsignal.zkgroup.profiles.ExpiringProfileKeyCredential
-import org.thoughtcrime.securesms.badges.models.Badge
 import org.thoughtcrime.securesms.conversation.colors.AvatarColor
 import org.thoughtcrime.securesms.conversation.colors.ChatColors
 import org.thoughtcrime.securesms.database.IdentityTable.VerifiedStatus
 import org.thoughtcrime.securesms.database.RecipientTable
-import org.thoughtcrime.securesms.database.RecipientTable.MentionSetting
+import org.thoughtcrime.securesms.database.RecipientTable.NotificationSetting
 import org.thoughtcrime.securesms.database.RecipientTable.PhoneNumberSharingState
 import org.thoughtcrime.securesms.database.RecipientTable.RegisteredState
 import org.thoughtcrime.securesms.database.RecipientTable.SealedSenderAccessMode
@@ -19,7 +20,6 @@ import org.thoughtcrime.securesms.database.RecipientTable.VibrateState
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.profiles.ProfileName
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkRoomId
 import org.thoughtcrime.securesms.wallpaper.ChatWallpaper
 
@@ -37,6 +37,7 @@ data class RecipientRecord(
   val distributionListId: DistributionListId?,
   val recipientType: RecipientTable.RecipientType,
   val isBlocked: Boolean,
+  val blockedAt: Long,
   val muteUntil: Long,
   val messageVibrateState: VibrateState,
   val callVibrateState: VibrateState,
@@ -59,12 +60,14 @@ data class RecipientRecord(
   val profileAvatarFileDetails: ProfileAvatarFileDetails,
   @get:JvmName("isProfileSharing")
   val profileSharing: Boolean,
-  val lastProfileFetch: Long,
   val notificationChannel: String?,
   val sealedSenderAccessMode: SealedSenderAccessMode,
   val capabilities: Capabilities,
   val storageId: ByteArray?,
-  val mentionSetting: MentionSetting,
+  val mentionSetting: NotificationSetting,
+  val callNotificationSetting: NotificationSetting,
+  val replyNotificationSetting: NotificationSetting,
+  val unreadReminder: NotificationSetting,
   val wallpaper: ChatWallpaper?,
   val chatColors: ChatColors?,
   val avatarColor: AvatarColor,
@@ -81,7 +84,9 @@ data class RecipientRecord(
   val callLinkRoomId: CallLinkRoomId?,
   val phoneNumberSharing: PhoneNumberSharingState,
   val nickname: ProfileName,
-  val note: String?
+  val note: String?,
+  val sharedName: ProfileName,
+  val keyTransparencyData: ByteArray? = null
 ) {
 
   fun e164Only(): Boolean {
@@ -119,12 +124,16 @@ data class RecipientRecord(
   )
 
   data class Capabilities(
-    val rawBits: Long
+    val rawBits: Long,
+    val usernameSyncMessages: Recipient.Capability,
+    val optionalPhoneNumber: Recipient.Capability
   ) {
     companion object {
       @JvmField
       val UNKNOWN = Capabilities(
-        rawBits = 0
+        rawBits = 0,
+        usernameSyncMessages = Recipient.Capability.UNKNOWN,
+        optionalPhoneNumber = Recipient.Capability.UNKNOWN
       )
     }
   }

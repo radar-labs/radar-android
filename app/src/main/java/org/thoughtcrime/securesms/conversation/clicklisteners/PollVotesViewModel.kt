@@ -6,13 +6,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.concurrent.SignalDispatchers
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.polls.PollOption
 import org.thoughtcrime.securesms.polls.PollRecord
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 
 /**
  * View model for [PollVotesFragment] which allows you to see results for a given poll.
@@ -31,7 +31,7 @@ class PollVotesViewModel(pollId: Long) : ViewModel() {
   }
 
   private fun loadPollInfo(pollId: Long) {
-    viewModelScope.launch(SignalDispatchers.IO) {
+    viewModelScope.launch(SignalDispatchers.Default) {
       val poll = SignalDatabase.polls.getPollFromId(pollId)!!
       val mostVotes = poll.pollOptions.maxByOrNull { option -> option.voters.size }?.voters?.size
       _state.update {

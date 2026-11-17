@@ -23,15 +23,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextDirection
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.IconButtons.IconButton
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.SignalIcons
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.recipients.ui.RecipientPicker.KeyboardType
 
@@ -48,7 +53,8 @@ fun RecipientSearchBar(
   onQueryChange: (String) -> Unit,
   onSearch: (String) -> Unit,
   modifier: Modifier = Modifier,
-  enabledKeyboardTypes: List<KeyboardType> = listOf(KeyboardType.Text, KeyboardType.Phone)
+  enabledKeyboardTypes: List<KeyboardType> = listOf(KeyboardType.Text, KeyboardType.Phone),
+  onFocusChanged: (Boolean) -> Unit = {}
 ) {
   val state = rememberSearchBarState()
   var keyboardType by remember(enabledKeyboardTypes) { mutableStateOf(enabledKeyboardTypes.first()) }
@@ -65,8 +71,10 @@ fun RecipientSearchBar(
       TextField(
         value = query,
         onValueChange = onQueryChange,
-        placeholder = { Text(hint) },
+        modifier = Modifier.onFocusChanged { onFocusChanged(it.isFocused) },
+        placeholder = { Text(hint, maxLines = 1, overflow = TextOverflow.Ellipsis) },
         singleLine = true,
+        textStyle = TextStyle(textDirection = TextDirection.ContentOrLtr),
         shape = SearchBarDefaults.inputFieldShape,
         colors = TextFieldDefaults.colors(
           unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -124,7 +132,7 @@ private fun KeyboardToggleButton(
   ) {
     when (keyboardType) {
       KeyboardType.Text -> Icon(
-        imageVector = ImageVector.vectorResource(R.drawable.ic_number_pad_conversation_filter_24),
+        imageVector = SignalIcons.NumberPad.imageVector,
         tint = MaterialTheme.colorScheme.onSurface,
         contentDescription = stringResource(R.string.RecipientSearchBar_accessibility_switch_to_numeric_keyboard)
       )

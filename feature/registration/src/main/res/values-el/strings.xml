@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <!-- Removed by excludeNonTranslatables <string name="terms_and_privacy_policy_url" translatable="false">https://signal.org/legal</string> -->
+  <!-- Removed by excludeNonTranslatables <string name="AccountLockedScreen__learn_more_url" translatable="false">https://support.signal.org/hc/articles/360007059792</string> -->
+
+    <string name="RegistrationActivity_take_privacy_with_you_be_yourself_in_every_message">Πάρε την ιδιωτικότητα μαζί σου.\nΝα είσαι ο εαυτός σου σε κάθε μήνυμα.</string>
+    <!-- Non-English translations should use "Signal is a nonprofit" instead, dropping the 501c3 reference. -->
+    <string name="RegistrationActivity_terms_and_privacy">Το Signal είναι ένας μη κερδοσκοπικός οργανισμός.\n Όροι και Πολιτική Απορρήτου</string>
+    <string name="RegistrationActivity_continue">Συνέχεια</string>
+    <!-- Screen title for restoring or transfering account -->
+    <string name="registration_activity__restore_or_transfer">Επαναφορά ή μεταφορά</string>
+
+    <!-- GrantPermissionsFragment -->
+    <!-- Displayed as a title at the top of the screen -->
+    <string name="GrantPermissionsFragment__allow_permissions">Να δοθούν δικαιώματα</string>
+    <!-- Displayed as a subtitle at the top of the screen -->
+    <string name="GrantPermissionsFragment__to_help_you_message_people_you_know">Η Radar θα ζητήσει αυτές τις άδειες, για να σε βοηθήσει να στέλνεις μηνύματα σε άτομα που γνωρίζεις. </string>
+    <!-- Displayed as a text-only action button at the bottom start of the screen -->
+    <string name="GrantPermissionsFragment__not_now">Όχι τώρα</string>
+    <!-- Displayed as an action button at the bottom end of the screen -->
+    <string name="GrantPermissionsFragment__next">Επόμενο</string>
+    <!-- Notifications permission row title -->
+    <string name="GrantPermissionsFragment__notifications">Ειδοποιήσεις</string>
+    <!-- Notifications permission row description -->
+    <string name="GrantPermissionsFragment__get_notified_when">Λάβε ειδοποιήσεις όταν έρχονται νέα μηνύματα.</string>
+    <!-- Contacts permission row title -->
+    <string name="GrantPermissionsFragment__contacts">Επαφές</string>
+    <!-- Contacts permission row description -->
+    <string name="GrantPermissionsFragment__find_people_you_know">Βρες άτομα που γνωρίζεις. Οι επαφές σου είναι κρυπτογραφημένες και δεν είναι ορατές στην υπηρεσία Radar.</string>
+    <!-- Phone calls permission row title -->
+    <string name="GrantPermissionsFragment__phone_calls">Τηλεφωνικές κλήσεις</string>
+    <!-- Phone calls permission row description -->
+    <string name="GrantPermissionsFragment__make_registering_easier">Κάνε την εγγραφή ευκολότερη και ενεργοποίησε πρόσθετες λειτουργίες κλήσεων.</string>
+    <!-- Storage permission row title -->
+    <string name="GrantPermissionsFragment__storage">Αποθηκευτικός χώρος</string>
+    <!-- Storage permission row description -->
+    <string name="GrantPermissionsFragment__send_photos_videos_and_files">Στείλε φωτογραφίες, βίντεο και αρχεία από τη συσκευή σου.</string>
+
+    <!-- PhoneNumberEntryScreen -->
+    <!-- Title of registration screen when asking for the users phone number -->
+    <string name="RegistrationActivity_phone_number">Αριθμός τηλεφώνου</string>
+    <!-- Text explaining to users that they will be receiving a verification for their phone number and that carrier rates could apply -->
+    <string name="RegistrationActivity_you_will_receive_a_verification_code">Θα λάβεις έναν κωδικό επαλήθευσης. Μπορεί να υπάρξουν χρεώσεις παρόχου.</string>
+    <!-- Hint text to select a country -->
+    <string name="RegistrationActivity_select_a_country">Επιλογή χώρας</string>
+    <string name="RegistrationActivity_phone_number_description">Αριθμός τηλεφώνου</string>
+    <!-- Label the phone number field takes on when what has been typed reads as an account ID rather than a number -->
+    <string name="RegistrationActivity_account_id">ID λογαριασμού</string>
+    <!-- Error shown beneath the phone number field when the entered number is not valid -->
+    <string name="RegistrationActivity_not_a_valid_phone_number">Ο αριθμός δεν είναι έγκυρος</string>
+    <!-- Dialog title shown when the entered phone number is rejected as invalid -->
+    <string name="RegistrationActivity_invalid_phone_number">Μη έγκυρος αριθμός τηλεφώνου</string>
+    <!-- Dialog body shown when the entered phone number is rejected as invalid -->
+    <string name="RegistrationActivity_the_number_you_entered_is_not_valid">Ο αριθμός που έγραψες δεν φαίνεται έγκαιρος. Τσέκαρε τον κωδικό χώρας και τον αριθμό και δοκίμασε ξανά.</string>
+    <string name="RegistrationActivity_next">Επόμενο</string>
+    <!-- Button on the phone number screen that starts registering with a purchased Signal Login instead of a phone number -->
+    <string name="RegistrationActivity_register_without_number">Εγγραφή χωρίς αριθμό</string>
+    <!-- Button on the phone number screen, shown when the user already said they have an account to restore, that goes straight to entering their existing Signal Login -->
+    <string name="RegistrationActivity_use_account_id">Χρησιμοποίησε το ID λογαριασμού</string>
+    <!-- Dialog title to confirm phone number -->
+    <string name="RegistrationActivity_is_the_phone_number">Είναι σωστός ο παρακάτω αριθμός τηλεφώνου;</string>
+    <!-- Dialog body to confirm phone number -->
+    <string name="RegistrationActivity_a_verification_code">Θα σταλεί κωδικός επαλήθευσης σε αυτό το νούμερο. Ενδέχεται να ισχύουν χρεώσεις εταιρείας κινητής τηλεφωνίας.</string>
+    <!-- Dialog button to edit the number entered -->
+    <string name="RegistrationActivity_edit_number">Επεξεργασία αριθμού</string>
+    <!-- Accessibility label for opening the screen specific dropdown menu. -->
+    <string name="RegistrationActivity_open_menu">Άνοιγμα μενού</string>
+    <!-- Menu option to use a proxy -->
+    <string name="RegistrationActivity_use_proxy">Χρήση proxy</string>
+    <!-- Menu option to link this as a device -->
+    <string name="RegistrationActivity_link_device">Σύνδεση συσκευής</string>
+    <!-- Clickable text that opens a corresponding URL -->
+    <string name="RegistrationActivity_learn_more">Μάθε περισσότερα</string>
+
+    <!-- CountryCodePickerScreen -->
+    <!-- Title of the country code selection screen -->
+    <string name="CountryCodeSelectScreen__your_country">Η χώρα σου</string>
+    <!-- Close button content description -->
+    <string name="CountryCodeSelectScreen__close">Κλείσιμο</string>
+    <!-- Search bar hint text -->
+    <string name="CountryCodeSelectScreen__search_by">Αναζήτηση με όνομα ή κωδικό χώρας</string>
+    <!-- Fallback text for countries with no name -->
+    <string name="CountryCodeSelectScreen__unknown_country">Άγνωστη χώρα</string>
+
+    <!-- VerificationCodeScreen -->
+    <!-- Title of the verification code entry screen -->
+    <string name="VerificationCodeScreen__verification_code">Κωδικός επαλήθευσης</string>
+    <!-- Subtitle explaining where the code was sent. Placeholder is the phone number -->
+    <string name="VerificationCodeScreen__enter_the_code_we_sent_to_s">Γράψε τον κωδικό που σου στείλαμε στο %1$s</string>
+    <!-- Button text for wrong number action -->
+    <string name="VerificationCodeScreen__wrong_number">Λάθος αριθμός;</string>
+    <!-- Button text for resend SMS action -->
+    <string name="VerificationCodeScreen__resend_code">Νέα αποστολή κωδικού</string>
+    <!-- Button text for call me action -->
+    <string name="VerificationCodeScreen__call_me_instead">Κάλεσέ με αντ\' αυτού</string>
+    <!-- Button text for resend SMS when countdown is active. Placeholders are minutes and seconds -->
+    <string name="VerificationCodeScreen__resend_code_available_in">Επαναποστολή κωδικού σε(%1$02d:%2$02d)</string>
+    <!-- Button text for call me when countdown is active. Placeholders are minutes and seconds -->
+    <string name="VerificationCodeScreen__call_me_available_in">Κάλεσέ με (%1$02d:%2$02d)</string>
+    <!-- Toast shown when the user enters an incorrect verification code -->
+    <string name="VerificationCodeScreen__incorrect_code">Λάθος κωδικός</string>
+    <!-- Snackbar shown when there is a network error -->
+    <string name="VerificationCodeScreen__network_error">Δεν είναι δυνατή η σύνδεση. Έλεγξε το δίκτυό σου και δοκίμασε ξανά.</string>
+    <!-- Snackbar shown when rate limited. Placeholder is the retry duration -->
+    <string name="VerificationCodeScreen__too_many_attempts_try_again_in_s">Υπερβολικά πολλές προσπάθειες. Δοκίμασε ξανά σε %1$s.</string>
+    <!-- Snackbar shown when rate limited without a specific retry duration -->
+    <string name="VerificationCodeScreen__too_many_attempts">Υπερβολικά πολλές προσπάθειες. Δοκίμασε αργότερα.</string>
+    <!-- Snackbar shown for generic/unknown errors -->
+    <string name="VerificationCodeScreen__an_unexpected_error_occurred">Παρουσιάστηκε απρόσμενο σφάλμα. Δοκίμασε ξανά.</string>
+    <!-- Snackbar shown when we are unable to send an SMS to the user\'s number -->
+    <string name="VerificationCodeScreen__unable_to_send_sms">Δεν μπορούμε να στείλουμε SMS στον αριθμό σου. Δοκίμασε ξανά σε λίγες ώρες.</string>
+    <!-- Snackbar shown when the selected transport (SMS/voice) is unavailable -->
+    <string name="VerificationCodeScreen__could_not_send_code_via_selected_method">Δεν ήταν δυνατή η αποστολή κωδικού μέσω της επιλεγμένης μεθόδου. Δοκίμασε μια άλλη επιλογή.</string>
+    <!-- Dialog shown when the provider rejected placing a verification phone call to the user\'s number -->
+    <string name="VerificationCodeScreen__could_not_call_provider_rejected">Δεν μπορέσαμε να σου στείλουμε κωδικό επαλήθευσης. Δοκίμασε ξανά ή ζήτα να λάβεις τον κωδικό σου μέσω SMS.</string>
+    <!-- Dialog shown when the provider rejected sending a verification SMS to the user\'s number -->
+    <string name="VerificationCodeScreen__could_not_sms_provider_rejected">Δεν μπορέσαμε να σου στείλουμε SMS με κωδικό επαλήθευσης. Δοκίμασε ξανά ή ζήτα να λάβεις τον κωδικό σου μέσω τηλεφωνικής κλήσης.</string>
+    <!-- Snackbar shown for registration errors -->
+    <string name="VerificationCodeScreen__registration_error">Η εγγραφή απέτυχε. Δοκίμασε ξανά.</string>
+    <!-- Button text for having trouble with verification -->
+    <string name="VerificationCodeScreen__having_trouble">Αντιμετωπίζεις προβλήματα;</string>
+    <!-- Title of the bottom sheet shown when the user is having trouble entering their verification code -->
+    <string name="VerificationCodeScreen__support_bottom_sheet_title">Αντιμετωπίζεις προβλήματα με την εγγραφή;</string>
+    <!-- Bulleted list of suggestions shown in the having trouble bottom sheet -->
+    <string name="VerificationCodeScreen__support_bottom_sheet_body_suggestions">• Βεβαιώσου ότι το τηλέφωνό σου διαθέτει σήμα κινητής τηλεφωνίας για να λάβεις το SMS ή την κλήση σου \n • Επιβεβαίωσε ότι μπορείς να δεχτείς τηλεφωνικές κλήσεις στον αριθμό \n • Έλεγξε ότι έχεις εισαγάγει σωστά τον αριθμό τηλεφώνου σου.</string>
+    <!-- A call to action for a user having trouble entering the verification code to seek further help. The first placeholder is VerificationCodeScreen__support_bottom_sheet_cta_troubleshooting_steps_substring, the second is VerificationCodeScreen__support_bottom_sheet_cta_contact_support_substring -->
+    <string name="VerificationCodeScreen__support_bottom_sheet_body_call_to_action">Για περισσότερες πληροφορίες, ακολούθησε τα εξής: %1$s ή %2$s</string>
+    <!-- Clickable substring linking to troubleshooting steps within VerificationCodeScreen__support_bottom_sheet_body_call_to_action -->
+    <string name="VerificationCodeScreen__support_bottom_sheet_cta_troubleshooting_steps_substring">αυτά τα βήματα αντιμετώπισης προβλημάτων</string>
+    <!-- Clickable substring linking to contacting support within VerificationCodeScreen__support_bottom_sheet_body_call_to_action -->
+    <string name="VerificationCodeScreen__support_bottom_sheet_cta_contact_support_substring">Επικοινωνία με την υποστήριξη</string>
+    <!-- Email subject used when contacting support from the verification code screen -->
+    <string name="VerificationCodeScreen__contact_support_email_subject">Εγγραφή Signal - Κωδικός επαλήθευσης για Android</string>
+    <!-- Text placed in the body of the support email composed from the verification code screen. Used to route the request, so it is not translated. -->
+  <!-- Removed by excludeNonTranslatables <string name="VerificationCodeScreen__contact_support_email_filter" translatable="false">Signal Registration - Verification Code for Android</string> -->
+    <!-- URL opened for troubleshooting steps from the verification code screen -->
+  <!-- Removed by excludeNonTranslatables <string name="VerificationCodeScreen__support_center_url" translatable="false">https://support.signal.org/</string> -->
+
+    <!-- RestoreWelcomeBottomSheet -->
+    <!-- Row title for restore/transfer using a previous registered phone/device -->
+    <string name="WelcomeFragment_restore_action_i_have_my_old_phone">Έχω το παλιό μου τηλέφωνο</string>
+    <!-- Row subtitle for restore/transfer using a previous registered phone/device -->
+    <string name="WelcomeFragment_restore_action_scan_qr">Σάρωσε έναν κωδικό QR από τον τρέχοντα λογαριασμό σου στο Radar για να ξεκινήσεις γρήγορα</string>
+    <!-- Row title for restore/transfer without using a previous device -->
+    <string name="WelcomeFragment_restore_action_i_dont_have_my_old_phone">Δεν έχω το παλιό μου τηλέφωνο</string>
+    <!-- Row subtitle for restore/transfer without using a previous device -->
+    <string name="WelcomeFragment_restore_action_reinstalling">Ή επανεγκαθιστάς το Radar στην ίδια συσκευή</string>
+
+    <!-- ArchiveRestoreSelectionScreen -->
+    <!-- Title text for the archive restore selection screen -->
+    <string name="ArchiveRestoreSelectionScreen__restore_or_transfer_account">Επαναφορά ή μεταφορά λογαριασμού</string>
+    <!-- Subtitle text for the archive restore selection screen -->
+    <string name="ArchiveRestoreSelectionScreen__subheading">Επίλεξε πώς θέλεις να επαναφέρεις το ιστορικό μηνυμάτων και τα δεδομένα του λογαριασμού σου.</string>
+    <!-- Title for the Signal Backups option card -->
+    <string name="ArchiveRestoreSelectionScreen__from_signal_backups">Από τα αντίγραφα ασφαλείας Radar</string>
+    <!-- Subtitle for the Signal Backups option card -->
+    <string name="ArchiveRestoreSelectionScreen__your_free_or_paid_signal_backup_plan">Το δωρεάν ή επί πληρωμή πρόγραμμα Radar Backup</string>
+    <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
+    <string name="ArchiveRestoreSelectionScreen__local_backup_card_title">Επαναφορά αντιγράφων ασφαλείας στη συσκευή</string>
+    <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
+    <string name="ArchiveRestoreSelectionScreen__local_backup_card_description">Επανάφερε τα μηνύματά σου από ένα αντίγραφο ασφαλείας που έχεις αποθηκεύσει στη συσκευή σου.</string>
+    <!-- Title for an option that, when clicked, will take the user to a flow to restore form a local backup -->
+    <string name="ArchiveRestoreSelectionScreen__skip_restore_title">Συνέχεια χωρίς μεταφορά</string>
+    <!-- Description for an option that, when clicked, will take the user to a flow to restore form a local backup -->
+    <string name="ArchiveRestoreSelectionScreen__skip_restore_description">Δεν θα γίνει μεταφορά μηνυμάτων και πολυμέσων</string>
+    <!-- Title for the device transfer option card -->
+    <string name="ArchiveRestoreSelectionScreen__from_your_old_phone">Από το παλιό σου τηλέφωνο</string>
+    <!-- Subtitle for the device transfer option card -->
+    <string name="ArchiveRestoreSelectionScreen__transfer_directly_from_old">Απευθείας μεταφορά από το παλιό σου Android</string>
+    <!-- Title for the skip restore confirmation dialog -->
+    <string name="ArchiveRestoreSelectionScreen__skip_restore_dialog_title">Παράλειψη επαναφοράς;</string>
+    <!-- Warning body text for the skip restore confirmation dialog -->
+    <string name="ArchiveRestoreSelectionScreen__skip_restore_dialog_warning">Αν παραλείψεις την επαναφορά τώρα, δε θα μπορείς να τα επαναφέρεις αργότερα. Εάν ενεργοποιήσεις ξανά τα αντίγραφα ασφαλείας μετά την παράλειψη της επαναφοράς, το τρέχον αντίγραφο ασφαλείας θα αντικατασταθεί από το νέο ιστορικό μηνυμάτων σου.</string>
+    <!-- Confirm button text for the skip restore dialog -->
+    <string name="ArchiveRestoreSelectionScreen__skip_restore_dialog_confirm_button">Παράλειψη επαναφοράς</string>
+
+    <!-- LocalBackupRestoreScreen -->
+    <!-- Title for the local backup restore screen -->
+    <string name="LocalBackupRestoreScreen__restore_on_device_backup">Επαναφορά αντιγράφων ασφαλείας στη συσκευή</string>
+    <!-- Description on the folder selection screen -->
+    <string name="LocalBackupRestoreScreen__select_folder_description">Επανάφερε τα μηνύματά σου από το αντίγραφο ασφαλείας που έχεις αποθηκεύσει στη συσκευή σου. Αν δεν τα επαναφέρεις τώρα, δε θα μπορείς να τα επαναφέρεις αργότερα.</string>
+    <!-- Title for the choose backup folder card -->
+    <string name="LocalBackupRestoreScreen__choose_backup_folder">Επίλεξε φάκελο αντιγράφων ασφαλείας</string>
+    <!-- Subtitle for the choose backup folder card -->
+    <string name="LocalBackupRestoreScreen__choose_folder_subtitle">Επίλεξε τον φάκελο στη συσκευή σου όπου είναι αποθηκευμένο το αντίγραφο ασφαλείας</string>
+    <!-- Text shown while scanning for backups -->
+    <string name="LocalBackupRestoreScreen__scanning_folder">Αναζήτηση αντιγράφων ασφαλείας…</string>
+    <!-- Description shown when a backup is found -->
+    <string name="LocalBackupRestoreScreen__backup_found_description">Επανάφερε τα μηνύματά σου από τον φάκελο αντιγράφων ασφαλείας που έχεις αποθηκεύσει στη συσκευή σου. Αν δεν τα επαναφέρεις τώρα, δε θα μπορείς να τα επαναφέρεις αργότερα.</string>
+    <!-- Title for the latest backup card -->
+    <string name="LocalBackupRestoreScreen__your_latest_backup">Τα τελευταία αντίγραφα ασφαλείας σου:</string>
+    <!-- Restore backup button text -->
+    <string name="LocalBackupRestoreScreen__restore_backup">Επαναφορά αντίγραφου ασφαλείας</string>
+    <!-- Link to choose an earlier backup -->
+    <string name="LocalBackupRestoreScreen__choose_earlier_backup">Επίλεξε ένα παλαιότερο αντίγραφο ασφαλείας</string>
+    <!-- Title for the backup picker bottom sheet -->
+    <string name="LocalBackupRestoreScreen__choose_a_backup_to_restore">Επίλεξε ένα αντίγραφο ασφαλείας για επαναφορά</string>
+    <!-- Warning text in the backup picker bottom sheet -->
+    <string name="LocalBackupRestoreScreen__choosing_an_older_backup_warning">Η επιλογή ενός παλαιότερου αντιγράφου ασφαλείας μπορεί να οδηγήσει σε απώλεια μηνυμάτων ή πολυμέσων.</string>
+    <!-- Title when no backup is found -->
+    <string name="LocalBackupRestoreScreen__no_backup_found">Δεν βρέθηκε αντίγραφο ασφαλείας</string>
+    <!-- Description when no backup is found -->
+    <string name="LocalBackupRestoreScreen__no_backup_found_description">Δεν βρέθηκε αντίγραφο ασφαλείας Radar στον επιλεγμένο φάκελο. Επίλεξε διαφορετικό φάκελο.</string>
+    <!-- Button to try a different folder -->
+    <string name="LocalBackupRestoreScreen__try_different_folder">Δοκίμασε έναν διαφορετικό φάκελο</string>
+    <!-- Title for V1 passphrase entry screen -->
+    <string name="LocalBackupRestoreScreen__enter_backup_passphrase">Εισαγωγή συνθηματικό αντίγραφου ασφαλείας</string>
+    <!-- Description for V1 passphrase entry screen -->
+    <string name="LocalBackupRestoreScreen__enter_the_30_digit_passphrase">To τοπικό συνθηματικό αντίγραφου ασφαλείας είναι ένας 30ψήφιος κωδικός που απαιτείται για την ανάκτηση του λογαριασμού και των δεδομένων σου.</string>
+    <!-- Label for the backup passphrase text field -->
+    <string name="LocalBackupRestoreScreen__passphrase">Συνθηματικό</string>
+    <!-- Error text when passphrase is too long -->
+    <string name="LocalBackupRestoreScreen__too_long">Πολύ μακροσκελές (%1$d/%2$d)</string>
+    <!-- Link for users who don\'t have their passphrase -->
+    <string name="LocalBackupRestoreScreen__no_passphrase">Δεν έχεις συνθηματικό;</string>
+    <!-- Next button text -->
+    <string name="LocalBackupRestoreScreen__next">Επόμενο</string>
+    <!-- EnterAepScreen -->
+    <!-- Title for recovery key entry screen -->
+    <string name="EnterAepScreen__enter_your_recovery_key">Γράψε το κλειδί ανάκτησής σου</string>
+    <!-- Description for recovery key entry screen -->
+    <string name="EnterAepScreen__your_recovery_key_is_a_64_character_code">Το κλειδί ανάκτησής σου είναι ένας κωδικός 64 χαρακτήρων που απαιτείται για την ανάκτηση του λογαριασμού και των δεδομένων σου.</string>
+    <!-- Label for the recovery key text field -->
+    <string name="EnterAepScreen__recovery_key">Κλειδί ανάκτησης</string>
+    <!-- Link for users who don\'t have their recovery key -->
+    <string name="EnterAepScreen__no_recovery_key">Δεν υπάρχει κλειδί ανάκτησης;</string>
+    <!-- Error text when key is invalid -->
+    <string name="EnterAepScreen__invalid_recovery_key">Μη έγκυρο κλειδί ανάκτησης</string>
+    <!-- Error text when key is correct format but does not match account -->
+    <string name="EnterAepScreen__incorrect_recovery_key">Λανθασμένο κλειδί ανάκτησης</string>
+    <!-- Button that prompts the device password manager to fill in the recovery key -->
+    <string name="EnterAepScreen__fill_from_password_manager">Συμπλήρωση από τον διαχειριστή κωδικών πρόσβασης</string>
+    <!-- Title of the dialog warning that the backup being restored was created with a different account -->
+    <string name="EnterAepScreen__restore_to_new_account">Επαναφορά σε νέο λογαριασμό;</string>
+    <!-- Body of the dialog warning the user that the backup was created with a different account and they will lose group memberships -->
+    <string name="EnterAepScreen__restore_to_new_account_body">Το αντίγραφο ασφαλείας που επαναφέρεις δημιουργήθηκε χρησιμοποιώντας διαφορετικό λογαριασμό Radar. Μπορείς να επαναφέρεις αυτό το αντίγραφο ασφαλείας σε έναν νέο λογαριασμό, αλλά δεν θα είσαι πλέον μέλος των ομάδων που ανακτήθηκαν.</string>
+    <!-- Confirm button label for the restore to new account dialog -->
+    <string name="EnterAepScreen__restore">Επαναφορά</string>
+    <!-- Title of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
+    <string name="EnterAepScreen__no_backup_found">Δεν βρέθηκε αντίγραφο ασφαλείας</string>
+    <!-- Body of the dialog shown when the entered recovery key is correct, but the account has no Signal Backup to restore -->
+    <string name="EnterAepScreen__no_backup_found_body">Το κλειδί ανάκτησης που έγραψες είναι σωστό, αλλά δεν υπάρχει αντίγραφο ασφαλείας Radar για αυτόν τον λογαριασμό. Επίστρεψε για να επιλέξεις έναν άλλο τρόπο επαναφοράς ή συνέχισε χωρίς επαναφορά.</string>
+    <!-- Title of the dialog shown when the entered recovery key does not match the account being registered -->
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_title">Λανθασμένο κλειδί ανάκτησης</string>
+    <!-- Body of the dialog shown when the entered recovery key does not match the account being registered -->
+    <string name="EnterAepScreen__incorrect_recovery_key_dialog_body">Βεβαιώσου ότι εγγράφεσαι με τον ίδιο αριθμό τηλεφώνου και κλειδί ανάκτησης 64 χαρακτήρων που αποθήκευσες κατά την ενεργοποίηση των αντιγράφων ασφαλείας Radar. Τα Αντίγραφα ασφαλείας δεν μπορούν να ανακτηθούν χωρίς αυτό το κλειδί.</string>
+    <!-- Button in the incorrect recovery key dialog that dismisses it so the user can re-enter their key -->
+    <string name="EnterAepScreen__try_again">Ξαναπροσπάθησε</string>
+    <!-- Button in the incorrect recovery key dialog that offers to verify the phone number over SMS instead -->
+    <string name="EnterAepScreen__try_another_way">Δοκίμασε άλλον τρόπο</string>
+    <!-- Button in the incorrect recovery key dialog that opens a support article about recovery keys -->
+    <string name="EnterAepScreen__recovery_key_help">Βοήθεια σχετικά με το κλειδί ανάκτησης</string>
+    <!-- Title of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
+    <string name="EnterAepScreen__verify_with_sms_code">Επιβεβαίωση με κωδικό SMS;</string>
+    <!-- Body of the dialog offering to verify the phone number with an SMS code instead of the recovery key -->
+    <string name="EnterAepScreen__verify_with_sms_code_body">Μπορείς να ενεργοποιήσεις τον λογαριασμό σου επαληθεύοντας τον μέσω ενός κωδικού SMS που θα σου στείλει η εφαρμογή Radar. Αφού εισαγάγεις τον κωδικό, μπορείς να δοκιμάσεις ξανά να επαναφέρεις το αντίγραφο ασφαλείας σου χρησιμοποιώντας το κλειδί ανάκτησης.</string>
+    <!-- Confirm button in the verify with SMS code dialog that requests an SMS verification code -->
+    <string name="EnterAepScreen__send_code">Αποστολή κωδικού</string>
+    <!-- Text shown while preparing the restore -->
+    <string name="LocalBackupRestoreScreen__preparing_restore">Προετοιμασία για επαναφορά…</string>
+    <!-- Title shown while restore is in progress -->
+    <string name="LocalBackupRestoreScreen__restoring_backup">Επαναφορά αντίγραφου ασφαλείας</string>
+    <!-- Description shown while restore is in progress -->
+    <string name="LocalBackupRestoreScreen__restoring_description">Περίμενε όσο τα μηνύματά σου και τα δεδομένα σου επαναφέρονται.</string>
+    <!-- Continue button text after restore is complete -->
+    <string name="LocalBackupRestoreScreen__continue_button">Συνέχεια</string>
+    <!-- Title shown when restore fails -->
+    <string name="LocalBackupRestoreScreen__restore_failed">Η επαναφορά απέτυχε</string>
+    <!-- Description shown when restore fails with an unknown error -->
+    <string name="LocalBackupRestoreScreen__restore_failed_description">Παρουσιάστηκε σφάλμα κατά την επαναφορά του αντιγράφου ασφαλείας σου. Δοκίμασε ξανά.</string>
+    <!-- Button to retry restore after failure -->
+    <string name="LocalBackupRestoreScreen__try_again">Δοκίμασε ξανά</string>
+    <!-- Title shown when the entered passphrase cannot decrypt the selected backup -->
+    <string name="LocalBackupRestoreScreen__incorrect_passphrase">Λανθασμένο συνθηματικό</string>
+    <!-- Title shown when the entered recovery key cannot decrypt the selected backup -->
+    <string name="LocalBackupRestoreScreen__incorrect_recovery_key">Λανθασμένο κλειδί ανάκτησης</string>
+    <!-- Description shown when the entered passphrase or recovery key cannot decrypt the selected backup -->
+    <string name="LocalBackupRestoreScreen__incorrect_credential_description">Τα διαπιστευτήρια που πρόσθεσες δεν αντιστοιχούν σε αυτό το αντίγραφο ασφαλείας. Τσέκαρε και δοκίμασε ξανά.</string>
+    <!-- Button to link an existing Signal account to this device -->
+    <string name="WelcomeScreen__link_your_account">Σύνδεσε τον λογαριασμό σου</string>
+    <!-- Prompt shown to users who don\'t have a Signal account yet -->
+    <string name="WelcomeScreen__not_on_signal_yet">Δεν είσαι ακόμα στο Radar;</string>
+    <!-- Button to create a new Signal account -->
+    <string name="WelcomeScreen__create_account">Δημιουργία λογαριασμού</string>
+
+    <!-- RemoteRestoreScreen -->
+    <!-- Title for the remote backup restore screen -->
+    <string name="RemoteRestoreScreen__restore_from_backup">Επαναφορά από αντίγραφο ασφαλείας</string>
+    <!-- Shown while fetching backup details from server -->
+    <string name="RemoteRestoreScreen__fetching_backup_details">Λήψη στοιχείων αντιγράφων ασφαλείας…</string>
+    <!-- Button to start restoring the backup -->
+    <string name="RemoteRestoreScreen__restore_backup">Επαναφορά αντίγραφου ασφαλείας</string>
+    <!-- Subtitle showing when the last backup was made, with date and time placeholders -->
+    <string name="RemoteRestoreScreen__your_last_backup_was_made_on_s_at_s">Το τελευταίο σου αντίγραφο ασφαλείας έγινε στις %1$s στις %2$s.</string>
+    <!-- Description telling the user their media will restore in the background -->
+    <string name="RemoteRestoreScreen__your_media_will_restore_in_the_background">Η επαναφορά των πολυμέσων σου θα πραγματοποιηθεί στο παρασκήνιο. Αν δεν επιλέξεις να τα επαναφέρεις τώρα, δε θα μπορείς να τα επαναφέρεις αργότερα.</string>
+    <!-- Title for the backup not found dialog -->
+    <string name="RemoteRestoreScreen__backup_not_found">Το αντίγραφο ασφαλείας δεν βρέθηκε</string>
+    <!-- Body for the backup not found dialog -->
+    <string name="RemoteRestoreScreen__no_backup_was_found">Δεν βρέθηκαν αντίγραφα ασφαλείας για αυτόν τον λογαριασμό.</string>
+    <!-- Title for the restore failed dialog -->
+    <string name="RemoteRestoreScreen__cant_restore_backup">Δεν είναι δυνατή η επαναφορά του αντιγράφου ασφαλείας</string>
+    <!-- Body for the restore failed dialog -->
+    <string name="RemoteRestoreScreen__your_backup_cant_be_restored_right_now">Δεν είναι δυνατή η επαναφορά του αντιγράφου ασφαλείας σου προς το παρόν. Δοκίμασε ξανά.</string>
+    <!-- Button to try again -->
+    <string name="RemoteRestoreScreen__try_again">Δοκίμασε ξανά</string>
+    <!-- Title for the network error dialog -->
+    <string name="RemoteRestoreScreen__couldnt_finish_restore">Δεν ήταν δυνατή η ολοκλήρωση της επαναφοράς</string>
+    <!-- Body for the network error dialog -->
+    <string name="RemoteRestoreScreen__error_connecting">Παρουσιάστηκε σφάλμα κατά τη σύνδεση με τον διακομιστή. \'Ελεγξε τη σύνδεσή σου και δοκίμασε ξανά.</string>
+    <!-- Body for the general restore failure dialog -->
+    <string name="RemoteRestoreScreen__error_occurred">Παρουσιάστηκε σφάλμα κατά την επαναφορά του αντιγράφου ασφαλείας σου. Δοκίμασε ξανά.</string>
+    <!-- Title for the invalid backup version dialog -->
+    <string name="RemoteRestoreScreen__couldnt_restore_this_backup">Δεν ήταν δυνατή η επαναφορά αυτού του αντιγράφου ασφαλείας</string>
+    <!-- Body for the invalid backup version dialog -->
+    <string name="RemoteRestoreScreen__update_latest">Αυτή η έκδοση του Radar δεν μπορεί να επαναφέρει το αντίγραφο ασφαλείας σου. Ενημέρωσε το Radar στην τελευταία έκδοση και δοκίμασε ξανά.</string>
+    <!-- Button to update Signal -->
+    <string name="RemoteRestoreScreen__update_signal">Αναβάθμισε το Radar</string>
+    <!-- Button to dismiss update dialog -->
+    <string name="RemoteRestoreScreen__not_now">Όχι τώρα</string>
+    <!-- Title for unrecoverable backup failure dialog -->
+    <string name="RemoteRestoreScreen__cant_restore_this_backup">Δεν είναι δυνατή η επαναφορά του αντιγράφου ασφαλείας</string>
+    <!-- Body for unrecoverable backup failure dialog prompting user to contact support -->
+    <string name="RemoteRestoreScreen__your_backup_is_not_recoverable">Παρουσιάστηκε σφάλμα κατά την επαναφορά του αντιγράφου ασφαλείας σου. Το αντίγραφο ασφαλείας σου δεν μπορεί να ανακτηθεί. Επικοινώνησε με την υποστήριξη για βοήθεια.</string>
+    <!-- Button to contact support -->
+    <string name="RemoteRestoreScreen__contact_support">Επικοινωνία με την υποστήριξη</string>
+    <!-- Subject line of the support email composed when the user contacts support about an unrecoverable backup. -->
+    <string name="RemoteRestoreScreen__contact_support_email_subject">Μόνιμη αποτυχία επαναφοράς αντιγράφου ασφαλείας Signal Android</string>
+    <!-- Text placed in the body of the support email composed when the user contacts support about an unrecoverable backup. Used to route the request, so it is not translated. -->
+  <!-- Removed by excludeNonTranslatables <string name="RemoteRestoreScreen__contact_support_email_filter" translatable="false">Android SignalBackups Import Permanent Failure</string> -->
+    <!-- Shown while downloading the backup from the server -->
+    <string name="RemoteRestoreScreen__downloading_backup">Λήψη αντιγράφων ασφαλείας…</string>
+    <!-- Shown while restoring messages from the downloaded backup -->
+    <string name="RemoteRestoreScreen__restoring_messages">Επαναφορά μηνυμάτων…</string>
+    <!-- Shown while finalizing the restore -->
+    <string name="RemoteRestoreScreen__finishing_restore">Ολοκλήρωση…</string>
+    <!-- Shown as a generic restoring message -->
+    <string name="RemoteRestoreScreen__restoring">Επαναφορά…</string>
+    <!-- Byte progress text, e.g. "1.2 MB of 10 MB (12.34%)" -->
+    <string name="RemoteRestoreScreen__s_of_s_s">%1$s από %2$s (%3$s)</string>
+    <!-- Shown when attempting to open a URL in the web browser, but a browser app cannot be found. -->
+    <string name="LinkActions_error_no_browser_found">Δεν βρέθηκε περιηγητής.</string>
+
+    <!-- Title for screen when your account is locked -->
+    <string name="AccountLockedScreen__account_locked">Κλειδωμένος λογαριασμός</string>
+    <!-- Description for screen when account is locked -->
+    <string name="AccountLockedScreen__your_account">Ο λογαριασμός σου έχει κλειδωθεί για να προστατεύσουμε το απόρρητο και την ασφάλειά σου. Μετά από %1$d ημέρες αδράνειας του λογαριασμού σου, θα μπορείς να επανεγγράψεις αυτό τον αριθμό τηλεφώνου χωρίς να χρειάζεται το PIN σου. Όλα τα περιεχόμενα θα διαγραφούν.</string>
+
+    <!-- Step 1 to quick restore -->
+    <string name="QuickRestoreQRScreen__step_1">Άνοιξε το Radar στην παλιά σου συσκευή</string>
+    <!-- Step 2 to quick restore -->
+    <string name="QuickRestoreQRScreen__step_2">Πάτα το εικονίδιο της κάμερας </string>
+    <!-- Step 3 to quick restore -->
+    <string name="QuickRestoreQRScreen__step_3">Σάρωσε αυτόν τον κωδικό με την κάμερα</string>
+    <!-- Loading dialog text when registering -->
+    <string name="QuickRestoreQRScreen__reregister">Εγγραφή…</string>
+    <!-- Error message text shown if registering fails -->
+    <string name="QuickRestoreQRScreen__error">Προέκυψε σφάλμα κατά την εγγραφή</string>
+    <!-- Title for quick restoring -->
+    <string name="QuickRestoreQRScreen__scan">Σάρωσε αυτόν τον κωδικό με το παλιό σου τηλέφωνο</string>
+    <!-- Confirmation dialog when qr code is successfully scanned -->
+    <string name="QuickRestoreQRScreen__scanned">Έγινε σάρωση του κωδικού QR</string>
+    <!-- Button text to retry scanning the QR code -->
+    <string name="QuickRestoreQRScreen__retry">Επανάληψη</string>
+    <!-- Failure text when a code could not be generated -->
+    <string name="QuickRestoreQRScreen__failed">Δεν είναι δυνατή η δημιουργία κωδικού QR</string>
+
+    <!-- Toast text hinting to submit a debug log with %d being how many more taps are left -->
+    <plurals name="RegistrationActivity_debug_log_hint">
+        <item quantity="one">Είσαι %1$d βήμα μακριά από την καταχώρηση ενός αρχείου αποσφαλμάτωσης.</item>
+        <item quantity="other">Είσαι %1$d βήματα μακριά από την καταχώρηση ενός αρχείου αποσφαλμάτωσης.</item>
+    </plurals>
+
+    <!-- PIN creation screen title. -->
+    <string name="PinCreationScreen__create_your_pin">Δημιουργία του PIN σου</string>
+    <!-- PIN creation screen title when confirming the new Signal PIN. -->
+    <string name="PinCreationScreen__confirm_your_pin">Επαλήθευσε το PIN σου</string>
+    <!-- Describes how to confirm the new Signal PIN. -->
+    <string name="PinCreationScreen__reenter_pin_description">Γράψε ξανά το PIN που μόλις δημιούργησες</string>
+    <!-- Describes the purpose of creating a Signal PIN. -->
+    <string name="PinCreationScreen__pins_can_help">Τα PIN μπορούν να σε βοηθήσουν να επαναφέρεις τον λογαριασμό σου εάν χάσεις το κινητό σου. </string>
+    <!-- Labels the button to learn more about Signal PINs. -->
+    <string name="PinCreationScreen__learn_more">Μάθε περισσότερα</string>
+    <!-- Labels the button to switch to the numeric PIN keyboard type. -->
+    <string name="PinCreationScreen__switch_to_numeric">Αλλαγή σε αριθμητικό πληκτρολόγιο</string>
+    <!-- Labels the button to switch to the alphanumeric PIN keyboard type. -->
+    <string name="PinCreationScreen__switch_to_alphanumeric">Αλλαγή σε αλφαριθμητικό πληκτρολόγιο</string>
+    <!-- Labels the button to submit a new Signal PIN. -->
+    <string name="PinCreationScreen__next">Επόμενο</string>
+    <!-- Hint shown below the create PIN field when numeric keyboard is active. -->
+    <string name="PinCreationScreen__pin_at_least_4_digits">Το PIN πρέπει να έχει τουλάχιστον 4 ψηφία</string>
+    <!-- Hint shown below the create PIN field when alphanumeric keyboard is active. -->
+    <string name="PinCreationScreen__pin_at_least_4_characters">Το PIN πρέπει να έχει τουλάχιστον 4 χαρακτήρες</string>
+    <!-- Hint shown below the create PIN field when the user is confirming their new Signal PIN. -->
+    <string name="PinCreationScreen__reenter_pin">Ξαναγράψε το PIN</string>
+    <!-- Error shown below the PIN field when the confirmation PIN does not match the one the user first entered. -->
+    <string name="PinCreationScreen__pins_dont_match">Τα PIN δεν ταιριάζουν. Ξαναδοκίμασε.</string>
+    <!-- Error shown below the PIN field when the user tries to create a PIN that is too easy to guess, such as one made of sequential or repeated digits. -->
+    <string name="PinCreationScreen__choose_a_stronger_pin">Επίλεξε ένα ισχυρότερο PIN</string>
+    <!-- Error shown below the PIN field when the user tries to create a PIN that matches the code used to verify their phone number. -->
+    <string name="PinCreationScreen__reentered_verification_code">Πληκτρολόγησες ξανά τον κωδικό που είχε ήδη χρησιμοποιηθεί για την επαλήθευση του αριθμού τηλεφώνου σου. Επίλεξε ένα νέο και μοναδικό Radar PIN.</string>
+    <!-- Overflow menu item that opens a help article about Signal PINs. -->
+    <string name="PinCreationScreen__learn_more_about_pins">Μάθε περισσότερα για τα PIN</string>
+    <!-- Title of the dialog confirming that the user wants to disable their Signal PIN. -->
+    <string name="PinCreationScreen__warning">Προσοχή</string>
+    <!-- Warning shown in the dialog confirming that the user wants to disable their Signal PIN. -->
+    <string name="PinCreationScreen__disable_pin_warning">Αν απενεργοποιήσεις το PIN, θα χάσεις όλα τα δεδομένα όταν επανεγγραφείς στο Radar, εκτός εάν δημιουργήσεις χειροκίνητα αντίγραφο ασφαλείας και το ανακτήσεις. Δεν μπορείς να ενεργοποιήσεις το Κλείδωμα Εγγραφής όσο το PIN είναι απενεργοποιημένο.</string>
+    <!-- Overflow menu item and dialog button that disables the Signal PIN. -->
+    <string name="PinCreationScreen__disable_pin">Απενεργοποίηση PIN</string>
+    <!-- Labels the button that cancels disabling the Signal PIN. -->
+    <string name="PinCreationScreen__cancel">Ακύρωση</string>
+    <!-- Dialog message shown when the PIN could not be created because of a problem reaching the service. -->
+    <string name="PinCreationScreen__service_error">Παρουσιάστηκε πρόβλημα κατά τη σύνδεση με την υπηρεσία.</string>
+    <!-- Dialog message shown when the PIN could not be created because of a network error. -->
+    <string name="PinCreationScreen__network_error">Υπήρξε σφάλμα δικτύου.</string>
+    <!-- Dialog message shown when the PIN could not be created because of a network error, and the user may retry after a delay. Placeholder is the wait duration. -->
+    <string name="PinCreationScreen__network_error_try_again_in_s">Υπήρξε σφάλμα δικτύου. Μπορείς να δοκιμάσεις ξανά σε %1$s.</string>
+
+    <!-- PIN entry screen title when registration lock is active. -->
+    <string name="PinEntryScreen__registration_lock">Κλείδωμα εγγραφής</string>
+    <!-- PIN entry screen title when restoring an account. -->
+    <string name="PinEntryScreen__enter_your_pin">Γράψε το PIN σου</string>
+    <!-- Describes the PIN that needs to be entered. -->
+    <string name="PinEntryScreen__enter_the_pin_you_created">Συμπλήρωσε το PIN που δημιούργησες όταν εγκατέστησες το Radar για πρώτη φορά</string>
+    <!-- Error shown when the user enters the code used to verify their phone number instead of their PIN, and it was not their actual PIN. -->
+    <string name="PinEntryScreen__reentered_verification_code">Πληκτρολόγησες ξανά τον κωδικό που είχε ήδη χρησιμοποιηθεί για την επαλήθευση του αριθμού τηλεφώνου σου. Πληκτρολόγησε τον μοναδικό κωδικό PIN Radar που είχες επιλέξει προηγουμένως για τον λογαριασμό σου.</string>
+    <!-- Error shown when an incorrect PIN is entered. %1$d is the number of attempts remaining. -->
+    <plurals name="PinEntryScreen__incorrect_pin">
+        <item quantity="one">Λάθος PIN. Απομένει %1$d προσπάθεια.</item>
+        <item quantity="other">Λάθος PIN. Απομένουν %1$d προσπάθειες.</item>
+    </plurals>
+    <!-- Labels the button to get help with PIN entry. -->
+    <string name="PinEntryScreen__need_help">Χρειάζεσαι βοήθεια;</string>
+    <!-- Labels the button to switch between the numeric and alphanumeric keyboard. -->
+    <string name="PinEntryScreen__switch_keyboard">Εναλλαγή πληκτρολογίου</string>
+    <!-- Labels the button to skip PIN entry. -->
+    <string name="PinEntryScreen__skip">Παράλειψη</string>
+    <!-- Labels the button to submit the PIN. -->
+    <string name="PinEntryScreen__continue">Συνέχεια</string>
+    <!-- Title of the dialog shown when the user taps skip on the PIN entry screen. -->
+    <string name="PinEntryScreen__skip_pin_entry">Παράλειψη της εισαγωγής του PIN;</string>
+    <!-- Body of the dialog shown when the user taps skip on the PIN entry screen, explaining the consequences of creating a new PIN. -->
+    <string name="PinEntryScreen__skip_pin_entry_message">Αν δεν μπορείς να θυμηθείς το PIN σου, μπορείς να δημιουργήσεις ένα νέο. Μπορείς να δημιουργήσεις και να χρησιμοποιήσεις τον λογαριασμό σου, αλλά θα χάσεις κάποιες αποθηκευμένες ρυθμίσεις όπως τις πληροφορίες προφίλ.</string>
+    <!-- Labels the button in the skip dialog that takes the user to create a new PIN. -->
+    <string name="PinEntryScreen__create_new_pin">Δημιουργία νέου PIN</string>
+    <!-- Labels the button in the skip dialog that dismisses it. -->
+    <string name="PinEntryScreen__cancel">Ακύρωση</string>
+    <!-- Body of the dialog shown when no data could be found to restore from the user\'s PIN, prompting them to create a new PIN. -->
+    <string name="PinEntryScreen__no_data_could_be_found">Δεν βρέθηκαν δεδομένα για την επαναφορά του λογαριασμού σου. Δημιούργησε ένα νέο PIN.</string>
+    <!-- Labels the button in the no-data-to-restore dialog that lets the user contact support. -->
+    <string name="PinEntryScreen__contact_support">Επικοινωνία με την υποστήριξη</string>
+    <!-- Subject line of the support email composed when the user contacts support about PIN entry. -->
+    <string name="PinEntryScreen__contact_support_email_subject">Εγγραφή στο Signal - Βοήθεια με το PIN σε Android</string>
+    <!-- Text placed in the body of the support email composed when the user contacts support about PIN entry. Used to route the request, so it is not translated. -->
+  <!-- Removed by excludeNonTranslatables <string name="PinEntryScreen__contact_support_email_filter" translatable="false">Signal Registration - Need Help with PIN for Android</string> -->
+
+    <!-- Title for the screen asking the user to grant the notification permission -->
+    <string name="AllowNotificationsScreen__allow_notifications">Να επιτρέπονται οι ειδοποιήσεις</string>
+    <!-- Description for the screen asking the user to grant the notification permission -->
+    <string name="AllowNotificationsScreen__signal_would_like_to_request_the_notification_permission">Το Radar θέλει να ζητήσει την άδεια ειδοποιήσεων. Αυτό επιτρέπει στη συσκευή σου να εμφανίζει ειδοποιήσεις όταν λαμβάνεις νέα μηνύματα.</string>
+    <!-- Button label that dismisses the notification permission request without granting it -->
+    <string name="AllowNotificationsScreen__not_now">Όχι τώρα</string>
+    <!-- Button label that proceeds with the notification permission request -->
+    <string name="AllowNotificationsScreen__next">Επόμενο</string>
+
+    <!-- Title shown while messages are syncing from the primary device -->
+    <string name="MessageSyncScreen__syncing_messages">Συγχρονισμός μηνυμάτων</string>
+    <!-- Subtitle shown while messages are syncing from the primary device, indicating it may take a while -->
+    <string name="MessageSyncScreen__this_may_take_a_few_minutes">Αυτό μπορεί να πάρει μερικά λεπτά…</string>
+    <!-- Progress label shown under the sync progress bar. %1$s is the amount downloaded so far (e.g. "1 MB"), %2$s is the total size to download (e.g. "3.2 MB") -->
+    <string name="MessageSyncScreen__downloading_s_of_s">Λήψη %1$s από %2$s</string>
+    <!-- Progress label shown under the sync progress bar before the download size is known -->
+    <string name="MessageSyncScreen__preparing">Προετοιμασία…</string>
+    <!-- Progress label shown under the sync progress bar while messages are being imported and the rest of the account is restored, after the download finishes -->
+    <string name="MessageSyncScreen__finishing">Ολοκλήρωση…</string>
+    <!-- Progress label shown while messages are being imported/restored from the downloaded backup -->
+    <string name="MessageSyncScreen__restoring">Επαναφορά…</string>
+    <!-- Informational notice in the sync screen footer, indicating the sync is end-to-end encrypted. Precedes a separate "Learn more" link. -->
+    <string name="MessageSyncScreen__messages_and_chat_info_are_protected_by_e2ee">Τα μηνύματα και οι πληροφορίες συνομιλίας προστατεύονται με κρυπτογράφηση από άκρο σε άκρο, συμπεριλαμβανομένης της διαδικασίας συγχρονισμού.</string>
+    <!-- Inline link in the sync screen footer that opens documentation about end-to-end encryption during sync -->
+    <string name="MessageSyncScreen__learn_more">Μάθε περισσότερα</string>
+    <!-- Button label that cancels the in-progress message sync -->
+    <string name="MessageSyncScreen__cancel">Ακύρωση</string>
+    <!-- Title of the dialog shown when restoring messages from the other device fails -->
+    <string name="MessageSyncScreen__couldnt_restore_messages">Δεν ήταν δυνατή η επαναφορά μηνυμάτων</string>
+    <!-- Body of the dialog shown when restoring messages fails, offering to retry or continue without message history -->
+    <string name="MessageSyncScreen__your_messages_couldnt_be_transferred">Δεν ήταν δυνατή η μεταφορά των μηνυμάτων σου από την άλλη σου συσκευή. Μπορείς να δοκιμάσεις ή να συνεχίσεις χωρίς το ιστορικό μηνυμάτων σου.</string>
+    <!-- Button that retries the failed message restore -->
+    <string name="MessageSyncScreen__try_again">Ξαναπροσπάθησε</string>
+    <!-- Button that finishes linking without restoring message history after a failed restore -->
+    <string name="MessageSyncScreen__continue_without_messages">Συνέχεια χωρίς μηνύματα</string>
+
+    <!-- Title for the screen that shows a QR code the user scans with their existing primary device to link this device as a secondary -->
+    <string name="LinkAccountScreen__scan_this_code_to_link_your_account">Σάρωσε αυτόν τον κωδικό για να συνδέσεις τον λογαριασμό σου</string>
+    <!-- Step in the link-account instructions: open Signal on the user\'s existing phone -->
+    <string name="LinkAccountScreen__open_signal_on_your_phone">Άνοιξε το Radar στο κινητό σου</string>
+    <!-- Step in the link-account instructions: tap profile picture to open Signal Settings -->
+    <string name="LinkAccountScreen__tap_your_profile_picture_to_open_signal_settings">Πάτα στη φωτογραφία προφίλ για να ανοίξεις τις Ρυθμίσεις Radar</string>
+    <!-- Step in the link-account instructions: navigate to the Linked devices section and tap Link new device. The quoted strings should match the button/menu labels in the primary device\'s settings. -->
+    <string name="LinkAccountScreen__tap_linked_devices_and_link_new_device">Πάτα «Συνδεδεμένες συσκευές» και «Σύνδεση νέας συσκευής»</string>
+    <!-- Button label opening help content for users who can\'t complete the link-account steps -->
+    <string name="LinkAccountScreen__get_help_with_these_steps">Λάβε βοήθεια σχετικά με αυτά τα βήματα</string>
+    <!-- Accessibility content description for the button that enlarges the QR code to full screen -->
+    <string name="LinkAccountScreen__maximize_qr_code">Μεγιστοποίηση κωδικού QR</string>
+    <!-- Label shown in place of the QR code after the primary device has successfully scanned it -->
+    <string name="LinkAccountScreen__scanned">Έγινε σάρωση</string>
+    <!-- Error label shown in place of the QR code if it could not be generated -->
+    <string name="LinkAccountScreen__failed_to_generate_code">Αποτυχία δημιουργίας κωδικού</string>
+    <!-- Footer prompt asking the user if they have another device with Signal. Precedes a separate "Create account" link. -->
+    <string name="LinkAccountScreen__dont_have_signal_on_another_device">Δεν έχεις το Radar σε άλλη συσκευή;</string>
+    <!-- Inline link in the link-account screen footer that takes the user to the new-account creation flow instead of linking -->
+    <string name="LinkAccountScreen__create_account">Δημιουργία λογαριασμού</string>
+    <!-- Button to retry generating the QR code after it failed to load -->
+    <string name="LinkAccountScreen__retry">Επανάληψη</string>
+    <!-- Progress dialog message shown while this device is being registered as a linked device -->
+    <string name="LinkAccountScreen__linking_device">Σύνδεση συσκευής…</string>
+    <!-- Progress dialog message shown while waiting for the primary device to prepare the message backup -->
+    <string name="LinkAccountScreen__waiting_for_your_other_device">Αναμονή για την άλλη συσκευή σου…</string>
+    <!-- Error dialog message shown when linking this device fails -->
+    <string name="LinkAccountScreen__error_linking_device">Σφάλμα κατά τη σύνδεση αυτής της συσκευής</string>
+    <!-- Title of the confirmation dialog shown when the scanned QR code belongs to a different account than the one this device is currently linked to -->
+    <string name="LinkAccountScreen__delete_app_data_question">Διαγραφή δεδομένων εφαρμογής;</string>
+    <!-- Body of the confirmation dialog warning that continuing will erase all local data before relinking to a different account -->
+    <string name="LinkAccountScreen__you_are_attempting_to_link_a_different_account">Προσπαθείς να συνδέσεις έναν άλλο λογαριασμό Radar. Αν συνεχίσεις, όλα τα δεδομένα Radar που υπάρχουν αυτή τη στιγμή στη συσκευή θα διαγραφούν.</string>
+    <!-- Destructive confirmation button that deletes all local data and restarts the app so it can be linked to a different account -->
+    <string name="LinkAccountScreen__delete_and_restart">Διαγραφή και επανεκκίνηση</string>
+    <!-- Content description for the button that closes the maximized QR code overlay -->
+    <string name="LinkAccountScreen__close_qr_code">Κλείσιμο κωδικού QR</string>
+
+    <!-- Device transfer: Instructions screen -->
+    <string name="DeviceTransferInstructions__transfer_your_account">Μεταφορά του λογαριασμού σου</string>
+    <string name="DeviceTransferInstructions__to_transfer_open_signal_on_your_old_android_device">Για να μεταφέρεις τον λογαριασμό σου, άνοιξε την εφαρμογή Radar στην παλιά σου συσκευή Android και επίλεξε «Μεταφορά λογαριασμού».</string>
+    <string name="DeviceTransferInstructions__continue">Συνέχεια</string>
+
+    <!-- Device transfer: Setup screen -->
+    <string name="DeviceTransferSetup__preparing_to_connect">Προετοιμαζόμαστε να συνδεθούμε με τη παλιά συσκευή Android…</string>
+    <string name="DeviceTransferSetup__take_a_moment_should_be_ready_soon">Αυτό μπορεί να πάρει λίγο χρόνο. Θα είναι έτοιμο σύντομα.</string>
+    <string name="DeviceTransferSetup__waiting_for_old_device">Αναμονή για τη σύνδεση της παλιάς σου συσκευής…</string>
+    <string name="DeviceTransferSetup__verify_numbers_match">Επαλήθευσε ότι οι αριθμοί ταιριάζουν και στις δύο συσκευές</string>
+    <string name="DeviceTransferSetup__numbers_match">Ναι, οι αριθμοί ταιριάζουν</string>
+    <string name="DeviceTransferSetup__numbers_do_not_match">Οι αριθμοί δεν ταιριάζουν.</string>
+    <string name="DeviceTransferSetup__waiting_for_other_to_verify">Αναμονή για την επαλήθευση της παλιάς σου συσκευής…</string>
+    <string name="DeviceTransferSetup__location_permission_required">Το Radar χρειάζεται δικαιώματα τοποθεσίας για να ανακαλύψει και να συνδεθεί με την παλιά σου συσκευή.</string>
+    <string name="DeviceTransferSetup__grant_location_permission">Χορήγηση άδειας</string>
+    <string name="DeviceTransferSetup__location_services_required">Το Radar χρειάζεται να έχεις την τοποθεσία ενεργοποιημένη για να ανακαλύψει και να συνδεθεί στη παλιά σου συσκευή.</string>
+    <string name="DeviceTransferSetup__turn_on_location_services">Ενεργοποίηση υπηρεσιών τοποθεσίας</string>
+    <string name="DeviceTransferSetup__wifi_required">Το Radar χρειάζεται Wi-Fi για να ανακαλύψει και να συνδεθεί με την παλιά σου συσκευή.</string>
+    <string name="DeviceTransferSetup__turn_on_wifi">Ενεργοποίηση Wi-Fi</string>
+    <string name="DeviceTransferSetup__wifi_direct_unavailable">Συγγνώμη, φαίνεται ότι η συσκευή σου δεν υποστηρίζει το Wi-Fi Direct.</string>
+    <string name="DeviceTransferSetup__restore_a_backup">Επαναφορά αντίγραφου ασφαλείας αντ\'αυτού</string>
+    <string name="DeviceTransferSetup__unexpected_error_connecting">Συνέβη ένα μη αναμενόμενο σφάλμα κατά την απόπειρα σύνδεσης στη παλιά σου συσκευή.</string>
+    <string name="DeviceTransferSetup__retry">Επανάληψη</string>
+    <string name="DeviceTransferSetup__unable_to_discover_old_device">Αδυναμία ανακάλυψης της παλιάς σου συσκευής</string>
+    <string name="DeviceTransferSetup__troubleshooting_tips">• Βεβαιώσου ότι έχουν παραχωρηθεί τα δικαιώματα πρόσβασης στην τοποθεσία.\n• Βεβαιώσου ότι το Wi-Fi είναι ενεργοποιημένο και ότι δεν έχουν αποθηκευτεί ομάδες Wi-Fi Direct.\n• Δοκίμασε να κλείσεις και να ξανανοίξεις το Wi-Fi και στις δύο συσκευές.\n• Επιβεβαίωσε πως και οι δύο συσκευές βρίσκονται σε κατάσταση μεταφοράς.</string>
+    <string name="DeviceTransferSetup__try_again">Ξαναπροσπάθησε</string>
+    <string name="DeviceTransferSetup__the_numbers_do_not_match">Οι αριθμοί δεν ταιριάζουν.</string>
+    <string name="DeviceTransferSetup__if_numbers_dont_match_wrong_device">Εάν οι αριθμοί στις συσκευές σου δεν ταιριάζουν, είναι πιθανό να έχεις συνδεθεί σε λάθος συσκευή.</string>
+    <string name="DeviceTransferSetup__stop_transfer">Ακυρωση μεταφοράς</string>
+
+    <!-- Device transfer: Progress screen -->
+    <string name="DeviceTransferProgress__transferring_data">Μεταφορά δεδομένων</string>
+    <string name="DeviceTransferProgress__d_messages_so_far">%1$d μηνύματα μέχρι τώρα</string>
+    <string name="DeviceTransferProgress__unable_to_transfer">Αδυναμία μεταφοράς</string>
+    <string name="DeviceTransferProgress__cannot_transfer_from_newer_signal">Δεν μπορεί να γίνει μεταφορά από νεότερη έκδοση του Radar.</string>
+    <string name="DeviceTransferProgress__failure_foreign_key">Ορισμένα δεδομένα δεν μπόρεσαν να μεταφερθούν λόγω περιορισμού της βάσης δεδομένων.</string>
+    <string name="DeviceTransferProgress__transfer_failed">Η μεταφορά απέτυχε. Δοκίμασε ξανά.</string>
+    <string name="DeviceTransferProgress__try_again">Δοκίμασε ξανά</string>
+    <string name="DeviceTransferProgress__cancel">Ακύρωση</string>
+    <string name="DeviceTransferProgress__stop_transfer">Ακύρωση μεταφοράς;</string>
+    <string name="DeviceTransferProgress__all_transfer_progress_will_be_lost">Θα χαθεί όλη η πρόοδος της μεταφοράς.</string>
+
+    <!-- Device transfer: Complete screen -->
+    <string name="DeviceTransferComplete__transfer_complete">Η μεταφορά ολοκληρώθηκε</string>
+    <string name="DeviceTransferComplete__your_account_is_now_on_this_device">Ο λογαριασμός σου έχει πλέον συνδεθεί σε αυτή τη συσκευή.</string>
+    <string name="DeviceTransferComplete__continue_registration">Συνέχεια</string>
+
+    <!-- Error message shown when the captcha fails to load. -->
+    <string name="CaptchaScreen__failed_to_load_captcha">Αποτυχία φόρτωσης captcha</string>
+    <!-- Button to cancel out of the captcha screen. -->
+    <string name="CaptchaScreen__cancel">Ακύρωση</string>
+
+    <!-- Shared registration strings -->
+    <!-- Content description for the back arrow in a registration screen header. -->
+    <string name="RegistrationScreen__back">Πίσω</string>
+
+    <!-- Signal Login purchase screen -->
+    <!-- Title of the screen where the user buys a Signal Login to register without a phone number. -->
+    <string name="SignalLoginPaymentScreen__signal_login">Signal Login</string>
+    <!-- Description of what a Signal Login is. Followed by a "learn more" link. -->
+    <string name="SignalLoginPaymentScreen__register_without_a_phone_number">Κάνε εγγραφή χωρίς αριθμό τηλεφώνου μέσω του Signal Login. Με μια εφάπαξ αγορά, θα λάβεις ένα ID λογαριασμού για να ξεκινήσεις.</string>
+    <!-- Link at the end of the description that opens a support article about Signal Login. -->
+    <string name="SignalLoginPaymentScreen__learn_more">Μάθε περισσότερα</string>
+    <!-- Subtitle of the purchase option, clarifying the price is not a subscription. -->
+    <string name="SignalLoginPaymentScreen__one_time_purchase">Εφάπαξ αγορά</string>
+    <!-- Selling point of the purchase option: no phone number is required. -->
+    <string name="SignalLoginPaymentScreen__no_phone_number_needed">Δεν χρειάζεται αριθμός τηλεφώνου</string>
+    <!-- Selling point of the purchase option: a username is used to reach the user. -->
+    <string name="SignalLoginPaymentScreen__username_for_messaging_and_calls">Όνομα χρήστη για μηνύματα και κλήσεις</string>
+    <!-- Selling point of the purchase option: the purchase supports Signal. -->
+    <string name="SignalLoginPaymentScreen__signal_is_a_non_profit">Το Signal είναι μη κερδοσκοπικό — η αγορά σου βοηθά στην υποστήριξη της αποστολής μας</string>
+    <!-- Title of the option for users who already bought a Signal Login. -->
+    <string name="SignalLoginPaymentScreen__i_have_a_signal_login">Έχω Signal Login</string>
+    <!-- Subtitle of the existing-login option. -->
+    <string name="SignalLoginPaymentScreen__use_your_existing_account_key">Χρησιμοποίησε τα υπάρχοντα στοιχεία σύνδεσης</string>
+    <!-- Selling point of the existing-login option: the account can be restored. -->
+    <string name="SignalLoginPaymentScreen__login_and_restore_your_account">Συνδέσου και κάνε επαναφορά του λογαριασμού σου</string>
+    <!-- Selling point of the existing-login option, thanking the user for their previous purchase. -->
+    <string name="SignalLoginPaymentScreen__thanks_for_supporting_signal">Ευχαριστούμε που στηρίζεις το Signal</string>
+    <!-- Action button that starts the purchase. Placeholder is the localized price, e.g. "$1.99". -->
+    <string name="SignalLoginPaymentScreen__pay_s">Πληρωμή %1$s</string>
+    <!-- Action button that starts the purchase, shown while the price is still loading. -->
+    <string name="SignalLoginPaymentScreen__pay">Πληρωμή</string>
+    <!-- Action button shown when the user indicated they already have a Signal Login. -->
+    <string name="SignalLoginPaymentScreen__continue">Συνέχεια</string>
+    <!-- Error shown when the purchase does not go through. -->
+    <string name="SignalLoginPaymentScreen__your_purchase_could_not_be_completed">Δεν ήταν δυνατή η ολοκλήρωση της αγοράς σου. Δεν έχεις χρεωθεί.</string>
+    <!-- Shown in place of the price when Google Play cannot offer the purchase. -->
+    <string name="SignalLoginPaymentScreen__unavailable">Δεν διατίθεται</string>
+    <!-- Label for the button that retries loading the purchase price after it failed to load. -->
+    <string name="SignalLoginPaymentScreen__retry">Επανάληψη</string>
+    <!-- Shown in place of the price when the user already paid for a Signal Login but it was never redeemed. -->
+    <string name="SignalLoginPaymentScreen__already_paid">Πληρώθηκε ήδη</string>
+    <!-- Error shown when Signal Login cannot be purchased on this device, for example because the Google Play Store is unavailable. -->
+    <string name="SignalLoginPaymentScreen__signal_login_cant_be_purchased">Η υπηρεσία Signal Login δεν είναι διαθέσιμη προς αγορά σε αυτή τη συσκευή αυτή τη στιγμή. Δοκίμασε ξανά αργότερα.</string>
+    <!-- Message shown when the user\'s payment has gone through but has not finished processing yet. -->
+    <string name="SignalLoginPaymentScreen__your_payment_is_still_processing">Η πληρωμή σου βρίσκεται ακόμη υπό επεξεργασία. Γύρνα πίσω και πάτα Συνέχεια μόλις ολοκληρωθεί η διαδικασία, και δεν θα χρεωθείς ξανά.</string>
+    <!-- Label for the internal-testing text field where a receipt credential can be pasted to skip payment. Not shown to real users. -->
+  <!-- Removed by excludeNonTranslatables <string name="SignalLoginPaymentScreen__paste_a_receipt_credential" translatable="false">Paste a receipt credential (testing)</string> -->
+    <!-- Error shown when a manually-pasted receipt credential can\'t be parsed or is rejected. Internal testing only. -->
+  <!-- Removed by excludeNonTranslatables <string name="SignalLoginPaymentScreen__this_receipt_credential_is_invalid" translatable="false">This receipt credential is invalid.</string> -->
+    <!-- Title of the dialog shown when Google Play services is too old to take a payment. -->
+    <string name="SignalLoginPaymentScreen__update_google_play_services">Ενημέρωση υπηρεσιών Google Play</string>
+    <!-- Body of the dialog shown when Google Play services is too old to take a payment. -->
+    <string name="SignalLoginPaymentScreen__to_purchase_a_signal_login_update_google_play_services">Για να αγοράσεις ένα Signal Login, ενημέρωσε τις υπηρεσίες Google Play σε αυτή τη συσκευή.</string>
+    <!-- Button that updates Google Play services. -->
+    <string name="SignalLoginPaymentScreen__update">Ενημέρωση</string>
+    <!-- Title of the dialog shown when Google Play services is not installed. -->
+    <string name="SignalLoginPaymentScreen__google_play_services_missing">Λείπουν οι υπηρεσίες Google Play</string>
+    <!-- Body of the dialog shown when Google Play services is not installed. -->
+    <string name="SignalLoginPaymentScreen__to_purchase_a_signal_login_google_play_services_needs_to_be_installed">Για να αγοράσεις ένα Signal Login, πρέπει να έχεις εγκαταστήσει τις υπηρεσίες Google Play.</string>
+    <!-- Button that installs Google Play services. -->
+    <string name="SignalLoginPaymentScreen__install_play_services">Εγκατάσταση Υπηρεσιών Play</string>
+    <!-- Title of the dialog shown while Google Play services is updating itself. -->
+    <string name="SignalLoginPaymentScreen__google_play_services_are_updating">Οι υπηρεσίες Google Play ενημερώνονται</string>
+    <!-- Body of the dialog shown while Google Play services is updating itself. -->
+    <string name="SignalLoginPaymentScreen__to_purchase_a_signal_login_wait_for_google_play_services">Για να αγοράσεις ένα Signal Login, περίμενε μέχρι να ολοκληρωθεί η ενημέρωση των υπηρεσιών Google Play.</string>
+    <!-- Title of the dialog shown when Google Play cannot be used to take a payment. -->
+    <string name="SignalLoginPaymentScreen__google_play_is_required">Απαιτείται το Google Play</string>
+    <!-- Body of the dialog shown when Google Play services is installed but turned off. -->
+    <string name="SignalLoginPaymentScreen__to_purchase_a_signal_login_enable_google_play_services">Για να αγοράσεις ένα Signal Login, ενεργοποίησε τις υπηρεσίες Google Play σε αυτή τη συσκευή και συνδέσου στο Google Play Store.</string>
+    <!-- Body of the dialog shown when the device cannot run Google Play services at all. -->
+    <string name="SignalLoginPaymentScreen__you_cant_purchase_a_signal_login_on_this_device">Δεν μπορείς να αγοράσεις Signal Login, καθώς αυτή η συσκευή δεν υποστηρίζει τις υπηρεσίες Google Play. Επικοινώνησε με τον κατασκευαστή του τηλεφώνου για βοήθεια.</string>
+    <!-- Body of the dialog shown when Google Play services works but nobody is signed into the Play Store. -->
+    <string name="SignalLoginPaymentScreen__to_purchase_a_signal_login_sign_into_the_google_play_store">Για να αγοράσεις ένα Signal Login, συνδέσου στο Google Play Store.</string>
+    <!-- Body of the dialog shown when this version of Signal cannot make Google Play purchases at all. -->
+    <string name="SignalLoginPaymentScreen__you_cant_purchase_a_signal_login_in_this_version">Δεν μπορείς να αγοράσεις Signal Login σε αυτή την έκδοση του Signal. Εγκατάστησε την εφαρμογή Signal από το Google Play Store για να αγοράσεις.</string>
+    <!-- Button that opens the Google Play store so the user can sign into it. -->
+    <string name="SignalLoginPaymentScreen__open_play_store">Άνοιγμα Play Store</string>
+
+    <!-- Signal Login details screen -->
+    <!-- Title of the screen that shows the user their newly purchased Signal Login. -->
+    <string name="SignalLoginInfoScreen__your_signal_login">Το Signal Login σου</string>
+    <!-- Description warning the user that a lost Signal Login cannot be recovered. -->
+    <string name="SignalLoginInfoScreen__thanks_for_your_purchase">Ευχαριστούμε για την αγορά σου. Χρησιμοποίησε το Signal Login για να εγγραφείς και να επαναφέρεις τον λογαριασμό σου. Εάν ξεχάσεις τα κλειδιά σου, δεν θα μπορέσεις να επαναφέρεις τον λογαριασμό σου.</string>
+    <!-- Action button that stores the Signal Login in the device password manager. -->
+    <string name="SignalLoginInfoScreen__save_to_password_manager">Αποθήκευση στον διαχειριστή κωδικών πρόσβασης</string>
+    <!-- Toast shown when the user taps the disabled save to password manager button and the device has no password manager. -->
+    <string name="SignalLoginInfoScreen__no_password_manager_available">Δεν έχεις ρυθμίσει κάποιο πρόγραμμα διαχείρισης κωδικών πρόσβασης.</string>
+    <!-- Body of the dialog asking the user to confirm saving their Signal Login credentials to the device password manager. -->
+    <string name="SignalLoginInfoScreen__only_store_your_credentials">Αποθήκευσε τα διαπιστευτήριά σου μόνο σε κάποιο διαχειριστή κωδικών πρόσβασης που εμπιστεύεσαι ότι είναι ασφαλής. Το Signal δεν κάνει συστάσεις σχετικά με το ποιος διαχειριστής κωδικών πρόσβασης είναι κατάλληλος για σένα.</string>
+    <!-- Action button for users who would rather write the Signal Login down themselves. -->
+    <string name="SignalLoginInfoScreen__save_manually">Χειροκίνητη αποθήκευση</string>
+    <!-- Error shown when the Signal Login could not be stored in the password manager. -->
+    <string name="SignalLoginInfoScreen__your_signal_login_could_not_be_saved">Δεν ήταν δυνατή η αποθήκευση του Signal Login σου. Αποθήκευσέ το μη αυτόματα.</string>
+    <!-- Title of the dialog shown when the Signal Login could not be found in the password manager after saving it. -->
+    <string name="SignalLoginInfoScreen__error_confirming_login_info">Σφάλμα κατά την επιβεβαίωση των στοιχείων σύνδεσης</string>
+    <!-- Description telling the user that the Signal Login we saved could not be read back out of their password manager. -->
+    <string name="SignalLoginInfoScreen__your_signal_login_could_not_be_confirmed">Το Signal Login σου δεν επιβεβαιώθηκε. Βεβαιώσου ότι το αποθήκευσες στον διαχειριστή κωδικών πρόσβασής σου ή αποθήκευσέ το χειροκίνητα.</string>
+
+    <!-- Sheet that double-checks the user\'s Signal Login really made it into their password manager -->
+    <!-- Title of the sheet asking the user to confirm their Signal Login was saved to their password manager. -->
+    <string name="ConfirmLoginSavedToPasswordManagerBottomSheet__confirm_your_login_info_is_saved">Βεβαιώσου ότι τα στοιχεία σύνδεσής σου έχουν αποθηκευτεί</string>
+    <!-- Description telling the user they are about to be asked to fill in the Signal Login they just saved. -->
+    <string name="ConfirmLoginSavedToPasswordManagerBottomSheet__confirm_that_your_login_info_was_saved">Επιβεβαίωσε ότι το Signal Login σου καταγράφηκε σωστά. Θα σου ζητηθεί να συμπληρώσεις τον αποθηκευμένο σου κωδικό πρόσβασης στο επόμενο βήμα.</string>
+    <!-- Action button that starts checking the password manager for the Signal Login. -->
+    <string name="ConfirmLoginSavedToPasswordManagerBottomSheet__confirm_login_info">Επιβεβαίωση στοιχείων σύνδεσης</string>
+    <!-- Action button that sends the user back to their Signal Login. -->
+    <string name="ConfirmLoginSavedToPasswordManagerBottomSheet__see_login_info_again">Προβολή στοιχείων σύνδεσης ξανά</string>
+
+    <!-- Save Signal Login screen -->
+    <!-- Title of the screen that spells out the Signal Login so the user can record it themselves. -->
+    <string name="SignalLoginViewDetailsForManualSaveScreen__save_your_signal_login">Αποθήκευσε το Signal Login σου</string>
+    <!-- Description telling the user to keep their Signal Login somewhere safe and private. -->
+    <string name="SignalLoginViewDetailsForManualSaveScreen__store_your_signal_login_somewhere_safe">Αποθήκευσε το Signal Login σου με ασφάλεια. Μην μοιράζεσαι τα στοιχεία σύνδεσης με κανέναν.</string>
+    <!-- Action button that saves the Signal Login to a PDF file. -->
+    <string name="SignalLoginViewDetailsForManualSaveScreen__save_as_pdf">Αποθήκευση ως PDF</string>
+    <!-- Action button for users who are done recording their Signal Login. -->
+    <string name="SignalLoginViewDetailsForManualSaveScreen__continue">Συνέχεια</string>
+
+    <!-- Sheet that double-checks the user really saved their Signal Login -->
+    <!-- Title of the sheet asking the user to confirm they saved their Signal Login. -->
+    <string name="ConfirmLoginSavedBottomSheet__confirm_your_login_info_is_saved">Βεβαιώσου ότι τα στοιχεία σύνδεσής σου έχουν αποθηκευτεί</string>
+    <!-- Description warning the user that they are about to be asked for their Signal Login and that it cannot be recovered. -->
+    <string name="ConfirmLoginSavedBottomSheet__you_will_be_prompted_to_sign_in">Στη συνέχεια, θα σου ζητηθεί να συνδεθείς με το Signal Login σου. Βεβαιώσου ότι έχεις αποθηκεύσει ή αντιγράψει αυτά τα στοιχεία. Το Signal δεν μπορεί να σε βοηθήσει να ανακτήσεις τον λογαριασμό σου.</string>
+    <!-- Action button confirming the Signal Login is saved. -->
+    <string name="ConfirmLoginSavedBottomSheet__continue">Συνέχεια</string>
+    <!-- Action button that sends the user back to their Signal Login. -->
+    <string name="ConfirmLoginSavedBottomSheet__show_login_info_again">Εμφάνιση στοιχείων σύνδεσης ξανά</string>
+
+    <!-- Errors shown beneath an account ID text field, wherever one is offered -->
+    <!-- Error shown when the entered account ID contains characters that can\'t appear in one. -->
+    <string name="AccountIdField__invalid_account_id">Μη έγκυρο ID λογαριασμού</string>
+
+    <!-- Signal Login credential entry screen -->
+    <!-- Title of the screen where a user with an existing Signal Login types it in to log back in. -->
+    <string name="SignalLoginCredentialEntryScreen__signal_login">Signal Login</string>
+    <!-- Description telling the user what to enter to log in. -->
+    <string name="SignalLoginCredentialEntryScreen__enter_your_account_id_followed_by_your_recovery_key">Γράψε το ID λογαριασμού σου και, στη συνέχεια, το κλειδί ανάκτησης για να επαναφέρεις τον λογαριασμό σου.</string>
+    <!-- Label of the text field the account ID is typed into. -->
+    <string name="SignalLoginCredentialEntryScreen__account_id">ID λογαριασμού</string>
+    <!-- Label of the text field the recovery key is typed into. -->
+    <string name="SignalLoginCredentialEntryScreen__recovery_key">Κλειδί ανάκτησης</string>
+    <!-- Description of the button that spells out the typed recovery key instead of masking it. -->
+    <string name="SignalLoginCredentialEntryScreen__show_recovery_key">Εμφάνιση κλειδιού ανάκτησης</string>
+    <!-- Description of the button that masks the typed recovery key. -->
+    <string name="SignalLoginCredentialEntryScreen__hide_recovery_key">Απόκρυψη κλειδιού ανάκτησης</string>
+    <!-- Button that opens a support article for users who can\'t find their Signal Login. -->
+    <string name="SignalLoginCredentialEntryScreen__need_help">Χρειάζεσαι βοήθεια;</string>
+    <!-- Action button that submits the entered Signal Login. -->
+    <string name="SignalLoginCredentialEntryScreen__next">Επόμενο</string>
+    <!-- Error shown when the service rejects the entered login, which means one of the two halves is wrong. -->
+    <string name="SignalLoginCredentialEntryScreen__incorrect_account_id_or_recovery_key">Λανθασμένο ID λογαριασμού ή κλειδί ανάκτησης</string>
+    <!-- Description shown instead when the user is typing back the Signal Login they were just given, to check they recorded it correctly. -->
+    <string name="SignalLoginCredentialEntryScreen__enter_your_signal_login_to_confirm_it_was_recorded_correctly">Πληκτρολόγησε το Signal Login σου για να επιβεβαιώσεις ότι καταγράφηκε σωστά.</string>
+    <!-- Button that takes the user back to their Signal Login if they can\'t remember what they recorded. -->
+    <string name="SignalLoginCredentialEntryScreen__show_login_info_again">Εμφάνιση στοιχείων σύνδεσης ξανά</string>
+    <!-- Error shown when what the user typed back doesn\'t match the Signal Login they were given. -->
+    <string name="SignalLoginCredentialEntryScreen__that_doesnt_match_the_signal_login_you_were_shown">Δεν ταιριάζει με το Signal Login που σου δείξαμε</string>
+    <!-- Subtitle on the Signal Login entry screen when the user opened it from a reminder to check they still know their login -->
+    <string name="SignalLoginCredentialEntryScreen__enter_your_signal_login_to_verify_you_still_know_it">Γράψε το Signal Login σου για να βεβαιωθούμε ότι το θυμάσαι.</string>
+
+    <!-- Add username screen -->
+    <!-- Title of the screen offering the user an optional username. -->
+    <string name="AddUsernameScreen__add_an_optional_username">Πρόσθεσε ένα προαιρετικό όνομα χρήστη</string>
+    <!-- Description explaining what a username is used for. -->
+    <string name="AddUsernameScreen__people_can_message_you_by_username">Οι χρήστες μπορούν να σου στέλνουν μήνυμα με το όνομα χρήστη αντί για το τηλέφωνό σου.</string>
+    <!-- Prompt shown above the username field. -->
+    <string name="AddUsernameScreen__choose_your_username">Διάλεξε όνομα χρήστη</string>
+    <!-- Label/hint for the username field. -->
+    <string name="AddUsernameScreen__username">Όνομα χρήστη</string>
+    <!-- Helper text below the username field. Followed by a "learn more" link. -->
+    <string name="AddUsernameScreen__usernames_are_always_paired_with_a_set_of_numbers">Τα ονόματα χρήστη συνδυάζονται πάντα με ένα σύνολο αριθμών.</string>
+    <!-- Link in the helper text that opens a support article about usernames. -->
+    <string name="AddUsernameScreen__learn_more">Μάθε περισσότερα</string>
+    <!-- Button that skips choosing a username. -->
+    <string name="AddUsernameScreen__skip">Παράλειψη</string>
+    <!-- Button that submits the chosen username. -->
+    <string name="AddUsernameScreen__next">Επόμενο</string>
+    <!-- Validation error shown when the entered username is too short. -->
+    <string name="AddUsernameScreen__usernames_must_be_at_least_3_characters">Τα ονόματα χρήστη πρέπει να αποτελούνται από τουλάχιστον 3 χαρακτήρες</string>
+    <!-- Validation error shown when the entered username is too long. -->
+    <string name="AddUsernameScreen__usernames_must_be_at_most_32_characters">Τα ονόματα χρήστη πρέπει να αποτελούνται το πολύ από 32 χαρακτήρες</string>
+    <!-- Validation error shown when the entered username contains disallowed characters. -->
+    <string name="AddUsernameScreen__usernames_can_only_contain">Τα ονόματα χρήστη μπορούν να περιέχουν μόνο γράμματα, αριθμούς και κάτω παύλες</string>
+    <!-- Validation error shown when the entered username starts with a digit. -->
+    <string name="AddUsernameScreen__usernames_cannot_begin_with_a_number">Τα ονόματα χρήστη δεν μπορούν να αρχίζουν με αριθμό</string>
+    <!-- Error shown when the chosen username cannot be reserved. -->
+    <string name="AddUsernameScreen__this_username_is_not_available">Αυτό το όνομα χρήστη δεν είναι διαθέσιμο. Δοκίμασε ένα διαφορετικό.</string>
+    <!-- Error shown when the user\'s temporary hold on a username expired before they submitted it. -->
+    <string name="AddUsernameScreen__your_username_reservation_expired">Η κράτηση του ονόματος χρήστη σου έληξε. Δοκίμασε ξανά.</string>
+    <!-- Error shown when the username formed by the entered name and the user\'s chosen number is already taken. -->
+    <string name="AddUsernameScreen__this_username_is_not_available_try_another_number">Αυτό το όνομα χρήστη δεν είναι διαθέσιμο, δοκίμασε έναν άλλο αριθμό.</string>
+    <!-- Validation error shown when the number the user entered after their username has too few digits. -->
+    <string name="AddUsernameScreen__enter_a_minimum_of_d_digits">Μη έγκυρο όνομα χρήστη, γράψε τουλάχιστον %1$d ψηφία.</string>
+    <!-- Validation error shown when the number the user entered after their username has too many digits. -->
+    <string name="AddUsernameScreen__enter_a_maximum_of_d_digits">Μη έγκυρο όνομα χρήστη, γράψε έως %1$d ψηφία.</string>
+    <!-- Validation error shown when the number the user entered after their username is 00. -->
+    <string name="AddUsernameScreen__this_number_cant_be_00">Αυτός ο αριθμός δεν μπορεί να είναι 00. Γράψε ένα ψηφίο μεταξύ 1–9</string>
+    <!-- Validation error shown when the number the user entered after their username has a leading zero. -->
+    <string name="AddUsernameScreen__this_number_cant_start_with_0">Οι αριθμοί με περισσότερα από 2 ψηφία δεν μπορούν να αρχίζουν με 0</string>
+    <!-- Title of the dialog confirming the user wants to skip choosing a username. -->
+    <string name="AddUsernameScreen__are_you_sure">Σίγουρα;</string>
+    <!-- Body of the dialog confirming the user wants to skip choosing a username. -->
+    <string name="AddUsernameScreen__without_a_username_people_wont_be_able_to_find_you">Χωρίς όνομα χρήστη, οι άλλοι δεν θα μπορούν να σε βρουν στο Radar.</string>
+    <!-- Button in the skip-username confirmation dialog that returns to the screen without skipping. -->
+    <string name="AddUsernameScreen__cancel">Ακύρωση</string>
+    <!-- Button in the skip-username confirmation dialog that skips choosing a username. -->
+    <string name="AddUsernameScreen__continue">Συνέχεια</string>
+
+    <!-- ContactSupportDialog -->
+    <!-- Title of the dialog asking the user whether they want to attach a debug log to their support request -->
+    <string name="ContactSupportDialog__submit_debug_log">Αποστολή αρχείου καταγραφής αποσφαλμάτωσης;</string>
+    <!-- Body of the dialog asking the user whether they want to attach a debug log to their support request -->
+    <string name="ContactSupportDialog__your_debug_logs">Τα αρχεία καταγραφής θα μας βοηθήσουν στην γρηγορότερη επίλυση του προβλήματος. Η υποβολή των αρχείων είναι προαιρετική.</string>
+    <!-- Button that contacts support with a debug log attached -->
+    <string name="ContactSupportDialog__submit_with_debug_log">Υποβολή με αρχείο καταγραφής</string>
+    <!-- Button that contacts support without attaching a debug log -->
+    <string name="ContactSupportDialog__submit_without_debug_log">Υποβολή χωρίς αρχείο καταγραφής</string>
+
+    <!-- TotpEntryScreen -->
+    <!-- Title of the two-factor authentication code entry screen -->
+    <string name="TotpEntryScreen__two_factor_authentication">Έλεγχος ταυτότητας δύο παραγόντων</string>
+    <!-- Subtitle explaining where to find the code -->
+    <string name="TotpEntryScreen__to_continue_enter_the_code">Για να συνεχίσεις, γράψε τον 6-ψηφιο κωδικό από την εφαρμογή επαλήθευσης.</string>
+    <!-- Button text to cancel entering a code -->
+    <string name="TotpEntryScreen__cancel">Ακύρωση</string>
+
+    <!-- TwoFactorSelectionScreen -->
+    <!-- Title of the two-factor authentication method selection screen -->
+    <string name="TwoFactorSelectionScreen__two_factor_authentication">Έλεγχος ταυτότητας δύο παραγόντων</string>
+    <!-- Subtitle telling the user to pick one of the methods listed below -->
+    <string name="TwoFactorSelectionScreen__choose_a_method_below">Επίλεξε μία μέθοδο παρακάτω για να επαληθεύσεις τον λογαριασμό σου.</string>
+    <!-- Title of the card for verifying with a passkey -->
+    <string name="TwoFactorSelectionScreen__passkey">Κλειδί πρόσβασης</string>
+    <!-- Description of the card for verifying with a passkey -->
+    <string name="TwoFactorSelectionScreen__tap_to_use_your_device_biometrics">Πάτα για να χρησιμοποιήσεις τα βιομετρικά στοιχεία της συσκευής σου ή το κλειδί πρόσβασης FIDO2</string>
+    <!-- Title of the card for verifying with a code from an authenticator app -->
+    <string name="TwoFactorSelectionScreen__authenticator_app">Εφαρμογή επαλήθευσης</string>
+    <!-- Description of the card for verifying with a code from an authenticator app -->
+    <string name="TwoFactorSelectionScreen__enter_a_one_time_code">Γράψε έναν κωδικό μίας χρήσης που δημιουργήθηκε από την εφαρμογή επαλήθευσης.</string>
+    <!-- Button text to cancel two-factor authentication -->
+    <string name="TwoFactorSelectionScreen__cancel">Ακύρωση</string>
+    <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
+    <string name="TwoFactorSelectionScreen__something_went_wrong_with_your_passkey">Κάτι πήγε στραβά με το κλειδί πρόσβασής σου. Δοκίμασε ξανά ή επίλεξε διαφορετική μέθοδο.</string>
+
+    <!-- PasskeyVerificationScreen -->
+    <!-- Title of the screen asking the user to verify their account with their passkey -->
+    <string name="PasskeyVerificationScreen__two_factor_authentication">Έλεγχος ταυτότητας δύο παραγόντων</string>
+    <!-- Subtitle telling the user to verify their account with their passkey -->
+    <string name="PasskeyVerificationScreen__to_continue_verify_your_account">Για να συνεχίσεις, επιβεβαίωσε τον λογαριασμό σου με το κλειδί πρόσβασης.</string>
+    <!-- Button text to start verifying with a passkey -->
+    <string name="PasskeyVerificationScreen__continue">Συνέχεια</string>
+    <!-- Button text to cancel two-factor authentication -->
+    <string name="PasskeyVerificationScreen__cancel">Ακύρωση</string>
+    <!-- Dialog message shown when a passkey verification attempt fails for a reason the user can\'t act on -->
+    <string name="PasskeyVerificationScreen__something_went_wrong_with_your_passkey">Κάτι πήγε στραβά με το κλειδί πρόσβασής σου. Δοκίμασε ξανά.</string>
+    <string name="RegistrationActivity_radar_terms_and_privacy">Όροι &amp; Πολιτική Απορρήτου</string>
+</resources>

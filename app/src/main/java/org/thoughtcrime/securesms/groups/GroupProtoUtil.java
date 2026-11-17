@@ -4,21 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.libsignal.zkgroup.groups.GroupMasterKey;
-import org.signal.storageservice.protos.groups.GroupChange;
-import org.signal.storageservice.protos.groups.local.DecryptedGroup;
-import org.signal.storageservice.protos.groups.local.DecryptedGroupChange;
-import org.signal.storageservice.protos.groups.local.DecryptedMember;
-import org.signal.storageservice.protos.groups.local.DecryptedPendingMember;
-import org.thoughtcrime.securesms.backup.v2.proto.GroupChangeChatUpdate;
+import org.signal.storageservice.storage.protos.groups.GroupChange;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroup;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroupChange;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedMember;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedPendingMember;
+import org.signal.archive.proto.GroupChangeChatUpdate;
 import org.thoughtcrime.securesms.database.model.GroupsV2UpdateMessageConverter;
 import org.thoughtcrime.securesms.database.model.databaseprotos.DecryptedGroupV2Context;
 import org.thoughtcrime.securesms.database.model.databaseprotos.GV2UpdateDescription;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.signal.core.models.ServiceId;
 import org.signal.core.models.ServiceId.ACI;
+import org.thoughtcrime.securesms.recipients.RecipientIds;
 import org.whispersystems.signalservice.internal.push.GroupContextV2;
 
 import java.util.List;
@@ -97,7 +98,7 @@ public final class GroupProtoUtil {
       return RecipientId.UNKNOWN;
     }
 
-    return RecipientId.from(serviceId);
+    return RecipientIds.from(serviceId);
   }
 
   public static boolean isMember(@NonNull ACI aci, @NonNull List<DecryptedMember> membersList) {

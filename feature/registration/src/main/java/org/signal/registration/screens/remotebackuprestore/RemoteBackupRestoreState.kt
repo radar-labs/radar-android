@@ -1,0 +1,48 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.registration.screens.remotebackuprestore
+
+import org.signal.core.models.AccountEntropyPool
+import org.signal.core.util.censor
+import org.signal.registration.screens.shared.RestoreProgress
+
+data class RemoteBackupRestoreState(
+  val aep: AccountEntropyPool,
+  val loadState: LoadState = LoadState.Loading,
+  val backupTime: Long = -1,
+  val backupSize: Long = 0,
+  val restoreState: RestoreState = RestoreState.None,
+  val restoreProgress: RestoreProgress? = null,
+  val loadAttempts: Int = 0,
+  val showContactSupportDialog: Boolean = false,
+  val isSkipping: Boolean = false
+) {
+
+  override fun toString(): String = "RemoteBackupRestoreState(aep=${aep.displayValue.censor()}, loadState=$loadState, backupTime=$backupTime, backupSize=$backupSize, restoreState=$restoreState, restoreProgress=$restoreProgress, loadAttempts=$loadAttempts, showContactSupportDialog=$showContactSupportDialog, isSkipping=$isSkipping)"
+
+  enum class LoadState {
+    Loading,
+    Loaded,
+    NotFound,
+    Failure
+  }
+
+  sealed interface RestoreState {
+    data object None : RestoreState
+
+    data object InProgress : RestoreState
+
+    data object Restored : RestoreState
+
+    data object NetworkFailure : RestoreState
+
+    data object InvalidBackupVersion : RestoreState
+
+    data object PermanentSvrBFailure : RestoreState
+
+    data object Failed : RestoreState
+  }
+}

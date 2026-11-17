@@ -1,0 +1,744 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.registration.screens.phonenumber
+
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.i18n.phonenumbers.PhoneNumberUtil
+import org.signal.core.ui.compose.AllDevicePreviews
+import org.signal.core.ui.compose.Buttons
+import org.signal.core.ui.compose.Dialogs
+import org.signal.core.ui.compose.DropdownMenus
+import org.signal.core.ui.compose.IconButtons.IconButton
+import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.SignalIcons
+import org.signal.core.ui.compose.TextFields
+import org.signal.core.util.Util
+import org.signal.core.util.logging.Log
+import org.signal.registration.R
+import org.signal.registration.RegistrationDependencies
+import org.signal.registration.screens.OnePaneRegistrationScaffold
+import org.signal.registration.screens.RegistrationScaffold
+import org.signal.registration.screens.TwoPaneRegistrationScaffold
+import org.signal.registration.screens.attachDebugLogHelper
+import org.signal.registration.screens.shared.AccountIdErrorText
+import org.signal.registration.screens.shared.AccountIdFormat
+import org.signal.registration.screens.shared.AccountIdVisualTransformation
+import org.signal.registration.screens.shared.accountIdTextStyle
+import org.signal.registration.test.TestTags
+import kotlin.math.max
+import org.signal.core.ui.R as CoreR
+
+private const val TAG = "PhoneNumberScreen"
+
+/**
+ * Reads the device's own phone number from the SIM as an E164 string, but only if the relevant phone permission has
+ * already been granted. Returns null if the permission is missing or the number is unavailable. We never prompt for
+ * the permission solely to prefill the number.
+ */
+@SuppressLint("MissingPermission")
+private fun readDeviceNumberE164(context: Context): String? {
+  val hasPhonePermission = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED ||
+    ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_NUMBERS) == PackageManager.PERMISSION_GRANTED
+
+  if (!hasPhonePermission) {
+    return null
+  }
+
+  val deviceNumber = Util.getDeviceNumber(context).orElse(null) ?: return null
+  return PhoneNumberUtil.getInstance().format(deviceNumber, PhoneNumberUtil.PhoneNumberFormat.E164)
+}
+
+/**
+ * Phone number entry screen
+ */
+@Composable
+fun PhoneNumberScreen(
+  state: PhoneNumberEntryState,
+  onEvent: (PhoneNumberEntryScreenEvents) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  val context = LocalContext.current
+  var hasRequestedPhoneNumberHint by rememberSaveable { mutableStateOf(false) }
+  val currentNationalNumber by rememberUpdatedState(state.nationalNumber)
+
+  val prefillFromDeviceNumberIfAllowed = {
+    if (currentNationalNumber.isEmpty()) {
+      readDeviceNumberE164(context)?.let { e164 ->
+        onEvent(PhoneNumberEntryScreenEvents.FullPhoneNumberEntered(e164))
+      }
+    }
+  }
+
+  val phoneNumberHintLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+    val phoneNumber = try {
+      Identity.getSignInClient(context).getPhoneNumberFromIntent(result.data)
+    } catch (e: Exception) {
+      Log.w(TAG, "Failed to retrieve phone number from hint.", e)
+      null
+    }
+
+    if (phoneNumber != null) {
+      onEvent(PhoneNumberEntryScreenEvents.FullPhoneNumberEntered(phoneNumber, autoConfirm = true))
+    }
+  }
+
+  LaunchedEffect(state.initialized) {
+    if (!state.initialized || hasRequestedPhoneNumberHint || state.nationalNumber.isNotEmpty() || state.preExistingRegistrationData != null) {
+      return@LaunchedEffect
+    }
+    hasRequestedPhoneNumberHint = true
+
+    try {
+      Identity.getSignInClient(context)
+        .getPhoneNumberHintIntent(GetPhoneNumberHintIntentRequest.builder().build())
+        .addOnSuccessListener { pendingIntent ->
+          try {
+            phoneNumberHintLauncher.launch(IntentSenderRequest.Builder(pendingIntent).build())
+          } catch (e: Exception) {
+            Log.w(TAG, "Failed to launch phone number hint intent.", e)
+            prefillFromDeviceNumberIfAllowed()
+          }
+        }
+        .addOnFailureListener { e ->
+          Log.w(TAG, "Phone number hint unavailable. Falling back to device number.", e)
+          prefillFromDeviceNumberIfAllowed()
+        }
+    } catch (e: Exception) {
+      Log.w(TAG, "Unable to request phone number hint. Falling back to device number.", e)
+      prefillFromDeviceNumberIfAllowed()
+    }
+  }
+
+  if (state.dialogs.confirmNumber) {
+    Dialogs.SimpleAlertDialog(
+      title = stringResource(R.string.RegistrationActivity_is_the_phone_number),
+      body = "+${state.countryCode} ${state.formattedNumber}\n\n${stringResource(R.string.RegistrationActivity_a_verification_code)}",
+      confirm = stringResource(id = android.R.string.ok),
+      dismiss = stringResource(R.string.RegistrationActivity_edit_number),
+      onConfirm = { onEvent(PhoneNumberEntryScreenEvents.PhoneNumberConfirmed) },
+      onDismiss = { onEvent(PhoneNumberEntryScreenEvents.PhoneNumberCancelled) }
+    )
+  }
+
+  val simpleError: Pair<String, PhoneNumberEntryScreenEvents>? = when {
+    state.dialogs.networkError -> stringResource(R.string.VerificationCodeScreen__network_error) to PhoneNumberEntryScreenEvents.NetworkErrorDialogDismissed
+    state.dialogs.rateLimitedRetryAfter != null -> {
+      val message = if (state.dialogs.rateLimitedRetryAfter.isPositive()) {
+        stringResource(R.string.VerificationCodeScreen__too_many_attempts_try_again_in_s, state.dialogs.rateLimitedRetryAfter.toString())
+      } else {
+        stringResource(R.string.VerificationCodeScreen__too_many_attempts)
+      }
+      message to PhoneNumberEntryScreenEvents.RateLimitedDialogDismissed
+    }
+    state.dialogs.unknownError -> stringResource(R.string.VerificationCodeScreen__an_unexpected_error_occurred) to PhoneNumberEntryScreenEvents.UnknownErrorDialogDismissed
+    state.dialogs.couldNotRequestCodeWithSelectedTransport -> stringResource(R.string.VerificationCodeScreen__could_not_send_code_via_selected_method) to PhoneNumberEntryScreenEvents.CouldNotRequestCodeWithSelectedTransportDialogDismissed
+    state.dialogs.unableToSendSms -> stringResource(R.string.VerificationCodeScreen__unable_to_send_sms) to PhoneNumberEntryScreenEvents.UnableToSendSmsDialogDismissed
+    else -> null
+  }
+
+  simpleError?.let { (message, dismissedEvent) ->
+    Dialogs.SimpleMessageDialog(
+      message = message,
+      dismiss = stringResource(android.R.string.ok),
+      onDismiss = { onEvent(dismissedEvent) }
+    )
+  }
+
+  if (state.dialogs.invalidPhoneNumber) {
+    Dialogs.SimpleMessageDialog(
+      title = stringResource(R.string.RegistrationActivity_invalid_phone_number),
+      message = stringResource(R.string.RegistrationActivity_the_number_you_entered_is_not_valid),
+      dismiss = stringResource(android.R.string.ok),
+      onDismiss = { onEvent(PhoneNumberEntryScreenEvents.InvalidPhoneNumberDialogDismissed) }
+    )
+  }
+
+  Box(
+    modifier = modifier
+      .fillMaxSize()
+      .testTag(TestTags.PHONE_NUMBER_SCREEN)
+  ) {
+    when (val layoutParams = RegistrationScaffold.rememberLayoutParams()) {
+      is RegistrationScaffold.Params.OnePane -> OnePaneLayout(layoutParams, state, onEvent)
+      is RegistrationScaffold.Params.TwoPane -> TwoPaneLayout(layoutParams, state, onEvent)
+    }
+  }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun OnePaneLayout(
+  params: RegistrationScaffold.Params.OnePane,
+  state: PhoneNumberEntryState,
+  onEvent: (PhoneNumberEntryScreenEvents) -> Unit
+) {
+  val scrollState = rememberScrollState()
+  val topBarScrollBehavior = RegistrationScaffold.rememberTopBarScrollBehavior()
+
+  OnePaneRegistrationScaffold(
+    params = params,
+    topBar = { TopAppBar(scrollBehavior = topBarScrollBehavior, isLinkAndSyncAvailable = state.isLinkAndSyncAvailable, onEvent = onEvent) },
+    content = { paddingValues ->
+      Column(
+        modifier = Modifier
+          .fillMaxSize()
+          .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
+          .verticalScroll(scrollState)
+          .padding(paddingValues)
+      ) {
+        Description()
+
+        Spacer(modifier = Modifier.height(36.dp))
+
+        PhoneNumberInputFields(
+          state = state,
+          onEvent = onEvent,
+          modifier = Modifier.fillMaxWidth()
+        )
+      }
+    },
+    footer = {
+      RegistrationScaffold.FooterSurface(
+        isElevated = scrollState.canScrollForward
+      ) {
+        NextButton(params, state, onEvent)
+      }
+    }
+  )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun TwoPaneLayout(
+  params: RegistrationScaffold.Params.TwoPane,
+  state: PhoneNumberEntryState,
+  onEvent: (PhoneNumberEntryScreenEvents) -> Unit
+) {
+  val firstPaneScrollState = rememberScrollState()
+  val secondPaneScrollState = rememberScrollState()
+  val topBarScrollBehavior = RegistrationScaffold.rememberTopBarScrollBehavior()
+
+  TwoPaneRegistrationScaffold(
+    params = params,
+    topBar = { TopAppBar(scrollBehavior = topBarScrollBehavior, isLinkAndSyncAvailable = state.isLinkAndSyncAvailable, onEvent = onEvent) },
+    firstPane = { paddingValues ->
+      Column(
+        modifier = Modifier
+          .weight(1f)
+          .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
+          .verticalScroll(firstPaneScrollState)
+          .padding(paddingValues)
+      ) {
+        Description(twoPane = true)
+      }
+    },
+    secondPane = { paddingValues ->
+      Column(
+        modifier = Modifier
+          .weight(1f)
+          .nestedScroll(topBarScrollBehavior.nestedScrollConnection)
+          .verticalScroll(secondPaneScrollState)
+          .padding(paddingValues)
+      ) {
+        PhoneNumberInputFields(
+          state = state,
+          onEvent = onEvent,
+          modifier = Modifier.fillMaxWidth()
+        )
+      }
+    },
+    footer = {
+      RegistrationScaffold.FooterSurface(
+        isElevated = firstPaneScrollState.canScrollForward || secondPaneScrollState.canScrollForward
+      ) {
+        NextButton(params, state, onEvent)
+      }
+    }
+  )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopAppBar(
+  scrollBehavior: TopAppBarScrollBehavior,
+  isLinkAndSyncAvailable: Boolean,
+  onEvent: (PhoneNumberEntryScreenEvents) -> Unit
+) {
+  val context = LocalContext.current
+
+  Scaffolds.DefaultTopAppBar(
+    title = "",
+    titleContent = { _, _ -> },
+    onNavigationClick = { },
+    navigationIcon = null,
+    scrollBehavior = scrollBehavior,
+    actions = {
+      val menuController = remember { DropdownMenus.MenuController() }
+
+      IconButton(
+        onClick = { menuController.show() },
+        modifier = Modifier.padding(horizontal = 8.dp)
+      ) {
+        Icon(
+          imageVector = ImageVector.vectorResource(CoreR.drawable.symbol_more_vertical_24),
+          contentDescription = stringResource(R.string.RegistrationActivity_open_menu)
+        )
+      }
+
+      DropdownMenus.Menu(
+        controller = menuController,
+        offsetX = 24.dp,
+        offsetY = 0.dp
+      ) {
+        DropdownMenus.Item(
+          text = { Text(text = stringResource(R.string.RegistrationActivity_use_proxy)) },
+          onClick = {
+            RegistrationDependencies.get().proxyConfigCallback?.invoke(context)
+            menuController.hide()
+          }
+        )
+        if (isLinkAndSyncAvailable) {
+          DropdownMenus.Item(
+            text = { Text(text = stringResource(R.string.RegistrationActivity_link_device)) },
+            onClick = {
+              onEvent(PhoneNumberEntryScreenEvents.LinkDevice)
+              menuController.hide()
+            }
+          )
+        }
+      }
+    }
+  )
+}
+
+@Composable
+private fun Description(twoPane: Boolean = false) {
+  Text(
+    text = stringResource(R.string.RegistrationActivity_phone_number),
+    style = if (twoPane) MaterialTheme.typography.headlineLarge else MaterialTheme.typography.headlineMedium,
+    modifier = Modifier
+      .fillMaxWidth()
+      .attachDebugLogHelper()
+  )
+
+  Text(
+    text = stringResource(R.string.RegistrationActivity_you_will_receive_a_verification_code),
+    style = if (twoPane) MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Normal) else MaterialTheme.typography.bodyLarge,
+    color = MaterialTheme.colorScheme.onSurfaceVariant,
+    modifier = Modifier.padding(top = 16.dp)
+  )
+}
+
+@Composable
+private fun NextButton(
+  params: RegistrationScaffold.Params,
+  state: PhoneNumberEntryState,
+  onEvent: (PhoneNumberEntryScreenEvents) -> Unit
+) {
+  val arrangement = if (state.isPhoneNumberlessRegistrationAvailable) {
+    Arrangement.SpaceBetween
+  } else {
+    Arrangement.End
+  }
+
+  Row(
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(params.footerPadding),
+    horizontalArrangement = arrangement,
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    if (state.isPhoneNumberlessRegistrationAvailable) {
+      TextButton(
+        onClick = { onEvent(PhoneNumberEntryScreenEvents.RegisterWithoutNumber) },
+        enabled = !state.showSpinner,
+        modifier = Modifier
+          .weight(1f, fill = false)
+          .testTag(TestTags.PHONE_NUMBER_REGISTER_WITHOUT_NUMBER_BUTTON)
+      ) {
+        Text(
+          stringResource(
+            if (state.sawArchiveRestoreSelectionScreen) {
+              R.string.RegistrationActivity_use_account_id
+            } else {
+              R.string.RegistrationActivity_register_without_number
+            }
+          )
+        )
+      }
+
+      Spacer(modifier = Modifier.width(8.dp))
+    }
+
+    Buttons.LargeTonal(
+      onClick = { onEvent(PhoneNumberEntryScreenEvents.NextClicked) },
+      enabled = state.isNextEnabled,
+      modifier = Modifier.testTag(TestTags.PHONE_NUMBER_NEXT_BUTTON)
+    ) {
+      if (state.showSpinner) {
+        CircularProgressIndicator(
+          modifier = Modifier.size(24.dp),
+          strokeWidth = 3.dp,
+          color = MaterialTheme.colorScheme.primary
+        )
+      } else {
+        Text(stringResource(R.string.RegistrationActivity_next))
+      }
+    }
+  }
+}
+
+/**
+ * The compact control to the left of the phone number field. It shows the selected calling code and opens the country
+ * picker; in account ID mode there is no country to pick, so it shows a key and does nothing when tapped.
+ */
+@Composable
+private fun CountryCodeButton(
+  countryCode: String,
+  isAccountId: Boolean,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Box(
+    modifier = modifier
+      .widthIn(min = 69.dp)
+      .height(56.dp)
+      .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+      .background(MaterialTheme.colorScheme.outline)
+      .padding(bottom = 1.dp)
+      .background(
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)
+      )
+      .clickable(enabled = !isAccountId, onClick = onClick)
+  ) {
+    Row(
+      modifier = Modifier
+        .fillMaxHeight()
+        .padding(start = 14.dp, end = 2.dp),
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      if (isAccountId) {
+        Icon(
+          imageVector = SignalIcons.Key.imageVector,
+          contentDescription = stringResource(R.string.RegistrationActivity_account_id),
+          tint = MaterialTheme.colorScheme.onSurfaceVariant,
+          modifier = Modifier.size(24.dp)
+        )
+      } else {
+        Text(
+          text = "+$countryCode",
+          style = MaterialTheme.typography.bodyLarge,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+          maxLines = 1
+        )
+      }
+
+      Spacer(modifier = Modifier.width(4.dp))
+
+      Icon(
+        imageVector = SignalIcons.ArrowDropDown.imageVector,
+        contentDescription = if (isAccountId) null else stringResource(R.string.RegistrationActivity_select_a_country),
+        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.size(24.dp)
+      )
+    }
+  }
+}
+
+/**
+ * Phone number input fields containing the country code and phone number text fields.
+ */
+@Composable
+private fun PhoneNumberInputFields(
+  state: PhoneNumberEntryState,
+  onEvent: (PhoneNumberEntryScreenEvents) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  var phoneNumberTextFieldValue by remember { mutableStateOf(TextFieldValue(state.formattedNumber)) }
+  val focusRequester = remember { FocusRequester() }
+  val interactionSource = remember { MutableInteractionSource() }
+  val hasValidCountry = state.countryName.isNotEmpty()
+  val isAccountId = state.enteredAccountId != null
+  val label = if (isAccountId) R.string.RegistrationActivity_account_id else R.string.RegistrationActivity_phone_number_description
+  val accountIdError = state.accountIdError.takeIf { isAccountId }
+  val supportingText: (@Composable () -> Unit)? = when {
+    accountIdError != null -> {
+      { AccountIdErrorText(accountIdError) }
+    }
+    state.isNumberInvalid -> {
+      { Text(stringResource(R.string.RegistrationActivity_not_a_valid_phone_number)) }
+    }
+    else -> null
+  }
+
+  LaunchedEffect(state.formattedNumber) {
+    if (phoneNumberTextFieldValue.text == state.formattedNumber) {
+      return@LaunchedEffect
+    }
+
+    if (isAccountId) {
+      phoneNumberTextFieldValue = TextFieldValue(
+        text = state.formattedNumber,
+        selection = TextRange(state.formattedNumber.length)
+      )
+      return@LaunchedEffect
+    }
+
+    val oldText = phoneNumberTextFieldValue.text
+    val oldCursorPos = phoneNumberTextFieldValue.selection.end
+    val digitsBeforeCursor = oldText.take(oldCursorPos).count { it.isDigit() }
+
+    var digitCount = 0
+    var newCursorPos = state.formattedNumber.length
+    for (i in state.formattedNumber.indices) {
+      if (state.formattedNumber[i].isDigit()) {
+        digitCount++
+      }
+      if (digitCount >= digitsBeforeCursor) {
+        newCursorPos = i + 1
+        break
+      }
+    }
+
+    phoneNumberTextFieldValue = TextFieldValue(
+      text = state.formattedNumber,
+      selection = TextRange(newCursorPos)
+    )
+  }
+
+  LaunchedEffect(hasValidCountry) {
+    if (hasValidCountry) {
+      focusRequester.requestFocus()
+    }
+  }
+
+  CountryCodeAndNumberLayout(modifier = modifier) {
+    CountryCodeButton(
+      countryCode = state.countryCode,
+      isAccountId = isAccountId,
+      onClick = { onEvent(PhoneNumberEntryScreenEvents.CountryPicker) },
+      modifier = Modifier.testTag(TestTags.PHONE_NUMBER_COUNTRY_CODE_FIELD)
+    )
+
+    TextField(
+      value = phoneNumberTextFieldValue,
+      onValueChange = { newValue ->
+        // An account ID that is already complete leaves the state untouched, so there is no re-sync to lean on: the
+        // field has to turn away the extra characters itself.
+        val accepted = if (isAccountId) newValue.copy(text = AccountIdFormat.normalizeAndTruncate(newValue.text)) else newValue
+        onEvent(PhoneNumberEntryScreenEvents.NationalNumberChanged(oldValue = phoneNumberTextFieldValue.text, newValue = accepted.text))
+        phoneNumberTextFieldValue = accepted
+      },
+      modifier = Modifier
+        .focusRequester(focusRequester)
+        .testTag(TestTags.PHONE_NUMBER_PHONE_FIELD),
+      label = { TextFields.Label(stringResource(label), phoneNumberTextFieldValue.text.isNotEmpty(), interactionSource) },
+      interactionSource = interactionSource,
+      isError = state.isNumberInvalid || state.accountIdError != null,
+      supportingText = supportingText,
+      keyboardOptions = if (isAccountId) {
+        KeyboardOptions(
+          keyboardType = KeyboardType.Ascii,
+          capitalization = KeyboardCapitalization.None,
+          autoCorrectEnabled = false,
+          imeAction = ImeAction.Done
+        )
+      } else {
+        KeyboardOptions(
+          keyboardType = KeyboardType.Phone,
+          imeAction = ImeAction.Done
+        )
+      },
+      keyboardActions = KeyboardActions(
+        onDone = {
+          if (state.isNextEnabled) {
+            onEvent(PhoneNumberEntryScreenEvents.NextClicked)
+          }
+        }
+      ),
+      singleLine = true,
+      visualTransformation = if (isAccountId) AccountIdVisualTransformation else VisualTransformation.None,
+      textStyle = if (isAccountId) {
+        accountIdTextStyle().copy(color = MaterialTheme.colorScheme.onSurface)
+      } else {
+        MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface)
+      },
+      colors = TextFieldDefaults.colors(
+        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+        errorContainerColor = MaterialTheme.colorScheme.surfaceVariant
+      )
+    )
+  }
+}
+
+/**
+ * Places the number field beside the country code when it gets at least [fieldMinWidth], scaled with the font, and
+ * below it otherwise. A FlowRow can't make this call because TextField reports a 280dp intrinsic width.
+ */
+@Composable
+private fun CountryCodeAndNumberLayout(
+  modifier: Modifier = Modifier,
+  fieldMinWidth: Dp = 140.dp,
+  content: @Composable () -> Unit
+) {
+  val fontScale = LocalDensity.current.fontScale
+
+  Layout(content = content, modifier = modifier) { measurables, constraints ->
+    val (buttonMeasurable, fieldMeasurable) = measurables
+    val button = buttonMeasurable.measure(constraints.copy(minWidth = 0, minHeight = 0))
+    val spacing = 20.dp.roundToPx()
+    val inlineWidth = constraints.maxWidth - button.width - spacing
+
+    if (inlineWidth >= (fieldMinWidth * fontScale).roundToPx()) {
+      val field = fieldMeasurable.measure(constraints.copy(minWidth = inlineWidth, maxWidth = inlineWidth, minHeight = 0))
+      layout(constraints.maxWidth, max(button.height, field.height)) {
+        button.placeRelative(0, 0)
+        field.placeRelative(button.width + spacing, 0)
+      }
+    } else {
+      val field = fieldMeasurable.measure(constraints.copy(minWidth = constraints.maxWidth, minHeight = 0))
+      val gap = 8.dp.roundToPx()
+      layout(constraints.maxWidth, button.height + gap + field.height) {
+        button.placeRelative(0, 0)
+        field.placeRelative(0, button.height + gap)
+      }
+    }
+  }
+}
+
+@AllDevicePreviews
+@Composable
+private fun PhoneNumberScreenPreview() {
+  Previews.Preview {
+    PhoneNumberScreen(
+      state = PhoneNumberEntryState(),
+      onEvent = {}
+    )
+  }
+}
+
+@AllDevicePreviews
+@Composable
+private fun PhoneNumberScreenRegisterWithoutNumberPreview() {
+  Previews.Preview {
+    PhoneNumberScreen(
+      state = PhoneNumberEntryState(isPhoneNumberlessRegistrationAvailable = true),
+      onEvent = {}
+    )
+  }
+}
+
+@AllDevicePreviews
+@Composable
+private fun PhoneNumberScreenUseAccountIdPreview() {
+  Previews.Preview {
+    PhoneNumberScreen(
+      state = PhoneNumberEntryState(
+        isPhoneNumberlessRegistrationAvailable = true,
+        sawArchiveRestoreSelectionScreen = true
+      ),
+      onEvent = {}
+    )
+  }
+}
+
+@AllDevicePreviews
+@Composable
+private fun PhoneNumberScreenAccountIdPreview() {
+  Previews.Preview {
+    PhoneNumberScreen(
+      state = PhoneNumberEntryState(
+        accountId = "a6b284822e3283d07f2391360a4c2b91",
+        formattedNumber = "a6b284822e3283d07f2391360a4c2b91",
+        isPhoneNumberlessRegistrationAvailable = true
+      ),
+      onEvent = {}
+    )
+  }
+}
+
+@AllDevicePreviews
+@Composable
+private fun PhoneNumberScreenSpinnerPreview() {
+  Previews.Preview {
+    PhoneNumberScreen(
+      state = PhoneNumberEntryState(showSpinner = true),
+      onEvent = {}
+    )
+  }
+}

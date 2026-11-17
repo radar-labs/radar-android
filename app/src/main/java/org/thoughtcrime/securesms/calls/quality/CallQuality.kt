@@ -6,12 +6,14 @@
 package org.thoughtcrime.securesms.calls.quality
 
 import okio.ByteString.Companion.toByteString
+import org.signal.remoteconfig.RemoteConfig
 import org.signal.ringrtc.CallSummary
 import org.signal.ringrtc.GroupCall
+import org.signal.storage.protos.CallQualitySurveyRequest
 import org.signal.storageservice.protos.calls.quality.SubmitCallQualitySurveyRequest
+import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.util.LocaleRemoteConfig
-import org.thoughtcrime.securesms.util.RemoteConfig
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
@@ -48,7 +50,7 @@ object CallQuality {
   @JvmStatic
   private fun handleCallSummary(callSummary: CallSummary, callType: CallType) {
     if (isCallQualitySurveyRequired(callSummary)) {
-      SignalStore.callQuality.surveyRequest = SubmitCallQualitySurveyRequest.Builder()
+      SignalStore.callQuality.surveyRequest = CallQualitySurveyRequest.Builder()
         .call_type(callType.code)
         .start_timestamp(callSummary.startTime)
         .end_timestamp(callSummary.endTime)
@@ -61,10 +63,10 @@ object CallQuality {
         .video_recv_jitter_median(callSummary.qualityStats.videoStats.jitterMedianRecvMillis)
         .audio_send_jitter_median(callSummary.qualityStats.audioStats.jitterMedianSendMillis)
         .video_send_jitter_median(callSummary.qualityStats.videoStats.jitterMedianSendMillis)
-        .audio_send_packet_loss_fraction(callSummary.qualityStats.audioStats.packetLossPercentageSend)
-        .video_send_packet_loss_fraction(callSummary.qualityStats.videoStats.packetLossPercentageSend)
-        .audio_recv_packet_loss_fraction(callSummary.qualityStats.audioStats.packetLossPercentageRecv)
-        .video_recv_packet_loss_fraction(callSummary.qualityStats.videoStats.packetLossPercentageRecv)
+        .audio_send_packet_loss_fraction(callSummary.qualityStats.audioStats.packetLossFractionSend)
+        .video_send_packet_loss_fraction(callSummary.qualityStats.videoStats.packetLossFractionSend)
+        .audio_recv_packet_loss_fraction(callSummary.qualityStats.audioStats.packetLossFractionRecv)
+        .video_recv_packet_loss_fraction(callSummary.qualityStats.videoStats.packetLossFractionRecv)
         .call_telemetry(callSummary.rawStats?.toByteString())
         .build()
     } else {
@@ -83,7 +85,7 @@ object CallQuality {
     return if (!isFeatureEnabled() || request.end_timestamp.milliseconds < fiveMinutesAgo) {
       null
     } else {
-      request
+      SubmitCallQualitySurveyRequest.ADAPTER.decode(request.encode())
     }
   }
 
@@ -111,14 +113,6 @@ object CallQuality {
         return false
       }
 
-      val callLength = callSummary.endTime.milliseconds - callSummary.startTime.milliseconds
-      val isLongerThanTenMinutes = callLength > 10.minutes
-      val isLessThanOneMinute = callLength < 1.minutes
-
-      if (isLongerThanTenMinutes || isLessThanOneMinute) {
-        return true
-      }
-
       val chance = LocaleRemoteConfig.getCallQualitySurveyPartsPerMillion()
       val roll = (0 until 1_000_000).random()
 
@@ -135,7 +129,8 @@ object CallQuality {
   }
 
   private fun isFeatureEnabled(): Boolean {
-    return RemoteConfig.callQualitySurvey && SignalStore.callQuality.isQualitySurveyEnabled
+    // Radar: the survey is off (it reports to Signal); see BuildConfig.CALL_QUALITY_SURVEY_ENABLED.
+    return BuildConfig.CALL_QUALITY_SURVEY_ENABLED && RemoteConfig.callQualitySurvey && SignalStore.callQuality.isQualitySurveyEnabled
   }
 
   private enum class CallType(val code: String) {

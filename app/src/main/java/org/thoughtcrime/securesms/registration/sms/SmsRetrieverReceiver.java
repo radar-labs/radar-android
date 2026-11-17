@@ -19,7 +19,7 @@ import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.Status;
 
-import org.greenrobot.eventbus.EventBus;
+import org.signal.core.util.eventbus.EventBus;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.service.VerificationCodeParser;
 
@@ -40,7 +40,7 @@ public class SmsRetrieverReceiver extends BroadcastReceiver {
 
   public void registerReceiver() {
     Log.d(TAG, "Registering SMS retriever receiver");
-    ContextCompat.registerReceiver(context, this, new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), ContextCompat.RECEIVER_EXPORTED);
+    ContextCompat.registerReceiver(context, this, new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), SmsRetriever.SEND_PERMISSION, null, ContextCompat.RECEIVER_EXPORTED);
   }
 
   public void unregisterReceiver() {

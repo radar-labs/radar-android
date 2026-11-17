@@ -1,47 +1,80 @@
 package org.thoughtcrime.securesms.contacts.paged
 
+import androidx.annotation.WorkerThread
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewModelScope
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import org.signal.paging.LivePagedData
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.signal.network.util.Preconditions
 import org.signal.paging.PagedData
 import org.signal.paging.PagingConfig
 import org.signal.paging.PagingController
+import org.signal.paging.StateFlowPagedData
+import org.signal.remoteconfig.SelectionLimits
 import org.thoughtcrime.securesms.conversationlist.chatfilter.ConversationFilterRequest
 import org.thoughtcrime.securesms.database.model.DistributionListPrivacyMode
-import org.thoughtcrime.securesms.groups.SelectionLimits
 import org.thoughtcrime.securesms.recipients.Recipient
+import org.thoughtcrime.securesms.search.SearchFilter
 import org.thoughtcrime.securesms.search.SearchRepository
-import org.thoughtcrime.securesms.util.livedata.Store
-import org.whispersystems.signalservice.api.util.Preconditions
+import org.thoughtcrime.securesms.util.adapter.mapping.MappingModelList
+import org.thoughtcrime.securesms.util.adapter.mapping.PagingMappingAdapter
 
 /**
- * Simple, reusable view model that manages a ContactSearchPagedDataSource as well as filter and expansion state.
+ * Manages paged contact search data, query/filter state, and contact selection. Drives
+ * [ContactSearch] / [ContactSearchView] and can also be used standalone via
+ * [bindAdapterToLifecycle] when only the data pipeline is needed (no Compose surface).
+ *
+ * Create via [Factory] and scope to the host Fragment or Activity. All state is exposed as
+ * [kotlinx.coroutines.flow.StateFlow] so it can be collected from Compose or coroutine scopes.
+ *
+ * @param fixedContacts Pre-selected contacts that cannot be deselected (e.g. existing group
+ *                      members). Owned here rather than by the UI layer.
  */
+@Stable
 class ContactSearchViewModel(
   private val savedStateHandle: SavedStateHandle,
   private val selectionLimits: SelectionLimits,
+  private val isMultiSelect: Boolean,
   private val contactSearchRepository: ContactSearchRepository,
   private val performSafetyNumberChecks: Boolean,
-  private val arbitraryRepository: ArbitraryRepository?,
+  val arbitraryRepository: ArbitraryRepository?,
   private val searchRepository: SearchRepository,
-  private val contactSearchPagedDataSourceRepository: ContactSearchPagedDataSourceRepository
+  private val contactSearchPagedDataSourceRepository: ContactSearchPagedDataSourceRepository,
+  val fixedContacts: Set<ContactSearchKey> = emptySet(),
+  private val debounceSearch: Boolean = false
 ) : ViewModel() {
 
   companion object {
     private const val QUERY = "query"
+    private const val SEARCH_DEBOUNCE_MILLIS = 300L
   }
 
   private val safetyNumberRepository: SafetyNumberRepository by lazy { SafetyNumberRepository() }
@@ -54,46 +87,193 @@ class ContactSearchViewModel(
     .setStartIndex(0)
     .build()
 
-  private val pagedData = MutableLiveData<LivePagedData<ContactSearchKey, ContactSearchData>>()
-  private val configurationStore = Store(ContactSearchState(query = savedStateHandle[QUERY]))
+  private val pagedData = MutableStateFlow<StateFlowPagedData<ContactSearchKey, ContactSearchData>?>(null)
+  private val internalConfigurationState = MutableStateFlow(ContactSearchState(query = savedStateHandle[QUERY]))
   private val internalSelectedContacts = MutableStateFlow<Set<ContactSearchKey>>(emptySet())
   private val errorEvents = PublishSubject.create<ContactSearchError>()
+  private val rawQuery = MutableStateFlow<String?>(savedStateHandle[QUERY])
+  private val internalFastScrollerEnabled = MutableStateFlow(false)
+  private val internalDisplayingContextMenu = MutableStateFlow(false)
+  private val internalScrollRequests = MutableSharedFlow<ScrollRequest>(extraBufferCapacity = 1)
+  private val internalSearchInProgress = MutableStateFlow(false)
 
-  val controller: LiveData<PagingController<ContactSearchKey>> = pagedData.map { it.controller }
-  val data: LiveData<List<ContactSearchData>> = pagedData.switchMap { it.data }
-  val configurationState: LiveData<ContactSearchState> = configurationStore.stateLiveData
-  private val selectedContacts: StateFlow<Set<ContactSearchKey>> = internalSelectedContacts
-  val selectionState: LiveData<Set<ContactSearchKey>> = selectedContacts.asLiveData()
+  val fastScrollerEnabled: StateFlow<Boolean> = internalFastScrollerEnabled
+  val isDisplayingContextMenu: StateFlow<Boolean> = internalDisplayingContextMenu
+  val scrollRequests: SharedFlow<ScrollRequest> = internalScrollRequests
+
+  /**
+   * True while a [setConfiguration] call has yet to publish anything for the current configuration. Suitable for driving a
+   * whole-list loading indicator. Goes false as soon as the first results are published, even if slower sections are still
+   * running -- those render their own placeholder.
+   */
+  val searchInProgress: StateFlow<Boolean> = internalSearchInProgress
+
+  val query: StateFlow<String?> = rawQuery
+
+  init {
+    viewModelScope.launch {
+      val querySource = if (debounceSearch) rawQuery.drop(1).debounce(SEARCH_DEBOUNCE_MILLIS) else rawQuery.drop(1)
+      querySource.collect { query ->
+        savedStateHandle[QUERY] = query
+        internalConfigurationState.update { it.copy(query = query) }
+      }
+    }
+  }
+
+  /** The paging controller for the current data source. Null until [setConfiguration] is called. */
+  val controller: StateFlow<PagingController<ContactSearchKey>?> = pagedData
+    .map { it?.controller }
+    .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
+  /** Raw paged contact data. Prefer [mappingModels] for binding to an adapter. */
+  val data: StateFlow<List<ContactSearchData>> = pagedData
+    .flatMapLatest { it?.data ?: flowOf(emptyList()) }
+    .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+  /** The current query/filter/expansion state. Changes here trigger a new [setConfiguration] call via the Compose layer or [bindAdapterToLifecycle]. */
+  val configurationState: StateFlow<ContactSearchState> = internalConfigurationState
+
+  /** Currently selected contact keys, excluding [fixedContacts]. */
+  val selectionState: StateFlow<Set<ContactSearchKey>> = internalSelectedContacts
+
+  /** Adapter-ready models combining [data] with [selectionState]. Suitable for direct submission to a [ContactSearchAdapter]. */
+  val mappingModels: StateFlow<MappingModelList> = combine(data, selectionState) { contactData, selection ->
+    ContactSearchModels.toMappingModelList(contactData, selection, arbitraryRepository)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, MappingModelList())
 
   val errorEventsStream: Observable<ContactSearchError> = errorEvents
+
+  val internalTotalCount = MutableStateFlow(0)
+  val totalCount: StateFlow<Int> = internalTotalCount
 
   override fun onCleared() {
     disposables.clear()
   }
 
-  fun setConfiguration(contactSearchConfiguration: ContactSearchConfiguration) {
-    val pagedDataSource = ContactSearchPagedDataSource(
-      contactSearchConfiguration,
-      arbitraryRepository = arbitraryRepository,
-      searchRepository = searchRepository,
-      contactSearchPagedDataSourceRepository = contactSearchPagedDataSourceRepository
-    )
-    pagedData.value = PagedData.createForLiveData(pagedDataSource, pagingConfig)
+  fun setFastScrollEnabled(enabled: Boolean) {
+    internalFastScrollerEnabled.update { enabled }
   }
 
-  fun getQuery(): String? = savedStateHandle[QUERY]
+  fun setDisplayingContextMenu(isDisplayingContextMenu: Boolean) {
+    internalDisplayingContextMenu.update { isDisplayingContextMenu }
+  }
+
+  fun requestScrollPosition(position: Int) {
+    internalScrollRequests.tryEmit(ScrollRequest(position))
+  }
+
+  /**
+   * Builds the results for [contactSearchConfiguration] and publishes them to [pagedData].
+   *
+   * Each query-driven section runs its own database query, and how long those take varies wildly --
+   * a message search can take an order of magnitude longer than a contact search. So rather than
+   * hold every section back until the slowest one finishes, they are queried concurrently and
+   * published as they land. A section that hasn't reported yet renders as a loading placeholder, so
+   * an outstanding section can't be mistaken for an empty one.
+   *
+   * Nothing is published until the topmost section finishes, even if a lower one is ready sooner.
+   * Publishing earlier would put a placeholder above the results and then shove them down when it
+   * resolves, which on a device where the whole search takes a few milliseconds reads as a flicker.
+   * Until then [searchInProgress] covers the gap, and sections that finish together are published
+   * together for the same reason.
+   */
+  suspend fun setConfiguration(contactSearchConfiguration: ContactSearchConfiguration) {
+    internalSearchInProgress.value = true
+    try {
+      val query = contactSearchConfiguration.query?.takeIf { it.isNotEmpty() }
+      val parallelSections = if (query == null) emptyList() else contactSearchConfiguration.sections.filter { it.isQueriedInParallel() }
+
+      if (query == null || parallelSections.isEmpty()) {
+        publish(contactSearchConfiguration, ContactSearchSectionResults())
+        return
+      }
+
+      coroutineScope {
+        val completedSections = Channel<ContactSearchSectionResult>(capacity = parallelSections.size)
+
+        parallelSections.forEach { section ->
+          launch(Dispatchers.Default) {
+            completedSections.send(querySection(section, query, contactSearchConfiguration.searchFilter))
+          }
+        }
+
+        val topSection = parallelSections.first().sectionKey
+        var results = ContactSearchSectionResults(pending = parallelSections.mapTo(mutableSetOf()) { it.sectionKey })
+
+        while (results.pending.isNotEmpty()) {
+          results = results.withSection(completedSections.receive())
+
+          generateSequence { completedSections.tryReceive().getOrNull() }
+            .forEach { results = results.withSection(it) }
+
+          if (topSection !in results.pending) {
+            publish(contactSearchConfiguration, results)
+            internalSearchInProgress.value = false
+          }
+        }
+      }
+    } finally {
+      internalSearchInProgress.value = false
+    }
+  }
+
+  /**
+   * Whether [querySection] can produce this section's rows up front. The rest are left to
+   * [ContactSearchPagedDataSource], which reads them a page at a time off of a cursor -- either
+   * because they're unbounded, or because they aren't query-driven and so aren't what a search is
+   * waiting on.
+   */
+  private fun ContactSearchConfiguration.Section.isQueriedInParallel(): Boolean {
+    return when (this) {
+      is ContactSearchConfiguration.Section.Chats,
+      is ContactSearchConfiguration.Section.Messages,
+      is ContactSearchConfiguration.Section.GroupsWithMembers,
+      is ContactSearchConfiguration.Section.ContactsWithoutThreads -> true
+
+      else -> false
+    }
+  }
+
+  @WorkerThread
+  private fun querySection(section: ContactSearchConfiguration.Section, query: String, searchFilter: SearchFilter): ContactSearchSectionResult {
+    return when (section) {
+      is ContactSearchConfiguration.Section.Chats -> ContactSearchSectionResult.Chats(searchRepository.queryThreadsSync(query, section.isUnreadOnly).results)
+      is ContactSearchConfiguration.Section.Messages -> ContactSearchSectionResult.Messages(searchRepository.queryMessagesSync(query, searchFilter).results)
+      is ContactSearchConfiguration.Section.GroupsWithMembers -> ContactSearchSectionResult.GroupsWithMembers(contactSearchPagedDataSourceRepository.getGroupsWithMembers(query))
+      is ContactSearchConfiguration.Section.ContactsWithoutThreads -> ContactSearchSectionResult.ContactsWithoutThreads(contactSearchPagedDataSourceRepository.getContactsWithoutThreads(query))
+      else -> error("Section ${section.sectionKey} is not queried in parallel.")
+    }
+  }
+
+  private suspend fun publish(contactSearchConfiguration: ContactSearchConfiguration, sectionResults: ContactSearchSectionResults) {
+    val (pagedDataSource, size) = withContext(Dispatchers.Default) {
+      val source = ContactSearchPagedDataSource(
+        contactSearchConfiguration,
+        arbitraryRepository = arbitraryRepository,
+        searchRepository = searchRepository,
+        contactSearchPagedDataSourceRepository = contactSearchPagedDataSourceRepository,
+        sectionResults = sectionResults
+      )
+      source to source.size()
+    }
+    internalTotalCount.value = size
+    pagedData.value = PagedData.createForStateFlow(pagedDataSource, pagingConfig, data.value)
+  }
 
   fun setQuery(query: String?) {
-    savedStateHandle[QUERY] = query
-    configurationStore.update { it.copy(query = query) }
+    rawQuery.value = query
   }
 
   fun setConversationFilterRequest(conversationFilterRequest: ConversationFilterRequest) {
-    configurationStore.update { it.copy(conversationFilterRequest = conversationFilterRequest) }
+    internalConfigurationState.update { it.copy(conversationFilterRequest = conversationFilterRequest) }
+  }
+
+  fun setSearchFilter(searchFilter: SearchFilter) {
+    internalConfigurationState.update { it.copy(searchFilter = searchFilter) }
   }
 
   fun expandSection(sectionKey: ContactSearchConfiguration.SectionKey) {
-    configurationStore.update { it.copy(expandedSections = it.expandedSections + sectionKey) }
+    internalConfigurationState.update { it.copy(expandedSections = it.expandedSections + sectionKey) }
   }
 
   fun setKeysSelected(contactSearchKeys: Set<ContactSearchKey>) {
@@ -116,7 +296,11 @@ class ContactSearchViewModel(
         safetyNumberRepository.batchSafetyNumberCheck(newSelectionEntries)
       }
 
-      internalSelectedContacts.update { it + newSelectionEntries }
+      if (!isMultiSelect && newSelectionEntries.isNotEmpty()) {
+        internalSelectedContacts.update { newSelectionEntries.toSet() }
+      } else {
+        internalSelectedContacts.update { it + newSelectionEntries }
+      }
     }
   }
 
@@ -125,7 +309,7 @@ class ContactSearchViewModel(
   }
 
   fun getSelectedContacts(): Set<ContactSearchKey> {
-    return selectedContacts.value
+    return internalSelectedContacts.value
   }
 
   fun clearSelection() {
@@ -134,7 +318,7 @@ class ContactSearchViewModel(
 
   fun addToVisibleGroupStories(groupStories: Set<ContactSearchKey.RecipientSearchKey>) {
     disposables += contactSearchRepository.markDisplayAsStory(groupStories.map { it.recipientId }).subscribe {
-      configurationStore.update { state ->
+      internalConfigurationState.update { state ->
         state.copy(
           groupStories = state.groupStories + groupStories.map {
             val recipient = Recipient.resolved(it.recipientId)
@@ -149,7 +333,7 @@ class ContactSearchViewModel(
     Preconditions.checkArgument(story.recipient.isGroup)
     setKeysNotSelected(setOf(story.contactSearchKey))
     disposables += contactSearchRepository.unmarkDisplayAsStory(story.recipient.requireGroupId()).subscribe {
-      configurationStore.update { state ->
+      internalConfigurationState.update { state ->
         state.copy(
           groupStories = state.groupStories.filter { it.recipient.id == story.recipient.id }.toSet()
         )
@@ -166,30 +350,82 @@ class ContactSearchViewModel(
     }
   }
 
+  fun getFixedContactsSize(): Int = fixedContacts.size
+
   fun refresh() {
     controller.value?.onDataInvalidated()
   }
 
+  fun refreshGroupData() {
+    contactSearchPagedDataSourceRepository.clearGroupRecordCache()
+    refresh()
+  }
+
+  data class ScrollRequest(val position: Int)
+
   class Factory(
     private val selectionLimits: SelectionLimits,
+    private val isMultiSelect: Boolean = true,
     private val repository: ContactSearchRepository,
     private val performSafetyNumberChecks: Boolean,
     private val arbitraryRepository: ArbitraryRepository?,
     private val searchRepository: SearchRepository,
-    private val contactSearchPagedDataSourceRepository: ContactSearchPagedDataSourceRepository
+    private val contactSearchPagedDataSourceRepository: ContactSearchPagedDataSourceRepository,
+    private val fixedContacts: Set<ContactSearchKey> = emptySet(),
+    private val debounceSearch: Boolean = false
   ) : AbstractSavedStateViewModelFactory() {
     override fun <T : ViewModel> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {
       return modelClass.cast(
         ContactSearchViewModel(
           savedStateHandle = handle,
           selectionLimits = selectionLimits,
+          isMultiSelect = isMultiSelect,
           contactSearchRepository = repository,
           performSafetyNumberChecks = performSafetyNumberChecks,
           arbitraryRepository = arbitraryRepository,
           searchRepository = searchRepository,
-          contactSearchPagedDataSourceRepository = contactSearchPagedDataSourceRepository
+          contactSearchPagedDataSourceRepository = contactSearchPagedDataSourceRepository,
+          fixedContacts = fixedContacts,
+          debounceSearch = debounceSearch
         )
       ) as T
+    }
+  }
+}
+
+/**
+ * Wires the three core flows of [ContactSearchViewModel] to a [PagingMappingAdapter], scoped to
+ * the given [LifecycleOwner]. Designed for Java callers that create the adapter directly (without
+ * [ContactSearchView]) and only need the data pipeline, not a full Compose surface.
+ *
+ * Call once from `onViewCreated` after constructing the ViewModel and adapter.
+ */
+fun ContactSearchViewModel.bindAdapterToLifecycle(
+  lifecycleOwner: LifecycleOwner,
+  adapter: PagingMappingAdapter<ContactSearchKey>,
+  mapStateToConfiguration: (ContactSearchState) -> ContactSearchConfiguration
+) {
+  lifecycleOwner.lifecycleScope.launch {
+    lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+      launch { mappingModels.collect { adapter.submitList(it) } }
+      launch { controller.collect { it?.let { c -> adapter.setPagingController(c) } } }
+      launch { configurationState.collectLatest { setConfiguration(mapStateToConfiguration(it)) } }
+    }
+  }
+}
+
+/**
+ * Observes [ContactSearchViewModel.searchInProgress] scoped to the given [LifecycleOwner], invoking
+ * [onSearchInProgressChanged] on the main thread whenever the loading state changes. Designed for Java
+ * callers that want to drive a loading indicator.
+ */
+fun ContactSearchViewModel.bindSearchInProgressToLifecycle(
+  lifecycleOwner: LifecycleOwner,
+  onSearchInProgressChanged: (Boolean) -> Unit
+) {
+  lifecycleOwner.lifecycleScope.launch {
+    lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+      searchInProgress.collect { onSearchInProgressChanged(it) }
     }
   }
 }

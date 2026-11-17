@@ -5,98 +5,146 @@
 
 package org.thoughtcrime.securesms.main
 
-import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldRole
-import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
-import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import io.reactivex.rxjava3.core.Observable
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.rx3.asObservable
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.ui.compose.EventDrivenViewModel
+import org.signal.core.ui.compose.split.ListDetailEvents
+import org.signal.core.ui.compose.split.ListDetailNavigator
+import org.signal.core.ui.compose.split.PaneAnchor
+import org.signal.core.ui.compose.split.detailLocation
+import org.signal.core.ui.compose.split.exitDetail
+import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.calls.log.CallLogRow
 import org.thoughtcrime.securesms.components.settings.app.notifications.profiles.NotificationProfilesRepository
+import org.thoughtcrime.securesms.components.snackbars.SnackbarStateConsumerRegistry
+import org.thoughtcrime.securesms.conversation.ConversationArgs
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.megaphone.Megaphone
 import org.thoughtcrime.securesms.megaphone.Megaphones
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfile
+import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.stories.Stories
-import org.thoughtcrime.securesms.window.AppScaffoldNavigator
 import java.util.Optional
+import kotlin.time.Duration.Companion.milliseconds
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 class MainNavigationViewModel(
-  initialListLocation: MainNavigationListLocation = MainNavigationListLocation.CHATS
-) : ViewModel(), MainNavigationRouter {
+  savedStateHandle: SavedStateHandle,
+  initialListLocation: MainListRoute = MainListRoute.Chats
+) : EventDrivenViewModel<MainNavigationEvents>(TAG, shouldLogEvents = false), MainNavigationEventSink {
+
+  companion object {
+    private val TAG = Log.tag(MainNavigationViewModel::class)
+    private const val NAV_PREFETCH_TIMEOUT_MS = 250L
+    private const val CHATS_BACK_STACK_KEY = "chats_back_stack_v2"
+    private const val CALLS_BACK_STACK_KEY = "calls_back_stack_v2"
+    private const val STORIES_BACK_STACK_KEY = "stories_back_stack_v2"
+    private const val PAYMENTS_BACK_STACK_KEY = "payments_back_stack_v2"
+  }
+
+  class Factory(
+    private val initialListLocation: MainListRoute = MainListRoute.Chats
+  ) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
+      val savedStateHandle = extras.createSavedStateHandle()
+      @Suppress("UNCHECKED_CAST")
+      return MainNavigationViewModel(savedStateHandle, initialListLocation) as T
+    }
+  }
+
   private val megaphoneRepository = AppDependencies.megaphoneRepository
 
-  private var navigator: AppScaffoldNavigator<Any>? = null
-  private var navigatorScope: CoroutineScope? = null
-  private var goToLegacyDetailLocation: ((MainNavigationDetailLocation) -> Unit)? = null
+  /**
+   * The stacks behind the main window, one per tab. The archive gets no stack of its own: it is a list
+   * pushed onto the chats stack, so that opening it keeps whatever chat was open beside it.
+   */
+  val navigator = ListDetailNavigator<MainListRoute, MainDetailRoute>(
+    savedStateHandle = savedStateHandle,
+    scope = viewModelScope,
+    stackKeys = mapOf(
+      MainListRoute.Chats to CHATS_BACK_STACK_KEY,
+      MainListRoute.Calls to CALLS_BACK_STACK_KEY,
+      MainListRoute.Stories to STORIES_BACK_STACK_KEY,
+      MainListRoute.Payments to PAYMENTS_BACK_STACK_KEY
+    ),
+    initialRoot = initialListLocation.tab
+  )
 
-  private val internalDetailLocation = MutableSharedFlow<MainNavigationDetailLocation>()
-  val detailLocation: SharedFlow<MainNavigationDetailLocation> = internalDetailLocation
+  /** The currently selected tab. */
+  val currentTab: StateFlow<MainListRoute> = navigator.currentRoot
 
-  private val internalIsFullScreenPane = MutableStateFlow(false)
-  val isFullScreenPane: StateFlow<Boolean> = internalIsFullScreenPane
+  /** How a split-pane window currently divides the list and detail panes. */
+  val paneAnchor: StateFlow<PaneAnchor> = navigator.paneAnchor
 
-  private val internalActiveChatThreadId = MutableStateFlow(-1L)
-  val observableActiveChatThreadId: Observable<Long> = internalActiveChatThreadId.combine(isFullScreenPane) { id, expanded ->
-    if (expanded) -1L else id
-  }.asObservable()
+  /** Whether one pane currently occupies the whole window. Only meaningful in split-pane layouts. */
+  val isFullScreenPane: StateFlow<Boolean> = navigator.isFullScreenPane
 
-  private val internalActiveCallId = MutableStateFlow<CallLogRow.Id?>(null)
-  val observableActiveCallId: Observable<Optional<out CallLogRow.Id>> = internalActiveCallId.map { Optional.ofNullable(it) }.combine(isFullScreenPane) { id, expanded ->
-    if (expanded) Optional.ofNullable(null) else id
-  }.asObservable()
+  val observableActiveRecipientId: Observable<Optional<out RecipientId>> =
+    navigator.snapshotsOf(MainListRoute.Chats) { activeRecipientId }
+      .combine(isFullScreenPane) { id, expanded -> if (expanded) Optional.ofNullable(null) else Optional.ofNullable(id) }
+      .asObservable()
+
+  val observableActiveCallId: Observable<Optional<out CallLogRow.Id>> =
+    navigator.snapshotsOf(MainListRoute.Calls) { activeCallId }
+      .combine(isFullScreenPane) { id, expanded -> if (expanded) Optional.ofNullable(null) else Optional.ofNullable(id) }
+      .asObservable()
 
   private val internalMegaphone = MutableStateFlow(Megaphone.NONE)
   val megaphone: StateFlow<Megaphone> = internalMegaphone
 
-  private val internalSnackbar = MutableStateFlow<SnackbarState?>(null)
-  val snackbar: StateFlow<SnackbarState?> = internalSnackbar
-
   private val internalNavigationEvents = MutableSharedFlow<NavigationEvent>()
   val navigationEvents: Flow<NavigationEvent> = internalNavigationEvents
 
+  private val internalConversationJumps = Channel<ConversationJump>(Channel.BUFFERED)
+  val conversationJumps: Flow<ConversationJump> = internalConversationJumps.receiveAsFlow()
+
   private val notificationProfilesRepository: NotificationProfilesRepository = NotificationProfilesRepository()
 
-  private val internalMainNavigationState = MutableStateFlow(MainNavigationState(currentListLocation = initialListLocation))
-  val mainNavigationState: StateFlow<MainNavigationState> = internalMainNavigationState
+  private val internalMainNavigationBarState = MutableStateFlow(MainNavigationBarState(currentListLocation = initialListLocation))
+  val mainNavigationBarState: StateFlow<MainNavigationBarState> = combine(internalMainNavigationBarState, navigator.displayedList) { state, listLocation ->
+    state.copy(currentListLocation = listLocation)
+  }.stateIn(viewModelScope, SharingStarted.Eagerly, MainNavigationBarState(currentListLocation = initialListLocation))
+
+  /**
+   * The detail content displayed above the current list, or null when the list is showing on its own.
+   */
+  val detailLocation: StateFlow<MainDetailRoute?> = navigator.detail
+
+  /**
+   * Whether the current tab is displaying detail content.
+   */
+  val hasDetailContent: StateFlow<Boolean> = navigator.hasDetail
 
   /**
    * This is Rx because these are still accessed from Java.
    */
-  private val internalTabClickEvents: MutableSharedFlow<MainNavigationListLocation> = MutableSharedFlow()
-  val tabClickEventsObservable: Observable<MainNavigationListLocation> = internalTabClickEvents.asObservable()
+  private val internalTabClickEvents: MutableSharedFlow<MainListRoute> = MutableSharedFlow()
+  val tabClickEventsObservable: Observable<MainListRoute> = internalTabClickEvents.asObservable()
 
-  private var earlyNavigationListLocationRequested: MainNavigationListLocation? = null
-  var earlyNavigationDetailLocationRequested: MainNavigationDetailLocation? = null
-    private set
-
-  private val internalPaneFocusRequests = MutableSharedFlow<ThreePaneScaffoldRole?>()
-  val paneFocusRequests: SharedFlow<ThreePaneScaffoldRole?> = internalPaneFocusRequests
-
-  private var earlyFocusedPaneRequested: ThreePaneScaffoldRole? = null
-
-  /**
-   * Which pane we display to the user at a given time should be driven solely by user intention. There are cases
-   * where the user can change configurations (such as opening a foldable) and we will restore state and errantly
-   * take them back into a PRIMARY pane. This boolean helps avoid these cases.
-   */
-  private var lockPaneToSecondary = false
+  val snackbarRegistry = SnackbarStateConsumerRegistry()
 
   init {
     performStoreUpdate(MainNavigationRepository.getNumberOfUnreadMessages()) { unreadChats, state ->
@@ -114,219 +162,175 @@ class MainNavigationViewModel(
     performStoreUpdate(MainNavigationRepository.getHasFailedOutgoingStories()) { hasFailedStories, state ->
       state.copy(storyFailure = hasFailedStories)
     }
-
-    viewModelScope.launch {
-      internalDetailLocation.collect { location ->
-        when (location) {
-          is MainNavigationDetailLocation.Chats.Conversation -> {
-            internalActiveChatThreadId.update { location.conversationArgs.threadId }
-          }
-          is MainNavigationDetailLocation.Calls -> {
-            internalActiveCallId.update { location.controllerKey }
-          }
-          else -> Unit
-        }
-      }
-    }
   }
 
-  fun onPaneAnchorChanged(isFullScreenPane: Boolean) {
-    internalIsFullScreenPane.update { isFullScreenPane }
+  override suspend fun processEvent(event: MainNavigationEvents) {
+    when (event) {
+      is MainNavigationEvents.GoToTab -> goToTab(event.tab)
+      is MainNavigationEvents.GoToList -> goToList(event.route)
+      is MainNavigationEvents.GoToDetail -> goToDetail(event.route)
+      MainNavigationEvents.ExitDetail -> navigator.processEvent(ListDetailEvents.ExitDetail)
+      MainNavigationEvents.GoToCameraFirstStoryCapture -> internalNavigationEvents.emit(NavigationEvent.STORY_CAMERA_FIRST)
+      MainNavigationEvents.RefreshNavigationBar -> refreshNavigationBarState()
+      MainNavigationEvents.RequestNextMegaphone -> requestNextMegaphone()
+      is MainNavigationEvents.MegaphoneVisible -> megaphoneRepository.markVisible(event.megaphone.event)
+      is MainNavigationEvents.MegaphoneSnoozed -> onMegaphoneSnoozed(event.event)
+      is MainNavigationEvents.MegaphoneCompleted -> onMegaphoneCompleted(event.event)
+      is MainNavigationEvents.ListDetailEvent -> navigator.processEvent(event.event)
+    }
   }
 
   /**
-   * Sets the navigator on the view-model. This wraps the given navigator in our own delegating implementation
-   * such that we can react to navigateTo/Back signals and maintain proper state for internalDetailLocation.
+   * Clicking the tab already displayed reveals its list and tells that tab's screen about the click —
+   * scrolling to the top, and the like — rather than navigating anywhere.
    */
-  fun wrapNavigator(composeScope: CoroutineScope, threePaneScaffoldNavigator: ThreePaneScaffoldNavigator<Any>, goToLegacyDetailLocation: (MainNavigationDetailLocation) -> Unit): AppScaffoldNavigator<Any> {
-    this.goToLegacyDetailLocation = goToLegacyDetailLocation
-    this.navigatorScope = composeScope
-    this.navigator = Nav(threePaneScaffoldNavigator)
-
-    earlyNavigationListLocationRequested?.let {
-      goTo(it)
-    }
-
-    earlyNavigationListLocationRequested = null
-
-    earlyFocusedPaneRequested?.let {
-      setFocusedPane(it)
-    }
-
-    earlyFocusedPaneRequested = null
-
-    earlyNavigationDetailLocationRequested?.let {
-      goTo(it)
-    }
-
-    return this.navigator!!
-  }
-
-  fun clearEarlyDetailLocation() {
-    earlyNavigationDetailLocationRequested = null
-  }
-
-  fun setFocusedPane(role: ThreePaneScaffoldRole) {
-    val roleToGoTo = if (lockPaneToSecondary) {
-      ThreePaneScaffoldRole.Secondary
+  private suspend fun goToTab(tab: MainListRoute) {
+    if (navigator.displayedList.value == tab) {
+      navigator.processEvent(ListDetailEvents.RevealList)
+      internalTabClickEvents.emit(tab)
     } else {
-      role
+      goToList(tab)
+    }
+  }
+
+  /** Switching tabs only changes which stack is displayed; each tab comes back to whatever it had open. */
+  private fun goToList(route: MainListRoute) {
+    navigator.processEvent(
+      ListDetailEvents.GoToList(
+        listRoute = route,
+        root = route.tab,
+        push = route == MainListRoute.Archive
+      )
+    )
+  }
+
+  private suspend fun goToDetail(route: MainDetailRoute) {
+    when (route) {
+      is MainDetailRoute.Chats -> pushChatsDetailLocation(route)
+      is MainDetailRoute.Conversation -> goToConversation(route)
+      is MainDetailRoute.Calls, is MainDetailRoute.CallLinkDetails -> pushCallsDetailLocation(route)
+      is MainDetailRoute.Stories -> navigator.processEvent(ListDetailEvents.Push(route, MainListRoute.Stories))
+    }
+  }
+
+  private suspend fun MainDetailRoute.Conversation.withPreloadedWallpaper(): MainDetailRoute.Conversation {
+    val args = conversationArgs
+    val liveRecipient = Recipient.live(args.recipientId)
+    val recipientSnapshot = liveRecipient.get()
+    val wallpaper = recipientSnapshot.wallpaper
+
+    val updatedArgs = if (recipientSnapshot.isResolving || (wallpaper?.isPhoto == true && !wallpaper.isPrefetched)) {
+      withTimeoutOrNull(NAV_PREFETCH_TIMEOUT_MS.milliseconds) {
+        withContext(Dispatchers.Default) {
+          val freshWallpaper = liveRecipient.resolve().wallpaper
+          if (freshWallpaper?.prefetch(AppDependencies.application, NAV_PREFETCH_TIMEOUT_MS) == false) {
+            Log.w(TAG, "[goToConversation] Failed to prefetch wallpaper.")
+          }
+          args.copy(hasWallpaper = freshWallpaper != null)
+        }
+      } ?: run {
+        Log.w(TAG, "[goToConversation] Timed out resolving recipient/wallpaper. Navigating without prefetch.")
+        args
+      }
+    } else {
+      args.copy(hasWallpaper = wallpaper != null)
     }
 
-    if (navigator == null) {
-      earlyFocusedPaneRequested = roleToGoTo
+    return copy(conversationArgs = updatedArgs)
+  }
+
+  private suspend fun goToConversation(location: MainDetailRoute.Conversation) {
+    val current = navigator[MainListRoute.Chats].detailLocation<MainDetailRoute.Conversation>()
+    if (current != null && location.conversationArgs.isJumpWithin(current.conversationArgs)) {
+      pushChatsDetailLocation(current)
+      internalConversationJumps.send(ConversationJump(current.conversationArgs.threadId, location.conversationArgs.startingPosition))
       return
     }
 
-    navigatorScope?.launch {
-      navigator?.navigateTo(roleToGoTo)
-    }
-
-    viewModelScope.launch {
-      internalPaneFocusRequests.emit(roleToGoTo)
-    }
+    pushChatsDetailLocation(location.withPreloadedWallpaper())
   }
 
-  /**
-   * Navigates to the requested location. If the navigator is not present, this functionally sets our
-   * "default" location to that specified, and we will route the user there when the navigator is set.
-   *
-   * This does not update what panel is currently focused, so that we can perform actions (such as first
-   * render) *before* swapping panes. This helps to prevent flashing / duplicate loads.
-   */
-  override fun goTo(location: MainNavigationDetailLocation) {
-    lockPaneToSecondary = false
-
-    if (navigator == null) {
-      earlyNavigationDetailLocationRequested = location
-      return
-    }
-
-    viewModelScope.launch {
-      internalDetailLocation.emit(location)
-    }
+  /** Whether these args only ask to move to a position in the [current] conversation, carrying nothing that needs a fresh screen. */
+  private fun ConversationArgs.isJumpWithin(current: ConversationArgs): Boolean {
+    return startingPosition >= 0 &&
+      threadId == current.threadId &&
+      conversationScreenType == current.conversationScreenType &&
+      canInitializeFromDatabase() &&
+      media.isNullOrEmpty() &&
+      stickerLocator == null &&
+      giftBadge == null &&
+      shareDataTimestamp == -1L &&
+      !isWithSearchOpen
   }
 
-  override fun goTo(location: MainNavigationListLocation) {
-    lockPaneToSecondary = true
-
-    if (navigator == null) {
-      earlyNavigationListLocationRequested = location
-      return
-    }
-
-    internalMainNavigationState.update {
-      it.copy(currentListLocation = location)
-    }
+  private fun pushChatsDetailLocation(location: MainDetailRoute) {
+    navigator.processEvent(ListDetailEvents.Push(location, MainListRoute.Chats))
   }
 
-  fun goToCameraFirstStoryCapture() {
-    viewModelScope.launch {
-      internalNavigationEvents.emit(NavigationEvent.STORY_CAMERA_FIRST)
+  private fun pushCallsDetailLocation(location: MainDetailRoute) {
+    val callsBackStack = navigator[MainListRoute.Calls]
+    if (location is MainDetailRoute.Calls && callsBackStack.activeCallId != location.controllerKey) {
+      callsBackStack.exitDetail()
     }
+
+    navigator.processEvent(ListDetailEvents.Push(location, MainListRoute.Calls))
   }
 
-  fun getNextMegaphone() {
+  private fun requestNextMegaphone() {
     megaphoneRepository.getNextMegaphone { next ->
       internalMegaphone.update { next ?: Megaphone.NONE }
     }
   }
 
-  fun setSnackbar(snackbarState: SnackbarState?) {
-    internalSnackbar.update { snackbarState }
-  }
-
-  fun onMegaphoneSnoozed(event: Megaphones.Event) {
-    megaphoneRepository.markSeen(event)
+  private fun onMegaphoneSnoozed(event: Megaphones.Event) {
+    megaphoneRepository.markInteractedWith(event)
     internalMegaphone.update { Megaphone.NONE }
   }
 
-  fun onMegaphoneCompleted(event: Megaphones.Event) {
+  private fun onMegaphoneCompleted(event: Megaphones.Event) {
     internalMegaphone.update { Megaphone.NONE }
     megaphoneRepository.markFinished(event)
   }
 
-  fun onMegaphoneVisible(visible: Megaphone) {
-    megaphoneRepository.markVisible(visible.event)
-  }
-
-  fun refreshNavigationBarState() {
-    internalMainNavigationState.update {
+  private fun refreshNavigationBarState() {
+    internalMainNavigationBarState.update {
       it.copy(
         compact = SignalStore.settings.useCompactNavigationBar,
-        isStoriesFeatureEnabled = Stories.isFeatureEnabled(),
-        // Show the Payments tab whenever the payments feature is enabled for this user.
-        // Mirrors iOS HomeTabBarController gating on `paymentsRef.shouldShowPaymentsUI`.
-        isPaymentsTabEnabled = SignalStore.payments.paymentsAvailability.showPaymentsMenu()
+        destinations = MainNavigationBarState.ALL_DESTINATIONS.filter { destination ->
+          destination != MainListRoute.Stories || Stories.isFeatureEnabled()
+        }.let { tabs ->
+          // Radar: the Payments tab sits right after Chats whenever payments are available to this user
+          // (mirrors iOS HomeTabBarController gating on shouldShowPaymentsUI).
+          if (SignalStore.payments.paymentsAvailability.showPaymentsMenu()) {
+            tabs.flatMap { if (it == MainListRoute.Chats) listOf(it, MainListRoute.Payments) else listOf(it) }
+          } else {
+            tabs
+          }
+        }
       )
     }
+  }
+
+  /** Radar: updates the unread badge on the Payments tab. */
+  fun setPaymentsCount(count: Int) {
+    internalMainNavigationBarState.update { it.copy(paymentsCount = count) }
   }
 
   fun getNotificationProfiles(): Flow<List<NotificationProfile>> {
     return notificationProfilesRepository.getProfiles().asFlow()
   }
 
-  fun onChatsSelected() {
-    onTabSelected(MainNavigationListLocation.CHATS)
-  }
-
-  fun onArchiveSelected() {
-    onTabSelected(MainNavigationListLocation.ARCHIVE)
-  }
-
-  fun onCallsSelected() {
-    onTabSelected(MainNavigationListLocation.CALLS)
-  }
-
-  fun onStoriesSelected() {
-    onTabSelected(MainNavigationListLocation.STORIES)
-  }
-
-  fun onPaymentsSelected() {
-    onTabSelected(MainNavigationListLocation.PAYMENTS)
-  }
-
-  /** Updates the unread badge count on the Payments tab. */
-  fun setPaymentsCount(count: Int) {
-    internalMainNavigationState.update { it.copy(paymentsCount = count) }
-  }
-
-  private fun onTabSelected(destination: MainNavigationListLocation) {
-    viewModelScope.launch {
-      val currentTab = internalMainNavigationState.value.currentListLocation
-      if (currentTab == destination) {
-        internalPaneFocusRequests.emit(ThreePaneScaffoldRole.Secondary)
-        internalTabClickEvents.emit(destination)
-      } else {
-        setFocusedPane(ThreePaneScaffoldRole.Secondary)
-        goTo(destination)
-      }
-    }
-  }
-
-  private fun <T : Any> performStoreUpdate(flow: Flow<T>, fn: (T, MainNavigationState) -> MainNavigationState) {
+  private fun <T : Any> performStoreUpdate(flow: Flow<T>, fn: (T, MainNavigationBarState) -> MainNavigationBarState) {
     viewModelScope.launch {
       flow.collectLatest { item ->
-        internalMainNavigationState.update { state -> fn(item, state) }
+        internalMainNavigationBarState.update { state -> fn(item, state) }
       }
     }
   }
+
+  data class ConversationJump(val threadId: Long, val position: Int)
 
   enum class NavigationEvent {
     STORY_CAMERA_FIRST
-  }
-
-  /**
-   * Ensures that when the user navigates back from the PRIMARY to SECONDARY pane, we lock our pane until they choose another primary
-   * piece of content via [goTo].
-   */
-  private inner class Nav<T>(delegate: ThreePaneScaffoldNavigator<T>) : AppScaffoldNavigator<T>(delegate) {
-    override suspend fun seekBack(backNavigationBehavior: BackNavigationBehavior, fraction: Float) {
-      super.seekBack(backNavigationBehavior, fraction)
-
-      if (fraction == 0f) {
-        lockPaneToSecondary = true
-      }
-    }
   }
 }

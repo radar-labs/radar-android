@@ -19,6 +19,7 @@ import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.keyvalue.protos.ArchiveUploadProgressState
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil
+import org.whispersystems.signalservice.api.storage.IAPSubscriptionId
 
 class LogSectionRemoteBackups : LogSection {
   override fun getTitle(): String = "REMOTE BACKUPS"
@@ -39,9 +40,15 @@ class LogSectionRemoteBackups : LogSection {
     output.append("Can backup with cellular            : ${SignalStore.backup.backupWithCellular}\n")
     output.append("Has backup been uploaded            : ${SignalStore.backup.hasBackupBeenUploaded}\n")
     output.append("Backup failure state                : ${SignalStore.backup.backupCreationError?.name ?: "None"}\n")
+    output.append("Message backup initialized          : ${SignalStore.backup.messageBackupInitialized}\n")
+    output.append("Media backup initialized            : ${SignalStore.backup.mediaBackupInitialized}\n")
     output.append("Optimize storage                    : ${SignalStore.backup.optimizeStorage}\n")
     output.append("Detected subscription state mismatch: ${SignalStore.backup.subscriptionStateMismatchDetected}\n")
     output.append("Last verified key time              : ${SignalStore.backup.lastVerifyKeyTime}\n")
+    output.append("Local restore reconcile pending     : ${SignalStore.backup.localRestoreReconcilePending}\n")
+    output.append("Last CDN-verified snapshot version  : ${SignalStore.backup.lastCompletedReconciliationSnapshotVersion}\n")
+    output.append("Last CDN-verified time              : ${SignalStore.backup.lastCompletedReconciliationTime}\n")
+    output.append("Last forced reconciliation attempt  : ${SignalStore.backup.lastForcedReconciliationAttemptTime}\n")
     output.append("Restore state                       : ${ArchiveRestoreProgress.state}\n")
     output.append("\n -- Subscription State\n")
 
@@ -50,7 +57,14 @@ class LogSectionRemoteBackups : LogSection {
     val googlePlayServicesAvailability = GooglePlayServicesAvailability.fromCode(GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context))
     val inAppPayment = SignalDatabase.inAppPayments.getLatestInAppPaymentByType(InAppPaymentType.RECURRING_BACKUP)
 
+    val backupSubscriptionType = when (backupSubscriptionId?.iapSubscriptionId) {
+      is IAPSubscriptionId.GooglePlayBillingPurchaseToken -> "Google Play Billing"
+      is IAPSubscriptionId.AppleIAPOriginalTransactionId -> "Apple IAP"
+      null -> if (backupSubscriptionId != null) "Unknown" else "None"
+    }
+
     output.append("Has backup subscription id       : ${backupSubscriptionId != null}\n")
+    output.append("Backup subscription type         : $backupSubscriptionType\n")
     output.append("Google Play Billing state        : $googlePlayBillingAccess\n")
     output.append("Google Play Services state       : $googlePlayServicesAvailability\n\n")
 
@@ -97,7 +111,12 @@ class LogSectionRemoteBackups : LogSection {
     }
 
     output.append("\n -- Attachment Stats\n")
-    output.append(SignalDatabase.attachments.debugGetAttachmentStats().prettyString())
+    val backupInProgress = SignalStore.backup.archiveUploadState?.state?.let { it != ArchiveUploadProgressState.State.None && it != ArchiveUploadProgressState.State.UserCanceled } ?: false
+    if (SignalStore.backup.hasBackupCreationError || backupInProgress) {
+      output.append(SignalDatabase.attachments.debugGetAttachmentStats().prettyString())
+    } else {
+      output.append("Skipped (last backup succeeded and no upload in progress)\n")
+    }
 
     return output
   }

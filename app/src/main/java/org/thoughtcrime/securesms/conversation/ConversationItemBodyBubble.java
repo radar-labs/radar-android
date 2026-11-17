@@ -9,17 +9,16 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
-
 import org.thoughtcrime.securesms.components.Outliner;
 import org.thoughtcrime.securesms.util.Projection;
-import org.thoughtcrime.securesms.util.Util;
+import org.signal.core.util.Util;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ConversationItemBodyBubble extends LinearLayout {
 
@@ -28,7 +27,6 @@ public class ConversationItemBodyBubble extends LinearLayout {
 
   private ClipProjectionDrawable clipProjectionDrawable;
   private Projection             quoteViewProjection;
-  private Projection             videoPlayerProjection;
 
   private final BodyBubbleLayoutTransition bodyBubbleLayoutTransition = new BodyBubbleLayoutTransition();
 
@@ -84,22 +82,9 @@ public class ConversationItemBodyBubble extends LinearLayout {
     clipProjectionDrawable.setProjections(getProjections());
   }
 
-  public void setVideoPlayerProjection(@Nullable Projection videoPlayerProjection) {
-    if (this.videoPlayerProjection != null) {
-      this.videoPlayerProjection.release();
-    }
-
-    this.videoPlayerProjection = videoPlayerProjection;
-    clipProjectionDrawable.setProjections(getProjections());
-  }
-
-  public @Nullable Projection getVideoPlayerProjection() {
-    return videoPlayerProjection;
-  }
-
   public @NonNull Set<Projection> getProjections() {
-    return Stream.of(quoteViewProjection, videoPlayerProjection)
-                 .filterNot(Objects::isNull)
+    return Stream.of(quoteViewProjection)
+                 .filter(Objects::nonNull)
                  .collect(Collectors.toSet());
   }
 

@@ -4,8 +4,9 @@ import android.util.LongSparseArray;
 
 import androidx.annotation.NonNull;
 
-import com.annimon.stream.Stream;
+import java.util.stream.Collectors;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.logging.Log;
 import org.signal.ringrtc.CallException;
 import org.signal.ringrtc.CallManager;
@@ -17,7 +18,6 @@ import org.thoughtcrime.securesms.events.WebRtcViewModel;
 import org.thoughtcrime.securesms.events.WebRtcViewModel.State;
 import org.thoughtcrime.securesms.groups.GroupManager;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.ringrtc.RemotePeer;
 import org.thoughtcrime.securesms.service.webrtc.state.VideoState;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceState;
@@ -192,9 +192,8 @@ public class GroupActionProcessor extends DeviceAwareActionProcessor {
     Recipient group     = currentState.getCallInfoState().getCallRecipient();
     GroupCall groupCall = currentState.getCallInfoState().requireGroupCall();
 
-    List<GroupCall.GroupMemberInfo> members = Stream.of(GroupManager.getUuidCipherTexts(context, group.requireGroupId().requireV2()))
-                                                    .map(entry -> new GroupCall.GroupMemberInfo(entry.getKey(), entry.getValue().serialize()))
-                                                    .toList();
+    List<GroupCall.GroupMemberInfo> members = GroupManager.getUuidCipherTexts(context, group.requireGroupId().requireV2()).entrySet().stream()
+                                                          .map(entry -> new GroupCall.GroupMemberInfo(entry.getKey(), entry.getValue().serialize())).collect(Collectors.toList());
 
     try {
       groupCall.setGroupMembers(new ArrayList<>(members));
@@ -318,7 +317,7 @@ public class GroupActionProcessor extends DeviceAwareActionProcessor {
                                                             .actionProcessor(actionProcessorFactory.createNetworkUnavailableActionProcessor(webRtcInteractor))
                                                             .changeVideoState()
                                                             .eglBase(videoState.getLockableEglBase())
-                                                            .camera(videoState.getCamera())
+                                                            .router(videoState.getRouter())
                                                             .localSink(videoState.getLocalSink())
                                                             .commit()
                                                             .changeCallInfoState()

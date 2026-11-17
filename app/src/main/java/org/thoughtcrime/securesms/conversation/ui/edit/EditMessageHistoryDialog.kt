@@ -14,35 +14,31 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.ui.BottomSheetUtil
+import org.signal.core.ui.FixedRoundedCornerBottomSheetDialogFragment
+import org.signal.core.ui.ViewModelFactory
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.components.FixedRoundedCornerBottomSheetDialogFragment
 import org.thoughtcrime.securesms.components.ViewBinderDelegate
 import org.thoughtcrime.securesms.conversation.ConversationAdapter
 import org.thoughtcrime.securesms.conversation.ConversationAdapterBridge
 import org.thoughtcrime.securesms.conversation.ConversationBottomSheetCallback
 import org.thoughtcrime.securesms.conversation.ConversationItemDisplayMode
 import org.thoughtcrime.securesms.conversation.ConversationMessage
-import org.thoughtcrime.securesms.conversation.colors.Colorizer
+import org.thoughtcrime.securesms.conversation.colors.ColorizerV1
 import org.thoughtcrime.securesms.conversation.colors.RecyclerViewColorizer
 import org.thoughtcrime.securesms.conversation.mutiselect.MultiselectPart
 import org.thoughtcrime.securesms.conversation.quotes.OriginalMessageSeparatorDecoration
 import org.thoughtcrime.securesms.database.model.MessageRecord
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.databinding.MessageEditHistoryBottomSheetBinding
-import org.thoughtcrime.securesms.giph.mp4.GiphyMp4ItemDecoration
-import org.thoughtcrime.securesms.giph.mp4.GiphyMp4PlaybackController
-import org.thoughtcrime.securesms.giph.mp4.GiphyMp4PlaybackPolicy
-import org.thoughtcrime.securesms.giph.mp4.GiphyMp4ProjectionPlayerHolder
-import org.thoughtcrime.securesms.giph.mp4.GiphyMp4ProjectionRecycler
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.groups.GroupMigrationMembershipChange
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
-import org.thoughtcrime.securesms.util.BottomSheetUtil
 import org.thoughtcrime.securesms.util.StickyHeaderDecoration
-import org.thoughtcrime.securesms.util.ViewModelFactory
-import org.thoughtcrime.securesms.util.fragments.requireListener
+import org.thoughtcrime.securesms.util.fragments.findListener
+import org.thoughtcrime.securesms.video.inline.InlineVideoController
 import java.util.Locale
 
 /**
@@ -78,16 +74,20 @@ class EditMessageHistoryDialog : FixedRoundedCornerBottomSheetDialogFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+
+    val callback = findListener<ConversationBottomSheetCallback>() ?: EmptyConversationBottomSheetCallback
+
     disposables.bindTo(viewLifecycleOwner)
 
-    val colorizer = Colorizer()
+    @Suppress("DEPRECATION")
+    val colorizer = ColorizerV1()
 
     val messageAdapter = ConversationAdapter(
       requireContext(),
       viewLifecycleOwner,
       Glide.with(this),
       Locale.getDefault(),
-      ConversationAdapterListener(),
+      ConversationAdapterListener(callback),
       conversationRecipient.hasWallpaper,
       colorizer
     ).apply {
@@ -123,26 +123,10 @@ class EditMessageHistoryDialog : FixedRoundedCornerBottomSheetDialogFragment() {
       messageAdapter.notifyItemRangeChanged(0, messageAdapter.itemCount, ConversationAdapterBridge.PAYLOAD_NAME_COLORS)
     }
 
-    initializeGiphyMp4()
+    InlineVideoController.attachForConversation(binding.editHistoryList, viewLifecycleOwner)
   }
 
-  private fun initializeGiphyMp4(): GiphyMp4ProjectionRecycler {
-    val maxPlayback = GiphyMp4PlaybackPolicy.maxSimultaneousPlaybackInConversation()
-    val holders = GiphyMp4ProjectionPlayerHolder.injectVideoViews(
-      requireContext(),
-      viewLifecycleOwner.lifecycle,
-      binding.videoContainer,
-      maxPlayback
-    )
-    val callback = GiphyMp4ProjectionRecycler(holders)
-
-    GiphyMp4PlaybackController.attach(binding.editHistoryList, callback, maxPlayback)
-    binding.editHistoryList.addItemDecoration(GiphyMp4ItemDecoration(callback) {}, 0)
-
-    return callback
-  }
-
-  private inner class ConversationAdapterListener : ConversationAdapter.ItemClickListener by requireListener<ConversationBottomSheetCallback>().getConversationAdapterListener() {
+  private class ConversationAdapterListener(callback: ConversationBottomSheetCallback) : ConversationAdapter.ItemClickListener by callback.getConversationAdapterListener() {
     override fun onQuoteClicked(messageRecord: MmsMessageRecord) = Unit
     override fun onScheduledIndicatorClicked(view: View, conversationMessage: ConversationMessage) = Unit
     override fun onGroupMemberClicked(recipientId: RecipientId, groupId: GroupId) = Unit

@@ -35,7 +35,7 @@ class CheckServiceReachabilityJob private constructor(params: Parameters) : Base
     fun enqueueIfNecessary() {
       val isCensored = AppDependencies.signalServiceNetworkAccess.isCensored()
       val timeSinceLastCheck = System.currentTimeMillis() - SignalStore.misc.lastCensorshipServiceReachabilityCheckTime
-      if (SignalStore.account.isRegistered && isCensored && timeSinceLastCheck > TimeUnit.DAYS.toMillis(1)) {
+      if (SignalStore.account.isRegistered && !SignalStore.account.isUnauthorizedReceived && isCensored && timeSinceLastCheck > TimeUnit.DAYS.toMillis(1)) {
         AppDependencies.jobManager.add(CheckServiceReachabilityJob())
       }
     }
@@ -52,6 +52,12 @@ class CheckServiceReachabilityJob private constructor(params: Parameters) : Base
   override fun onRun() {
     if (!SignalStore.account.isRegistered) {
       Log.w(TAG, "Not registered, skipping.")
+      SignalStore.misc.lastCensorshipServiceReachabilityCheckTime = System.currentTimeMillis()
+      return
+    }
+
+    if (SignalStore.account.isUnauthorizedReceived) {
+      Log.w(TAG, "Unauthorized received, skipping.")
       SignalStore.misc.lastCensorshipServiceReachabilityCheckTime = System.currentTimeMillis()
       return
     }

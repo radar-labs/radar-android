@@ -6,8 +6,9 @@ import android.os.ResultReceiver;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.annimon.stream.Stream;
+import java.util.stream.Collectors;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.IdentityKey;
 import org.signal.libsignal.protocol.InvalidKeyException;
@@ -31,10 +32,9 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfile;
 import org.thoughtcrime.securesms.notifications.profiles.NotificationProfiles;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.recipients.RecipientUtil;
 import org.thoughtcrime.securesms.ringrtc.CallState;
-import org.thoughtcrime.securesms.ringrtc.Camera;
+import org.thoughtcrime.securesms.ringrtc.OutgoingVideoSourceRouter;
 import org.thoughtcrime.securesms.ringrtc.CameraState;
 import org.thoughtcrime.securesms.ringrtc.RemotePeer;
 import org.thoughtcrime.securesms.service.webrtc.WebRtcData.CallMetadata;
@@ -43,7 +43,7 @@ import org.thoughtcrime.securesms.service.webrtc.WebRtcData.ReceivedOfferMetadat
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcEphemeralState;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceState;
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceStateBuilder;
-import org.thoughtcrime.securesms.util.AppForegroundObserver;
+import org.signal.core.util.AppForegroundObserver;
 import org.thoughtcrime.securesms.util.NetworkUtil;
 import org.thoughtcrime.securesms.util.TelephonyUtil;
 import org.thoughtcrime.securesms.webrtc.audio.SignalAudioManager;
@@ -290,7 +290,7 @@ public abstract class WebRtcActionProcessor {
     RemotePeer peer = currentState.getCallInfoState().getPeerByCallId(new CallId(callId));
     if (peer == null || !peer.callIdEquals(currentState.getCallInfoState().getActivePeer())) {
       Log.w(tag, "Received telecom approval after call terminated. callId: " + callId + " recipient: " + recipientId);
-      webRtcInteractor.terminateCall(recipientId);
+      webRtcInteractor.terminateCall(recipientId, android.telecom.DisconnectCause.LOCAL);
       return currentState;
     }
 
@@ -365,6 +365,11 @@ public abstract class WebRtcActionProcessor {
     return currentState;
   }
 
+  protected @NonNull WebRtcServiceState handleAudioReadyForAccept(@NonNull WebRtcServiceState currentState) {
+    Log.i(tag, "handleAudioReadyForAccept not processed");
+    return currentState;
+  }
+
   protected @NonNull WebRtcServiceState handleReceivedOfferWhileActive(@NonNull WebRtcServiceState currentState, @NonNull RemotePeer remotePeer) {
     Log.i(tag, "handleReceivedOfferWhileActive not processed");
     return currentState;
@@ -411,6 +416,16 @@ public abstract class WebRtcActionProcessor {
 
   protected  @NonNull WebRtcServiceState handleScreenSharingEnable(@NonNull WebRtcServiceState currentState, boolean enable) {
     Log.i(tag, "handleScreenSharingEnable not processed");
+    return currentState;
+  }
+
+  protected @NonNull WebRtcServiceState handleSetLocalScreenShare(@NonNull WebRtcServiceState currentState, boolean enable, @Nullable android.content.Intent mediaProjectionData) {
+    Log.i(tag, "handleSetLocalScreenShare not processed");
+    return currentState;
+  }
+
+  protected @NonNull WebRtcServiceState handleScreenSharingServiceReady(@NonNull WebRtcServiceState currentState) {
+    Log.i(tag, "handleScreenSharingServiceReady not processed");
     return currentState;
   }
 
@@ -497,11 +512,24 @@ public abstract class WebRtcActionProcessor {
     return currentState;
   }
 
+  public @NonNull WebRtcServiceState handleAudioDeviceChangeFailed(@NonNull WebRtcServiceState currentState) {
+    Log.i(tag, "handleAudioDeviceChangeFailed(): clearing pending state");
+    return currentState.builder()
+                       .changeLocalDeviceState()
+                       .setAudioDeviceChangePending(false)
+                       .build();
+  }
+
   public @NonNull WebRtcServiceState handleBluetoothPermissionDenied(@NonNull WebRtcServiceState currentState) {
     return currentState.builder()
                        .changeLocalDeviceState()
                        .setBluetoothPermissionDenied(true)
                        .build();
+  }
+
+  protected @NonNull WebRtcServiceState handleMicrophoneSilencedChanged(@NonNull WebRtcServiceState currentState, boolean silenced) {
+    Log.i(tag, "handleMicrophoneSilencedChanged not processed");
+    return currentState;
   }
 
   protected @NonNull WebRtcServiceState handleSetUserAudioDevice(@NonNull WebRtcServiceState currentState, @NonNull SignalAudioManager.ChosenAudioDeviceIdentifier userDevice) {
@@ -525,9 +553,9 @@ public abstract class WebRtcActionProcessor {
   protected final @NonNull WebRtcServiceState handleSendIceCandidates(@NonNull WebRtcServiceState currentState, @NonNull CallMetadata callMetadata, boolean broadcast, @NonNull List<byte[]> iceCandidates) {
     Log.i(tag, "handleSendIceCandidates(): id: " + callMetadata.getCallId().format(callMetadata.getRemoteDevice()));
 
-    List<IceUpdateMessage> iceUpdateMessages = Stream.of(iceCandidates)
-                                                     .map(c -> new IceUpdateMessage(callMetadata.getCallId().longValue(), c))
-                                                     .toList();
+    List<IceUpdateMessage> iceUpdateMessages = iceCandidates.stream()
+                                                            .map(c -> new IceUpdateMessage(callMetadata.getCallId().longValue(), c))
+                                                            .collect(Collectors.toList());
 
     Integer                  destinationDeviceId = broadcast ? null : callMetadata.getRemoteDevice();
     SignalServiceCallMessage callMessage         = SignalServiceCallMessage.forIceUpdates(iceUpdateMessages, destinationDeviceId);
@@ -578,6 +606,10 @@ public abstract class WebRtcActionProcessor {
     return currentState;
   }
 
+  protected @NonNull WebRtcServiceState handleSetIncomingRingingVanity(@NonNull WebRtcServiceState currentState, boolean enabled) {
+    Log.i(tag, "handleSetIncomingRingingVanity not processed");
+    return currentState;
+  }
 
   protected @NonNull WebRtcServiceState handleSelfRaiseHand(@NonNull WebRtcServiceState currentState, boolean raised) {
     Log.i(tag, "raiseHand not processed");
@@ -626,9 +658,9 @@ public abstract class WebRtcActionProcessor {
   }
 
   protected @NonNull WebRtcServiceState handleOrientationChanged(@NonNull WebRtcServiceState currentState, boolean isLandscapeEnabled, int orientationDegrees) {
-    Camera camera = currentState.getVideoState().getCamera();
-    if (camera != null) {
-      camera.setOrientation(orientationDegrees);
+    OutgoingVideoSourceRouter router = currentState.getVideoState().getRouter();
+    if (router != null) {
+      router.setOrientation(orientationDegrees);
     }
 
     int sinkRotationDegrees  = isLandscapeEnabled ? BroadcastVideoSink.DEVICE_ROTATION_IGNORE : orientationDegrees;
@@ -957,6 +989,12 @@ public abstract class WebRtcActionProcessor {
 
   protected @NonNull WebRtcServiceState handleSetCallLinkJoinRequestRejected(@NonNull WebRtcServiceState currentState, @NonNull RecipientId participant) {
     Log.i(tag, "handleSetCallLinkJoinRequestRejected not processed");
+
+    return currentState;
+  }
+
+  protected @NonNull WebRtcServiceState handleSendRemoteMuteRequest(@NonNull WebRtcServiceState currentState, @NonNull CallParticipant participant) {
+    Log.i(tag, "handleSendRemoteMuteRequest not processed");
 
     return currentState;
   }

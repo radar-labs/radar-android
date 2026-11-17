@@ -10,7 +10,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
@@ -25,33 +24,30 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.ui.compose.AllDevicePreviews
 import org.signal.core.ui.compose.Buttons
 import org.signal.core.ui.compose.Dialogs
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.theme.SignalTheme
 import org.signal.core.util.getParcelableArrayListExtraCompat
 import org.signal.core.util.getParcelableExtraCompat
+import org.signal.remoteconfig.SelectionLimits
 import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.SignalTheme
 import org.thoughtcrime.securesms.contacts.SelectedContact
-import org.thoughtcrime.securesms.groups.SelectionLimits
 import org.thoughtcrime.securesms.groups.ui.GroupErrors
 import org.thoughtcrime.securesms.groups.ui.addtogroup.AddToGroupsUiState.UserMessage
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.ui.RecipientPicker
 import org.thoughtcrime.securesms.recipients.ui.RecipientPickerCallbacks
-import org.thoughtcrime.securesms.recipients.ui.RecipientPickerScaffold
 import org.thoughtcrime.securesms.recipients.ui.RecipientSelection
 
 /**
  * Allows the user to add a recipient to a group.
  */
 class AddToGroupsActivity : PassphraseRequiredActivity() {
-  /** Draws edge to edge and positions its own content against the insets. */
-  override fun fitsSystemBars(): Boolean = false
-
   companion object {
     private const val EXTRA_RECIPIENT_ID = "recipient_id"
     private const val EXTRA_SELECTION_LIMITS = "selection_limits"
@@ -74,7 +70,6 @@ class AddToGroupsActivity : PassphraseRequiredActivity() {
   }
 
   override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
-    enableEdgeToEdge()
     super.onCreate(savedInstanceState, ready)
 
     val navigateBack = onBackPressedDispatcher::onBackPressed
@@ -102,7 +97,7 @@ private fun AddToGroupsScreen(
   closeScreen: () -> Unit
 ) {
   val callbacks = remember {
-    object : UiCallbacks {
+    object : AddToGroupsUiCallbacks {
       override fun onSearchQueryChanged(query: String) = viewModel.onSearchQueryChanged(query)
       override fun onSelectionChanged(newSelections: List<SelectedContact>) = viewModel.selectGroups(newSelections)
       override fun addToSelectedGroups() = viewModel.addToSelectedGroups()
@@ -124,7 +119,7 @@ private fun AddToGroupsScreen(
 @Composable
 private fun AddToGroupsScreenUi(
   uiState: AddToGroupsUiState,
-  callbacks: UiCallbacks
+  callbacks: AddToGroupsUiCallbacks
 ) {
   val title = if (uiState.isMultiSelectEnabled) {
     stringResource(R.string.AddToGroupActivity_add_to_groups)
@@ -132,9 +127,8 @@ private fun AddToGroupsScreenUi(
     stringResource(R.string.AddToGroupActivity_add_to_a_group)
   }
 
-  RecipientPickerScaffold(
+  Scaffolds.TitlePane(
     title = title,
-    forceSplitPane = uiState.forceSplitPane,
     onNavigateUpClick = callbacks::onBackPressed,
     topAppBarActions = {},
     snackbarHostState = remember { SnackbarHostState() },
@@ -157,7 +151,7 @@ private fun AddToGroupsScreenUi(
 
 private fun getDoneButton(
   uiState: AddToGroupsUiState,
-  callbacks: UiCallbacks
+  callbacks: AddToGroupsUiCallbacks
 ): (@Composable () -> Unit)? {
   return if (uiState.isMultiSelectEnabled) {
     {
@@ -176,7 +170,7 @@ private fun getDoneButton(
 @Composable
 private fun AddToGroupsRecipientPicker(
   uiState: AddToGroupsUiState,
-  callbacks: UiCallbacks,
+  callbacks: AddToGroupsUiCallbacks,
   modifier: Modifier = Modifier
 ) {
   RecipientPicker(
@@ -197,7 +191,7 @@ private fun AddToGroupsRecipientPicker(
   )
 }
 
-private interface UiCallbacks : RecipientPickerCallbacks.ListActions {
+private interface AddToGroupsUiCallbacks : RecipientPickerCallbacks.ListActions {
   override suspend fun shouldAllowSelection(selection: RecipientSelection): Boolean = true
   override fun onRecipientSelected(selection: RecipientSelection) = Unit
   override fun onPendingRecipientSelectionsConsumed() = Unit
@@ -206,7 +200,7 @@ private interface UiCallbacks : RecipientPickerCallbacks.ListActions {
   fun onUserMessageDismissed(userMessage: UserMessage)
   fun onBackPressed()
 
-  object Empty : UiCallbacks {
+  object Empty : AddToGroupsUiCallbacks {
     override fun onSearchQueryChanged(query: String) = Unit
     override fun addToSelectedGroups() = Unit
     override fun onAddConfirmed(groupRecipient: Recipient) = Unit
@@ -243,6 +237,17 @@ private fun UserMessagesHost(
       Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
       onDismiss(userMessage)
       closeScreen()
+    }
+
+    is UserMessage.InvitedRecipientToGroup -> {
+      Dialogs.SimpleMessageDialog(
+        message = stringResource(R.string.GroupManagement_invite_single_user, userMessage.recipient.getDisplayName(context)),
+        dismiss = stringResource(android.R.string.ok),
+        onDismiss = {
+          onDismiss(userMessage)
+          closeScreen()
+        }
+      )
     }
 
     is UserMessage.CantAddRecipientToLegacyGroup -> {
@@ -287,10 +292,9 @@ private fun AddToSingleGroupScreenPreview() {
   Previews.Preview {
     AddToGroupsScreenUi(
       uiState = AddToGroupsUiState(
-        forceSplitPane = false,
         selectionLimits = null
       ),
-      callbacks = UiCallbacks.Empty
+      callbacks = AddToGroupsUiCallbacks.Empty
     )
   }
 }
@@ -301,10 +305,9 @@ private fun AddToMultipleGroupsScreenPreview() {
   Previews.Preview {
     AddToGroupsScreenUi(
       uiState = AddToGroupsUiState(
-        forceSplitPane = false,
         selectionLimits = SelectionLimits.NO_LIMITS
       ),
-      callbacks = UiCallbacks.Empty
+      callbacks = AddToGroupsUiCallbacks.Empty
     )
   }
 }

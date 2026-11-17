@@ -15,6 +15,8 @@ import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 
+import org.signal.core.ui.util.ViewUtil;
+import org.signal.core.util.Util;
 import org.signal.libsignal.protocol.util.ByteUtil;
 import org.thoughtcrime.securesms.avatar.fallback.FallbackAvatarDrawable;
 import org.thoughtcrime.securesms.contacts.avatars.SystemContactPhoto;
@@ -25,6 +27,7 @@ import org.thoughtcrime.securesms.recipients.Recipient;
 import java.security.MessageDigest;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import org.signal.core.util.DrawableUtil;
 
 public final class ConversationShortcutPhoto implements Key {
 
@@ -154,7 +157,7 @@ public final class ConversationShortcutPhoto implements Key {
     }
 
     private @NonNull Bitmap getShortcutInfoBitmap(@NonNull Context context) throws ExecutionException, InterruptedException {
-      return DrawableUtil.wrapBitmapForShortcutInfo(AvatarUtil.loadIconBitmapSquareNoCache(context,
+      return AdaptiveBitmapMetrics.wrapBitmap(AvatarUtil.loadIconBitmapSquareNoCache(context,
                                                                                            photo.recipient,
                                                                                            AdaptiveBitmapMetrics.getInnerWidth(),
                                                                                            AdaptiveBitmapMetrics.getInnerWidth()));
@@ -164,7 +167,7 @@ public final class ConversationShortcutPhoto implements Key {
       Recipient recipient = photo.recipient;
 
       Bitmap toWrap  = DrawableUtil.toBitmap(new FallbackAvatarDrawable(context, recipient.getFallbackAvatar()), ViewUtil.dpToPx(80), ViewUtil.dpToPx(80));
-      Bitmap wrapped = DrawableUtil.wrapBitmapForShortcutInfo(toWrap);
+      Bitmap wrapped = AdaptiveBitmapMetrics.wrapBitmap(toWrap);
 
       toWrap.recycle();
 

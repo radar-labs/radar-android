@@ -1,43 +1,41 @@
 package org.thoughtcrime.securesms.payments.backup.phrase;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.annimon.stream.Stream;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.signal.core.util.PendingIntentFlags;
 import org.thoughtcrime.securesms.R;
+import org.thoughtcrime.securesms.components.TemporaryScreenshotSecurity;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.payments.Mnemonic;
-import org.thoughtcrime.securesms.util.ServiceUtil;
-import org.thoughtcrime.securesms.util.Util;
+import org.signal.core.util.Util;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
 import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 public class PaymentsRecoveryPhraseFragment extends Fragment {
 
-  private static final int SPAN_COUNT = 2;
+  private static final int SPAN_COUNT                = 2;
+  private static final int CLIPBOARD_TIMEOUT_SECONDS = 30;
 
   public PaymentsRecoveryPhraseFragment() {
     super(R.layout.payments_recovery_phrase_fragment);
@@ -45,6 +43,8 @@ public class PaymentsRecoveryPhraseFragment extends Fragment {
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    TemporaryScreenshotSecurity.bindToViewLifecycleOwner(this);
+
     Toolbar                            toolbar           = view.findViewById(R.id.payments_recovery_phrase_fragment_toolbar);
     RecyclerView                       recyclerView      = view.findViewById(R.id.payments_recovery_phrase_fragment_recycler);
     TextView                           message           = view.findViewById(R.id.payments_recovery_phrase_fragment_message);
@@ -53,6 +53,10 @@ public class PaymentsRecoveryPhraseFragment extends Fragment {
     View                               copy              = view.findViewById(R.id.payments_recovery_phrase_fragment_copy);
     GridLayoutManager                  gridLayoutManager = new GridLayoutManager(requireContext(), SPAN_COUNT);
     PaymentsRecoveryPhraseFragmentArgs args              = PaymentsRecoveryPhraseFragmentArgs.fromBundle(requireArguments());
+
+    toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    SystemWindowInsetsSetter.attach(toolbar, getViewLifecycleOwner(), WindowInsetsCompat.Type.statusBars());
+    SystemWindowInsetsSetter.attach(view.findViewById(R.id.payments_recovery_phrase_fragment_scroll_view), getViewLifecycleOwner(), WindowInsetsCompat.Type.navigationBars());
 
     final List<String> words;
 
@@ -68,10 +72,9 @@ public class PaymentsRecoveryPhraseFragment extends Fragment {
       setUpForDisplay(message, next, edit, copy, words, args);
     }
 
-    List<MnemonicPart> parts = Stream.of(words)
-                                     .mapIndexed(MnemonicPart::new)
-                                     .sorted(new MnemonicPartComparator(words.size(), SPAN_COUNT))
-                                     .toList();
+    List<MnemonicPart> parts = IntStream.range(0, words.size()).boxed()
+                                     .map(index -> new MnemonicPart(index, words.get(index)))
+                                     .sorted(new MnemonicPartComparator(words.size(), SPAN_COUNT)).collect(Collectors.toList());
 
     MnemonicPartAdapter adapter = new MnemonicPartAdapter();
 
@@ -91,14 +94,7 @@ public class PaymentsRecoveryPhraseFragment extends Fragment {
   }
 
   private void copyWordsToClipboard(List<String> words) {
-    ClipboardManager clipboardManager = ServiceUtil.getClipboardManager(requireContext());
-    clipboardManager.setPrimaryClip(ClipData.newPlainText(getString(R.string.app_name), Util.join(words, " ")));
-
-    AlarmManager  alarmManager       = ServiceUtil.getAlarmManager(requireContext());
-    Intent        alarmIntent        = new Intent(requireContext(), ClearClipboardAlarmReceiver.class);
-    PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(requireContext(), 0, alarmIntent, PendingIntentFlags.mutable());
-
-    alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(30), pendingAlarmIntent);
+    Util.copyToClipboardSensitive(requireContext(), Util.join(words, " "), CLIPBOARD_TIMEOUT_SECONDS);
   }
 
   private void setUpForConfirmation(@NonNull TextView message,

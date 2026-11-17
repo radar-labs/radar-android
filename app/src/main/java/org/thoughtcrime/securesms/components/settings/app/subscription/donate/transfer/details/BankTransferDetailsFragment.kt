@@ -9,9 +9,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
@@ -31,10 +33,9 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -49,10 +50,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
 import org.signal.core.ui.compose.Buttons
+import org.signal.core.ui.compose.ComposeFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.ui.compose.Texts
+import org.signal.core.ui.util.SpanUtil
+import org.signal.core.ui.viewModel
 import org.signal.core.util.getParcelableCompat
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.TemporaryScreenshotSecurity
@@ -63,13 +68,11 @@ import org.thoughtcrime.securesms.components.settings.app.subscription.donate.In
 import org.thoughtcrime.securesms.components.settings.app.subscription.donate.stripe.StripePaymentInProgressFragment
 import org.thoughtcrime.securesms.components.settings.app.subscription.donate.stripe.StripePaymentInProgressViewModel
 import org.thoughtcrime.securesms.components.settings.app.subscription.donate.transfer.BankTransferRequestKeys
+import org.thoughtcrime.securesms.components.settings.app.subscription.donate.transfer.DonationTransferTestTags
 import org.thoughtcrime.securesms.components.settings.app.subscription.donate.transfer.details.BankTransferDetailsViewModel.Field
-import org.thoughtcrime.securesms.compose.ComposeFragment
 import org.thoughtcrime.securesms.database.InAppPaymentTable
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil
-import org.thoughtcrime.securesms.util.SpanUtil
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
-import org.thoughtcrime.securesms.util.viewModel
 
 /**
  * Collects SEPA Debit bank transfer details from the user to proceed with donation.
@@ -186,7 +189,7 @@ class BankTransferDetailsFragment : ComposeFragment(), InAppPaymentCheckoutDeleg
 
 @DayNightPreviews
 @Composable
-private fun BankTransferDetailsContentPreview() {
+fun BankTransferDetailsContentPreview() {
   Previews.Preview {
     BankTransferDetailsContent(
       state = BankTransferDetailsState(
@@ -207,7 +210,7 @@ private fun BankTransferDetailsContentPreview() {
 }
 
 @Composable
-private fun BankTransferDetailsContent(
+fun BankTransferDetailsContent(
   state: BankTransferDetailsState,
   onNavigationClick: () -> Unit,
   onNameChanged: (String) -> Unit,
@@ -222,7 +225,7 @@ private fun BankTransferDetailsContent(
   Scaffolds.Settings(
     title = "Bank transfer",
     onNavigationClick = onNavigationClick,
-    navigationIcon = ImageVector.vectorResource(id = R.drawable.symbol_arrow_start_24)
+    navigationIcon = SignalIcons.ArrowStart.imageVector
   ) {
     Column(
       horizontalAlignment = CenterHorizontally,
@@ -230,6 +233,8 @@ private fun BankTransferDetailsContent(
         .fillMaxWidth()
         .fillMaxHeight()
         .padding(it)
+        .consumeWindowInsets(it)
+        .imePadding()
     ) {
       val focusManager = LocalFocusManager.current
       val focusRequester = remember { FocusRequester() }
@@ -238,6 +243,7 @@ private fun BankTransferDetailsContent(
         modifier = Modifier
           .weight(1f)
           .padding(horizontal = 24.dp)
+          .testTag(DonationTransferTestTags.SEPA_DETAILS_LIST)
       ) {
         item {
           val learnMore = stringResource(id = R.string.BankTransferDetailsFragment__learn_more)
@@ -293,6 +299,7 @@ private fun BankTransferDetailsContent(
               .defaultMinSize(minHeight = 78.dp)
               .onFocusChanged { onFocusChanged(Field.IBAN, it.hasFocus) }
               .focusRequester(focusRequester)
+              .testTag(DonationTransferTestTags.SEPA_IBAN_FIELD)
           )
         }
 
@@ -313,7 +320,7 @@ private fun BankTransferDetailsContent(
             isError = state.showNameError(),
             supportingText = {
               if (state.showNameError()) {
-                Text(text = stringResource(id = R.string.BankTransferDetailsFragment__minimum_2_characters))
+                Text(text = stringResource(id = R.string.BankTransferDetailsFragment__minimum_3_characters))
               }
             },
             modifier = Modifier
@@ -321,6 +328,7 @@ private fun BankTransferDetailsContent(
               .padding(top = 16.dp)
               .defaultMinSize(minHeight = 78.dp)
               .onFocusChanged { onFocusChanged(Field.NAME, it.hasFocus) }
+              .testTag(DonationTransferTestTags.SEPA_NAME_FIELD)
           )
         }
 
@@ -349,6 +357,7 @@ private fun BankTransferDetailsContent(
               .padding(top = 16.dp)
               .defaultMinSize(minHeight = 78.dp)
               .onFocusChanged { onFocusChanged(Field.EMAIL, it.hasFocus) }
+              .testTag(DonationTransferTestTags.SEPA_EMAIL_FIELD)
           )
         }
 
@@ -374,6 +383,7 @@ private fun BankTransferDetailsContent(
         modifier = Modifier
           .defaultMinSize(minWidth = 220.dp)
           .padding(vertical = 16.dp)
+          .testTag(DonationTransferTestTags.SEPA_DONATE_BUTTON)
       ) {
         Text(text = donateLabel)
       }

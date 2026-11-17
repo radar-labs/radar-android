@@ -1,8 +1,8 @@
 package org.thoughtcrime.securesms.messages
 
 import android.content.Context
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.UuidUtil
-import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.orNull
 import org.thoughtcrime.securesms.database.MessageTable.InsertResult
 import org.thoughtcrime.securesms.database.MessageType
@@ -11,11 +11,10 @@ import org.thoughtcrime.securesms.database.model.MessageId
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList
 import org.thoughtcrime.securesms.database.model.toBodyRangeList
+import org.thoughtcrime.securesms.database.withAttachments
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.jobs.AttachmentDownloadJob
-import org.thoughtcrime.securesms.jobs.PushProcessEarlyMessagesJob
-import org.thoughtcrime.securesms.jobs.SendDeliveryReceiptJob
 import org.thoughtcrime.securesms.messages.MessageContentProcessor.Companion.log
 import org.thoughtcrime.securesms.messages.MessageContentProcessor.Companion.warn
 import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.groupId
@@ -25,7 +24,6 @@ import org.thoughtcrime.securesms.mms.IncomingMessage
 import org.thoughtcrime.securesms.mms.QuoteModel
 import org.thoughtcrime.securesms.notifications.v2.ConversationId.Companion.forConversation
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.util.EarlyMessageCacheEntry
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.MessageConstraintsUtil
@@ -45,21 +43,22 @@ object EditMessageProcessor {
     envelope: Envelope,
     content: Content,
     metadata: EnvelopeMetadata,
-    earlyMessageCacheEntry: EarlyMessageCacheEntry?
+    earlyMessageCacheEntry: EarlyMessageCacheEntry?,
+    batchCache: BatchCache
   ) {
     val editMessage = content.editMessage!!
 
-    log(envelope.timestamp!!, "[handleEditMessage] Edit message for " + editMessage.targetSentTimestamp)
+    log(envelope.clientTimestamp!!, "[handleEditMessage] Edit message for " + editMessage.targetSentTimestamp)
 
     var targetMessage: MmsMessageRecord? = SignalDatabase.messages.getMessageFor(editMessage.targetSentTimestamp!!, senderRecipient.id) as? MmsMessageRecord
     val targetThreadRecipient: Recipient? = if (targetMessage != null) SignalDatabase.threads.getRecipientForThreadId(targetMessage.threadId) else null
 
     if (targetMessage == null || targetThreadRecipient == null) {
-      warn(envelope.timestamp!!, "[handleEditMessage] Could not find matching message! timestamp: ${editMessage.targetSentTimestamp}  author: ${senderRecipient.id}")
+      warn(envelope.clientTimestamp!!, "[handleEditMessage] Could not find matching message! timestamp: ${editMessage.targetSentTimestamp}  author: ${senderRecipient.id}")
 
       if (earlyMessageCacheEntry != null) {
         AppDependencies.earlyMessageCache.store(senderRecipient.id, editMessage.targetSentTimestamp!!, earlyMessageCacheEntry)
-        PushProcessEarlyMessagesJob.enqueue()
+        batchCache.requiresEarlyMessageProcessing()
       }
 
       return
@@ -69,35 +68,38 @@ object EditMessageProcessor {
     val isMediaMessage = message.isMediaMessage
     val groupId: GroupId.V2? = message.groupV2?.groupId
 
-    val originalMessage = targetMessage.originalMessageId?.let { SignalDatabase.messages.getMessageRecord(it.id) } ?: targetMessage
+    val originalMessageWithoutAttachments = targetMessage.originalMessageId?.let { SignalDatabase.messages.getMessageRecord(it.id) } ?: targetMessage
+    val originalMessage = originalMessageWithoutAttachments.withAttachments()
     val validTiming = MessageConstraintsUtil.isValidEditMessageReceive(originalMessage, senderRecipient, envelope.serverTimestamp!!)
     val validAuthor = senderRecipient.id == originalMessage.fromRecipient.id
     val validGroup = groupId == targetThreadRecipient.groupId.orNull()
     val validTarget = !originalMessage.isViewOnce && !originalMessage.hasAudio() && !originalMessage.hasSharedContact()
 
     if (!validTiming || !validAuthor || !validGroup || !validTarget) {
-      warn(envelope.timestamp!!, "[handleEditMessage] Invalid message edit! editTime: ${envelope.serverTimestamp}, targetTime: ${originalMessage.serverTimestamp}, editAuthor: ${senderRecipient.id}, targetAuthor: ${originalMessage.fromRecipient.id}, editThread: ${threadRecipient.id}, targetThread: ${targetThreadRecipient.id}, validity: (timing: $validTiming, author: $validAuthor, group: $validGroup, target: $validTarget)")
+      warn(envelope.clientTimestamp!!, "[handleEditMessage] Invalid message edit! editTime: ${envelope.serverTimestamp}, targetTime: ${originalMessage.serverTimestamp}, editAuthor: ${senderRecipient.id}, targetAuthor: ${originalMessage.fromRecipient.id}, editThread: ${threadRecipient.id}, targetThread: ${targetThreadRecipient.id}, validity: (timing: $validTiming, author: $validAuthor, group: $validGroup, target: $validTarget)")
       return
     }
 
-    if (groupId != null && MessageContentProcessor.handleGv2PreProcessing(context, envelope.timestamp!!, content, metadata, groupId, message.groupV2!!, senderRecipient) == MessageContentProcessor.Gv2PreProcessResult.IGNORE) {
-      warn(envelope.timestamp!!, "[handleEditMessage] Group processor indicated we should ignore this.")
+    if (groupId != null && MessageContentProcessor.handleGv2PreProcessing(context, envelope.clientTimestamp!!, content, metadata, groupId, message.groupV2!!, senderRecipient) == MessageContentProcessor.Gv2PreProcessResult.IGNORE) {
+      warn(envelope.clientTimestamp!!, "[handleEditMessage] Group processor indicated we should ignore this.")
       return
     }
 
-    DataMessageProcessor.notifyTypingStoppedFromIncomingMessage(context, senderRecipient, threadRecipient.id, metadata.sourceDeviceId)
+    DataMessageProcessor.notifyTypingStoppedFromIncomingMessage(senderRecipient, threadRecipient.id, metadata.sourceDeviceId)
 
     targetMessage = targetMessage.withAttachments(SignalDatabase.attachments.getAttachmentsForMessage(targetMessage.id))
 
     val insertResult: InsertResult? = if (isMediaMessage || targetMessage.quote != null || targetMessage.slideDeck.slides.isNotEmpty()) {
-      handleEditMediaMessage(senderRecipient.id, groupId, envelope, metadata, message, targetMessage)
+      handleEditMediaMessage(senderRecipient.id, groupId, envelope, metadata, message, targetMessage, batchCache)
     } else {
-      handleEditTextMessage(senderRecipient.id, groupId, envelope, metadata, message, targetMessage)
+      handleEditTextMessage(senderRecipient.id, groupId, envelope, metadata, message, targetMessage, batchCache)
     }
 
     if (insertResult != null) {
-      SignalExecutors.BOUNDED.execute {
-        AppDependencies.jobManager.add(SendDeliveryReceiptJob(senderRecipient.id, message.timestamp!!, MessageId(insertResult.messageId)))
+      batchCache.addDeliveryReceipt(senderRecipient.id, groupId, message.timestamp!!, MessageId(insertResult.messageId))
+
+      if (insertResult.needsThreadUpdate) {
+        batchCache.addIncomingMessageInsertThreadUpdate(insertResult.threadId)
       }
 
       if (targetMessage.expireStarted > 0) {
@@ -120,9 +122,11 @@ object EditMessageProcessor {
     envelope: Envelope,
     metadata: EnvelopeMetadata,
     message: DataMessage,
-    targetMessage: MmsMessageRecord
+    targetMessage: MmsMessageRecord,
+    batchCache: BatchCache
   ): InsertResult? {
-    val messageRanges: BodyRangeList? = message.bodyRanges.filter { Util.allAreNull(it.mentionAci, it.mentionAciBinary) }.toList().toBodyRangeList()
+    val cappedBodyRanges = message.bodyRanges.take(DataMessageProcessor.BODY_RANGE_PROCESSING_LIMIT)
+    val messageRanges: BodyRangeList? = cappedBodyRanges.filter { Util.allAreNull(it.mentionAci, it.mentionAciBinary) }.toList().toBodyRangeList()
     val targetQuote = targetMessage.quote
     val quote: QuoteModel? = if (targetQuote != null && (message.quote != null || (targetMessage.parentStoryId != null && message.storyContext != null))) {
       QuoteModel(
@@ -157,12 +161,12 @@ object EditMessageProcessor {
       parentStoryId = targetMessage.parentStoryId,
       sharedContacts = emptyList(),
       linkPreviews = DataMessageProcessor.getLinkPreviews(message.preview, message.body ?: "", false),
-      mentions = DataMessageProcessor.getMentions(message.bodyRanges),
+      mentions = DataMessageProcessor.getMentions(cappedBodyRanges),
       serverGuid = UuidUtil.getStringUUID(envelope.serverGuid, envelope.serverGuidBinary),
       messageRanges = messageRanges
     )
 
-    val insertResult = SignalDatabase.messages.insertEditMessageInbox(mediaMessage, targetMessage).orNull()
+    val insertResult = SignalDatabase.messages.insertEditMessageInbox(mediaMessage, targetMessage, skipThreadUpdate = batchCache.batchThreadUpdates).orNull()
     if (insertResult?.insertedAttachments != null) {
       SignalDatabase.runPostSuccessfulTransaction {
         val downloadJobs: List<AttachmentDownloadJob> = insertResult.insertedAttachments.mapNotNull { (_, attachmentId) ->
@@ -180,13 +184,14 @@ object EditMessageProcessor {
     envelope: Envelope,
     metadata: EnvelopeMetadata,
     message: DataMessage,
-    targetMessage: MmsMessageRecord
+    targetMessage: MmsMessageRecord,
+    batchCache: BatchCache
   ): InsertResult? {
     val textMessage = IncomingMessage(
       type = MessageType.NORMAL,
       from = senderRecipientId,
-      sentTimeMillis = envelope.timestamp!!,
-      serverTimeMillis = envelope.timestamp!!,
+      sentTimeMillis = envelope.clientTimestamp!!,
+      serverTimeMillis = envelope.clientTimestamp!!,
       receivedTimeMillis = targetMessage.dateReceived,
       body = message.body,
       groupId = groupId,
@@ -196,6 +201,6 @@ object EditMessageProcessor {
       serverGuid = UuidUtil.getStringUUID(envelope.serverGuid, envelope.serverGuidBinary)
     )
 
-    return SignalDatabase.messages.insertEditMessageInbox(textMessage, targetMessage).orNull()
+    return SignalDatabase.messages.insertEditMessageInbox(textMessage, targetMessage, skipThreadUpdate = batchCache.batchThreadUpdates).orNull()
   }
 }

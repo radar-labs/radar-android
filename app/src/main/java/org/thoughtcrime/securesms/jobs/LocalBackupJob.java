@@ -6,29 +6,29 @@ import android.Manifest;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import org.signal.core.ui.permissions.Permissions;
+import org.signal.core.ui.util.StorageUtil;
+import org.signal.core.util.NoExternalStorageException;
 import org.signal.core.util.Stopwatch;
+import org.signal.core.util.UnableToStartException;
+import org.signal.core.util.crypto.AttachmentSecretProvider;
+import org.signal.core.util.eventbus.EventBus;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.backup.BackupEvent;
 import org.thoughtcrime.securesms.backup.BackupFileIOError;
-import org.thoughtcrime.securesms.backup.BackupPassphrase;
 import org.thoughtcrime.securesms.backup.BackupVerifier;
 import org.thoughtcrime.securesms.backup.FullBackupExporter;
-import org.thoughtcrime.securesms.crypto.AttachmentSecretProvider;
-import org.thoughtcrime.securesms.database.NoExternalStorageException;
+import org.thoughtcrime.securesms.crypto.AppAttachmentSecretStore;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobmanager.JobManager;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.notifications.NotificationChannels;
-import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.service.GenericForegroundService;
 import org.thoughtcrime.securesms.service.NotificationController;
 import org.thoughtcrime.securesms.util.BackupUtil;
-import org.thoughtcrime.securesms.util.StorageUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public final class LocalBackupJob extends BaseJob {
 
@@ -44,6 +45,7 @@ public final class LocalBackupJob extends BaseJob {
   private static final String TAG = Log.tag(LocalBackupJob.class);
 
   public static final String QUEUE = "__LOCAL_BACKUP__";
+  public static final String PLAINTEXT_ARCHIVE_QUEUE = "__LOCAL_PLAINTEXT_ARCHIVE__";
 
   public static final String TEMP_BACKUP_FILE_PREFIX = ".backup";
   public static final String TEMP_BACKUP_FILE_SUFFIX = ".tmp";
@@ -65,14 +67,25 @@ public final class LocalBackupJob extends BaseJob {
     }
   }
 
-  public static void enqueueArchive() {
+  public static void enqueueArchive(boolean delay) {
     JobManager         jobManager = AppDependencies.getJobManager();
     Parameters.Builder parameters = new Parameters.Builder()
                                                   .setQueue(QUEUE)
                                                   .setMaxInstancesForFactory(1)
+                                                  .setInitialDelay(delay ? TimeUnit.MINUTES.toMillis(30) : 0)
                                                   .setMaxAttempts(3);
 
     jobManager.add(new LocalArchiveJob(parameters.build()));
+  }
+
+  public static void enqueuePlaintextArchive(String destinationUri, boolean includeMedia) {
+    JobManager         jobManager = AppDependencies.getJobManager();
+    Parameters.Builder parameters = new Parameters.Builder()
+        .setQueue(PLAINTEXT_ARCHIVE_QUEUE)
+        .setMaxInstancesForFactory(1)
+        .setMaxAttempts(3);
+
+    jobManager.add(new LocalPlaintextArchiveJob(destinationUri, includeMedia, parameters.build()));
   }
 
   private LocalBackupJob(@NonNull Job.Parameters parameters) {
@@ -99,17 +112,17 @@ public final class LocalBackupJob extends BaseJob {
       throw new IOException("No external storage permission!");
     }
 
-    ProgressUpdater updater = new ProgressUpdater(context.getString(R.string.LocalBackupJob_verifying_signal_backup));
+    ProgressUpdater       updater      = new ProgressUpdater(context.getString(R.string.LocalBackupJob_verifying_signal_backup));
+    EventBus.Subscription subscription = EventBus.getDefault().subscribe(BackupEvent.class, updater::onEvent);
     try (NotificationController notification = GenericForegroundService.startForegroundTask(context,
                                                                      context.getString(R.string.LocalBackupJob_creating_signal_backup),
                                                                      NotificationChannels.getInstance().BACKUPS,
-                                                                     R.drawable.ic_signal_backup))
+                                                                     org.signal.core.ui.R.drawable.ic_signal_backup))
     {
       updater.setNotification(notification);
-      EventBus.getDefault().register(updater);
       notification.setIndeterminateProgress();
 
-      String backupPassword  = BackupPassphrase.get(context);
+      String backupPassword  = SignalStore.backup().getV1BackupPassphrase();
       File   backupDirectory = StorageUtil.getOrCreateBackupDirectory();
       String timestamp       = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US).format(new Date());
       String fileName        = String.format("signal-%s.backup", timestamp);
@@ -130,7 +143,7 @@ public final class LocalBackupJob extends BaseJob {
       try {
         Stopwatch   stopwatch     = new Stopwatch("backup-export");
         BackupEvent finishedEvent = FullBackupExporter.export(context,
-                                                              AttachmentSecretProvider.getInstance(context).getOrCreateAttachmentSecret(),
+                                                              AttachmentSecretProvider.getInstance(context, AppAttachmentSecretStore.INSTANCE).getOrCreateAttachmentSecret(),
                                                               SignalDatabase.getBackupDatabase(),
                                                               tempFile,
                                                               backupPassword,
@@ -175,7 +188,7 @@ public final class LocalBackupJob extends BaseJob {
       Log.w(TAG, "This should not happen on API < 31");
       throw new AssertionError(e);
     } finally {
-      EventBus.getDefault().unregister(updater);
+      subscription.unsubscribe();
       updater.setNotification(null);
     }
   }
@@ -213,7 +226,6 @@ public final class LocalBackupJob extends BaseJob {
       this.verifyProgressTitle = verifyProgressTitle;
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING)
     public void onEvent(BackupEvent event) {
       if (notification == null) {
         return;

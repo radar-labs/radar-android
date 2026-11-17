@@ -24,10 +24,16 @@ import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleEmitter
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.signal.core.models.database.StickerRecord
+import org.signal.core.models.recipients.RecipientId
+import org.signal.core.util.DrawableUtil
 import org.signal.core.util.StreamUtil
+import org.signal.core.util.Util
 import org.signal.core.util.concurrent.MaybeCompat
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.dp
+import org.signal.core.util.groups.GroupNotAMemberException
+import org.signal.core.util.logTime
 import org.signal.core.util.logging.Log
 import org.signal.paging.PagedData
 import org.signal.paging.PagingConfig
@@ -35,9 +41,9 @@ import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.ShortcutLauncherActivity
 import org.thoughtcrime.securesms.attachments.TombstoneAttachment
 import org.thoughtcrime.securesms.avatar.fallback.FallbackAvatarDrawable
-import org.thoughtcrime.securesms.components.emoji.EmojiStrings
 import org.thoughtcrime.securesms.contactshare.Contact
-import org.thoughtcrime.securesms.contactshare.ContactUtil
+import org.thoughtcrime.securesms.contactshare.quoteText
+import org.thoughtcrime.securesms.contactshare.resolveOrCreateSignalRecipient
 import org.thoughtcrime.securesms.conversation.ConversationMessage
 import org.thoughtcrime.securesms.conversation.mutiselect.MultiselectPart
 import org.thoughtcrime.securesms.conversation.v2.RequestReviewState.GroupReviewState
@@ -60,7 +66,6 @@ import org.thoughtcrime.securesms.database.model.MessageId
 import org.thoughtcrime.securesms.database.model.MessageRecord
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.ReactionRecord
-import org.thoughtcrime.securesms.database.model.StickerRecord
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList
 import org.thoughtcrime.securesms.database.model.databaseprotos.MessageExtras
 import org.thoughtcrime.securesms.database.model.databaseprotos.PinnedMessage
@@ -68,7 +73,9 @@ import org.thoughtcrime.securesms.database.model.databaseprotos.PollTerminate
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.dependencies.AppDependencies.databaseObserver
 import org.thoughtcrime.securesms.dependencies.AppDependencies.expiringMessageManager
-import org.thoughtcrime.securesms.groups.GroupNotAMemberException
+import org.thoughtcrime.securesms.groups.ui.GroupChangeFailureReason
+import org.thoughtcrime.securesms.groups.v2.GroupAddMembersResult
+import org.thoughtcrime.securesms.groups.v2.GroupManagementRepository
 import org.thoughtcrime.securesms.jobs.GroupSendJobHelper
 import org.thoughtcrime.securesms.jobs.MultiDeviceViewOnceOpenJob
 import org.thoughtcrime.securesms.jobs.UnpinMessageJob
@@ -84,29 +91,27 @@ import org.thoughtcrime.securesms.mms.Slide
 import org.thoughtcrime.securesms.mms.SlideDeck
 import org.thoughtcrime.securesms.polls.Poll
 import org.thoughtcrime.securesms.profiles.spoofing.ReviewRecipient
-import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.RecipientUtil
 import org.thoughtcrime.securesms.sms.MessageSender
 import org.thoughtcrime.securesms.sms.MessageSender.PreUploadResult
 import org.thoughtcrime.securesms.transport.UndeliverableMessageException
-import org.thoughtcrime.securesms.util.DrawableUtil
+import org.thoughtcrime.securesms.util.AdaptiveBitmapMetrics
 import org.thoughtcrime.securesms.util.GroupUtil
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.MessageUtil
 import org.thoughtcrime.securesms.util.SignalLocalMetrics
-import org.thoughtcrime.securesms.util.Util
-import org.thoughtcrime.securesms.util.hasLinkPreview
 import org.thoughtcrime.securesms.util.hasSharedContact
 import org.thoughtcrime.securesms.util.hasTextSlide
 import org.thoughtcrime.securesms.util.isViewOnceMessage
 import org.thoughtcrime.securesms.util.requireTextSlide
+import org.thoughtcrime.securesms.util.shouldDisplayLinkPreview
 import org.whispersystems.signalservice.api.crypto.ContentHint
 import org.whispersystems.signalservice.api.messages.SendMessageResult
 import org.whispersystems.signalservice.api.messages.SignalServiceDataMessage
 import org.whispersystems.signalservice.api.messages.SignalServiceDataMessage.Companion.newBuilder
 import java.io.IOException
+import java.time.ZoneId
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.max
 import kotlin.time.Duration
@@ -155,13 +160,14 @@ class ConversationRepository(
         metadata.threadSize
       )
       val config = PagingConfig.Builder().setPageSize(25)
-        .setBufferPages(2)
+        .setBufferPages(3)
         .setStartIndex(max(metadata.getStartPosition(), 0))
         .build()
 
       ConversationThreadState(
         items = PagedData.createForObservable(dataSource, config),
-        meta = metadata
+        meta = metadata,
+        sharedContactMessages = dataSource.sharedContactMessages
       )
     }.subscribeOn(Schedulers.io())
   }
@@ -218,12 +224,18 @@ class ConversationRepository(
       val threadRecipient = SignalDatabase.threads.getRecipientForThreadId(messageRecord.threadId)!!
       val pollSentTimestamp = messageRecord.dateSent
 
-      if (threadRecipient.groupId.getOrNull()?.isV2 != true) {
+      if (threadRecipient.isPushV2Group && threadRecipient.groupId.getOrNull()?.isV2 != true) {
         Log.w(TAG, "Missing group id")
         emitter.tryOnError(Exception("Poll terminate failed"))
+        return@create
       }
 
-      val groupId = threadRecipient.requireGroupId().requireV2()
+      if (threadRecipient.isPushV2Group && !SignalDatabase.groups.isActive(threadRecipient.requireGroupId())) {
+        Log.w(TAG, "Cannot end poll in terminated or inactive group")
+        emitter.tryOnError(Exception("Poll terminate failed"))
+        return@create
+      }
+
       val message = OutgoingMessage.pollTerminateMessage(
         threadRecipient = threadRecipient,
         sentTimeMillis = System.currentTimeMillis(),
@@ -233,12 +245,17 @@ class ConversationRepository(
 
       Log.i(TAG, "Sending poll terminate to " + message.threadRecipient.id + ", thread: " + messageRecord.threadId)
 
-      val possibleTargets: List<Recipient> = SignalDatabase.groups.getGroupMembers(groupId, GroupTable.MemberSet.FULL_MEMBERS_EXCLUDING_SELF)
-        .map { it.resolve() }
-        .distinctBy { it.id }
+      val possibleTargets: List<Recipient> = if (threadRecipient.isPushV2Group) {
+        SignalDatabase.groups.getGroupMembers(threadRecipient.requireGroupId().requireV2(), GroupTable.MemberSet.FULL_MEMBERS_EXCLUDING_SELF)
+          .map { it.resolve() }
+          .distinctBy { it.id }
+      } else {
+        listOf(threadRecipient)
+      }
+      val isSelf = threadRecipient.isSelf
 
       val eligibleTargets: List<Recipient> = RecipientUtil.getEligibleForSending(possibleTargets)
-      val results = sendEndPoll(threadRecipient, message, eligibleTargets, poll.messageId)
+      val results = sendEndPoll(threadRecipient, message, eligibleTargets, isSelf, poll.messageId)
       val sendResults = GroupSendJobHelper.getCompletedSends(eligibleTargets, results)
 
       if (sendResults.completed.isNotEmpty() || possibleTargets.isEmpty()) {
@@ -261,7 +278,7 @@ class ConversationRepository(
           Log.i(TAG, "Some recipients skipped when sending end poll. Resending to $filterRecipientIds")
           MessageSender.resendGroupMessage(applicationContext, messageRecord, filterRecipientIds)
         } else {
-          SignalDatabase.messages.markAsSent(messageId, true)
+          SignalDatabase.messages.markAsSent(messageId)
         }
         emitter.onComplete()
       } else {
@@ -271,9 +288,9 @@ class ConversationRepository(
   }
 
   @Throws(IOException::class, GroupNotAMemberException::class, UndeliverableMessageException::class)
-  fun sendEndPoll(group: Recipient, message: OutgoingMessage, destinations: List<Recipient>, messageId: Long): List<SendMessageResult?> {
-    val groupId = group.requireGroupId().requireV2()
-    val groupRecord: GroupRecord? = SignalDatabase.groups.getGroup(group.requireGroupId()).getOrNull()
+  fun sendEndPoll(threadRecipient: Recipient, message: OutgoingMessage, destinations: List<Recipient>, isSelf: Boolean, messageId: Long): List<SendMessageResult?> {
+    val groupId = if (threadRecipient.isPushV2Group) threadRecipient.requireGroupId().requireV2() else null
+    val groupRecord: GroupRecord? = if (threadRecipient.isPushV2Group) SignalDatabase.groups.getGroup(threadRecipient.requireGroupId()).getOrNull() else null
 
     if (groupRecord != null && groupRecord.isAnnouncementGroup && !groupRecord.isAdmin(Recipient.self())) {
       throw UndeliverableMessageException("Non-admins cannot send messages in announcement groups!")
@@ -281,29 +298,35 @@ class ConversationRepository(
 
     val builder = newBuilder()
 
-    GroupUtil.setDataMessageGroupContext(AppDependencies.application, builder, groupId)
+    if (groupId != null) {
+      GroupUtil.setDataMessageGroupContext(AppDependencies.application, builder, groupId)
+    }
 
     val sentTime = System.currentTimeMillis()
-    val groupMessage = builder
+    val message = builder
       .withTimestamp(sentTime)
       .withExpiration((message.expiresIn / 1000).toInt())
       .withProfileKey(ProfileKeyUtil.getSelfProfileKey().serialize())
       .withPollTerminate(SignalServiceDataMessage.PollTerminate(message.messageExtras!!.pollTerminate!!.targetTimestamp))
       .build()
 
-    return GroupSendUtil.sendResendableDataMessage(
-      applicationContext,
-      groupId,
-      null,
-      destinations,
-      false,
-      ContentHint.RESENDABLE,
-      MessageId(messageId),
-      groupMessage,
-      true,
-      false,
-      null
-    ) { System.currentTimeMillis() - sentTime > POLL_TERMINATE_TIMEOUT.inWholeMilliseconds }
+    return if (isSelf) {
+      listOf(AppDependencies.signalServiceMessageSender.sendSyncMessage(message))
+    } else {
+      GroupSendUtil.sendResendableDataMessage(
+        applicationContext,
+        groupId,
+        null,
+        destinations,
+        false,
+        ContentHint.RESENDABLE,
+        MessageId(messageId),
+        message,
+        true,
+        false,
+        null
+      ) { System.currentTimeMillis() - sentTime > POLL_TERMINATE_TIMEOUT.inWholeMilliseconds }
+    }
   }
 
   fun getPinnedMessages(threadId: Long): List<MmsMessageRecord> {
@@ -339,8 +362,9 @@ class ConversationRepository(
         listOf(threadRecipient)
       }
 
+      val includeSelf = threadRecipient.isSelf
       val eligibleTargets = RecipientUtil.getEligibleForSending(possibleTargets)
-      val results = PinSendUtil.sendPinMessage(applicationContext, threadRecipient, message, eligibleTargets, messageRecord.id)
+      val results = PinSendUtil.sendPinMessage(applicationContext, threadRecipient, message, eligibleTargets, includeSelf, messageRecord.id)
 
       val sendResults = GroupSendJobHelper.getCompletedSends(eligibleTargets, results)
 
@@ -362,7 +386,7 @@ class ConversationRepository(
           Log.i(TAG, "Some recipients skipped when sending pin message. Resending to $filterRecipientIds")
           MessageSender.resendGroupMessage(applicationContext, messageRecord, filterRecipientIds)
         } else {
-          SignalDatabase.messages.markAsSent(insertResult.messageId, true)
+          SignalDatabase.messages.markAsSent(insertResult.messageId)
         }
         emitter.onComplete()
       } else {
@@ -396,8 +420,9 @@ class ConversationRepository(
         listOf(threadRecipient)
       }
 
+      val includeSelf = threadRecipient.isSelf
       val eligibleTargets: List<Recipient> = RecipientUtil.getEligibleForSending(possibleTargets)
-      val results = PinSendUtil.sendUnpinMessage(applicationContext, threadRecipient, message.fromRecipient.requireServiceId(), message.dateSent, eligibleTargets, messageId)
+      val results = PinSendUtil.sendUnpinMessage(applicationContext, threadRecipient, message.fromRecipient.requireServiceId(), message.dateSent, eligibleTargets, includeSelf, messageId)
       val sendResults = GroupSendJobHelper.getCompletedSends(eligibleTargets, results)
 
       if (sendResults.completed.isNotEmpty() || possibleTargets.isEmpty()) {
@@ -416,6 +441,16 @@ class ConversationRepository(
       } else {
         emitter.tryOnError(Exception("Unpin message failed"))
       }
+    }.subscribeOn(Schedulers.io())
+  }
+
+  fun setMessageStarred(messageId: Long, starred: Boolean): Completable {
+    return setMessagesStarred(setOf(messageId), starred)
+  }
+
+  fun setMessagesStarred(messageIds: Set<Long>, starred: Boolean): Completable {
+    return Completable.fromAction {
+      SignalDatabase.messages.setStarred(messageIds, starred)
     }.subscribeOn(Schedulers.io())
   }
 
@@ -515,6 +550,20 @@ class ConversationRepository(
     oldConversationRepository.markGiftBadgeRevealed(messageId)
   }
 
+  /** Without a profile key for the subject this invites rather than adds, see [GroupAddMembersResult.Success.newMembersInvited]. */
+  fun addSharedContactToGroup(contact: Contact, groupRecipient: Recipient): Single<GroupAddMembersResult> {
+    return Single.create { emitter ->
+      val recipientId = contact.resolveOrCreateSignalRecipient()
+
+      if (recipientId == null) {
+        Log.w(TAG, "Shared contact does not resolve to a Signal account.")
+        emitter.onSuccess(GroupAddMembersResult.Failure(GroupChangeFailureReason.OTHER))
+      } else {
+        GroupManagementRepository().addMembers(groupRecipient, listOf(recipientId)) { emitter.onSuccess(it) }
+      }
+    }.subscribeOn(Schedulers.io())
+  }
+
   fun getQuotedMessagePosition(threadId: Long, quoteId: Long, authorId: RecipientId): Single<Int> {
     return Single.fromCallable {
       SignalDatabase.messages.getQuotedMessagePosition(threadId, quoteId, authorId)
@@ -571,7 +620,7 @@ class ConversationRepository(
     return Single.fromCallable {
       val recipients = if (groupRecord == null) {
         listOf(recipient)
-      } else if (groupRecord.isV2Group) {
+      } else if (groupRecord.hasV2GroupProperties) {
         groupRecord.requireV2GroupProperties().getMemberRecipients(GroupTable.MemberSet.FULL_MEMBERS_EXCLUDING_SELF)
       } else {
         emptyList()
@@ -622,7 +671,7 @@ class ConversationRepository(
         }
       }
 
-      if (group != null && group.isV2Group) {
+      if (group != null && group.hasV2GroupProperties) {
         val groupId = group.id.requireV2()
         val duplicateRecipients: List<ReviewRecipient> = SignalDatabase.nameCollisions.getCollisionsForThreadRecipientId(group.recipientId)
 
@@ -651,7 +700,7 @@ class ConversationRepository(
         val thumbnailUri = thumbnailSlide.uri ?: return@fromCallable null
 
         val inputStream = PartAuthority.getAttachmentStream(applicationContext, thumbnailUri)
-        val tempUri = BlobProvider.getInstance().forData(inputStream, thumbnailSlide.fileSize)
+        val tempUri = AppDependencies.blobs.forData(inputStream, thumbnailSlide.fileSize)
           .withMimeType(thumbnailSlide.contentType)
           .createForSingleSessionOnDisk(applicationContext)
 
@@ -753,16 +802,9 @@ class ConversationRepository(
 
     return if (messageRecord.isMms && messageRecord.hasSharedContact()) {
       val contact: Contact = (messageRecord as MmsMessageRecord).sharedContacts.first()
-      val displayName: String = ContactUtil.getDisplayName(contact)
-      val body: String = context.getString(R.string.ConversationActivity_quoted_contact_message, EmojiStrings.BUST_IN_SILHOUETTE, displayName)
-      val slideDeck = SlideDeck()
 
-      if (contact.avatarAttachment != null) {
-        slideDeck.addSlide(MediaUtil.getSlideForAttachment(contact.avatarAttachment))
-      }
-
-      slideDeck to body
-    } else if (messageRecord.isMms && messageRecord.hasLinkPreview()) {
+      SlideDeck() to contact.quoteText(context)
+    } else if (messageRecord.isMms && messageRecord.shouldDisplayLinkPreview()) {
       val linkPreview = (messageRecord as MmsMessageRecord).linkPreviews.first()
       val slideDeck = SlideDeck()
 
@@ -796,9 +838,9 @@ class ConversationRepository(
     SignalExecutors.BOUNDED_IO.execute {
       slides
         .mapNotNull(Slide::getUri)
-        .filter(BlobProvider::isAuthority)
+        .filter { AppDependencies.blobs.isAuthority(it) }
         .forEach {
-          BlobProvider.getInstance().delete(applicationContext, it)
+          AppDependencies.blobs.delete(applicationContext, it)
         }
     }
   }
@@ -814,10 +856,26 @@ class ConversationRepository(
     AppDependencies.expiringMessageManager.scheduleDeletion(expirationInfos)
   }
 
-  fun getEarliestMessageSentDate(threadId: Long): Single<Long> {
+  fun getDaysWithMessages(threadId: Long): Single<Set<Long>> {
     return Single
-      .fromCallable { SignalDatabase.messages.getEarliestMessageSentDate(threadId) }
+      .fromCallable {
+        logTime(TAG, "days-with-messages", decimalPlaces = 1) {
+          SignalDatabase.messages.getDaysWithMessages(threadId, ZoneId.systemDefault())
+        }
+      }
       .subscribeOn(Schedulers.io())
+  }
+
+  fun collapseEvents(messageId: Long) {
+    SignalDatabase.messages.collapseEvents(messageId)
+  }
+
+  fun collapseAllEvents() {
+    SignalDatabase.messages.collapseAllEvents()
+  }
+
+  fun expandEvents(messageId: Long) {
+    SignalDatabase.messages.expandEvents(messageId)
   }
 
   /**
@@ -857,9 +915,9 @@ class ConversationRepository(
       override fun transformToFinalBitmap(): Single<Bitmap> {
         return Single.create {
           val bitmap = if (Build.VERSION.SDK_INT <= 25) {
-            DrawableUtil.wrapBitmapForShortcutInfo(DrawableUtil.toBitmap(drawable, SHORTCUT_ICON_SIZE, SHORTCUT_ICON_SIZE))
+            AdaptiveBitmapMetrics.wrapBitmap(DrawableUtil.toBitmap(drawable, SHORTCUT_ICON_SIZE, SHORTCUT_ICON_SIZE))
           } else {
-            DrawableUtil.wrapBitmapForShortcutInfo(drawable.toBitmap(SHORTCUT_ICON_SIZE, SHORTCUT_ICON_SIZE))
+            AdaptiveBitmapMetrics.wrapBitmap(drawable.toBitmap(SHORTCUT_ICON_SIZE, SHORTCUT_ICON_SIZE))
           }
           it.setCancellable {
             bitmap.recycle()
@@ -872,7 +930,7 @@ class ConversationRepository(
     class BitmapResult(private val bitmap: Bitmap) : ContactPhotoResult {
       override fun transformToFinalBitmap(): Single<Bitmap> {
         return Single.create {
-          val bitmap = DrawableUtil.wrapBitmapForShortcutInfo(bitmap)
+          val bitmap = AdaptiveBitmapMetrics.wrapBitmap(bitmap)
           it.setCancellable {
             bitmap.recycle()
           }

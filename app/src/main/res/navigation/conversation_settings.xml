@@ -22,7 +22,7 @@
             <argument
                 android:name="recipient_id"
                 android:defaultValue="@null"
-                app:argType="org.thoughtcrime.securesms.recipients.RecipientId"
+                app:argType="org.signal.core.models.recipients.RecipientId"
                 app:nullable="true" />
 
             <argument
@@ -39,18 +39,22 @@
 
         <argument
             android:name="recipient_id"
-            app:argType="org.thoughtcrime.securesms.recipients.RecipientId"
+            app:argType="org.signal.core.models.recipients.RecipientId"
             app:nullable="true" />
 
         <argument
             android:name="group_id"
-            app:argType="android.os.Parcelable"
+            app:argType="org.thoughtcrime.securesms.groups.GroupId"
             app:nullable="true" />
 
         <argument
             android:name="call_message_ids"
             app:argType="long[]"
             app:nullable="true" />
+
+        <argument
+            android:name="kind"
+            app:argType="org.thoughtcrime.securesms.components.settings.conversation.ConversationSettingsKind" />
 
         <action
             android:id="@+id/action_conversationSettingsFragment_to_soundsAndNotificationsSettingsFragment"
@@ -62,13 +66,13 @@
 
             <argument
                 android:name="recipient_id"
-                app:argType="org.thoughtcrime.securesms.recipients.RecipientId" />
+                app:argType="org.signal.core.models.recipients.RecipientId" />
 
         </action>
 
         <action
-            android:id="@+id/action_conversationSettingsFragment_to_permissionsSettingsFragment"
-            app:destination="@id/permissionsSettingsFragment"
+            android:id="@+id/action_conversationSettingsFragment_to_groupPermissionsFragment"
+            app:destination="@id/groupPermissionsFragment"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
@@ -76,7 +80,7 @@
 
             <argument
                 android:name="group_id"
-                app:argType="android.os.Parcelable"
+                app:argType="org.thoughtcrime.securesms.groups.GroupId"
                 app:nullable="true" />
         </action>
 
@@ -90,7 +94,7 @@
 
             <argument
                 android:name="recipient_id"
-                app:argType="org.thoughtcrime.securesms.recipients.RecipientId" />
+                app:argType="org.signal.core.models.recipients.RecipientId" />
 
         </action>
 
@@ -102,6 +106,42 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
 
+        <action
+            android:id="@+id/action_conversationSettingsFragment_to_memberLabelFragment"
+            app:destination="@id/memberLabelFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit">
+
+            <argument
+                android:name="group_id"
+                app:argType="org.thoughtcrime.securesms.groups.GroupId"
+                app:nullable="false" />
+        </action>
+
+        <action
+            android:id="@+id/action_conversationSettingsFragment_to_memberSearchFragment"
+            app:destination="@id/memberSearchFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit">
+
+            <argument
+                android:name="group_id"
+                app:argType="org.thoughtcrime.securesms.groups.GroupId"
+                app:nullable="false" />
+
+            <argument
+                android:name="can_add"
+                app:argType="boolean" />
+
+            <argument
+                android:name="has_group_link"
+                app:argType="boolean" />
+        </action>
+
     </fragment>
 
     <fragment
@@ -110,11 +150,19 @@
 
         <argument
             android:name="recipient_id"
-            app:argType="org.thoughtcrime.securesms.recipients.RecipientId" />
+            app:argType="org.signal.core.models.recipients.RecipientId" />
 
         <action
             android:id="@+id/action_soundsAndNotificationsSettingsFragment_to_customNotificationsSettingsFragment"
             app:destination="@id/customNotificationsSettingsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
+        <action
+            android:id="@+id/action_soundsAndNotificationsSettingsFragment_to_mutedNotificationsFragment"
+            app:destination="@id/mutedNotificationsFragment"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
@@ -128,18 +176,18 @@
 
         <argument
             android:name="recipient_id"
-            app:argType="org.thoughtcrime.securesms.recipients.RecipientId" />
+            app:argType="org.signal.core.models.recipients.RecipientId" />
 
     </fragment>
 
     <fragment
-        android:id="@+id/permissionsSettingsFragment"
-        android:name="org.thoughtcrime.securesms.components.settings.conversation.permissions.PermissionsSettingsFragment">
+        android:id="@+id/groupPermissionsFragment"
+        android:name="org.thoughtcrime.securesms.components.settings.conversation.grouppermissions.GroupPermissionsFragment">
 
         <argument
             android:name="group_id"
-            app:argType="android.os.Parcelable"
-            app:nullable="true" />
+            app:argType="org.thoughtcrime.securesms.groups.GroupId"
+            app:nullable="false" />
     </fragment>
 
     <fragment
@@ -148,7 +196,17 @@
 
         <argument
             android:name="recipient_id"
-            app:argType="org.thoughtcrime.securesms.recipients.RecipientId" />
+            app:argType="org.signal.core.models.recipients.RecipientId" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mutedNotificationsFragment"
+        android:name="org.thoughtcrime.securesms.components.settings.conversation.sounds.MutedNotificationsFragment">
+
+        <argument
+            android:name="recipient_id"
+            app:argType="org.signal.core.models.recipients.RecipientId" />
 
     </fragment>
 
@@ -158,8 +216,29 @@
 
         <argument
             android:name="group_id"
-            app:argType="string" />
+            app:argType="org.thoughtcrime.securesms.groups.GroupId"
+            app:nullable="false" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/memberLabelFragment"
+        android:name="org.thoughtcrime.securesms.groups.memberlabel.MemberLabelFragment">
+
+        <argument
+            android:name="group_id"
+            app:argType="org.thoughtcrime.securesms.groups.GroupId"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/memberSearchFragment"
+        android:name="org.thoughtcrime.securesms.groups.ui.MemberSearchFragment">
+
+        <argument
+            android:name="group_id"
+            app:argType="org.thoughtcrime.securesms.groups.GroupId"
+            app:nullable="false" />
     </fragment>
 
     <include app:graph="@navigation/app_settings_expire_timer" />

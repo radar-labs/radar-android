@@ -7,9 +7,9 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
+import java.util.stream.Collectors;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.database.CallTable;
@@ -22,7 +22,6 @@ import org.thoughtcrime.securesms.jobs.CallLogEventSendJob;
 import org.thoughtcrime.securesms.jobs.MultiDeviceReadUpdateJob;
 import org.thoughtcrime.securesms.jobs.SendReadReceiptJob;
 import org.thoughtcrime.securesms.notifications.v2.ConversationId;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -50,10 +49,12 @@ public class MarkReadReceiver extends BroadcastReceiver {
         notifier.removeStickyThread(thread);
       }
 
-      NotificationCancellationHelper.cancelLegacy(context, intent.getIntExtra(NOTIFICATION_ID_EXTRA, -1));
+      int notificationId = intent.getIntExtra(NOTIFICATION_ID_EXTRA, -1);
 
       PendingResult finisher = goAsync();
       SignalExecutors.BOUNDED.execute(() -> {
+        NotificationCancellationHelper.cancel(context, notificationId);
+
         List<MarkedMessageInfo> messageIdsCollection = new LinkedList<>();
 
         for (ConversationId thread : threads) {
@@ -74,27 +75,27 @@ public class MarkReadReceiver extends BroadcastReceiver {
   public static void process(@NonNull List<MarkedMessageInfo> markedReadMessages) {
     if (markedReadMessages.isEmpty()) return;
 
-    List<SyncMessageId>  syncMessageIds = Stream.of(markedReadMessages)
-                                                .map(MarkedMessageInfo::getSyncMessageId)
-                                                .toList();
-    List<ExpirationInfo> expirationInfo = Stream.of(markedReadMessages)
-                                                .map(MarkedMessageInfo::getExpirationInfo)
-                                                .filter(info -> info.getExpiresIn() > 0 && info.getExpireStarted() <= 0)
-                                                .toList();
+    List<SyncMessageId>  syncMessageIds = markedReadMessages.stream()
+                                                            .map(MarkedMessageInfo::getSyncMessageId)
+                                                            .collect(Collectors.toList());
+    List<ExpirationInfo> expirationInfo = markedReadMessages.stream()
+                                                            .map(MarkedMessageInfo::getExpirationInfo)
+                                                            .filter(info -> info.getExpiresIn() > 0 && info.getExpireStarted() <= 0)
+                                                            .collect(Collectors.toList());
 
     scheduleDeletion(expirationInfo);
 
     MultiDeviceReadUpdateJob.enqueue(syncMessageIds);
 
-    Map<Long, List<MarkedMessageInfo>> threadToInfo = Stream.of(markedReadMessages)
-                                                            .collect(Collectors.groupingBy(MarkedMessageInfo::getThreadId));
+    Map<Long, List<MarkedMessageInfo>> threadToInfo = markedReadMessages.stream()
+                                                                        .collect(Collectors.groupingBy(MarkedMessageInfo::getThreadId));
 
-    Stream.of(threadToInfo).forEach(threadToInfoEntry -> {
-      Map<RecipientId, List<MarkedMessageInfo>> recipientIdToInfo = Stream.of(threadToInfoEntry.getValue())
-                                                                          .map(info -> info)
-                                                                          .collect(Collectors.groupingBy(info -> info.getSyncMessageId().getRecipientId()));
+    threadToInfo.entrySet().stream().forEach(threadToInfoEntry -> {
+      Map<RecipientId, List<MarkedMessageInfo>> recipientIdToInfo = threadToInfoEntry.getValue().stream()
+                                                                                     .map(info -> info)
+                                                                                     .collect(Collectors.groupingBy(info -> info.getSyncMessageId().getRecipientId()));
 
-      Stream.of(recipientIdToInfo).forEach(entry -> {
+      recipientIdToInfo.entrySet().stream().forEach(entry -> {
         long                    threadId    = threadToInfoEntry.getKey();
         RecipientId             recipientId = entry.getKey();
         List<MarkedMessageInfo> infos       = entry.getValue();
@@ -108,10 +109,10 @@ public class MarkReadReceiver extends BroadcastReceiver {
     List<RecipientId> peers = SignalDatabase.threads().getRecipientIdsForThreadIds(threads.stream()
                                                                                           .filter(it -> it.getGroupStoryId() == null)
                                                                                           .map(ConversationId::getThreadId)
-                                                                                          .collect(java.util.stream.Collectors.toList()));
+                                                                                          .collect(Collectors.toList()));
 
     for (RecipientId peer : peers) {
-      CallTable.Call lastCallInThread = SignalDatabase.calls().markAllCallEventsWithPeerBeforeTimestampRead(peer, timestamp);
+      CallTable.Call lastCallInThread = SignalDatabase.calls().markAllCallEventsWithPeerBeforeTimestampRead(peer, timestamp, System.currentTimeMillis());
       if (lastCallInThread != null) {
         AppDependencies.getJobManager().add(CallLogEventSendJob.forMarkedAsReadInConversation(lastCallInThread));
       }
@@ -121,10 +122,10 @@ public class MarkReadReceiver extends BroadcastReceiver {
   private static void scheduleDeletion(@NonNull List<ExpirationInfo> expirationInfo) {
     if (expirationInfo.size() > 0) {
       long now = System.currentTimeMillis();
-      SignalDatabase.messages().markExpireStarted(Stream.of(expirationInfo).map(info -> new kotlin.Pair<>(info.getId(), now)).toList());
+      SignalDatabase.messages().markExpireStarted(expirationInfo.stream().map(info -> new kotlin.Pair<>(info.getId(), now)).collect(Collectors.toList()));
 
       AppDependencies.getExpiringMessageManager()
-                     .scheduleDeletion(Stream.of(expirationInfo).map(info -> info.copy(info.getId(), info.getExpiresIn(), now, info.isMms())).toList());
+                     .scheduleDeletion(expirationInfo.stream().map(info -> info.copy(info.getId(), info.getExpiresIn(), now, info.isMms())).collect(Collectors.toList()));
     }
   }
 }

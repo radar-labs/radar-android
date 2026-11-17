@@ -1,13 +1,26 @@
 package org.thoughtcrime.securesms.keyvalue
 
-import org.thoughtcrime.securesms.components.settings.app.usernamelinks.UsernameQrCodeColorScheme
+import android.content.Context
+import org.signal.appsettings.usernamelinks.UsernameQrCodeColorScheme
+import org.signal.core.util.logging.Log
+import org.signal.storage.keyvalue.KeyValueStore
+import org.signal.storage.keyvalue.LegacySharedPrefs
+import org.signal.storage.keyvalue.SignalStoreValues
+import org.signal.storage.keyvalue.booleanValue
+import org.signal.storage.keyvalue.integerValue
+import org.signal.storage.keyvalue.longValue
+import org.signal.storage.keyvalue.nullableBlobValue
+import org.signal.storage.keyvalue.protoValue
 import org.thoughtcrime.securesms.database.model.databaseprotos.PendingChangeNumberMetadata
 import org.thoughtcrime.securesms.jobmanager.impl.ChangeNumberConstraintObserver
+import org.thoughtcrime.securesms.jobmanager.impl.SealedSenderConstraint
 import org.thoughtcrime.securesms.jobs.DeprecatedNotificationJob
 import org.thoughtcrime.securesms.keyvalue.protos.LeastActiveLinkedDevice
 
-class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalStoreValues(store) {
+class MiscellaneousValues internal constructor(store: KeyValueStore, context: Context) : SignalStoreValues(store) {
   companion object {
+    private val TAG = Log.tag(MiscellaneousValues::class)
+
     private const val LAST_PREKEY_REFRESH_TIME = "last_prekey_refresh_time"
     private const val MESSAGE_REQUEST_ENABLE_TIME = "message_request_enable_time"
     private const val LAST_PROFILE_REFRESH_TIME = "misc.last_profile_refresh_time"
@@ -32,18 +45,107 @@ class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalSto
     private const val LAST_SERVER_TIME_OFFSET_UPDATE = "misc.last_server_time_offset_update"
     private const val NEEDS_USERNAME_RESTORE = "misc.needs_username_restore"
     private const val LAST_FORCED_PREKEY_REFRESH = "misc.last_forced_prekey_refresh"
+    private const val FORCE_PNI_SIGNED_PREKEY_ROTATION = "misc.force_pni_signed_prekey_rotation"
     private const val LAST_CDS_FOREGROUND_SYNC = "misc.last_cds_foreground_sync"
     private const val LINKED_DEVICE_LAST_ACTIVE_CHECK_TIME = "misc.linked_device.last_active_check_time"
+    private const val LAST_REFRESH_ATTRIBUTES_TIME = "misc.last_refresh_attributes_time"
     private const val LEAST_ACTIVE_LINKED_DEVICE = "misc.linked_device.least_active"
     private const val NEXT_DATABASE_ANALYSIS_TIME = "misc.next_database_analysis_time"
     private const val LAST_NETWORK_RESET_TIME = "misc.last_network_reset_time"
     private const val LAST_WEBSOCKET_CONNECT_TIME = "misc.last_websocket_connect_time"
+    private const val LAST_PROCESS_EXIT_TIMESTAMP_SEEN = "misc.last_process_exit_timestamp_seen"
     private const val LAST_CONNECTIVITY_WARNING_TIME = "misc.last_connectivity_warning_time"
     private const val NEW_LINKED_DEVICE_ID = "misc.new_linked_device_id"
     private const val NEW_LINKED_DEVICE_CREATED_TIME = "misc.new_linked_device_created_time"
     private const val STARTED_QUOTE_THUMBNAIL_MIGRATION = "misc.started_quote_thumbnail_migration"
     private const val PREFERRED_MAIN_ACTIVITY_ANCHOR_INDEX = "misc.preferred_main_activity_anchor_index"
+    private const val LAST_KEY_TRANSPARENCY_TIME = "misc.last_key_transparency_time"
+    private const val NEXT_KEY_TRANSPARENCY_TIME = "misc.next_key_transparency_time"
+    private const val HAS_KEY_TRANSPARENCY_FAILURE = "misc.has_key_transparency_failure"
+    private const val HAS_SEEN_KEY_TRANSPARENCY_FAILURE = "misc.has_seen_key_transparency_failure"
+    private const val CAMERA_FACING_FRONT = "misc.camera_facing_front"
+    private const val COMPLETED_COLLAPSED_EVENTS_MIGRATION = "misc.completed_collapsed_events_migration"
+    private const val CAPTCHA_LAST_VIEWED_AT = "misc.captcha_last_viewed_at"
+    private const val CALLING_ASSETS_VERSION = "misc.calling_assets_version"
+    private const val LAST_SYNC_MESSAGE_SEEN_TIME_MS = "misc.last_sync_message_seen_time"
+    private const val LAST_APPLIED_PNI_CHANGE_SERVER_TIMESTAMP = "misc.last_applied_pni_change_server_timestamp"
+    private const val LAST_MISSING_PLAY_SERVICES_FCM_VERIFICATION_TIME = "misc.last_missing_play_services_fcm_verification_time"
+    private const val LAST_PROCESSED_SHARE_DATA_TIMESTAMP = "misc.last_processed_share_data_timestamp"
+    private const val DIRECTORY_REFRESH_TIME = "misc.directory_refresh_time"
+    private const val HAS_SUCCESSFULLY_RETRIEVED_DIRECTORY = "misc.has_successfully_retrieved_directory"
+    private const val LAST_FULL_CONTACT_SYNC_TIME = "misc.last_full_contact_sync_time"
+    private const val NEEDS_FULL_CONTACT_SYNC = "misc.needs_full_contact_sync"
+    private const val SERVICE_OUTAGE = "misc.service_outage"
+    private const val LAST_OUTAGE_CHECK_TIME = "misc.last_outage_check_time"
+    private const val SIGNED_PREKEY_ROTATION_TIME = "misc.signed_prekey_rotation_time"
+    private const val JOB_MANAGER_VERSION = "misc.job_manager_version"
+    private const val FIRST_INSTALL_VERSION = "misc.first_install_version"
+    private const val NOTIFICATION_CHANNEL_VERSION = "misc.notification_channel_version"
+    private const val NOTIFICATION_MESSAGES_CHANNEL_VERSION = "misc.notification_messages_channel_version"
+    private const val RATING_ENABLED = "misc.rating_enabled"
+    private const val RATING_LATER_TIMESTAMP = "misc.rating_later_timestamp"
   }
+
+  init {
+    if (!store.containsKey(FIRST_INSTALL_VERSION)) {
+      migrateFromSharedPrefsV1(context)
+    }
+  }
+
+  /** Do not alter. If you need to migrate more stuff, create a new method. */
+  private fun migrateFromSharedPrefsV1(context: Context) {
+    Log.i(TAG, "[V1] Migrating misc values from shared prefs.")
+
+    store.beginWrite()
+      .putLong(DIRECTORY_REFRESH_TIME, LegacySharedPrefs.getLong(context, "pref_directory_refresh_time", 0))
+      .putBoolean(HAS_SUCCESSFULLY_RETRIEVED_DIRECTORY, LegacySharedPrefs.getBoolean(context, "pref_successful_directory", false))
+      .putLong(LAST_FULL_CONTACT_SYNC_TIME, LegacySharedPrefs.getLong(context, "pref_last_full_contact_sync_time", 0))
+      .putBoolean(NEEDS_FULL_CONTACT_SYNC, LegacySharedPrefs.getBoolean(context, "pref_needs_full_contact_sync", false))
+      .putBoolean(SERVICE_OUTAGE, LegacySharedPrefs.getBoolean(context, "pref_service_outage", false))
+      .putLong(LAST_OUTAGE_CHECK_TIME, LegacySharedPrefs.getLong(context, "pref_last_outage_check_time", 0))
+      .putLong(SIGNED_PREKEY_ROTATION_TIME, LegacySharedPrefs.getLong(context, "pref_signed_pre_key_rotation_time", 0))
+      .putInteger(JOB_MANAGER_VERSION, LegacySharedPrefs.getInteger(context, "pref_job_manager_version", 1))
+      .putInteger(NOTIFICATION_CHANNEL_VERSION, LegacySharedPrefs.getInteger(context, "pref_notification_channel_version", 1))
+      .putInteger(NOTIFICATION_MESSAGES_CHANNEL_VERSION, LegacySharedPrefs.getInteger(context, "pref_notification_messages_channel_version", 1))
+      .putBoolean(RATING_ENABLED, LegacySharedPrefs.getBoolean(context, "pref_rating_enabled", true))
+      .putLong(RATING_LATER_TIMESTAMP, LegacySharedPrefs.getLong(context, "pref_rating_later", -1))
+      // Written last so that it acts as the marker for this migration having run.
+      .putInteger(FIRST_INSTALL_VERSION, LegacySharedPrefs.getInteger(context, "pref_first_install_version", -1))
+      .commit()
+  }
+
+  /** When the next contact directory refresh is scheduled. */
+  var directoryRefreshTime: Long by longValue(DIRECTORY_REFRESH_TIME, 0)
+
+  /** Whether we've ever managed to pull down the contact directory. */
+  var hasSuccessfullyRetrievedDirectory: Boolean by booleanValue(HAS_SUCCESSFULLY_RETRIEVED_DIRECTORY, false)
+
+  var lastFullContactSyncTime: Long by longValue(LAST_FULL_CONTACT_SYNC_TIME, 0)
+
+  var needsFullContactSync: Boolean by booleanValue(NEEDS_FULL_CONTACT_SYNC, false)
+
+  /** Whether the service is currently reporting an outage. */
+  var serviceOutage: Boolean by booleanValue(SERVICE_OUTAGE, false)
+
+  var lastOutageCheckTime: Long by longValue(LAST_OUTAGE_CHECK_TIME, 0)
+
+  var signedPreKeyRotationTime: Long by longValue(SIGNED_PREKEY_ROTATION_TIME, 0)
+
+  /** The [org.thoughtcrime.securesms.jobmanager.JobManager] version the job database was last migrated to. */
+  var jobManagerVersion: Int by integerValue(JOB_MANAGER_VERSION, 1)
+
+  /** The canonical version code the app was first installed at, or -1 if we don't know. */
+  var firstInstallVersion: Int by integerValue(FIRST_INSTALL_VERSION, -1)
+
+  var notificationChannelVersion: Int by integerValue(NOTIFICATION_CHANNEL_VERSION, 1)
+
+  var notificationMessagesChannelVersion: Int by integerValue(NOTIFICATION_MESSAGES_CHANNEL_VERSION, 1)
+
+  /** Whether we're still allowed to ask the user to rate the app. */
+  var ratingEnabled: Boolean by booleanValue(RATING_ENABLED, true)
+
+  /** The earliest time we're allowed to ask the user to rate the app again. */
+  var ratingLaterTimestamp: Long by longValue(RATING_LATER_TIMESTAMP, -1)
 
   public override fun onFirstEverAppLaunch() {
     putLong(MESSAGE_REQUEST_ENABLE_TIME, 0)
@@ -51,9 +153,10 @@ class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalSto
     putBoolean(STARTED_QUOTE_THUMBNAIL_MIGRATION, true)
   }
 
-  public override fun getKeysToIncludeInBackup(): List<String> {
-    return listOf(STARTED_QUOTE_THUMBNAIL_MIGRATION)
-  }
+  override val keysToIncludeInBackup: List<String>
+    get() {
+      return listOf(STARTED_QUOTE_THUMBNAIL_MIGRATION)
+    }
 
   /**
    * Represents the last time a _full_ prekey refreshed finished. That means signed+one-time prekeys for both ACI and PNI.
@@ -66,6 +169,17 @@ class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalSto
    * Get the last time we successfully completed a forced prekey refresh.
    */
   var lastForcedPreKeyRefresh by longValue(LAST_FORCED_PREKEY_REFRESH, 0)
+
+  /**
+   * Bypasses the timeout in [org.thoughtcrime.securesms.jobs.PreKeysSyncJob] since otherwise we can hit a race.
+   */
+  var forcePniSignedPreKeyRotation by booleanValue(FORCE_PNI_SIGNED_PREKEY_ROTATION, false)
+
+  /**
+   * Envelope serverTimestamp of the most recently applied PniChangeNumber sync. Used to reject
+   * stale replays — a sync with serverTimestamp <= this value is treated as a replay and ignored.
+   */
+  var lastAppliedPniChangeServerTimestamp by longValue(LAST_APPLIED_PNI_CHANGE_SERVER_TIMESTAMP, 0L)
 
   /**
    * The last time we completed a routine profile refresh.
@@ -97,6 +211,8 @@ class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalSto
   val isChangeNumberLocked: Boolean by booleanValue(CHANGE_NUMBER_LOCK, false)
 
   var preferredMainActivityAnchorIndex: Int by integerValue(PREFERRED_MAIN_ACTIVITY_ANCHOR_INDEX, -1)
+
+  var lastSyncMessageSeenTimeMs: Long by longValue(LAST_SYNC_MESSAGE_SEEN_TIME_MS, 0L)
 
   fun lockChangeNumber() {
     putBoolean(CHANGE_NUMBER_LOCK, true)
@@ -234,6 +350,8 @@ class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalSto
       .putLong(SERVER_TIME_OFFSET, currentTime - serverTime)
       .putLong(LAST_SERVER_TIME_OFFSET_UPDATE, System.currentTimeMillis())
       .apply()
+
+    SealedSenderConstraint.refresh()
   }
 
   /**
@@ -252,6 +370,11 @@ class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalSto
   var linkedDeviceLastActiveCheckTime by longValue(LINKED_DEVICE_LAST_ACTIVE_CHECK_TIME, 0)
 
   /**
+   * The last time we successfully refreshed our account attributes with the service.
+   */
+  var lastRefreshAttributesTime: Long by longValue(LAST_REFRESH_ATTRIBUTES_TIME, 0)
+
+  /**
    * Details about the least-active linked device.
    */
   var leastActiveLinkedDevice: LeastActiveLinkedDevice? by protoValue(LEAST_ACTIVE_LINKED_DEVICE, LeastActiveLinkedDevice.ADAPTER)
@@ -267,6 +390,9 @@ class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalSto
    * The last time you successfully connected to the websocket.
    */
   var lastWebSocketConnectTime: Long by longValue(LAST_WEBSOCKET_CONNECT_TIME, System.currentTimeMillis())
+
+  /** The timestamp of the newest process exit we have already logged, so each exit is only reported once. */
+  var lastProcessExitTimestampSeen: Long by longValue(LAST_PROCESS_EXIT_TIMESTAMP_SEEN, 0)
 
   /**
    * The last time we prompted the user regarding a [org.thoughtcrime.securesms.util.ConnectivityWarning].
@@ -291,4 +417,58 @@ class MiscellaneousValues internal constructor(store: KeyValueStore) : SignalSto
    */
   @get:JvmName("startedQuoteThumbnailMigration")
   var startedQuoteThumbnailMigration: Boolean by booleanValue(STARTED_QUOTE_THUMBNAIL_MIGRATION, false)
+
+  /**
+   * The last time we ran key transparency against ourself
+   */
+  var lastKeyTransparencyTime: Long by longValue(LAST_KEY_TRANSPARENCY_TIME, 0)
+
+  /**
+   * The next time we should run key transparency self check
+   */
+  var nextKeyTransparencyTime: Long by longValue(NEXT_KEY_TRANSPARENCY_TIME, 0)
+
+  /**
+   * Whether you are unable to run key transparency on yourself
+   */
+  var hasKeyTransparencyFailure: Boolean by booleanValue(HAS_KEY_TRANSPARENCY_FAILURE, false)
+
+  /**
+   * Whether you have seen the dialog on key transparency failure
+   */
+  var hasSeenKeyTransparencyFailure: Boolean by booleanValue(HAS_SEEN_KEY_TRANSPARENCY_FAILURE, false)
+
+  /**
+   * Whether or not the preferred camera direction is front-facing.
+   */
+  var isCameraFacingFront: Boolean by booleanValue(CAMERA_FACING_FRONT, true)
+
+  var completedCollapsedEventsMigration: Boolean by booleanValue(COMPLETED_COLLAPSED_EVENTS_MIGRATION, false)
+
+  /**
+   * The last time the user viewed the captcha/recaptcha proof activity.
+   */
+  var captchaLastViewedAt: Long by longValue(CAPTCHA_LAST_VIEWED_AT, 0)
+
+  /**
+   * The last successfully-downloaded calling assets version. Compared against
+   * [org.thoughtcrime.securesms.service.webrtc.CallingAssets.CURRENT_VERSION] to determine
+   * if new assets need to be fetched.
+   */
+  var callingAssetsVersion: Int by integerValue(CALLING_ASSETS_VERSION, 0)
+
+  /**
+   * The last time we tried to get an FCM token for a user reporting missing Play Services.
+   */
+  var lastMissingPlayServicesFcmVerificationTime: Long by longValue(LAST_MISSING_PLAY_SERVICES_FCM_VERIFICATION_TIME, 0)
+
+  /**
+   * High-water mark of the most recently consumed share payload, as set by
+   * [org.thoughtcrime.securesms.conversation.ConversationArgs.shareDataTimestamp]. Any share whose timestamp is at or
+   * below this has already been handed off to the conversation and must never be replayed.
+   *
+   * This has to outlive the navigation entry carrying the payload, which is persisted and can be restored long after
+   * the activity that consumed it is gone.
+   */
+  var lastProcessedShareDataTimestamp: Long by longValue(LAST_PROCESSED_SHARE_DATA_TIMESTAMP, -1)
 }

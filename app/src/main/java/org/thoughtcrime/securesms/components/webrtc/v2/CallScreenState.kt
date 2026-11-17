@@ -7,7 +7,7 @@ package org.thoughtcrime.securesms.components.webrtc.v2
 
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
-import org.thoughtcrime.securesms.recipients.RecipientId
+import org.signal.core.models.recipients.RecipientId
 
 /**
  * This contains higher level information that would have traditionally been directly
@@ -25,14 +25,23 @@ data class CallScreenState(
   val isDisplayingAudioToggleSheet: Boolean = false,
   val displaySwitchCameraTooltip: Boolean = false,
   val displayVideoTooltip: Boolean = false,
-  val displaySwipeToSpeakerHint: Boolean = false,
+  val swipeHint: SwipeHintType = SwipeHintType.NONE,
   val displayWifiToCellularPopup: Boolean = false,
+  val remoteMuteToastMessage: String? = null,
   val displayAdditionalActionsDialog: Boolean = false,
   val displayMissingPermissionsNotice: Boolean = false,
   val pendingParticipantsState: PendingParticipantsState? = null,
   val isParticipantUpdatePopupEnabled: Boolean = true,
   val isCallStateUpdatePopupEnabled: Boolean = false,
-  val reactions: PersistentList<String> = persistentListOf()
+  val isWaitingToBeLetIn: Boolean = false,
+  val reactions: PersistentList<String> = persistentListOf(),
+  val isLocalScreenSharing: Boolean = false
 ) {
   fun isDisplayingControlMenu(): Boolean = isDisplayingAudioToggleSheet || displayAdditionalActionsDialog
+}
+
+enum class SwipeHintType {
+  NONE,
+  SPEAKER_VIEW,
+  SCREEN_SHARE
 }

@@ -9,12 +9,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.WindowManager
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import org.signal.core.models.media.Media
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mediasend.v2.gallery.MediaGalleryFragment
 
 /**
@@ -29,7 +29,7 @@ class QrImageSelectionActivity : AppCompatActivity(), MediaGalleryFragment.Callb
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+    enableEdgeToEdge()
     setContentView(R.layout.username_qr_image_selection_activity)
   }
 

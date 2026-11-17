@@ -7,22 +7,24 @@ package org.thoughtcrime.securesms.backup.v2.exporters
 
 import android.database.Cursor
 import okio.ByteString.Companion.toByteString
+import org.signal.archive.proto.Contact
+import org.signal.archive.proto.Self
 import org.signal.core.models.ServiceId
 import org.signal.core.util.Base64
 import org.signal.core.util.logging.Log
 import org.signal.core.util.optionalInt
+import org.signal.core.util.requireBlob
 import org.signal.core.util.requireBoolean
 import org.signal.core.util.requireInt
 import org.signal.core.util.requireLong
 import org.signal.core.util.requireString
 import org.signal.core.util.toByteArray
 import org.thoughtcrime.securesms.backup.v2.ArchiveRecipient
-import org.thoughtcrime.securesms.backup.v2.proto.Contact
-import org.thoughtcrime.securesms.backup.v2.proto.Self
 import org.thoughtcrime.securesms.backup.v2.util.clampToValidBackupRange
 import org.thoughtcrime.securesms.backup.v2.util.isValidUsername
 import org.thoughtcrime.securesms.backup.v2.util.toRemote
 import org.thoughtcrime.securesms.conversation.colors.AvatarColor
+import org.thoughtcrime.securesms.crypto.ProfileKeyUtil
 import org.thoughtcrime.securesms.database.IdentityTable
 import org.thoughtcrime.securesms.database.RecipientTable
 import org.thoughtcrime.securesms.database.RecipientTableCursorUtil
@@ -73,8 +75,9 @@ class ContactArchiveExporter(private val cursor: Cursor, private val selfId: Lon
       .username(cursor.requireString(RecipientTable.USERNAME)?.takeIf { it.isValidUsername() })
       .e164(cursor.requireString(RecipientTable.E164)?.e164ToLong())
       .blocked(cursor.requireBoolean(RecipientTable.BLOCKED))
+      .blockedAtTimestamp(cursor.requireLong(RecipientTable.BLOCKED_AT))
       .visibility(Recipient.HiddenState.deserialize(cursor.requireInt(RecipientTable.HIDDEN)).toRemote())
-      .profileKey(cursor.requireString(RecipientTable.PROFILE_KEY)?.let { Base64.decode(it) }?.toByteString())
+      .profileKey(cursor.requireString(RecipientTable.PROFILE_KEY)?.let { ProfileKeyUtil.profileKeyOrNull(it)?.serialize()?.toByteString() })
       .profileSharing(cursor.requireBoolean(RecipientTable.PROFILE_SHARING))
       .profileGivenName(cursor.requireString(RecipientTable.PROFILE_GIVEN_NAME))
       .profileFamilyName(cursor.requireString(RecipientTable.PROFILE_FAMILY_NAME))
@@ -83,10 +86,12 @@ class ContactArchiveExporter(private val cursor: Cursor, private val selfId: Lon
       .identityState(cursor.optionalInt(IdentityTable.VERIFIED).map { IdentityTable.VerifiedStatus.forState(it) }.orElse(IdentityTable.VerifiedStatus.DEFAULT).toRemote())
       .note(cursor.requireString(RecipientTable.NOTE) ?: "")
       .nickname(cursor.readNickname())
+      .sharedName(cursor.readSharedName())
       .systemGivenName(cursor.requireString(RecipientTable.SYSTEM_GIVEN_NAME) ?: "")
       .systemFamilyName(cursor.requireString(RecipientTable.SYSTEM_FAMILY_NAME) ?: "")
       .systemNickname(cursor.requireString(RecipientTable.SYSTEM_NICKNAME) ?: "")
       .avatarColor(cursor.requireString(RecipientTable.AVATAR_COLOR)?.let { AvatarColor.deserialize(it) }?.toRemote())
+      .keyTransparencyData(cursor.requireBlob(RecipientTable.KEY_TRANSPARENCY_DATA)?.toByteString())
 
     val registeredState = RecipientTable.RegisteredState.fromId(cursor.requireInt(RecipientTable.REGISTERED))
     if (registeredState == RecipientTable.RegisteredState.REGISTERED) {
@@ -110,12 +115,26 @@ private fun Cursor.readNickname(): Contact.Name? {
   val given = this.requireString(RecipientTable.NICKNAME_GIVEN_NAME)
   val family = this.requireString(RecipientTable.NICKNAME_FAMILY_NAME)
 
-  if (given.isNullOrEmpty()) {
+  if (given.isNullOrEmpty() && family.isNullOrEmpty()) {
     return null
   }
 
   return Contact.Name(
-    given = given,
+    given = given ?: "",
+    family = family ?: ""
+  )
+}
+
+private fun Cursor.readSharedName(): Contact.Name? {
+  val given = this.requireString(RecipientTable.SHARED_GIVEN_NAME)
+  val family = this.requireString(RecipientTable.SHARED_FAMILY_NAME)
+
+  if (given.isNullOrEmpty() && family.isNullOrEmpty()) {
+    return null
+  }
+
+  return Contact.Name(
+    given = given ?: "",
     family = family ?: ""
   )
 }

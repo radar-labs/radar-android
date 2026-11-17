@@ -19,11 +19,14 @@ package org.thoughtcrime.securesms;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.DimensionUnit;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.components.ContactFilterView;
@@ -31,10 +34,9 @@ import org.thoughtcrime.securesms.contacts.ContactSelectionDisplayMode;
 import org.thoughtcrime.securesms.contacts.paged.ChatType;
 import org.thoughtcrime.securesms.contacts.selection.ContactSelectionArguments;
 import org.thoughtcrime.securesms.contacts.sync.ContactDiscovery;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
-import org.thoughtcrime.securesms.util.ServiceUtil;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -49,8 +51,7 @@ import java.util.function.Consumer;
  */
 public abstract class ContactSelectionActivity extends PassphraseRequiredActivity
                                                implements SwipeRefreshLayout.OnRefreshListener,
-                                                          ContactSelectionListFragment.OnContactSelectedListener,
-                                                          ContactSelectionListFragment.ScrollCallback
+                                                          ContactSelectionListFragment.OnContactSelectedListener
 {
   private static final String TAG = Log.tag(ContactSelectionActivity.class);
 
@@ -112,11 +113,16 @@ public abstract class ContactSelectionActivity extends PassphraseRequiredActivit
     getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     getSupportActionBar().setIcon(null);
     getSupportActionBar().setLogo(null);
+
+    toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    SystemWindowInsetsSetter.attach(toolbar, this, WindowInsetsCompat.Type.statusBars());
   }
 
   private void initializeResources() {
     contactsFragment = (ContactSelectionListFragment) getSupportFragmentManager().findFragmentById(R.id.contact_selection_list_fragment);
     contactsFragment.setOnRefreshListener(this);
+
+    SystemWindowInsetsSetter.attach(contactsFragment.requireView(), this, WindowInsetsCompat.Type.navigationBars());
   }
 
   private void initializeSearch() {
@@ -135,17 +141,6 @@ public abstract class ContactSelectionActivity extends PassphraseRequiredActivit
 
   @Override
   public void onContactDeselected(@NonNull Optional<RecipientId> recipientId, String number, @NonNull Optional<ChatType> chatType) {}
-
-  @Override
-  public void onBeginScroll() {
-    hideKeyboard();
-  }
-
-  private void hideKeyboard() {
-    ServiceUtil.getInputMethodManager(this)
-               .hideSoftInputFromWindow(toolbar.getWindowToken(), 0);
-    toolbar.clearFocus();
-  }
 
   private static class RefreshDirectoryTask extends AsyncTask<Context, Void, Void> {
 

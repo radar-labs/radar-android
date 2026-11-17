@@ -6,12 +6,17 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.FlakyTest
 import androidx.test.platform.app.InstrumentationRegistry
 import assertk.assertThat
+import assertk.assertions.containsExactly
 import assertk.assertions.hasSize
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
+import assertk.assertions.isFalse
 import assertk.assertions.isNotEmpty
 import assertk.assertions.isNotEqualTo
+import assertk.assertions.isNotNull
+import assertk.assertions.isNull
 import assertk.assertions.isTrue
+import okio.ByteString.Companion.toByteString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
@@ -19,19 +24,25 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.signal.core.database.update
+import org.signal.core.models.backup.MediaName
+import org.signal.core.models.database.AttachmentId
+import org.signal.core.models.media.SentMediaQuality
+import org.signal.core.models.media.TransformProperties
 import org.signal.core.util.Base64
 import org.signal.core.util.Base64.decodeBase64OrThrow
 import org.signal.core.util.copyTo
 import org.signal.core.util.stream.NullOutputStream
 import org.thoughtcrime.securesms.attachments.ArchivedAttachment
 import org.thoughtcrime.securesms.attachments.Attachment
-import org.thoughtcrime.securesms.attachments.AttachmentId
 import org.thoughtcrime.securesms.attachments.PointerAttachment
 import org.thoughtcrime.securesms.attachments.UriAttachment
+import org.thoughtcrime.securesms.backup.v2.ArchivedMediaObject
+import org.thoughtcrime.securesms.database.model.databaseprotos.AudioWaveFormData
+import org.thoughtcrime.securesms.dependencies.AppDependencies
+import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.mms.IncomingMessage
 import org.thoughtcrime.securesms.mms.MediaStream
-import org.thoughtcrime.securesms.mms.SentMediaQuality
-import org.thoughtcrime.securesms.providers.BlobProvider
 import org.thoughtcrime.securesms.testing.SignalActivityRule
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.whispersystems.signalservice.api.crypto.AttachmentCipherOutputStream
@@ -53,6 +64,10 @@ import kotlin.time.Duration.Companion.seconds
 @RunWith(AndroidJUnit4::class)
 class AttachmentTableTest {
 
+  companion object {
+    private const val TEST_PAGE_SIZE = 3
+  }
+
   @get:Rule
   val harness = SignalActivityRule(othersCount = 10)
 
@@ -63,7 +78,7 @@ class AttachmentTableTest {
 
   @Test
   fun givenABlob_whenIInsert2AttachmentsForPreUpload_thenIExpectDistinctIdsButSameFileName() {
-    val blob = BlobProvider.getInstance().forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
+    val blob = AppDependencies.blobs.forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
     val highQualityProperties = createHighQualityTransformProperties()
     val highQualityImage = createAttachment(1, blob, highQualityProperties)
     val attachment = SignalDatabase.attachments.insertAttachmentForPreUpload(highQualityImage)
@@ -76,10 +91,10 @@ class AttachmentTableTest {
   @FlakyTest
   @Test
   fun givenABlobAndDifferentTransformQuality_whenIInsert2AttachmentsForPreUpload_thenIExpectDifferentFileInfos() {
-    val blob = BlobProvider.getInstance().forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
+    val blob = AppDependencies.blobs.forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
     val highQualityProperties = createHighQualityTransformProperties()
     val highQualityImage = createAttachment(1, blob, highQualityProperties)
-    val lowQualityImage = createAttachment(1, blob, AttachmentTable.TransformProperties.empty())
+    val lowQualityImage = createAttachment(1, blob, TransformProperties.empty())
     val attachment = SignalDatabase.attachments.insertAttachmentForPreUpload(highQualityImage)
     val attachment2 = SignalDatabase.attachments.insertAttachmentForPreUpload(lowQualityImage)
 
@@ -103,7 +118,7 @@ class AttachmentTableTest {
   @Ignore("test is flaky")
   @Test
   fun givenIdenticalAttachmentsInsertedForPreUpload_whenIUpdateAttachmentDataAndSpecifyOnlyModifyThisAttachment_thenIExpectDifferentFileInfos() {
-    val blob = BlobProvider.getInstance().forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
+    val blob = AppDependencies.blobs.forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
     val highQualityProperties = createHighQualityTransformProperties()
     val highQualityImage = createAttachment(1, blob, highQualityProperties)
     val attachment = SignalDatabase.attachments.insertAttachmentForPreUpload(highQualityImage)
@@ -139,15 +154,15 @@ class AttachmentTableTest {
     val uncompressData = byteArrayOf(1, 2, 3, 4, 5)
     val compressedData = byteArrayOf(1, 2, 3)
 
-    val blobUncompressed = BlobProvider.getInstance().forData(uncompressData).createForSingleSessionInMemory()
+    val blobUncompressed = AppDependencies.blobs.forData(uncompressData).createForSingleSessionInMemory()
 
-    val previousAttachment = createAttachment(1, BlobProvider.getInstance().forData(compressedData).createForSingleSessionInMemory(), AttachmentTable.TransformProperties.empty())
+    val previousAttachment = createAttachment(1, AppDependencies.blobs.forData(compressedData).createForSingleSessionInMemory(), TransformProperties.empty())
     val previousDatabaseAttachmentId: AttachmentId = SignalDatabase.attachments.insertAttachmentsForMessage(1, listOf(previousAttachment), emptyList()).values.first()
 
-    val standardQualityPreUpload = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.empty())
+    val standardQualityPreUpload = createAttachment(1, blobUncompressed, TransformProperties.empty())
     val standardDatabaseAttachment = SignalDatabase.attachments.insertAttachmentForPreUpload(standardQualityPreUpload)
 
-    val highQualityPreUpload = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.forSentMediaQuality(Optional.empty(), SentMediaQuality.HIGH))
+    val highQualityPreUpload = createAttachment(1, blobUncompressed, transformPropertiesForSentMediaQuality(Optional.empty(), SentMediaQuality.HIGH))
     val highDatabaseAttachment = SignalDatabase.attachments.insertAttachmentForPreUpload(highQualityPreUpload)
 
     // WHEN
@@ -174,16 +189,16 @@ class AttachmentTableTest {
   fun doNotDedupedFileIfUsedByAnotherAttachmentWithADifferentTransformProperties() {
     // GIVEN
     val uncompressData = byteArrayOf(1, 2, 3, 4, 5)
-    val blobUncompressed = BlobProvider.getInstance().forData(uncompressData).createForSingleSessionInMemory()
+    val blobUncompressed = AppDependencies.blobs.forData(uncompressData).createForSingleSessionInMemory()
 
-    val standardQualityPreUpload = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.empty())
+    val standardQualityPreUpload = createAttachment(1, blobUncompressed, TransformProperties.empty())
     val standardDatabaseAttachment = SignalDatabase.attachments.insertAttachmentForPreUpload(standardQualityPreUpload)
 
     // WHEN
-    val highQualityPreUpload = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.forSentMediaQuality(Optional.empty(), SentMediaQuality.HIGH))
+    val highQualityPreUpload = createAttachment(1, blobUncompressed, transformPropertiesForSentMediaQuality(Optional.empty(), SentMediaQuality.HIGH))
     val highDatabaseAttachment = SignalDatabase.attachments.insertAttachmentForPreUpload(highQualityPreUpload)
 
-    val secondHighQualityPreUpload = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.forSentMediaQuality(Optional.empty(), SentMediaQuality.HIGH))
+    val secondHighQualityPreUpload = createAttachment(1, blobUncompressed, transformPropertiesForSentMediaQuality(Optional.empty(), SentMediaQuality.HIGH))
     val secondHighDatabaseAttachment = SignalDatabase.attachments.insertAttachmentForPreUpload(secondHighQualityPreUpload)
 
     // THEN
@@ -198,21 +213,94 @@ class AttachmentTableTest {
   }
 
   @Test
+  fun finalizeAttachmentAfterUpload_preservesAudioWaveForm() {
+    val blob = AppDependencies.blobs.forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
+    val attachment = createAttachment(1, blob, TransformProperties.empty(), contentType = MediaUtil.AUDIO_AAC)
+    val attachmentId = SignalDatabase.attachments.insertAttachmentsForMessage(-1L, listOf(attachment), emptyList()).values.first()
+
+    SignalDatabase.attachments.writeAudioHash(attachmentId, AudioWaveFormData(durationUs = 5_000_000, waveForm = byteArrayOf(1, 2, 3).toByteString()))
+
+    SignalDatabase.attachments.finalizeAttachmentAfterUpload(attachmentId, AttachmentTableTestUtil.createUploadResult(attachmentId))
+
+    val audioHash = SignalDatabase.attachments.getAttachment(attachmentId)!!.audioHash
+    assertThat(audioHash).isNotNull()
+    assertThat(audioHash!!.waveFormBytes!!.toList()).isEqualTo(listOf<Byte>(1, 2, 3))
+  }
+
+  @Test
+  fun finalizeAttachmentAfterUpload_writesBlurHashWhenPresent() {
+    val blob = AppDependencies.blobs.forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
+    val attachment = createAttachment(1, blob, TransformProperties.empty())
+    val attachmentId = SignalDatabase.attachments.insertAttachmentsForMessage(-1L, listOf(attachment), emptyList()).values.first()
+
+    SignalDatabase.attachments.finalizeAttachmentAfterUpload(attachmentId, AttachmentTableTestUtil.createUploadResult(attachmentId, blurHash = "LEHV6nWB2yk8pyo0adR*"))
+
+    assertThat(SignalDatabase.attachments.getAttachment(attachmentId)!!.blurHash!!.hash).isEqualTo("LEHV6nWB2yk8pyo0adR*")
+  }
+
+  @Test
   fun resetArchiveTransferStateByPlaintextHashAndRemoteKey_singleMatch() {
     // Given an attachment with some plaintextHash+remoteKey
-    val blob = BlobProvider.getInstance().forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
-    val attachment = createAttachment(1, blob, AttachmentTable.TransformProperties.empty())
+    val blob = AppDependencies.blobs.forData(byteArrayOf(1, 2, 3, 4, 5)).createForSingleSessionInMemory()
+    val attachment = createAttachment(1, blob, TransformProperties.empty())
     val attachmentId = SignalDatabase.attachments.insertAttachmentsForMessage(-1L, listOf(attachment), emptyList()).values.first()
     SignalDatabase.attachments.finalizeAttachmentAfterUpload(attachmentId, AttachmentTableTestUtil.createUploadResult(attachmentId))
     SignalDatabase.attachments.setArchiveTransferState(attachmentId, AttachmentTable.ArchiveTransferState.FINISHED)
 
     // Reset the transfer state by plaintextHash+remoteKey
-    val plaintextHash = SignalDatabase.attachments.getAttachment(attachmentId)!!.dataHash!!.decodeBase64OrThrow()
-    val remoteKey = SignalDatabase.attachments.getAttachment(attachmentId)!!.remoteKey!!.decodeBase64OrThrow()
-    SignalDatabase.attachments.resetArchiveTransferStateByPlaintextHashAndRemoteKeyIfNecessary(plaintextHash, remoteKey)
+    val inserted = SignalDatabase.attachments.getAttachment(attachmentId)!!
+    SignalDatabase.attachments.resetArchiveTransferStateByPlaintextHashAndRemoteKeyIfNecessary(
+      listOf(AttachmentTable.MediaNameParts(plaintextHash = inserted.dataHash!!, remoteKey = inserted.remoteKey!!))
+    )
 
     // Verify it's been reset
     assertThat(SignalDatabase.attachments.getAttachment(attachmentId)!!.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+  }
+
+  @Test
+  fun resetArchiveTransferStateByPlaintextHashAndRemoteKey_batchedMatch() {
+    // Given two archive-finished attachments that still have their local data
+    val attachmentIds = listOf(byteArrayOf(1, 2, 3, 4, 5), byteArrayOf(6, 7, 8, 9, 10)).mapIndexed { index, data ->
+      val blob = AppDependencies.blobs.forData(data).createForSingleSessionInMemory()
+      val attachment = createAttachment(index + 1L, blob, TransformProperties.empty())
+      val attachmentId = SignalDatabase.attachments.insertAttachmentsForMessage(-1L, listOf(attachment), emptyList()).values.first()
+      SignalDatabase.attachments.finalizeAttachmentAfterUpload(attachmentId, AttachmentTableTestUtil.createUploadResult(attachmentId))
+      SignalDatabase.attachments.setArchiveTransferState(attachmentId, AttachmentTable.ArchiveTransferState.FINISHED)
+      attachmentId
+    }
+
+    val mediaNames = attachmentIds.map { attachmentId ->
+      val attachment = SignalDatabase.attachments.getAttachment(attachmentId)!!
+      AttachmentTable.MediaNameParts(plaintextHash = attachment.dataHash!!, remoteKey = attachment.remoteKey!!)
+    }
+
+    val results = SignalDatabase.attachments.resetArchiveTransferStateByPlaintextHashAndRemoteKeyIfNecessary(mediaNames)
+
+    // Both are reported as reset, and both actually are
+    assertThat(results).containsExactly(AttachmentTable.ArchiveTransferStateResetResult.RESET, AttachmentTable.ArchiveTransferStateResetResult.RESET)
+    attachmentIds.forEach { attachmentId ->
+      assertThat(SignalDatabase.attachments.getAttachment(attachmentId)!!.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+    }
+  }
+
+  @Test
+  fun resetArchiveTransferStateForLocalBackupMedia_onlyResetsLocalBackupMedia() {
+    // Given one archive-finished attachment restored from a local backup, and one that wasn't
+    val localBackupMessageId = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = createArchivedAttachment(localBackupKey = Random.nextBytes(32)))).map { it.messageId }.get()
+    val localBackupAttachmentId = SignalDatabase.attachments.getAttachmentsForMessage(localBackupMessageId).first().attachmentId
+
+    val nonLocalBackupMessageId = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 1.days, attachment = createArchivedAttachment())).map { it.messageId }.get()
+    val nonLocalBackupAttachmentId = SignalDatabase.attachments.getAttachmentsForMessage(nonLocalBackupMessageId).first().attachmentId
+
+    SignalDatabase.attachments.setArchiveTransferState(localBackupAttachmentId, AttachmentTable.ArchiveTransferState.FINISHED)
+    SignalDatabase.attachments.setArchiveTransferState(nonLocalBackupAttachmentId, AttachmentTable.ArchiveTransferState.FINISHED)
+
+    val resetCount = SignalDatabase.attachments.resetArchiveTransferStateForLocalBackupMedia()
+
+    // Only the local-backup attachment is reset
+    assertThat(resetCount).isEqualTo(1)
+    assertThat(SignalDatabase.attachments.getAttachment(localBackupAttachmentId)!!.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+    assertThat(SignalDatabase.attachments.getAttachment(nonLocalBackupAttachmentId)!!.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.FINISHED)
   }
 
   @Test
@@ -255,8 +343,8 @@ class AttachmentTableTest {
   fun givenAnAttachmentWithAMessageThatExpiresIn5Minutes_whenIGetAttachmentsThatNeedArchiveUpload_thenIDoNotExpectThatAttachment() {
     // GIVEN
     val uncompressData = byteArrayOf(1, 2, 3, 4, 5)
-    val blobUncompressed = BlobProvider.getInstance().forData(uncompressData).createForSingleSessionInMemory()
-    val attachment = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.empty())
+    val blobUncompressed = AppDependencies.blobs.forData(uncompressData).createForSingleSessionInMemory()
+    val attachment = createAttachment(1, blobUncompressed, TransformProperties.empty())
     val message = createIncomingMessage(serverTime = 0.days, attachment = attachment, expiresIn = 5.minutes)
     val messageId = SignalDatabase.messages.insertMessageInbox(message).map { it.messageId }.get()
     SignalDatabase.attachments.setArchiveTransferState(AttachmentId(1L), AttachmentTable.ArchiveTransferState.NONE)
@@ -274,8 +362,8 @@ class AttachmentTableTest {
   fun givenAnAttachmentWithAMessageThatExpiresIn5Days_whenIGetAttachmentsThatNeedArchiveUpload_thenIDoExpectThatAttachment() {
     // GIVEN
     val uncompressData = byteArrayOf(1, 2, 3, 4, 5)
-    val blobUncompressed = BlobProvider.getInstance().forData(uncompressData).createForSingleSessionInMemory()
-    val attachment = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.empty())
+    val blobUncompressed = AppDependencies.blobs.forData(uncompressData).createForSingleSessionInMemory()
+    val attachment = createAttachment(1, blobUncompressed, TransformProperties.empty())
     val message = createIncomingMessage(serverTime = 0.days, attachment = attachment, expiresIn = 5.days)
     val messageId = SignalDatabase.messages.insertMessageInbox(message).map { it.messageId }.get()
     SignalDatabase.attachments.setArchiveTransferState(AttachmentId(1L), AttachmentTable.ArchiveTransferState.NONE)
@@ -293,8 +381,8 @@ class AttachmentTableTest {
   fun givenAnAttachmentWithAMessageWithExpirationStartedThatExpiresIn5Days_whenIGetAttachmentsThatNeedArchiveUpload_thenIDoExpectThatAttachment() {
     // GIVEN
     val uncompressData = byteArrayOf(1, 2, 3, 4, 5)
-    val blobUncompressed = BlobProvider.getInstance().forData(uncompressData).createForSingleSessionInMemory()
-    val attachment = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.empty())
+    val blobUncompressed = AppDependencies.blobs.forData(uncompressData).createForSingleSessionInMemory()
+    val attachment = createAttachment(1, blobUncompressed, TransformProperties.empty())
     val message = createIncomingMessage(serverTime = 0.days, attachment = attachment, expiresIn = 5.days)
     val messageId = SignalDatabase.messages.insertMessageInbox(message).map { it.messageId }.get()
     SignalDatabase.messages.markExpireStarted(messageId)
@@ -313,8 +401,8 @@ class AttachmentTableTest {
   fun givenAnAttachmentWithALongTextAttachment_whenIGetAttachmentsThatNeedArchiveUpload_thenIDoNotExpectThatAttachment() {
     // GIVEN
     val uncompressData = byteArrayOf(1, 2, 3, 4, 5)
-    val blobUncompressed = BlobProvider.getInstance().forData(uncompressData).createForSingleSessionInMemory()
-    val attachment = createAttachment(1, blobUncompressed, AttachmentTable.TransformProperties.empty(), contentType = MediaUtil.LONG_TEXT)
+    val blobUncompressed = AppDependencies.blobs.forData(uncompressData).createForSingleSessionInMemory()
+    val attachment = createAttachment(1, blobUncompressed, TransformProperties.empty(), contentType = MediaUtil.LONG_TEXT)
     val message = createIncomingMessage(serverTime = 0.days, attachment = attachment)
     val messageId = SignalDatabase.messages.insertMessageInbox(message).map { it.messageId }.get()
     SignalDatabase.attachments.setArchiveTransferState(AttachmentId(1L), AttachmentTable.ArchiveTransferState.NONE)
@@ -414,6 +502,422 @@ class AttachmentTableTest {
     assertThat(dbAttachment2.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.FINISHED)
   }
 
+  @Test
+  fun givenLocalBackupRestore_whenIFinalizeAttachment_thenIExpectArchiveStateNoneSoItGetsUploaded() {
+    val data = byteArrayOf(1, 2, 3, 4, 5)
+    val attachment = createAttachmentPointer("remote-key-1".toByteArray(), data.size)
+
+    val messageResult = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = attachment)).get()
+    val attachmentId = messageResult.insertedAttachments!![attachment]!!
+    SignalDatabase.attachments.setTransferState(messageResult.messageId, attachmentId, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+
+    // Data is restored from a local backup file, not the archive CDN
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(messageResult.messageId, attachmentId, ByteArrayInputStream(data), archiveRestore = true, restoredFromArchiveCdn = false)
+
+    val result = SignalDatabase.attachments.getAttachment(attachmentId)!!
+    assertThat(result.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+    assertThat(result.archiveCdn).isNull()
+  }
+
+  @Test
+  fun givenPermanentlyFailedThumbnail_whenIFinalizeAttachment_thenIExpectThumbnailStateNoneSoItCanBeArchivedAgain() {
+    val data = byteArrayOf(1, 2, 3, 4, 5)
+    val attachment = createAttachmentPointer("remote-key-1".toByteArray(), data.size)
+
+    val messageResult = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = attachment)).get()
+    val attachmentId = messageResult.insertedAttachments!![attachment]!!
+    SignalDatabase.attachments.setTransferState(messageResult.messageId, attachmentId, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+
+    setDataHashEnd(attachmentId, "kMDoNIQjPGiuKzZHUCcLBiIF5wsvE7dqLKvvKG1JLmc=")
+    SignalDatabase.attachments.setArchiveThumbnailTransferState(attachmentId, AttachmentTable.ArchiveTransferState.PERMANENT_FAILURE)
+
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(messageResult.messageId, attachmentId, ByteArrayInputStream(data), archiveRestore = true, restoredFromArchiveCdn = true)
+
+    // Local bytes are back, so the thumbnail is eligible for archiving again
+    assertThat(SignalDatabase.attachments.getArchiveThumbnailTransferState(attachmentId)).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+  }
+
+  @Test
+  fun givenPermanentlyFailedThumbnail_whenIFinalizeAnOrdinaryDownload_thenIExpectTheMarkToSurvive() {
+    val data = byteArrayOf(1, 2, 3, 4, 5)
+    val attachment = createAttachmentPointer("remote-key-1".toByteArray(), data.size)
+
+    val messageResult = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = attachment)).get()
+    val attachmentId = messageResult.insertedAttachments!![attachment]!!
+    SignalDatabase.attachments.setTransferState(messageResult.messageId, attachmentId, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+    SignalDatabase.attachments.setArchiveThumbnailTransferState(attachmentId, AttachmentTable.ArchiveTransferState.PERMANENT_FAILURE)
+
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(messageResult.messageId, attachmentId, ByteArrayInputStream(data))
+
+    assertThat(SignalDatabase.attachments.getArchiveThumbnailTransferState(attachmentId)).isEqualTo(AttachmentTable.ArchiveTransferState.PERMANENT_FAILURE)
+  }
+
+  @Test
+  fun givenFinishedThumbnail_whenIFinalizeAttachment_thenIExpectThumbnailStateUntouched() {
+    val data = byteArrayOf(1, 2, 3, 4, 5)
+    val attachment = createAttachmentPointer("remote-key-1".toByteArray(), data.size)
+
+    val messageResult = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = attachment)).get()
+    val attachmentId = messageResult.insertedAttachments!![attachment]!!
+    SignalDatabase.attachments.setTransferState(messageResult.messageId, attachmentId, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+    SignalDatabase.attachments.setArchiveThumbnailTransferState(attachmentId, AttachmentTable.ArchiveTransferState.FINISHED)
+
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(messageResult.messageId, attachmentId, ByteArrayInputStream(data), archiveRestore = true, restoredFromArchiveCdn = true)
+
+    // Only PERMANENT_FAILURE is lifted, an already-archived thumbnail keeps its state
+    assertThat(SignalDatabase.attachments.getArchiveThumbnailTransferState(attachmentId)).isEqualTo(AttachmentTable.ArchiveTransferState.FINISHED)
+  }
+
+  @Test
+  fun givenArchiveCdnRestore_whenIFinalizeAttachment_thenIExpectArchiveStateFinished() {
+    val data = byteArrayOf(1, 2, 3, 4, 5)
+    val attachment = createAttachmentPointer("remote-key-1".toByteArray(), data.size)
+
+    val messageResult = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = attachment)).get()
+    val attachmentId = messageResult.insertedAttachments!![attachment]!!
+    SignalDatabase.attachments.setTransferState(messageResult.messageId, attachmentId, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+
+    // Data is restored directly from the archive CDN
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(messageResult.messageId, attachmentId, ByteArrayInputStream(data), archiveRestore = true, restoredFromArchiveCdn = true)
+
+    val result = SignalDatabase.attachments.getAttachment(attachmentId)!!
+    assertThat(result.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.FINISHED)
+  }
+
+  @Test
+  fun givenAttachmentsWithMatchingMediaId_whenISetArchiveFinishedForMatchingMediaObjects_thenIExpectThoseAttachmentsToBeMarkedFinished() {
+    // GIVEN
+    val data1 = byteArrayOf(1, 2, 3, 4, 5)
+    val data2 = byteArrayOf(6, 7, 8, 9, 10)
+    val data3 = byteArrayOf(11, 12, 13, 14, 15)
+
+    val attachment1 = createAttachmentPointer("remote-key-1".toByteArray(), data1.size)
+    val attachment2 = createAttachmentPointer("remote-key-2".toByteArray(), data2.size)
+    val attachment3 = createAttachmentPointer("remote-key-3".toByteArray(), data3.size)
+
+    // Insert messages with attachments
+    val message1Result = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = attachment1)).get()
+    val attachment1Id = message1Result.insertedAttachments!![attachment1]!!
+    SignalDatabase.attachments.setTransferState(message1Result.messageId, attachment1Id, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(message1Result.messageId, attachment1Id, ByteArrayInputStream(data1))
+
+    val message2Result = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 1.days, attachment = attachment2)).get()
+    val attachment2Id = message2Result.insertedAttachments!![attachment2]!!
+    SignalDatabase.attachments.setTransferState(message2Result.messageId, attachment2Id, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(message2Result.messageId, attachment2Id, ByteArrayInputStream(data2))
+
+    val message3Result = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 2.days, attachment = attachment3)).get()
+    val attachment3Id = message3Result.insertedAttachments!![attachment3]!!
+    SignalDatabase.attachments.setTransferState(message3Result.messageId, attachment3Id, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(message3Result.messageId, attachment3Id, ByteArrayInputStream(data3))
+
+    // Ensure attachments are in NONE state
+    assertThat(SignalDatabase.attachments.getAttachment(attachment1Id)!!.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+    assertThat(SignalDatabase.attachments.getAttachment(attachment2Id)!!.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+    assertThat(SignalDatabase.attachments.getAttachment(attachment3Id)!!.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+
+    // Build media objects only for attachments 1 and 2 (not 3)
+    val dbAttachment1 = SignalDatabase.attachments.getAttachment(attachment1Id)!!
+    val dbAttachment2 = SignalDatabase.attachments.getAttachment(attachment2Id)!!
+
+    val mediaId1 = MediaName.fromPlaintextHashAndRemoteKey(
+      dbAttachment1.dataHash!!.decodeBase64OrThrow(),
+      dbAttachment1.remoteKey!!.decodeBase64OrThrow()
+    ).toMediaId(SignalStore.backup.mediaRootBackupKey).encode()
+
+    val mediaId2 = MediaName.fromPlaintextHashAndRemoteKey(
+      dbAttachment2.dataHash!!.decodeBase64OrThrow(),
+      dbAttachment2.remoteKey!!.decodeBase64OrThrow()
+    ).toMediaId(SignalStore.backup.mediaRootBackupKey).encode()
+
+    val archivedMediaObjects = setOf(
+      ArchivedMediaObject(mediaId = mediaId1, cdn = 5),
+      ArchivedMediaObject(mediaId = mediaId2, cdn = 6)
+    )
+
+    // WHEN
+    val updatedCount = SignalDatabase.attachments.setArchiveFinishedForMatchingMediaObjects(archivedMediaObjects)
+
+    // THEN
+    assertThat(updatedCount).isEqualTo(2)
+
+    val resultAttachment1 = SignalDatabase.attachments.getAttachment(attachment1Id)!!
+    val resultAttachment2 = SignalDatabase.attachments.getAttachment(attachment2Id)!!
+    val resultAttachment3 = SignalDatabase.attachments.getAttachment(attachment3Id)!!
+
+    // Attachments 1 and 2 should be FINISHED with their respective CDNs
+    assertThat(resultAttachment1.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.FINISHED)
+    assertThat(resultAttachment1.archiveCdn).isEqualTo(5)
+
+    assertThat(resultAttachment2.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.FINISHED)
+    assertThat(resultAttachment2.archiveCdn).isEqualTo(6)
+
+    // Attachment 3 should still be NONE (not in the set)
+    assertThat(resultAttachment3.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+  }
+
+  @Test
+  fun givenEmptyMediaObjectsSet_whenISetArchiveFinishedForMatchingMediaObjects_thenIExpectZeroUpdates() {
+    // GIVEN
+    val data = byteArrayOf(1, 2, 3, 4, 5)
+    val attachment = createAttachmentPointer("remote-key-1".toByteArray(), data.size)
+
+    val messageResult = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = attachment)).get()
+    val attachmentId = messageResult.insertedAttachments!![attachment]!!
+    SignalDatabase.attachments.setTransferState(messageResult.messageId, attachmentId, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(messageResult.messageId, attachmentId, ByteArrayInputStream(data))
+
+    // WHEN
+    val updatedCount = SignalDatabase.attachments.setArchiveFinishedForMatchingMediaObjects(emptySet())
+
+    // THEN
+    assertThat(updatedCount).isEqualTo(0)
+    assertThat(SignalDatabase.attachments.getAttachment(attachmentId)!!.archiveTransferState).isEqualTo(AttachmentTable.ArchiveTransferState.NONE)
+  }
+
+  @Test
+  fun givenAlreadyFinishedAttachment_whenISetArchiveFinishedForMatchingMediaObjects_thenIExpectNoUpdate() {
+    // GIVEN
+    val data = byteArrayOf(1, 2, 3, 4, 5)
+    val attachment = createAttachmentPointer("remote-key-1".toByteArray(), data.size)
+
+    val messageResult = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = 0.days, attachment = attachment)).get()
+    val attachmentId = messageResult.insertedAttachments!![attachment]!!
+    SignalDatabase.attachments.setTransferState(messageResult.messageId, attachmentId, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(messageResult.messageId, attachmentId, ByteArrayInputStream(data))
+
+    // Mark as already FINISHED
+    SignalDatabase.attachments.setArchiveTransferState(attachmentId, AttachmentTable.ArchiveTransferState.FINISHED)
+
+    val dbAttachment = SignalDatabase.attachments.getAttachment(attachmentId)!!
+    val mediaId = MediaName.fromPlaintextHashAndRemoteKey(
+      dbAttachment.dataHash!!.decodeBase64OrThrow(),
+      dbAttachment.remoteKey!!.decodeBase64OrThrow()
+    ).toMediaId(SignalStore.backup.mediaRootBackupKey).encode()
+
+    val archivedMediaObjects = setOf(
+      ArchivedMediaObject(mediaId = mediaId, cdn = 5)
+    )
+
+    // WHEN
+    val updatedCount = SignalDatabase.attachments.setArchiveFinishedForMatchingMediaObjects(archivedMediaObjects)
+
+    // THEN - should not update since already FINISHED
+    assertThat(updatedCount).isEqualTo(0)
+  }
+
+  /**
+   * Offloading deletes the only local copy, so it must be gated on evidence that came from the server. Being in the snapshot is our own bookkeeping. Only
+   * last_seen_on_remote_snapshot_version is the part the CDN told us, so only it can authorize the delete.
+   */
+  @Test
+  fun givenAnOffloadCandidateConfirmedOnTheCdn_whenIOptimize_thenIExpectItOffloaded() {
+    val attachmentId = seedOffloadCandidate()
+    val snapshotVersion = commitSnapshotFor(attachmentId, markSeenOnRemote = true)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = snapshotVersion, minimumAge = 30.days, now = pastTheOffloadWindow())
+
+    assertThat(SignalDatabase.attachments.getAttachment(attachmentId)!!.transferState).isEqualTo(AttachmentTable.TRANSFER_RESTORE_OFFLOADED)
+  }
+
+  @Test
+  fun givenAnOffloadCandidateNeverSeenOnTheCdn_whenIOptimize_thenIExpectItLeftAlone() {
+    val attachmentId = seedOffloadCandidate()
+    val snapshotVersion = commitSnapshotFor(attachmentId, markSeenOnRemote = false)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = snapshotVersion, minimumAge = 30.days, now = pastTheOffloadWindow())
+
+    assertThat(SignalDatabase.attachments.getAttachment(attachmentId)!!.transferState).isEqualTo(AttachmentTable.TRANSFER_PROGRESS_DONE)
+  }
+
+  @Test
+  fun givenNoCompletedReconciliation_whenIOptimize_thenIExpectNothingOffloaded() {
+    val attachmentId = seedOffloadCandidate()
+    commitSnapshotFor(attachmentId, markSeenOnRemote = true)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = -1, minimumAge = 30.days, now = pastTheOffloadWindow())
+
+    assertThat(SignalDatabase.attachments.getAttachment(attachmentId)!!.transferState).isEqualTo(AttachmentTable.TRANSFER_PROGRESS_DONE)
+  }
+
+  /**
+   * Coverage across pages: if only the first page were processed, the overflow would silently never be reclaimed.
+   */
+  @Test
+  fun givenMoreConfirmedCandidatesThanOnePage_whenIOptimize_thenIExpectEveryPageOffloaded() {
+    val attachmentIds = List(TEST_PAGE_SIZE * 3) { seedOffloadCandidate() }
+    val snapshotVersion = commitSnapshotForAll(attachmentIds, markSeenOnRemote = true)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = snapshotVersion, minimumAge = 30.days, now = pastTheOffloadWindow(), pageSize = TEST_PAGE_SIZE)
+
+    assertThat(attachmentIds.count { isOffloaded(it) }).isEqualTo(attachmentIds.size)
+  }
+
+  /**
+   * Termination when nothing is offloadable. Unconfirmed candidates stay eligible forever, so a loop that ran until the candidate query drained would spin here
+   * and this test would hang rather than fail. Only the advancing id cursor ends it.
+   */
+  @Test
+  fun givenMoreUnconfirmedCandidatesThanOnePage_whenIOptimize_thenIExpectItToTerminateAndOffloadNothing() {
+    val attachmentIds = List(TEST_PAGE_SIZE * 3) { seedOffloadCandidate() }
+    val snapshotVersion = commitSnapshotForAll(attachmentIds, markSeenOnRemote = false)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = snapshotVersion, minimumAge = 30.days, now = pastTheOffloadWindow(), pageSize = TEST_PAGE_SIZE)
+
+    assertThat(attachmentIds.count { isOffloaded(it) }).isEqualTo(0)
+  }
+
+  /**
+   * Stickers come back from their pack rather than the archive, so they are never offloaded no matter what the CDN confirms.
+   */
+  @Test
+  fun givenAStickerOffloadCandidate_whenIOptimize_thenIExpectItLeftAlone() {
+    val attachmentId = seedOffloadCandidate()
+    val snapshotVersion = commitSnapshotFor(attachmentId, markSeenOnRemote = true)
+    markAsSticker(attachmentId)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = snapshotVersion, minimumAge = 30.days, now = pastTheOffloadWindow())
+
+    assertThat(isOffloaded(attachmentId)).isFalse()
+  }
+
+  /**
+   * Offloading an image with no thumbnail would leave nothing at all to render in the conversation, so visual media has to keep a local thumbnail to qualify.
+   */
+  @Test
+  fun givenAnImageOffloadCandidateWithNoThumbnail_whenIOptimize_thenIExpectItLeftAlone() {
+    val attachmentId = seedOffloadCandidate(contentType = MediaUtil.IMAGE_JPEG)
+    val snapshotVersion = commitSnapshotFor(attachmentId, markSeenOnRemote = true)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = snapshotVersion, minimumAge = 30.days, now = pastTheOffloadWindow())
+
+    assertThat(isOffloaded(attachmentId)).isFalse()
+  }
+
+  /**
+   * Media the user just pulled back down would otherwise be offloaded again immediately, undoing the restore they asked for.
+   */
+  @Test
+  fun givenARecentlyRestoredOffloadCandidate_whenIOptimize_thenIExpectItLeftAlone() {
+    val attachmentId = seedOffloadCandidate()
+    val snapshotVersion = commitSnapshotFor(attachmentId, markSeenOnRemote = true)
+    val evaluatedAt = pastTheOffloadWindow()
+    markRestoredAt(attachmentId, evaluatedAt)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = snapshotVersion, minimumAge = 30.days, now = evaluatedAt)
+
+    assertThat(isOffloaded(attachmentId)).isFalse()
+  }
+
+  @Test
+  fun givenAnOffloadCandidateOnATooRecentMessage_whenIOptimize_thenIExpectItLeftAlone() {
+    val attachmentId = seedOffloadCandidate()
+    val snapshotVersion = commitSnapshotFor(attachmentId, markSeenOnRemote = true)
+
+    SignalDatabase.attachments.markEligibleAttachmentsAsOptimized(lastCompletedCrawlVersion = snapshotVersion, minimumAge = 30.days, now = System.currentTimeMillis())
+
+    assertThat(isOffloaded(attachmentId)).isFalse()
+  }
+
+  /** Far enough ahead of the seeded message that both the offload age and the 7-day offload-restore window are satisfied. */
+  private fun pastTheOffloadWindow(): Long = System.currentTimeMillis() + 60.days.inWholeMilliseconds
+
+  /** A full locator, because a partial one makes reading the attachment back blow up on the sticker fields. */
+  private fun markAsSticker(attachmentId: AttachmentId) {
+    SignalDatabase.rawDatabase
+      .update(AttachmentTable.TABLE_NAME)
+      .values(
+        AttachmentTable.STICKER_ID to 7,
+        AttachmentTable.STICKER_PACK_ID to "aa1111bbcc2222ddee3333ff44445555",
+        AttachmentTable.STICKER_PACK_KEY to "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwYWI=",
+        AttachmentTable.STICKER_EMOJI to ":)"
+      )
+      .where("${AttachmentTable.ID} = ?", attachmentId.id)
+      .run()
+  }
+
+  private fun markRestoredAt(attachmentId: AttachmentId, restoredAt: Long) {
+    SignalDatabase.rawDatabase
+      .update(AttachmentTable.TABLE_NAME)
+      .values(AttachmentTable.OFFLOAD_RESTORED_AT to restoredAt)
+      .where("${AttachmentTable.ID} = ?", attachmentId.id)
+      .run()
+  }
+
+  private fun setDataHashEnd(attachmentId: AttachmentId, hashEnd: String) {
+    SignalDatabase.rawDatabase
+      .update(AttachmentTable.TABLE_NAME)
+      .values(AttachmentTable.DATA_HASH_END to hashEnd)
+      .where("${AttachmentTable.ID} = ?", attachmentId.id)
+      .run()
+  }
+
+  /** Defaults to a non-media content type, which keeps the candidate eligible without also having to generate a thumbnail file. */
+  private fun seedOffloadCandidate(contentType: String = "application/pdf"): AttachmentId {
+    val data = byteArrayOf(1, 2, 3, 4, 5)
+    val attachment = createAttachmentPointer(Random.nextBytes(32), data.size, contentType = contentType)
+    val messageResult = SignalDatabase.messages.insertMessageInbox(createIncomingMessage(serverTime = System.currentTimeMillis().milliseconds, attachment = attachment)).get()
+    val attachmentId = messageResult.insertedAttachments!![attachment]!!
+
+    SignalDatabase.attachments.setTransferState(messageResult.messageId, attachmentId, AttachmentTable.TRANSFER_PROGRESS_STARTED)
+    SignalDatabase.attachments.finalizeAttachmentAfterDownload(messageResult.messageId, attachmentId, ByteArrayInputStream(data))
+    SignalDatabase.attachments.setArchiveTransferState(attachmentId, AttachmentTable.ArchiveTransferState.FINISHED)
+
+    return attachmentId
+  }
+
+  /**
+   * Commits every entry in a single snapshot version. Calling [commitSnapshotFor] in a loop would not work: each commit bumps the version, leaving all but the
+   * last entry below MAX_VERSION and therefore unconfirmable.
+   */
+  private fun commitSnapshotForAll(attachmentIds: List<AttachmentId>, markSeenOnRemote: Boolean): Long {
+    val mediaIds: MutableList<String> = mutableListOf()
+    val entries: MutableList<BackupMediaSnapshotTable.MediaEntry> = mutableListOf()
+
+    for (attachmentId in attachmentIds) {
+      val attachment = SignalDatabase.attachments.getAttachment(attachmentId)!!
+      val plaintextHash = attachment.dataHash!!.decodeBase64OrThrow()
+      val remoteKey = attachment.remoteKey!!.decodeBase64OrThrow()
+      val mediaId = MediaName.fromPlaintextHashAndRemoteKey(plaintextHash, remoteKey).toMediaId(SignalStore.backup.mediaRootBackupKey).encode()
+
+      mediaIds += mediaId
+      entries += BackupMediaSnapshotTable.MediaEntry(mediaId = mediaId, cdn = 3, plaintextHash = plaintextHash, remoteKey = remoteKey, isThumbnail = false)
+    }
+
+    SignalDatabase.backupMediaSnapshots.writePendingMediaEntries(entries)
+    SignalDatabase.backupMediaSnapshots.commitPendingRows()
+
+    val snapshotVersion = SignalDatabase.backupMediaSnapshots.getCurrentSnapshotVersion()
+    if (markSeenOnRemote) {
+      SignalDatabase.backupMediaSnapshots.markSeenOnRemote(mediaIds, snapshotVersion)
+    }
+
+    return snapshotVersion
+  }
+
+  private fun isOffloaded(attachmentId: AttachmentId): Boolean {
+    return SignalDatabase.attachments.getAttachment(attachmentId)!!.transferState == AttachmentTable.TRANSFER_RESTORE_OFFLOADED
+  }
+
+  private fun commitSnapshotFor(attachmentId: AttachmentId, markSeenOnRemote: Boolean): Long {
+    val attachment = SignalDatabase.attachments.getAttachment(attachmentId)!!
+    val plaintextHash = attachment.dataHash!!.decodeBase64OrThrow()
+    val remoteKey = attachment.remoteKey!!.decodeBase64OrThrow()
+    val mediaId = MediaName.fromPlaintextHashAndRemoteKey(plaintextHash, remoteKey).toMediaId(SignalStore.backup.mediaRootBackupKey).encode()
+
+    SignalDatabase.backupMediaSnapshots.writePendingMediaEntries(
+      listOf(BackupMediaSnapshotTable.MediaEntry(mediaId = mediaId, cdn = 3, plaintextHash = plaintextHash, remoteKey = remoteKey, isThumbnail = false))
+    )
+    SignalDatabase.backupMediaSnapshots.commitPendingRows()
+
+    val snapshotVersion = SignalDatabase.backupMediaSnapshots.getCurrentSnapshotVersion()
+    if (markSeenOnRemote) {
+      SignalDatabase.backupMediaSnapshots.markSeenOnRemote(listOf(mediaId), snapshotVersion)
+    }
+
+    return snapshotVersion
+  }
+
   private fun createIncomingMessage(
     serverTime: Duration,
     attachment: Attachment,
@@ -431,13 +935,13 @@ class AttachmentTableTest {
     )
   }
 
-  private fun createAttachmentPointer(key: ByteArray, size: Int): Attachment {
+  private fun createAttachmentPointer(key: ByteArray, size: Int, contentType: String = MediaUtil.IMAGE_JPEG): Attachment {
     return PointerAttachment.forPointer(
       pointer = Optional.of(
         SignalServiceAttachmentPointer(
           cdnNumber = 3,
           remoteId = SignalServiceAttachmentRemoteId.V4("asdf"),
-          contentType = MediaUtil.IMAGE_JPEG,
+          contentType = contentType,
           key = key,
           size = Optional.of(size),
           preview = Optional.empty(),
@@ -459,7 +963,7 @@ class AttachmentTableTest {
     ).get()
   }
 
-  private fun createArchivedAttachment(): Attachment {
+  private fun createArchivedAttachment(localBackupKey: ByteArray? = null): Attachment {
     return ArchivedAttachment(
       contentType = "image/jpeg",
       size = 1024,
@@ -482,11 +986,12 @@ class AttachmentTableTest {
       quote = false,
       quoteTargetContentType = null,
       uuid = UUID.randomUUID(),
-      fileName = null
+      fileName = null,
+      localBackupKey = localBackupKey
     )
   }
 
-  private fun createAttachment(id: Long, uri: Uri, transformProperties: AttachmentTable.TransformProperties, contentType: String = MediaUtil.IMAGE_JPEG): UriAttachment {
+  private fun createAttachment(id: Long, uri: Uri, transformProperties: TransformProperties, contentType: String = MediaUtil.IMAGE_JPEG): UriAttachment {
     return UriAttachmentBuilder.build(
       id,
       uri = uri,
@@ -495,8 +1000,8 @@ class AttachmentTableTest {
     )
   }
 
-  private fun createHighQualityTransformProperties(): AttachmentTable.TransformProperties {
-    return AttachmentTable.TransformProperties.forSentMediaQuality(Optional.empty(), SentMediaQuality.HIGH)
+  private fun createHighQualityTransformProperties(): TransformProperties {
+    return transformPropertiesForSentMediaQuality(Optional.empty(), SentMediaQuality.HIGH)
   }
 
   private fun createMediaStream(byteArray: ByteArray): MediaStream {

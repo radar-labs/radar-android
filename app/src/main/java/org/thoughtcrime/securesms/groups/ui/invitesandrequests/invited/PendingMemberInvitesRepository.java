@@ -6,17 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
 import androidx.core.util.Consumer;
 
-import com.annimon.stream.Stream;
 
 import org.signal.core.util.concurrent.SignalExecutors;
+import org.signal.core.util.groups.GroupChangeException;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.zkgroup.InvalidInputException;
 import org.signal.libsignal.zkgroup.groups.UuidCiphertext;
-import org.signal.storageservice.protos.groups.local.DecryptedGroup;
-import org.signal.storageservice.protos.groups.local.DecryptedPendingMember;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroup;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedPendingMember;
 import org.thoughtcrime.securesms.database.GroupTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
-import org.thoughtcrime.securesms.groups.GroupChangeException;
+import org.thoughtcrime.securesms.database.model.GroupRecord;
 import org.thoughtcrime.securesms.groups.GroupId;
 import org.thoughtcrime.securesms.groups.GroupManager;
 import org.thoughtcrime.securesms.groups.GroupProtoUtil;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 
 import okio.ByteString;
 
@@ -50,8 +51,15 @@ final class PendingMemberInvitesRepository {
 
   public void getInvitees(@NonNull Consumer<InviteeResult> onInviteesLoaded) {
     executor.execute(() -> {
-      GroupTable                                   groupDatabase      = SignalDatabase.groups();
-      GroupTable.V2GroupProperties                 v2GroupProperties  = groupDatabase.getGroup(groupId).get().requireV2GroupProperties();
+      GroupTable  groupDatabase = SignalDatabase.groups();
+      GroupRecord groupRecord   = groupDatabase.getGroup(groupId).orElse(null);
+
+      if (groupRecord == null || !groupRecord.getHasV2GroupProperties()) {
+        Log.w(TAG, "Missing group, likely deleted.");
+        return;
+      }
+
+      GroupTable.V2GroupProperties                 v2GroupProperties  = groupRecord.requireV2GroupProperties();
       DecryptedGroup                               decryptedGroup     = v2GroupProperties.getDecryptedGroup();
       List<DecryptedPendingMember>                 pendingMembersList = decryptedGroup.pendingMembers;
       List<SinglePendingMemberInvitedByYou>        byMe               = new ArrayList<>(pendingMembersList.size());
@@ -59,8 +67,9 @@ final class PendingMemberInvitesRepository {
       ByteString                                   self               = SignalStore.account().requireAci().toByteString();
       boolean                                      selfIsAdmin        = v2GroupProperties.isAdmin(Recipient.self());
 
-      Stream.of(pendingMembersList)
-            .groupBy(m -> m.addedByAci)
+      pendingMembersList.stream()
+          .collect(Collectors.groupingBy(m -> m.addedByAci))
+          .entrySet()
             .forEach(g ->
               {
                 ByteString                   inviterAci     = g.getKey();

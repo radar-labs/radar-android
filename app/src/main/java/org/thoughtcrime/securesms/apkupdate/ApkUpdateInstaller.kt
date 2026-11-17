@@ -5,11 +5,13 @@
 
 package org.thoughtcrime.securesms.apkupdate
 
+import android.app.DownloadManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.os.Build
+import org.signal.core.util.AppForegroundObserver
 import org.signal.core.util.PendingIntentFlags
 import org.signal.core.util.StreamUtil
 import org.signal.core.util.getDownloadManager
@@ -17,8 +19,6 @@ import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobs.ApkUpdateJob
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.util.AppForegroundObserver
-import org.thoughtcrime.securesms.util.Environment
 import org.thoughtcrime.securesms.util.FileUtils
 import java.io.FileInputStream
 import java.io.IOException
@@ -54,21 +54,43 @@ object ApkUpdateInstaller {
       return
     }
 
-    if (!isMatchingDigest(context, downloadId, digest)) {
-      Log.w(TAG, "DownloadId matches, but digest does not! Bad download or inconsistent state. Failing and clearing state.")
+    if (!isDownloadSuccessful(context, downloadId)) {
+      Log.w(TAG, "DownloadId matches, but the download was not successful. The download may have failed due to a network issue. Clearing state and re-checking for updates.")
       SignalStore.apkUpdate.clearDownloadAttributes()
-      ApkUpdateNotifications.showInstallFailed(context, ApkUpdateNotifications.FailureReason.UNKNOWN)
+      AppDependencies.jobManager.add(ApkUpdateJob())
       return
     }
 
     if (!userInitiated && !shouldAutoUpdate()) {
+      if (!isMatchingDigest(context, downloadId, digest)) {
+        Log.w(TAG, "DownloadId matches, but digest does not! Bad download or inconsistent state. Failing and clearing state.")
+        SignalStore.apkUpdate.clearDownloadAttributes()
+        ApkUpdateNotifications.showInstallFailed(context, ApkUpdateNotifications.FailureReason.UNKNOWN)
+        return
+      }
+
       Log.w(TAG, "Not user-initiated and not eligible for auto-update. Prompting. (API=${Build.VERSION.SDK_INT}, Foreground=${AppForegroundObserver.isForegrounded()}, AutoUpdate=${SignalStore.apkUpdate.autoUpdate})")
       ApkUpdateNotifications.showInstallPrompt(context, downloadId)
       return
     }
 
     try {
-      installApk(context, downloadId, userInitiated)
+      context
+        .getDownloadManager()
+        .openDownloadedFile(downloadId)
+        .use { parcelFileDescriptor ->
+          val stream = FileInputStream(parcelFileDescriptor.fileDescriptor)
+
+          if (!MessageDigest.isEqual(FileUtils.getFileDigest(stream), digest)) {
+            Log.w(TAG, "DownloadId matches, but digest does not! Bad download or inconsistent state. Failing and clearing state.")
+            SignalStore.apkUpdate.clearDownloadAttributes()
+            ApkUpdateNotifications.showInstallFailed(context, ApkUpdateNotifications.FailureReason.UNKNOWN)
+            return
+          }
+
+          stream.channel.position(0)
+          installApk(context, downloadId, stream, userInitiated)
+        }
     } catch (e: IOException) {
       Log.w(TAG, "Hit IOException when trying to install APK!", e)
       SignalStore.apkUpdate.clearDownloadAttributes()
@@ -81,17 +103,13 @@ object ApkUpdateInstaller {
   }
 
   @Throws(IOException::class, SecurityException::class)
-  private fun installApk(context: Context, downloadId: Long, userInitiated: Boolean) {
-    val apkInputStream: InputStream? = getDownloadedApkInputStream(context, downloadId)
-    if (apkInputStream == null) {
-      Log.w(TAG, "Could not open download APK input stream!")
-      return
-    }
-
+  private fun installApk(context: Context, downloadId: Long, apkInputStream: InputStream, userInitiated: Boolean) {
     Log.d(TAG, "Beginning APK install...")
     val packageInstaller: PackageInstaller = context.packageManager.packageInstaller
 
     val sessionParams = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL).apply {
+      // Reject the session if the APK's declared package name doesn't match ours.
+      setAppPackageName(context.packageName)
       // At this point, we always want to set this if possible, since we've already prompted the user with our own notification when necessary.
       // This lets us skip the system-generated notification.
       if (Build.VERSION.SDK_INT >= 31) {
@@ -126,12 +144,32 @@ object ApkUpdateInstaller {
     session.commit(installerPendingIntent.intentSender)
   }
 
-  private fun getDownloadedApkInputStream(context: Context, downloadId: Long): InputStream? {
-    return try {
-      FileInputStream(context.getDownloadManager().openDownloadedFile(downloadId).fileDescriptor)
-    } catch (e: IOException) {
-      Log.w(TAG, e)
-      null
+  private fun isDownloadSuccessful(context: Context, downloadId: Long): Boolean {
+    val query = DownloadManager.Query().setFilterById(downloadId)
+    val cursor = context.getDownloadManager().query(query)
+
+    return cursor.use { cursor ->
+      if (cursor.moveToFirst()) {
+        val status = cursor
+          .getColumnIndex(DownloadManager.COLUMN_STATUS)
+          .takeUnless { it == -1 }
+          ?.let { cursor.getInt(it) } ?: DownloadManager.STATUS_FAILED
+
+        if (status == DownloadManager.STATUS_SUCCESSFUL) {
+          return@use true
+        }
+
+        val reason = cursor
+          .getColumnIndex(DownloadManager.COLUMN_REASON)
+          .takeUnless { it == -1 }
+          ?.let { cursor.getInt(it) }
+
+        Log.w(TAG, "Download not successful. Status: $status, Reason: $reason")
+        false
+      } else {
+        Log.w(TAG, "Download ID $downloadId not found in DownloadManager.")
+        false
+      }
     }
   }
 
@@ -148,7 +186,12 @@ object ApkUpdateInstaller {
   }
 
   private fun shouldAutoUpdate(): Boolean {
-    // TODO Auto-updates temporarily restricted to nightlies. Once we have designs for allowing users to opt-out of auto-updates, we can re-enable this
-    return Environment.IS_NIGHTLY && Build.VERSION.SDK_INT >= 31 && SignalStore.apkUpdate.autoUpdate && !AppForegroundObserver.isForegrounded()
+    // Once we have designs for allowing users to opt-out of auto-updates, we can re-enable this
+    return false
+
+//    val webRtcViewModel = EventBus.getDefault().getStickyEvent(WebRtcViewModel::class.java)
+//    val isCallActive = webRtcViewModel != null && webRtcViewModel.state != WebRtcViewModel.State.IDLE
+//
+//    return Build.VERSION.SDK_INT >= 31 && SignalStore.apkUpdate.autoUpdate && !AppForegroundObserver.isForegrounded() && !isCallActive
   }
 }

@@ -14,6 +14,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,29 +25,32 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
-import io.reactivex.rxjava3.disposables.CompositeDisposable
+import org.signal.appsettings.usernamelinks.QrScanProblemDialog
+import org.signal.appsettings.usernamelinks.UsernameQrScanTab
+import org.signal.camera.CameraScreenEvents
+import org.signal.camera.CameraScreenState
+import org.signal.camera.CameraScreenViewModel
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.ui.compose.Dialogs
-import org.signal.core.util.concurrent.LifecycleDisposable
+import org.signal.core.ui.compose.SignalIcons
+import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.core.ui.permissions.Permissions
 import org.signal.core.util.getParcelableExtraCompat
+import org.signal.core.util.permissions.PermissionCompat
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.SignalTheme
-import org.thoughtcrime.securesms.permissions.PermissionCompat
-import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
-import org.thoughtcrime.securesms.util.DynamicTheme
+import org.signal.mediasend.R as MediaSendR
 
 /**
  * Prompts the user to scan a username QR code. Uses the activity result to communicate the recipient that was found, or null if no valid usernames were scanned.
@@ -59,7 +63,6 @@ class UsernameQrScannerActivity : AppCompatActivity() {
   }
 
   private val viewModel: UsernameQrScannerViewModel by viewModels()
-  private val disposables = LifecycleDisposable()
 
   @SuppressLint("MissingSuperCall")
   override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -67,8 +70,8 @@ class UsernameQrScannerActivity : AppCompatActivity() {
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    enableEdgeToEdge()
     super.onCreate(savedInstanceState)
-    disposables.bindTo(this)
 
     val galleryLauncher = registerForActivityResult(QrImageSelectionActivity.Contract()) { uri ->
       if (uri != null) {
@@ -88,14 +91,22 @@ class UsernameQrScannerActivity : AppCompatActivity() {
       val cameraPermissionState: PermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
       val state by viewModel.state
 
-      SignalTheme(isDarkMode = DynamicTheme.isDarkTheme(LocalContext.current)) {
+      val cameraViewModel: CameraScreenViewModel = viewModel { CameraScreenViewModel() }
+      val cameraState by cameraViewModel.state
+
+      LaunchedEffect(cameraViewModel) {
+        cameraViewModel.qrCodeDetected.collect { url ->
+          viewModel.onQrScanned(url)
+        }
+      }
+
+      SignalTheme {
         Content(
-          lifecycleOwner = this,
-          diposables = disposables.disposables,
           state = state,
+          cameraState = cameraState,
+          cameraEmitter = cameraViewModel::onEvent,
           galleryPermissionsState = galleryPermissionState,
           cameraPermissionState = cameraPermissionState,
-          onQrScanned = { url -> viewModel.onQrScanned(url) },
           onQrResultHandled = {
             finish()
           },
@@ -126,8 +137,8 @@ class UsernameQrScannerActivity : AppCompatActivity() {
     Permissions.with(this)
       .request(Manifest.permission.CAMERA)
       .ifNecessary()
-      .withPermanentDenialDialog(getString(R.string.CameraXFragment_signal_needs_camera_access_scan_qr_code), null, R.string.CameraXFragment_allow_access_camera, R.string.CameraXFragment_to_scan_qr_codes, supportFragmentManager)
-      .onAnyDenied { Toast.makeText(this, R.string.CameraXFragment_signal_needs_camera_access_scan_qr_code, Toast.LENGTH_LONG).show() }
+      .withPermanentDenialDialog(getString(MediaSendR.string.CameraXFragment_signal_needs_camera_access_scan_qr_code), null, MediaSendR.string.CameraXFragment_allow_access_camera, MediaSendR.string.CameraXFragment_to_scan_qr_codes, supportFragmentManager)
+      .onAnyDenied { Toast.makeText(this, MediaSendR.string.CameraXFragment_signal_needs_camera_access_scan_qr_code, Toast.LENGTH_LONG).show() }
       .execute()
   }
 
@@ -145,12 +156,11 @@ class UsernameQrScannerActivity : AppCompatActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Content(
-  lifecycleOwner: LifecycleOwner,
-  diposables: CompositeDisposable,
   state: UsernameQrScannerViewModel.ScannerState,
+  cameraState: CameraScreenState,
+  cameraEmitter: (CameraScreenEvents) -> Unit,
   galleryPermissionsState: MultiplePermissionsState,
   cameraPermissionState: PermissionState,
-  onQrScanned: (String) -> Unit,
   onQrResultHandled: () -> Unit,
   onOpenCameraClicked: () -> Unit,
   onOpenGalleryClicked: () -> Unit,
@@ -166,7 +176,7 @@ fun Content(
             onClick = onBackNavigationPressed
           ) {
             Icon(
-              painter = painterResource(R.drawable.symbol_x_24),
+              painter = SignalIcons.X.painter,
               contentDescription = stringResource(android.R.string.cancel)
             )
           }
@@ -174,18 +184,21 @@ fun Content(
       )
     }
   ) { contentPadding ->
-    UsernameQrScanScreen(
-      lifecycleOwner = lifecycleOwner,
-      disposables = diposables,
-      qrScanResult = state.qrScanResult,
-      onQrCodeScanned = onQrScanned,
-      onQrResultHandled = onQrResultHandled,
-      onOpenCameraClicked = onOpenCameraClicked,
-      onOpenGalleryClicked = onOpenGalleryClicked,
-      onRecipientFound = onRecipientFound,
+    UsernameQrScanTab(
       hasCameraPermission = cameraPermissionState.status.isGranted,
+      onAllowCameraClicked = onOpenCameraClicked,
+      onOpenGalleryClicked = onOpenGalleryClicked,
+      cameraPreview = { modifier ->
+        UsernameQrCameraPreview(cameraState = cameraState, cameraEmitter = cameraEmitter, modifier = modifier)
+      },
       modifier = Modifier.padding(contentPadding)
     )
+
+    when (val result = state.qrScanResult) {
+      null -> Unit
+      is QrScanResult.Success -> LaunchedEffect(result) { onRecipientFound(result.recipient) }
+      else -> result.toProblem()?.let { problem -> QrScanProblemDialog(problem = problem, onDismiss = onQrResultHandled) }
+    }
 
     if (state.indeterminateProgress) {
       Dialogs.IndeterminateProgressDialog()

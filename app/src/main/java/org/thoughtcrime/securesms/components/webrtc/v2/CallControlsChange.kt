@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.NightPreview
 import org.signal.core.ui.compose.Previews
 import org.thoughtcrime.securesms.R
+import org.signal.core.ui.R as CoreUiR
 
 /**
  * Enumeration of the different call states we can display in the CallStateUpdate component.
@@ -41,8 +42,8 @@ enum class CallControlsChange(
   RINGING_DISABLED(null, R.string.CallStateUpdatePopupWindow__group_is_too_large),
   MIC_ON(R.drawable.symbol_mic_compact_16, R.string.CallStateUpdatePopupWindow__mic_on),
   MIC_OFF(R.drawable.symbol_mic_slash_compact_16, R.string.CallStateUpdatePopupWindow__mic_off),
-  SPEAKER_ON(R.drawable.symbol_speaker_24, R.string.CallStateUpdatePopupWindow__speaker_on),
-  SPEAKER_OFF(R.drawable.symbol_speaker_slash_24, R.string.CallStateUpdatePopupWindow__speaker_off)
+  SPEAKER_ON(CoreUiR.drawable.symbol_speaker_24, R.string.CallStateUpdatePopupWindow__speaker_on),
+  SPEAKER_OFF(CoreUiR.drawable.symbol_speaker_slash_24, R.string.CallStateUpdatePopupWindow__speaker_off)
 }
 
 /**
@@ -58,7 +59,7 @@ fun CallStateUpdatePopup(
     verticalAlignment = Alignment.CenterVertically,
     modifier = modifier
       .background(
-        color = colorResource(id = R.color.signal_light_colorSecondaryContainer),
+        color = colorResource(id = CoreUiR.color.signal_light_colorSecondaryContainer),
         shape = RoundedCornerShape(50)
       )
       .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -67,7 +68,7 @@ fun CallStateUpdatePopup(
       Icon(
         painter = painterResource(id = callControlsChange.iconRes),
         contentDescription = null,
-        tint = colorResource(id = R.color.signal_light_colorOnSecondaryContainer),
+        tint = colorResource(id = CoreUiR.color.signal_light_colorOnSecondaryContainer),
         modifier = Modifier.size(16.dp)
       )
     }
@@ -75,7 +76,7 @@ fun CallStateUpdatePopup(
     Text(
       text = stringResource(id = callControlsChange.stringRes),
       style = MaterialTheme.typography.bodyMedium,
-      color = colorResource(id = R.color.signal_light_colorOnSecondaryContainer)
+      color = colorResource(id = CoreUiR.color.signal_light_colorOnSecondaryContainer)
     )
   }
 }

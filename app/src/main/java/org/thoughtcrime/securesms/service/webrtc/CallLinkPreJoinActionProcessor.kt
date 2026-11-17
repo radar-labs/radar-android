@@ -11,6 +11,7 @@ import org.signal.libsignal.zkgroup.InvalidInputException
 import org.signal.libsignal.zkgroup.ServerPublicParams
 import org.signal.libsignal.zkgroup.VerificationFailedException
 import org.signal.libsignal.zkgroup.calllinks.CallLinkSecretParams
+import org.signal.remoteconfig.RemoteConfig
 import org.signal.ringrtc.CallException
 import org.signal.ringrtc.CallLinkRootKey
 import org.thoughtcrime.securesms.database.SignalDatabase.Companion.callLinks
@@ -42,6 +43,11 @@ class CallLinkPreJoinActionProcessor(
   override fun handlePreJoinCall(currentState: WebRtcServiceState, remotePeer: RemotePeer): WebRtcServiceState {
     Log.i(TAG, "handlePreJoinCall():")
 
+    if (currentState.callInfoState.groupCall != null) {
+      Log.w(TAG, "handlePreJoinCall(): Group call already exists, ignoring duplicate pre-join request")
+      return currentState
+    }
+
     val groupCall = try {
       val callLink = callLinks.getCallLinkByRoomId(remotePeer.recipient.requireCallLinkRoomId())
       if (callLink?.credentials == null) {
@@ -65,16 +71,19 @@ class CallLinkPreJoinActionProcessor(
         .groupsV2Authorization
         .getCallLinkAuthorizationForToday(genericServerPublicParams, callLinkSecretParams)
 
+      val dredDuration: Byte = RemoteConfig.dredDuration.toByte()
+
       webRtcInteractor.callManager.createCallLinkCall(
         SignalStore.internal.groupCallingServer,
         serverPublicParams.endorsementPublicKey,
         callLinkAuthCredentialPresentation.serialize(),
         callLinkRootKey,
-        callLink.credentials.epoch,
         callLink.credentials.adminPassBytes,
         ByteArray(0),
         AUDIO_LEVELS_INTERVAL,
+        dredDuration,
         RingRtcDynamicConfiguration.getAudioConfig(),
+        RingRtcDynamicConfiguration.getSvcConfig(),
         webRtcInteractor.groupCallObserver
       )
     } catch (e: InvalidInputException) {
@@ -89,7 +98,7 @@ class CallLinkPreJoinActionProcessor(
 
     try {
       groupCall.setOutgoingAudioMuted(true)
-      groupCall.setOutgoingVideoMuted(true)
+      groupCall.setOutgoingVideoMuted(true, false)
       groupCall.setDataMode(NetworkUtil.getCallingDataMode(context, groupCall.localDeviceState.networkRoute.localAdapterType))
       Log.i(TAG, "Connecting to group call: " + currentState.callInfoState.callRecipient.id)
       groupCall.connect()

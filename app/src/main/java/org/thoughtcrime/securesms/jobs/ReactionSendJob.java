@@ -6,25 +6,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.logging.Log;
+import org.signal.libsignal.protocol.NoSessionException;
+import org.thoughtcrime.securesms.database.GroupTable;
 import org.thoughtcrime.securesms.database.NoSuchMessageException;
 import org.thoughtcrime.securesms.database.ReactionTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
 import org.thoughtcrime.securesms.database.model.MessageId;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.database.model.ReactionRecord;
+import org.thoughtcrime.securesms.database.model.RecipientRecord;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
-import org.thoughtcrime.securesms.groups.GroupId;
-import org.thoughtcrime.securesms.jobmanager.JsonJobData;
 import org.thoughtcrime.securesms.jobmanager.Job;
+import org.thoughtcrime.securesms.jobmanager.JsonJobData;
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint;
+import org.thoughtcrime.securesms.jobmanager.impl.SealedSenderConstraint;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.messages.GroupSendUtil;
 import org.thoughtcrime.securesms.net.NotPushRegisteredException;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.recipients.RecipientUtil;
 import org.thoughtcrime.securesms.transport.RetryLaterException;
+import org.thoughtcrime.securesms.transport.UndeliverableMessageException;
 import org.thoughtcrime.securesms.util.GroupUtil;
 import org.whispersystems.signalservice.api.crypto.ContentHint;
 import org.whispersystems.signalservice.api.crypto.UntrustedIdentityException;
@@ -69,19 +73,19 @@ public class ReactionSendJob extends BaseJob {
   {
     MessageRecord message = SignalDatabase.messages().getMessageRecord(messageId.getId());
 
-    Recipient conversationRecipient = SignalDatabase.threads().getRecipientForThreadId(message.getThreadId());
+    RecipientId conversationRecipientId = SignalDatabase.threads().getRecipientIdForThreadId(message.getThreadId());
 
-    if (conversationRecipient == null) {
+    if (conversationRecipientId == null) {
       throw new AssertionError("We have a message, but couldn't find the thread!");
     }
 
-    RecipientId       selfId     = Recipient.self().getId();
-    List<RecipientId> recipients = conversationRecipient.isGroup() ? RecipientUtil.getEligibleForSending(Recipient.resolvedList(conversationRecipient.getParticipantIds()))
-                                                                                  .stream()
-                                                                                  .map(Recipient::getId)
-                                                                                  .filter(r -> !r.equals(selfId))
-                                                                                  .collect(Collectors.toList())
-                                                                   : Collections.singletonList(conversationRecipient.getId());
+    RecipientRecord conversationRecipient = SignalDatabase.recipients().getRecord(conversationRecipientId);
+
+    List<RecipientId> recipients = conversationRecipient.getGroupId() != null ? RecipientUtil.getEligibleForSending(Recipient.resolvedList(SignalDatabase.groups().getGroupMemberIds(conversationRecipient.getGroupId(), GroupTable.MemberSet.FULL_MEMBERS_EXCLUDING_SELF)))
+                                                                                            .stream()
+                                                                                            .map(Recipient::getId)
+                                                                                            .collect(Collectors.toList())
+                                                                             : Collections.singletonList(conversationRecipient.getId());
 
     return new ReactionSendJob(messageId,
                                recipients,
@@ -91,6 +95,7 @@ public class ReactionSendJob extends BaseJob {
                                new Parameters.Builder()
                                              .setQueue(conversationRecipient.getId().toQueueKey())
                                              .addConstraint(NetworkConstraint.KEY)
+                                             .addConstraint(SealedSenderConstraint.KEY)
                                              .setLifespan(TimeUnit.DAYS.toMillis(1))
                                              .setMaxAttempts(Parameters.UNLIMITED)
                                              .build());
@@ -156,14 +161,21 @@ public class ReactionSendJob extends BaseJob {
       return;
     }
 
-    Recipient conversationRecipient = SignalDatabase.threads().getRecipientForThreadId(message.getThreadId());
+    RecipientId conversationRecipientId = SignalDatabase.threads().getRecipientIdForThreadId(message.getThreadId());
 
-    if (conversationRecipient == null) {
+    if (conversationRecipientId == null) {
       throw new AssertionError("We have a message, but couldn't find the thread!");
     }
 
-    if (conversationRecipient.isPushV1Group() || conversationRecipient.isMmsGroup()) {
+    RecipientRecord conversationRecipient = SignalDatabase.recipients().getRecord(conversationRecipientId);
+
+    if (conversationRecipient.getGroupId() != null && (conversationRecipient.getGroupId().isV1() || conversationRecipient.getGroupId().isMms())) {
       Log.w(TAG, "Cannot send reactions to legacy groups.");
+      return;
+    }
+
+    if (conversationRecipient.getGroupId() != null && conversationRecipient.getGroupId().isV2() && !SignalDatabase.groups().isActive(conversationRecipient.getGroupId())) {
+      Log.w(TAG, "Cannot send reactions to terminated or inactive groups.");
       return;
     }
 
@@ -192,6 +204,11 @@ public class ReactionSendJob extends BaseJob {
   }
 
   @Override
+  public long getNextRunAttemptBackoff(int pastAttemptCount, @NonNull Exception exception) {
+    return SendJobUtil.getBackoffMillisFromException(this, TAG, pastAttemptCount, exception, () -> super.getNextRunAttemptBackoff(pastAttemptCount, exception));
+  }
+
+  @Override
   public void onFailure() {
     if (recipients.size() < initialRecipientCount) {
       Log.w(TAG, "Only sent a reaction to " + recipients.size() + "/" + initialRecipientCount + " recipients. Still, it sent to someone, so it stays.");
@@ -213,22 +230,22 @@ public class ReactionSendJob extends BaseJob {
     }
   }
 
-  private @NonNull List<Recipient> deliver(@NonNull Recipient conversationRecipient, @NonNull List<Recipient> destinations, @NonNull Recipient targetAuthor, long targetSentTimestamp)
-      throws IOException, UntrustedIdentityException
+  private @NonNull List<Recipient> deliver(@NonNull RecipientRecord conversationRecipient, @NonNull List<Recipient> destinations, @NonNull Recipient targetAuthor, long targetSentTimestamp)
+      throws IOException, UntrustedIdentityException, NoSessionException, UndeliverableMessageException
   {
     SignalServiceDataMessage.Builder dataMessageBuilder = SignalServiceDataMessage.newBuilder()
                                                                                   .withTimestamp(System.currentTimeMillis())
-                                                                                  .withReaction(buildReaction(context, reaction, remove, targetAuthor, targetSentTimestamp));
+                                                                                  .withReaction(buildReaction(reaction, remove, targetAuthor, targetSentTimestamp));
 
-    if (conversationRecipient.isGroup()) {
-      GroupUtil.setDataMessageGroupContext(context, dataMessageBuilder, conversationRecipient.requireGroupId().requirePush());
+    if (conversationRecipient.getGroupId() != null) {
+      GroupUtil.setDataMessageGroupContext(context, dataMessageBuilder, conversationRecipient.getGroupId().requirePush());
     }
 
     SignalServiceDataMessage dataMessage         = dataMessageBuilder.build();
     List<Recipient>          nonSelfDestinations = destinations.stream().filter(r -> !r.isSelf()).collect(Collectors.toList());
     boolean                  includesSelf        = nonSelfDestinations.size() != destinations.size();
     List<SendMessageResult>  results             = GroupSendUtil.sendResendableDataMessage(context,
-                                                                                           conversationRecipient.getGroupId().map(GroupId::requireV2).orElse(null),
+                                                                                           conversationRecipient.getGroupId() != null ? conversationRecipient.getGroupId().requireV2() : null,
                                                                                            null,
                                                                                            nonSelfDestinations,
                                                                                            false,
@@ -253,16 +270,14 @@ public class ReactionSendJob extends BaseJob {
     return groupResult.completed;
   }
 
-  private static SignalServiceDataMessage.Reaction buildReaction(@NonNull Context context,
-                                                                 @NonNull ReactionRecord reaction,
+  private static SignalServiceDataMessage.Reaction buildReaction(@NonNull ReactionRecord reaction,
                                                                  boolean remove,
                                                                  @NonNull Recipient targetAuthor,
                                                                  long targetSentTimestamp)
-      throws IOException
   {
     return new SignalServiceDataMessage.Reaction(reaction.getEmoji(),
                                                  remove,
-                                                 RecipientUtil.getOrFetchServiceId(context, targetAuthor),
+                                                 targetAuthor.requireServiceId(),
                                                  targetSentTimestamp);
   }
 

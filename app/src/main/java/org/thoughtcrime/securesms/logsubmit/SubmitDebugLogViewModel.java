@@ -13,6 +13,7 @@ import org.signal.core.util.Stopwatch;
 import org.signal.core.util.logging.Log;
 import org.signal.core.util.tracing.Tracer;
 import org.signal.debuglogsviewer.DebugLogsViewer;
+import org.signal.remoteconfig.RemoteConfig;
 import org.thoughtcrime.securesms.database.LogDatabase;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.util.SingleLiveEvent;
@@ -28,20 +29,23 @@ public class SubmitDebugLogViewModel extends ViewModel {
 
   private static final String TAG = Log.tag(SubmitDebugLogViewModel.class);
 
-  private static final int CHUNK_SIZE = 10_000;
+  private static final int  CHUNK_SIZE                     = 10_000;
+  private static final long SLOW_PREFIX_THRESHOLD_MILLIS   = 3_000L;
 
   private final SubmitDebugLogRepository    repo;
   private final MutableLiveData<Mode>       mode;
   private final SingleLiveEvent<Event>      event;
+  private final SingleLiveEvent<Long>       slowPrefixWarning;
   private final long                        firstViewTime;
   private final byte[]                      trace;
 
   private SubmitDebugLogViewModel() {
-    this.repo          = new SubmitDebugLogRepository();
-    this.mode          = new MutableLiveData<>();
-    this.trace         = Tracer.getInstance().serialize();
-    this.firstViewTime = System.currentTimeMillis();
-    this.event         = new SingleLiveEvent<>();
+    this.repo              = new SubmitDebugLogRepository();
+    this.mode              = new MutableLiveData<>();
+    this.trace             = Tracer.getInstance().serialize();
+    this.firstViewTime     = System.currentTimeMillis();
+    this.event             = new SingleLiveEvent<>();
+    this.slowPrefixWarning = new SingleLiveEvent<>();
   }
 
   @NonNull Observable<List<String>> getLogLinesObservable() {
@@ -50,7 +54,13 @@ public class SubmitDebugLogViewModel extends ViewModel {
       try {
         mode.postValue(Mode.LOADING);
 
+        long prefixStartTime = System.currentTimeMillis();
         repo.getPrefixLogLines(prefixLines -> {
+          long prefixDurationMillis = System.currentTimeMillis() - prefixStartTime;
+          if (prefixDurationMillis > SLOW_PREFIX_THRESHOLD_MILLIS && RemoteConfig.showSlowDebugLogWarning()) {
+            slowPrefixWarning.postValue(prefixDurationMillis);
+          }
+
           try {
             List<String> prefixStrings = new ArrayList<>();
             for (LogLine line : prefixLines) {
@@ -61,7 +71,8 @@ public class SubmitDebugLogViewModel extends ViewModel {
             Log.blockUntilAllWritesFinished();
             stopwatch.split("flush");
 
-            LogDatabase.getInstance(AppDependencies.getApplication()).logs().trimToSize();
+            LogDatabase logDatabase = LogDatabase.getInstance(AppDependencies.getApplication());
+            logDatabase.logs().trimToSize();
             stopwatch.split("trim-old");
 
             if (!emitter.isDisposed()) {
@@ -69,35 +80,40 @@ public class SubmitDebugLogViewModel extends ViewModel {
             }
 
             List<String> currentChunk = new ArrayList<>();
+            logDatabase.getReadableDatabase().beginTransactionNonExclusive();
+            try {
+              try (LogDatabase.LogTable.CursorReader logReader = (LogDatabase.LogTable.CursorReader) logDatabase.logs().getAllBeforeTime(firstViewTime)) {
+                stopwatch.split("initial-query");
 
-            try (LogDatabase.LogTable.CursorReader logReader = (LogDatabase.LogTable.CursorReader) LogDatabase.getInstance(AppDependencies.getApplication()).logs().getAllBeforeTime(firstViewTime)) {
-              stopwatch.split("initial-query");
+                int count = 0;
+                while (logReader.hasNext() && !emitter.isDisposed()) {
+                  String next = logReader.next();
+                  currentChunk.add(next);
+                  count++;
 
-              int count = 0;
-              while (logReader.hasNext() && !emitter.isDisposed()) {
-                String next = logReader.next();
-                currentChunk.add(next);
-                count++;
-
-                if (count >= CHUNK_SIZE) {
-                  emitter.onNext(currentChunk);
-                  count = 0;
-                  currentChunk = new ArrayList<>();
+                  if (count >= CHUNK_SIZE) {
+                    emitter.onNext(currentChunk);
+                    count = 0;
+                    currentChunk = new ArrayList<>();
+                  }
                 }
-              }
 
-              // Send final chunk if any remaining
-              if (!emitter.isDisposed() && count > 0) {
-                emitter.onNext(currentChunk);
-              }
+                // Send final chunk if any remaining
+                if (!emitter.isDisposed() && count > 0) {
+                  emitter.onNext(currentChunk);
+                }
 
-              if (!emitter.isDisposed()) {
-                mode.postValue(Mode.NORMAL);
-                emitter.onComplete();
-              }
+                if (!emitter.isDisposed()) {
+                  mode.postValue(Mode.NORMAL);
+                  emitter.onComplete();
+                }
 
-              stopwatch.split("lines");
-              stopwatch.stop(TAG);
+                stopwatch.split("lines");
+                stopwatch.stop(TAG);
+              }
+              logDatabase.getReadableDatabase().setTransactionSuccessful();
+            } finally {
+              logDatabase.getReadableDatabase().endTransaction();
             }
           } catch (Exception e) {
             if (!emitter.isDisposed()) {
@@ -136,6 +152,10 @@ public class SubmitDebugLogViewModel extends ViewModel {
     return event;
   }
 
+  @NonNull LiveData<Long> getSlowPrefixWarning() {
+    return slowPrefixWarning;
+  }
+
   void onDiskSaveLocationReady(@Nullable Uri uri) {
     if (uri == null) {
       Log.w(TAG, "Null URI!");
@@ -150,10 +170,6 @@ public class SubmitDebugLogViewModel extends ViewModel {
         event.postValue(Event.FILE_SAVE_ERROR);
       }
     });
-  }
-
-  boolean onBackPressed() {
-    return false;
   }
 
   enum Mode {

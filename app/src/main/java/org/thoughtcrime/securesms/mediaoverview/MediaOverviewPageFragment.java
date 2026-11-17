@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
@@ -29,14 +30,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codewaves.stickyheadergrid.StickyHeaderGridLayoutManager;
 
+import org.signal.core.ui.compose.SignalIcons;
 import org.signal.core.util.ByteSize;
 import org.signal.core.util.DimensionUnit;
 import org.signal.core.util.concurrent.LifecycleDisposable;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.LoggingFragment;
+import org.signal.core.ui.logging.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment;
-import org.thoughtcrime.securesms.components.compose.DeleteSyncEducationDialog;
+import org.thoughtcrime.securesms.components.SignalProgressDialog;
 import org.thoughtcrime.securesms.components.menu.ActionItem;
 import org.thoughtcrime.securesms.components.menu.SignalBottomActionBar;
 import org.thoughtcrime.securesms.components.voice.VoiceNoteMediaController;
@@ -45,15 +47,26 @@ import org.thoughtcrime.securesms.database.AttachmentTable;
 import org.thoughtcrime.securesms.database.MediaTable;
 import org.thoughtcrime.securesms.database.loaders.GroupedThreadMediaLoader;
 import org.thoughtcrime.securesms.database.loaders.MediaLoader;
+import org.thoughtcrime.securesms.jobs.AttachmentDownloadJob;
 import org.thoughtcrime.securesms.mediapreview.MediaIntentFactory;
-import org.thoughtcrime.securesms.mediapreview.MediaPreviewV2Activity;
+import org.thoughtcrime.securesms.mediapreview.MediaPreviewActivity;
 import org.thoughtcrime.securesms.mms.PartAuthority;
-import org.thoughtcrime.securesms.permissions.Permissions;
+import org.signal.core.ui.permissions.Permissions;
+import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.util.BottomOffsetDecoration;
+import org.thoughtcrime.securesms.util.CommunicationActions;
+import org.thoughtcrime.securesms.util.OffloadedMediaDialogUtil;
 import org.thoughtcrime.securesms.util.MediaUtil;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.signal.core.ui.util.ViewUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -66,9 +79,11 @@ public final class MediaOverviewPageFragment extends LoggingFragment
 
   private static final String TAG = Log.tag(MediaOverviewPageFragment.class);
 
-  private static final String THREAD_ID_EXTRA  = "thread_id";
-  private static final String MEDIA_TYPE_EXTRA = "media_type";
-  private static final String GRID_MODE        = "grid_mode";
+  private static final String THREAD_ID_EXTRA       = "thread_id";
+  private static final String MEDIA_TYPE_EXTRA      = "media_type";
+  private static final String GRID_MODE             = "grid_mode";
+  private static final int    INITIAL_LOAD_LIMIT    = 500;
+  private static final int    LOAD_MORE_THRESHOLD   = 50;
 
   private final ActionModeCallback            actionModeCallback = new ActionModeCallback();
   private       MediaTable.Sorting            sorting            = MediaTable.Sorting.Newest;
@@ -83,7 +98,13 @@ public final class MediaOverviewPageFragment extends LoggingFragment
   private       GridMode                      gridMode;
   private       VoiceNoteMediaController      voiceNoteMediaController;
   private       SignalBottomActionBar         bottomActionBar;
+  private       SignalProgressDialog          selectAllProgress;
   private       LifecycleDisposable           lifecycleDisposable;
+  private       boolean                       pendingLoad = true;
+  private       int                           loadLimit;
+  private       boolean                       allLoaded;
+  private       boolean                       loadingMore;
+  private       boolean                       pendingSelectAll;
 
   public static @NonNull Fragment newInstance(long threadId,
                                               @NonNull MediaLoader.MediaType mediaType,
@@ -111,7 +132,8 @@ public final class MediaOverviewPageFragment extends LoggingFragment
 
     if (threadId == Long.MIN_VALUE) throw new AssertionError();
 
-    LoaderManager.getInstance(this).initLoader(0, null, this);
+    loadLimit = threadId == MediaTable.ALL_THREADS ? INITIAL_LOAD_LIMIT : 0;
+    allLoaded = loadLimit == 0;
   }
 
   @Override
@@ -119,6 +141,15 @@ public final class MediaOverviewPageFragment extends LoggingFragment
     super.onActivityCreated(savedInstanceState);
 
     voiceNoteMediaController = new VoiceNoteMediaController(requireActivity(), false);
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    if (pendingLoad) {
+      pendingLoad = false;
+      LoaderManager.getInstance(this).restartLoader(0, null, this);
+    }
   }
 
   @Override
@@ -142,11 +173,31 @@ public final class MediaOverviewPageFragment extends LoggingFragment
                                               this,
                                               sorting.isRelatedToFileSize(),
                                               threadId == MediaTable.ALL_THREADS);
+    this.recyclerView.setClipToPadding(false);
+    SystemWindowInsetsSetter.attach(recyclerView, getViewLifecycleOwner(), WindowInsetsCompat.Type.navigationBars());
+    SystemWindowInsetsSetter.attach(bottomActionBar, getViewLifecycleOwner(), WindowInsetsCompat.Type.navigationBars(), SystemWindowInsetsSetter.ApplyMode.MARGIN);
+
     this.recyclerView.setAdapter(adapter);
     this.recyclerView.setLayoutManager(gridManager);
     this.recyclerView.setHasFixedSize(true);
     this.recyclerView.addItemDecoration(new MediaGridDividerDecoration(spans, ViewUtil.dpToPx(4), adapter));
     this.recyclerView.addItemDecoration(new BottomOffsetDecoration(ViewUtil.dpToPx(160)));
+    this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      @Override
+      public void onScrolled(@NonNull RecyclerView rv, int dx, int dy) {
+        if (allLoaded || loadingMore) return;
+
+        int scrollRange  = rv.computeVerticalScrollRange();
+        int scrollOffset = rv.computeVerticalScrollOffset();
+        int scrollExtent = rv.computeVerticalScrollExtent();
+
+        if (scrollRange > 0 && scrollOffset + scrollExtent * 2 >= scrollRange) {
+          loadingMore = true;
+          loadLimit *= 2;
+          LoaderManager.getInstance(MediaOverviewPageFragment.this).restartLoader(0, null, MediaOverviewPageFragment.this);
+        }
+      }
+    });
 
     MediaOverviewViewModel viewModel = MediaOverviewViewModel.getMediaOverviewViewModel(requireActivity());
 
@@ -154,8 +205,14 @@ public final class MediaOverviewPageFragment extends LoggingFragment
       .observe(getViewLifecycleOwner(), sorting -> {
         if (sorting != null) {
           this.sorting = sorting;
+          this.loadLimit = threadId == MediaTable.ALL_THREADS ? INITIAL_LOAD_LIMIT : 0;
+          this.allLoaded = loadLimit == 0;
           adapter.setShowFileSizes(sorting.isRelatedToFileSize());
-          LoaderManager.getInstance(this).restartLoader(0, null, this);
+          if (isResumed()) {
+            LoaderManager.getInstance(this).restartLoader(0, null, this);
+          } else {
+            pendingLoad = true;
+          }
           updateMultiSelect();
         }
       });
@@ -192,13 +249,32 @@ public final class MediaOverviewPageFragment extends LoggingFragment
 
   @Override
   public @NonNull Loader<GroupedThreadMediaLoader.GroupedThreadMedia> onCreateLoader(int i, Bundle bundle) {
-    return new GroupedThreadMediaLoader(requireContext(), threadId, mediaType, sorting);
+    return new GroupedThreadMediaLoader(requireContext(), threadId, mediaType, sorting, loadLimit);
   }
 
   @Override
   public void onLoadFinished(@NonNull Loader<GroupedThreadMediaLoader.GroupedThreadMedia> loader, GroupedThreadMediaLoader.GroupedThreadMedia groupedThreadMedia) {
     ((MediaGalleryAllAdapter) recyclerView.getAdapter()).setMedia(groupedThreadMedia);
     ((MediaGalleryAllAdapter) recyclerView.getAdapter()).notifyAllSectionsDataSetChanged();
+
+    if (loadLimit > 0) {
+      int totalMediaItems = 0;
+      for (int i = 0; i < groupedThreadMedia.getSectionCount(); i++) {
+        totalMediaItems += groupedThreadMedia.getSectionItemCount(i);
+      }
+      allLoaded = totalMediaItems < loadLimit;
+    } else {
+      allLoaded = true;
+    }
+
+    loadingMore = false;
+
+    if (pendingSelectAll) {
+      pendingSelectAll = false;
+      dismissSelectAllProgress();
+      getListAdapter().selectAllMedia();
+      updateMultiSelect();
+    }
 
     noMedia.setVisibility(recyclerView.getAdapter().getItemCount() > 0 ? View.GONE : View.VISIBLE);
     getActivity().invalidateOptionsMenu();
@@ -241,30 +317,50 @@ public final class MediaOverviewPageFragment extends LoggingFragment
   }
 
   private void handleMediaPreviewClick(@NonNull View view, @NonNull MediaTable.MediaRecord mediaRecord) {
-    if (mediaRecord.getAttachment().getDisplayUri() == null) {
-      return;
-    }
-
     Context context = getContext();
     if (context == null) {
       return;
     }
 
+    if (mediaRecord.getLinkPreviewJson() != null) {
+      String url = parseLinkUrl(mediaRecord.getLinkPreviewJson());
+      if (url != null && !url.isEmpty()) {
+        CommunicationActions.openBrowserLink(context, url);
+      }
+      return;
+    }
+
     DatabaseAttachment attachment = mediaRecord.getAttachment();
 
+    if (attachment == null) {
+      return;
+    }
+
+    if (attachment.getDisplayUri() == null) {
+      if (attachment.transferState == AttachmentTable.TRANSFER_RESTORE_OFFLOADED) {
+        AttachmentDownloadJob.downloadAttachmentIfNeeded(attachment);
+      }
+      return;
+    }
+
     if (MediaUtil.isVideo(attachment) || MediaUtil.isImage(attachment)) {
-      if (mediaRecord.getAttachment().transferState != AttachmentTable.TRANSFER_PROGRESS_DONE && mediaRecord.getAttachment().transferState != AttachmentTable.TRANSFER_RESTORE_OFFLOADED) {
+      if (attachment.transferState != AttachmentTable.TRANSFER_PROGRESS_DONE && attachment.transferState != AttachmentTable.TRANSFER_RESTORE_OFFLOADED) {
         Toast.makeText(context, R.string.MediaOverviewActivity_this_media_is_not_sent_yet, Toast.LENGTH_LONG).show();
         return;
       }
       MediaIntentFactory.MediaPreviewArgs args = new MediaIntentFactory.MediaPreviewArgs(
           threadId,
           mediaRecord.getDate(),
+          mediaRecord.getMessageId(),
+          mediaRecord.getRecipientId(),
+          mediaRecord.getThreadRecipientId(),
+          mediaRecord.isOutgoing(),
           Objects.requireNonNull(mediaRecord.getAttachment().getDisplayUri()),
+          mediaRecord.getAttachment().getUri(),
           mediaRecord.getContentType(),
           mediaRecord.getAttachment().size,
           mediaRecord.getAttachment().caption,
-          true,
+          null,
           true,
           threadId == MediaTable.ALL_THREADS,
           true,
@@ -279,8 +375,8 @@ public final class MediaOverviewPageFragment extends LoggingFragment
               DimensionUnit.DP.toDp(12)
           ),
           false);
-      view.setTransitionName(MediaPreviewV2Activity.SHARED_ELEMENT_TRANSITION_NAME);
-      ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), view, MediaPreviewV2Activity.SHARED_ELEMENT_TRANSITION_NAME);
+      view.setTransitionName(MediaPreviewActivity.SHARED_ELEMENT_TRANSITION_NAME);
+      ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), view, MediaPreviewActivity.SHARED_ELEMENT_TRANSITION_NAME);
       context.startActivity(MediaIntentFactory.create(context, args), options.toBundle());
     } else {
       if (!MediaUtil.isAudio(attachment)) {
@@ -303,31 +399,75 @@ public final class MediaOverviewPageFragment extends LoggingFragment
       }
     }
 
-  @Override
-  public void onMediaLongClicked(MediaTable.MediaRecord mediaRecord) {
-    if (actionMode == null) {
-      enterMultiSelect();
+  private static @Nullable String parseLinkUrl(@NonNull String linkPreviewJson) {
+    try {
+      JSONArray json = new JSONArray(linkPreviewJson);
+      if (json.length() > 0) {
+        return json.getJSONObject(0).optString("url", "");
+      }
+    } catch (JSONException e) {
+      // ignore
     }
-
-    handleMediaMultiSelectClick(mediaRecord);
+    return null;
   }
 
-  private void handleDeleteSelectedMedia() {
-    if (DeleteSyncEducationDialog.shouldShow()) {
-      lifecycleDisposable.add(
-          DeleteSyncEducationDialog.show(getChildFragmentManager())
-                                   .subscribe(this::handleDeleteSelectedMedia)
-      );
+  @Override
+  public void onMediaLongClicked(@NonNull View view, MediaTable.MediaRecord mediaRecord) {
+    if (actionMode != null) {
+      handleMediaMultiSelectClick(mediaRecord);
       return;
     }
 
-    MediaActions.handleDeleteMedia(requireContext(), getListAdapter().getSelectedMedia());
+    new MediaOverviewContextMenu(this, new MediaOverviewContextMenu.Callbacks() {
+      @Override
+      public void onSave(@NonNull MediaTable.MediaRecord record) {
+        handleSaveSingleMedia(record);
+      }
+
+      @Override
+      public void onDelete(@NonNull MediaTable.MediaRecord record) {
+        handleDeleteSingleMedia(record);
+      }
+
+      @Override
+      public void onSelect(@NonNull MediaTable.MediaRecord record) {
+        enterMultiSelect();
+        handleMediaMultiSelectClick(record);
+      }
+    }).show(view, mediaRecord);
+  }
+
+  private void handleSaveSingleMedia(@NonNull MediaTable.MediaRecord mediaRecord) {
+    if (SignalStore.backup().getOptimizeStorage() && mediaRecord.getAttachment() != null && !mediaRecord.getAttachment().hasData) {
+      OffloadedMediaDialogUtil.showAllOffloaded(requireContext());
+      return;
+    }
+    lifecycleDisposable.add(
+        MediaActions.handleSaveMedia(this, Collections.singleton(mediaRecord))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe()
+    );
+  }
+
+  private void handleDeleteSingleMedia(@NonNull MediaTable.MediaRecord mediaRecord) {
+    MediaActions.handleDeleteMedia(this, Collections.singleton(mediaRecord));
+  }
+
+  private void handleDeleteSelectedMedia() {
+    MediaActions.handleDeleteMedia(this, getListAdapter().getSelectedMedia());
     exitMultiSelect();
   }
 
   private void handleSelectAllMedia() {
-    getListAdapter().selectAllMedia();
-    updateMultiSelect();
+    if (allLoaded) {
+      getListAdapter().selectAllMedia();
+      updateMultiSelect();
+    } else {
+      pendingSelectAll = true;
+      selectAllProgress = SignalProgressDialog.show(requireContext(), null, null, true);
+      loadLimit = 0;
+      LoaderManager.getInstance(this).restartLoader(0, null, this);
+    }
   }
 
   private String getActionModeTitle() {
@@ -353,9 +493,18 @@ public final class MediaOverviewPageFragment extends LoggingFragment
     updateMultiSelect();
   }
 
+  private void dismissSelectAllProgress() {
+    if (selectAllProgress != null && selectAllProgress.isShowing()) {
+      selectAllProgress.dismiss();
+    }
+    selectAllProgress = null;
+  }
+
   private void exitMultiSelect() {
     actionMode.finish();
     actionMode = null;
+    pendingSelectAll = false;
+    dismissSelectAllProgress();
     ViewUtil.animateOut(bottomActionBar, bottomActionBar.getExitAnimation());
   }
 
@@ -366,16 +515,39 @@ public final class MediaOverviewPageFragment extends LoggingFragment
       int selectionCount = getListAdapter().getSectionCount();
 
       bottomActionBar.setItems(Arrays.asList(
-          new ActionItem(R.drawable.symbol_save_android_24, getResources().getQuantityString(R.plurals.MediaOverviewActivity_save_plural, selectionCount), () -> {
+          new ActionItem(org.signal.core.ui.R.drawable.symbol_save_android_24, getResources().getQuantityString(R.plurals.MediaOverviewActivity_save_plural, selectionCount), () -> {
+            Collection<MediaTable.MediaRecord> selected = getListAdapter().getSelectedMedia();
+
+            if (SignalStore.backup().getOptimizeStorage()) {
+              boolean allOffloaded  = selected.stream().allMatch(r -> r.getAttachment() != null && !r.getAttachment().hasData);
+              boolean someOffloaded = !allOffloaded && selected.stream().anyMatch(r -> r.getAttachment() != null && !r.getAttachment().hasData);
+
+              if (allOffloaded) {
+                OffloadedMediaDialogUtil.showAllOffloaded(requireContext());
+                return;
+              } else if (someOffloaded) {
+                OffloadedMediaDialogUtil.showPartiallyOffloaded(requireContext(), () -> {
+                  Collection<MediaTable.MediaRecord> saveable = selected.stream().filter(r -> r.getAttachment() == null || r.getAttachment().hasData).collect(Collectors.toList());
+                  lifecycleDisposable.add(
+                      MediaActions
+                          .handleSaveMedia(MediaOverviewPageFragment.this, saveable)
+                          .observeOn(AndroidSchedulers.mainThread())
+                          .subscribe(this::exitMultiSelect)
+                  );
+                });
+                return;
+              }
+            }
+
             lifecycleDisposable.add(
                 MediaActions
-                    .handleSaveMedia(MediaOverviewPageFragment.this, getListAdapter().getSelectedMedia())
+                    .handleSaveMedia(MediaOverviewPageFragment.this, selected)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::exitMultiSelect)
             );
           }),
-          new ActionItem(R.drawable.symbol_check_circle_24, getString(R.string.MediaOverviewActivity_select_all), this::handleSelectAllMedia),
-          new ActionItem(R.drawable.symbol_trash_24, getResources().getQuantityString(R.plurals.MediaOverviewActivity_delete_plural, selectionCount), this::handleDeleteSelectedMedia)
+          new ActionItem(org.signal.core.ui.R.drawable.symbol_check_circle_24, getString(R.string.MediaOverviewActivity_select_all), this::handleSelectAllMedia),
+          new ActionItem(org.signal.core.ui.R.drawable.symbol_trash_24, getResources().getQuantityString(R.plurals.MediaOverviewActivity_delete_plural, selectionCount), this::handleDeleteSelectedMedia)
       ));
     }
   }

@@ -5,8 +5,8 @@ import android.media.MediaDataSource;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.thoughtcrime.securesms.crypto.AttachmentSecret;
-import org.thoughtcrime.securesms.crypto.ModernDecryptingPartInputStream;
+import org.signal.core.util.crypto.AttachmentSecret;
+import org.signal.core.util.crypto.ModernDecryptingPartInputStream;
 import org.thoughtcrime.securesms.video.videoconverter.mediadatasource.InputStreamMediaDataSource;
 
 import java.io.File;
@@ -34,9 +34,6 @@ final class ModernEncryptedMediaDataSource extends InputStreamMediaDataSource {
     this.random           = random;
     this.length           = length;
   }
-
-  @Override
-  public void close() {}
 
   @Override
   public long getSize() {

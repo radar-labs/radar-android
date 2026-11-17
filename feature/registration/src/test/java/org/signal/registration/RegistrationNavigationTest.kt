@@ -1,0 +1,422 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.registration
+
+import android.Manifest
+import android.app.Application
+import android.os.Looper
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
+import androidx.lifecycle.SavedStateHandle
+import androidx.test.core.app.ApplicationProvider
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows
+import org.robolectric.annotation.Config
+import org.signal.core.ui.CoreUiDependenciesRule
+import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.registration.screens.util.MockMultiplePermissionsState
+import org.signal.registration.screens.util.MockPermissionsState
+import org.signal.registration.test.TestTags
+
+/**
+ * Tests for registration navigation flow using Navigation 3.
+ * Tests navigation by verifying UI state changes rather than using NavController.
+ */
+@OptIn(ExperimentalPermissionsApi::class)
+@RunWith(RobolectricTestRunner::class)
+@Config(application = Application::class)
+class RegistrationNavigationTest {
+
+  @get:Rule
+  val composeTestRule = createComposeRule()
+
+  @get:Rule
+  val coreUiDependenciesRule = CoreUiDependenciesRule(ApplicationProvider.getApplicationContext())
+
+  private lateinit var viewModel: RegistrationViewModel
+  private lateinit var mockRepository: RegistrationRepository
+
+  @Before
+  fun setup() {
+    mockRepository = mockk<RegistrationRepository>(relaxed = true)
+    coEvery { mockRepository.restoreFlowState() } returns null
+    coEvery { mockRepository.getPreExistingRegistrationData() } returns null
+    viewModel = RegistrationViewModel(mockRepository, SavedStateHandle())
+    // Allow the init coroutine to complete so isRestoring becomes false.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+  }
+
+  @Test
+  fun `navigation starts at Welcome screen`() {
+    // Given
+    val permissionsState = createMockPermissionsState()
+
+    // Verify the ViewModel state is correctly initialized
+    val state = viewModel.state.value
+    assert(!state.isRestoringNavigationState) { "isRestoring should be false after init, was: ${state.isRestoringNavigationState}" }
+    assert(state.backStack == listOf(RegistrationRoute.Welcome)) { "backStack should be [Welcome], was: ${state.backStack}" }
+
+    composeTestRule.setContent {
+      SignalTheme(incognitoKeyboardEnabled = false) {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // Then - verify Welcome screen is displayed
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_SCREEN).assertIsDisplayed()
+  }
+
+  @Test
+  fun `clicking Get Started navigates from Welcome to Permissions`() {
+    // Given
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then - verify Permissions screen is displayed
+    composeTestRule.onNodeWithTag(TestTags.PERMISSIONS_SCREEN).assertIsDisplayed()
+  }
+
+  @Test
+  fun `clicking Get Started skips Permissions when all are already granted`() {
+    // Given
+    val context = ApplicationProvider.getApplicationContext<Application>()
+    Shadows.shadowOf(context).grantPermissions(*RegistrationPermissions.getRequiredPermissions(context).toTypedArray())
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then - the Permissions screen is skipped and PhoneNumber is displayed
+    composeTestRule.onNodeWithTag(TestTags.PHONE_NUMBER_SCREEN).assertIsDisplayed()
+  }
+
+  @Test
+  fun `clicking Next on Permissions when they are all granted navigates to PhoneNumber`() {
+    // Given
+    val permissionsState = createMockPermissionsState(allPermissionsGranted = true)
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // Navigate to Permissions screen first
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.PERMISSIONS_NEXT_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then - verify PhoneNumber screen is displayed
+    composeTestRule.onNodeWithTag(TestTags.PHONE_NUMBER_SCREEN).assertIsDisplayed()
+  }
+
+  @Test
+  fun `clicking Not now on Permissions navigates to PhoneNumber`() {
+    // Given
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // Navigate to Permissions screen first
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).performClick()
+    // Radar: "I'm new to Radar" opens Radar's sign-up screen; "Create new account" continues as upstream's Get Started.
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+    composeTestRule.onNodeWithTag(TestTags.RADAR_SIGN_UP_CREATE_ACCOUNT_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.PERMISSIONS_NOT_NOW_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then - verify PhoneNumber screen is displayed
+    composeTestRule.onNodeWithTag(TestTags.PHONE_NUMBER_SCREEN).assertIsDisplayed()
+  }
+
+  // Note: Back navigation testing in Navigation 3 requires testing through
+  // actual back button presses at the Activity level, which is better suited
+  // for instrumentation tests. The back stack is managed internally by Nav3
+  // and not directly accessible in unit tests.
+
+  @Test
+  fun `clicking I have my old phone navigates to Permissions for restore`() {
+    // Given
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).performClick()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_HAS_OLD_PHONE_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then - verify Permissions screen is displayed
+    // (After permissions, user would go to RestoreViaQr screen)
+    composeTestRule.onNodeWithTag(TestTags.PERMISSIONS_SCREEN).assertIsDisplayed()
+  }
+
+  @Test
+  @Config(qualifiers = "w1280dp-h800dp-xhdpi")
+  fun `when isLinkAndSyncAvailable is true, Welcome shows the link device button`() {
+    // Given
+    every { mockRepository.isLinkAndSyncAvailable } returns true
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // Then
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_LINK_DEVICE_BUTTON).assertIsDisplayed()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).assertDoesNotExist()
+  }
+
+  @Test
+  fun `when isLinkAndSyncAvailable is true on compact display, link device button is not shown`() {
+    // Given
+    every { mockRepository.isLinkAndSyncAvailable } returns true
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // Then - compact layout always uses the primary buttons regardless of the flag
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_LINK_DEVICE_BUTTON).assertDoesNotExist()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).assertIsDisplayed()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).assertIsDisplayed()
+  }
+
+  @Test
+  @Config(qualifiers = "w800dp-h800dp-xhdpi")
+  fun `when isLinkAndSyncAvailable is true on medium display, link device button is not shown`() {
+    // Given
+    every { mockRepository.isLinkAndSyncAvailable } returns true
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // Then - medium layout always uses the primary buttons regardless of the flag
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_LINK_DEVICE_BUTTON).assertDoesNotExist()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).assertIsDisplayed()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).assertIsDisplayed()
+  }
+
+  @Test
+  @Config(qualifiers = "w1280dp-h800dp-xhdpi")
+  fun `when isLinkAndSyncAvailable is false, Welcome does not show the link device button`() {
+    // Given - relaxed mock returns false for isLinkAndSyncAvailable by default
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // Then
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_LINK_DEVICE_BUTTON).assertDoesNotExist()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).assertIsDisplayed()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_GET_STARTED_BUTTON).assertIsDisplayed()
+  }
+
+  @Test
+  @Config(qualifiers = "w1280dp-h800dp-xhdpi")
+  fun `clicking Link Device on Welcome navigates to AllowNotifications when notifications permission is required`() {
+    // Given
+    every { mockRepository.isLinkAndSyncAvailable } returns true
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_LINK_DEVICE_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then - notifications permission is required on the default Robolectric SDK (>= 33)
+    composeTestRule.onNodeWithTag(TestTags.ALLOW_NOTIFICATIONS_SCREEN).assertIsDisplayed()
+  }
+
+  @Test
+  @Config(qualifiers = "w1280dp-h800dp-xhdpi")
+  fun `clicking Next on AllowNotifications navigates to LinkAccount`() {
+    // Given
+    every { mockRepository.isLinkAndSyncAvailable } returns true
+    val permissionsState = createMockPermissionsState()
+    Shadows.shadowOf(ApplicationProvider.getApplicationContext<Application>())
+      .grantPermissions(Manifest.permission.POST_NOTIFICATIONS)
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_LINK_DEVICE_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.ALLOW_NOTIFICATIONS_NEXT_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then
+    composeTestRule.onNodeWithTag(TestTags.LINK_ACCOUNT_SCREEN).assertIsDisplayed()
+  }
+
+  @Test
+  @Config(qualifiers = "w1280dp-h800dp-xhdpi")
+  fun `clicking Not now on AllowNotifications navigates to LinkAccount`() {
+    // Given
+    every { mockRepository.isLinkAndSyncAvailable } returns true
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_LINK_DEVICE_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.ALLOW_NOTIFICATIONS_NOT_NOW_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then
+    composeTestRule.onNodeWithTag(TestTags.LINK_ACCOUNT_SCREEN).assertIsDisplayed()
+  }
+
+  @Test
+  fun `clicking I don't have my old phone navigates to Restore`() {
+    // Given
+    val permissionsState = createMockPermissionsState()
+
+    composeTestRule.setContent {
+      SignalTheme {
+        RegistrationNavHost(
+          registrationViewModel = viewModel,
+          permissionsState = permissionsState
+        )
+      }
+    }
+
+    // When
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_OR_TRANSFER_BUTTON).performClick()
+    composeTestRule.onNodeWithTag(TestTags.WELCOME_RESTORE_NO_OLD_PHONE_BUTTON).performClick()
+    Shadows.shadowOf(Looper.getMainLooper()).idle()
+
+    // Then - Radar: this row is "Migrate from Signal", which opens Radar's migrate screen
+    composeTestRule.onNodeWithTag(TestTags.MIGRATE_FROM_SIGNAL_SCREEN).assertIsDisplayed()
+  }
+
+  /**
+   * Creates a mock permissions state for testing.
+   * Since we're in JUnit tests, we can't use the real rememberMultiplePermissionsState.
+   */
+  private fun createMockPermissionsState(allPermissionsGranted: Boolean = false): MockMultiplePermissionsState {
+    return MockMultiplePermissionsState(
+      allPermissionsGranted = allPermissionsGranted,
+      permissions = RegistrationPermissions.getRequiredPermissions(isModernBackupDirectorySelectionRequired = false).map { MockPermissionsState(it) }
+    )
+  }
+}

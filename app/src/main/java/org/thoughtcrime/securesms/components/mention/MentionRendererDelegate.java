@@ -11,12 +11,12 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import org.signal.core.util.ContextUtil;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.spoiler.SpoilerAnnotation;
-import org.thoughtcrime.securesms.util.ContextUtil;
-import org.thoughtcrime.securesms.util.DrawableUtil;
-import org.thoughtcrime.securesms.util.Util;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.signal.core.util.DrawableUtil;
+import org.signal.core.util.Util;
+import org.signal.core.ui.util.ViewUtil;
 
 import java.util.List;
 

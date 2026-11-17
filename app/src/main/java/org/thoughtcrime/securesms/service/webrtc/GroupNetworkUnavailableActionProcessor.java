@@ -3,10 +3,13 @@ package org.thoughtcrime.securesms.service.webrtc;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.ResultReceiver;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.signal.core.util.logging.Log;
+import org.signal.remoteconfig.RemoteConfig;
 import org.signal.ringrtc.CallException;
 import org.signal.ringrtc.GroupCall;
 import org.thoughtcrime.securesms.components.webrtc.EglBaseWrapper;
@@ -36,6 +39,26 @@ public class GroupNetworkUnavailableActionProcessor extends WebRtcActionProcesso
     this.actionProcessorFactory = actionProcessorFactory;
   }
 
+  protected GroupNetworkUnavailableActionProcessor(@NonNull MultiPeerActionProcessorFactory actionProcessorFactory,
+                                                   @NonNull WebRtcInteractor webRtcInteractor,
+                                                   @NonNull String tag)
+  {
+    super(webRtcInteractor, tag);
+    this.actionProcessorFactory = actionProcessorFactory;
+  }
+
+  protected @NonNull MultiPeerActionProcessorFactory getActionProcessorFactory() {
+    return actionProcessorFactory;
+  }
+
+  @Override
+  protected @NonNull WebRtcServiceState handleIsInCallQuery(@NonNull WebRtcServiceState currentState, @Nullable ResultReceiver resultReceiver) {
+    if (resultReceiver != null) {
+      resultReceiver.send(1, ActiveCallData.fromCallState(currentState).toBundle());
+    }
+    return currentState;
+  }
+
   @Override
   protected @NonNull WebRtcServiceState handlePreJoinCall(@NonNull WebRtcServiceState currentState, @NonNull RemotePeer remotePeer) {
     Log.i(TAG, "handlePreJoinCall():");
@@ -48,13 +71,16 @@ public class GroupNetworkUnavailableActionProcessor extends WebRtcActionProcesso
       return processor.handlePreJoinCall(currentState.builder().actionProcessor(processor).build(), remotePeer);
     }
 
-    byte[]    groupId   = currentState.getCallInfoState().getCallRecipient().requireGroupId().getDecodedId();
-    GroupCall groupCall = webRtcInteractor.getCallManager().createGroupCall(groupId,
-                                                                            SignalStore.internal().getGroupCallingServer(),
-                                                                            new byte[0],
-                                                                            null,
-                                                                            RingRtcDynamicConfiguration.getAudioConfig(),
-                                                                            webRtcInteractor.getGroupCallObserver());
+    byte      dredDuration  = (byte) RemoteConfig.dredDuration();
+    byte[]    groupId       = currentState.getCallInfoState().getCallRecipient().requireGroupId().getDecodedId();
+    GroupCall groupCall     = webRtcInteractor.getCallManager().createGroupCall(groupId,
+                                                                                SignalStore.internal().getGroupCallingServer(),
+                                                                                new byte[0],
+                                                                                AUDIO_LEVELS_INTERVAL,
+                                                                                dredDuration,
+                                                                                RingRtcDynamicConfiguration.getAudioConfig(),
+                                                                                RingRtcDynamicConfiguration.getSvcConfig(),
+                                                                                webRtcInteractor.getGroupCallObserver());
 
     if (groupCall == null) {
       return groupCallFailure(currentState, "RingRTC did not create a group call", null);

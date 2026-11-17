@@ -1,0 +1,47 @@
+/*
+ * Copyright 2026 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.glide
+
+import android.app.Application
+import android.net.Uri
+import org.signal.glide.common.io.InputStreamFactory
+
+/**
+ * Dependencies for the Glide library module, provided by the host application.
+ */
+object SignalGlideDependencies {
+  private lateinit var _application: Application
+  private lateinit var _provider: Provider
+
+  @Synchronized
+  fun init(application: Application, provider: Provider) {
+    if (this::_application.isInitialized || this::_provider.isInitialized) {
+      return
+    }
+
+    _application = application
+    _provider = provider
+  }
+
+  val application: Application
+    get() = _application
+
+  fun getUriInputStreamFactory(uri: Uri, thumbnailTimeUs: Long = 0, contentType: String? = null): InputStreamFactory = _provider.getUriInputStreamFactory(uri, thumbnailTimeUs, contentType)
+
+  @JvmStatic
+  fun isLocalUri(uri: Uri): Boolean = _provider.isLocalUri(uri)
+
+  interface Provider {
+    /**
+     * A factory which can create an [java.io.InputStream] from a given [Uri]. For videos, [thumbnailTimeUs] specifies the frame time to extract.
+     * [contentType], if known, is the content type of the data at [uri].
+     */
+    fun getUriInputStreamFactory(uri: Uri, thumbnailTimeUs: Long = 0, contentType: String? = null): InputStreamFactory
+
+    /** Whether [uri] names locally-served content that [getUriInputStreamFactory] can open. */
+    fun isLocalUri(uri: Uri): Boolean
+  }
+}

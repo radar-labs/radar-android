@@ -21,11 +21,15 @@ import android.content.Context
 import android.os.Build
 import android.text.format.DateFormat
 import org.signal.core.util.logging.Log
+import org.signal.core.util.toLocalDateTime
+import org.signal.core.util.toLocalTime
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.conversation.v2.computed.FormattedDate
+import org.thoughtcrime.securesms.util.DateUtils.getBriefRelativeTimeSpanString
 import java.text.DateFormatSymbols
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -59,8 +63,8 @@ object DateUtils : android.text.format.DateUtils() {
    * A relative timestamp to use in space-constrained areas, like the conversation list.
    */
   @JvmStatic
-  fun getBriefRelativeTimeSpanString(c: Context, locale: Locale, timestamp: Long): String {
-    return when {
+  fun getBriefRelativeTimeSpanString(c: Context, locale: Locale, timestamp: Long): Pair<String, String> {
+    val time = when {
       isNow(timestamp) -> {
         c.getString(R.string.DateUtils_just_now)
       }
@@ -82,14 +86,15 @@ object DateUtils : android.text.format.DateUtils() {
         timestamp.toDateString("MMM d, yyyy", locale)
       }
     }
+    return Pair(time, time.toAccessibleFormat(c, timestamp))
   }
 
   /**
    * Similar to [getBriefRelativeTimeSpanString], except this will include additional time information in longer formats.
    */
   @JvmStatic
-  fun getExtendedRelativeTimeSpanString(context: Context, locale: Locale, timestamp: Long): String {
-    return when {
+  fun getExtendedRelativeTimeSpanString(context: Context, locale: Locale, timestamp: Long): Pair<String, String> {
+    val time = when {
       isNow(timestamp) -> {
         context.getString(R.string.DateUtils_just_now)
       }
@@ -117,6 +122,7 @@ object DateUtils : android.text.format.DateUtils() {
         timestamp.toDateString(format.toString(), locale)
       }
     }
+    return Pair(time, time.toAccessibleFormat(context, timestamp))
   }
 
   /**
@@ -132,14 +138,14 @@ object DateUtils : android.text.format.DateUtils() {
   fun getDatelessRelativeTimeSpanFormattedDate(context: Context, locale: Locale, timestamp: Long): FormattedDate {
     return when {
       isNow(timestamp) -> {
-        FormattedDate(isRelative = true, isNow = true, value = context.getString(R.string.DateUtils_just_now))
+        FormattedDate(isRelative = true, isNow = true, value = context.getString(R.string.DateUtils_just_now), contentDescValue = context.getString(R.string.DateUtils_just_now))
       }
       timestamp.isWithin(1.hours) -> {
         val minutes = timestamp.convertDeltaTo(DurationUnit.MINUTES)
-        FormattedDate(isRelative = true, isNow = false, value = context.resources.getString(R.string.DateUtils_minutes_ago, minutes))
+        FormattedDate(isRelative = true, isNow = false, value = context.resources.getString(R.string.DateUtils_minutes_ago, minutes), contentDescValue = context.resources.getQuantityString(R.plurals.DateUtils_minutes_ago_content_description, minutes, minutes))
       }
       else -> {
-        FormattedDate(isRelative = false, isNow = false, value = getOnlyTimeString(context, timestamp))
+        FormattedDate(isRelative = false, isNow = false, value = getOnlyTimeString(context, timestamp), contentDescValue = getOnlyTimeString(context, timestamp))
       }
     }
   }
@@ -289,8 +295,12 @@ object DateUtils : android.text.format.DateUtils() {
       } else {
         context.getString(R.string.DateUtils_today)
       }
-    } else {
+    } else if (isTomorrow(timestamp)) {
       context.getString(R.string.DateUtils_tomorrow)
+    } else {
+      val locale = Locale.getDefault()
+      // Many locales (e.g. Dutch, French, Spanish) render weekday names in lowercase, but this is used as a standalone label, so we want it capitalized.
+      localDateTime.dayOfWeek.getDisplayName(TextStyle.FULL, locale).capitalizeFirstChar(locale)
     }
     val time = localDateTime.toLocalTime().formatHours(context)
     return context.getString(R.string.DateUtils_schedule_at, dayModifier, time)
@@ -300,6 +310,7 @@ object DateUtils : android.text.format.DateUtils() {
     return timestamp.toDateString("EEE, MMM d", locale)
   }
 
+  @JvmStatic
   fun formatDateWithYear(locale: Locale, timestamp: Long): String {
     return timestamp.toDateString("MMM d, yyyy", locale)
   }
@@ -380,6 +391,10 @@ object DateUtils : android.text.format.DateUtils() {
     return isToday(time + TimeUnit.DAYS.toMillis(1))
   }
 
+  private fun isTomorrow(time: Long): Boolean {
+    return isToday(time - TimeUnit.DAYS.toMillis(1))
+  }
+
   private fun getHour(context: Context, timestamp: Long): Int {
     val cal = Calendar.getInstance(Locale.getDefault())
     cal.timeInMillis = timestamp
@@ -428,6 +443,15 @@ object DateUtils : android.text.format.DateUtils() {
     }
   }
 
+  fun String.toAccessibleFormat(context: Context, timestamp: Long): String {
+    return if (!isNow(timestamp) && timestamp.isWithin(1.hours)) {
+      val minutes = timestamp.convertDeltaTo(DurationUnit.MINUTES)
+      context.resources.getQuantityString(R.plurals.DateUtils_minutes_ago_content_description, minutes, minutes)
+    } else {
+      this
+    }
+  }
+
   private fun SimpleDateFormat.setLowercaseAmPmStrings(locale: Locale): SimpleDateFormat {
     val symbols = dateFormatSymbolsCache.getOrPut(locale) {
       DateFormatSymbols(locale).apply {
@@ -436,6 +460,13 @@ object DateUtils : android.text.format.DateUtils() {
     }
     this.dateFormatSymbols = symbols
     return this
+  }
+
+  /**
+   * Uppercases the first character using the rules of the provided [locale]. A no-op for scripts that have no notion of case.
+   */
+  private fun String.capitalizeFirstChar(locale: Locale): String {
+    return replaceFirstChar { it.titlecase(locale) }
   }
 
   private data class TemplateLocale(val template: String, val locale: Locale)

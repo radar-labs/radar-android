@@ -10,15 +10,25 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
 import org.junit.rules.ExternalResource
+import org.signal.remoteconfig.RemoteConfig
+import org.signal.storage.keyvalue.EmojiValues
+import org.signal.storage.keyvalue.NotificationProfileValues
+import org.signal.storage.keyvalue.PhoneNumberPrivacyValues
+import org.signal.storage.keyvalue.RegistrationValues
+import org.signal.storage.keyvalue.ReleaseChannelValues
+import org.signal.storage.keyvalue.StorageServiceValues
+import org.signal.storage.keyvalue.SvrValues
+import org.signal.storage.keyvalue.UiHintValues
+import org.thoughtcrime.securesms.dependencies.AppRemoteConfigDependencies
 import org.thoughtcrime.securesms.keyvalue.AccountValues
 import org.thoughtcrime.securesms.keyvalue.BackupValues
-import org.thoughtcrime.securesms.keyvalue.EmojiValues
 import org.thoughtcrime.securesms.keyvalue.InAppPaymentValues
-import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues
-import org.thoughtcrime.securesms.keyvalue.RegistrationValues
+import org.thoughtcrime.securesms.keyvalue.InternalValues
+import org.thoughtcrime.securesms.keyvalue.MiscellaneousValues
+import org.thoughtcrime.securesms.keyvalue.PaymentsValues
 import org.thoughtcrime.securesms.keyvalue.SettingsValues
 import org.thoughtcrime.securesms.keyvalue.SignalStore
-import org.thoughtcrime.securesms.keyvalue.SvrValues
+import org.thoughtcrime.securesms.keyvalue.StoryValues
 import kotlin.reflect.KClass
 
 /**
@@ -57,6 +67,30 @@ class MockSignalStoreRule(private val relaxed: Set<KClass<*>> = emptySet()) : Ex
   lateinit var settings: SettingsValues
     private set
 
+  lateinit var releaseChannel: ReleaseChannelValues
+    private set
+
+  lateinit var storageService: StorageServiceValues
+    private set
+
+  lateinit var internal: InternalValues
+    private set
+
+  lateinit var misc: MiscellaneousValues
+    private set
+
+  lateinit var story: StoryValues
+    private set
+
+  lateinit var uiHints: UiHintValues
+    private set
+
+  lateinit var payments: PaymentsValues
+    private set
+
+  lateinit var notificationProfile: NotificationProfileValues
+    private set
+
   override fun before() {
     account = mockk(relaxed = relaxed.contains(AccountValues::class), relaxUnitFun = true)
     phoneNumberPrivacy = mockk(relaxed = relaxed.contains(PhoneNumberPrivacyValues::class), relaxUnitFun = true)
@@ -66,8 +100,17 @@ class MockSignalStoreRule(private val relaxed: Set<KClass<*>> = emptySet()) : Ex
     inAppPayments = mockk(relaxed = relaxed.contains(InAppPaymentValues::class), relaxUnitFun = true)
     backup = mockk(relaxed = relaxed.contains(BackupValues::class), relaxUnitFun = true)
     settings = mockk(relaxed = relaxed.contains(SettingsValues::class), relaxUnitFun = true)
+    releaseChannel = mockk(relaxed = relaxed.contains(ReleaseChannelValues::class), relaxUnitFun = true)
+    storageService = mockk(relaxed = relaxed.contains(StorageServiceValues::class), relaxUnitFun = true)
+    internal = mockk(relaxed = relaxed.contains(InternalValues::class), relaxUnitFun = true)
+    misc = mockk(relaxed = relaxed.contains(MiscellaneousValues::class), relaxUnitFun = true)
+    story = mockk(relaxed = relaxed.contains(StoryValues::class), relaxUnitFun = true)
+    uiHints = mockk(relaxed = relaxed.contains(UiHintValues::class), relaxUnitFun = true)
+    payments = mockk(relaxed = relaxed.contains(PaymentsValues::class), relaxUnitFun = true)
+    notificationProfile = mockk(relaxed = relaxed.contains(NotificationProfileValues::class), relaxUnitFun = true)
 
     mockkObject(SignalStore)
+    RemoteConfig.initDependencies(AppRemoteConfigDependencies)
     every { SignalStore.account } returns account
     every { SignalStore.phoneNumberPrivacy } returns phoneNumberPrivacy
     every { SignalStore.registration } returns registration
@@ -76,6 +119,14 @@ class MockSignalStoreRule(private val relaxed: Set<KClass<*>> = emptySet()) : Ex
     every { SignalStore.inAppPayments } returns inAppPayments
     every { SignalStore.backup } returns backup
     every { SignalStore.settings } returns settings
+    every { SignalStore.releaseChannel } returns releaseChannel
+    every { SignalStore.storageService } returns storageService
+    every { SignalStore.internal } returns internal
+    every { SignalStore.misc } returns misc
+    every { SignalStore.story } returns story
+    every { SignalStore.uiHints } returns uiHints
+    every { SignalStore.payments } returns payments
+    every { SignalStore.notificationProfile } returns notificationProfile
   }
 
   override fun after() {

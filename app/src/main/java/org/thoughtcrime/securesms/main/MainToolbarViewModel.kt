@@ -34,7 +34,7 @@ class MainToolbarViewModel : ViewModel() {
 
   fun refresh() {
     viewModelScope.launch {
-      val self = withContext(SignalDispatchers.IO) {
+      val self = withContext(SignalDispatchers.Default) {
         Recipient.self().resolve()
       }
 
@@ -83,19 +83,19 @@ class MainToolbarViewModel : ViewModel() {
   fun isInActionMode(): Boolean = state.value.mode == MainToolbarMode.ACTION_MODE
 
   fun presentToolbarForConversationListFragment() {
-    setToolbarMode(MainToolbarMode.FULL, destination = MainNavigationListLocation.CHATS, overwriteExtraMode = false)
+    setToolbarMode(MainToolbarMode.FULL, destination = MainListRoute.Chats, overwriteExtraMode = false)
   }
 
   fun presentToolbarForConversationListArchiveFragment() {
-    setToolbarMode(MainToolbarMode.BASIC, destination = MainNavigationListLocation.CHATS)
+    setToolbarMode(MainToolbarMode.BASIC, destination = MainListRoute.Chats)
   }
 
   fun presentToolbarForStoriesLandingFragment() {
-    setToolbarMode(MainToolbarMode.FULL, destination = MainNavigationListLocation.STORIES)
+    setToolbarMode(MainToolbarMode.FULL, destination = MainListRoute.Stories)
   }
 
   fun presentToolbarForCallLogFragment() {
-    setToolbarMode(MainToolbarMode.FULL, destination = MainNavigationListLocation.CALLS)
+    setToolbarMode(MainToolbarMode.FULL, destination = MainListRoute.Calls)
   }
 
   fun presentToolbarForMultiselect() {
@@ -104,7 +104,7 @@ class MainToolbarViewModel : ViewModel() {
 
   fun presentToolbarForCurrentDestination() {
     when (state.value.destination) {
-      MainNavigationListLocation.ARCHIVE -> setToolbarMode(MainToolbarMode.BASIC)
+      MainListRoute.Archive -> setToolbarMode(MainToolbarMode.BASIC)
       else -> setToolbarMode(MainToolbarMode.FULL)
     }
   }
@@ -112,7 +112,7 @@ class MainToolbarViewModel : ViewModel() {
   @JvmOverloads
   fun setToolbarMode(
     mode: MainToolbarMode,
-    destination: MainNavigationListLocation? = null,
+    destination: MainListRoute? = null,
     overwriteExtraMode: Boolean = true
   ) {
     val previousMode = internalStateFlow.value.mode
@@ -210,6 +210,12 @@ class MainToolbarViewModel : ViewModel() {
   fun setSearchHint(@StringRes hint: Int) {
     internalStateFlow.update {
       it.copy(searchHint = hint)
+    }
+  }
+
+  fun setHasActiveSearchFilter(hasActiveSearchFilter: Boolean) {
+    internalStateFlow.update {
+      it.copy(hasActiveSearchFilter = hasActiveSearchFilter)
     }
   }
 

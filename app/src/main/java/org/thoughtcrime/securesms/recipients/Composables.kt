@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.rx3.asFlow
 import kotlinx.coroutines.withContext
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.concurrent.SignalDispatchers
 
 /**
@@ -38,7 +39,7 @@ private fun <T> rememberRecipientField(recipientId: RecipientId, initialData: Re
   var recipientAndCounter by remember(recipientId) { mutableStateOf(initialData to 0L) }
 
   LaunchedEffect(recipientId) {
-    withContext(SignalDispatchers.IO) {
+    withContext(SignalDispatchers.Default) {
       Recipient.observable(recipientId)
         .asFlow()
         .collect {

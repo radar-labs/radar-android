@@ -44,18 +44,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
+import org.signal.core.ui.compose.ComposeFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Rows
-import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.ComposeFragment
-import org.thoughtcrime.securesms.database.model.ThreadRecord
+import org.signal.core.ui.compose.SignalIcons
+import org.thoughtcrime.securesms.database.model.ThreadWithRecipient
 
 class DataSeedingPlaygroundFragment : ComposeFragment() {
 
@@ -127,7 +126,7 @@ fun Screen(
         navigationIcon = {
           IconButton(onClick = onBack) {
             Icon(
-              painter = painterResource(R.drawable.symbol_arrow_start_24),
+              painter = SignalIcons.ArrowStart.painter,
               tint = MaterialTheme.colorScheme.onSurface,
               contentDescription = null
             )
@@ -286,7 +285,7 @@ fun Screen(
 
 @Composable
 private fun ThreadSelectionRow(
-  thread: ThreadRecord,
+  thread: ThreadWithRecipient,
   isSelected: Boolean,
   onSelectionChanged: (Boolean) -> Unit
 ) {

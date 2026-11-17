@@ -8,6 +8,7 @@ import androidx.annotation.WorkerThread;
 
 import org.signal.core.models.ServiceId;
 import org.signal.core.util.Base64;
+import org.signal.core.util.Util;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.IdentityKey;
 import org.signal.libsignal.protocol.IdentityKeyPair;
@@ -15,11 +16,12 @@ import org.signal.libsignal.protocol.InvalidKeyException;
 import org.signal.libsignal.zkgroup.InvalidInputException;
 import org.signal.libsignal.zkgroup.profiles.ExpiringProfileKeyCredential;
 import org.signal.libsignal.zkgroup.profiles.ProfileKey;
-import org.thoughtcrime.securesms.badges.models.Badge;
+import org.signal.core.models.badges.Badge;
 import org.thoughtcrime.securesms.crypto.ProfileKeyUtil;
 import org.thoughtcrime.securesms.crypto.SealedSenderAccessUtil;
 import org.thoughtcrime.securesms.database.RecipientTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
+import org.thoughtcrime.securesms.database.model.IdentityStoreRecord;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobs.*;
@@ -33,11 +35,11 @@ import org.thoughtcrime.securesms.profiles.AvatarHelper;
 import org.thoughtcrime.securesms.profiles.ProfileName;
 import org.thoughtcrime.securesms.recipients.Recipient;
 import org.thoughtcrime.securesms.recipients.RecipientUtil;
-import org.whispersystems.signalservice.api.NetworkResult;
+import org.signal.network.NetworkResult;
+import org.signal.network.crypto.SealedSenderAccess;
 import org.whispersystems.signalservice.api.NetworkResultUtil;
-import org.whispersystems.signalservice.api.crypto.InvalidCiphertextException;
+import org.signal.core.util.crypto.InvalidCiphertextException;
 import org.whispersystems.signalservice.api.crypto.ProfileCipher;
-import org.whispersystems.signalservice.api.crypto.SealedSenderAccess;
 import org.whispersystems.signalservice.api.profiles.AvatarUploadParams;
 import org.whispersystems.signalservice.api.profiles.ProfileAndCredential;
 import org.whispersystems.signalservice.api.profiles.SignalServiceProfile;
@@ -64,6 +66,7 @@ public final class ProfileUtil {
 
   private static final String TAG = Log.tag(ProfileUtil.class);
 
+  private static final String SELF_PROFILE_KEY_CHANGE_DEDUPE_KEY = "ProfileUtil.handleSelfProfileKeyChange";
   // Hex.toStringCondensed(CryptoUtil.sha256("LIGHTNINGBTCADDRESS".getBytes(StandardCharsets.UTF_8)
   private static final String LIGHTNING_PROFILE_VERSION = "2f289e8cf0f8382f08d4e4eed361206b72599b91ed190a753355e47e8b11d31d";
 
@@ -71,10 +74,15 @@ public final class ProfileUtil {
   }
 
   /**
-   * Should be called after a change to our own profile key as been persisted to the database.
+   * Should be called after a change to our own profile key has been persisted to the database.
    */
   @WorkerThread
   public static void handleSelfProfileKeyChange() {
+    SignalDatabase.runPostSuccessfulTransaction(SELF_PROFILE_KEY_CHANGE_DEDUPE_KEY, ProfileUtil::scheduleSelfProfileKeyChangeJobs);
+  }
+
+  @WorkerThread
+  private static void scheduleSelfProfileKeyChangeJobs() {
     if (SignalStore.account().isLinkedDevice()) {
       Log.i(TAG, "Linked devices shouldn't rotate self profile key after initial link");
       return;
@@ -145,7 +153,7 @@ public final class ProfileUtil {
                                                                                                 boolean allowUnidentifiedAccess)
   {
     ProfileService       profileService     = AppDependencies.getProfileService();
-    SealedSenderAccess   sealedSenderAccess = allowUnidentifiedAccess ? SealedSenderAccessUtil.getSealedSenderAccessFor(recipient, false) : SealedSenderAccess.NONE;
+    SealedSenderAccess   sealedSenderAccess = allowUnidentifiedAccess ? SealedSenderAccessUtil.getSealedSenderAccessForProfileFetch(recipient, false) : SealedSenderAccess.NONE;
     Optional<ProfileKey> profileKey         = ProfileKeyUtil.profileKeyOptional(recipient.getProfileKey());
 
     return Single.fromCallable(() -> toSignalServiceAddress(context, recipient))
@@ -204,8 +212,8 @@ public final class ProfileUtil {
     // expiring profile key credential is unused. Requesting it would fail verification, because the
     // server does not issue a credential for the fixed LIGHTNING_PROFILE_VERSION request, which would
     // null out the whole response and surface as a spurious NOT_ENABLED error.
-    SignalServiceProfile profile = SignalNetwork.profile()
-                                                .getVersionedProfile(recipientACI, profileKey, sealedSenderAccess, LIGHTNING_PROFILE_VERSION)
+    SignalServiceProfile profile = SignalNetwork.profileApi()
+                                                .getVersionedProfileBlocking(recipientACI, profileKey, sealedSenderAccess, LIGHTNING_PROFILE_VERSION)
                                                 .successOrNull();
 
     if (profile == null) {
@@ -221,11 +229,20 @@ public final class ProfileUtil {
     }
 
     try {
-      IdentityKey    identityKey    = new IdentityKey(Base64.decode(profile.getIdentityKey()), 0);
+      // Upstream 8.35: never trust a payment address signed by an identity key other than the one we
+      // already hold for this contact, so the server can't substitute the address.
+      IdentityKey    remoteIdentityKey = new IdentityKey(Base64.decode(profile.getIdentityKey()), 0);
+      IdentityKey    localIdentityKey  = getLocalIdentityKey(recipient);
+
+      if (localIdentityKey != null && !localIdentityKey.equals(remoteIdentityKey)) {
+        Log.w(TAG, "Server-provided identity key does not match locally-stored identity key for " + recipient.getId());
+        throw new PaymentsAddressException(PaymentsAddressException.Code.IDENTITY_MISMATCH);
+      }
+
       ProfileCipher  profileCipher  = new ProfileCipher(profileKey);
       byte[]         decrypted      = profileCipher.decryptWithLength(encryptedPaymentsAddress);
       PaymentAddress paymentAddress = PaymentAddress.ADAPTER.decode(decrypted);
-      byte[]         bytes          = MobileCoinPublicAddressProfileUtil.verifyPaymentsAddress(paymentAddress, identityKey);
+      byte[]         bytes          = MobileCoinPublicAddressProfileUtil.verifyPaymentsAddress(paymentAddress, localIdentityKey != null ? localIdentityKey : remoteIdentityKey);
       String         addr           = new String(bytes, Charsets.UTF_8);
 
       return LightningAddress.Companion.fromLNURL(addr);
@@ -239,6 +256,15 @@ public final class ProfileUtil {
       Log.w(TAG, "Not a lightning address " + recipient.getId(), e);
       throw new PaymentsAddressException(PaymentsAddressException.Code.INVALID_ADDRESS);
     }
+  }
+
+  private static @Nullable IdentityKey getLocalIdentityKey(@NonNull Recipient recipient) {
+    if (!recipient.getHasServiceId()) {
+      return null;
+    }
+
+    IdentityStoreRecord record = SignalDatabase.identities().getIdentityStoreRecord(recipient.requireServiceId());
+    return record != null ? record.getIdentityKey() : null;
   }
 
   private static ProfileKey getProfileKey(@NonNull Recipient recipient) throws IOException {
@@ -419,7 +445,7 @@ public final class ProfileUtil {
     }
 
     ProfileKey profileKey = ProfileKeyUtil.getSelfProfileKey();
-    NetworkResult<String> result = SignalNetwork.profile().setVersionedProfile(SignalStore.account().requireAci(),
+    NetworkResult<String> result = SignalNetwork.profileApi().setVersionedProfile(SignalStore.account().requireAci(),
                                                                                profileKey,
                                                                                profileName.serialize(),
                                                                                about,

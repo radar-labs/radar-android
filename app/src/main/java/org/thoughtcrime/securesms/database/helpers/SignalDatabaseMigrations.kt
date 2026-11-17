@@ -3,7 +3,7 @@ package org.thoughtcrime.securesms.database.helpers
 import android.app.Application
 import android.content.Context
 import android.database.sqlite.SQLiteException
-import org.signal.core.util.areForeignKeyConstraintsEnabled
+import org.signal.core.database.areForeignKeyConstraintsEnabled
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.helpers.migration.SignalDatabaseMigration
@@ -152,6 +152,38 @@ import org.thoughtcrime.securesms.database.helpers.migration.V295_AddLastRestore
 import org.thoughtcrime.securesms.database.helpers.migration.V296_RemovePollVoteConstraint
 import org.thoughtcrime.securesms.database.helpers.migration.V297_AddPinnedMessageColumns
 import org.thoughtcrime.securesms.database.helpers.migration.V298_DoNotBackupReleaseNotes
+import org.thoughtcrime.securesms.database.helpers.migration.V299_AddAttachmentMetadataTable
+import org.thoughtcrime.securesms.database.helpers.migration.V300_AddKeyTransparencyColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V301_RemoveCallLinkEpoch
+import org.thoughtcrime.securesms.database.helpers.migration.V302_AddDeletedByColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V303_CaseInsensitiveUsernames
+import org.thoughtcrime.securesms.database.helpers.migration.V304_CallAndReplyNotificationSettings
+import org.thoughtcrime.securesms.database.helpers.migration.V305_AddStoryArchivedColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V306_AddRemoteDeletedColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V308_AddBackRemoteDeletedColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V309_GroupTerminatedColumnMigration
+import org.thoughtcrime.securesms.database.helpers.migration.V310_AddStarredColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V311_AddAttachmentMediaOverviewSizeIndex
+import org.thoughtcrime.securesms.database.helpers.migration.V312_RefactorNameCollisionTables
+import org.thoughtcrime.securesms.database.helpers.migration.V313_AddCollapsingUpdateColumns
+import org.thoughtcrime.securesms.database.helpers.migration.V314_FixMessageRequestAcceptedToRecipient
+import org.thoughtcrime.securesms.database.helpers.migration.V315_CleanupE164SenderKeyShared
+import org.thoughtcrime.securesms.database.helpers.migration.V316_AddVerifiedGroupNameHashMigration
+import org.thoughtcrime.securesms.database.helpers.migration.V317_AddMessageThreadDateReceivedUnreadIndex
+import org.thoughtcrime.securesms.database.helpers.migration.V318_AddMessageNotificationStateIndex
+import org.thoughtcrime.securesms.database.helpers.migration.V319_AddAttachmentAndMessageIndexes
+import org.thoughtcrime.securesms.database.helpers.migration.V320_AddAttachmentThumbnailFileAndUuidIndexes
+import org.thoughtcrime.securesms.database.helpers.migration.V321_AddScheduledMessageIndex
+import org.thoughtcrime.securesms.database.helpers.migration.V322_NormalizeStickerTable
+import org.thoughtcrime.securesms.database.helpers.migration.V323_AddStickerPackStorageSync
+import org.thoughtcrime.securesms.database.helpers.migration.V324_MoveGroupV1StorageIdsToUnknownIds
+import org.thoughtcrime.securesms.database.helpers.migration.V325_AddBlockedAtToRecipientTable
+import org.thoughtcrime.securesms.database.helpers.migration.V326_AddUnreadReminderColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V327_AddLastUnreadReminderColumn
+import org.thoughtcrime.securesms.database.helpers.migration.V328_AddSharedNameToRecipientTable
+import org.thoughtcrime.securesms.database.helpers.migration.V329_AddStickerFavoriteColumns
+import org.thoughtcrime.securesms.database.helpers.migration.V330_AddHiddenPackColumns
+import org.thoughtcrime.securesms.database.helpers.migration.V331_AddMessageThreadDateSentIndex
 import org.thoughtcrime.securesms.database.SQLiteDatabase as SignalSqliteDatabase
 
 /**
@@ -310,10 +342,43 @@ object SignalDatabaseMigrations {
     295 to V295_AddLastRestoreKeyTypeTableIfMissingMigration,
     296 to V296_RemovePollVoteConstraint,
     297 to V297_AddPinnedMessageColumns,
-    298 to V298_DoNotBackupReleaseNotes
+    298 to V298_DoNotBackupReleaseNotes,
+    299 to V299_AddAttachmentMetadataTable,
+    300 to V300_AddKeyTransparencyColumn,
+    301 to V301_RemoveCallLinkEpoch,
+    302 to V302_AddDeletedByColumn,
+    303 to V303_CaseInsensitiveUsernames,
+    304 to V304_CallAndReplyNotificationSettings,
+    305 to V305_AddStoryArchivedColumn,
+    306 to V306_AddRemoteDeletedColumn,
+//    307 to V307_RemoveRemoteDeletedColumn - Removed due to unsolvable OOM crashes. [TODO]: Attempt to fix in the future
+    308 to V308_AddBackRemoteDeletedColumn,
+    309 to V309_GroupTerminatedColumnMigration,
+    310 to V310_AddStarredColumn,
+    311 to V311_AddAttachmentMediaOverviewSizeIndex,
+    312 to V312_RefactorNameCollisionTables,
+    313 to V313_AddCollapsingUpdateColumns,
+    314 to V314_FixMessageRequestAcceptedToRecipient,
+    315 to V315_CleanupE164SenderKeyShared,
+    316 to V316_AddVerifiedGroupNameHashMigration,
+    317 to V317_AddMessageThreadDateReceivedUnreadIndex,
+    318 to V318_AddMessageNotificationStateIndex,
+    319 to V319_AddAttachmentAndMessageIndexes,
+    320 to V320_AddAttachmentThumbnailFileAndUuidIndexes,
+    321 to V321_AddScheduledMessageIndex,
+    322 to V322_NormalizeStickerTable,
+    323 to V323_AddStickerPackStorageSync,
+    324 to V324_MoveGroupV1StorageIdsToUnknownIds,
+    325 to V325_AddBlockedAtToRecipientTable,
+    326 to V326_AddUnreadReminderColumn,
+    327 to V327_AddLastUnreadReminderColumn,
+    328 to V328_AddSharedNameToRecipientTable,
+    329 to V329_AddStickerFavoriteColumns,
+    330 to V330_AddHiddenPackColumns,
+    331 to V331_AddMessageThreadDateSentIndex
   )
 
-  const val DATABASE_VERSION = 298
+  const val DATABASE_VERSION = 331
 
   @JvmStatic
   fun migrate(context: Application, db: SignalSqliteDatabase, oldVersion: Int, newVersion: Int) {
@@ -363,8 +428,5 @@ object SignalDatabaseMigrations {
 
   @JvmStatic
   fun migratePostTransaction(context: Context, oldVersion: Int) {
-    if (oldVersion < V149_LegacyMigrations.MIGRATE_PREKEYS_VERSION) {
-      PreKeyMigrationHelper.cleanUpPreKeys(context)
-    }
   }
 }

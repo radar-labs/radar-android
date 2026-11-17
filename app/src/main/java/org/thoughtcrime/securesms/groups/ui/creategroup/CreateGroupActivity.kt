@@ -11,7 +11,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -45,18 +44,18 @@ import org.signal.core.ui.compose.AllDevicePreviews
 import org.signal.core.ui.compose.Buttons
 import org.signal.core.ui.compose.Dialogs
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.remoteconfig.SelectionLimits
 import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.SignalTheme
 import org.thoughtcrime.securesms.contacts.SelectedContact
-import org.thoughtcrime.securesms.groups.SelectionLimits
 import org.thoughtcrime.securesms.groups.ui.creategroup.CreateGroupUiState.NavTarget
 import org.thoughtcrime.securesms.groups.ui.creategroup.CreateGroupUiState.UserMessage
 import org.thoughtcrime.securesms.groups.ui.creategroup.details.AddGroupDetailsActivity
 import org.thoughtcrime.securesms.recipients.ui.RecipientLookupFailureMessage
 import org.thoughtcrime.securesms.recipients.ui.RecipientPicker
 import org.thoughtcrime.securesms.recipients.ui.RecipientPickerCallbacks
-import org.thoughtcrime.securesms.recipients.ui.RecipientPickerScaffold
 import org.thoughtcrime.securesms.recipients.ui.RecipientSelection
 import org.thoughtcrime.securesms.recipients.ui.findby.FindByActivity
 import org.thoughtcrime.securesms.recipients.ui.findby.FindByMode
@@ -66,9 +65,6 @@ import java.text.NumberFormat
  * Allows creation of a Signal group by selecting from a list of recipients.
  */
 class CreateGroupActivity : PassphraseRequiredActivity() {
-  /** Draws edge to edge and positions its own content against the insets. */
-  override fun fitsSystemBars(): Boolean = false
-
   companion object {
     @JvmStatic
     fun createIntent(context: Context): Intent {
@@ -77,7 +73,6 @@ class CreateGroupActivity : PassphraseRequiredActivity() {
   }
 
   override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
-    enableEdgeToEdge()
     super.onCreate(savedInstanceState, ready)
 
     val navigateBack = onBackPressedDispatcher::onBackPressed
@@ -115,7 +110,7 @@ private fun CreateGroupScreen(
   )
 
   val callbacks = remember {
-    object : UiCallbacks {
+    object : CreateGroupUiCallbacks {
       override fun onSearchQueryChanged(query: String) = viewModel.onSearchQueryChanged(query)
       override fun onFindByUsername() = findByLauncher.launch(FindByMode.USERNAME)
       override fun onFindByPhoneNumber() = findByLauncher.launch(FindByMode.PHONE_NUMBER)
@@ -153,7 +148,7 @@ private fun CreateGroupScreen(
 @Composable
 private fun CreateGroupScreenUi(
   uiState: CreateGroupUiState,
-  callbacks: UiCallbacks
+  callbacks: CreateGroupUiCallbacks
 ) {
   val title = if (uiState.newSelections.isNotEmpty()) {
     pluralStringResource(
@@ -165,9 +160,8 @@ private fun CreateGroupScreenUi(
     stringResource(R.string.CreateGroupActivity__select_members)
   }
 
-  RecipientPickerScaffold(
+  Scaffolds.TitlePane(
     title = title,
-    forceSplitPane = uiState.forceSplitPane,
     onNavigateUpClick = callbacks::onBackPressed,
     topAppBarActions = {},
     snackbarHostState = remember { SnackbarHostState() },
@@ -221,7 +215,7 @@ private fun CreateGroupScreenUi(
 @Composable
 private fun CreateGroupRecipientPicker(
   uiState: CreateGroupUiState,
-  callbacks: UiCallbacks,
+  callbacks: CreateGroupUiCallbacks,
   modifier: Modifier = Modifier
 ) {
   RecipientPicker(
@@ -243,7 +237,7 @@ private fun CreateGroupRecipientPicker(
   )
 }
 
-private interface UiCallbacks :
+private interface CreateGroupUiCallbacks :
   RecipientPickerCallbacks.ListActions,
   RecipientPickerCallbacks.FindByUsername,
   RecipientPickerCallbacks.FindByPhoneNumber {
@@ -254,7 +248,7 @@ private interface UiCallbacks :
   fun onBackPressed()
   fun onPendingDestinationConsumed()
 
-  object Empty : UiCallbacks {
+  object Empty : CreateGroupUiCallbacks {
     override fun onSearchQueryChanged(query: String) = Unit
     override fun onFindByUsername() = Unit
     override fun onFindByPhoneNumber() = Unit
@@ -290,10 +284,9 @@ private fun CreateGroupScreenPreview() {
   Previews.Preview {
     CreateGroupScreenUi(
       uiState = CreateGroupUiState(
-        forceSplitPane = false,
         selectionLimits = SelectionLimits.NO_LIMITS
       ),
-      callbacks = UiCallbacks.Empty
+      callbacks = CreateGroupUiCallbacks.Empty
     )
   }
 }

@@ -30,14 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
@@ -52,16 +50,18 @@ import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Dialogs
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.core.ui.fonts.SignalSymbols
+import org.signal.core.ui.fonts.SignalSymbols.signalSymbolText
+import org.signal.core.util.ByteSize
+import org.signal.core.util.ByteUnit
 import org.signal.core.util.billing.BillingResponseCode
 import org.signal.core.util.bytes
 import org.signal.core.util.money.FiatMoney
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.backup.v2.MessageBackupTier
-import org.thoughtcrime.securesms.fonts.SignalSymbols
-import org.thoughtcrime.securesms.fonts.SignalSymbols.signalSymbolText
 import org.thoughtcrime.securesms.payments.FiatMoneyUtil
-import org.thoughtcrime.securesms.util.ByteUnit
 import java.math.BigDecimal
 import java.util.Currency
 import kotlin.time.Duration.Companion.days
@@ -91,7 +91,7 @@ fun MessageBackupsTypeSelectionScreen(
   Scaffolds.Settings(
     title = "",
     onNavigationClick = onNavigationClick,
-    navigationIcon = ImageVector.vectorResource(id = R.drawable.symbol_arrow_start_24)
+    navigationIcon = SignalIcons.ArrowStart.imageVector
   ) { paddingValues ->
     Column(
       modifier = Modifier
@@ -110,7 +110,7 @@ fun MessageBackupsTypeSelectionScreen(
           Image(
             painter = painterResource(id = R.drawable.image_signal_backups_plans),
             contentDescription = null,
-            modifier = Modifier.size(88.dp)
+            modifier = Modifier.size(96.dp)
           )
         }
 
@@ -443,7 +443,7 @@ private fun getFeatures(messageBackupsType: MessageBackupsType): List<MessageBac
     is MessageBackupsType.Paid -> {
       val photoCount = messageBackupsType.storageAllowanceBytes / ByteUnit.MEGABYTES.toBytes(2)
       val photoCountThousands = photoCount / 1000
-      val sizeUnitString = messageBackupsType.storageAllowanceBytes.bytes.toUnitString(spaced = false)
+      val sizeUnitString = messageBackupsType.storageAllowanceBytes.bytes.toUnitString(spaced = false, unitSystem = ByteSize.UnitSystem.IEC)
 
       persistentListOf(
         MessageBackupsTypeFeature(

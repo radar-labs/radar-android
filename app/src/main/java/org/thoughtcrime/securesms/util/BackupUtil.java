@@ -11,16 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.VisibleForTesting;
+import androidx.annotation.WorkerThread;
 import androidx.documentfile.provider.DocumentFile;
 
+import org.signal.core.util.Util;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.util.ByteUtil;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.backup.BackupPassphrase;
-import org.thoughtcrime.securesms.database.NoExternalStorageException;
+import org.thoughtcrime.securesms.backup.v2.local.ArchiveFileSystem;
+import org.signal.core.util.NoExternalStorageException;
+import org.signal.core.ui.util.StorageUtil;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.permissions.Permissions;
+import org.signal.core.ui.permissions.Permissions;
 
 import java.io.File;
 import java.security.SecureRandom;
@@ -31,21 +34,23 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import kotlin.Pair;
+
 public class BackupUtil {
 
   private static final String TAG = Log.tag(BackupUtil.class);
 
   public static final int PASSPHRASE_LENGTH = 30;
 
-  public static @NonNull String getLastBackupTime(@NonNull Context context, @NonNull Locale locale) {
+  public static @NonNull Pair<String, String> getLastBackupTime(@NonNull Context context, @NonNull Locale locale) {
     try {
       BackupInfo backup = getLatestBackup();
 
-      if (backup == null) return context.getString(R.string.BackupUtil_never);
+      if (backup == null) return new Pair<>(context.getString(R.string.BackupUtil_never), context.getString(R.string.BackupUtil_never));
       else                return DateUtils.getExtendedRelativeTimeSpanString(context, locale, backup.getTimestamp());
     } catch (NoExternalStorageException e) {
       Log.w(TAG, e);
-      return context.getString(R.string.BackupUtil_unknown);
+      return new Pair<>(context.getString(R.string.BackupUtil_unknown), context.getString(R.string.BackupUtil_unknown));
     }
   }
 
@@ -67,12 +72,54 @@ public class BackupUtil {
     }
   }
 
+  public static boolean canUserAccessUnifiedBackupDirectory(@NonNull Context context) {
+    if (isUserSelectionRequired(context)) {
+      String backupDirectoryPath = SignalStore.backup().getNewLocalBackupsDirectory();
+      if (backupDirectoryPath == null) {
+        return false;
+      }
+
+      Uri backupDirectoryUri = Uri.parse(backupDirectoryPath);
+      if (backupDirectoryUri == null) {
+        return false;
+      }
+
+      DocumentFile backupDirectory = DocumentFile.fromTreeUri(context, backupDirectoryUri);
+      return backupDirectory != null && backupDirectory.exists() && backupDirectory.canRead() && backupDirectory.canWrite();
+    } else {
+      return Permissions.hasAll(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+  }
+
+  public static void deleteUnifiedBackups(@NonNull Context context, @Nullable String backupDirectoryPath) {
+    deleteUnifiedBackups(context, backupDirectoryPath, null);
+  }
+
+  public static void deleteUnifiedBackups(@NonNull Context context, @Nullable String backupDirectoryPath, @Nullable org.thoughtcrime.securesms.backup.v2.local.AllFilesProgressListener progressListener) {
+    if (backupDirectoryPath != null) {
+      Uri          backupDirectoryUri = Uri.parse(backupDirectoryPath);
+      DocumentFile backupDirectory    = DocumentFile.fromTreeUri(context, backupDirectoryUri);
+
+      if (backupDirectory == null || !backupDirectory.exists() || !backupDirectory.canRead() || !backupDirectory.canWrite()) {
+        Log.w(TAG, "Backup directory is inaccessible. Cannot delete backups.");
+        return;
+      }
+
+      for (DocumentFile file : backupDirectory.listFiles()) {
+        if (file.isDirectory() && Objects.equals(file.getName(), ArchiveFileSystem.MAIN_DIRECTORY_NAME)) {
+          ArchiveFileSystem.deleteAll(file, progressListener);
+        }
+      }
+    }
+  }
+
   public static @Nullable BackupInfo getLatestBackup() throws NoExternalStorageException {
     List<BackupInfo> backups = getAllBackupsNewestFirst();
 
     return backups.isEmpty() ? null : backups.get(0);
   }
 
+  @WorkerThread
   public static void deleteAllBackups() {
     Log.i(TAG, "Deleting all backups");
 
@@ -102,7 +149,7 @@ public class BackupUtil {
   }
 
   public static void disableBackups(@NonNull Context context) {
-    BackupPassphrase.set(context, null);
+    SignalStore.backup().setV1BackupPassphrase(null);
     SignalStore.settings().setBackupEnabled(false);
     BackupUtil.deleteAllBackups();
 
@@ -113,7 +160,7 @@ public class BackupUtil {
         return;
       }
 
-      SignalStore.settings().clearSignalBackupDirectory();
+      SignalStore.settings().setSignalBackupDirectory(null);
 
       try {
         context.getContentResolver()

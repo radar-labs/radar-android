@@ -6,7 +6,9 @@ import android.os.Parcelable
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.annotation.WorkerThread
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import org.signal.core.models.media.Media
 import org.signal.core.util.StreamUtil
 import org.signal.core.util.ThreadUtil
 import org.signal.core.util.concurrent.SignalExecutors
@@ -18,7 +20,6 @@ import org.thoughtcrime.securesms.conversation.MessageStyler
 import org.thoughtcrime.securesms.conversation.mutiselect.MultiselectPart
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
-import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mms.PartAuthority
 import org.thoughtcrime.securesms.sharing.MultiShareArgs
 import org.thoughtcrime.securesms.stories.Stories
@@ -35,6 +36,7 @@ import java.util.function.Consumer
  * @param forceSelectionOnly     Force the fragment to only select recipients, never actually performing the send.
  * @param selectSingleRecipient  Only allow the selection of a single recipient.
  * @param isWrappedInBottomSheet Whether the fragment is wrapped in a bottom sheet.
+ * @param searchHint             The hint to display in the search bar when no query is entered.
  */
 @Parcelize
 data class MultiselectForwardFragmentArgs @JvmOverloads constructor(
@@ -42,13 +44,18 @@ data class MultiselectForwardFragmentArgs @JvmOverloads constructor(
   @StringRes val title: Int = R.string.MultiselectForwardFragment__forward_to,
   val forceDisableAddMessage: Boolean = false,
   val forceSelectionOnly: Boolean = false,
+  val forceHideToolbar: Boolean = false,
   val selectSingleRecipient: Boolean = false,
   val sendButtonColors: ViewColorSet = ViewColorSet.PRIMARY,
   val storySendRequirements: Stories.MediaTransform.SendRequirements = Stories.MediaTransform.SendRequirements.CAN_NOT_SEND,
   val isSearchEnabled: Boolean = true,
   val isViewOnce: Boolean = false,
-  val isWrappedInBottomSheet: Boolean = false
+  val isWrappedInBottomSheet: Boolean = false,
+  @StringRes val searchHint: Int = R.string.RecipientSearchBar__search_name_or_number
 ) : Parcelable {
+
+  @IgnoredOnParcel
+  val isToolbarVisible: Boolean = !forceHideToolbar && !isWrappedInBottomSheet
 
   fun withSendButtonTint(@ColorInt sendButtonTint: Int) = copy(sendButtonColors = ViewColorSet.forCustomColor(sendButtonTint))
 

@@ -7,6 +7,7 @@ package org.thoughtcrime.securesms.backup.v2.exporters
 
 import android.database.Cursor
 import okio.ByteString.Companion.toByteString
+import org.signal.archive.proto.Group
 import org.signal.core.models.ServiceId
 import org.signal.core.util.requireBlob
 import org.signal.core.util.requireBoolean
@@ -14,17 +15,16 @@ import org.signal.core.util.requireInt
 import org.signal.core.util.requireLong
 import org.signal.core.util.requireNonNullBlob
 import org.signal.core.util.requireString
-import org.signal.storageservice.protos.groups.AccessControl
-import org.signal.storageservice.protos.groups.Member
-import org.signal.storageservice.protos.groups.local.DecryptedBannedMember
-import org.signal.storageservice.protos.groups.local.DecryptedGroup
-import org.signal.storageservice.protos.groups.local.DecryptedMember
-import org.signal.storageservice.protos.groups.local.DecryptedPendingMember
-import org.signal.storageservice.protos.groups.local.DecryptedRequestingMember
-import org.signal.storageservice.protos.groups.local.EnabledState
+import org.signal.storageservice.storage.protos.groups.AccessControl
+import org.signal.storageservice.storage.protos.groups.Member
+import org.signal.storageservice.storage.protos.groups.local.DecryptedBannedMember
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroup
+import org.signal.storageservice.storage.protos.groups.local.DecryptedMember
+import org.signal.storageservice.storage.protos.groups.local.DecryptedPendingMember
+import org.signal.storageservice.storage.protos.groups.local.DecryptedRequestingMember
+import org.signal.storageservice.storage.protos.groups.local.EnabledState
 import org.thoughtcrime.securesms.backup.v2.ArchiveGroup
 import org.thoughtcrime.securesms.backup.v2.ArchiveRecipient
-import org.thoughtcrime.securesms.backup.v2.proto.Group
 import org.thoughtcrime.securesms.backup.v2.util.toRemote
 import org.thoughtcrime.securesms.conversation.colors.AvatarColor
 import org.thoughtcrime.securesms.database.GroupTable
@@ -50,8 +50,8 @@ class GroupArchiveExporter(private val selfAci: ServiceId.ACI, private val curso
     val extras = RecipientTableCursorUtil.getExtras(cursor)
     val showAsStoryState: GroupTable.ShowAsStoryState = GroupTable.ShowAsStoryState.deserialize(cursor.requireInt(GroupTable.SHOW_AS_STORY_STATE))
 
-    val isActive: Boolean = cursor.requireBoolean(GroupTable.ACTIVE)
-    val decryptedGroup: DecryptedGroup = DecryptedGroup.ADAPTER.decode(cursor.requireBlob(GroupTable.V2_DECRYPTED_GROUP)!!)
+    val isMember: Boolean = cursor.requireBoolean(GroupTable.IS_MEMBER)
+    val decryptedGroup: DecryptedGroup? = cursor.requireBlob(GroupTable.V2_DECRYPTED_GROUP)?.let { DecryptedGroup.ADAPTER.decode(it) }
 
     return ArchiveRecipient(
       id = cursor.requireLong(RecipientTable.ID),
@@ -59,9 +59,10 @@ class GroupArchiveExporter(private val selfAci: ServiceId.ACI, private val curso
         masterKey = cursor.requireNonNullBlob(GroupTable.V2_MASTER_KEY).toByteString(),
         whitelisted = cursor.requireBoolean(RecipientTable.PROFILE_SHARING),
         blocked = cursor.requireBoolean(RecipientTable.BLOCKED),
+        blockedAtTimestamp = cursor.requireLong(RecipientTable.BLOCKED_AT),
         hideStory = extras?.hideStory() ?: false,
         storySendMode = showAsStoryState.toRemote(),
-        snapshot = decryptedGroup.toRemote(isActive, selfAci),
+        snapshot = decryptedGroup?.toRemote(isMember, selfAci) ?: Group.GroupSnapshot(),
         avatarColor = cursor.requireString(RecipientTable.AVATAR_COLOR)?.let { AvatarColor.deserialize(it) }?.toRemote()
       )
     )
@@ -80,9 +81,9 @@ private fun GroupTable.ShowAsStoryState.toRemote(): Group.StorySendMode {
   }
 }
 
-private fun DecryptedGroup.toRemote(isActive: Boolean, selfAci: ServiceId.ACI): Group.GroupSnapshot? {
+private fun DecryptedGroup.toRemote(isMember: Boolean, selfAci: ServiceId.ACI): Group.GroupSnapshot? {
   val selfAciBytes = selfAci.toByteString()
-  val memberFilter = { m: DecryptedMember -> isActive || m.aciBytes != selfAciBytes }
+  val memberFilter = { m: DecryptedMember -> isMember || m.aciBytes != selfAciBytes }
 
   return Group.GroupSnapshot(
     title = Group.GroupAttributeBlob(title = this.title),
@@ -95,8 +96,9 @@ private fun DecryptedGroup.toRemote(isActive: Boolean, selfAci: ServiceId.ACI): 
     membersPendingAdminApproval = this.requestingMembers.map { it.toRemote() },
     inviteLinkPassword = this.inviteLinkPassword,
     description = this.description.takeUnless { it.isBlank() }?.let { Group.GroupAttributeBlob(descriptionText = it) },
-    announcements_only = this.isAnnouncementGroup == EnabledState.ENABLED,
-    members_banned = this.bannedMembers.map { it.toRemote() }
+    announcementsOnly = this.isAnnouncementGroup == EnabledState.ENABLED,
+    membersBanned = this.bannedMembers.map { it.toRemote() },
+    terminated = this.terminated
   )
 }
 
@@ -111,19 +113,30 @@ private fun AccessControl.AccessRequired.toRemote(): Group.AccessControl.AccessR
 }
 
 private fun AccessControl.toRemote(): Group.AccessControl {
-  return Group.AccessControl(members = members.toRemote(), attributes = attributes.toRemote(), addFromInviteLink = addFromInviteLink.toRemote())
+  return Group.AccessControl(
+    members = members.toRemote(),
+    attributes = attributes.toRemote(),
+    addFromInviteLink = addFromInviteLink.toRemote(),
+    memberLabel = memberLabel.toRemote()
+  )
 }
 
 private fun Member.Role.toRemote(): Group.Member.Role {
   return when (this) {
-    Member.Role.UNKNOWN -> Group.Member.Role.UNKNOWN
+    Member.Role.UNKNOWN -> Group.Member.Role.DEFAULT
     Member.Role.DEFAULT -> Group.Member.Role.DEFAULT
     Member.Role.ADMINISTRATOR -> Group.Member.Role.ADMINISTRATOR
   }
 }
 
 private fun DecryptedMember.toRemote(): Group.Member {
-  return Group.Member(userId = aciBytes, role = role.toRemote(), joinedAtVersion = joinedAtRevision)
+  return Group.Member(
+    userId = aciBytes,
+    role = role.toRemote(),
+    joinedAtVersion = joinedAtRevision,
+    labelEmoji = if (labelString.isNotBlank()) labelEmoji else "",
+    labelString = labelString
+  )
 }
 
 private fun DecryptedPendingMember.toRemote(): Group.MemberPendingProfileKey {

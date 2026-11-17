@@ -6,13 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.concurrent.LifecycleDisposable;
 import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity;
 import org.thoughtcrime.securesms.conversation.ConversationIntents;
 import org.thoughtcrime.securesms.groups.ui.creategroup.CreateGroupActivity;
-import org.thoughtcrime.securesms.main.MainNavigationDetailLocation;
+import org.thoughtcrime.securesms.main.MainDetailRoute;
+import org.thoughtcrime.securesms.main.MainNavigationEvents;
 import org.thoughtcrime.securesms.main.MainNavigationViewModel;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -41,11 +42,16 @@ public class MainNavigator {
   }
 
   public void goToConversation(@NonNull RecipientId recipientId, long threadId, int distributionType, int startingPosition) {
+    goToConversation(recipientId, threadId, distributionType, startingPosition, false);
+  }
+
+  public void goToConversation(@NonNull RecipientId recipientId, long threadId, int distributionType, int startingPosition, boolean incognito) {
     Disposable disposable = ConversationIntents.createBuilder(activity, recipientId, threadId)
                                                .map(builder -> builder.withDistributionType(distributionType)
                                                                       .withStartingPosition(startingPosition)
+                                                                      .asIncognito(incognito)
                                                                       .toConversationArgs())
-                                               .subscribe(args -> viewModel.goTo(new MainNavigationDetailLocation.Chats.Conversation(args)));
+                                               .subscribe(args -> viewModel.onEvent(new MainNavigationEvents.GoToDetail(new MainDetailRoute.Conversation(args))));
 
     lifecycleDisposable.add(disposable);
   }

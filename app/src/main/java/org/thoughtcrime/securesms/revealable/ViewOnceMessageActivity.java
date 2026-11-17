@@ -14,19 +14,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 
 import org.signal.core.util.logging.Log;
+import org.signal.glide.decryptableuri.DecryptableUri;
+import org.signal.video.VideoPlayer;
 import org.thoughtcrime.securesms.PassphraseRequiredActivity;
 import org.thoughtcrime.securesms.R;
-import org.thoughtcrime.securesms.mms.DecryptableUri;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.mms.PartAuthority;
-import org.thoughtcrime.securesms.mms.VideoSlide;
-import org.thoughtcrime.securesms.providers.BlobProvider;
 import org.thoughtcrime.securesms.util.MediaUtil;
-import org.thoughtcrime.securesms.video.VideoPlayer;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.thoughtcrime.securesms.util.WindowUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -72,11 +74,17 @@ public class ViewOnceMessageActivity extends PassphraseRequiredActivity implemen
     super.onCreate(savedInstanceState, ready);
     setContentView(R.layout.view_once_message_activity);
 
+    WindowUtil.clearLightStatusBar(getWindow());
+    WindowUtil.clearLightNavigationBar(getWindow());
+
     this.image       = findViewById(R.id.view_once_image);
     this.video       = findViewById(R.id.view_once_video);
     this.duration    = findViewById(R.id.view_once_duration);
     this.closeButton = findViewById(R.id.view_once_close_button);
     this.uri         = getIntent().getParcelableExtra(KEY_URI);
+
+    SystemWindowInsetsSetter.attach(closeButton, this, WindowInsetsCompat.Type.statusBars(), SystemWindowInsetsSetter.ApplyMode.MARGIN);
+    SystemWindowInsetsSetter.attach(duration, this, WindowInsetsCompat.Type.statusBars(), SystemWindowInsetsSetter.ApplyMode.MARGIN);
 
     closeButton.setOnClickListener(v -> finish());
 
@@ -88,7 +96,7 @@ public class ViewOnceMessageActivity extends PassphraseRequiredActivity implemen
     super.onStop();
     cancelDurationUpdate();
     video.cleanup();
-    BlobProvider.getInstance().delete(this, uri);
+    AppDependencies.getBlobs().delete(this, uri);
     finish();
   }
 
@@ -127,11 +135,10 @@ public class ViewOnceMessageActivity extends PassphraseRequiredActivity implemen
     image.setVisibility(View.GONE);
     duration.setVisibility(View.VISIBLE);
 
-    VideoSlide videoSlide = new VideoSlide(this, uri, 0, false);
-
     video.setWindow(getWindow());
     video.setPlayerStateCallbacks(this);
-    video.setVideoSource(videoSlide, true, TAG);
+    video.setExoPlayerPool(AppDependencies.getExoPlayerPool());
+    video.setVideoSource(uri, true, TAG);
 
     video.hideControls();
     video.loopForever();

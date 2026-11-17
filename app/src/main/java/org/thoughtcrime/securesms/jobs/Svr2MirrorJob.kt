@@ -5,6 +5,7 @@
 package org.thoughtcrime.securesms.jobs
 
 import org.signal.core.util.logging.Log
+import org.signal.network.exceptions.NonSuccessfulResponseCodeException
 import org.thoughtcrime.securesms.BuildConfig
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
@@ -13,12 +14,12 @@ import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.pin.Svr3Migration
 import org.thoughtcrime.securesms.pin.SvrRepository
-import org.whispersystems.signalservice.api.push.exceptions.NonSuccessfulResponseCodeException
 import org.whispersystems.signalservice.api.svr.SecureValueRecovery.BackupResponse
 import org.whispersystems.signalservice.api.svr.SecureValueRecovery.PinChangeSession
 import org.whispersystems.signalservice.api.svr.SecureValueRecoveryV2
 import kotlin.concurrent.withLock
 import kotlin.time.Duration.Companion.days
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Ensures a user's SVR data is written to SVR2.
@@ -54,8 +55,18 @@ class Svr2MirrorJob private constructor(parameters: Parameters, private var seri
   override fun getFactoryKey(): String = KEY
 
   override fun run(): Result {
+    if (!SignalStore.account.isRegistered) {
+      Log.w(TAG, "Not registered. Skipping.")
+      return Result.success()
+    }
+
+    if (SignalStore.account.isUnauthorizedReceived) {
+      Log.w(TAG, "Not authorized. Skipping.")
+      return Result.success()
+    }
+
     if (SignalStore.account.isLinkedDevice) {
-      Log.i(TAG, "Not primary device, skipping mirror")
+      Log.i(TAG, "Not primary device. Skipping.")
       return Result.success()
     }
 
@@ -109,6 +120,11 @@ class Svr2MirrorJob private constructor(parameters: Parameters, private var seri
           Log.w(TAG, "Failed to expose the backup. Giving up.")
           Result.success()
         }
+        is BackupResponse.RateLimited -> {
+          val backoff = response.retryAfter ?: defaultBackoff().milliseconds
+          Log.w(TAG, "Hit rate limit. Retrying in $backoff")
+          Result.retry(backoff.inWholeMilliseconds)
+        }
         is BackupResponse.NetworkError -> {
           Log.w(TAG, "Hit a network error. Retrying.", response.exception)
           Result.retry(defaultBackoff())
@@ -122,7 +138,7 @@ class Svr2MirrorJob private constructor(parameters: Parameters, private var seri
   }
 
   private fun Throwable.isUnauthorized(): Boolean {
-    return this is NonSuccessfulResponseCodeException && this.code == 401
+    return this is NonSuccessfulResponseCodeException && (this.code == 401 || this.code == 403)
   }
 
   override fun onFailure() = Unit

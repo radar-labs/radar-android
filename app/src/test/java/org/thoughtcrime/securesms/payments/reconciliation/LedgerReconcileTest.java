@@ -3,16 +3,16 @@ package org.thoughtcrime.securesms.payments.reconciliation;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.annimon.stream.Stream;
+import java.util.stream.Collectors;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.protocol.util.ByteUtil;
 import org.thoughtcrime.securesms.payments.*;
 import org.thoughtcrime.securesms.payments.proto.MobileCoinLedger;
 import org.thoughtcrime.securesms.payments.proto.PaymentMetaData;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.testutil.LogRecorder;
 import org.whispersystems.signalservice.api.payments.Money;
 import org.signal.core.util.UuidUtil;
@@ -163,7 +163,7 @@ public final class LedgerReconcileTest {
 
     List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
-    assertEquals(Arrays.asList(mob(-1), mob(2.5)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
+    assertEquals(Arrays.asList(mob(-1), mob(2.5)), payments.stream().map(Payment::getAmountWithDirection).collect(Collectors.toList()));
     assertEquals("received", payments.get(1).getNote());
   }
 
@@ -176,7 +176,7 @@ public final class LedgerReconcileTest {
 
     List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
-    assertEquals(Arrays.asList(mob(1.5), mob(-2.5), mob(2.5)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
+    assertEquals(Arrays.asList(mob(1.5), mob(-2.5), mob(2.5)), payments.stream().map(Payment::getAmountWithDirection).collect(Collectors.toList()));
     assertEquals("received", payments.get(2).getNote());
   }
 
@@ -189,7 +189,7 @@ public final class LedgerReconcileTest {
 
     List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
-    assertEquals(Arrays.asList(mob(2.5), mob(1.5), mob(-2.5), mob(2.5)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
+    assertEquals(Arrays.asList(mob(2.5), mob(1.5), mob(-2.5), mob(2.5)), payments.stream().map(Payment::getAmountWithDirection).collect(Collectors.toList()));
     assertEquals("received", payments.get(0).getNote());
   }
 
@@ -203,7 +203,7 @@ public final class LedgerReconcileTest {
 
     List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
-    assertEquals(Arrays.asList(mob(1.5), mob(-2.5), mob(10), mob(20)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
+    assertEquals(Arrays.asList(mob(1.5), mob(-2.5), mob(10), mob(20)), payments.stream().map(Payment::getAmountWithDirection).collect(Collectors.toList()));
   }
 
   @Test
@@ -216,8 +216,8 @@ public final class LedgerReconcileTest {
 
     List<Payment> payments = reconcile(localPayments, new MobileCoinLedgerWrapper(null));
 
-    assertEquals(Arrays.asList(20L, 15L, 0L, 10L), Stream.of(payments).map(Payment::getBlockIndex).toList());
-    assertEquals(Arrays.asList(mob(-2.5), mob(10), mob(20), mob(2.5)), Stream.of(payments).map(Payment::getAmountWithDirection).toList());
+    assertEquals(Arrays.asList(20L, 15L, 0L, 10L), payments.stream().map(Payment::getBlockIndex).collect(Collectors.toList()));
+    assertEquals(Arrays.asList(mob(-2.5), mob(10), mob(20), mob(2.5)), payments.stream().map(Payment::getAmountWithDirection).collect(Collectors.toList()));
   }
 
   private static @NonNull List<Payment> reconcile(@NonNull Collection<Payment> localPaymentTransactions,

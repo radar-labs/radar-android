@@ -35,6 +35,7 @@ import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.database.NoSuchMessageException
 import org.thoughtcrime.securesms.database.SignalDatabase.Companion.messages
 import org.thoughtcrime.securesms.database.model.MessageRecord
+import org.thoughtcrime.securesms.database.withAttachments
 import org.thoughtcrime.securesms.util.hasAudio
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -93,7 +94,12 @@ class VoiceNotePlayerCallback(val context: Context, val player: VoiceNotePlayer)
   private var latestUri = Uri.EMPTY
 
   override fun onConnect(session: MediaSession, controller: MediaSession.ControllerInfo): MediaSession.ConnectionResult {
-    return MediaSession.ConnectionResult.accept(CUSTOM_COMMANDS, SUPPORTED_ACTIONS)
+    return if (controller.isTrusted) {
+      MediaSession.ConnectionResult.accept(CUSTOM_COMMANDS, SUPPORTED_ACTIONS)
+    } else {
+      Log.w(TAG, "Rejecting connection from non-trusted caller: ${controller.packageName}")
+      MediaSession.ConnectionResult.reject()
+    }
   }
 
   override fun onPostConnect(session: MediaSession, controller: MediaSession.ControllerInfo) {
@@ -203,9 +209,11 @@ class VoiceNotePlayerCallback(val context: Context, val player: VoiceNotePlayer)
       }
 
       player.playWhenReady = false
-      player.setAudioAttributes(attributes, newStreamType == AudioManager.STREAM_MUSIC)
+      player.setAudioAttributes(attributes, false)
       if (newStreamType == AudioManager.STREAM_VOICE_CALL) {
         player.playWhenReady = true
+      } else {
+        Log.i(TAG, "Audio stream set to $newStreamType. Not playing when ready.")
       }
     }
     return Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))
@@ -258,7 +266,7 @@ class VoiceNotePlayerCallback(val context: Context, val player: VoiceNotePlayer)
 
   private fun loadMediaItemsForSinglePlayback(messageId: Long): List<MediaItem> {
     return try {
-      listOf(messages.getMessageRecord(messageId)).messageRecordsToVoiceNoteMediaItems()
+      listOf(messages.getMessageRecord(messageId)).withAttachments().messageRecordsToVoiceNoteMediaItems()
     } catch (e: NoSuchMessageException) {
       Log.w(TAG, "Could not find message.", e)
       emptyList()
@@ -268,7 +276,7 @@ class VoiceNotePlayerCallback(val context: Context, val player: VoiceNotePlayer)
   @WorkerThread
   private fun loadMediaItemsForConsecutivePlayback(messageId: Long): List<MediaItem> {
     return try {
-      messages.getMessagesAfterVoiceNoteInclusive(messageId, LIMIT).messageRecordsToVoiceNoteMediaItems()
+      messages.getMessagesAfterVoiceNoteInclusive(messageId, LIMIT).withAttachments().messageRecordsToVoiceNoteMediaItems()
     } catch (e: NoSuchMessageException) {
       Log.w(TAG, "Could not find message.", e)
       emptyList()

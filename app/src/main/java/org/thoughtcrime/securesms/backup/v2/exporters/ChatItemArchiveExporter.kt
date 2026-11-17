@@ -6,18 +6,57 @@
 package org.thoughtcrime.securesms.backup.v2.exporters
 
 import android.database.Cursor
+import androidx.annotation.VisibleForTesting
+import okio.ByteString
 import okio.ByteString.Companion.toByteString
 import org.json.JSONArray
 import org.json.JSONException
+import org.signal.archive.proto.AdminDeletedMessage
+import org.signal.archive.proto.ChatItem
+import org.signal.archive.proto.ChatUpdateMessage
+import org.signal.archive.proto.ContactAttachment
+import org.signal.archive.proto.ContactMessage
+import org.signal.archive.proto.DirectStoryReplyMessage
+import org.signal.archive.proto.ExpirationTimerChatUpdate
+import org.signal.archive.proto.GenericGroupUpdate
+import org.signal.archive.proto.GroupCall
+import org.signal.archive.proto.GroupChangeChatUpdate
+import org.signal.archive.proto.GroupExpirationTimerUpdate
+import org.signal.archive.proto.GroupV2MigrationUpdate
+import org.signal.archive.proto.IndividualCall
+import org.signal.archive.proto.LearnedProfileChatUpdate
+import org.signal.archive.proto.MessageAttachment
+import org.signal.archive.proto.PaymentNotification
+import org.signal.archive.proto.PinMessageUpdate
+import org.signal.archive.proto.Poll
+import org.signal.archive.proto.PollTerminateUpdate
+import org.signal.archive.proto.ProfileChangeChatUpdate
+import org.signal.archive.proto.Quote
+import org.signal.archive.proto.Reaction
+import org.signal.archive.proto.RemoteDeletedMessage
+import org.signal.archive.proto.SendStatus
+import org.signal.archive.proto.SessionSwitchoverChatUpdate
+import org.signal.archive.proto.SimpleChatUpdate
+import org.signal.archive.proto.StandardMessage
+import org.signal.archive.proto.Sticker
+import org.signal.archive.proto.StickerMessage
+import org.signal.archive.proto.Text
+import org.signal.archive.proto.ThreadMergeChatUpdate
+import org.signal.archive.proto.ViewOnceMessage
+import org.signal.core.models.ServiceId
+import org.signal.core.models.database.AttachmentId
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64
 import org.signal.core.util.EventTimer
 import org.signal.core.util.Hex
+import org.signal.core.util.JsonUtils
 import org.signal.core.util.ParallelEventTimer
 import org.signal.core.util.StringUtil
 import org.signal.core.util.UuidUtil
 import org.signal.core.util.bytes
 import org.signal.core.util.concurrent.SignalExecutors
 import org.signal.core.util.emptyIfNull
+import org.signal.core.util.isNotEmpty
 import org.signal.core.util.isNotNullOrBlank
 import org.signal.core.util.kibiBytes
 import org.signal.core.util.logging.Log
@@ -33,41 +72,13 @@ import org.signal.core.util.requireLong
 import org.signal.core.util.requireLongOrNull
 import org.signal.core.util.requireString
 import org.signal.core.util.toByteArray
-import org.thoughtcrime.securesms.attachments.AttachmentId
+import org.signal.libsignal.zkgroup.InvalidInputException
+import org.signal.libsignal.zkgroup.receipts.ReceiptCredentialPresentation
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
+import org.thoughtcrime.securesms.backup.v2.BackupMode
 import org.thoughtcrime.securesms.backup.v2.ExportOddities
 import org.thoughtcrime.securesms.backup.v2.ExportSkips
 import org.thoughtcrime.securesms.backup.v2.ExportState
-import org.thoughtcrime.securesms.backup.v2.proto.ChatItem
-import org.thoughtcrime.securesms.backup.v2.proto.ChatUpdateMessage
-import org.thoughtcrime.securesms.backup.v2.proto.ContactAttachment
-import org.thoughtcrime.securesms.backup.v2.proto.ContactMessage
-import org.thoughtcrime.securesms.backup.v2.proto.DirectStoryReplyMessage
-import org.thoughtcrime.securesms.backup.v2.proto.ExpirationTimerChatUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.GenericGroupUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.GroupCall
-import org.thoughtcrime.securesms.backup.v2.proto.GroupChangeChatUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.GroupExpirationTimerUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.GroupV2MigrationUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.IndividualCall
-import org.thoughtcrime.securesms.backup.v2.proto.LearnedProfileChatUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.MessageAttachment
-import org.thoughtcrime.securesms.backup.v2.proto.PaymentNotification
-import org.thoughtcrime.securesms.backup.v2.proto.Poll
-import org.thoughtcrime.securesms.backup.v2.proto.PollTerminateUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.ProfileChangeChatUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.Quote
-import org.thoughtcrime.securesms.backup.v2.proto.Reaction
-import org.thoughtcrime.securesms.backup.v2.proto.RemoteDeletedMessage
-import org.thoughtcrime.securesms.backup.v2.proto.SendStatus
-import org.thoughtcrime.securesms.backup.v2.proto.SessionSwitchoverChatUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.SimpleChatUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.StandardMessage
-import org.thoughtcrime.securesms.backup.v2.proto.Sticker
-import org.thoughtcrime.securesms.backup.v2.proto.StickerMessage
-import org.thoughtcrime.securesms.backup.v2.proto.Text
-import org.thoughtcrime.securesms.backup.v2.proto.ThreadMergeChatUpdate
-import org.thoughtcrime.securesms.backup.v2.proto.ViewOnceMessage
 import org.thoughtcrime.securesms.backup.v2.util.clampToValidBackupRange
 import org.thoughtcrime.securesms.backup.v2.util.toRemoteFilePointer
 import org.thoughtcrime.securesms.contactshare.Contact
@@ -99,8 +110,6 @@ import org.thoughtcrime.securesms.mms.QuoteModel
 import org.thoughtcrime.securesms.payments.FailureReason
 import org.thoughtcrime.securesms.payments.State
 import org.thoughtcrime.securesms.polls.PollRecord
-import org.thoughtcrime.securesms.recipients.RecipientId
-import org.thoughtcrime.securesms.util.JsonUtils
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.mb
 import java.io.Closeable
@@ -112,14 +121,15 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Future
 import kotlin.math.max
 import kotlin.time.Duration.Companion.days
-import org.thoughtcrime.securesms.backup.v2.proto.BodyRange as BackupBodyRange
-import org.thoughtcrime.securesms.backup.v2.proto.GiftBadge as BackupGiftBadge
+import org.signal.archive.proto.BodyRange as BackupBodyRange
+import org.signal.archive.proto.GiftBadge as BackupGiftBadge
 
 private val TAG = Log.tag(ChatItemArchiveExporter::class.java)
 private val MAX_INLINED_BODY_SIZE = 128.kibiBytes.bytes.toInt()
 private val MAX_INLINED_BODY_SIZE_WITH_LONG_ATTACHMENT_POINTER = 2.kibiBytes.bytes.toInt()
 private val MAX_INLINED_QUOTE_BODY_SIZE = 2.kibiBytes.bytes.toInt()
-private const val MAX_POLL_CHARACTER_LENGTH = 100
+private const val MAX_POLL_QUESTION_GRAPHEME_LENGTH = 200
+private const val MAX_POLL_OPTION_GRAPHEME_LENGTH = 100
 private const val MAX_POLL_OPTIONS = 10
 
 /**
@@ -136,12 +146,19 @@ class ChatItemArchiveExporter(
   private val backupStartTime: Long,
   private val batchSize: Int,
   private val exportState: ExportState,
-  private val cursorGenerator: (Long, Int) -> Cursor
+  private val cursorGenerator: (Long, Int) -> Cursor,
+  private val maxBufferMemorySize: Int = MAX_BUFFER_MEMORY_SIZE
 ) : Iterator<ChatItem?>, Closeable {
 
   companion object {
     val EXPIRATION_CUTOFF = 1.days
     private val MAX_BUFFER_MEMORY_SIZE = 15.mb
+
+    /** Never ask the database for fewer rows than this, no matter how large the individual records are. */
+    private const val MIN_ROW_LIMIT = 100
+
+    /** How many extra rows to ask for beyond what we expect to consume, to account for records getting smaller. */
+    private const val ROW_LIMIT_HEADROOM = 1.5
   }
 
   /** Timer for more macro-level events, like fetching extra data vs transforming the data. */
@@ -163,7 +180,19 @@ class ChatItemArchiveExporter(
 
   private var lastSeenReceivedTime = 0L
 
-  private var records: LinkedHashMap<Long, BackupMessageRecord> = readNextMessageRecordBatch(emptySet())
+  /**
+   * The ids of every record we've already exported that shares [lastSeenReceivedTime].
+   */
+  private val lastSeenReceivedTimeIds: MutableSet<Long> = hashSetOf()
+
+  /**
+   * The number of rows we ask the database for when reading the next batch. Starts with max and then adjusts
+   * up and down to account for changes in message sizes.
+   */
+  private var rowLimit = batchSize
+
+  @VisibleForTesting
+  internal var records: LinkedHashMap<Long, BackupMessageRecord> = readNextMessageRecordBatch()
 
   override fun hasNext(): Boolean {
     return buffer.isNotEmpty() || records.isNotEmpty()
@@ -174,7 +203,7 @@ class ChatItemArchiveExporter(
       return buffer.remove()
     }
 
-    val extraData = fetchExtraMessageData(db, records.keys)
+    val extraData = fetchExtraMessageData(db = db, messageIds = records.keys)
     eventTimer.emit("extra-data")
     transformTimer.emit("ignore")
 
@@ -187,9 +216,20 @@ class ChatItemArchiveExporter(
       }
 
       when {
-        record.remoteDeleted -> {
-          builder.remoteDeletedMessage = RemoteDeletedMessage()
-          transformTimer.emit("remote-delete")
+        record.deletedBy != null -> {
+          val deletedByAuthor = record.deletedBy == builder.authorId
+          val isGroupChat = exportState.threadIdToRecipientId[record.threadId] in exportState.groupRecipientIds
+
+          if (!deletedByAuthor && isGroupChat) {
+            builder.adminDeletedMessage = AdminDeletedMessage(adminId = record.deletedBy)
+            transformTimer.emit("admin-delete")
+          } else {
+            if (!deletedByAuthor) {
+              Log.w(TAG, ExportOddities.adminDeleteInNonGroupChat(record.dateSent))
+            }
+            builder.remoteDeletedMessage = RemoteDeletedMessage()
+            transformTimer.emit("remote-delete")
+          }
         }
 
         MessageTypes.isJoinedType(record.type) -> {
@@ -230,6 +270,10 @@ class ChatItemArchiveExporter(
         }
 
         MessageTypes.isReleaseChannelDonationRequest(record.type) -> {
+          if (exportState.threadIdToRecipientId[builder.chatId] != exportState.releaseNoteRecipientId) {
+            Log.w(TAG, ExportSkips.donationRequestNotInReleaseNotesChat(builder.dateSent))
+            continue
+          }
           builder.updateMessage = simpleUpdate(SimpleChatUpdate.Type.RELEASE_CHANNEL_DONATION_REQUEST)
           transformTimer.emit("simple-update")
         }
@@ -307,7 +351,7 @@ class ChatItemArchiveExporter(
         }
 
         MessageTypes.isSessionSwitchoverType(record.type) -> {
-          builder.updateMessage = record.toRemoteSessionSwitchoverUpdate(record.dateSent)
+          builder.updateMessage = record.toRemoteSessionSwitchoverUpdate(record.dateSent)?.takeIf { builder.authorIsAciContact(exportState) } ?: continue
           transformTimer.emit("sse")
         }
 
@@ -366,7 +410,7 @@ class ChatItemArchiveExporter(
         }
 
         !record.sharedContacts.isNullOrEmpty() -> {
-          builder.contactMessage = record.toRemoteContactMessage(reactionRecords = extraData.reactionsById[id], attachments = extraData.attachmentsById[id]) ?: continue
+          builder.contactMessage = record.toRemoteContactMessage(reactionRecords = extraData.reactionsById[id], attachments = extraData.attachmentsById[id], exportState = exportState) ?: continue
           transformTimer.emit("contact")
         }
 
@@ -380,7 +424,7 @@ class ChatItemArchiveExporter(
             Log.w(TAG, ExportSkips.directStoryReplyInNoteToSelf(record.dateSent))
             continue
           }
-          builder.directStoryReplyMessage = record.toRemoteDirectStoryReplyMessage(reactionRecords = extraData.reactionsById[id], attachments = extraData.attachmentsById[record.id]) ?: continue
+          builder.directStoryReplyMessage = record.toRemoteDirectStoryReplyMessage(reactionRecords = extraData.reactionsById[id], attachments = extraData.attachmentsById[record.id], exportState = exportState) ?: continue
           transformTimer.emit("story")
         }
 
@@ -395,30 +439,35 @@ class ChatItemArchiveExporter(
         }
 
         extraData.pollsById[record.id] != null -> {
-          if (exportState.threadIdToRecipientId[builder.chatId] !in exportState.groupRecipientIds) {
-            Log.w(TAG, ExportSkips.pollNotInGroupChat(record.dateSent))
-            continue
-          }
-
           val poll = extraData.pollsById[record.id]!!
-          if (poll.question.isEmpty() || poll.question.length > MAX_POLL_CHARACTER_LENGTH) {
+          if (!poll.hasValidQuestionForExport()) {
             Log.w(TAG, ExportSkips.invalidPollQuestion(record.dateSent))
             continue
           }
-          if (poll.pollOptions.isEmpty() || poll.pollOptions.size > MAX_POLL_OPTIONS || poll.pollOptions.any { it.text.isEmpty() || it.text.length > MAX_POLL_CHARACTER_LENGTH }) {
+          if (!poll.hasValidOptionsForExport()) {
             Log.w(TAG, ExportSkips.invalidPollOption(record.dateSent))
             continue
           }
-          builder.poll = poll.toRemotePollMessage(reactionRecords = extraData.reactionsById[record.id])
+          builder.poll = poll.toRemotePollMessage(reactionRecords = extraData.reactionsById[record.id], exportState = exportState)
           transformTimer.emit("poll")
+        }
+
+        MessageTypes.isPinnedMessageUpdate(record.type) -> {
+          val pinMessageUpdate = record.toRemotePinMessageUpdate(exportState)
+          if (pinMessageUpdate == null) {
+            Log.w(TAG, ExportSkips.pinMessageIsInvalid(record.dateSent))
+            continue
+          }
+          builder.updateMessage = ChatUpdateMessage(pinMessage = pinMessageUpdate)
+          transformTimer.emit("pin-message")
         }
 
         else -> {
           val attachments = extraData.attachmentsById[record.id]
-          val sticker = attachments?.firstOrNull { dbAttachment -> dbAttachment.isSticker }
+          val sticker = attachments?.firstOrNull { dbAttachment -> dbAttachment.isSticker && !dbAttachment.quote }
 
           if (sticker?.stickerLocator != null) {
-            builder.stickerMessage = sticker.toRemoteStickerMessage(sentTimestamp = record.dateSent, reactions = extraData.reactionsById[id])
+            builder.stickerMessage = sticker.toRemoteStickerMessage(sentTimestamp = record.dateSent, reactions = extraData.reactionsById[id], exportState = exportState)
           } else {
             val standardMessage = record.toRemoteStandardMessage(
               exportState = exportState,
@@ -454,10 +503,9 @@ class ChatItemArchiveExporter(
     }
     eventTimer.emit("transform")
 
-    val recordIds = HashSet(records.keys)
     records.clear()
 
-    records = readNextMessageRecordBatch(recordIds)
+    records = readNextMessageRecordBatch()
     eventTimer.emit("messages")
 
     return if (buffer.isNotEmpty()) {
@@ -473,22 +521,55 @@ class ChatItemArchiveExporter(
     Log.d(TAG, "[ChatItemArchiveExporterExtraData][batchSize = $batchSize] ${extraDataTimer.stop().summary}")
   }
 
-  private fun readNextMessageRecordBatch(pastIds: Set<Long>): LinkedHashMap<Long, BackupMessageRecord> {
-    return cursorGenerator(lastSeenReceivedTime, batchSize).use { cursor ->
-      val records: LinkedHashMap<Long, BackupMessageRecord> = LinkedHashMap(batchSize)
-      var estimatedRecordsMemorySize = 0
-      while (cursor.moveToNext() && estimatedRecordsMemorySize < MAX_BUFFER_MEMORY_SIZE) {
-        cursor.toBackupMessageRecord(pastIds, backupStartTime)?.let { record ->
-          records[record.id] = record
-          lastSeenReceivedTime = record.dateReceived
-          estimatedRecordsMemorySize += record.estimatedSizeInBytes
+  @VisibleForTesting
+  internal fun readNextMessageRecordBatch(): LinkedHashMap<Long, BackupMessageRecord> {
+    var limit = rowLimit
+
+    while (true) {
+      val batch: LinkedHashMap<Long, BackupMessageRecord> = LinkedHashMap(limit.coerceAtMost(batchSize))
+      var estimatedBatchMemorySize = 0
+      var rowsRead = 0
+
+      cursorGenerator(lastSeenReceivedTime, limit).use { cursor ->
+        while (cursor.moveToNext()) {
+          rowsRead++
+
+          val record = cursor.toBackupMessageRecord(lastSeenReceivedTimeIds, backupStartTime) ?: continue
+
+          if (record.dateReceived != lastSeenReceivedTime) {
+            lastSeenReceivedTime = record.dateReceived
+            lastSeenReceivedTimeIds.clear()
+          }
+          lastSeenReceivedTimeIds += record.id
+
+          batch[record.id] = record
+          estimatedBatchMemorySize += record.estimatedSizeInBytes
+
+          if (estimatedBatchMemorySize >= maxBufferMemorySize) {
+            break
+          }
         }
       }
 
-      if (estimatedRecordsMemorySize > MAX_BUFFER_MEMORY_SIZE) {
-        Log.d(TAG, "[readNextMessageRecordBatch] recordsSize = ${records.size} recordsMemSize: ${estimatedRecordsMemorySize.bytes.toUnitString(spaced = false)}")
+      if (batch.isEmpty() && rowsRead >= limit) {
+        limit = lastSeenReceivedTimeIds.size + MIN_ROW_LIMIT
+        Log.w(TAG, "[readNextMessageRecordBatch] All $rowsRead rows read were already exported. Retrying with a limit of $limit.")
+        continue
       }
-      records
+
+      if (batch.isNotEmpty()) {
+        val previousRowLimit = rowLimit
+        val averageRecordSize = max(1, estimatedBatchMemorySize / batch.size)
+        val sizeBasedLimit = ((maxBufferMemorySize / averageRecordSize) * ROW_LIMIT_HEADROOM).toInt()
+
+        rowLimit = sizeBasedLimit.coerceIn(MIN_ROW_LIMIT, max(MIN_ROW_LIMIT, batchSize)) + lastSeenReceivedTimeIds.size
+
+        if (rowLimit != previousRowLimit) {
+          Log.d(TAG, "[readNextMessageRecordBatch] recordsSize = ${batch.size}, recordsMemSize = ${estimatedBatchMemorySize.bytes.toUnitString(spaced = false)}, avgRecordSize = ${averageRecordSize.bytes.toUnitString(spaced = false)}. Adjusting rowLimit $previousRowLimit -> $rowLimit")
+        }
+      }
+
+      return batch
     }
   }
 
@@ -509,7 +590,7 @@ class ChatItemArchiveExporter(
 
     val attachmentsFuture = executor.submitTyped {
       extraDataTimer.timeEvent("attachments") {
-        db.attachmentTable.getAttachmentsForMessages(messageIds, excludeTranscodingQuotes = true)
+        db.attachmentTable.getAttachmentsForMessagesArchive(messageIds)
       }
     }
 
@@ -541,6 +622,16 @@ class ChatItemArchiveExporter(
   }
 }
 
+@VisibleForTesting
+internal fun PollRecord.hasValidQuestionForExport(): Boolean {
+  return question.isNotEmpty() && StringUtil.getGraphemeCount(question) <= MAX_POLL_QUESTION_GRAPHEME_LENGTH
+}
+
+@VisibleForTesting
+internal fun PollRecord.hasValidOptionsForExport(): Boolean {
+  return pollOptions.isNotEmpty() && pollOptions.size <= MAX_POLL_OPTIONS && pollOptions.all { it.text.isNotEmpty() && StringUtil.getGraphemeCount(it.text) <= MAX_POLL_OPTION_GRAPHEME_LENGTH }
+}
+
 private fun simpleUpdate(type: SimpleChatUpdate.Type): ChatUpdateMessage {
   return ChatUpdateMessage(simpleUpdate = SimpleChatUpdate(type = type))
 }
@@ -553,7 +644,7 @@ private fun BackupMessageRecord.toBasicChatItemBuilder(selfRecipientId: Recipien
   }
 
   val direction = when {
-    record.type.isDirectionlessType() && !record.remoteDeleted -> {
+    record.type.isDirectionlessType() && record.deletedBy == null -> {
       Direction.DIRECTIONLESS
     }
     MessageTypes.isOutgoingMessageType(record.type) || record.fromRecipientId == selfRecipientId.toLong() -> {
@@ -595,6 +686,7 @@ private fun BackupMessageRecord.toBasicChatItemBuilder(selfRecipientId: Recipien
     expiresInMs = record.expiresIn.takeIf { it > 0 }
     revisions = emptyList()
     sms = record.type.isSmsType()
+    pinDetails = record.toPinDetails()
     when (direction) {
       Direction.DIRECTIONLESS -> {
         directionless = ChatItem.DirectionlessMessageDetails()
@@ -626,14 +718,21 @@ private fun BackupMessageRecord.toBasicChatItemBuilder(selfRecipientId: Recipien
     }
   }
 
-  if (!MessageTypes.isExpirationTimerUpdate(record.type) && builder.expiresInMs != null && builder.expireStartDate != null) {
-    val cutoffDuration = ChatItemArchiveExporter.EXPIRATION_CUTOFF.inWholeMilliseconds
-    val expiresAt = builder.expireStartDate!! + builder.expiresInMs!!
-    val threshold = if (exportState.forTransfer) backupStartTime else backupStartTime + cutoffDuration
-
-    if (expiresAt < threshold || (builder.expiresInMs!! <= cutoffDuration && !exportState.forTransfer)) {
+  if (!MessageTypes.isExpirationTimerUpdate(record.type) && builder.expiresInMs != null) {
+    if (exportState.backupMode.isPlaintextExport) {
       Log.w(TAG, ExportSkips.messageExpiresTooSoon(record.dateSent))
       return null
+    }
+
+    if (builder.expireStartDate != null) {
+      val cutoffDuration = ChatItemArchiveExporter.EXPIRATION_CUTOFF.inWholeMilliseconds
+      val expiresAt = builder.expireStartDate!! + builder.expiresInMs!!
+      val threshold = if (exportState.backupMode.isLinkAndSync) backupStartTime else backupStartTime + cutoffDuration
+
+      if (expiresAt < threshold || (builder.expiresInMs!! <= cutoffDuration && !exportState.backupMode.isLinkAndSync)) {
+        Log.w(TAG, ExportSkips.messageExpiresTooSoon(record.dateSent))
+        return null
+      }
     }
   }
 
@@ -658,8 +757,9 @@ private fun BackupMessageRecord.toRemoteProfileChangeUpdate(): ChatUpdateMessage
   } else if (profileChangeDetails?.learnedProfileName != null) {
     val e164 = profileChangeDetails.learnedProfileName.e164?.e164ToLong()
     val username = profileChangeDetails.learnedProfileName.username
-    if (e164 != null || username.isNotNullOrBlank()) {
-      ChatUpdateMessage(learnedProfileChange = LearnedProfileChatUpdate(e164 = e164, username = username))
+    val sharedName = profileChangeDetails.learnedProfileName.sharedName
+    if (e164 != null || username.isNotNullOrBlank() || sharedName.isNotNullOrBlank()) {
+      ChatUpdateMessage(learnedProfileChange = LearnedProfileChatUpdate(e164 = e164, username = username, sharedName = sharedName))
     } else {
       Log.w(TAG, ExportSkips.emptyLearnedProfileChange(this.dateSent))
       null
@@ -669,7 +769,7 @@ private fun BackupMessageRecord.toRemoteProfileChangeUpdate(): ChatUpdateMessage
   }
 }
 
-private fun BackupMessageRecord.toRemoteSessionSwitchoverUpdate(sentTimestamp: Long): ChatUpdateMessage {
+private fun BackupMessageRecord.toRemoteSessionSwitchoverUpdate(sentTimestamp: Long): ChatUpdateMessage? {
   if (this.body == null) {
     return ChatUpdateMessage(sessionSwitchover = SessionSwitchoverChatUpdate())
   }
@@ -677,10 +777,10 @@ private fun BackupMessageRecord.toRemoteSessionSwitchoverUpdate(sentTimestamp: L
   return ChatUpdateMessage(
     sessionSwitchover = try {
       val event = SessionSwitchoverEvent.ADAPTER.decode(Base64.decodeOrThrow(this.body))
-      val e164 = event.e164.e164ToLong() ?: return ChatUpdateMessage(sessionSwitchover = SessionSwitchoverChatUpdate()).logW(TAG, ExportOddities.invalidE164InSessionSwitchover(sentTimestamp))
+      val e164 = event.e164.e164ToLong() ?: return null.logW(TAG, ExportSkips.invalidE164InSessionSwitchover(sentTimestamp))
       SessionSwitchoverChatUpdate(e164)
     } catch (e: IOException) {
-      SessionSwitchoverChatUpdate()
+      null
     }
   )
 }
@@ -831,8 +931,8 @@ private fun BackupMessageRecord.toRemotePaymentNotificationUpdate(db: SignalData
     PaymentNotification()
   } else {
     PaymentNotification(
-      amountMob = payment.amount.serializeAmountString(),
-      feeMob = payment.fee.serializeAmountString(),
+      amountMob = payment.amount.requireMobileCoin().amountDecimalString,
+      feeMob = payment.fee.requireMobileCoin().amountDecimalString,
       note = payment.note.takeUnless { it.isEmpty() },
       transactionDetails = payment.toRemoteTransactionDetails()
     )
@@ -844,6 +944,27 @@ private fun BackupMessageRecord.toRemotePollTerminateUpdate(): PollTerminateUpda
   return PollTerminateUpdate(
     targetSentTimestamp = pollTerminate.targetTimestamp,
     question = pollTerminate.question
+  )
+}
+
+private fun BackupMessageRecord.toPinDetails(): ChatItem.PinDetails? {
+  return if (this.pinnedAt == 0L || this.pinnedUntil == 0L) {
+    null
+  } else {
+    ChatItem.PinDetails(
+      pinnedAtTimestamp = this.pinnedAt,
+      pinExpiresAtTimestamp = this.pinnedUntil.takeIf { it != MessageTable.PIN_FOREVER },
+      pinNeverExpires = (this.pinnedUntil == MessageTable.PIN_FOREVER).takeIf { it }
+    )
+  }
+}
+
+private fun BackupMessageRecord.toRemotePinMessageUpdate(exportState: ExportState): PinMessageUpdate? {
+  val pinMessage = this.messageExtras?.pinnedMessage ?: return null
+  val authorId = exportState.aciToRecipientId[ServiceId.ACI.parseOrNull(pinMessage.targetAuthorAci).toString()] ?: return null
+  return PinMessageUpdate(
+    targetSentTimestamp = pinMessage.targetTimestamp,
+    authorId = authorId
   )
 }
 
@@ -920,39 +1041,39 @@ private fun BackupMessageRecord.toRemoteLinkPreviews(attachments: List<DatabaseA
   return emptyList()
 }
 
-private fun LinkPreview.toRemoteLinkPreview(): org.thoughtcrime.securesms.backup.v2.proto.LinkPreview {
-  return org.thoughtcrime.securesms.backup.v2.proto.LinkPreview(
+private fun LinkPreview.toRemoteLinkPreview(backupMode: BackupMode): org.signal.archive.proto.LinkPreview {
+  return org.signal.archive.proto.LinkPreview(
     url = url,
     title = title.nullIfEmpty(),
-    image = (thumbnail.orNull() as? DatabaseAttachment)?.toRemoteMessageAttachment()?.pointer,
+    image = (thumbnail.orNull() as? DatabaseAttachment)?.toRemoteMessageAttachment(backupMode = backupMode)?.pointer,
     description = description.nullIfEmpty(),
     date = date.clampToValidBackupRange()
   )
 }
 
 private fun BackupMessageRecord.toRemoteViewOnceMessage(exportState: ExportState, reactionRecords: List<ReactionRecord>?, attachments: List<DatabaseAttachment>?): ViewOnceMessage {
-  val attachment: MessageAttachment? = if (exportState.forTransfer) {
+  val attachment: MessageAttachment? = if (exportState.backupMode.isLinkAndSync) {
     attachments
       ?.firstOrNull()
       ?.takeUnless { !it.hasData && it.size == 0L && it.remoteDigest == null && it.width == 0 && it.height == 0 && it.blurHash == null }
-      ?.toRemoteMessageAttachment()
+      ?.toRemoteMessageAttachment(backupMode = exportState.backupMode)
   } else {
     null
   }
 
   return ViewOnceMessage(
     attachment = attachment,
-    reactions = reactionRecords?.toRemote() ?: emptyList()
+    reactions = reactionRecords.toRemote(exportState)
   )
 }
 
-private fun BackupMessageRecord.toRemoteContactMessage(reactionRecords: List<ReactionRecord>?, attachments: List<DatabaseAttachment>?): ContactMessage? {
+private fun BackupMessageRecord.toRemoteContactMessage(reactionRecords: List<ReactionRecord>?, attachments: List<DatabaseAttachment>?, exportState: ExportState): ContactMessage? {
   val sharedContact = toRemoteSharedContact(attachments) ?: return null
 
   return ContactMessage(
     contact = ContactAttachment(
       name = sharedContact.name.toRemote(),
-      avatar = (sharedContact.avatar?.attachment as? DatabaseAttachment)?.toRemoteMessageAttachment()?.pointer,
+      avatar = (sharedContact.avatar?.attachment as? DatabaseAttachment)?.toRemoteMessageAttachment(backupMode = exportState.backupMode)?.pointer,
       organization = sharedContact.organization ?: "",
       number = sharedContact.phoneNumbers.mapNotNull { phone ->
         ContactAttachment.Phone(
@@ -980,9 +1101,23 @@ private fun BackupMessageRecord.toRemoteContactMessage(reactionRecords: List<Rea
           postcode = address.postalCode ?: "",
           country = address.country ?: ""
         ).takeUnless { it.street.isBlank() && it.pobox.isBlank() && it.neighborhood.isBlank() && it.city.isBlank() && it.region.isBlank() && it.postcode.isBlank() && it.country.isBlank() }
-      }
+      },
+      aci = ServiceId.ACI.parseOrNull(sharedContact.aci)?.takeIf { it.isValid }?.toByteString() ?: ByteString.EMPTY,
+      nickname = sharedContact.nickname.toRemote(),
+      note = sharedContact.note ?: ""
     ),
-    reactions = reactionRecords.toRemote()
+    reactions = reactionRecords.toRemote(exportState)
+  )
+}
+
+private fun Contact.SignalNickname?.toRemote(): ContactAttachment.SignalNickname? {
+  if (this == null || this.isEmpty) {
+    return null
+  }
+
+  return ContactAttachment.SignalNickname(
+    given = this.given ?: "",
+    family = this.family ?: ""
   )
 }
 
@@ -1033,7 +1168,7 @@ private fun Contact.PostalAddress.Type.toRemote(): ContactAttachment.PostalAddre
   }
 }
 
-private fun BackupMessageRecord.toRemoteDirectStoryReplyMessage(reactionRecords: List<ReactionRecord>?, attachments: List<DatabaseAttachment>?): DirectStoryReplyMessage? {
+private fun BackupMessageRecord.toRemoteDirectStoryReplyMessage(reactionRecords: List<ReactionRecord>?, attachments: List<DatabaseAttachment>?, exportState: ExportState): DirectStoryReplyMessage? {
   if (this.body.isNullOrBlank()) {
     Log.w(TAG, ExportSkips.directStoryReplyHasNoBody(this.dateSent))
     return null
@@ -1055,12 +1190,12 @@ private fun BackupMessageRecord.toRemoteDirectStoryReplyMessage(reactionRecords:
           body = bodyText,
           bodyRanges = this.bodyRanges?.toRemoteBodyRanges(this.dateSent) ?: emptyList()
         ),
-        longText = longTextAttachment?.toRemoteFilePointer()
+        longText = longTextAttachment?.toRemoteFilePointer(backupMode = exportState.backupMode)
       )
     } else {
       null
     },
-    reactions = reactionRecords.toRemote()
+    reactions = reactionRecords.toRemote(exportState)
   )
 }
 
@@ -1087,10 +1222,10 @@ private fun BackupMessageRecord.toRemoteStandardMessage(exportState: ExportState
   return StandardMessage(
     quote = this.toRemoteQuote(exportState, quotedAttachments),
     text = text.takeUnless { hasVoiceNote },
-    attachments = messageAttachments.toRemoteAttachments().withFixedVoiceNotes(textPresent = text != null || longTextAttachment != null),
-    linkPreview = linkPreviews.map { it.toRemoteLinkPreview() },
-    longText = longTextAttachment?.toRemoteFilePointer(),
-    reactions = reactionRecords.toRemote()
+    attachments = messageAttachments.toRemoteAttachments(exportState.backupMode).withFixedVoiceNotes(textPresent = text != null || longTextAttachment != null),
+    linkPreview = linkPreviews.map { it.toRemoteLinkPreview(exportState.backupMode) },
+    longText = longTextAttachment?.toRemoteFilePointer(backupMode = exportState.backupMode),
+    reactions = reactionRecords.toRemote(exportState)
   )
 }
 
@@ -1099,7 +1234,7 @@ private fun BackupMessageRecord.toRemoteStandardMessage(exportState: ExportState
  * you should set it as the value for [StandardMessage.longText].
  */
 private fun BackupMessageRecord.getBodyText(attachments: List<DatabaseAttachment>?): Pair<String, DatabaseAttachment?> {
-  val longTextAttachment = attachments?.firstOrNull { it.contentType == "text/x-signal-plain" }
+  val longTextAttachment = attachments?.firstOrNull { it.contentType == "text/x-signal-plain" && !it.quote }
   if (longTextAttachment == null) {
     return this.body.emptyIfNull() to null
   }
@@ -1136,6 +1271,16 @@ private fun BackupMessageRecord.toRemoteQuote(exportState: ExportState, attachme
     return null
   }
 
+  if (!exportState.recipientIds.contains(this.quoteAuthor)) {
+    Log.w(TAG, ExportOddities.quoteAuthorNotFound(this.dateSent))
+    return null
+  }
+
+  if (exportState.recipientIdToAci[this.quoteAuthor] == null && exportState.recipientIdToE164[this.quoteAuthor] == null) {
+    Log.w(TAG, ExportOddities.quoteAuthorHasNoAciOrE164(this.dateSent))
+    return null
+  }
+
   val localType = QuoteModel.Type.fromCode(this.quoteType)
   val remoteType = when (localType) {
     QuoteModel.Type.NORMAL -> {
@@ -1160,7 +1305,7 @@ private fun BackupMessageRecord.toRemoteQuote(exportState: ExportState, attachme
   val attachments = if (remoteType == Quote.Type.VIEW_ONCE) {
     emptyList()
   } else {
-    attachments?.toRemoteQuoteAttachments() ?: emptyList()
+    attachments?.toRemoteQuoteAttachments(exportState.backupMode) ?: emptyList()
   }
 
   if (remoteType == Quote.Type.NORMAL && body == null && attachments.isEmpty()) {
@@ -1185,18 +1330,45 @@ private fun BackupMessageRecord.toRemoteGiftBadgeUpdate(): BackupGiftBadge? {
     return null
   }
 
-  return BackupGiftBadge(
-    receiptCredentialPresentation = giftBadge.redemptionToken,
-    state = when (giftBadge.redemptionState) {
-      GiftBadge.RedemptionState.REDEEMED -> BackupGiftBadge.State.REDEEMED
-      GiftBadge.RedemptionState.FAILED -> BackupGiftBadge.State.FAILED
-      GiftBadge.RedemptionState.PENDING -> BackupGiftBadge.State.UNOPENED
-      GiftBadge.RedemptionState.STARTED -> BackupGiftBadge.State.OPENED
-    }
-  )
+  val backupGiftBadge = giftBadge.toBackupGiftBadgeOrNull()
+  if (backupGiftBadge == null) {
+    Log.w(TAG, ExportSkips.invalidGiftBadgeReceiptCredentialPresentation(this.dateSent))
+  }
+
+  return backupGiftBadge
 }
 
-private fun PollRecord.toRemotePollMessage(reactionRecords: List<ReactionRecord>?): Poll {
+/**
+ * Returns null if the redemption token is not a valid [ReceiptCredentialPresentation]. Failed gift badges are exported
+ * with an empty presentation, as required by the backup spec.
+ */
+@VisibleForTesting
+internal fun GiftBadge.toBackupGiftBadgeOrNull(): BackupGiftBadge? {
+  val state = when (redemptionState) {
+    GiftBadge.RedemptionState.REDEEMED -> {
+      BackupGiftBadge.State.REDEEMED
+    }
+    GiftBadge.RedemptionState.PENDING -> {
+      BackupGiftBadge.State.UNOPENED
+    }
+    GiftBadge.RedemptionState.STARTED -> {
+      BackupGiftBadge.State.OPENED
+    }
+    GiftBadge.RedemptionState.FAILED -> {
+      return BackupGiftBadge(receiptCredentialPresentation = ByteString.EMPTY, state = BackupGiftBadge.State.FAILED)
+    }
+  }
+
+  try {
+    ReceiptCredentialPresentation(redemptionToken.toByteArray())
+  } catch (e: InvalidInputException) {
+    return null
+  }
+
+  return BackupGiftBadge(receiptCredentialPresentation = redemptionToken, state = state)
+}
+
+private fun PollRecord.toRemotePollMessage(reactionRecords: List<ReactionRecord>?, exportState: ExportState): Poll {
   return Poll(
     question = this.question,
     allowMultiple = this.allowMultipleVotes,
@@ -1212,11 +1384,11 @@ private fun PollRecord.toRemotePollMessage(reactionRecords: List<ReactionRecord>
         }
       )
     },
-    reactions = reactionRecords?.toRemote() ?: emptyList()
+    reactions = reactionRecords.toRemote(exportState)
   )
 }
 
-private fun DatabaseAttachment.toRemoteStickerMessage(sentTimestamp: Long, reactions: List<ReactionRecord>?): StickerMessage? {
+private fun DatabaseAttachment.toRemoteStickerMessage(sentTimestamp: Long, reactions: List<ReactionRecord>?, exportState: ExportState): StickerMessage? {
   val stickerLocator = this.stickerLocator!!
 
   val packId = try {
@@ -1239,18 +1411,19 @@ private fun DatabaseAttachment.toRemoteStickerMessage(sentTimestamp: Long, react
       packKey = packKey.toByteString(),
       stickerId = stickerLocator.stickerId,
       emoji = stickerLocator.emoji,
-      data_ = this.toRemoteMessageAttachment().pointer
+      data_ = this.toRemoteMessageAttachment(backupMode = exportState.backupMode).pointer
     ),
-    reactions = reactions.toRemote()
+    reactions = reactions.toRemote(exportState)
   )
 }
 
-private fun List<DatabaseAttachment>.toRemoteQuoteAttachments(): List<Quote.QuotedAttachment> {
+private fun List<DatabaseAttachment>.toRemoteQuoteAttachments(backupMode: BackupMode): List<Quote.QuotedAttachment> {
   return this.map { attachment ->
     Quote.QuotedAttachment(
       contentType = attachment.quoteTargetContentType,
       fileName = attachment.fileName,
       thumbnail = attachment.toRemoteMessageAttachment(
+        backupMode = backupMode,
         flagOverride = MessageAttachment.Flag.NONE,
         contentTypeOverride = attachment.contentType
       )
@@ -1258,8 +1431,8 @@ private fun List<DatabaseAttachment>.toRemoteQuoteAttachments(): List<Quote.Quot
   }
 }
 
-private fun DatabaseAttachment.toRemoteMessageAttachment(flagOverride: MessageAttachment.Flag? = null, contentTypeOverride: String? = null): MessageAttachment {
-  val pointer = this.toRemoteFilePointer(contentTypeOverride)
+private fun DatabaseAttachment.toRemoteMessageAttachment(backupMode: BackupMode, flagOverride: MessageAttachment.Flag? = null, contentTypeOverride: String? = null): MessageAttachment {
+  val pointer = this.toRemoteFilePointer(contentTypeOverride, backupMode)
   return MessageAttachment(
     pointer = pointer,
     wasDownloaded = (this.transferState == AttachmentTable.TRANSFER_PROGRESS_DONE || this.transferState == AttachmentTable.TRANSFER_NEEDS_RESTORE) && pointer.locatorInfo?.plaintextHash != null,
@@ -1278,9 +1451,9 @@ private fun DatabaseAttachment.toRemoteMessageAttachment(flagOverride: MessageAt
   )
 }
 
-private fun List<DatabaseAttachment>.toRemoteAttachments(): List<MessageAttachment> {
+private fun List<DatabaseAttachment>.toRemoteAttachments(backupMode: BackupMode): List<MessageAttachment> {
   return this.map { attachment ->
-    attachment.toRemoteMessageAttachment()
+    attachment.toRemoteMessageAttachment(backupMode = backupMode)
   }
 }
 
@@ -1326,11 +1499,12 @@ private fun FailureReason?.toRemote(): PaymentNotification.TransactionDetails.Fa
 }
 
 private fun List<Mention>.toRemoteBodyRanges(exportState: ExportState): List<BackupBodyRange> {
-  return this.map {
+  return this.mapNotNull {
+    val aci = exportState.recipientIdToAci[it.recipientId.toLong()] ?: return@mapNotNull null
     BackupBodyRange(
       start = it.start,
       length = it.length,
-      mentionAci = exportState.recipientIdToAci[it.recipientId.toLong()]
+      mentionAci = aci
     )
   }
 }
@@ -1343,21 +1517,21 @@ private fun ByteArray.toRemoteBodyRanges(dateSent: Long): List<BackupBodyRange> 
     return emptyList()
   }
 
-  return decoded.ranges.map {
-    val mention = it.mentionUuid?.let { uuid -> UuidUtil.parseOrThrow(uuid) }?.toByteArray()?.toByteString()
+  return decoded.ranges.mapNotNull { range ->
+    val mention = range.mentionUuid?.let { UuidUtil.parseOrNull(it) }?.toByteArray()?.toByteString()?.takeIf { it.isNotEmpty() }
     val style = if (mention == null) {
-      it.style?.toRemote() ?: BackupBodyRange.Style.NONE
+      range.style?.toRemote()
     } else {
       null
     }
 
     if (mention == null && style == null) {
-      return emptyList()
+      return@mapNotNull null
     }
 
     BackupBodyRange(
-      start = it.start,
-      length = it.length,
+      start = range.start,
+      length = range.length,
       mentionAci = mention,
       style = style
     )
@@ -1374,9 +1548,13 @@ private fun BodyRangeList.BodyRange.Style.toRemote(): BackupBodyRange.Style {
   }
 }
 
-private fun List<ReactionRecord>?.toRemote(): List<Reaction> {
+private fun List<ReactionRecord>?.toRemote(exportState: ExportState): List<Reaction> {
   return this
-    ?.map {
+    ?.mapNotNull {
+      if (!it.author.hasAciOrE164(exportState)) {
+        return@mapNotNull null
+      }
+
       Reaction(
         emoji = it.emoji,
         authorId = it.author.toLong(),
@@ -1591,7 +1769,8 @@ private fun Long.isDirectionlessType(): Boolean {
     MessageTypes.isGroupUpdate(this) ||
     MessageTypes.isGroupV1MigrationEvent(this) ||
     MessageTypes.isGroupQuit(this) ||
-    MessageTypes.isPollTerminate(this)
+    MessageTypes.isPollTerminate(this) ||
+    MessageTypes.isPinnedMessageUpdate(this)
 }
 
 private fun Long.isIdentityVerifyType(): Boolean {
@@ -1623,24 +1802,36 @@ private fun ChatItem.validateChatItem(exportState: ExportState, selfRecipientId:
     this.giftBadge == null &&
     this.viewOnceMessage == null &&
     this.directStoryReplyMessage == null &&
-    this.poll == null
+    this.poll == null &&
+    this.adminDeletedMessage == null
   ) {
     Log.w(TAG, ExportSkips.emptyChatItem(this.dateSent))
     return null
   }
 
-  if (this.updateMessage != null && this.updateMessage.isOnlyForIndividualChats() && exportState.threadIdToRecipientId[this.chatId] !in exportState.contactRecipientIds) {
+  val validatedUpdateMessage = this.updateMessage
+  if (validatedUpdateMessage != null && validatedUpdateMessage.isOnlyForIndividualChats() && exportState.threadIdToRecipientId[this.chatId] !in exportState.contactRecipientIds) {
     Log.w(TAG, ExportSkips.individualChatUpdateInWrongTypeOfChat(this.dateSent))
     return null
   }
 
-  if (this.updateMessage != null && this.updateMessage.canOnlyBeAuthoredBySelf() && this.authorId != selfRecipientId.toLong()) {
+  if (validatedUpdateMessage != null && validatedUpdateMessage.isOnlyForGroupChats() && exportState.threadIdToRecipientId[this.chatId] !in exportState.groupRecipientIds) {
+    Log.w(TAG, ExportSkips.groupChatUpdateInWrongTypeOfChat(this.dateSent))
+    return null
+  }
+
+  if (validatedUpdateMessage != null && validatedUpdateMessage.canOnlyBeAuthoredBySelf() && this.authorId != selfRecipientId.toLong()) {
     Log.w(TAG, ExportSkips.individualChatUpdateNotAuthoredBySelf(this.dateSent))
     return null
   }
 
   if (this.incoming != null && exportState.recipientIdToAci[this.authorId] == null && exportState.recipientIdToE164[this.authorId] == null) {
     Log.w(TAG, ExportSkips.incomingMessageAuthorDoesNotHaveAciOrE164(this.dateSent))
+    return null
+  }
+
+  if (this.directionless != null && this.authorId != selfRecipientId.toLong() && exportState.recipientIdToAci[this.authorId] == null && exportState.recipientIdToE164[this.authorId] == null) {
+    Log.w(TAG, ExportSkips.directionlessMessageAuthorDoesNotHaveAciOrE164(this.dateSent))
     return null
   }
 
@@ -1657,7 +1848,13 @@ private fun ChatUpdateMessage.isOnlyForIndividualChats(): Boolean {
     this.simpleUpdate?.type == SimpleChatUpdate.Type.END_SESSION ||
     this.simpleUpdate?.type == SimpleChatUpdate.Type.CHAT_SESSION_REFRESH ||
     this.simpleUpdate?.type == SimpleChatUpdate.Type.PAYMENT_ACTIVATION_REQUEST ||
-    this.simpleUpdate?.type == SimpleChatUpdate.Type.PAYMENTS_ACTIVATED
+    this.simpleUpdate?.type == SimpleChatUpdate.Type.PAYMENTS_ACTIVATED ||
+    this.sessionSwitchover != null ||
+    this.threadMerge != null
+}
+
+private fun ChatUpdateMessage.isOnlyForGroupChats(): Boolean {
+  return this.groupChange != null
 }
 
 private fun ChatUpdateMessage.canOnlyBeAuthoredBySelf(): Boolean {
@@ -1668,19 +1865,24 @@ private fun ChatUpdateMessage.canOnlyBeAuthoredBySelf(): Boolean {
 }
 
 private fun List<ChatItem>.repairRevisions(current: ChatItem.Builder): List<ChatItem> {
+  val authorFiltered = this.filter { it.authorId == current.authorId }
+  if (authorFiltered.size != this.size) {
+    Log.w(TAG, ExportOddities.mismatchedRevisionAuthor(current.dateSent))
+  }
+
   return if (current.standardMessage != null) {
-    val filtered = this
+    val filtered = authorFiltered
       .filter { it.standardMessage != null }
       .map { it.withDowngradeVoiceNotes() }
 
-    if (this.size != filtered.size) {
+    if (authorFiltered.size != filtered.size) {
       Log.w(TAG, ExportOddities.mismatchedRevisionHistory(current.dateSent))
     }
 
     filtered
   } else if (current.directStoryReplyMessage != null) {
-    val filtered = this.filter { it.directStoryReplyMessage != null }
-    if (this.size != filtered.size) {
+    val filtered = authorFiltered.filter { it.directStoryReplyMessage != null }
+    if (authorFiltered.size != filtered.size) {
       Log.w(TAG, ExportOddities.mismatchedRevisionHistory(current.dateSent))
     }
     filtered
@@ -1705,17 +1907,15 @@ private fun List<MessageAttachment>.withFixedVoiceNotes(textPresent: Boolean): L
 }
 
 private fun ChatItem.withDowngradeVoiceNotes(): ChatItem {
-  if (this.standardMessage == null) {
-    return this
-  }
+  val msg = this.standardMessage ?: return this
 
-  if (this.standardMessage.attachments.none { it.flag == MessageAttachment.Flag.VOICE_MESSAGE }) {
+  if (msg.attachments.none { it.flag == MessageAttachment.Flag.VOICE_MESSAGE }) {
     return this
   }
 
   return this.copy(
-    standardMessage = this.standardMessage.copy(
-      attachments = this.standardMessage.attachments.map {
+    standardMessage = msg.copy(
+      attachments = msg.attachments.map {
         if (it.flag == MessageAttachment.Flag.VOICE_MESSAGE) {
           it.copy(flag = MessageAttachment.Flag.NONE)
         } else {
@@ -1730,9 +1930,13 @@ private fun ChatItem.Builder.authorIsAciContact(exportState: ExportState): Boole
   return exportState.recipientIdToAci[this.authorId] != null && this.authorId != exportState.selfRecipientId.toLong() && this.authorId != exportState.releaseNoteRecipientId
 }
 
-private fun Cursor.toBackupMessageRecord(pastIds: Set<Long>, backupStartTime: Long): BackupMessageRecord? {
+private fun RecipientId.hasAciOrE164(exportState: ExportState): Boolean {
+  return exportState.recipientIdToAci[this.toLong()] != null || exportState.recipientIdToE164[this.toLong()] != null
+}
+
+private fun Cursor.toBackupMessageRecord(skipIds: Set<Long>, backupStartTime: Long): BackupMessageRecord? {
   val id = this.requireLong(MessageTable.ID)
-  if (pastIds.contains(id)) {
+  if (skipIds.contains(id)) {
     return null
   }
 
@@ -1753,7 +1957,6 @@ private fun Cursor.toBackupMessageRecord(pastIds: Set<Long>, backupStartTime: Lo
     toRecipientId = this.requireLong(MessageTable.TO_RECIPIENT_ID),
     expiresIn = expiresIn,
     expireStarted = expireStarted,
-    remoteDeleted = this.requireBoolean(MessageTable.REMOTE_DELETED),
     sealedSender = this.requireBoolean(MessageTable.UNIDENTIFIED),
     linkPreview = this.requireString(MessageTable.LINK_PREVIEWS),
     sharedContacts = this.requireString(MessageTable.SHARED_CONTACTS),
@@ -1776,11 +1979,14 @@ private fun Cursor.toBackupMessageRecord(pastIds: Set<Long>, backupStartTime: Lo
     messageExtras = messageExtras.parseMessageExtras(),
     viewOnce = this.requireBoolean(MessageTable.VIEW_ONCE),
     parentStoryId = this.requireLong(MessageTable.PARENT_STORY_ID),
+    pinnedAt = this.requireLong(MessageTable.PINNED_AT),
+    pinnedUntil = this.requireLong(MessageTable.PINNED_UNTIL),
+    deletedBy = this.requireLongOrNull(MessageTable.DELETED_BY),
     messageExtrasSize = messageExtras?.size ?: 0
   )
 }
 
-private class BackupMessageRecord(
+internal class BackupMessageRecord(
   val id: Long,
   val dateSent: Long,
   val dateReceived: Long,
@@ -1793,7 +1999,6 @@ private class BackupMessageRecord(
   val toRecipientId: Long,
   val expiresIn: Long,
   val expireStarted: Long,
-  val remoteDeleted: Boolean,
   val sealedSender: Boolean,
   val linkPreview: String?,
   val sharedContacts: String?,
@@ -1816,6 +2021,9 @@ private class BackupMessageRecord(
   val baseType: Long,
   val messageExtras: MessageExtras?,
   val viewOnce: Boolean,
+  val pinnedAt: Long,
+  val pinnedUntil: Long,
+  val deletedBy: Long?,
   private val messageExtrasSize: Int
 ) {
   val estimatedSizeInBytes: Int = (body?.length ?: 0) +

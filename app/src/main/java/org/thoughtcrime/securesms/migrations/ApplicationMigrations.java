@@ -7,19 +7,20 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import org.signal.core.util.Util;
+import org.signal.core.util.eventbus.EventBus;
+import org.signal.core.util.eventbus.ThreadMode;
 import org.signal.core.util.logging.Log;
+import org.signal.storage.keyvalue.PlainTextKeyValueStore;
 import org.thoughtcrime.securesms.jobmanager.JobManager;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.stickers.BlessedPacks;
-import org.thoughtcrime.securesms.util.TextSecurePreferences;
-import org.thoughtcrime.securesms.util.Util;
 import org.thoughtcrime.securesms.util.VersionTracker;
 
+import java.util.Currency;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Manages application-level migrations.
@@ -190,9 +191,38 @@ public class ApplicationMigrations {
     static final int QUOTE_THUMBNAIL_BACKFILL      = 146;
     static final int EMOJI_ENGLISH_SEARCH          = 147;
     static final int AEP_ROTATE_FIX                = 148;
+    static final int ATTACHMENT_HASH_BACKFILL_2    = 149;
+    static final int SVR2_ENCLAVE_UPDATE_5         = 150;
+    static final int STICKER_PACK_ADDITION_2       = 151;
+    static final int DELETED_BY_DB_MIGRATION       = 152;
+    static final int RELEASE_CHANNEL_RECIPIENT_FIX = 153;
+    static final int EMOJI_VERSION_13              = 154;
+    static final int COLLAPSED_EVENTS              = 155;
+    static final int COLLAPSED_EVENTS_2            = 156;
+    static final int KEY_TRANSPARENCY              = 157;
+    static final int RELEASE_NOTES_CHAT_SYNC       = 158;
+    static final int READ_INDEX_DB_MIGRATION       = 159;
+    // Need to skip 160 due to release ordering issues
+    static final int SVR2_ENCLAVE_UPDATE_6         = 161;
+    static final int NOTIFICATION_INDEX_MIGRATION  = 162;
+    static final int NOTIFICATION_STATE_CLEANUP    = 163;
+    static final int KT_USERNAME_CAPABILITY        = 164;
+    static final int FIX_CHANGE_NUMBER_ERROR_2     = 165;
+    static final int LOCAL_ARCHIVE_RECONCILE       = 166;
+//    static final int GROUP_DELETED_AT_BACKFILL     = 167;
+    static final int STICKER_PACK_STORAGE_SYNC     = 168;
+    static final int GROUP_DELETED_AT_BACKFILL     = 169;
+    static final int KT_RESET_FAILURE              = 170;
+    static final int ENABLE_MUTED_CALL_SETTING     = 171;
+    static final int CLEAR_ZK_CREDENTIALS          = 172;
+    static final int SVR2_ENCLAVE_UPDATE_7         = 173;
+    static final int DISABLE_UNREAD_REMINDER       = 174;
+    static final int MENTIONS_STORAGE_SERVICE      = 175;
+    static final int TWO_FACTOR_METHODS            = 176;
+    static final int SIGNAL_LOGIN_REMINDER         = 177;
   }
 
-  public static final int CURRENT_VERSION = 148;
+  public static final int CURRENT_VERSION = 177;
 
   /**
    * This *must* be called after the {@link JobManager} has been instantiated, but *before* the call
@@ -201,20 +231,20 @@ public class ApplicationMigrations {
    */
   public static void onApplicationCreate(@NonNull Context context, @NonNull JobManager jobManager) {
     if (isLegacyUpdate(context)) {
-      Log.i(TAG, "Detected the need for a legacy update. Last seen canonical version: " + VersionTracker.getLastSeenVersion(context));
-      TextSecurePreferences.setAppMigrationVersion(context, 0);
+      Log.i(TAG, "Detected the need for a legacy update. Last seen canonical version: " + VersionTracker.getLastSeenVersion());
+      PlainTextKeyValueStore.setAppMigrationVersion(0);
     }
 
-    if (!isUpdate(context)) {
+    if (!isUpdate(context)) { // this returned false
       Log.d(TAG, "Not an update. Skipping.");
-      VersionTracker.updateLastSeenVersion(context);
+      VersionTracker.updateLastSeenVersion();
       return;
     } else {
       Log.d(TAG, "About to update. Clearing deprecation flag.", true);
       SignalStore.misc().setClientDeprecated(false);
     }
 
-    final int lastSeenVersion = TextSecurePreferences.getAppMigrationVersion(context);
+    final int lastSeenVersion = PlainTextKeyValueStore.getAppMigrationVersion();
     Log.d(TAG, "currentVersion: " + CURRENT_VERSION + ",  lastSeenVersion: " + lastSeenVersion);
 
     LinkedHashMap<Integer, MigrationJob> migrationJobs = getMigrationJobs(context, lastSeenVersion);
@@ -249,34 +279,42 @@ public class ApplicationMigrations {
       final long startTime = System.currentTimeMillis();
       final int  uiVersion = uiBlockingVersion;
 
-      EventBus.getDefault().register(new Object() {
-        @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
-        public void onMigrationComplete(MigrationCompleteEvent event) {
-          Log.i(TAG, "Received MigrationCompleteEvent for version " + event.getVersion() + ". (Current: " + CURRENT_VERSION + ")");
+      AtomicReference<EventBus.Subscription> subscription = new AtomicReference<>();
 
-          if (event.getVersion() > CURRENT_VERSION) {
-            throw new AssertionError("Received a higher version than the current version? App downgrades are not supported. (received: " + event.getVersion() + ", current: " + CURRENT_VERSION + ")");
-          }
+      subscription.set(EventBus.getDefault().subscribeSticky(MigrationCompleteEvent.class, ThreadMode.MAIN, event -> {
+        Log.i(TAG, "Received MigrationCompleteEvent for version " + event.getVersion() + ". (Current: " + CURRENT_VERSION + ")");
 
-          Log.i(TAG, "Updating last migration version to " + event.getVersion());
-          TextSecurePreferences.setAppMigrationVersion(context, event.getVersion());
-
-          if (event.getVersion() == CURRENT_VERSION) {
-            Log.i(TAG, "Migration complete. Took " + (System.currentTimeMillis() - startTime) + " ms.");
-            EventBus.getDefault().unregister(this);
-
-            VersionTracker.updateLastSeenVersion(context);
-            UI_BLOCKING_MIGRATION_RUNNING.setValue(false);
-          } else if (event.getVersion() >= uiVersion) {
-            Log.i(TAG, "Version is >= the UI-blocking version. Posting 'false'.");
-            UI_BLOCKING_MIGRATION_RUNNING.setValue(false);
-          }
+        if (event.getVersion() > CURRENT_VERSION) {
+          throw new AssertionError("Received a higher version than the current version? App downgrades are not supported. (received: " + event.getVersion() + ", current: " + CURRENT_VERSION + ")");
         }
-      });
+
+        int storedVersion = PlainTextKeyValueStore.getAppMigrationVersion();
+        if (event.getVersion() <= storedVersion) {
+          Log.w(TAG, "Ignoring stale MigrationCompleteEvent for version " + event.getVersion() + ". Already at version " + storedVersion + ".");
+          return;
+        }
+
+        Log.i(TAG, "Updating last migration version to " + event.getVersion());
+        PlainTextKeyValueStore.setAppMigrationVersion(event.getVersion());
+
+        if (event.getVersion() == CURRENT_VERSION) {
+          Log.i(TAG, "Migration complete. Took " + (System.currentTimeMillis() - startTime) + " ms.");
+          EventBus.Subscription current = subscription.get();
+          if (current != null) {
+            current.unsubscribe();
+          }
+
+          VersionTracker.updateLastSeenVersion();
+          UI_BLOCKING_MIGRATION_RUNNING.setValue(false);
+        } else if (event.getVersion() >= uiVersion) {
+          Log.i(TAG, "Version is >= the UI-blocking version. Posting 'false'.");
+          UI_BLOCKING_MIGRATION_RUNNING.setValue(false);
+        }
+      }));
     } else {
       Log.d(TAG, "No migrations.");
-      TextSecurePreferences.setAppMigrationVersion(context, CURRENT_VERSION);
-      VersionTracker.updateLastSeenVersion(context);
+      PlainTextKeyValueStore.setAppMigrationVersion(CURRENT_VERSION);
+      VersionTracker.updateLastSeenVersion();
       UI_BLOCKING_MIGRATION_RUNNING.setValue(false);
     }
   }
@@ -302,7 +340,7 @@ public class ApplicationMigrations {
    * current version.
    */
   public static boolean isUpdate(@NonNull Context context) {
-    return isLegacyUpdate(context) || TextSecurePreferences.getAppMigrationVersion(context) < CURRENT_VERSION;
+    return isLegacyUpdate(context) || PlainTextKeyValueStore.getAppMigrationVersion() < CURRENT_VERSION;
   }
 
   private static LinkedHashMap<Integer, MigrationJob> getMigrationJobs(@NonNull Context context, int lastSeenVersion) {
@@ -831,6 +869,10 @@ public class ApplicationMigrations {
       jobs.put(Version.FIX_CHANGE_NUMBER_ERROR, new FixChangeNumberErrorMigrationJob());
     }
 
+    if (lastSeenVersion < Version.FIX_CHANGE_NUMBER_ERROR_2) {
+      jobs.put(Version.FIX_CHANGE_NUMBER_ERROR_2, new FixChangeNumberErrorMigrationJob());
+    }
+
     if (lastSeenVersion < Version.CHAT_FOLDER_STORAGE_SYNC) {
       jobs.put(Version.CHAT_FOLDER_STORAGE_SYNC, new SyncChatFoldersMigrationJob());
     }
@@ -879,10 +921,118 @@ public class ApplicationMigrations {
       jobs.put(Version.AEP_ROTATE_FIX, new AepMigrationJob());
     }
 
+    if (lastSeenVersion < Version.ATTACHMENT_HASH_BACKFILL_2) {
+      jobs.put(Version.ATTACHMENT_HASH_BACKFILL_2, new AttachmentHashBackfillMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.SVR2_ENCLAVE_UPDATE_5) {
+      jobs.put(Version.SVR2_ENCLAVE_UPDATE_5, new Svr2MirrorMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.STICKER_PACK_ADDITION_2) {
+      jobs.put(Version.STICKER_PACK_ADDITION_2, new StickerPackAddition2MigrationJob());
+    }
+
+    if (lastSeenVersion < Version.DELETED_BY_DB_MIGRATION) {
+      jobs.put(Version.DELETED_BY_DB_MIGRATION, new DatabaseMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.RELEASE_CHANNEL_RECIPIENT_FIX) {
+      jobs.put(Version.RELEASE_CHANNEL_RECIPIENT_FIX, new ReleaseChannelRecipientFixMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.EMOJI_VERSION_13) {
+      jobs.put(Version.EMOJI_VERSION_13, new EmojiDownloadMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.COLLAPSED_EVENTS) {
+      jobs.put(Version.COLLAPSED_EVENTS, new BackfillCollapsedEventsMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.COLLAPSED_EVENTS_2) {
+      jobs.put(Version.COLLAPSED_EVENTS_2, new BackfillCollapsedEventsMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.KEY_TRANSPARENCY) {
+      jobs.put(Version.KEY_TRANSPARENCY, new ResetKeyTransparencyMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.RELEASE_NOTES_CHAT_SYNC) {
+      jobs.put(Version.RELEASE_NOTES_CHAT_SYNC, new AccountRecordMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.READ_INDEX_DB_MIGRATION) {
+      jobs.put(Version.READ_INDEX_DB_MIGRATION, new DatabaseMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.SVR2_ENCLAVE_UPDATE_6) {
+      jobs.put(Version.SVR2_ENCLAVE_UPDATE_6, new Svr2MirrorMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.NOTIFICATION_INDEX_MIGRATION) {
+      jobs.put(Version.NOTIFICATION_INDEX_MIGRATION, new DatabaseMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.NOTIFICATION_STATE_CLEANUP) {
+      jobs.put(Version.NOTIFICATION_STATE_CLEANUP, new BackfillNotifiedStateMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.KT_USERNAME_CAPABILITY) {
+      jobs.put(Version.KT_USERNAME_CAPABILITY, new KeyTransparencyUsernameMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.LOCAL_ARCHIVE_RECONCILE) {
+      jobs.put(Version.LOCAL_ARCHIVE_RECONCILE, new LocalArchiveReconciliationMigrationJob());
+    }
+
+//    if (lastSeenVersion < Version.GROUP_DELETED_AT_BACKFILL) {
+//      jobs.put(Version.GROUP_DELETED_AT_BACKFILL, new GroupDeletedBackfillMigrationJob());
+//    }
+
+    if (lastSeenVersion < Version.STICKER_PACK_STORAGE_SYNC) {
+      jobs.put(Version.STICKER_PACK_STORAGE_SYNC, new SyncStickerPacksMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.GROUP_DELETED_AT_BACKFILL) {
+      jobs.put(Version.GROUP_DELETED_AT_BACKFILL, new GroupDeletedBackfillMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.KT_RESET_FAILURE) {
+      jobs.put(Version.KT_RESET_FAILURE, new KeyTransparencyFailureMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.ENABLE_MUTED_CALL_SETTING) {
+      jobs.put(Version.ENABLE_MUTED_CALL_SETTING, new EnableMutedCallsMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.CLEAR_ZK_CREDENTIALS) {
+      jobs.put(Version.CLEAR_ZK_CREDENTIALS, new ClearZkCredentialsMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.SVR2_ENCLAVE_UPDATE_7) {
+      jobs.put(Version.SVR2_ENCLAVE_UPDATE_7, new Svr2MirrorMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.DISABLE_UNREAD_REMINDER) {
+      jobs.put(Version.DISABLE_UNREAD_REMINDER, new DisableUnreadReminderMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.MENTIONS_STORAGE_SERVICE) {
+      jobs.put(Version.MENTIONS_STORAGE_SERVICE, new MentionsStorageServiceMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.TWO_FACTOR_METHODS) {
+      jobs.put(Version.TWO_FACTOR_METHODS, new TwoFactorMethodsMigrationJob());
+    }
+
+    if (lastSeenVersion < Version.SIGNAL_LOGIN_REMINDER) {
+      jobs.put(Version.SIGNAL_LOGIN_REMINDER, new SignalLoginReminderMigrationJob());
+    }
+
     return jobs;
   }
 
   private static boolean isLegacyUpdate(@NonNull Context context) {
-    return VersionTracker.getLastSeenVersion(context) < LEGACY_CANONICAL_VERSION;
+    return VersionTracker.getLastSeenVersion() < LEGACY_CANONICAL_VERSION;
   }
 }

@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,13 +18,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.LoggingFragment;
+import org.signal.core.ui.logging.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.badges.BadgeImageView;
 import org.thoughtcrime.securesms.components.AvatarImageView;
@@ -36,9 +38,10 @@ import org.thoughtcrime.securesms.payments.Payee;
 import org.thoughtcrime.securesms.payments.Payment;
 import org.thoughtcrime.securesms.payments.State;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
+import org.signal.core.models.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.DateUtils;
-import org.thoughtcrime.securesms.util.SpanUtil;
+import org.signal.core.ui.util.SpanUtil;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
 import org.thoughtcrime.securesms.util.views.LearnMoreTextView;
 import org.whispersystems.signalservice.api.payments.Money;
 
@@ -61,6 +64,10 @@ public final class PaymentDetailsFragment extends LoggingFragment {
     toolbar.inflateMenu(R.menu.payment_details);
 
     MenuItem messageItem = toolbar.getMenu().findItem(R.id.payment_details_message);
+
+    toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    SystemWindowInsetsSetter.attach(toolbar, getViewLifecycleOwner(), WindowInsetsCompat.Type.statusBars());
+    SystemWindowInsetsSetter.attach(view.findViewById(R.id.payments_details_scroll_view), getViewLifecycleOwner(), WindowInsetsCompat.Type.navigationBars());
 
     PaymentDetailsParcelable details = PaymentDetailsFragmentArgs.fromBundle(requireArguments()).getPaymentDetails();
 
@@ -208,7 +215,7 @@ public final class PaymentDetailsFragment extends LoggingFragment {
 
   private static @NonNull CharSequence mono(@NonNull Context context, @NonNull CharSequence address) {
     SpannableString spannable = new SpannableString(address);
-    spannable.setSpan(new TextAppearanceSpan(context, R.style.TextAppearance_Signal_Mono),
+    spannable.setSpan(new TextAppearanceSpan(context, org.signal.core.ui.R.style.TextAppearance_Signal_Mono),
                       0,
                       address.length(),
                       Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

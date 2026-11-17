@@ -1,0 +1,14 @@
+/**
+ * Copyright (C) 2014-2016 Open Whisper Systems
+ *
+ * Licensed according to the LICENSE file in this repository.
+ */
+package org.whispersystems.signalservice.api.push.exceptions;
+
+import org.signal.network.exceptions.NonSuccessfulResponseCodeException;
+
+public class ExpectationFailedException extends NonSuccessfulResponseCodeException {
+  public ExpectationFailedException() {
+    super(417);
+  }
+}

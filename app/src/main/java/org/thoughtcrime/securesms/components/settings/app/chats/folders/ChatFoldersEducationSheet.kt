@@ -19,10 +19,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.signal.core.ui.compose.BottomSheets
 import org.signal.core.ui.compose.Buttons
+import org.signal.core.ui.compose.ComposeBottomSheetDialogFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.ComposeBottomSheetDialogFragment
+import org.signal.appsettings.R as AppSettingsR
 
 /**
  * Education sheet shown when clicking on chat folders for the first time
@@ -51,7 +52,7 @@ private fun FolderEducationSheet(onClick: () -> Unit) {
     )
 
     Text(
-      text = stringResource(R.string.ChatsSettingsFragment__chat_folders),
+      text = stringResource(AppSettingsR.string.ChatsSettingsFragment__chat_folders),
       style = MaterialTheme.typography.titleLarge,
       textAlign = TextAlign.Center,
       modifier = Modifier.padding(top = 18.dp, bottom = 12.dp).align(Alignment.CenterHorizontally),

@@ -1,8 +1,11 @@
 package org.thoughtcrime.securesms.badges.gifts.flow
 
 import android.view.View
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.findNavController
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import org.signal.core.ui.activityViewModel
+import org.signal.core.ui.util.ViewUtil
 import org.signal.core.util.DimensionUnit
 import org.signal.core.util.concurrent.LifecycleDisposable
 import org.signal.donations.InAppPaymentType
@@ -10,17 +13,16 @@ import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.settings.DSLConfiguration
 import org.thoughtcrime.securesms.components.settings.DSLSettingsFragment
 import org.thoughtcrime.securesms.components.settings.DSLSettingsText
-import org.thoughtcrime.securesms.components.settings.app.subscription.models.CurrencySelection
-import org.thoughtcrime.securesms.components.settings.app.subscription.models.NetworkFailure
+import org.thoughtcrime.securesms.components.settings.app.subscription.ui.CurrencySelection
+import org.thoughtcrime.securesms.components.settings.app.subscription.ui.NetworkFailure
 import org.thoughtcrime.securesms.components.settings.configure
 import org.thoughtcrime.securesms.components.settings.models.IndeterminateLoadingCircle
 import org.thoughtcrime.securesms.components.settings.models.SplashImage
-import org.thoughtcrime.securesms.util.ViewUtil
-import org.thoughtcrime.securesms.util.activityViewModel
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
-import org.thoughtcrime.securesms.util.viewModel
 import java.util.concurrent.TimeUnit
+import org.signal.core.ui.R as CoreUiR
 
 /**
  * Landing fragment for sending gifts.
@@ -47,6 +49,8 @@ class GiftFlowStartFragment : DSLSettingsFragment(
       findNavController().safeNavigate(R.id.action_giftFlowStartFragment_to_giftFlowRecipientSelectionFragment)
     }
 
+    SystemWindowInsetsSetter.attach(next, viewLifecycleOwner, WindowInsetsCompat.Type.navigationBars(), SystemWindowInsetsSetter.ApplyMode.MARGIN)
+
     lifecycleDisposable.bindTo(viewLifecycleOwner)
     lifecycleDisposable += viewModel.state.observeOn(AndroidSchedulers.mainThread()).subscribe { state ->
       next.isEnabled = state.stage == GiftFlowState.Stage.READY
@@ -72,7 +76,7 @@ class GiftFlowStartFragment : DSLSettingsFragment(
         title = DSLSettingsText.from(
           R.string.GiftFlowStartFragment__donate_for_a_friend,
           DSLSettingsText.CenterModifier,
-          DSLSettingsText.TextAppearanceModifier(R.style.Signal_Text_Headline)
+          DSLSettingsText.TextAppearanceModifier(CoreUiR.style.Signal_Text_Headline)
         )
       )
 

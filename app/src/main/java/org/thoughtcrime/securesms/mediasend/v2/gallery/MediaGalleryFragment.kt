@@ -1,45 +1,53 @@
 package org.thoughtcrime.securesms.mediasend.v2.gallery
 
-import android.Manifest
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginEnd
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
+import androidx.core.view.updatePaddingRelative
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import org.signal.core.models.media.Media
+import org.signal.core.ui.WindowBreakpoint
+import org.signal.core.ui.getWindowBreakpoint
+import org.signal.core.ui.permissions.Permissions
+import org.signal.core.ui.util.StorageUtil
+import org.signal.core.ui.util.ViewUtil
 import org.signal.core.util.Stopwatch
+import org.signal.core.util.permissions.PermissionCompat
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.recyclerview.GridDividerDecoration
 import org.thoughtcrime.securesms.conversation.ManageContextMenu
 import org.thoughtcrime.securesms.databinding.V2MediaGalleryFragmentBinding
-import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mediasend.MediaRepository
-import org.thoughtcrime.securesms.mediasend.camerax.CameraXUtil
-import org.thoughtcrime.securesms.mediasend.v2.review.MediaGalleryGridItemTouchListener
-import org.thoughtcrime.securesms.permissions.PermissionCompat
-import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.util.Material3OnScrollHelper
-import org.thoughtcrime.securesms.util.StorageUtil
-import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter
-import org.thoughtcrime.securesms.util.ViewUtil
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingAdapter
 import org.thoughtcrime.securesms.util.fragments.requireListener
 import org.thoughtcrime.securesms.util.livedata.LiveDataUtil
 import org.thoughtcrime.securesms.util.visible
+import org.signal.core.ui.R as CoreUiR
 
 /**
  * Displays a collection of files and folders to the user to allow them to select
  * media to send.
  */
 class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
+
+  companion object {
+    private const val SPAN_COUNT = 24
+  }
 
   private val viewModel: MediaGalleryViewModel by viewModels(
     factoryProducer = { MediaGalleryViewModel.Factory(null, null, MediaGalleryRepository(requireContext(), MediaRepository())) }
@@ -54,7 +62,7 @@ class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
   private val selectedAdapter = MappingAdapter()
   private val mediaGalleryGridItemTouchListener = MediaGalleryGridItemTouchListener()
 
-  private val viewStateLiveData = MutableLiveData(ViewState())
+  private lateinit var viewStateLiveData: MutableLiveData<ViewState>
 
   private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(false) {
     override fun handleOnBackPressed() {
@@ -63,28 +71,34 @@ class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
   }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    viewStateLiveData = MutableLiveData(ViewState(chatColor = ContextCompat.getColor(requireContext(), CoreUiR.color.signal_light_colorPrimary)))
     callbacks = requireListener()
     val binding = V2MediaGalleryFragmentBinding.bind(view)
 
-    SystemWindowInsetsSetter.attach(view, viewLifecycleOwner, WindowInsetsCompat.Type.navigationBars())
+    applyWindowInsets(view, binding)
 
-    binding.mediaGalleryToolbar.updateLayoutParams<ConstraintLayout.LayoutParams> {
-      topMargin = ViewUtil.getStatusBarHeight(view)
-    }
-
-    binding.mediaGalleryStatusBarBackground.updateLayoutParams {
-      height = ViewUtil.getStatusBarHeight(view)
-    }
-
-    binding.mediaGalleryGrid.layoutManager = object : GridLayoutManager(requireContext(), 4) {
+    binding.mediaGalleryGrid.layoutManager = object : GridLayoutManager(requireContext(), SPAN_COUNT) {
       override fun canScrollVertically() = shouldEnableScrolling
+    }
+
+    val breakpoint = resources.getWindowBreakpoint()
+    val folderSpans = when (breakpoint) {
+      is WindowBreakpoint.Large -> SPAN_COUNT / 4
+      is WindowBreakpoint.Medium -> SPAN_COUNT / 3
+      is WindowBreakpoint.Small -> SPAN_COUNT / 2
+    }
+
+    val fileSpans = when (breakpoint) {
+      is WindowBreakpoint.Large -> SPAN_COUNT / 8
+      is WindowBreakpoint.Medium -> SPAN_COUNT / 6
+      is WindowBreakpoint.Small -> SPAN_COUNT / 4
     }
 
     (binding.mediaGalleryGrid.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
       override fun getSpanSize(position: Int): Int {
         val isFolder: Boolean = (binding.mediaGalleryGrid.adapter as MappingAdapter).getModel(position).map { it is MediaGallerySelectableItem.FolderModel }.orElse(false)
 
-        return if (isFolder) 2 else 1
+        return if (isFolder) folderSpans else fileSpans
       }
     }
 
@@ -101,18 +115,7 @@ class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
     if (callbacks.isCameraEnabled()) {
       binding.mediaGalleryToolbar.setOnMenuItemClickListener { item ->
         if (item.itemId == R.id.action_camera) {
-          if (CameraXUtil.isSupported()) {
-            callbacks.onNavigateToCamera()
-          } else {
-            Permissions.with(this)
-              .request(Manifest.permission.CAMERA)
-              .ifNecessary()
-              .onAllGranted { callbacks.onNavigateToCamera() }
-              .withRationaleDialog(getString(R.string.CameraXFragment_allow_access_camera), getString(R.string.CameraXFragment_to_capture_photos_and_video_allow_camera), R.drawable.ic_camera_24)
-              .withPermanentDenialDialog(getString(R.string.CameraXFragment_signal_needs_camera_access_capture_photos), null, R.string.CameraXFragment_allow_access_camera, R.string.CameraXFragment_to_capture_photos_videos, getParentFragmentManager())
-              .onAnyDenied { Toast.makeText(requireContext(), R.string.CameraXFragment_signal_needs_camera_access_capture_photos, Toast.LENGTH_LONG).show() }
-              .execute()
-          }
+          callbacks.onNavigateToCamera()
           true
         } else {
           false
@@ -191,6 +194,7 @@ class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
     viewStateLiveData.observe(viewLifecycleOwner) { state ->
       binding.mediaGalleryBottomBarGroup.visible = state.selectedMedia.isNotEmpty()
       binding.mediaGalleryCountButton.setCount(state.selectedMedia.size)
+      state.chatColor?.let { binding.mediaGalleryCountButton.setChatColor(it) }
 
       val stopwatch = Stopwatch("mediaSubmit")
       selectedAdapter.submitList(state.selectedMedia.map { MediaGallerySelectedItem.Model(it) }) {
@@ -208,11 +212,17 @@ class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
 
     val galleryItemsWithSelection = LiveDataUtil.combineLatest(
       viewModel.state.map { it.items },
-      viewStateLiveData.map { it.selectedMedia }
-    ) { galleryItems, selectedMedia ->
+      viewStateLiveData.map { it.selectedMedia },
+      viewStateLiveData.map { it.chatColor }
+    ) { galleryItems, selectedMedia, chatColor ->
       galleryItems.map {
         if (it is MediaGallerySelectableItem.FileModel) {
-          it.copy(isSelected = selectedMedia.contains(it.media), selectionOneBasedIndex = selectedMedia.indexOf(it.media) + 1)
+          val selectedIndex = selectedMedia.indexOfFirst { selected -> selected.uri == it.media.uri }
+          it.copy(
+            isSelected = selectedIndex >= 0,
+            selectionOneBasedIndex = selectedIndex + 1,
+            chatColor = chatColor
+          )
         } else {
           it
         }
@@ -253,6 +263,52 @@ class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
     requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
   }
 
+  /**
+   * The top bar spans the full width so its background covers the cutout, while everything that holds
+   * content is inset horizontally. Driven off the inset dispatch rather than read once, since our hosts
+   * declare `configChanges="orientation"` and never recreate this view on rotation.
+   */
+  private fun applyWindowInsets(view: View, binding: V2MediaGalleryFragmentBinding) {
+    val rootPaddingBottom = view.paddingBottom
+    val toolbarPaddingLeft = binding.mediaGalleryToolbar.paddingLeft
+    val toolbarPaddingRight = binding.mediaGalleryToolbar.paddingRight
+    val managePaddingLeft = binding.mediaGalleryManageContainer.paddingLeft
+    val managePaddingRight = binding.mediaGalleryManageContainer.paddingRight
+    val selectedPaddingStart = binding.mediaGallerySelected.paddingStart
+    val countButtonMarginEnd = binding.mediaGalleryCountButton.marginEnd
+
+    ViewCompat.setOnApplyWindowInsetsListener(view) { root, windowInsets ->
+      val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+      val isLtr = ViewUtil.isLtr(root)
+      val startInset = if (isLtr) insets.left else insets.right
+      val endInset = if (isLtr) insets.right else insets.left
+
+      root.updatePadding(bottom = rootPaddingBottom + insets.bottom)
+
+      binding.mediaGalleryStatusBarBackground.updateLayoutParams {
+        height = insets.top
+      }
+
+      binding.mediaGalleryToolbar.updateLayoutParams<ConstraintLayout.LayoutParams> {
+        topMargin = insets.top
+      }
+
+      binding.mediaGalleryToolbar.updatePadding(left = toolbarPaddingLeft + insets.left, right = toolbarPaddingRight + insets.right)
+      binding.mediaGalleryManageContainer.updatePadding(left = managePaddingLeft + insets.left, right = managePaddingRight + insets.right)
+      binding.mediaGalleryGrid.updatePadding(left = insets.left, right = insets.right)
+      binding.mediaGalleryMissingPermissions.updatePadding(left = insets.left, right = insets.right)
+      binding.mediaGallerySelected.updatePaddingRelative(start = selectedPaddingStart + startInset)
+
+      binding.mediaGalleryCountButton.updateLayoutParams<ConstraintLayout.LayoutParams> {
+        marginEnd = countButtonMarginEnd + endInset
+      }
+
+      windowInsets
+    }
+
+    view.post { ViewCompat.requestApplyInsets(view) }
+  }
+
   override fun onResume() {
     super.onResume()
     refreshMediaGallery()
@@ -291,7 +347,14 @@ class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
       .request(*PermissionCompat.forImagesAndVideos())
       .ifNecessary()
       .onAnyResult { refreshMediaGallery() }
-      .withPermanentDenialDialog(getString(R.string.AttachmentManager_signal_requires_the_external_storage_permission_in_order_to_attach_photos_videos_or_audio), null, R.string.AttachmentManager_signal_allow_storage, R.string.AttachmentManager_signal_to_show_photos, true, parentFragmentManager)
+      .withPermanentDenialDialog(
+        getString(R.string.AttachmentManager_signal_requires_the_external_storage_permission_in_order_to_attach_photos_videos_or_audio),
+        null,
+        R.string.AttachmentManager_signal_allow_storage,
+        R.string.AttachmentManager_signal_to_show_photos,
+        true,
+        parentFragmentManager
+      )
       .onSomeDenied {
         val deniedPermission = PermissionCompat.getRequiredPermissionsForDenial()
         if (it.containsAll(deniedPermission.toList())) {
@@ -322,7 +385,8 @@ class MediaGalleryFragment : Fragment(R.layout.v2_media_gallery_fragment) {
   }
 
   data class ViewState(
-    val selectedMedia: List<Media> = listOf()
+    val selectedMedia: List<Media> = listOf(),
+    val chatColor: Int
   )
 
   interface Callbacks {

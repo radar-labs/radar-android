@@ -6,6 +6,7 @@
 package org.thoughtcrime.securesms.backup.v2.exporters
 
 import android.database.Cursor
+import org.signal.archive.proto.Chat
 import org.signal.core.util.decodeOrNull
 import org.signal.core.util.requireBlob
 import org.signal.core.util.requireBoolean
@@ -13,7 +14,6 @@ import org.signal.core.util.requireInt
 import org.signal.core.util.requireIntOrNull
 import org.signal.core.util.requireLong
 import org.thoughtcrime.securesms.backup.v2.ExportState
-import org.thoughtcrime.securesms.backup.v2.proto.Chat
 import org.thoughtcrime.securesms.backup.v2.util.ChatStyleConverter
 import org.thoughtcrime.securesms.backup.v2.util.isValid
 import org.thoughtcrime.securesms.conversation.colors.ChatColors
@@ -34,6 +34,9 @@ class ChatArchiveExporter(private val cursor: Cursor, private val db: SignalData
     if (!cursor.moveToNext()) {
       throw NoSuchElementException()
     }
+
+    val recipientId = cursor.requireLong(ThreadTable.RECIPIENT_ID)
+    val isGroup = recipientId in exportState.groupRecipientIds
 
     val customChatColorsId = ChatColors.Id.forLongValue(cursor.requireLong(RecipientTable.CUSTOM_CHAT_COLORS_ID)).takeIf { it.isValid(exportState) } ?: ChatColors.Id.NotSet
 
@@ -61,14 +64,19 @@ class ChatArchiveExporter(private val cursor: Cursor, private val db: SignalData
       expirationTimerMs = cursor.requireLong(RecipientTable.MESSAGE_EXPIRATION_TIME).seconds.inWholeMilliseconds.takeIf { it > 0 },
       expireTimerVersion = cursor.requireInt(RecipientTable.MESSAGE_EXPIRATION_TIME_VERSION),
       muteUntilMs = cursor.requireLong(RecipientTable.MUTE_UNTIL).takeIf { it > 0 },
-      markedUnread = ThreadTable.ReadStatus.deserialize(cursor.requireInt(ThreadTable.READ)) == ThreadTable.ReadStatus.FORCED_UNREAD,
-      dontNotifyForMentionsIfMuted = RecipientTable.MentionSetting.DO_NOT_NOTIFY.id == cursor.requireInt(RecipientTable.MENTION_SETTING),
+      markedUnread = ThreadTable.ReadStatus.deserialize(cursor.requireInt(ThreadTable.READ)) == ThreadTable.ReadStatus.ForcedUnread,
+      dontNotifyForMentionsIfMuted = if (isGroup) RecipientTable.NotificationSetting.DO_NOT_NOTIFY.id == cursor.requireInt(RecipientTable.MENTION_SETTING) else false,
       style = ChatStyleConverter.constructRemoteChatStyle(
         db = db,
         chatColors = chatColors,
         chatColorId = customChatColorsId,
-        chatWallpaper = chatWallpaper
-      )
+        chatWallpaper = chatWallpaper,
+        backupMode = exportState.backupMode
+      ),
+      notifyForCallsIfMuted = RecipientTable.NotificationSetting.toBoolean(RecipientTable.NotificationSetting.fromId(cursor.requireInt(RecipientTable.CALL_NOTIFICATION_SETTING))),
+      notifyForMentionsIfMuted = if (isGroup) RecipientTable.NotificationSetting.toBoolean(RecipientTable.NotificationSetting.fromId(cursor.requireInt(RecipientTable.MENTION_SETTING))) else null,
+      notifyForRepliesIfMuted = if (isGroup) RecipientTable.NotificationSetting.toBoolean(RecipientTable.NotificationSetting.fromId(cursor.requireInt(RecipientTable.REPLY_NOTIFICATION_SETTING))) else null,
+      showUnreadReminders = RecipientTable.NotificationSetting.toBoolean(RecipientTable.NotificationSetting.fromId(cursor.requireInt(RecipientTable.UNREAD_REMINDER)))
     )
   }
 

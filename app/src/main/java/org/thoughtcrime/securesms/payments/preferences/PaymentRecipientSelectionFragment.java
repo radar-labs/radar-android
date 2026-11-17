@@ -3,7 +3,7 @@ package org.thoughtcrime.securesms.payments.preferences;
 import android.Manifest;
 import android.widget.Toast;
 import org.thoughtcrime.securesms.payments.preferences.transfer.PaymentsTransferQrScanFragment;
-import org.thoughtcrime.securesms.permissions.Permissions;
+import org.signal.core.ui.permissions.Permissions;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -19,22 +19,24 @@ import java.util.List;
 import java.util.Set;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
+import org.signal.core.models.recipients.RecipientId;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.ContactSelectionListFragment;
-import org.thoughtcrime.securesms.LoggingFragment;
+import org.signal.core.ui.logging.LoggingFragment;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.ContactFilterView;
 import org.thoughtcrime.securesms.contacts.ContactSelectionDisplayMode;
@@ -49,12 +51,13 @@ import org.thoughtcrime.securesms.payments.PaymentsAddressException;
 import org.thoughtcrime.securesms.payments.preferences.model.PayeeParcelable;
 import org.thoughtcrime.securesms.mms.AttachmentManager;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.signal.core.ui.util.ViewUtil;
+import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
+import org.signal.core.util.ExpiringProfileCredentialUtil;
 import org.thoughtcrime.securesms.recipients.ui.findby.FindByActivity;
 import org.thoughtcrime.securesms.recipients.ui.findby.FindByMode;
 import org.thoughtcrime.securesms.util.ProfileUtil;
-import org.thoughtcrime.securesms.util.ViewUtil;
-import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -62,7 +65,7 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 
-public class PaymentRecipientSelectionFragment extends LoggingFragment implements ContactSelectionListFragment.OnContactSelectedListener, ContactSelectionListFragment.ScrollCallback, ContactSelectionListFragment.FindByCallback {
+public class PaymentRecipientSelectionFragment extends LoggingFragment implements ContactSelectionListFragment.OnContactSelectedListener, ContactSelectionListFragment.FindByCallback {
 
   private static final String TAG = Log.tag(PaymentRecipientSelectionFragment.class);
 
@@ -128,6 +131,9 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     recentHeader    = view.findViewById(R.id.payment_recipient_selection_fragment_recent_header);
     recentContainer = view.findViewById(R.id.payment_recipient_selection_fragment_recents);
     loadRecentRecipients();
+
+    toolbar.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    SystemWindowInsetsSetter.attach(toolbar, getViewLifecycleOwner(), WindowInsetsCompat.Type.statusBars());
 
     contactFilterView = view.findViewById(R.id.contact_filter_edit_text);
     contactFilterView.enablePaste();
@@ -251,7 +257,7 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     // No-op: only the find-by-username row is enabled in the payment recipient picker.
   }
 
-  @Override
+  // Upstream's contact list is a Compose list now and no longer reports scroll starts (ScrollCallback is gone).
   public void onBeginScroll() {
     hideKeyboard();
   }
@@ -313,8 +319,8 @@ public class PaymentRecipientSelectionFragment extends LoggingFragment implement
     Permissions.with(this)
                .request(Manifest.permission.CAMERA)
                .ifNecessary()
-               .withRationaleDialog(getString(R.string.CameraXFragment_allow_access_camera), getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs), R.drawable.ic_camera_24)
-               .withPermanentDenialDialog(getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera), null, R.string.CameraXFragment_allow_access_camera, R.string.CameraXFragment_to_scan_qr_codes, getParentFragmentManager())
+               .withRationaleDialog(getString(org.signal.mediasend.R.string.CameraXFragment_allow_access_camera), getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs), R.drawable.ic_camera_24)
+               .withPermanentDenialDialog(getString(R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera), null, org.signal.mediasend.R.string.CameraXFragment_allow_access_camera, org.signal.mediasend.R.string.CameraXFragment_to_scan_qr_codes, getParentFragmentManager())
                .onAllGranted(() -> SafeNavigation.safeNavigate(Navigation.findNavController(requireView()), R.id.action_paymentRecipientSelection_to_scanQr))
                .onAnyDenied(() -> Toast.makeText(requireContext(), R.string.PaymentsTransferFragment__to_scan_a_qr_code_signal_needs_access_to_the_camera, Toast.LENGTH_LONG).show())
                .execute();

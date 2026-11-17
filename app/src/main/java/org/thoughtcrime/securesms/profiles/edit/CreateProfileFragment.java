@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,25 +23,27 @@ import com.airbnb.lottie.SimpleColorFilter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.signal.core.models.media.Media;
+import org.signal.core.ui.logging.LoggingFragment;
 import org.signal.core.util.EditTextUtil;
 import org.signal.core.util.StreamUtil;
+import org.signal.core.util.StringUtil;
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.LoggingFragment;
+import org.signal.remoteconfig.RemoteConfig;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.avatar.Avatars;
 import org.thoughtcrime.securesms.avatar.picker.AvatarPickerFragment;
 import org.thoughtcrime.securesms.databinding.CreateProfileFragmentBinding;
+import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.groups.GroupId;
-import org.thoughtcrime.securesms.keyvalue.PhoneNumberPrivacyValues;
+import org.signal.storage.keyvalue.PhoneNumberPrivacyValues;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
-import org.thoughtcrime.securesms.mediasend.Media;
 import org.thoughtcrime.securesms.profiles.edit.pnp.WhoCanFindMeByPhoneNumberFragment;
-import org.thoughtcrime.securesms.profiles.manage.EditProfileNameFragment;
-import org.thoughtcrime.securesms.providers.BlobProvider;
+import org.thoughtcrime.securesms.profiles.ProfileName;
 import org.thoughtcrime.securesms.util.CommunicationActions;
-import org.thoughtcrime.securesms.util.RemoteConfig;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.thoughtcrime.securesms.util.SystemWindowInsetsSetter;
+import org.signal.core.ui.util.ViewUtil;
 import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
 import org.thoughtcrime.securesms.util.text.AfterTextChanged;
 
@@ -62,6 +65,7 @@ public class CreateProfileFragment extends LoggingFragment {
   private static final String TAG                    = Log.tag(CreateProfileFragment.class);
   private static final int    MAX_DESCRIPTION_GLYPHS = 480;
   private static final int    MAX_DESCRIPTION_BYTES  = 8192;
+  private static final int    NAME_MAX_GLYPHS        = 26;
 
   private Intent nextIntent;
 
@@ -89,6 +93,8 @@ public class CreateProfileFragment extends LoggingFragment {
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    SystemWindowInsetsSetter.attach(binding.container, getViewLifecycleOwner(), SystemWindowInsetsSetter.SAFE_AREA_WITH_KEYBOARD);
+
     GroupId groupId = GroupId.parseNullableOrThrow(requireArguments().getString(GROUP_ID, null));
 
     initializeViewModel(requireArguments().getBoolean(EXCLUDE_SYSTEM, false), groupId, savedInstanceState != null);
@@ -117,7 +123,7 @@ public class CreateProfileFragment extends LoggingFragment {
   private void handleMediaFromResult(@NonNull Media media) {
     SimpleTask.run(() -> {
       try {
-        InputStream stream = BlobProvider.getInstance().getStream(requireContext(), media.getUri());
+        InputStream stream = AppDependencies.getBlobs().getStream(requireContext(), media.getUri());
 
         return StreamUtil.readFully(stream);
       } catch (IOException ioException) {
@@ -180,7 +186,7 @@ public class CreateProfileFragment extends LoggingFragment {
       if (groupId.isV2()) {
         EditTextUtil.addGraphemeClusterLimitFilter(binding.familyName, MAX_DESCRIPTION_GLYPHS);
         binding.familyName.addTextChangedListener(new AfterTextChanged(s -> {
-          EditProfileNameFragment.trimFieldToMaxByteLength(s, MAX_DESCRIPTION_BYTES);
+          trimFieldToMaxByteLength(s, MAX_DESCRIPTION_BYTES);
           viewModel.setFamilyName(s.toString());
         }));
         binding.familyNameWrapper.setHint(R.string.EditProfileFragment__group_description);
@@ -199,30 +205,34 @@ public class CreateProfileFragment extends LoggingFragment {
       }
       binding.avatarPlaceholder.setImageResource(R.drawable.ic_group_outline_40);
     } else {
-      EditTextUtil.addGraphemeClusterLimitFilter(binding.givenName, EditProfileNameFragment.NAME_MAX_GLYPHS);
-      EditTextUtil.addGraphemeClusterLimitFilter(binding.familyName, EditProfileNameFragment.NAME_MAX_GLYPHS);
+      EditTextUtil.addGraphemeClusterLimitFilter(binding.givenName, NAME_MAX_GLYPHS);
+      EditTextUtil.addGraphemeClusterLimitFilter(binding.familyName, NAME_MAX_GLYPHS);
       binding.givenName.addTextChangedListener(new AfterTextChanged(s -> {
-                                                                        EditProfileNameFragment.trimFieldToMaxByteLength(s);
+                                                                        trimFieldToMaxByteLength(s, ProfileName.MAX_PART_LENGTH);
                                                                         viewModel.setGivenName(s.toString());
                                                                       }));
       binding.familyName.addTextChangedListener(new AfterTextChanged(s -> {
-                                                                         EditProfileNameFragment.trimFieldToMaxByteLength(s);
+                                                                         trimFieldToMaxByteLength(s, ProfileName.MAX_PART_LENGTH);
                                                                          viewModel.setFamilyName(s.toString());
                                                                        }));
       binding.groupDescriptionText.setVisibility(View.GONE);
       binding.profileDescriptionText.setLearnMoreVisible(true);
-      binding.profileDescriptionText.setLinkColor(ContextCompat.getColor(requireContext(), R.color.signal_colorPrimary));
+      binding.profileDescriptionText.setLinkColor(ContextCompat.getColor(requireContext(), org.signal.core.ui.R.color.signal_colorPrimary));
       binding.profileDescriptionText.setOnLinkClickListener(v -> CommunicationActions.openBrowserLink(requireContext(), getString(R.string.EditProfileFragment__support_link)));
 
-      getParentFragmentManager().setFragmentResultListener(WhoCanFindMeByPhoneNumberFragment.REQUEST_KEY, getViewLifecycleOwner(), (requestKey, result) -> {
-        if (WhoCanFindMeByPhoneNumberFragment.REQUEST_KEY.equals(requestKey)) {
-          presentWhoCanFindMeDescription(SignalStore.phoneNumberPrivacy().getPhoneNumberDiscoverabilityMode());
-        }
-      });
+      if (SignalStore.account().isPhoneNumberless()) {
+        binding.whoCanFindMeContainer.setVisibility(View.GONE);
+      } else {
+        getParentFragmentManager().setFragmentResultListener(WhoCanFindMeByPhoneNumberFragment.REQUEST_KEY, getViewLifecycleOwner(), (requestKey, result) -> {
+          if (WhoCanFindMeByPhoneNumberFragment.REQUEST_KEY.equals(requestKey)) {
+            presentWhoCanFindMeDescription(SignalStore.phoneNumberPrivacy().getPhoneNumberDiscoverabilityMode());
+          }
+        });
 
-      binding.whoCanFindMeContainer.setVisibility(View.VISIBLE);
-      binding.whoCanFindMeContainer.setOnClickListener(v -> SafeNavigation.safeNavigate(Navigation.findNavController(v), CreateProfileFragmentDirections.actionCreateProfileFragmentToPhoneNumberPrivacy()));
-      presentWhoCanFindMeDescription(SignalStore.phoneNumberPrivacy().getPhoneNumberDiscoverabilityMode());
+        binding.whoCanFindMeContainer.setVisibility(View.VISIBLE);
+        binding.whoCanFindMeContainer.setOnClickListener(v -> SafeNavigation.safeNavigate(Navigation.findNavController(v), CreateProfileFragmentDirections.actionCreateProfileFragmentToPhoneNumberPrivacy()));
+        presentWhoCanFindMeDescription(SignalStore.phoneNumberPrivacy().getPhoneNumberDiscoverabilityMode());
+      }
     }
 
     binding.finishButton.setOnClickListener(v -> {
@@ -293,11 +303,11 @@ public class CreateProfileFragment extends LoggingFragment {
       case DISCOVERABLE:
       case UNDECIDED:
         binding.whoCanFindMeIcon.setImageResource(R.drawable.symbol_group_24);
-        binding.whoCanFindMeDescription.setText(R.string.PhoneNumberPrivacy_everyone);
+        binding.whoCanFindMeDescription.setText(org.signal.appsettings.R.string.PhoneNumberPrivacy_everyone);
         break;
       case NOT_DISCOVERABLE:
-        binding.whoCanFindMeIcon.setImageResource(R.drawable.symbol_lock_24);
-        binding.whoCanFindMeDescription.setText(R.string.PhoneNumberPrivacy_nobody);
+        binding.whoCanFindMeIcon.setImageResource(org.signal.core.ui.R.drawable.symbol_lock_24);
+        binding.whoCanFindMeDescription.setText(org.signal.appsettings.R.string.PhoneNumberPrivacy_nobody);
         break;
     }
   }
@@ -321,6 +331,7 @@ public class CreateProfileFragment extends LoggingFragment {
         }
       } else {
         Toast.makeText(requireContext(), R.string.CreateProfileActivity_problem_setting_profile, Toast.LENGTH_LONG).show();
+        binding.finishButton.cancelSpinning();
       }
     });
 
@@ -378,5 +389,13 @@ public class CreateProfileFragment extends LoggingFragment {
 
   public interface Controller {
     void onProfileNameUploadCompleted();
+  }
+
+  private static void trimFieldToMaxByteLength(@NonNull Editable s, int length) {
+    int trimmedLength = StringUtil.trimToFit(s.toString(), length).length();
+
+    if (s.length() > trimmedLength) {
+      s.delete(trimmedLength, s.length());
+    }
   }
 }

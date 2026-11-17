@@ -2,8 +2,7 @@ package org.thoughtcrime.securesms.storage;
 
 import androidx.annotation.NonNull;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
+import java.util.stream.Collectors;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.recipients.Recipient;
@@ -35,7 +34,7 @@ public final class StorageSyncValidations {
     validateManifestAndInserts(result.manifest, result.inserts, self);
 
     if (result.deletes.size() > 0) {
-      Set<String> allSetEncoded = Stream.of(result.manifest.storageIds).map(StorageId::getRaw).map(Base64::encodeWithPadding).collect(Collectors.toSet());
+      Set<String> allSetEncoded = result.manifest.storageIds.stream().map(StorageId::getRaw).map(Base64::encodeWithPadding).collect(Collectors.toSet());
 
       for (byte[] delete : result.deletes) {
         String encoded = Base64.encodeWithPadding(delete);
@@ -59,14 +58,14 @@ public final class StorageSyncValidations {
       return;
     }
 
-    Set<ByteBuffer> previousIds = Stream.of(previousManifest.storageIds).map(id -> ByteBuffer.wrap(id.getRaw())).collect(Collectors.toSet());
-    Set<ByteBuffer> newIds      = Stream.of(result.manifest.storageIds).map(id -> ByteBuffer.wrap(id.getRaw())).collect(Collectors.toSet());
+    Set<ByteBuffer> previousIds = previousManifest.storageIds.stream().map(id -> ByteBuffer.wrap(id.getRaw())).collect(Collectors.toSet());
+    Set<ByteBuffer> newIds      = result.manifest.storageIds.stream().map(id -> ByteBuffer.wrap(id.getRaw())).collect(Collectors.toSet());
 
     Set<ByteBuffer> manifestInserts = SetUtil.difference(newIds, previousIds);
     Set<ByteBuffer> manifestDeletes = SetUtil.difference(previousIds, newIds);
 
-    Set<ByteBuffer> declaredInserts = Stream.of(result.inserts).map(r -> ByteBuffer.wrap(r.getId().getRaw())).collect(Collectors.toSet());
-    Set<ByteBuffer> declaredDeletes = Stream.of(result.deletes).map(ByteBuffer::wrap).collect(Collectors.toSet());
+    Set<ByteBuffer> declaredInserts = result.inserts.stream().map(r -> ByteBuffer.wrap(r.getId().getRaw())).collect(Collectors.toSet());
+    Set<ByteBuffer> declaredDeletes = result.deletes.stream().map(ByteBuffer::wrap).collect(Collectors.toSet());
 
     if (declaredInserts.size() > manifestInserts.size()) {
       Log.w(TAG, "DeclaredInserts: " + declaredInserts.size() + ", ManifestInserts: " + manifestInserts.size());
@@ -117,8 +116,8 @@ public final class StorageSyncValidations {
     }
 
     Set<StorageId>  allSet    = new HashSet<>(manifest.storageIds);
-    Set<StorageId>  insertSet = new HashSet<>(Stream.of(inserts).map(SignalStorageRecord::getId).toList());
-    Set<ByteBuffer> rawIdSet  = Stream.of(allSet).map(id -> ByteBuffer.wrap(id.getRaw())).collect(Collectors.toSet());
+    Set<StorageId>  insertSet = new HashSet<>(inserts.stream().map(SignalStorageRecord::getId).collect(Collectors.toList()));
+    Set<ByteBuffer> rawIdSet  = allSet.stream().map(id -> ByteBuffer.wrap(id.getRaw())).collect(Collectors.toSet());
 
     if (allSet.size() != manifest.storageIds.size()) {
       throw new DuplicateStorageIdError();
@@ -158,6 +157,21 @@ public final class StorageSyncValidations {
       ids = manifest.getStorageIdsByType().get(ManifestRecord.Identifier.Type.NOTIFICATION_PROFILE.getValue());
       if (ids.size() != new HashSet<>(ids).size()) {
         throw new DuplicateNotificationProfileError();
+      }
+
+      ids = manifest.getStorageIdsByType().get(ManifestRecord.Identifier.Type.STICKER_PACK.getValue());
+      if (ids.size() != new HashSet<>(ids).size()) {
+        throw new DuplicateStickerPackError();
+      }
+
+      ids = manifest.getStorageIdsByType().get(ManifestRecord.Identifier.Type.HIDDEN_STICKER_PACK.getValue());
+      if (ids.size() != new HashSet<>(ids).size()) {
+        throw new DuplicateHiddenStickerPackError();
+      }
+
+      ids = manifest.getStorageIdsByType().get(ManifestRecord.Identifier.Type.FAVORITE_STICKER.getValue());
+      if (ids.size() != new HashSet<>(ids).size()) {
+        throw new DuplicateFavoriteStickerError();
       }
 
       throw new DuplicateRawIdAcrossTypesError();
@@ -222,6 +236,15 @@ public final class StorageSyncValidations {
   }
 
   private static final class DuplicateNotificationProfileError extends Error {
+  }
+
+  private static final class DuplicateStickerPackError extends Error {
+  }
+
+  private static final class DuplicateHiddenStickerPackError extends Error {
+  }
+
+  private static final class DuplicateFavoriteStickerError extends Error {
   }
 
   private static final class InsertNotPresentInFullIdSetError extends Error {

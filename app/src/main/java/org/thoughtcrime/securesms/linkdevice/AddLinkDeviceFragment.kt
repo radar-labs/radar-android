@@ -8,30 +8,38 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import org.signal.camera.CameraScreenEvents
+import org.signal.camera.CameraScreenState
+import org.signal.camera.CameraScreenViewModel
+import org.signal.core.ui.compose.ComposeFragment
 import org.signal.core.ui.compose.DayNightPreviews
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.permissions.Permissions
 import org.thoughtcrime.securesms.R
-import org.thoughtcrime.securesms.compose.ComposeFragment
-import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.util.VibrateUtil
 import org.thoughtcrime.securesms.util.navigation.safeNavigate
+import org.signal.core.ui.R as CoreUiR
+import org.signal.mediasend.R as MediaSendR
 
 /**
  * Fragment that allows users to scan a QR code from their camera to link a device
@@ -48,6 +56,9 @@ class AddLinkDeviceFragment : ComposeFragment() {
   @Composable
   override fun FragmentContent() {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val cameraViewModel: CameraScreenViewModel = viewModel { CameraScreenViewModel() }
+    val cameraState by cameraViewModel.state
+    val context = LocalContext.current
     val navController: NavController by remember { mutableStateOf(findNavController()) }
     val cameraPermissionState: PermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
 
@@ -60,24 +71,28 @@ class AddLinkDeviceFragment : ComposeFragment() {
       navController.popBackStack()
     }
 
-    MainScreen(
-      state = state,
-      navController = navController,
-      hasPermissions = cameraPermissionState.status.isGranted,
-      onRequestPermissions = { askPermissions() },
-      onShowFrontCamera = { viewModel.showFrontCamera() },
-      onQrCodeScanned = { data ->
+    LaunchedEffect(cameraViewModel) {
+      cameraViewModel.qrCodeDetected.collect { data ->
         if (VibrateUtil.isHapticFeedbackEnabled(requireContext())) {
           VibrateUtil.vibrate(requireContext(), VIBRATE_DURATION_MS)
         }
         viewModel.onQrCodeScanned(data)
-      },
+      }
+    }
+
+    MainScreen(
+      state = state,
+      cameraState = cameraState,
+      cameraEmitter = cameraViewModel::onEvent,
+      navController = navController,
+      hasPermissions = cameraPermissionState.status.isGranted,
+      onRequestPermissions = { askPermissions() },
+      onSwitchCamera = { cameraViewModel.onEvent(CameraScreenEvents.SwitchCamera(context)) },
       onQrCodeApproved = {
         navController.popBackStack()
         viewModel.addDevice(shouldSync = false)
       },
       onQrCodeDismissed = { viewModel.onQrCodeDismissed() },
-      onQrCodeRetry = { viewModel.onQrCodeScanned(state.linkUri.toString()) },
       onLinkDeviceSuccess = {
         viewModel.onLinkDeviceResult(showSheet = true)
       },
@@ -89,8 +104,8 @@ class AddLinkDeviceFragment : ComposeFragment() {
     Permissions.with(this)
       .request(Manifest.permission.CAMERA)
       .ifNecessary()
-      .withPermanentDenialDialog(getString(R.string.CameraXFragment_signal_needs_camera_access_scan_qr_code), null, R.string.CameraXFragment_allow_access_camera, R.string.CameraXFragment_to_scan_qr_codes, parentFragmentManager)
-      .onAnyDenied { Toast.makeText(requireContext(), R.string.CameraXFragment_signal_needs_camera_access_scan_qr_code, Toast.LENGTH_LONG).show() }
+      .withPermanentDenialDialog(getString(MediaSendR.string.CameraXFragment_signal_needs_camera_access_scan_qr_code), null, MediaSendR.string.CameraXFragment_allow_access_camera, MediaSendR.string.CameraXFragment_to_scan_qr_codes, parentFragmentManager)
+      .onAnyDenied { Toast.makeText(requireContext(), MediaSendR.string.CameraXFragment_signal_needs_camera_access_scan_qr_code, Toast.LENGTH_LONG).show() }
       .execute()
   }
 
@@ -103,14 +118,14 @@ class AddLinkDeviceFragment : ComposeFragment() {
 @Composable
 private fun MainScreen(
   state: LinkDeviceSettingsState,
+  cameraState: CameraScreenState = CameraScreenState(),
+  cameraEmitter: (CameraScreenEvents) -> Unit = {},
   navController: NavController? = null,
   hasPermissions: Boolean = false,
   onRequestPermissions: () -> Unit = {},
-  onShowFrontCamera: () -> Unit = {},
-  onQrCodeScanned: (String) -> Unit = {},
+  onSwitchCamera: () -> Unit = {},
   onQrCodeApproved: () -> Unit = {},
   onQrCodeDismissed: () -> Unit = {},
-  onQrCodeRetry: () -> Unit = {},
   onLinkDeviceSuccess: () -> Unit = {},
   onLinkDeviceFailure: () -> Unit = {}
 ) {
@@ -118,9 +133,9 @@ private fun MainScreen(
     title = "",
     onNavigationClick = { navController?.popBackStack() },
     navigationIcon = ImageVector.vectorResource(id = R.drawable.ic_x),
-    navigationContentDescription = stringResource(id = R.string.Material3SearchToolbar__close),
+    navigationContentDescription = stringResource(id = CoreUiR.string.CloseButton__content_description),
     actions = {
-      IconButton(onClick = { onShowFrontCamera() }) {
+      IconButton(onClick = onSwitchCamera) {
         Icon(painterResource(id = R.drawable.symbol_switch_24), contentDescription = null)
       }
     }
@@ -128,12 +143,11 @@ private fun MainScreen(
     LinkDeviceQrScanScreen(
       hasPermission = hasPermissions,
       onRequestPermissions = onRequestPermissions,
-      showFrontCamera = state.showFrontCamera,
+      cameraState = cameraState,
+      cameraEmitter = cameraEmitter,
       qrCodeState = state.qrCodeState,
-      onQrCodeScanned = onQrCodeScanned,
       onQrCodeAccepted = onQrCodeApproved,
       onQrCodeDismissed = onQrCodeDismissed,
-      onQrCodeRetry = onQrCodeRetry,
       linkDeviceResult = state.linkDeviceResult,
       onLinkDeviceSuccess = onLinkDeviceSuccess,
       onLinkDeviceFailure = onLinkDeviceFailure,

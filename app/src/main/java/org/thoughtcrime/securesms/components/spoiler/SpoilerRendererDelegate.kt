@@ -11,11 +11,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import org.signal.core.util.AccessibilityUtil
 import org.signal.core.util.dp
-import org.thoughtcrime.securesms.R
+import org.signal.uicomponents.spoiler.SpoilerPaint
 import org.thoughtcrime.securesms.components.spoiler.SpoilerAnnotation.SpoilerClickableSpan
-import org.thoughtcrime.securesms.util.AccessibilityUtil
 import org.thoughtcrime.securesms.util.getLifecycle
+import org.signal.core.ui.R as CoreUiR
 
 /**
  * Performs initial calculation on how to render spoilers and then delegates to actually drawing the spoiler sparkles.
@@ -50,7 +51,7 @@ class SpoilerRendererDelegate @JvmOverloads constructor(
       spoilerDrawable = spoilerDrawable,
       renderForComposing = renderForComposing,
       padding = 2.dp,
-      composeBackgroundColor = ContextCompat.getColor(view.context, R.color.signal_colorOnSurfaceVariant1)
+      composeBackgroundColor = ContextCompat.getColor(view.context, CoreUiR.color.signal_colorOnSurfaceVariant1)
     )
 
     view.addOnAttachStateChangeListener(object : OnAttachStateChangeListener {

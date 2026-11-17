@@ -10,7 +10,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -36,16 +34,16 @@ import org.signal.core.ui.compose.AllDevicePreviews
 import org.signal.core.ui.compose.Dialogs
 import org.signal.core.ui.compose.DropdownMenus
 import org.signal.core.ui.compose.Previews
+import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.theme.SignalTheme
 import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.calls.new.NewCallUiState.CallType
 import org.thoughtcrime.securesms.calls.new.NewCallUiState.UserMessage
 import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity
-import org.thoughtcrime.securesms.compose.SignalTheme
 import org.thoughtcrime.securesms.recipients.ui.RecipientLookupFailureMessage
 import org.thoughtcrime.securesms.recipients.ui.RecipientPicker
 import org.thoughtcrime.securesms.recipients.ui.RecipientPickerCallbacks
-import org.thoughtcrime.securesms.recipients.ui.RecipientPickerScaffold
 import org.thoughtcrime.securesms.recipients.ui.RecipientSelection
 import org.thoughtcrime.securesms.util.CommunicationActions
 
@@ -53,9 +51,6 @@ import org.thoughtcrime.securesms.util.CommunicationActions
  * Allows the user to start a new call by selecting a recipient.
  */
 class NewCallActivity : PassphraseRequiredActivity() {
-  /** Draws edge to edge and positions its own content against the insets. */
-  override fun fitsSystemBars(): Boolean = false
-
   companion object {
     @JvmStatic
     fun createIntent(context: Context): Intent {
@@ -64,7 +59,6 @@ class NewCallActivity : PassphraseRequiredActivity() {
   }
 
   override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
-    enableEdgeToEdge()
     super.onCreate(savedInstanceState, ready)
 
     val navigateBack = onBackPressedDispatcher::onBackPressed
@@ -87,7 +81,7 @@ private fun NewCallScreen(
   val context = LocalActivity.current as FragmentActivity
 
   val callbacks = remember {
-    object : UiCallbacks {
+    object : NewCallUiCallbacks {
       override fun onSearchQueryChanged(query: String) = viewModel.onSearchQueryChanged(query)
       override fun onRecipientSelected(selection: RecipientSelection) = viewModel.startCall(selection)
       override fun onInviteToSignal() = context.startActivity(AppSettingsActivity.invite(context))
@@ -114,7 +108,7 @@ private fun NewCallScreen(
   )
 }
 
-private interface UiCallbacks :
+private interface NewCallUiCallbacks :
   RecipientPickerCallbacks.ListActions,
   RecipientPickerCallbacks.Refresh,
   RecipientPickerCallbacks.NewCall {
@@ -123,7 +117,7 @@ private interface UiCallbacks :
   fun onUserMessageDismissed(userMessage: UserMessage)
   fun onBackPressed()
 
-  object Empty : UiCallbacks {
+  object Empty : NewCallUiCallbacks {
     override fun onSearchQueryChanged(query: String) = Unit
     override fun onRecipientSelected(selection: RecipientSelection) = Unit
     override fun onInviteToSignal() = Unit
@@ -137,13 +131,12 @@ private interface UiCallbacks :
 @Composable
 private fun NewCallScreenUi(
   uiState: NewCallUiState,
-  callbacks: UiCallbacks
+  callbacks: NewCallUiCallbacks
 ) {
   val snackbarHostState = remember { SnackbarHostState() }
 
-  RecipientPickerScaffold(
+  Scaffolds.TitlePane(
     title = stringResource(R.string.NewCallActivity__new_call),
-    forceSplitPane = uiState.forceSplitPane,
     onNavigateUpClick = callbacks::onBackPressed,
     topAppBarActions = { TopAppBarActions(callbacks) },
     snackbarHostState = snackbarHostState,
@@ -176,7 +169,7 @@ private fun NewCallScreenUi(
 }
 
 @Composable
-private fun TopAppBarActions(callbacks: UiCallbacks) {
+private fun TopAppBarActions(callbacks: NewCallUiCallbacks) {
   val menuController = remember { DropdownMenus.MenuController() }
   IconButton(
     onClick = { menuController.show() },
@@ -217,7 +210,8 @@ private fun UserMessagesHost(
   onDismiss: (UserMessage) -> Unit,
   snackbarHostState: SnackbarHostState
 ) {
-  val context = LocalContext.current
+  val youAreAlreadyInACall = stringResource(R.string.CommunicationActions__you_are_already_in_a_call)
+  val errorRetrievingContacts = stringResource(R.string.ContactSelectionListFragment_error_retrieving_contacts_check_your_network_connection)
 
   when (userMessage) {
     null -> {}
@@ -231,14 +225,14 @@ private fun UserMessagesHost(
 
     is UserMessage.UserAlreadyInAnotherCall -> LaunchedEffect(userMessage) {
       snackbarHostState.showSnackbar(
-        message = context.getString(R.string.CommunicationActions__you_are_already_in_a_call)
+        message = youAreAlreadyInACall
       )
       onDismiss(userMessage)
     }
 
     is UserMessage.ContactsRefreshFailed -> LaunchedEffect(userMessage) {
       snackbarHostState.showSnackbar(
-        message = context.getString(R.string.ContactSelectionListFragment_error_retrieving_contacts_check_your_network_connection)
+        message = errorRetrievingContacts
       )
       onDismiss(userMessage)
     }
@@ -250,10 +244,8 @@ private fun UserMessagesHost(
 private fun NewCallScreenPreview() {
   Previews.Preview {
     NewCallScreenUi(
-      uiState = NewCallUiState(
-        forceSplitPane = false
-      ),
-      callbacks = UiCallbacks.Empty
+      uiState = NewCallUiState(),
+      callbacks = NewCallUiCallbacks.Empty
     )
   }
 }

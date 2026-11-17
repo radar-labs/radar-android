@@ -1,18 +1,21 @@
 package org.thoughtcrime.securesms.jobs
 
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.logging.Log
+import org.thoughtcrime.securesms.database.GroupTable
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.MessageId
+import org.thoughtcrime.securesms.database.model.RecipientRecord
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.groups.GroupAccessControl
-import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
+import org.thoughtcrime.securesms.jobmanager.impl.SealedSenderConstraint
 import org.thoughtcrime.securesms.jobs.protos.UnpinJobData
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.messages.GroupSendUtil
 import org.thoughtcrime.securesms.recipients.Recipient
 import org.thoughtcrime.securesms.recipients.Recipient.Companion.self
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.recipients.RecipientUtil
 import org.thoughtcrime.securesms.util.GroupUtil
 import org.whispersystems.signalservice.api.crypto.ContentHint
@@ -44,16 +47,19 @@ class UnpinMessageJob(
         return null
       }
 
-      val conversationRecipient = SignalDatabase.threads.getRecipientForThreadId(message.threadId)
-      if (conversationRecipient == null) {
+      val conversationRecipientId = SignalDatabase.threads.getRecipientIdForThreadId(message.threadId)
+      if (conversationRecipientId == null) {
         Log.w(TAG, "We have a message, but couldn't find the thread!")
         return null
       }
 
+      val conversationRecipient = SignalDatabase.recipients.getRecord(conversationRecipientId)
+      val groupId = conversationRecipient.groupId
+
       val recipients = if (initialRecipientIds.isNotEmpty()) {
         initialRecipientIds.map { it.toLong() }
-      } else if (conversationRecipient.isGroup) {
-        conversationRecipient.participantIds.filter { it != Recipient.self().id }.map { it.toLong() }
+      } else if (groupId != null) {
+        SignalDatabase.groups.getGroupMemberIds(groupId, GroupTable.MemberSet.FULL_MEMBERS_EXCLUDING_SELF).map { it.toLong() }
       } else {
         listOf(conversationRecipient.id.toLong())
       }
@@ -65,6 +71,7 @@ class UnpinMessageJob(
         parameters = Parameters.Builder()
           .setQueue(conversationRecipient.id.toQueueKey())
           .addConstraint(NetworkConstraint.KEY)
+          .addConstraint(SealedSenderConstraint.KEY)
           .setMaxAttempts(Parameters.UNLIMITED)
           .setLifespan(1.days.inWholeMilliseconds)
           .build()
@@ -92,11 +99,13 @@ class UnpinMessageJob(
       return Result.failure()
     }
 
-    val conversationRecipient = SignalDatabase.threads.getRecipientForThreadId(message.threadId)
-    if (conversationRecipient == null) {
+    val conversationRecipientId = SignalDatabase.threads.getRecipientIdForThreadId(message.threadId)
+    if (conversationRecipientId == null) {
       Log.w(TAG, "We have a message, but couldn't find the thread!")
       return Result.failure()
     }
+
+    val conversationRecipient = SignalDatabase.recipients.getRecord(conversationRecipientId)
 
     val targetAuthor = message.fromRecipient
     if (targetAuthor == null || !targetAuthor.hasServiceId) {
@@ -104,8 +113,13 @@ class UnpinMessageJob(
       return Result.failure()
     }
 
-    if (conversationRecipient.isPushV2Group) {
+    val groupId = conversationRecipient.groupId
+    if (groupId != null && groupId.isV2) {
       val groupRecord = SignalDatabase.groups.getGroup(conversationRecipient.id)
+      if (groupRecord.isPresent && groupRecord.get().isTerminated) {
+        Log.w(TAG, "Cannot send unpin messages to terminated group.")
+        return Result.failure()
+      }
       if (groupRecord.isPresent && groupRecord.get().attributesAccessControl == GroupAccessControl.ONLY_ADMINS && !groupRecord.get().isAdmin(self())) {
         Log.w(TAG, "Non-admins cannot send unpin messages to group.")
         return Result.failure()
@@ -114,7 +128,7 @@ class UnpinMessageJob(
 
     val targetSentTimestamp = message.dateSent
 
-    val recipients = Recipient.resolvedList(recipientIds.filter { it != Recipient.self().id.toLong() }.map { RecipientId.from(it) })
+    val recipients = Recipient.resolvedList(recipientIds.map { RecipientId.from(it) })
     val registered = RecipientUtil.getEligibleForSending(recipients)
     val unregistered = recipients - registered.toSet()
     val completions: List<Recipient> = deliver(conversationRecipient, registered, message.threadId, targetAuthor, targetSentTimestamp)
@@ -132,7 +146,7 @@ class UnpinMessageJob(
     return Result.success()
   }
 
-  private fun deliver(conversationRecipient: Recipient, destinations: List<Recipient>, threadId: Long, targetAuthor: Recipient, targetSentTimestamp: Long): List<Recipient> {
+  private fun deliver(conversationRecipient: RecipientRecord, destinations: List<Recipient>, threadId: Long, targetAuthor: Recipient, targetSentTimestamp: Long): List<Recipient> {
     val dataMessageBuilder = newBuilder()
       .withTimestamp(System.currentTimeMillis())
       .withUnpinnedMessage(
@@ -142,17 +156,21 @@ class UnpinMessageJob(
         )
       )
 
-    if (conversationRecipient.isGroup) {
-      GroupUtil.setDataMessageGroupContext(context, dataMessageBuilder, conversationRecipient.requireGroupId().requirePush())
+    val groupId = conversationRecipient.groupId
+    if (groupId != null) {
+      GroupUtil.setDataMessageGroupContext(context, dataMessageBuilder, groupId.requirePush())
     }
 
     val dataMessage = dataMessageBuilder.build()
 
+    val nonSelfRecipients = destinations.filterNot { it.isSelf }
+    val includeSelf = destinations.size != nonSelfRecipients.size
+
     val results = GroupSendUtil.sendResendableDataMessage(
       context,
-      conversationRecipient.groupId.map { obj: GroupId -> obj.requireV2() }.orElse(null),
+      groupId?.requireV2(),
       null,
-      destinations,
+      nonSelfRecipients,
       false,
       ContentHint.RESENDABLE,
       MessageId(messageId),
@@ -162,6 +180,10 @@ class UnpinMessageJob(
       null,
       null
     )
+
+    if (includeSelf) {
+      results.add(AppDependencies.signalServiceMessageSender.sendSyncMessage(dataMessage))
+    }
 
     val result = GroupSendJobHelper.getCompletedSends(destinations, results)
 

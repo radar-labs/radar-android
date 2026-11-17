@@ -13,6 +13,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.signal.archive.proto.Frame
+import org.signal.archive.stream.PlainTextBackupReader
 import org.signal.core.models.ServiceId
 import org.signal.core.util.Base64
 import org.signal.core.util.logging.Log
@@ -20,9 +22,7 @@ import org.signal.core.util.readFully
 import org.signal.libsignal.messagebackup.ComparableBackup
 import org.signal.libsignal.messagebackup.MessageBackup
 import org.signal.libsignal.zkgroup.profiles.ProfileKey
-import org.thoughtcrime.securesms.backup.v2.proto.Frame
-import org.thoughtcrime.securesms.backup.v2.stream.PlainTextBackupReader
-import org.thoughtcrime.securesms.database.KeyValueDatabase
+import org.signal.storage.keyvalue.KeyValueDatabase
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import java.io.ByteArrayInputStream
@@ -69,6 +69,11 @@ class ArchiveImportExportTests {
 //  @Test
   fun chatFolders() {
     runTests { it.startsWith("chat_folder_") }
+  }
+
+//  @Test
+  fun chatItemAdminDelete() {
+    runTests { it.startsWith("chat_item_admin_deleted_") }
   }
 
 //  @Test
@@ -217,6 +222,16 @@ class ArchiveImportExportTests {
   }
 
 //  @Test
+  fun chatItemPinMessage() {
+    runTests { it.startsWith("chat_item_pin_message_") }
+  }
+
+//  @Test
+  fun favoriteStickerList() {
+    runTests { it.startsWith("favorite_sticker_list_") }
+  }
+
+//  @Test
   fun notificationProfiles() {
     runTests { it.startsWith("notification_profile_") }
   }
@@ -244,6 +259,16 @@ class ArchiveImportExportTests {
   //  @Test
   fun recipientSelf() {
     runTests { it.startsWith("recipient_self_") }
+  }
+
+//  @Test
+  fun installedStickerPack() {
+    runTests { it.startsWith("installed_sticker_pack_") }
+  }
+
+//  @Test
+  fun hiddenStickerPack() {
+    runTests { it.startsWith("hidden_sticker_pack_") }
   }
 
   private fun runTests(predicate: (String) -> Boolean = { true }) {

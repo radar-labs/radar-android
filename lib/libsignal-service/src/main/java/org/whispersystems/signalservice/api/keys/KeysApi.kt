@@ -1,0 +1,277 @@
+/*
+ * Copyright 2024 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.whispersystems.signalservice.api.keys
+
+import org.signal.core.util.logging.Log
+import org.signal.libsignal.protocol.InvalidKeyException
+import org.signal.libsignal.protocol.SignalProtocolAddress
+import org.signal.libsignal.protocol.ecc.ECPublicKey
+import org.signal.libsignal.protocol.kem.KEMPublicKey
+import org.signal.libsignal.protocol.state.PreKeyBundle
+import org.signal.libsignal.protocol.state.PreKeyRecord
+import org.signal.network.NetworkResult
+import org.signal.network.crypto.SealedSenderAccess
+import org.signal.network.websocket.WebSocketRequestMessage
+import org.signal.network.websocket.get
+import org.signal.network.websocket.put
+import org.whispersystems.signalservice.api.InvalidPreKeyException
+import org.whispersystems.signalservice.api.account.PreKeyUpload
+import org.whispersystems.signalservice.api.fromWebSocketRequest
+import org.whispersystems.signalservice.api.push.SignalServiceAddress
+import org.whispersystems.signalservice.api.push.SignedPreKeyEntity
+import org.whispersystems.signalservice.api.push.exceptions.UnregisteredUserException
+import org.whispersystems.signalservice.api.websocket.SignalWebSocket
+import org.whispersystems.signalservice.internal.push.KyberPreKeyEntity
+import org.whispersystems.signalservice.internal.push.PreKeyEntity
+import org.whispersystems.signalservice.internal.push.PreKeyResponse
+import org.whispersystems.signalservice.internal.push.PreKeyState
+import java.util.LinkedList
+
+/**
+ * Contains APIs for interacting with /keys endpoints on the service.
+ */
+class KeysApi(
+  private val authWebSocket: SignalWebSocket.AuthenticatedWebSocket,
+  private val unauthWebSocket: SignalWebSocket.UnauthenticatedWebSocket
+) {
+
+  companion object {
+    private val TAG = Log.tag(KeysApi::class)
+  }
+
+  /**
+   * Register an identity key, signed prekey, and list of one time prekeys with the server.
+   *
+   * PUT /v2/keys?identity=[preKeyUpload]`.serviceIdType`
+   */
+  fun setPreKeysSync(preKeyUpload: PreKeyUpload): NetworkResult<Unit> {
+    val signedPreKey: SignedPreKeyEntity? = if (preKeyUpload.signedPreKey != null) {
+      SignedPreKeyEntity(
+        preKeyUpload.signedPreKey.id.toLong(),
+        preKeyUpload.signedPreKey.keyPair.publicKey,
+        preKeyUpload.signedPreKey.signature
+      )
+    } else {
+      null
+    }
+
+    val oneTimeEcPreKeys: List<PreKeyEntity>? = if (preKeyUpload.oneTimeEcPreKeys != null) {
+      preKeyUpload
+        .oneTimeEcPreKeys
+        .map { oneTimeEcKey: PreKeyRecord -> PreKeyEntity(oneTimeEcKey.id.toLong(), oneTimeEcKey.keyPair.publicKey) }
+    } else {
+      null
+    }
+
+    val lastResortKyberPreKey: KyberPreKeyEntity? = if (preKeyUpload.lastResortKyberPreKey != null) {
+      KyberPreKeyEntity(
+        preKeyUpload.lastResortKyberPreKey.id.toLong(),
+        preKeyUpload.lastResortKyberPreKey.keyPair.publicKey,
+        preKeyUpload.lastResortKyberPreKey.signature
+      )
+    } else {
+      null
+    }
+
+    val oneTimeKyberPreKeys: List<KyberPreKeyEntity>? = if (preKeyUpload.oneTimeKyberPreKeys != null) {
+      preKeyUpload
+        .oneTimeKyberPreKeys
+        .map { record -> KyberPreKeyEntity(record.id.toLong(), record.keyPair.publicKey, record.signature) }
+    } else {
+      null
+    }
+
+    val body = PreKeyState(signedPreKey, oneTimeEcPreKeys, lastResortKyberPreKey, oneTimeKyberPreKeys)
+
+    val request = WebSocketRequestMessage.put("/v2/keys?identity=${preKeyUpload.serviceIdType.queryParam()}", body)
+    return NetworkResult.fromWebSocketRequest(authWebSocket, request)
+  }
+
+  /**
+   * Retrieves prekeys. If the specified device is the primary (i.e. deviceId 1), it will retrieve prekeys
+   * for all devices. If it is not a primary, it will only contain the prekeys for that specific device.
+   *
+   * GET /v2/keys/[destination]`.identifier`/[deviceSpecifier]
+   * - 200: Success
+   * - 400: Multiple forms of authentication provided
+   * - 401: No valid authentication provided
+   * - 404: No keys found for address/device
+   * - 429: Rate limited
+   */
+  fun getPreKeysSync(
+    destination: SignalServiceAddress,
+    sealedSenderAccess: SealedSenderAccess?,
+    deviceId: Int
+  ): NetworkResult<List<PreKeyBundle>> {
+    return getPreKeysBySpecifierSync(destination, sealedSenderAccess, if (deviceId == 1) "*" else deviceId.toString())
+  }
+
+  /**
+   * Coroutine-friendly variant of [getPreKeysSync] that suspends instead of blocking the calling thread.
+   */
+  suspend fun getPreKeys(
+    destination: SignalServiceAddress,
+    sealedSenderAccess: SealedSenderAccess?,
+    deviceId: Int
+  ): NetworkResult<List<PreKeyBundle>> {
+    return getPreKeysBySpecifier(destination, sealedSenderAccess, if (deviceId == 1) "*" else deviceId.toString())
+  }
+
+  /**
+   * Retrieves a prekey for a specific device.
+   *
+   * GET /v2/keys/[destination]`.identifier`/[deviceSpecifier]
+   * - 200: Success
+   * - 400: Multiple forms of authentication provided
+   * - 401: No valid authentication provided
+   * - 404: No keys found for address/device
+   * - 429: Rate limited
+   */
+  fun getPreKeySync(destination: SignalServiceAddress, deviceId: Int): NetworkResult<PreKeyBundle> {
+    return getPreKeysBySpecifierSync(destination, null, deviceId.toString())
+      .then { bundles ->
+        if (bundles.isNotEmpty()) {
+          NetworkResult.Success(bundles[0])
+        } else {
+          val address = SignalProtocolAddress(destination.identifier, deviceId)
+          NetworkResult.NetworkError(InvalidPreKeyException(address, InvalidKeyException("No valid prekeys available for $address")))
+        }
+      }
+  }
+
+  /**
+   * Retrieves the public identity key and available device prekeys for the specified [destination]. Results can
+   * be restricted to a specific device setting the device number for [deviceSpecifier] or can get all devices by passing `*`.
+   *
+   * GET /v2/keys/[destination]`.identifier`/[deviceSpecifier]
+   * - 200: Success
+   * - 400: Multiple forms of authentication provided
+   * - 401: No valid authentication provided
+   * - 404: No keys found for address/device
+   * - 429: Rate limited
+   */
+  private fun getPreKeysBySpecifierSync(destination: SignalServiceAddress, sealedSenderAccess: SealedSenderAccess?, deviceSpecifier: String): NetworkResult<List<PreKeyBundle>> {
+    val request = preKeysRequest(destination, deviceSpecifier)
+
+    val result: NetworkResult<PreKeyResponse> = NetworkResult.fromWebSocket {
+      if (sealedSenderAccess != null) {
+        unauthWebSocket.request(request, sealedSenderAccess)
+      } else {
+        authWebSocket.request(request)
+      }
+    }
+
+    return result.toPreKeyBundles(destination)
+  }
+
+  /**
+   * Coroutine-friendly counterpart to [getPreKeysBySpecifierSync] that suspends instead of blocking the calling thread.
+   */
+  private suspend fun getPreKeysBySpecifier(
+    destination: SignalServiceAddress,
+    sealedSenderAccess: SealedSenderAccess?,
+    deviceSpecifier: String
+  ): NetworkResult<List<PreKeyBundle>> {
+    val request = preKeysRequest(destination, deviceSpecifier)
+    val converter = NetworkResult.DefaultWebSocketConverter(PreKeyResponse::class)
+
+    val result: NetworkResult<PreKeyResponse> = NetworkResult.fromWebSocketSuspend(converter) {
+      if (sealedSenderAccess != null) {
+        unauthWebSocket.requestSuspend(request, sealedSenderAccess)
+      } else {
+        authWebSocket.requestSuspend(request)
+      }
+    }
+
+    return result.toPreKeyBundles(destination)
+  }
+
+  private fun preKeysRequest(destination: SignalServiceAddress, deviceSpecifier: String): WebSocketRequestMessage {
+    val request = WebSocketRequestMessage.get("/v2/keys/${destination.identifier}/$deviceSpecifier")
+    Log.d(TAG, "Fetching prekeys for ${destination.identifier}.$deviceSpecifier, i.e. GET ${request.path}")
+    return request
+  }
+
+  private fun NetworkResult<PreKeyResponse>.toPreKeyBundles(destination: SignalServiceAddress): NetworkResult<List<PreKeyBundle>> {
+    if (this is NetworkResult.StatusCodeError && this.code == 404) {
+      return NetworkResult.NetworkError(UnregisteredUserException(destination.identifier, this.exception))
+    }
+
+    return this.map { response ->
+      val bundles: MutableList<PreKeyBundle> = LinkedList()
+
+      for (device in response.devices) {
+        var preKey: ECPublicKey? = null
+        var signedPreKey: ECPublicKey?
+        var signedPreKeySignature: ByteArray?
+        var preKeyId = PreKeyBundle.NULL_PRE_KEY_ID
+        var signedPreKeyId: Int
+        var kyberPreKeyId: Int
+        var kyberPreKey: KEMPublicKey?
+        var kyberPreKeySignature: ByteArray?
+
+        val deviceSignedPreKey = device.signedPreKey
+        if (deviceSignedPreKey != null) {
+          val rawSignedPreKeyId = deviceSignedPreKey.keyId
+          if (rawSignedPreKeyId !in 0..Int.MAX_VALUE.toLong()) {
+            Log.w(TAG, "Signed pre-key ID for device ${device.deviceId} is out of valid range! Skipping.")
+            continue
+          }
+          signedPreKey = deviceSignedPreKey.publicKey
+          signedPreKeyId = rawSignedPreKeyId.toInt()
+          signedPreKeySignature = deviceSignedPreKey.signature
+        } else {
+          Log.w(TAG, "No signed prekey for device ${device.deviceId}! Skipping.")
+          continue
+        }
+
+        val devicePreKey = device.preKey
+        if (devicePreKey != null) {
+          val rawPreKeyId = devicePreKey.keyId
+          if (rawPreKeyId !in 0..Int.MAX_VALUE.toLong()) {
+            Log.w(TAG, "Pre-key ID for device ${device.deviceId} is out of valid range! Skipping.")
+            continue
+          }
+          preKeyId = rawPreKeyId.toInt()
+          preKey = devicePreKey.publicKey
+        }
+
+        val deviceKyberPreKey = device.kyberPreKey
+        if (deviceKyberPreKey != null) {
+          val rawKyberPreKeyId = deviceKyberPreKey.keyId
+          if (rawKyberPreKeyId !in 0..Int.MAX_VALUE.toLong()) {
+            Log.w(TAG, "Kyber pre-key ID for device ${device.deviceId} is out of valid range! Skipping.")
+            continue
+          }
+          kyberPreKey = deviceKyberPreKey.publicKey
+          kyberPreKeyId = rawKyberPreKeyId.toInt()
+          kyberPreKeySignature = deviceKyberPreKey.signature
+        } else {
+          Log.w(TAG, "No kyber prekey for device ${device.deviceId}! Skipping.")
+          continue
+        }
+
+        bundles.add(
+          PreKeyBundle(
+            device.registrationId,
+            device.deviceId,
+            preKeyId,
+            preKey,
+            signedPreKeyId,
+            signedPreKey,
+            signedPreKeySignature,
+            response.identityKey,
+            kyberPreKeyId,
+            kyberPreKey,
+            kyberPreKeySignature
+          )
+        )
+      }
+
+      bundles
+    }
+  }
+}

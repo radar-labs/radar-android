@@ -1,12 +1,12 @@
 package org.thoughtcrime.securesms.jobs
 
 import org.signal.core.util.logging.Log
+import org.signal.network.exceptions.NonSuccessfulResponseCodeException
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.pin.SvrRepository
-import org.whispersystems.signalservice.api.push.exceptions.NonSuccessfulResponseCodeException
 import java.io.IOException
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
@@ -24,7 +24,7 @@ class RefreshSvrCredentialsJob private constructor(parameters: Parameters) : Bas
 
     @JvmStatic
     fun enqueueIfNecessary() {
-      if (SignalStore.svr.hasPin() && SignalStore.account.isRegistered) {
+      if (SignalStore.svr.hasPin() && SignalStore.account.isRegistered && !SignalStore.account.isUnauthorizedReceived) {
         val lastTimestamp = SignalStore.svr.lastRefreshAuthTimestamp
         if (lastTimestamp + FREQUENCY.inWholeMilliseconds < System.currentTimeMillis() || lastTimestamp > System.currentTimeMillis()) {
           AppDependencies.jobManager.add(RefreshSvrCredentialsJob())
@@ -52,6 +52,11 @@ class RefreshSvrCredentialsJob private constructor(parameters: Parameters) : Bas
   override fun onRun() {
     if (!SignalStore.account.isRegistered) {
       Log.w(TAG, "Not registered! Skipping.")
+      return
+    }
+
+    if (SignalStore.account.isUnauthorizedReceived) {
+      Log.i(TAG, "No longer authorized. Ignoring.")
       return
     }
 

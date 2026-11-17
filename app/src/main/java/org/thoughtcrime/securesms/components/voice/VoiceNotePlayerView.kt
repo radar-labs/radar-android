@@ -18,10 +18,11 @@ import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
+import org.signal.core.models.recipients.RecipientId
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.PlaybackSpeedToggleTextView
-import org.thoughtcrime.securesms.recipients.RecipientId
 import java.util.concurrent.TimeUnit
+import org.signal.core.ui.R as CoreUiR
 
 private const val ANIMATE_DURATION: Long = 150L
 private const val TO_PAUSE = 1
@@ -109,7 +110,7 @@ class VoiceNotePlayerView @JvmOverloads constructor(
       playPauseToggleView.addValueCallback(
         KeyPath("**"),
         LottieProperty.COLOR_FILTER,
-        LottieValueCallback(SimpleColorFilter(ContextCompat.getColor(context, R.color.signal_colorOnSurface)))
+        LottieValueCallback(SimpleColorFilter(ContextCompat.getColor(context, CoreUiR.color.signal_colorOnSurface)))
       )
     }
 

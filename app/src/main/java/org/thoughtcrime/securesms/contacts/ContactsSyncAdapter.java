@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.SyncResult;
 import android.os.Bundle;
 
-import com.annimon.stream.Stream;
 
 import org.signal.contacts.SystemContactsRepository;
 import org.signal.core.util.logging.Log;
@@ -43,12 +42,12 @@ public class ContactsSyncAdapter extends AbstractThreadedSyncAdapter {
 
     Context context = getContext();
 
-    if (SignalStore.account().getE164() == null) {
-      Log.i(TAG, "No local number set, skipping all sync operations.");
+    if (SignalStore.account().getAci() == null && SignalStore.account().getE164() == null) {
+      Log.i(TAG, "No local account data set, skipping all sync operations.");
       return;
     }
 
-    if (!SignalStore.account().isRegistered()) {
+    if (!SignalStore.account().isRegistered() || SignalStore.account().getAci() == null) {
       Log.i(TAG, "Not push registered. Just syncing contact info.");
       ContactDiscovery.syncRecipientInfoWithSystemContacts(context);
       return;
@@ -70,11 +69,10 @@ public class ContactsSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.w(TAG, e);
       }
     } else if (unknownSystemE164s.size() > 0) {
-      List<Recipient> recipients = Stream.of(unknownSystemE164s)
-                                         .filter(s -> s.startsWith("+"))
-                                         .map(s -> Recipient.external(s))
-                                         .filter(it -> it != null)
-                                         .toList();
+      List<Recipient> recipients = unknownSystemE164s.stream()
+                                                     .filter(s -> s.startsWith("+"))
+                                                     .map(s -> Recipient.external(s))
+                                                     .filter(it -> it != null).collect(Collectors.toList());
 
       Log.i(TAG, "There are " + unknownSystemE164s.size() + " unknown E164s, which are now " + recipients.size() + " recipients. Only syncing these specific contacts.");
 

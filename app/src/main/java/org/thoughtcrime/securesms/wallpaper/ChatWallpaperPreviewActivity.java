@@ -12,20 +12,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.annimon.stream.Stream;
+import java.util.stream.Collectors;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.thoughtcrime.securesms.PassphraseRequiredActivity;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.conversation.colors.ChatColors;
 import org.thoughtcrime.securesms.conversation.colors.ColorizerView;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme;
 import org.thoughtcrime.securesms.util.DynamicTheme;
 import org.thoughtcrime.securesms.util.FullscreenHelper;
 import org.thoughtcrime.securesms.util.Projection;
-import org.thoughtcrime.securesms.util.ViewUtil;
+import org.signal.core.ui.util.ViewUtil;
 import org.thoughtcrime.securesms.util.WindowUtil;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel;
 
@@ -80,10 +80,9 @@ public class ChatWallpaperPreviewActivity extends PassphraseRequiredActivity {
     viewPager.setAdapter(adapter);
 
     adapter.submitList(Collections.singletonList(new ChatWallpaperSelectionMappingModel(selected)));
-    repository.getAllWallpaper(wallpapers -> adapter.submitList(Stream.of(wallpapers)
-                                                                      .map(wallpaper -> ChatWallpaperFactory.updateWithDimming(wallpaper, dim ? ChatWallpaper.FIXED_DIM_LEVEL_FOR_DARK_THEME : 0f))
-                                                                      .<MappingModel<?>>map(ChatWallpaperSelectionMappingModel::new)
-                                                                      .toList()));
+    repository.getAllWallpaper(wallpapers -> adapter.submitList(wallpapers.stream()
+                                                                          .map(wallpaper -> ChatWallpaperFactory.updateWithDimming(wallpaper, dim ? ChatWallpaper.FIXED_DIM_LEVEL_FOR_DARK_THEME : 0f))
+                                                                          .<MappingModel<?>>map(ChatWallpaperSelectionMappingModel::new).collect(Collectors.toList())));
 
     submit.setOnClickListener(unused -> {
       ChatWallpaperSelectionMappingModel model = (ChatWallpaperSelectionMappingModel) adapter.getCurrentList().get(viewPager.getCurrentItem());

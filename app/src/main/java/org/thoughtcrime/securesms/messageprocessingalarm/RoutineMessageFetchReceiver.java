@@ -15,11 +15,12 @@ import androidx.annotation.NonNull;
 import org.signal.core.util.PendingIntentFlags;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
+import org.signal.remoteconfig.RemoteConfig;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.jobmanager.JobTracker;
 import org.thoughtcrime.securesms.jobs.MessageFetchJob;
-import org.thoughtcrime.securesms.util.AppForegroundObserver;
-import org.thoughtcrime.securesms.util.RemoteConfig;
+import org.signal.core.util.AppForegroundObserver;
+import org.thoughtcrime.securesms.util.BatterySnapshotTracker;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -48,6 +49,8 @@ public final class RoutineMessageFetchReceiver extends BroadcastReceiver {
         Log.i(TAG, "App is foregrounded");
         return;
       }
+
+      BatterySnapshotTracker.emit(context, "routine");
 
       long foregroundDelayMs = RemoteConfig.getBackgroundMessageProcessForegroundDelay();
       long jobTimeout        = foregroundDelayMs + 200;

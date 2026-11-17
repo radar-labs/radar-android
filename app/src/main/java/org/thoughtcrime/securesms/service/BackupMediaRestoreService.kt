@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import org.signal.core.util.ByteSize
 import org.signal.core.util.PendingIntentFlags
+import org.signal.core.util.SafeForegroundService
 import org.signal.core.util.bytes
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.MainActivity
@@ -161,7 +162,7 @@ class BackupMediaRestoreService : SafeForegroundService() {
   private fun stopDueToTimeout() {
     controllerLock.withLock {
       hasTimedOut = true
-      controllers.forEach { it.closeFromTimeout() }
+      controllers.clear()
       stop(context = this, fromTimeout = true)
     }
 
@@ -179,12 +180,6 @@ class BackupMediaRestoreService : SafeForegroundService() {
 
     val totalBytes: ByteSize
       get() = ArchiveRestoreProgress.state.totalRestoreSize
-
-    fun closeFromTimeout() {
-      controllerLock.withLock {
-        controllers.remove(this)
-      }
-    }
 
     override fun close() {
       controllerLock.withLock {

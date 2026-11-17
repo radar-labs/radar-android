@@ -1,0 +1,220 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.registration.screens.quickrestore
+
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import org.signal.core.models.AccountEntropyPool
+import org.signal.core.ui.compose.EventDrivenViewModel
+import org.signal.core.ui.compose.QrCodeData
+import org.signal.core.util.logging.Log
+import org.signal.libsignal.net.RequestResult
+import org.signal.network.api.RegistrationApiV2.RegisterAccountError
+import org.signal.registration.NetworkController
+import org.signal.registration.RegistrationFlowEvent
+import org.signal.registration.RegistrationRepository
+import org.signal.registration.RegistrationRoute
+import org.signal.registration.screens.util.navigateBack
+import org.signal.registration.screens.util.navigateTo
+
+class QuickRestoreQrViewModel(
+  private val repository: RegistrationRepository,
+  private val parentEventEmitter: (RegistrationFlowEvent) -> Unit
+) : EventDrivenViewModel<QuickRestoreQrEvents>(TAG, shouldLogEvents = true) {
+
+  companion object {
+    private val TAG = Log.tag(QuickRestoreQrViewModel::class)
+  }
+
+  private val _state = MutableStateFlow(QuickRestoreQrState())
+  val state: StateFlow<QuickRestoreQrState> = _state.asStateFlow()
+
+  private var provisioningJob: Job? = null
+
+  init {
+    _state
+      .onEach { Log.d(TAG, "[State] $it") }
+      .launchIn(viewModelScope)
+
+    startProvisioning()
+  }
+
+  override suspend fun processEvent(event: QuickRestoreQrEvents) {
+    applyEvent(state.value, event) { _state.value = it }
+  }
+
+  @VisibleForTesting
+  suspend fun applyEvent(state: QuickRestoreQrState, event: QuickRestoreQrEvents, stateEmitter: (QuickRestoreQrState) -> Unit) {
+    val result = when (event) {
+      is QuickRestoreQrEvents.RetryQrCode -> {
+        startProvisioning()
+        state.copy(qrState = QrState.Loading, showRegistrationError = false, errorMessage = null)
+      }
+      is QuickRestoreQrEvents.Cancel -> {
+        parentEventEmitter.navigateBack()
+        state
+      }
+      is QuickRestoreQrEvents.DismissError -> {
+        startProvisioning()
+        state.copy(showRegistrationError = false, errorMessage = null)
+      }
+    }
+    stateEmitter(result)
+  }
+
+  private fun startProvisioning() {
+    provisioningJob?.cancel()
+    provisioningJob = viewModelScope.launch {
+      repository.startProvisioning().collect { event ->
+        when (event) {
+          is NetworkController.ProvisioningEvent.QrCodeReady -> {
+            Log.d(TAG, "[Provisioning] QR code ready")
+            _state.value = _state.value.copy(
+              qrState = QrState.Loaded(
+                qrCodeData = QrCodeData.forData(data = event.url, supportIconOverlay = false)
+              )
+            )
+          }
+          is NetworkController.ProvisioningEvent.MessageReceived -> {
+            Log.i(TAG, "[Provisioning] Message received from old device (platform: ${event.message.platform}, tier: ${event.message.tier})")
+            handleProvisioningMessage(event.message)
+          }
+          is NetworkController.ProvisioningEvent.Error -> {
+            Log.w(TAG, "[Provisioning] Error", event.cause)
+            _state.value = _state.value.copy(qrState = QrState.Failed)
+          }
+        }
+      }
+    }
+  }
+
+  private suspend fun handleProvisioningMessage(message: NetworkController.ProvisioningMessage) {
+    parentEventEmitter(RegistrationFlowEvent.RestoreMethodTokenReceived(message.restoreMethodToken))
+    if (message.e164 != null) {
+      parentEventEmitter(RegistrationFlowEvent.E164Chosen(message.e164))
+    }
+
+    if (message.platform == NetworkController.ProvisioningMessage.Platform.IOS && message.tier == null) {
+      // iOS without a backup tier cannot do a quick restore — navigate to the choose-restore screen
+      parentEventEmitter.navigateTo(RegistrationRoute.ArchiveRestoreSelection.forManualRestore())
+      return
+    }
+
+    _state.value = _state.value.copy(isRegistering = true, qrState = QrState.Scanned)
+
+    attemptToRegister(message, provideRegistrationLock = false)
+  }
+
+  private suspend fun attemptToRegister(message: NetworkController.ProvisioningMessage, provideRegistrationLock: Boolean) {
+    val registerResult = repository.registerAccountWithProvisioningData(message, provideRegistrationLock)
+
+    when (registerResult) {
+      is RequestResult.Success -> {
+        val (response, keyMaterial, aci) = registerResult.result
+        Log.i(TAG, "[Register] Success! reregistration: ${response.reregistration}")
+        parentEventEmitter(RegistrationFlowEvent.Registered(aci, keyMaterial.accountEntropyPool, response.storageCapable, phoneNumberless = response.e164 == null))
+        parentEventEmitter.navigateTo(
+          RegistrationRoute.ArchiveRestoreSelection.forQuickRestore(
+            aep = AccountEntropyPool(message.accountEntropyPool),
+            hasRemoteBackup = message.tier != null,
+            hasPin = !message.pin.isNullOrBlank()
+          )
+        )
+      }
+      is RequestResult.NonSuccess -> {
+        when (val error = registerResult.error) {
+          is RegisterAccountError.RateLimited -> {
+            Log.w(TAG, "[Register] Rate limited (retryAfter: ${error.retryAfter}).")
+            _state.value = _state.value.copy(
+              isRegistering = false,
+              showRegistrationError = true,
+              errorMessage = null
+            )
+          }
+          is RegisterAccountError.RegistrationRecoveryPasswordIncorrect -> {
+            Log.w(TAG, "[Register] Recovery password incorrect: ${error.message}")
+            _state.value = _state.value.copy(
+              isRegistering = false,
+              showRegistrationError = true,
+              errorMessage = null
+            )
+          }
+          is RegisterAccountError.RegistrationLock -> {
+            if (provideRegistrationLock) {
+              Log.w(TAG, "[Register] Still registration locked after providing the reglock token derived from the provisioned AEP. Falling back to PIN entry.")
+              parentEventEmitter.navigateTo(
+                RegistrationRoute.PinEntryForRegistrationLock(
+                  timeRemaining = error.data.timeRemaining,
+                  svrCredentials = error.data.svr2Credentials
+                )
+              )
+            } else {
+              Log.w(TAG, "[Register] Registration locked. Retrying with the reglock token derived from the provisioned AEP.")
+              attemptToRegister(message, provideRegistrationLock = true)
+            }
+          }
+          is RegisterAccountError.SessionNotFoundOrNotVerified -> {
+            Log.w(TAG, "[Register] Session not found or not verified: ${error.message}")
+            _state.value = _state.value.copy(
+              isRegistering = false,
+              showRegistrationError = true,
+              errorMessage = null
+            )
+          }
+          is RegisterAccountError.DeviceTransferPossible -> {
+            Log.w(TAG, "[Register] Device transfer possible. We never set this flag, so we should never see it. Resetting.")
+            parentEventEmitter(RegistrationFlowEvent.ResetState)
+          }
+          is RegisterAccountError.InvalidRequest -> {
+            Log.w(TAG, "[Register] Invalid request: ${error.message}")
+            _state.value = _state.value.copy(
+              isRegistering = false,
+              showRegistrationError = true,
+              errorMessage = null
+            )
+          }
+          is RegisterAccountError.InvalidReceiptCredentialPresentation,
+          is RegisterAccountError.TwoFactorRequired,
+          RegisterAccountError.PostQuantumRatchetRequired -> {
+            Log.w(TAG, "[Register] Unexpected registration error: $error")
+            _state.value = _state.value.copy(
+              isRegistering = false,
+              showRegistrationError = true,
+              errorMessage = null
+            )
+          }
+        }
+      }
+      is RequestResult.RetryableNetworkError -> {
+        Log.w(TAG, "[Register] Network error.", registerResult.networkError)
+        _state.value = _state.value.copy(
+          isRegistering = false,
+          showRegistrationError = true,
+          errorMessage = null
+        )
+      }
+      is RequestResult.ApplicationError -> {
+        Log.w(TAG, "[Register] Application error.", registerResult.cause)
+        _state.value = _state.value.copy(
+          isRegistering = false,
+          showRegistrationError = true,
+          errorMessage = null
+        )
+      }
+    }
+  }
+
+  override fun onCleared() {
+    provisioningJob?.cancel()
+  }
+}

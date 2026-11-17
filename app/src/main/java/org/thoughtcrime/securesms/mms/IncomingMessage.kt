@@ -1,5 +1,6 @@
 package org.thoughtcrime.securesms.mms
 
+import org.signal.core.models.recipients.RecipientId
 import org.thoughtcrime.securesms.attachments.Attachment
 import org.thoughtcrime.securesms.contactshare.Contact
 import org.thoughtcrime.securesms.database.MessageType
@@ -13,7 +14,6 @@ import org.thoughtcrime.securesms.database.model.databaseprotos.MessageExtras
 import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.linkpreview.LinkPreview
 import org.thoughtcrime.securesms.polls.Poll
-import org.thoughtcrime.securesms.recipients.RecipientId
 
 class IncomingMessage(
   val type: MessageType,
@@ -40,7 +40,7 @@ class IncomingMessage(
   mentions: List<Mention> = emptyList(),
   val giftBadge: GiftBadge? = null,
   val messageExtras: MessageExtras? = null,
-  val isGroupAdd: Boolean = false,
+  val isNotifiable: Boolean = false,
   val poll: Poll? = null
 ) {
 
@@ -98,22 +98,21 @@ class IncomingMessage(
       )
     }
 
-    @JvmStatic
-    fun groupUpdate(from: RecipientId, timestamp: Long, groupId: GroupId, update: GV2UpdateDescription, isGroupAdd: Boolean, serverGuid: String?): IncomingMessage {
+    fun groupUpdate(from: RecipientId, timestamp: Long, groupId: GroupId, update: GV2UpdateDescription, isNotifiable: Boolean, serverGuid: String?, receivedTime: Long? = null): IncomingMessage {
       val messageExtras = MessageExtras(gv2UpdateDescription = update)
       val groupContext = MessageGroupContext(update.gv2ChangeDescription!!)
 
       return IncomingMessage(
         from = from,
         sentTimeMillis = timestamp,
-        receivedTimeMillis = timestamp,
+        receivedTimeMillis = receivedTime?.minus(1) ?: System.currentTimeMillis(),
         serverTimeMillis = timestamp,
         serverGuid = serverGuid,
         groupId = groupId,
         groupContext = groupContext,
         type = MessageType.GROUP_UPDATE,
         messageExtras = messageExtras,
-        isGroupAdd = isGroupAdd
+        isNotifiable = isNotifiable
       )
     }
   }

@@ -4,19 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
-import com.annimon.stream.Stream;
-
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.logging.Log;
+import org.signal.libsignal.protocol.NoSessionException;
+import org.thoughtcrime.securesms.database.GroupTable;
 import org.thoughtcrime.securesms.database.SignalDatabase;
+import org.thoughtcrime.securesms.database.model.RecipientRecord;
 import org.thoughtcrime.securesms.jobmanager.Job;
 import org.thoughtcrime.securesms.jobmanager.JsonJobData;
 import org.thoughtcrime.securesms.jobmanager.impl.DecryptionsDrainedConstraint;
 import org.thoughtcrime.securesms.jobmanager.impl.NetworkConstraint;
+import org.thoughtcrime.securesms.jobmanager.impl.SealedSenderConstraint;
 import org.thoughtcrime.securesms.messages.GroupSendUtil;
 import org.thoughtcrime.securesms.net.NotPushRegisteredException;
 import org.thoughtcrime.securesms.ratelimit.ProofRequiredExceptionHandler;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.recipients.RecipientUtil;
 import org.thoughtcrime.securesms.transport.RetryLaterException;
 import org.whispersystems.signalservice.api.crypto.ContentHint;
@@ -29,6 +31,8 @@ import org.whispersystems.signalservice.api.push.exceptions.ServerRejectedExcept
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ProfileKeySendJob extends BaseJob {
 
@@ -48,6 +52,7 @@ public class ProfileKeySendJob extends BaseJob {
             .setMaxInstancesForQueue(Parameters.UNLIMITED)
             .addConstraint(NetworkConstraint.KEY)
             .addConstraint(DecryptionsDrainedConstraint.KEY)
+            .addConstraint(SealedSenderConstraint.KEY)
             .setLifespan(TimeUnit.DAYS.toMillis(1))
             .setMaxAttempts(Parameters.UNLIMITED)
             .build(),
@@ -79,22 +84,24 @@ public class ProfileKeySendJob extends BaseJob {
    */
   @WorkerThread
   public static @Nullable ProfileKeySendJob create(long threadId, boolean queueLimits) {
-    Recipient conversationRecipient = SignalDatabase.threads().getRecipientForThreadId(threadId);
+    RecipientId conversationRecipientId = SignalDatabase.threads().getRecipientIdForThreadId(threadId);
 
-    if (conversationRecipient == null) {
+    if (conversationRecipientId == null) {
       Log.w(TAG, "Thread no longer valid! Aborting.");
       return null;
     }
 
-    if (conversationRecipient.isPushV2Group()) {
+    RecipientRecord conversationRecipient = SignalDatabase.recipients().getRecord(conversationRecipientId);
+
+    if (conversationRecipient.getGroupId() != null && conversationRecipient.getGroupId().isV2()) {
       throw new AssertionError("Do not send profile keys directly for GV2");
     }
 
-    List<RecipientId> recipients = conversationRecipient.isGroup() ? Stream.of(RecipientUtil.getEligibleForSending(Recipient.resolvedList(conversationRecipient.getParticipantIds())))
-                                                                           .map(Recipient::getId)
-                                                                           .toList()
-                                                                   : Stream.of(conversationRecipient.getId())
-                                                                           .toList();
+    List<RecipientId> recipients = conversationRecipient.getGroupId() != null
+                                   ? RecipientUtil.getEligibleForSending(Recipient.resolvedList(SignalDatabase.groups().getGroupMemberIds(conversationRecipient.getGroupId(), GroupTable.MemberSet.FULL_MEMBERS_INCLUDING_SELF)))
+                                                  .stream()
+                                                  .map(Recipient::getId).collect(Collectors.toList())
+                                   : Stream.of(conversationRecipient.getId()).collect(Collectors.toList());
 
     recipients.remove(Recipient.self().getId());
 
@@ -104,6 +111,7 @@ public class ProfileKeySendJob extends BaseJob {
                                                  .setMaxInstancesForQueue(1)
                                                  .addConstraint(NetworkConstraint.KEY)
                                                  .addConstraint(DecryptionsDrainedConstraint.KEY)
+                                                 .addConstraint(SealedSenderConstraint.KEY)
                                                  .setLifespan(TimeUnit.DAYS.toMillis(1))
                                                  .setMaxAttempts(Parameters.UNLIMITED)
                                                  .build(), threadId, recipients);
@@ -111,6 +119,7 @@ public class ProfileKeySendJob extends BaseJob {
       return new ProfileKeySendJob(new Parameters.Builder()
                                                  .setQueue(conversationRecipient.getId().toQueueKey())
                                                  .addConstraint(NetworkConstraint.KEY)
+                                                 .addConstraint(SealedSenderConstraint.KEY)
                                                  .setLifespan(TimeUnit.DAYS.toMillis(1))
                                                  .setMaxAttempts(Parameters.UNLIMITED)
                                                  .build(), threadId, recipients);
@@ -129,16 +138,12 @@ public class ProfileKeySendJob extends BaseJob {
       throw new NotPushRegisteredException();
     }
 
-    if (threadId > 0) {
-      Recipient conversationRecipient = SignalDatabase.threads().getRecipientForThreadId(threadId);
-
-      if (conversationRecipient == null) {
-        Log.w(TAG, "Thread no longer present");
-        return;
-      }
+    if (threadId > 0 && SignalDatabase.threads().getRecipientIdForThreadId(threadId) == null) {
+      Log.w(TAG, "Thread no longer present");
+      return;
     }
 
-    List<Recipient> destinations = Stream.of(recipients).map(Recipient::resolved).toList();
+    List<Recipient> destinations = recipients.stream().map(Recipient::resolved).collect(Collectors.toList());
     List<Recipient> completions  = deliver(destinations);
 
     for (Recipient completion : completions) {
@@ -162,6 +167,11 @@ public class ProfileKeySendJob extends BaseJob {
   }
 
   @Override
+  public long getNextRunAttemptBackoff(int pastAttemptCount, @NonNull Exception exception) {
+    return SendJobUtil.getBackoffMillisFromException(this, TAG, pastAttemptCount, exception, () -> super.getNextRunAttemptBackoff(pastAttemptCount, exception));
+  }
+
+  @Override
   public @Nullable byte[] serialize() {
     return new JsonJobData.Builder()
                    .putLong(KEY_THREAD, threadId)
@@ -179,14 +189,14 @@ public class ProfileKeySendJob extends BaseJob {
 
   }
 
-  private List<Recipient> deliver(@NonNull List<Recipient> destinations) throws IOException, UntrustedIdentityException {
+  private List<Recipient> deliver(@NonNull List<Recipient> destinations) throws IOException, UntrustedIdentityException, NoSessionException {
     SignalServiceDataMessage.Builder dataMessage = SignalServiceDataMessage.newBuilder()
                                                                            .asProfileKeyUpdate(true)
                                                                            .withTimestamp(System.currentTimeMillis())
                                                                            .withProfileKey(Recipient.self().resolve().getProfileKey());
 
     List<SendMessageResult>    results       = GroupSendUtil.sendUnresendableDataMessage(context, null, destinations, false, ContentHint.IMPLICIT, dataMessage.build(), false, null);
-    ProofRequiredException     proofRequired = Stream.of(results).filter(r -> r.getProofRequiredFailure() != null).findLast().map(SendMessageResult::getProofRequiredFailure).orElse(null);
+    ProofRequiredException     proofRequired = results.stream().filter(r -> r.getProofRequiredFailure() != null).reduce((a,b) -> b).map(SendMessageResult::getProofRequiredFailure).orElse(null);
 
     GroupSendJobHelper.SendResult groupResult = GroupSendJobHelper.getCompletedSends(destinations, results);
 

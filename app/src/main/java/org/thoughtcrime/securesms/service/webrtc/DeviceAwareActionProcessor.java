@@ -2,6 +2,7 @@ package org.thoughtcrime.securesms.service.webrtc;
 
 import androidx.annotation.NonNull;
 
+import org.signal.core.util.DeviceProperties;
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.components.webrtc.BroadcastVideoSink;
 import org.thoughtcrime.securesms.events.WebRtcViewModel;
@@ -29,7 +30,7 @@ public abstract class DeviceAwareActionProcessor extends WebRtcActionProcessor {
     Log.i(tag, "handleAudioDeviceChanged(): active: " + activeDevice + " available: " + availableDevices);
 
     if (currentState.getCallInfoState().getCallState() == WebRtcViewModel.State.CALL_CONNECTED) {
-      boolean localVideoEnabled  = currentState.getLocalDeviceState().getCameraState().isEnabled();
+      boolean localVideoEnabled  = currentState.getLocalDeviceState().getCameraState().isEnabled() || currentState.getLocalDeviceState().isScreenSharing();
       boolean remoteVideoEnabled = currentState.getCallInfoState().getRemoteCallParticipantsMap().values().stream().anyMatch(CallParticipant::isVideoEnabled);
       webRtcInteractor.updatePhoneState(WebRtcUtil.getInCallPhoneState(context, localVideoEnabled, remoteVideoEnabled));
     } else {
@@ -40,6 +41,7 @@ public abstract class DeviceAwareActionProcessor extends WebRtcActionProcessor {
                        .changeLocalDeviceState()
                        .setActiveDevice(activeDevice)
                        .setAvailableDevices(availableDevices)
+                       .setAudioDeviceChangePending(false)
                        .build();
   }
 
@@ -50,18 +52,35 @@ public abstract class DeviceAwareActionProcessor extends WebRtcActionProcessor {
     RemotePeer activePeer = currentState.getCallInfoState().getActivePeer();
     webRtcInteractor.setUserAudioDevice(activePeer != null ? activePeer.getId() : null, userDevice);
 
-    return currentState;
+    return currentState.builder()
+                       .changeLocalDeviceState()
+                       .setAudioDeviceChangePending(true)
+                       .build();
+  }
+
+  @Override
+  protected @NonNull WebRtcServiceState handleMicrophoneSilencedChanged(@NonNull WebRtcServiceState currentState, boolean silenced) {
+    Log.i(tag, "handleMicrophoneSilencedChanged(): silenced: " + silenced + " backgroundRestricted: " + DeviceProperties.isBackgroundRestricted());
+
+    if (!silenced) {
+      return currentState;
+    }
+
+    return currentState.builder()
+                       .changeLocalDeviceState()
+                       .setMicrophoneSilencedTimestamp(System.currentTimeMillis())
+                       .build();
   }
 
   @Override
   protected @NonNull WebRtcServiceState handleSetCameraFlip(@NonNull WebRtcServiceState currentState) {
     Log.i(tag, "handleSetCameraFlip():");
 
-    if (currentState.getLocalDeviceState().getCameraState().isEnabled() && currentState.getVideoState().getCamera() != null) {
-      currentState.getVideoState().getCamera().flip();
+    if (currentState.getLocalDeviceState().getCameraState().isEnabled() && currentState.getVideoState().getRouter() != null) {
+      currentState.getVideoState().getRouter().flip();
       return currentState.builder()
                          .changeLocalDeviceState()
-                         .cameraState(currentState.getVideoState().getCamera().getCameraState())
+                         .cameraState(currentState.getVideoState().getRouter().getCameraState())
                          .build();
     }
     return currentState;

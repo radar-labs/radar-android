@@ -9,13 +9,13 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.annotation.WorkerThread;
 
+import org.signal.core.models.recipients.RecipientId;
 import org.signal.core.util.CursorUtil;
-import org.signal.core.util.StringUtil;
 import org.signal.core.util.concurrent.SignalExecutors;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.contacts.ContactRepository;
 import org.thoughtcrime.securesms.conversation.MessageStyler;
 import org.thoughtcrime.securesms.database.BodyAdjustment;
 import org.thoughtcrime.securesms.database.BodyRangeUtil;
@@ -30,13 +30,13 @@ import org.thoughtcrime.securesms.database.ThreadTable;
 import org.thoughtcrime.securesms.database.model.GroupRecord;
 import org.thoughtcrime.securesms.database.model.Mention;
 import org.thoughtcrime.securesms.database.model.MessageRecord;
-import org.thoughtcrime.securesms.database.model.ThreadRecord;
+import org.thoughtcrime.securesms.database.model.ThreadWithRecipient;
 import org.thoughtcrime.securesms.database.model.databaseprotos.BodyRangeList;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
-import org.thoughtcrime.securesms.util.Util;
-import org.thoughtcrime.securesms.util.concurrent.SerialExecutor;
+import org.thoughtcrime.securesms.util.SignalTrace;
+import org.signal.core.util.Util;
+import org.signal.core.util.concurrent.SerialExecutor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,10 +60,11 @@ public class SearchRepository {
 
   private static final String TAG = Log.tag(SearchRepository.class);
 
+  private static final int MAX_SNIPPET_SIZE = 100;
+
   private final Context           context;
   private final String            noteToSelfTitle;
   private final SearchTable       searchDatabase;
-  private final ContactRepository contactRepository;
   private final ThreadTable       threadTable;
   private final RecipientTable    recipientTable;
   private final MentionTable      mentionTable;
@@ -79,31 +80,41 @@ public class SearchRepository {
     this.recipientTable    = SignalDatabase.recipients();
     this.mentionTable      = SignalDatabase.mentions();
     this.messageTable      = SignalDatabase.messages();
-    this.contactRepository = new ContactRepository(noteToSelfTitle);
     this.serialExecutor    = new SerialExecutor(SignalExecutors.BOUNDED);
   }
 
   @WorkerThread
   public @NonNull ThreadSearchResult queryThreadsSync(@NonNull String query, boolean unreadOnly) {
-    long               start  = System.currentTimeMillis();
-    List<ThreadRecord> result = queryConversations(query, unreadOnly);
+    SignalTrace.beginSection("ConversationListSearch-Threads");
+    try {
+      long                      start  = System.currentTimeMillis();
+      List<ThreadWithRecipient> result = queryConversations(query, unreadOnly);
 
-    Log.d(TAG, "[threads] Search took " + (System.currentTimeMillis() - start) + " ms");
+      Log.d(TAG, "[threads] Search took " + (System.currentTimeMillis() - start) + " ms");
 
-    return new ThreadSearchResult(result, query);
+      return new ThreadSearchResult(result, query);
+    } finally {
+      SignalTrace.endSection();
+    }
   }
 
   @WorkerThread
-  public @NonNull MessageSearchResult queryMessagesSync(@NonNull String query) {
-    long start = System.currentTimeMillis();
+  public @NonNull MessageSearchResult queryMessagesSync(@NonNull String query, @NonNull SearchFilter filter) {
+    SignalTrace.beginSection("ConversationListSearch-Messages");
+    try {
+      long start = System.currentTimeMillis();
 
-    List<MessageResult> messages        = queryMessages(query);
-    List<MessageResult> mentionMessages = queryMentions(convertMentionsQueryToTokens(query));
-    List<MessageResult> combined        = mergeMessagesAndMentions(messages, mentionMessages);
+      List<MessageResult> messages         = queryMessages(query, filter);
+      List<MessageResult> mentionMessages  = queryMentions(convertMentionsQueryToTokens(query));
+      List<MessageResult> filteredMentions = filterMentionResults(mentionMessages, filter);
+      List<MessageResult> combined         = mergeMessagesAndMentions(messages, filteredMentions);
 
-    Log.d(TAG, "[messages] Search took " + (System.currentTimeMillis() - start) + " ms");
+      Log.d(TAG, "[messages] Search took " + (System.currentTimeMillis() - start) + " ms");
 
-    return new MessageSearchResult(combined, query);
+      return new MessageSearchResult(combined, query);
+    } finally {
+      SignalTrace.endSection();
+    }
   }
 
   public void query(@NonNull String query, long threadId, @NonNull Callback<List<MessageResult>> callback) {
@@ -123,7 +134,7 @@ public class SearchRepository {
     });
   }
 
-  private @NonNull List<ThreadRecord> queryConversations(@NonNull String query, boolean unreadOnly) {
+  private @NonNull List<ThreadWithRecipient> queryConversations(@NonNull String query, boolean unreadOnly) {
     if (Util.isEmpty(query)) {
       return Collections.emptyList();
     }
@@ -150,7 +161,7 @@ public class SearchRepository {
       }
     }
 
-    LinkedHashSet<ThreadRecord> output = new LinkedHashSet<>();
+    LinkedHashSet<ThreadWithRecipient> output = new LinkedHashSet<>();
 
     output.addAll(getMatchingThreads(contactIds, unreadOnly));
     output.addAll(getMatchingThreads(groupsByTitleIds, unreadOnly));
@@ -158,21 +169,27 @@ public class SearchRepository {
     return new ArrayList<>(output);
   }
 
-  private List<ThreadRecord> getMatchingThreads(@NonNull Collection<RecipientId> recipientIds, boolean unreadOnly) {
+  private List<ThreadWithRecipient> getMatchingThreads(@NonNull Collection<RecipientId> recipientIds, boolean unreadOnly) {
     try (Cursor cursor = threadTable.getFilteredConversationList(new ArrayList<>(recipientIds), unreadOnly)) {
       return readToList(cursor, new ThreadModelBuilder(threadTable));
     }
   }
 
-  private @NonNull List<MessageResult> queryMessages(@NonNull String query) {
+  private @NonNull List<MessageResult> queryMessages(@NonNull String query, @NonNull SearchFilter filter) {
     if (Util.isEmpty(query)) {
       return Collections.emptyList();
     }
 
     List<MessageResult> results;
-    try (Cursor cursor = searchDatabase.queryMessages(query)) {
+    try (Cursor cursor = searchDatabase.queryMessages(query, filter)) {
       results = readToList(cursor, new MessageModelBuilder());
     }
+
+    if (results.isEmpty()) {
+      return results;
+    }
+
+    List<String> snippetQueries = tokenizeQuery(query);
 
     List<Long> messageIds = new LinkedList<>();
     for (MessageResult result : results) {
@@ -181,122 +198,65 @@ public class SearchRepository {
       }
     }
 
-    if (messageIds.isEmpty()) {
-      return results;
-    }
-
-    Map<Long, BodyRangeList> bodyRanges = SignalDatabase.messages().getBodyRangesForMessages(messageIds);
-    Map<Long, List<Mention>> mentions   = SignalDatabase.mentions().getMentionsForMessages(messageIds);
-
-    if (bodyRanges.isEmpty() && mentions.isEmpty()) {
-      return results;
-    }
+    Map<Long, BodyRangeList> bodyRanges = messageIds.isEmpty() ? Collections.emptyMap() : SignalDatabase.messages().getBodyRangesForMessages(messageIds);
+    Map<Long, List<Mention>> mentions   = messageIds.isEmpty() ? Collections.emptyMap() : SignalDatabase.mentions().getMentionsForMessages(messageIds);
 
     List<MessageResult> updatedResults = new ArrayList<>(results.size());
     for (MessageResult result : results) {
-      if (bodyRanges.containsKey(result.getMessageId()) || mentions.containsKey(result.getMessageId())) {
-        CharSequence         body               = result.getBody();
-        CharSequence         bodySnippet        = result.getBodySnippet();
-        CharSequence         updatedBody        = body;
-        List<BodyAdjustment> bodyAdjustments    = Collections.emptyList();
-        CharSequence         updatedSnippet     = bodySnippet;
-        List<BodyAdjustment> snippetAdjustments = Collections.emptyList();
-        List<Mention>        messageMentions    = mentions.get(result.getMessageId());
-        BodyRangeList        ranges             = bodyRanges.get(result.getMessageId());
+      CharSequence         updatedBody     = result.getBody();
+      List<BodyAdjustment> bodyAdjustments = Collections.emptyList();
+      List<Mention>        messageMentions = mentions.get(result.getMessageId());
+      BodyRangeList        ranges          = bodyRanges.get(result.getMessageId());
 
-        if (messageMentions != null) {
-          MentionUtil.UpdatedBodyAndMentions bodyMentionUpdate = MentionUtil.updateBodyAndMentionsWithDisplayNames(context, body, messageMentions);
-          updatedBody     = Objects.requireNonNull(bodyMentionUpdate.getBody());
-          bodyAdjustments = bodyMentionUpdate.getBodyAdjustments();
-
-          MentionUtil.UpdatedBodyAndMentions snippetMentionUpdate = updateSnippetWithDisplayNames(body, bodySnippet, messageMentions);
-          updatedSnippet     = Objects.requireNonNull(snippetMentionUpdate.getBody());
-          snippetAdjustments = snippetMentionUpdate.getBodyAdjustments();
-        }
-
-        if (ranges != null) {
-          updatedBody = SpannableString.valueOf(updatedBody);
-          MessageStyler.style(result.getReceivedTimestampMs(), BodyRangeUtil.adjustBodyRanges(ranges, bodyAdjustments), (Spannable) updatedBody);
-
-          updatedSnippet = SpannableString.valueOf(updatedSnippet);
-          //noinspection ConstantConditions
-          updateSnippetWithStyles(result.getReceivedTimestampMs(), updatedBody, (SpannableString) updatedSnippet, BodyRangeUtil.adjustBodyRanges(ranges, snippetAdjustments));
-        }
-
-        updatedResults.add(new MessageResult(result.getConversationRecipient(), result.getMessageRecipient(), updatedBody, updatedSnippet, result.getThreadId(), result.getMessageId(), result.getReceivedTimestampMs(), result.isMms()));
-      } else {
-        updatedResults.add(result);
+      if (messageMentions != null) {
+        MentionUtil.UpdatedBodyAndMentions bodyMentionUpdate = MentionUtil.updateBodyAndMentionsWithDisplayNames(context, updatedBody, messageMentions);
+        updatedBody     = Objects.requireNonNull(bodyMentionUpdate.getBody());
+        bodyAdjustments = bodyMentionUpdate.getBodyAdjustments();
       }
+
+      if (ranges != null) {
+        updatedBody = SpannableString.valueOf(updatedBody);
+        MessageStyler.style(result.getReceivedTimestampMs(), BodyRangeUtil.adjustBodyRanges(ranges, bodyAdjustments), (Spannable) updatedBody);
+      }
+
+      CharSequence updatedSnippet = makeSnippet(snippetQueries, updatedBody);
+
+      updatedResults.add(new MessageResult(result.getConversationRecipient(), result.getMessageRecipient(), updatedBody, updatedSnippet, result.getThreadId(), result.getMessageId(), result.getReceivedTimestampMs(), result.isMms()));
     }
 
     return updatedResults;
   }
 
-  private @NonNull MentionUtil.UpdatedBodyAndMentions updateSnippetWithDisplayNames(@NonNull CharSequence body, @NonNull CharSequence bodySnippet, @NonNull List<Mention> mentions) {
-    CharSequence cleanSnippet = bodySnippet;
-    int          startOffset  = 0;
-
-    if (StringUtil.startsWith(cleanSnippet, SNIPPET_WRAP)) {
-      cleanSnippet = cleanSnippet.subSequence(SNIPPET_WRAP.length(), cleanSnippet.length());
-      startOffset  = SNIPPET_WRAP.length();
-    }
-
-    if (StringUtil.endsWith(cleanSnippet, SNIPPET_WRAP)) {
-      cleanSnippet = cleanSnippet.subSequence(0, cleanSnippet.length() - SNIPPET_WRAP.length());
-    }
-
-    int startIndex = TextUtils.indexOf(body, cleanSnippet);
-
-    if (startIndex != -1) {
-      List<Mention> adjustMentions = new ArrayList<>(mentions.size());
-      for (Mention mention : mentions) {
-        int adjustedStart = mention.getStart() - startIndex + startOffset;
-        if (adjustedStart >= 0 && adjustedStart + mention.getLength() <= cleanSnippet.length()) {
-          adjustMentions.add(new Mention(mention.getRecipientId(), adjustedStart, mention.getLength()));
-        }
-      }
-
-      return MentionUtil.updateBodyAndMentionsWithDisplayNames(context, bodySnippet, adjustMentions);
-    } else {
-      return MentionUtil.updateBodyAndMentionsWithDisplayNames(context, bodySnippet, Collections.emptyList());
-    }
-  }
-
-  private void updateSnippetWithStyles(long id, @NonNull CharSequence body, @NonNull SpannableString bodySnippet, @NonNull BodyRangeList bodyRanges) {
-    CharSequence cleanSnippet = bodySnippet;
-    int          startOffset  = 0;
-
-    if (StringUtil.startsWith(cleanSnippet, SNIPPET_WRAP)) {
-      cleanSnippet = cleanSnippet.subSequence(SNIPPET_WRAP.length(), cleanSnippet.length());
-      startOffset  = SNIPPET_WRAP.length();
-    }
-
-    if (StringUtil.endsWith(cleanSnippet, SNIPPET_WRAP)) {
-      cleanSnippet = cleanSnippet.subSequence(0, cleanSnippet.length() - SNIPPET_WRAP.length());
-    }
-
-    int startIndex = TextUtils.indexOf(body, cleanSnippet);
-
-    if (startIndex != -1) {
-      List<BodyRangeList.BodyRange> newRanges = new ArrayList<>(bodyRanges.ranges.size());
-      for (BodyRangeList.BodyRange range : bodyRanges.ranges) {
-        int adjustedStart = range.start - startIndex + startOffset;
-        if (adjustedStart >= 0 && adjustedStart + range.length <= bodySnippet.length()) {
-          newRanges.add(range.newBuilder().start(adjustedStart).build());
-        }
-      }
-
-      BodyRangeList.Builder builder = new BodyRangeList.Builder();
-      builder.ranges(newRanges);
-
-      MessageStyler.style(id, builder.build(), bodySnippet);
-    }
-  }
-
   private @NonNull List<MessageResult> queryMessages(@NonNull String query, long threadId) {
+    List<MessageResult> results;
     try (Cursor cursor = searchDatabase.queryMessages(query, threadId)) {
-      return readToList(cursor, new MessageModelBuilder());
+      results = readToList(cursor, new MessageModelBuilder());
     }
+
+    if (results.isEmpty()) {
+      return results;
+    }
+
+    List<String>        snippetQueries = tokenizeQuery(query);
+    List<MessageResult> updatedResults = new ArrayList<>(results.size());
+    for (MessageResult result : results) {
+      CharSequence snippet = makeSnippet(snippetQueries, result.getBody());
+      updatedResults.add(new MessageResult(result.getConversationRecipient(), result.getMessageRecipient(), result.getBody(), snippet, result.getThreadId(), result.getMessageId(), result.getReceivedTimestampMs(), result.isMms()));
+    }
+
+    return updatedResults;
+  }
+
+  @VisibleForTesting
+  static @NonNull List<String> tokenizeQuery(@NonNull String query) {
+    List<String> tokens = new ArrayList<>();
+    for (String part : query.split("\\s+")) {
+      String trimmed = part.trim();
+      if (!trimmed.isEmpty()) {
+        tokens.add(trimmed);
+      }
+    }
+    return tokens;
   }
 
   private @NonNull List<MessageResult> queryMentions(@NonNull List<String> cleanQueries) {
@@ -320,7 +280,9 @@ public class SearchRepository {
         BodyRangeList bodyRanges = record.getMessageRanges();
         List<Mention> mentions   = mentionQueryResults.get(record.getId());
 
-        if (Util.hasItems(mentions)) {
+        Recipient conversationRecipient = threadTable.getRecipientForThreadId(record.getThreadId());
+
+        if (Util.hasItems(mentions) && conversationRecipient != null) {
           SpannableString body = new SpannableString(record.getBody());
 
           if (bodyRanges != null) {
@@ -330,7 +292,7 @@ public class SearchRepository {
           CharSequence updatedBody    = MentionUtil.updateBodyAndMentionsWithDisplayNames(context, body, mentions).getBody();
           CharSequence updatedSnippet = makeSnippet(cleanQueries, Objects.requireNonNull(updatedBody));
 
-          results.add(new MessageResult(record.getFromRecipient(), record.getToRecipient(), updatedBody, updatedSnippet, record.getThreadId(), record.getId(), record.getDateReceived(), true));
+          results.add(new MessageResult(conversationRecipient, record.getFromRecipient(), updatedBody, updatedSnippet, record.getThreadId(), record.getId(), record.getDateReceived(), true));
         }
       }
     }
@@ -363,14 +325,15 @@ public class SearchRepository {
     return results;
   }
 
-  private @NonNull CharSequence makeSnippet(@NonNull List<String> queries, @NonNull CharSequence styledBody) {
+  @VisibleForTesting
+  static @NonNull CharSequence makeSnippet(@NonNull List<String> queries, @NonNull CharSequence styledBody) {
     if (styledBody.length() < 50) {
       return styledBody;
     }
 
-    String lowerBody  = styledBody.toString().toLowerCase();
+    String lowerBody  = toLowerCasePreservingLength(styledBody);
     for (String query : queries) {
-      int foundIndex = lowerBody.indexOf(query.toLowerCase());
+      int foundIndex = lowerBody.indexOf(toLowerCasePreservingLength(query));
       if (foundIndex != -1) {
         int snippetStart = Math.max(0, Math.max(TextUtils.lastIndexOf(styledBody,' ', foundIndex - 5) + 1, foundIndex - 15));
         int lastSpace    = TextUtils.indexOf(styledBody, ' ', foundIndex + 30);
@@ -382,7 +345,30 @@ public class SearchRepository {
       }
     }
 
-    return styledBody;
+    if (styledBody.length() <= MAX_SNIPPET_SIZE) {
+      return styledBody;
+    }
+
+    int lastSpace = TextUtils.lastIndexOf(styledBody, ' ', MAX_SNIPPET_SIZE);
+    int snippetEnd = lastSpace > 0 ? lastSpace : MAX_SNIPPET_SIZE;
+
+    return new SpannableStringBuilder().append(styledBody.subSequence(0, snippetEnd))
+                                       .append(SNIPPET_WRAP);
+  }
+
+  /**
+   * Lowercases each UTF-16 code unit individually so the result has the exact same length as the
+   * input. {@code String.toLowerCase} can change the number of code units for certain
+   * characters (e.g. {@code İ}, U+0130, folds to two code units), which would desynchronize match
+   * indices computed on the lowercased text from the positions they are later applied to on the
+   * original {@code styledBody}, producing invalid {@code subSequence} ranges that crash search.
+   */
+  private static @NonNull String toLowerCasePreservingLength(@NonNull CharSequence input) {
+    StringBuilder builder = new StringBuilder(input.length());
+    for (int i = 0; i < input.length(); i++) {
+      builder.append(Character.toLowerCase(input.charAt(i)));
+    }
+    return builder.toString();
   }
 
   private @NonNull <T> List<T> readToList(@Nullable Cursor cursor, @NonNull ModelBuilder<T> builder) {
@@ -414,6 +400,28 @@ public class SearchRepository {
     }
   }
 
+  private static @NonNull List<MessageResult> filterMentionResults(@NonNull List<MessageResult> mentions, @NonNull SearchFilter filter) {
+    if (filter.isEmpty()) {
+      return mentions;
+    }
+
+    List<MessageResult> filtered = new ArrayList<>();
+    for (MessageResult mention : mentions) {
+      if (filter.getStartDate() != null && mention.getReceivedTimestampMs() < filter.getStartDate()) {
+        continue;
+      }
+      if (filter.getEndDate() != null && mention.getReceivedTimestampMs() > filter.getEndDate()) {
+        continue;
+      }
+      if (filter.getAuthor() != null && !mention.getMessageRecipient().getId().equals(filter.getAuthor())) {
+        continue;
+      }
+      filtered.add(mention);
+    }
+
+    return filtered;
+  }
+
   private static @NonNull List<MessageResult> mergeMessagesAndMentions(@NonNull List<MessageResult> messages, @NonNull List<MessageResult> mentionMessages) {
     Set<Long> includedMmsMessages = new HashSet<>();
 
@@ -436,16 +444,7 @@ public class SearchRepository {
     return combined;
   }
 
-  private static class RecipientModelBuilder implements ModelBuilder<Recipient> {
-
-    @Override
-    public Recipient build(@NonNull Cursor cursor) {
-      long recipientId = cursor.getLong(cursor.getColumnIndexOrThrow(ContactRepository.ID_COLUMN));
-      return Recipient.resolved(RecipientId.from(recipientId));
-    }
-  }
-
-  private static class ThreadModelBuilder implements ModelBuilder<ThreadRecord> {
+  private static class ThreadModelBuilder implements ModelBuilder<ThreadWithRecipient> {
 
     private final ThreadTable threadTable;
 
@@ -454,7 +453,7 @@ public class SearchRepository {
     }
 
     @Override
-    public ThreadRecord build(@NonNull Cursor cursor) {
+    public ThreadWithRecipient build(@NonNull Cursor cursor) {
       return threadTable.readerFor(cursor).getCurrent();
     }
   }
@@ -465,10 +464,9 @@ public class SearchRepository {
     public MessageResult build(@NonNull Cursor cursor) {
       RecipientId conversationRecipientId = RecipientId.from(CursorUtil.requireLong(cursor, SearchTable.CONVERSATION_RECIPIENT));
       RecipientId messageRecipientId      = RecipientId.from(CursorUtil.requireLong(cursor, SearchTable.MESSAGE_RECIPIENT));
-      Recipient   conversationRecipient   = Recipient.live(conversationRecipientId).get();
-      Recipient   messageRecipient        = Recipient.live(messageRecipientId).get();
+      Recipient   conversationRecipient   = Recipient.resolved(conversationRecipientId);
+      Recipient   messageRecipient        = Recipient.resolved(messageRecipientId);
       String      body                    = CursorUtil.requireString(cursor, SearchTable.BODY);
-      String      bodySnippet             = CursorUtil.requireString(cursor, SearchTable.SNIPPET);
       long        receivedMs              = CursorUtil.requireLong(cursor, MessageTable.DATE_RECEIVED);
       long        threadId                = CursorUtil.requireLong(cursor, MessageTable.THREAD_ID);
       int         messageId               = CursorUtil.requireInt(cursor, SearchTable.MESSAGE_ID);
@@ -478,11 +476,7 @@ public class SearchRepository {
         body = "";
       }
 
-      if (bodySnippet == null) {
-        bodySnippet = "";
-      }
-
-      return new MessageResult(conversationRecipient, messageRecipient, body, bodySnippet, threadId, messageId, receivedMs, isMms);
+      return new MessageResult(conversationRecipient, messageRecipient, body, body, threadId, messageId, receivedMs, isMms);
     }
   }
 

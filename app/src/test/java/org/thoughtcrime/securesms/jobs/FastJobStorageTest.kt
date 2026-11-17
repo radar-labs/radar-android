@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.jobs
 
 import assertk.assertThat
+import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotEqualTo
 import assertk.assertions.isNotNull
@@ -776,6 +777,26 @@ class FastJobStorageTest {
   }
 
   @Test
+  fun `getNextEligibleJob - newly-inserted higher-priority job does not replace running job in same queue`() {
+    // This test is for a specific bug, where a newly-added job could replace a lower-priority job in the same
+    // queue even if the existing job was actively running. This is a defensive test to make sure that we don't replace
+    // running jobs with another job, even if it's higher priority.
+    val runningJob = jobSpec(id = "1", factoryKey = "f1", queueKey = "q", isRunning = true)
+    val subject = FastJobStorage(mockDatabase(listOf(FullSpec(runningJob, emptyList(), emptyList()))))
+    subject.init()
+
+    assertThat(subject.getNextEligibleJob(10, NO_PREDICATE)).isNull()
+
+    val higherPriorityJob = jobSpec(id = "2", factoryKey = "f2", queueKey = "q", globalPriority = Job.Parameters.PRIORITY_HIGH)
+    subject.insertJobs(listOf(FullSpec(higherPriorityJob, emptyList(), emptyList())))
+
+    assertThat(subject.getNextEligibleJob(10, NO_PREDICATE)).isNull()
+
+    subject.deleteJob("1")
+    assertThat(subject.getNextEligibleJob(10, NO_PREDICATE)).isEqualTo(higherPriorityJob)
+  }
+
+  @Test
   fun `getNextEligibleJob - updating job to have a higher global priority replaces lower priority in queue`() {
     val subject = FastJobStorage(mockDatabase(DataSet1.FULL_SPECS))
     subject.init()
@@ -1034,6 +1055,23 @@ class FastJobStorageTest {
     assertThat(subject.getJobCountForFactoryAndQueue("f1", "q1")).isEqualTo(1)
     assertThat(subject.getJobCountForFactoryAndQueue("f2", "q1")).isEqualTo(0)
     assertThat(subject.getJobCountForFactoryAndQueue("f1", "does-not-exist")).isEqualTo(0)
+  }
+
+  @Test
+  fun `getAllMinimalJobSpecsMatchingFilter - general`() {
+    val fullSpec1 = FullSpec(jobSpec(id = "1", factoryKey = "f1", createTime = 1), emptyList(), emptyList())
+    val fullSpec2 = FullSpec(jobSpec(id = "2", factoryKey = "f1", createTime = 3), emptyList(), emptyList())
+    val fullSpec3 = FullSpec(jobSpec(id = "3", factoryKey = "f2", queueKey = "q1", createTime = 2), emptyList(), emptyList())
+
+    val subject = FastJobStorage(mockDatabase(listOf(fullSpec1, fullSpec2, fullSpec3)))
+    subject.init()
+
+    val f1Jobs = subject.getAllMinimalJobSpecsMatchingFilter { it.factoryKey == "f1" }
+    assertThat(f1Jobs.map { it.id }.toSet()).isEqualTo(setOf("1", "2"))
+    assertThat(f1Jobs.maxByOrNull { it.createTime }?.id).isEqualTo("2")
+
+    assertThat(subject.getAllMinimalJobSpecsMatchingFilter { it.queueKey == "q1" }.map { it.id }).isEqualTo(listOf("3"))
+    assertThat(subject.getAllMinimalJobSpecsMatchingFilter { it.factoryKey == "does-not-exist" }).isEmpty()
   }
 
   @Test

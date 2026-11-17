@@ -6,6 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
+import org.signal.core.models.ServiceId;
+import org.signal.core.models.recipients.RecipientId;
+import org.signal.core.util.Util;
+import org.signal.core.util.groups.GroupChangeException;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.metadata.certificate.SenderCertificate;
 import org.signal.libsignal.protocol.InvalidKeyException;
@@ -14,6 +18,10 @@ import org.signal.libsignal.protocol.NoSessionException;
 import org.signal.libsignal.zkgroup.groups.GroupSecretParams;
 import org.signal.libsignal.zkgroup.groupsend.GroupSendEndorsement;
 import org.signal.libsignal.zkgroup.groupsend.GroupSendFullToken;
+import org.signal.network.crypto.SealedSenderAccess;
+import org.signal.network.crypto.UnidentifiedAccess;
+import org.signal.network.util.Preconditions;
+import org.signal.remoteconfig.RemoteConfig;
 import org.thoughtcrime.securesms.crypto.SealedSenderAccessUtil;
 import org.thoughtcrime.securesms.crypto.SenderKeyUtil;
 import org.thoughtcrime.securesms.database.MessageSendLogTables;
@@ -23,24 +31,18 @@ import org.thoughtcrime.securesms.database.model.GroupRecord;
 import org.thoughtcrime.securesms.database.model.GroupSendEndorsementRecords;
 import org.thoughtcrime.securesms.database.model.MessageId;
 import org.thoughtcrime.securesms.dependencies.AppDependencies;
-import org.thoughtcrime.securesms.groups.GroupChangeException;
 import org.thoughtcrime.securesms.groups.GroupId;
 import org.thoughtcrime.securesms.groups.GroupManager;
 import org.thoughtcrime.securesms.jobs.RequestGroupV2InfoJob;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.recipients.RecipientId;
 import org.thoughtcrime.securesms.recipients.RecipientUtil;
 import org.thoughtcrime.securesms.util.RecipientAccessList;
-import org.thoughtcrime.securesms.util.RemoteConfig;
 import org.thoughtcrime.securesms.util.SignalLocalMetrics;
-import org.thoughtcrime.securesms.util.Util;
 import org.whispersystems.signalservice.api.SignalServiceMessageSender;
 import org.whispersystems.signalservice.api.SignalServiceMessageSender.LegacyGroupEvents;
 import org.whispersystems.signalservice.api.SignalServiceMessageSender.SenderKeyGroupEvents;
 import org.whispersystems.signalservice.api.crypto.ContentHint;
-import org.whispersystems.signalservice.api.crypto.SealedSenderAccess;
-import org.whispersystems.signalservice.api.crypto.UnidentifiedAccess;
 import org.whispersystems.signalservice.api.crypto.UntrustedIdentityException;
 import org.whispersystems.signalservice.api.groupsv2.GroupSendEndorsements;
 import org.whispersystems.signalservice.api.messages.SendMessageResult;
@@ -51,10 +53,8 @@ import org.whispersystems.signalservice.api.messages.SignalServiceStoryMessageRe
 import org.whispersystems.signalservice.api.messages.SignalServiceTypingMessage;
 import org.whispersystems.signalservice.api.messages.calls.SignalServiceCallMessage;
 import org.whispersystems.signalservice.api.push.DistributionId;
-import org.signal.core.models.ServiceId;
 import org.whispersystems.signalservice.api.push.SignalServiceAddress;
 import org.whispersystems.signalservice.api.push.exceptions.NotFoundException;
-import org.whispersystems.signalservice.api.util.Preconditions;
 import org.whispersystems.signalservice.internal.push.exceptions.InvalidUnidentifiedAccessHeaderException;
 import org.whispersystems.signalservice.internal.push.http.CancelationSignal;
 import org.whispersystems.signalservice.internal.push.http.PartialSendBatchCompleteListener;
@@ -108,7 +108,7 @@ public final class GroupSendUtil {
                                                                   boolean isForStory,
                                                                   @Nullable SignalServiceEditMessage editMessage,
                                                                   @Nullable CancelationSignal cancelationSignal)
-      throws IOException, UntrustedIdentityException
+      throws IOException, UntrustedIdentityException, NoSessionException
   {
     Preconditions.checkArgument(groupId == null || distributionListId == null, "Cannot supply both a groupId and a distributionListId!");
 
@@ -135,7 +135,7 @@ public final class GroupSendUtil {
                                                                     @NonNull SignalServiceDataMessage message,
                                                                     boolean urgent,
                                                                     CancelationSignal cancelationSignal)
-      throws IOException, UntrustedIdentityException
+      throws IOException, UntrustedIdentityException, NoSessionException
   {
     return sendMessage(context, groupId, getDistributionId(groupId), null, allTargets, isRecipientUpdate, false, DataSendOperation.unresendable(message, contentHint, urgent), cancelationSignal);
   }
@@ -152,9 +152,9 @@ public final class GroupSendUtil {
                                                           @NonNull List<Recipient> allTargets,
                                                           @NonNull SignalServiceTypingMessage message,
                                                           @Nullable CancelationSignal cancelationSignal)
-      throws IOException, UntrustedIdentityException
+      throws IOException, UntrustedIdentityException, NoSessionException
   {
-    return sendMessage(context, groupId, getDistributionId(groupId), null, allTargets, false, false, new TypingSendOperation(message), cancelationSignal);
+    return sendMessage(context, groupId, getDistributionId(groupId), null, allTargets, false, false, new TypingSendOperation(message, cancelationSignal), cancelationSignal);
   }
 
   /**
@@ -168,7 +168,7 @@ public final class GroupSendUtil {
                                                         @NonNull GroupId.V2 groupId,
                                                         @NonNull List<Recipient> allTargets,
                                                         @NonNull SignalServiceCallMessage message)
-      throws IOException, UntrustedIdentityException
+      throws IOException, UntrustedIdentityException, NoSessionException
   {
     return sendMessage(context, groupId, getDistributionId(groupId), null, allTargets, false, false, new CallSendOperation(message), null);
   }
@@ -187,7 +187,7 @@ public final class GroupSendUtil {
                                                          long sentTimestamp,
                                                          @NonNull SignalServiceStoryMessage message,
                                                          @NonNull Set<SignalServiceStoryMessageRecipient> manifest)
-      throws IOException, UntrustedIdentityException
+      throws IOException, UntrustedIdentityException, NoSessionException
   {
     return sendMessage(
         context,
@@ -214,7 +214,7 @@ public final class GroupSendUtil {
                                                               @NonNull MessageId messageId,
                                                               long sentTimestamp,
                                                               @NonNull SignalServiceStoryMessage message)
-      throws IOException, UntrustedIdentityException
+      throws IOException, UntrustedIdentityException, NoSessionException
   {
     return sendMessage(
         context,
@@ -253,24 +253,26 @@ public final class GroupSendUtil {
                                                      boolean isStorySend,
                                                      @NonNull SendOperation sendOperation,
                                                      @Nullable CancelationSignal cancelationSignal)
-      throws IOException, UntrustedIdentityException
+      throws IOException, UntrustedIdentityException, NoSessionException
   {
     Log.i(TAG, "Starting group send. GroupId: " + (groupId != null ? groupId.toString() : "none") + ", DistributionId: " + (distributionId != null ? distributionId.toString() : "none") + " RelatedMessageId: " + (relatedMessageId != null ? relatedMessageId.toString() : "none") + ", Targets: " + allTargets.size() + ", RecipientUpdate: " + isRecipientUpdate + ", Operation: " + sendOperation.getClass().getSimpleName());
 
     Set<Recipient>  unregisteredTargets = allTargets.stream().filter(it -> it.isUnregistered() || it.isUnknown()).collect(Collectors.toSet());
     List<Recipient> registeredTargets   = allTargets.stream().filter(r -> !unregisteredTargets.contains(r)).collect(Collectors.toList());
 
+    SenderCertificate senderCertificate = SealedSenderAccessUtil.getSealedSenderCertificate();
+
+    if (senderCertificate == null) {
+      throw new IOException("No usable sealed sender certificate. Refusing to fall back to an unsealed send.");
+    }
+
     RecipientData               recipients                     = new RecipientData(context, registeredTargets, isStorySend);
     Optional<GroupRecord>       groupRecord                    = groupId != null ? SignalDatabase.groups().getGroup(groupId) : Optional.empty();
-    GroupSendEndorsementRecords groupSendEndorsementRecords    = groupRecord.filter(GroupRecord::isV2Group).map(g -> SignalDatabase.groups().getGroupSendEndorsements(g.getId())).orElse(null);
+    GroupSendEndorsementRecords groupSendEndorsementRecords    = groupRecord.filter(GroupRecord::getHasV2GroupProperties).map(g -> SignalDatabase.groups().getGroupSendEndorsements(g.getId())).orElse(null);
     long                        groupSendEndorsementExpiration = groupRecord.map(GroupRecord::getGroupSendEndorsementExpiration).orElse(0L);
-    SenderCertificate           senderCertificate              = SealedSenderAccessUtil.getSealedSenderCertificate();
     boolean                     useGroupSendEndorsements       = groupSendEndorsementRecords != null;
 
-    if (useGroupSendEndorsements && senderCertificate == null) {
-      Log.w(TAG, "Can't use group send endorsements without a sealed sender certificate, falling back to access key");
-      useGroupSendEndorsements = false;
-    } else if (useGroupSendEndorsements) {
+    if (useGroupSendEndorsements) {
       boolean refreshGroupSendEndorsements = false;
 
       if (groupSendEndorsementExpiration == 0) {
@@ -284,7 +286,11 @@ public final class GroupSendUtil {
         refreshGroupSendEndorsements = true;
       }
 
-      if (refreshGroupSendEndorsements) {
+      if (refreshGroupSendEndorsements && !groupRecord.get().isMember()) {
+        Log.i(TAG, "Not a member of the group, unable to refresh group send endorsements, using legacy");
+        useGroupSendEndorsements    = false;
+        groupSendEndorsementRecords = new GroupSendEndorsementRecords(Collections.emptyMap());
+      } else if (refreshGroupSendEndorsements) {
         try {
           GroupManager.updateGroupSendEndorsements(context, groupRecord.get().requireV2GroupProperties().getGroupMasterKey());
 
@@ -502,7 +508,7 @@ public final class GroupSendUtil {
       final AtomicLong           entryId             = new AtomicLong(-1);
       final boolean              includeInMessageLog = sendOperation.shouldIncludeInMessageLog();
 
-      List<SendMessageResult> results = sendOperation.sendLegacy(messageSender, legacyTargetAddresses, legacyTargets, SealedSenderAccess.forFanOutGroupSend(groupSendTokens, SealedSenderAccessUtil.getSealedSenderCertificate(), legacyTargetAccesses), recipientUpdate, result -> {
+      List<SendMessageResult> results = sendOperation.sendLegacy(messageSender, legacyTargetAddresses, legacyTargets, SealedSenderAccess.forFanOutGroupSend(groupSendTokens, senderCertificate, legacyTargetAccesses), recipientUpdate, result -> {
         if (!includeInMessageLog) {
           return;
         }
@@ -577,7 +583,7 @@ public final class GroupSendUtil {
                                                 boolean isRecipientUpdate,
                                                 @Nullable PartialSendCompleteListener partialListener,
                                                 @Nullable CancelationSignal cancelationSignal)
-        throws IOException, UntrustedIdentityException;
+        throws IOException, UntrustedIdentityException, NoSessionException;
 
     @NonNull ContentHint getContentHint();
     long getSentTimestamp();
@@ -639,7 +645,7 @@ public final class GroupSendUtil {
                                                        boolean isRecipientUpdate,
                                                        @Nullable PartialSendCompleteListener partialListener,
                                                        @Nullable CancelationSignal cancelationSignal)
-        throws IOException, UntrustedIdentityException
+        throws IOException, UntrustedIdentityException, NoSessionException
     {
       // PniSignatures are only needed for 1:1 messages, but some message jobs use the GroupSendUtil methods to send 1:1
       if (targets.size() == 1 && relatedMessageId == null) {
@@ -706,9 +712,11 @@ public final class GroupSendUtil {
   private static class TypingSendOperation implements SendOperation {
 
     private final SignalServiceTypingMessage message;
+    private final CancelationSignal          cancelationSignal;
 
-    private TypingSendOperation(@NonNull SignalServiceTypingMessage message) {
-      this.message = message;
+    private TypingSendOperation(@NonNull SignalServiceTypingMessage message, @Nullable CancelationSignal cancelationSignal) {
+      this.message           = message;
+      this.cancelationSignal = cancelationSignal;
     }
 
     @Override
@@ -723,8 +731,14 @@ public final class GroupSendUtil {
     {
       Preconditions.checkNotNull(groupSendEndorsements, "GSEs must be non-null for non-story sender key send.");
 
-      messageSender.sendGroupTyping(distributionId, targets, access, groupSendEndorsements, message);
-      List<SendMessageResult> results = targets.stream().map(a -> SendMessageResult.success(a, Collections.emptyList(), true, false, -1, Optional.empty())).collect(Collectors.toList());
+      messageSender.sendGroupTyping(distributionId, targets, access, groupSendEndorsements, message, cancelationSignal);
+
+      List<SendMessageResult> results;
+      if (cancelationSignal != null && cancelationSignal.isCanceled()) {
+        results = targets.stream().map(SendMessageResult::canceledFailure).collect(Collectors.toList());
+      } else {
+        results = targets.stream().map(a -> SendMessageResult.success(a, Collections.emptyList(), true, false, -1, Optional.empty())).collect(Collectors.toList());
+      }
 
       if (partialListener != null) {
         partialListener.onPartialSendComplete(results);
@@ -877,7 +891,7 @@ public final class GroupSendUtil {
                                                        boolean isRecipientUpdate,
                                                        @Nullable PartialSendCompleteListener partialListener,
                                                        @Nullable CancelationSignal cancelationSignal)
-        throws IOException, UntrustedIdentityException
+        throws IOException, UntrustedIdentityException, NoSessionException
     {
       // We only allow legacy sends if you're sending to an empty group and just need to send a sync message.
       if (targets.isEmpty()) {
@@ -942,6 +956,11 @@ public final class GroupSendUtil {
     public void onSyncMessageSent() {
       SignalLocalMetrics.GroupMessageSend.onSenderKeySyncSent(messageId);
     }
+
+    @Override
+    public void onSyncMessageEncrypted() {
+      SignalLocalMetrics.GroupMessageSend.onSenderKeySyncEncrypted(messageId);
+    }
   }
 
   private static final class LegacyMetricEventListener implements LegacyGroupEvents {
@@ -963,6 +982,11 @@ public final class GroupSendUtil {
     @Override
     public void onSyncMessageSent() {
       SignalLocalMetrics.GroupMessageSend.onLegacySyncFinished(messageId);
+    }
+
+    @Override
+    public void onSyncMessageEncrypted() {
+      SignalLocalMetrics.GroupMessageSend.onLegacySyncEncrypted(messageId);
     }
   }
 

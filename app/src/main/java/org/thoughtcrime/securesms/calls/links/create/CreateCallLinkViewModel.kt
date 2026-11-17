@@ -17,11 +17,11 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import org.signal.core.models.recipients.RecipientId
 import org.signal.ringrtc.CallLinkState.Restrictions
 import org.thoughtcrime.securesms.calls.links.CallLinks
 import org.thoughtcrime.securesms.calls.links.UpdateCallLinkRepository
 import org.thoughtcrime.securesms.database.CallLinkTable
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkCredentials
 import org.thoughtcrime.securesms.service.webrtc.links.SignalCallLinkState
 import org.thoughtcrime.securesms.service.webrtc.links.UpdateCallLinkResult
@@ -51,9 +51,6 @@ class CreateCallLinkViewModel(
 
   val linkKeyBytes: ByteArray
     get() = callLink.value.credentials!!.linkKeyBytes
-
-  val epochBytes: ByteArray?
-    get() = callLink.value.credentials!!.epochBytes
 
   private val internalShowAlreadyInACall = MutableStateFlow(false)
   val showAlreadyInACall: StateFlow<Boolean> = internalShowAlreadyInACall

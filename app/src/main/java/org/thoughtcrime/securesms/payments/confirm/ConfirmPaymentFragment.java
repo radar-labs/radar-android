@@ -30,8 +30,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.signal.core.util.ThreadUtil;
 import org.signal.core.util.logging.Log;
-import org.thoughtcrime.securesms.BiometricDeviceAuthentication;
-import org.thoughtcrime.securesms.BiometricDeviceLockContract;
+import org.signal.core.ui.biometrics.BiometricDeviceAuthentication;
+import org.signal.core.ui.biometrics.BiometricDeviceLockContract;
 import org.thoughtcrime.securesms.R;
 import org.thoughtcrime.securesms.components.settings.app.AppSettingsActivity;
 import org.thoughtcrime.securesms.keyvalue.SignalStore;
@@ -42,8 +42,8 @@ import org.thoughtcrime.securesms.payments.PaymentAmountFormatter;
 import org.thoughtcrime.securesms.payments.preferences.PaymentsHomeFragmentDirections;
 import org.thoughtcrime.securesms.payments.preferences.RecipientHasNotEnabledPaymentsDialog;
 import org.thoughtcrime.securesms.recipients.Recipient;
-import org.thoughtcrime.securesms.util.BottomSheetUtil;
-import org.thoughtcrime.securesms.util.ServiceUtil;
+import org.signal.core.ui.BottomSheetUtil;
+import org.signal.core.util.ServiceUtil;
 import org.thoughtcrime.securesms.util.WindowUtil;
 import org.thoughtcrime.securesms.util.adapter.mapping.MappingModelList;
 import org.thoughtcrime.securesms.util.navigation.SafeNavigation;
@@ -140,12 +140,10 @@ public class ConfirmPaymentFragment extends BottomSheetDialogFragment {
       }
     });
 
-    BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo
-                                                               .Builder()
-                                                               .setAllowedAuthenticators(BiometricDeviceAuthentication.ALLOWED_AUTHENTICATORS)
-                                                               .setTitle(requireContext().getString(R.string.BiometricDeviceAuthentication__signal))
-                                                               .setConfirmationRequired(false)
-                                                               .build();
+    BiometricPrompt.PromptInfo promptInfo = BiometricDeviceAuthentication.createPromptInfoBuilder()
+                                                                         .setTitle(requireContext().getString(R.string.BiometricDeviceAuthentication__signal))
+                                                                         .setConfirmationRequired(false)
+                                                                         .build();
     biometricAuth = new BiometricDeviceAuthentication(BiometricManager.from(requireActivity()),
                                                       new BiometricPrompt(requireActivity(), new BiometricAuthenticationListener()),
                                                       promptInfo);
@@ -207,7 +205,7 @@ public class ConfirmPaymentFragment extends BottomSheetDialogFragment {
 
   private static CharSequence mono(Context context, CharSequence address) {
     SpannableString spannable = new SpannableString(address);
-    spannable.setSpan(new TextAppearanceSpan(context, R.style.TextAppearance_Signal_Mono),
+    spannable.setSpan(new TextAppearanceSpan(context, org.signal.core.ui.R.style.TextAppearance_Signal_Mono),
                       0,
                       address.length(),
                       Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

@@ -1,0 +1,202 @@
+package org.signal.imageeditor.core;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.os.Build;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.graphics.ColorUtils;
+
+import org.signal.imageeditor.core.model.EditorElement;
+
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Contains all of the information required for a {@link Renderer} to do its job.
+ * <p>
+ * Includes a {@link #canvas}, preconfigured with the correct matrix.
+ * <p>
+ * The {@link #canvasMatrix} should further matrix manipulation be required.
+ */
+public final class RendererContext {
+
+  @NonNull
+  public final Context context;
+
+  @NonNull
+  public final Canvas canvas;
+
+  @NonNull
+  public final CanvasMatrix canvasMatrix;
+
+  @NonNull
+  public final Ready rendererReady;
+
+  @NonNull
+  public final Invalidate invalidate;
+
+  @NonNull
+  public final TypefaceProvider typefaceProvider;
+
+  private boolean blockingLoad;
+
+  private float fade = 1f;
+
+  private boolean isEditing = true;
+
+  @ColorInt
+  @Nullable
+  private Integer blackoutColor;
+
+  @ColorInt
+  @Nullable
+  private Integer decorationColor;
+
+  private List<EditorElement> children = Collections.emptyList();
+  private Paint               maskPaint;
+
+  public RendererContext(@NonNull Context context, @NonNull Canvas canvas, @NonNull Ready rendererReady, @NonNull Invalidate invalidate, @NonNull TypefaceProvider typefaceProvider) {
+    this.context          = context;
+    this.canvas           = canvas;
+    this.canvasMatrix     = new CanvasMatrix(canvas);
+    this.rendererReady    = rendererReady;
+    this.invalidate       = invalidate;
+    this.typefaceProvider = typefaceProvider;
+  }
+
+  public void setBlockingLoad(boolean blockingLoad) {
+    this.blockingLoad = blockingLoad;
+  }
+
+  /**
+   * {@link Renderer}s generally run in the foreground but can load any data they require in the background.
+   * <p>
+   * If they do so, they can use the {@link #invalidate} callback when ready to inform the view it needs to be redrawn.
+   * <p>
+   * However, when isBlockingLoad is true, the renderer is running in the background for the final render
+   * and must load the data immediately and block the render until done so.
+   */
+  public boolean isBlockingLoad() {
+    return blockingLoad;
+  }
+
+  public boolean mapRect(@NonNull RectF dst, @NonNull RectF src) {
+    return canvasMatrix.mapRect(dst, src);
+  }
+
+  public void setIsEditing(boolean isEditing) {
+    this.isEditing = isEditing;
+  }
+
+  public boolean isEditing() {
+    return isEditing;
+  }
+
+  public void setFade(float fade) {
+    this.fade = fade;
+  }
+
+  public int getAlpha(int alpha) {
+    return Math.max(0, Math.min(255, (int) (fade * alpha)));
+  }
+
+  /**
+   * Overrides the blackout color the model was created with for this render, so that a caller whose background can
+   * change after the model exists -- a theme switch, for example -- can keep the two in step. Pass null to fall back to
+   * the model's own color.
+   */
+  public void setBlackoutColor(@ColorInt @Nullable Integer blackoutColor) {
+    this.blackoutColor = blackoutColor;
+  }
+
+  /**
+   * Resolves a color derived from the model's blackout color against any override set for this render, preserving the
+   * alpha the caller baked in.
+   */
+  @ColorInt
+  public int resolveBlackoutColor(@ColorInt int modelColor) {
+    return blackoutColor == null ? modelColor : ColorUtils.setAlphaComponent(blackoutColor, Color.alpha(modelColor));
+  }
+
+  /**
+   * Overrides the color the editor draws its chrome -- crop thumbs, guides -- with, for a caller whose background is
+   * not always dark. Pass null to fall back to the default light-on-dark chrome.
+   */
+  public void setDecorationColor(@ColorInt @Nullable Integer decorationColor) {
+    this.decorationColor = decorationColor;
+  }
+
+  /**
+   * Resolves a decoration color against any override set for this render, preserving the alpha the caller baked in.
+   */
+  @ColorInt
+  public int resolveDecorationColor(@ColorInt int defaultColor) {
+    return decorationColor == null ? defaultColor : ColorUtils.setAlphaComponent(decorationColor, Color.alpha(defaultColor));
+  }
+
+  /**
+   * Persist the current state on to a stack, must be complimented by a call to {@link #restore()}.
+   */
+  public void save() {
+    canvasMatrix.save();
+  }
+
+  /**
+   * Restore the current state from the stack, must match a call to {@link #save()}.
+   */
+  public void restore() {
+    canvasMatrix.restore();
+  }
+
+  public void getCurrent(@NonNull Matrix into) {
+    canvasMatrix.getCurrent(into);
+  }
+
+  public void setChildren(@NonNull List<EditorElement> children) {
+    this.children = children;
+  }
+
+  public @NonNull List<EditorElement> getChildren() {
+    return children;
+  }
+
+  public void setMaskPaint(@Nullable Paint maskPaint) {
+    this.maskPaint = maskPaint;
+  }
+
+  public @Nullable Paint getMaskPaint() {
+    return maskPaint;
+  }
+
+  /**
+   * Allows a RenderContext creator to specify which font to use for text on the fly.
+   */
+  public interface TypefaceProvider {
+    @NonNull Typeface getSelectedTypeface(@NonNull Context context, @NonNull Renderer renderer, @NonNull Invalidate invalidate);
+  }
+
+  public interface Ready {
+
+    Ready NULL = (renderer, cropMatrix, size) -> {
+    };
+
+    void onReady(@NonNull Renderer renderer, @Nullable Matrix cropMatrix, @Nullable Point size);
+  }
+
+  public interface Invalidate {
+
+    Invalidate NULL = (renderer) -> {
+    };
+
+    void onInvalidate(@NonNull Renderer renderer);
+  }
+}

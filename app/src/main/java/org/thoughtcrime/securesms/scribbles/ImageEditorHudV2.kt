@@ -19,6 +19,8 @@ import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import com.airbnb.lottie.SimpleColorFilter
 import com.google.android.material.materialswitch.MaterialSwitch
+import org.signal.core.ui.util.ViewUtil
+import org.signal.core.util.Debouncer
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.TooltipPopup
 import org.thoughtcrime.securesms.keyvalue.SignalStore
@@ -26,9 +28,8 @@ import org.thoughtcrime.securesms.mediasend.v2.MediaAnimations
 import org.thoughtcrime.securesms.scribbles.HSVColorSlider.getColor
 import org.thoughtcrime.securesms.scribbles.HSVColorSlider.setColor
 import org.thoughtcrime.securesms.scribbles.HSVColorSlider.setUpForColor
-import org.thoughtcrime.securesms.util.Debouncer
-import org.thoughtcrime.securesms.util.ViewUtil
 import org.thoughtcrime.securesms.util.visible
+import org.signal.core.ui.R as CoreUiR
 
 class ImageEditorHudV2 @JvmOverloads constructor(
   context: Context,
@@ -146,9 +147,9 @@ class ImageEditorHudV2 @JvmOverloads constructor(
     cropAspectLockButton.setOnClickListener {
       listener?.onCropAspectLock()
       if (listener?.isCropAspectLocked == true) {
-        cropAspectLockButton.setImageResource(R.drawable.symbol_crop_lock_24)
+        cropAspectLockButton.setImageResource(CoreUiR.drawable.symbol_crop_lock_24)
       } else {
-        cropAspectLockButton.setImageResource(R.drawable.symbol_crop_unlock_24)
+        cropAspectLockButton.setImageResource(CoreUiR.drawable.symbol_crop_unlock_24)
       }
     }
 
@@ -185,6 +186,10 @@ class ImageEditorHudV2 @JvmOverloads constructor(
     widthSeekBar.thumb = HSVColorSlider.createThumbDrawable(Color.WHITE)
     widthSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
       override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        if (!DRAW_WIDTH_BOUNDARIES.containsKey(currentMode)) {
+          return
+        }
+
         listener?.onBrushWidthChange()
         brushPreview.setThickness(getActiveBrushWidth())
 
@@ -266,8 +271,8 @@ class ImageEditorHudV2 @JvmOverloads constructor(
   fun showBlurHudTooltip() {
     TooltipPopup.forTarget(blurButton)
       .setText(R.string.ImageEditorHud_new_blur_faces_or_draw_anywhere_to_blur)
-      .setBackgroundTint(ContextCompat.getColor(context, R.color.core_ultramarine))
-      .setTextColor(ContextCompat.getColor(context, R.color.core_white))
+      .setBackgroundTint(ContextCompat.getColor(context, CoreUiR.color.core_ultramarine))
+      .setTextColor(ContextCompat.getColor(context, CoreUiR.color.core_white))
       .show(TooltipPopup.POSITION_BELOW)
   }
 
@@ -355,7 +360,7 @@ class ImageEditorHudV2 @JvmOverloads constructor(
 
   private fun presentModeDraw() {
     drawButton.isSelected = true
-    brushToggle.setImageResource(R.drawable.symbol_brush_pen_24)
+    brushToggle.setImageResource(CoreUiR.drawable.symbol_brush_pen_24)
     widthSeekBar.progress = SignalStore.imageEditor.getMarkerPercentage()
     listener?.onColorChange(getActiveColor())
     updateColorIndicator()
@@ -368,7 +373,7 @@ class ImageEditorHudV2 @JvmOverloads constructor(
 
   private fun presentModeHighlight() {
     drawButton.isSelected = true
-    brushToggle.setImageResource(R.drawable.symbol_brush_highlighter_24)
+    brushToggle.setImageResource(CoreUiR.drawable.symbol_brush_highlighter_24)
     widthSeekBar.progress = SignalStore.imageEditor.getHighlighterPercentage()
     listener?.onColorChange(getActiveColor())
     updateColorIndicator()

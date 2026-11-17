@@ -9,7 +9,11 @@ import android.content.Context
 import android.database.Cursor
 import com.google.protobuf.InvalidProtocolBufferException
 import org.signal.core.models.ServiceId
+import org.signal.core.models.badges.Badge
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64
+import org.signal.core.util.Bitmask
+import org.signal.core.util.Util
 import org.signal.core.util.logging.Log
 import org.signal.core.util.optionalBlob
 import org.signal.core.util.optionalBoolean
@@ -25,7 +29,6 @@ import org.signal.libsignal.zkgroup.InvalidInputException
 import org.signal.libsignal.zkgroup.profiles.ExpiringProfileKeyCredential
 import org.signal.libsignal.zkgroup.profiles.ProfileKey
 import org.thoughtcrime.securesms.badges.Badges
-import org.thoughtcrime.securesms.badges.models.Badge
 import org.thoughtcrime.securesms.conversation.colors.AvatarColor
 import org.thoughtcrime.securesms.conversation.colors.ChatColors
 import org.thoughtcrime.securesms.crypto.ProfileKeyUtil
@@ -42,10 +45,8 @@ import org.thoughtcrime.securesms.groups.GroupId
 import org.thoughtcrime.securesms.profiles.AvatarHelper
 import org.thoughtcrime.securesms.profiles.ProfileName
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.service.webrtc.links.CallLinkRoomId
 import org.thoughtcrime.securesms.util.GroupUtil
-import org.thoughtcrime.securesms.util.Util
 import org.thoughtcrime.securesms.wallpaper.ChatWallpaper
 import org.thoughtcrime.securesms.wallpaper.ChatWallpaperFactory
 import java.io.IOException
@@ -126,6 +127,7 @@ object RecipientTableCursorUtil {
       distributionListId = distributionListId,
       recipientType = RecipientTable.RecipientType.fromId(cursor.requireInt(RecipientTable.TYPE)),
       isBlocked = cursor.requireBoolean(RecipientTable.BLOCKED),
+      blockedAt = cursor.requireLong(RecipientTable.BLOCKED_AT),
       muteUntil = cursor.requireLong(RecipientTable.MUTE_UNTIL),
       messageVibrateState = RecipientTable.VibrateState.fromId(cursor.requireInt(RecipientTable.MESSAGE_VIBRATE)),
       callVibrateState = RecipientTable.VibrateState.fromId(cursor.requireInt(RecipientTable.CALL_VIBRATE)),
@@ -145,12 +147,14 @@ object RecipientTableCursorUtil {
       signalProfileAvatar = cursor.requireString(RecipientTable.PROFILE_AVATAR),
       profileAvatarFileDetails = AvatarHelper.getAvatarFileDetails(context, recipientId),
       profileSharing = cursor.requireBoolean(RecipientTable.PROFILE_SHARING),
-      lastProfileFetch = cursor.requireLong(RecipientTable.LAST_PROFILE_FETCH),
       notificationChannel = cursor.requireString(RecipientTable.NOTIFICATION_CHANNEL),
       sealedSenderAccessMode = RecipientTable.SealedSenderAccessMode.fromMode(cursor.requireInt(RecipientTable.SEALED_SENDER_MODE)),
       capabilities = readCapabilities(cursor),
       storageId = Base64.decodeNullableOrThrow(cursor.requireString(RecipientTable.STORAGE_SERVICE_ID)),
-      mentionSetting = RecipientTable.MentionSetting.fromId(cursor.requireInt(RecipientTable.MENTION_SETTING)),
+      mentionSetting = RecipientTable.NotificationSetting.fromId(cursor.requireInt(RecipientTable.MENTION_SETTING)),
+      callNotificationSetting = RecipientTable.NotificationSetting.fromId(cursor.requireInt(RecipientTable.CALL_NOTIFICATION_SETTING)),
+      replyNotificationSetting = RecipientTable.NotificationSetting.fromId(cursor.requireInt(RecipientTable.REPLY_NOTIFICATION_SETTING)),
+      unreadReminder = RecipientTable.NotificationSetting.fromId(cursor.requireInt(RecipientTable.UNREAD_REMINDER)),
       wallpaper = chatWallpaper,
       chatColors = chatColors,
       avatarColor = avatarColor,
@@ -165,14 +169,18 @@ object RecipientTableCursorUtil {
       callLinkRoomId = cursor.requireString(RecipientTable.CALL_LINK_ROOM_ID)?.let { CallLinkRoomId.DatabaseSerializer.deserialize(it) },
       phoneNumberSharing = cursor.requireInt(RecipientTable.PHONE_NUMBER_SHARING).let { RecipientTable.PhoneNumberSharingState.fromId(it) },
       nickname = ProfileName.fromParts(cursor.requireString(RecipientTable.NICKNAME_GIVEN_NAME), cursor.requireString(RecipientTable.NICKNAME_FAMILY_NAME)),
-      note = cursor.requireString(RecipientTable.NOTE)
+      note = cursor.requireString(RecipientTable.NOTE),
+      sharedName = ProfileName.fromParts(cursor.requireString(RecipientTable.SHARED_GIVEN_NAME), cursor.requireString(RecipientTable.SHARED_FAMILY_NAME)),
+      keyTransparencyData = cursor.requireBlob(RecipientTable.KEY_TRANSPARENCY_DATA)
     )
   }
 
   fun readCapabilities(cursor: Cursor): RecipientRecord.Capabilities {
     val capabilities = cursor.requireLong(RecipientTable.CAPABILITIES)
     return RecipientRecord.Capabilities(
-      rawBits = capabilities
+      rawBits = capabilities,
+      usernameSyncMessages = Recipient.Capability.deserialize(Bitmask.read(capabilities, RecipientTable.Capabilities.USERNAME_SYNC_MESSAGES, RecipientTable.Capabilities.BIT_LENGTH).toInt()),
+      optionalPhoneNumber = Recipient.Capability.deserialize(Bitmask.read(capabilities, RecipientTable.Capabilities.OPTIONAL_PHONE_NUMBER, RecipientTable.Capabilities.BIT_LENGTH).toInt())
     )
   }
 
@@ -207,7 +215,7 @@ object RecipientTableCursorUtil {
       identityKey = cursor.optionalString(RecipientTable.IDENTITY_KEY).map { Base64.decodeOrThrow(it) }.orElse(null),
       identityStatus = cursor.optionalInt(RecipientTable.IDENTITY_STATUS).map { VerifiedStatus.forState(it) }.orElse(VerifiedStatus.DEFAULT),
       isArchived = cursor.optionalBoolean(ThreadTable.ARCHIVED).orElse(false),
-      isForcedUnread = cursor.optionalInt(ThreadTable.READ).map { status: Int -> status == ThreadTable.ReadStatus.FORCED_UNREAD.serialize() }.orElse(false),
+      isForcedUnread = cursor.optionalInt(ThreadTable.READ).map { status: Int -> status == ThreadTable.ReadStatus.ForcedUnread.serialize() }.orElse(false),
       unregisteredTimestamp = cursor.optionalLong(RecipientTable.UNREGISTERED_TIMESTAMP).orElse(0),
       systemNickname = cursor.optionalString(RecipientTable.SYSTEM_NICKNAME).orElse(null),
       pniSignatureVerified = cursor.optionalBoolean(RecipientTable.PNI_SIGNATURE_VERIFIED).orElse(false)

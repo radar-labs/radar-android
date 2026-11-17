@@ -1,0 +1,292 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.registration.screens.remotebackuprestore
+
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.signal.core.models.AccountEntropyPool
+import org.signal.core.ui.compose.EventDrivenViewModel
+import org.signal.core.util.logging.Log
+import org.signal.core.util.throttleLatest
+import org.signal.libsignal.net.RequestResult
+import org.signal.registration.NetworkController
+import org.signal.registration.RegistrationFlowEvent
+import org.signal.registration.RegistrationFlowState
+import org.signal.registration.RegistrationRepository
+import org.signal.registration.RegistrationRoute
+import org.signal.registration.RestoreDecision
+import org.signal.registration.screens.shared.RestoreProgress
+import org.signal.registration.screens.util.navigateBack
+import org.signal.registration.screens.util.navigateTo
+import kotlin.coroutines.CoroutineContext
+import kotlin.time.Duration.Companion.seconds
+
+class RemoteBackupRestoreViewModel(
+  private val aep: AccountEntropyPool,
+  private val canNavigateBackwards: Boolean,
+  private val repository: RegistrationRepository,
+  private val parentState: StateFlow<RegistrationFlowState>,
+  private val parentEventEmitter: (RegistrationFlowEvent) -> Unit,
+  private val ioDispatcher: CoroutineContext = Dispatchers.IO
+) : EventDrivenViewModel<RemoteBackupRestoreScreenEvents>(TAG, shouldLogEvents = true) {
+
+  companion object {
+    private val TAG = Log.tag(RemoteBackupRestoreViewModel::class)
+  }
+
+  private val _state = MutableStateFlow(RemoteBackupRestoreState(aep))
+  val state: StateFlow<RemoteBackupRestoreState> = _state.asStateFlow()
+
+  /** Logging only. Each attempt costs an SVRB guess, so it's useful to know how many were spent. */
+  private var restoreAttempts = 0
+
+  init {
+    _state
+      .throttleLatest(1.seconds) { it.restoreState != RemoteBackupRestoreState.RestoreState.InProgress }
+      .onEach { Log.d(TAG, "[State] $it") }
+      .launchIn(viewModelScope)
+
+    loadBackupInfo()
+  }
+
+  override suspend fun processEvent(event: RemoteBackupRestoreScreenEvents) {
+    applyEvent(state.value, event) {
+      _state.value = it
+    }
+  }
+
+  @VisibleForTesting
+  suspend fun applyEvent(state: RemoteBackupRestoreState, event: RemoteBackupRestoreScreenEvents, stateEmitter: (RemoteBackupRestoreState) -> Unit) {
+    when (event) {
+      is RemoteBackupRestoreScreenEvents.BackupRestoreBackup -> {
+        stateEmitter(state.copy(restoreState = RemoteBackupRestoreState.RestoreState.InProgress))
+        restoreBackup()
+      }
+      is RemoteBackupRestoreScreenEvents.Retry -> {
+        loadBackupInfo()
+        stateEmitter(state)
+      }
+      is RemoteBackupRestoreScreenEvents.Cancel -> {
+        if (state.isSkipping) {
+          Log.i(TAG, "[Cancel] Already moving on without a remote restore. Ignoring.")
+          return
+        }
+
+        if (canNavigateBackwards) {
+          Log.i(TAG, "[Cancel] Going back to previous screen.")
+          parentEventEmitter.navigateBack()
+          return
+        }
+
+        Log.i(TAG, "[Cancel] Moving on without a remote restore.")
+        stateEmitter(state.copy(isSkipping = true))
+        repository.setRestoreDecision(RestoreDecision.SKIPPED)
+        continuePastRestore()
+      }
+      is RemoteBackupRestoreScreenEvents.DismissError -> {
+        stateEmitter(state.copy(restoreState = RemoteBackupRestoreState.RestoreState.None, restoreProgress = null))
+      }
+      is RemoteBackupRestoreScreenEvents.ContactSupport -> {
+        stateEmitter(state.copy(showContactSupportDialog = true))
+      }
+      is RemoteBackupRestoreScreenEvents.DismissContactSupport -> {
+        stateEmitter(state.copy(showContactSupportDialog = false))
+      }
+    }
+  }
+
+  private suspend fun continuePastRestore() {
+    when {
+      parentState.value.isPhoneNumberlessAccount -> {
+        Log.i(TAG, "[continuePastRestore] Account has no phone number, and therefore no PIN. Completing registration.")
+        repository.restoreAccountRecord()
+        parentEventEmitter(RegistrationFlowEvent.RegistrationComplete)
+      }
+      repository.hasKnownPin() -> {
+        repository.restoreAccountRecord()
+        parentEventEmitter(RegistrationFlowEvent.RegistrationComplete)
+      }
+      parentState.value.storageCapable -> {
+        Log.i(TAG, "[continuePastRestore] No PIN is known and the account is storage capable. Navigating to PIN entry to restore the existing PIN.")
+        parentEventEmitter.navigateTo(RegistrationRoute.PinEntryForSvrRestore)
+      }
+      else -> {
+        Log.i(TAG, "[continuePastRestore] No PIN is known and the account is not storage capable. Navigating to PIN creation.")
+        parentEventEmitter.navigateTo(RegistrationRoute.PinCreate)
+      }
+    }
+  }
+
+  private fun restoreBackup() {
+    viewModelScope.launch {
+      restoreAttempts++
+      Log.i(TAG, "[restoreBackup] Starting restore attempt #$restoreAttempts.")
+      repository.restoreRemoteBackup(_state.value.aep).collect { progress ->
+        when (progress) {
+          is RemoteBackupRestoreProgress.Downloading -> {
+            Log.i(TAG, "[restoreBackup] Restoring...")
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.InProgress,
+              restoreProgress = RestoreProgress(
+                phase = RestoreProgress.Phase.Downloading,
+                bytesCompleted = progress.bytesDownloaded,
+                totalBytes = progress.totalBytes
+              )
+            )
+          }
+          is RemoteBackupRestoreProgress.Restoring -> {
+            Log.i(TAG, "[restoreBackup] Restoring...")
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.InProgress,
+              restoreProgress = RestoreProgress(
+                phase = RestoreProgress.Phase.Restoring,
+                bytesCompleted = progress.bytesRead,
+                totalBytes = progress.totalBytes
+              )
+            )
+          }
+          is RemoteBackupRestoreProgress.Finalizing -> {
+            Log.i(TAG, "[restoreBackup] Finalizing...")
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.InProgress,
+              restoreProgress = RestoreProgress(
+                phase = RestoreProgress.Phase.Finalizing,
+                bytesCompleted = 0,
+                totalBytes = 0
+              )
+            )
+          }
+          is RemoteBackupRestoreProgress.Complete -> {
+            Log.i(TAG, "[restoreBackup] Remote restore completed successfully.")
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.Restored,
+              restoreProgress = null
+            )
+            repository.persistRestoredBackupState(progress.restoredSvrPin, progress.restoredProfileKey)
+            repository.setRestoreDecision(RestoreDecision.COMPLETED)
+            continuePastRestore()
+          }
+          is RemoteBackupRestoreProgress.NetworkError -> {
+            Log.w(TAG, "[restoreBackup] Remote restore failed with network error.", progress.cause)
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.NetworkFailure,
+              restoreProgress = null
+            )
+          }
+          is RemoteBackupRestoreProgress.InvalidBackupVersion -> {
+            Log.w(TAG, "[restoreBackup] Remote restore failed: invalid backup version.")
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.InvalidBackupVersion,
+              restoreProgress = null
+            )
+          }
+          is RemoteBackupRestoreProgress.PermanentSvrBFailure -> {
+            Log.w(TAG, "[restoreBackup] Remote restore failed: permanent SVRB failure. (attempt #$restoreAttempts)")
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.PermanentSvrBFailure,
+              restoreProgress = null
+            )
+          }
+          is RemoteBackupRestoreProgress.Canceled -> {
+            Log.w(TAG, "[restoreBackup] Remote restore was canceled.")
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.Failed,
+              restoreProgress = null
+            )
+          }
+          is RemoteBackupRestoreProgress.GenericError -> {
+            Log.w(TAG, "[restoreBackup] Remote restore failed.", progress.cause)
+            _state.value = _state.value.copy(
+              restoreState = RemoteBackupRestoreState.RestoreState.Failed,
+              restoreProgress = null
+            )
+          }
+        }
+      }
+    }
+  }
+
+  private fun loadBackupInfo() {
+    viewModelScope.launch {
+      _state.value = _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.Loading, loadAttempts = _state.value.loadAttempts + 1)
+
+      val result = withContext(ioDispatcher) {
+        repository.getAndMaybeHealRemoteBackupInfo(_state.value.aep)
+      }
+
+      when (result) {
+        is RequestResult.Success -> {
+          Log.i(TAG, "[loadBackupInfo] Successfully fetched backup info.")
+          parentEventEmitter(RegistrationFlowEvent.UserSuppliedAepVerified(aep))
+          val info = result.result
+
+          val lastModifiedResult = withContext(ioDispatcher) {
+            repository.getBackupFileLastModified(_state.value.aep, info)
+          }
+
+          val backupTime = when (lastModifiedResult) {
+            is RequestResult.Success -> lastModifiedResult.result
+            else -> {
+              Log.w(TAG, "Failed to get backup last modified time: $lastModifiedResult")
+              -1L
+            }
+          }
+
+          _state.value = _state.value.copy(
+            loadState = RemoteBackupRestoreState.LoadState.Loaded,
+            backupSize = info.usedSpace ?: 0,
+            backupTime = backupTime
+          )
+        }
+        is RequestResult.NonSuccess -> {
+          _state.value = when (val error = result.error) {
+            is NetworkController.GetBackupInfoError.NoBackup -> {
+              Log.w(TAG, "[loadBackupInfo] No backup found.")
+              _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.NotFound)
+            }
+            is NetworkController.GetBackupInfoError.BadArguments -> {
+              Log.w(TAG, "[loadBackupInfo] Failed with bad arguments. Body: ${error.body}")
+              _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.Failure)
+            }
+            is NetworkController.GetBackupInfoError.BadAuthCredential -> {
+              Log.w(TAG, "[loadBackupInfo] Bad auth credential. Body: ${error.body}")
+              _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.Failure)
+            }
+            is NetworkController.GetBackupInfoError.Forbidden -> {
+              Log.w(TAG, "[loadBackupInfo] Forbidden. Body: ${error.body}")
+              _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.Failure)
+            }
+            is NetworkController.GetBackupInfoError.RateLimited -> {
+              Log.w(TAG, "[loadBackupInfo] Rate limited. Try again in: ${error.retryAfter}")
+              _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.Failure)
+            }
+            is NetworkController.GetBackupInfoError.CredentialVerificationFailed -> {
+              // Either the retried fetch failed the same way, or the backup-id could not be re-committed at all -- the repository collapses both to this.
+              Log.w(TAG, "[loadBackupInfo] Credential failed zk verification and re-committing the backup-id did not recover it.")
+              _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.Failure)
+            }
+          }
+        }
+        is RequestResult.RetryableNetworkError -> {
+          Log.w(TAG, "[loadBackupInfo] Hit network error.", result.networkError)
+          _state.value = _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.Failure)
+        }
+        is RequestResult.ApplicationError -> {
+          Log.w(TAG, "[loadBackupInfo] Hit unexpected error.", result.cause)
+          _state.value = _state.value.copy(loadState = RemoteBackupRestoreState.LoadState.Failure)
+        }
+      }
+    }
+  }
+}

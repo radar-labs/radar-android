@@ -1,16 +1,16 @@
 package org.thoughtcrime.securesms.events
 
-import com.annimon.stream.OptionalLong
+import org.signal.core.models.recipients.RecipientId
 import org.signal.ringrtc.CallManager.CallEndReason
 import org.thoughtcrime.securesms.components.webrtc.BroadcastVideoSink
 import org.thoughtcrime.securesms.events.CallParticipant.Companion.createLocal
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.service.webrtc.CallLinkDisconnectReason
 import org.thoughtcrime.securesms.service.webrtc.PendingParticipantCollection
 import org.thoughtcrime.securesms.service.webrtc.state.WebRtcServiceState
 import org.thoughtcrime.securesms.webrtc.audio.SignalAudioManager
 import org.webrtc.PeerConnection
+import java.util.Optional
 
 class WebRtcViewModel(state: WebRtcServiceState) {
 
@@ -100,7 +100,7 @@ class WebRtcViewModel(state: WebRtcServiceState) {
   val callConnectedTime: Long = state.callInfoState.callConnectedTime
   val remoteParticipants: List<CallParticipant> = state.callInfoState.remoteCallParticipants
   val identityChangedParticipants: Set<RecipientId> = state.callInfoState.identityChangedRecipients
-  val remoteDevicesCount: OptionalLong = state.callInfoState.remoteDevicesCount
+  val remoteDevicesCount: Optional<Long> = state.callInfoState.remoteDevicesCount
   val participantLimit: Long? = state.callInfoState.participantLimit
   val pendingParticipants: PendingParticipantCollection = state.callInfoState.pendingParticipants
   val isCallLink: Boolean = state.callInfoState.callRecipient.isCallLink
@@ -121,13 +121,17 @@ class WebRtcViewModel(state: WebRtcServiceState) {
   val activeDevice: SignalAudioManager.AudioDevice = state.localDeviceState.activeDevice
   val availableDevices: Set<SignalAudioManager.AudioDevice> = state.localDeviceState.availableDevices
   val bluetoothPermissionDenied: Boolean = state.localDeviceState.bluetoothPermissionDenied
+  val microphoneSilencedTimestamp: Long = state.localDeviceState.microphoneSilencedTimestamp
+  val isAudioDeviceChangePending: Boolean = state.localDeviceState.isAudioDeviceChangePending
 
   val localParticipant: CallParticipant = createLocal(
-    state.localDeviceState.cameraState,
-    (if (state.videoState.localSink != null) state.videoState.localSink else BroadcastVideoSink())!!,
-    state.localDeviceState.isMicrophoneEnabled,
-    state.localDeviceState.handRaisedTimestamp
+    cameraState = state.localDeviceState.cameraState,
+    renderer = state.videoState.localSink ?: BroadcastVideoSink(),
+    microphoneEnabled = state.localDeviceState.isMicrophoneEnabled,
+    handRaisedTimestamp = state.localDeviceState.handRaisedTimestamp
   )
+
+  val isLocalScreenSharing: Boolean = state.localDeviceState.isScreenSharing
 
   val remoteMutedBy: CallParticipant? = state.localDeviceState.remoteMutedBy
 
@@ -150,7 +154,7 @@ class WebRtcViewModel(state: WebRtcServiceState) {
     get() = remoteParticipants.any(CallParticipant::isVideoEnabled) || groupState.isNotIdle && remoteParticipants.size > 1
 
   fun areRemoteDevicesInCall(): Boolean {
-    return remoteDevicesCount.isPresent && remoteDevicesCount.asLong > 0
+    return remoteDevicesCount.isPresent && remoteDevicesCount.get() > 0
   }
 
   override fun toString(): String {
@@ -168,6 +172,7 @@ class WebRtcViewModel(state: WebRtcServiceState) {
        activeDevice=$activeDevice,
        availableDevices=$availableDevices,
        bluetoothPermissionDenied=$bluetoothPermissionDenied,
+       microphoneSilencedTimestamp=$microphoneSilencedTimestamp,
        ringGroup=$ringGroup,
        remoteMutedBy=$remoteMutedBy
       }
@@ -199,6 +204,7 @@ class WebRtcViewModel(state: WebRtcServiceState) {
       if (activeDevice != previousEvent.activeDevice) builder.append(" activeDevice=$activeDevice\n")
       if (availableDevices != previousEvent.availableDevices) builder.append(" availableDevices=$availableDevices\n")
       if (bluetoothPermissionDenied != previousEvent.bluetoothPermissionDenied) builder.append(" bluetoothPermissionDenied=$bluetoothPermissionDenied\n")
+      if (microphoneSilencedTimestamp != previousEvent.microphoneSilencedTimestamp) builder.append(" microphoneSilencedTimestamp=$microphoneSilencedTimestamp\n")
       if (ringGroup != previousEvent.ringGroup) builder.append(" ringGroup=$ringGroup\n")
       if (remoteMutedBy != previousEvent.remoteMutedBy) builder.append(" remoteMutedBy=$remoteMutedBy\n")
 

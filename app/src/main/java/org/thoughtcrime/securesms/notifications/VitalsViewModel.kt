@@ -19,7 +19,6 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.notifications.DeviceSpecificNotificationConfig.ShowCondition
 import org.thoughtcrime.securesms.util.ConnectivityWarning
 import org.thoughtcrime.securesms.util.NetworkUtil
-import org.thoughtcrime.securesms.util.TextSecurePreferences
 import org.whispersystems.signalservice.api.websocket.WebSocketConnectionState
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.days
@@ -53,30 +52,33 @@ class VitalsViewModel(private val context: Application) : AndroidViewModel(conte
     return Single.fromCallable {
       val deviceSpecificCondition = SlowNotificationHeuristics.getDeviceSpecificShowCondition()
 
-      if (deviceSpecificCondition == ShowCondition.ALWAYS && SlowNotificationHeuristics.shouldShowDeviceSpecificDialog()) {
+      val shouldShowDeviceSpecificDialog = SlowNotificationHeuristics.shouldShowDeviceSpecificDialog()
+      val havingDelayedNotifications = SlowNotificationHeuristics.isHavingDelayedNotifications()
+
+      if (deviceSpecificCondition == ShowCondition.ALWAYS && shouldShowDeviceSpecificDialog) {
         return@fromCallable State.PROMPT_SPECIFIC_BATTERY_SAVER_DIALOG
       }
 
-      if (deviceSpecificCondition == ShowCondition.HAS_BATTERY_OPTIMIZATION_ON && SlowNotificationHeuristics.shouldShowDeviceSpecificDialog() && SlowNotificationHeuristics.isBatteryOptimizationsOn()) {
+      if (deviceSpecificCondition == ShowCondition.HAS_BATTERY_OPTIMIZATION_ON && shouldShowDeviceSpecificDialog && SlowNotificationHeuristics.isBatteryOptimizationsOn()) {
         return@fromCallable State.PROMPT_SPECIFIC_BATTERY_SAVER_DIALOG
       }
 
-      if (deviceSpecificCondition == ShowCondition.HAS_SLOW_NOTIFICATIONS && SlowNotificationHeuristics.shouldShowDeviceSpecificDialog() && SlowNotificationHeuristics.isHavingDelayedNotifications()) {
+      if (deviceSpecificCondition == ShowCondition.HAS_SLOW_NOTIFICATIONS && shouldShowDeviceSpecificDialog && havingDelayedNotifications) {
         return@fromCallable State.PROMPT_SPECIFIC_BATTERY_SAVER_DIALOG
       }
 
-      if (SlowNotificationHeuristics.isHavingDelayedNotifications() && SlowNotificationHeuristics.shouldPromptBatterySaver()) {
+      if (havingDelayedNotifications && SlowNotificationHeuristics.shouldPromptBatterySaver() && SlowNotificationHeuristics.isBatteryOptimizationsOn()) {
         return@fromCallable State.PROMPT_GENERAL_BATTERY_SAVER_DIALOG
       }
 
-      if (SlowNotificationHeuristics.isHavingDelayedNotifications() && SlowNotificationHeuristics.shouldPromptUserForDelayedNotificationLogs()) {
+      if (havingDelayedNotifications && SlowNotificationHeuristics.shouldPromptUserForDelayedNotificationLogs()) {
         return@fromCallable State.PROMPT_DEBUGLOGS_FOR_NOTIFICATIONS
       }
 
       val timeSinceLastConnection = System.currentTimeMillis() - SignalStore.misc.lastWebSocketConnectTime
       val timeSinceLastConnectionWarning = System.currentTimeMillis() - SignalStore.misc.lastConnectivityWarningTime
       val connectedToWebSocket = AppDependencies.webSocketObserver.value == WebSocketConnectionState.CONNECTED
-      val isRegistered = SignalStore.account.isRegistered && !TextSecurePreferences.isUnauthorizedReceived(context)
+      val isRegistered = SignalStore.account.isRegistered && !SignalStore.account.isUnauthorizedReceived
 
       if (ConnectivityWarning.isEnabled && timeSinceLastConnection > ConnectivityWarning.threshold && timeSinceLastConnectionWarning > 14.days.inWholeMilliseconds && NetworkUtil.isConnected(context) && isRegistered && !connectedToWebSocket) {
         return@fromCallable if (ConnectivityWarning.isDebugPromptEnabled) {

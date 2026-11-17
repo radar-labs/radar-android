@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import org.signal.core.util.concurrent.SimpleTask;
 import org.signal.core.util.logging.Log;
@@ -23,7 +26,7 @@ import org.thoughtcrime.securesms.keyvalue.SignalStore;
 import org.thoughtcrime.securesms.net.SignalNetwork;
 import org.thoughtcrime.securesms.util.DynamicTheme;
 import org.thoughtcrime.securesms.util.ExceptionHelper;
-import org.thoughtcrime.securesms.util.Util;
+import org.signal.core.util.Util;
 import org.thoughtcrime.securesms.util.views.SimpleProgressDialog;
 import org.whispersystems.signalservice.api.NetworkResultUtil;
 
@@ -54,6 +57,13 @@ public class RecaptchaProofActivity extends PassphraseRequiredActivity {
     requireSupportActionBar().setDisplayHomeAsUpEnabled(true);
     requireSupportActionBar().setTitle(R.string.RecaptchaProofActivity_complete_verification);
 
+    // Insets are re-dispatched by appcompat's ActionBarOverlayLayout with the action bar height folded into the top inset.
+    ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+      Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+      v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+      return WindowInsetsCompat.CONSUMED;
+    });
+
     WebView webView = findViewById(R.id.recaptcha_webview);
     webView.getSettings().setJavaScriptEnabled(true);
     webView.clearCache(true);
@@ -69,6 +79,7 @@ public class RecaptchaProofActivity extends PassphraseRequiredActivity {
       }
     });
 
+    SignalStore.misc().setCaptchaLastViewedAt(System.currentTimeMillis());
     webView.loadUrl(BuildConfig.RECAPTCHA_PROOF_URL);
   }
 
@@ -99,7 +110,7 @@ public class RecaptchaProofActivity extends PassphraseRequiredActivity {
       try {
         for (int i = 0; i < 3; i++) {
           try {
-            NetworkResultUtil.toBasicLegacy(SignalNetwork.rateLimitChallenge().submitCaptchaChallenge(challenge, token));
+            NetworkResultUtil.toBasicLegacy(SignalNetwork.rateLimitChallengeApi().submitCaptchaChallenge(challenge, token));
             RateLimitUtil.retryAllRateLimitedMessages(this);
             Log.i(TAG, "Successfully completed reCAPTCHA.");
             return new TokenResult(true, true);

@@ -1,0 +1,100 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+syntax = "proto3";
+
+package signal;
+
+option java_package = "org.signal.registration.proto";
+
+message RegistrationData {
+  // Should only be persisted in the app-layer a single time during registration
+  AccountData accountData = 1;
+  bool accountDataCommitted = 2;
+
+  string accountEntropyPool = 3;
+  string pin = 4;
+  bool pinOptedOut = 5;
+  bool registrationLockEnabled = 6;
+  bytes profileKey = 7;
+  bytes masterKeyForInitialDataRestore = 8;
+  repeated SvrCredential svrCredentials = 9;
+  ProvisioningData provisioningData = 10;
+  string flowStateJson = 11;
+  int64 lastUpdatedMillis = 12;
+  SignalLoginPurchase signalLoginPurchase = 13;
+}
+
+// A Signal Login purchase that has been paid for with Google Play but not yet redeemed into an account.
+message SignalLoginPurchase {
+  // The Google Play purchase token, which the service verifies the purchase with.
+  string purchaseToken = 1;
+  // The zkgroup receipt credential request context. The service rejects a retry that uses a different one, so this
+  // must survive until the purchase is redeemed.
+  bytes receiptCredentialRequestContext = 2;
+}
+
+message AccountData {
+  bytes aciIdentityKeyPair = 1;
+  bytes pniIdentityKeyPair = 2;
+  bytes aciSignedPreKey = 3;
+  bytes pniSignedPreKey = 4;
+  bytes aciLastResortKyberPreKey = 5;
+  bytes pniLastResortKyberPreKey = 6;
+  int32 aciRegistrationId = 7;
+  int32 pniRegistrationId = 8;
+
+  string aci = 9;
+  // Absent for an account registered without a phone number.
+  optional string pni = 10;
+  // Absent for an account registered without a phone number.
+  optional string e164 = 11;
+  string servicePassword = 12;
+
+  bytes unidentifiedAccessKey = 13;
+  bool fetchesMessages = 14;
+
+  LinkedDeviceData linkedDeviceData = 15;
+
+  // Whether the service reported this registration as a re-registration of an existing account.
+  bool reRegistration = 16;
+
+  // Salt used by the service to generate PNI auth credentials. Only present for an account registered without a phone number.
+  optional bytes authCredentialSalt = 17;
+}
+
+message SvrCredential {
+  string username = 1;
+  string password = 2;
+}
+
+message ProvisioningData {
+  enum Platform {
+    UNKNOWN = 0;
+    ANDROID = 1;
+    IOS = 2;
+  }
+
+  enum Tier {
+    TIER_UNKNOWN = 0;
+    FREE = 1;
+    PAID = 2;
+  }
+
+  string restoreMethodToken = 1;
+  Platform platform = 2;
+  Tier tier = 3;
+  int64 backupTimestampMs = 4;
+  int64 backupSizeBytes = 5;
+  int64 backupVersion = 6;
+}
+
+message LinkedDeviceData {
+  uint32 deviceId = 1;
+  string deviceName = 2;
+  optional bytes ephemeralBackupKey = 3;
+  optional bytes mediaRootBackupKey = 4;
+  optional bool readReceipts = 5;
+}

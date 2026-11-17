@@ -1,0 +1,1204 @@
+/*
+ * Copyright 2025 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.signal.core.ui.compose
+
+import android.R
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.AlertDialogDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TimeInput
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimePickerDefaults
+import androidx.compose.material3.rememberTimePickerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewWrapper
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import kotlinx.coroutines.delay
+import org.signal.core.ui.compose.Dialogs.AdvancedAlertDialog
+import org.signal.core.ui.compose.Dialogs.PermissionRationaleDialog
+import org.signal.core.ui.compose.Dialogs.SimpleAlertDialog
+import org.signal.core.ui.compose.Dialogs.SimpleMessageDialog
+import org.signal.core.ui.compose.theme.SignalTheme
+import java.time.LocalTime
+import kotlin.math.max
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import androidx.compose.material3.TimePickerDialog as Material3TimePickerDialog
+import org.signal.core.ui.R as CoreUiR
+
+object Dialogs {
+
+  const val NoTitle = ""
+  const val NoDismiss = ""
+
+  const val TEST_TAG_ALERT_DIALOG_CONFIRM_BUTTON = "dialog-confirm-button"
+  const val TEST_TAG_ALERT_DIALOG_DISMISS_BUTTON = "dialog-dismiss-button"
+  const val TEST_TAG_MESSAGE_DIALOG_DISMISS_BUTTON = "dialog-message-dismiss-button"
+  const val TEST_TAG_ADVANCED_ALERT_DIALOG_POSITIVE_BUTTON = "dialog-advanced-positive-button"
+  const val TEST_TAG_ADVANCED_ALERT_DIALOG_NEUTRAL_BUTTON = "dialog-advanced-neutral-button"
+  const val TEST_TAG_ADVANCED_ALERT_DIALOG_NEGATIVE_BUTTON = "dialog-advanced-negative-button"
+
+  /** Suffixed with the index of the option the row renders. */
+  const val TEST_TAG_RADIO_LIST_DIALOG_OPTION = "dialog-radio-list-option"
+
+  const val TEST_TAG_RADIO_LIST_DIALOG_CONFIRM_BUTTON = "dialog-radio-list-confirm-button"
+  const val TEST_TAG_RADIO_LIST_DIALOG_DISMISS_BUTTON = "dialog-radio-list-dismiss-button"
+
+  fun testTagRadioListDialogOption(index: Int) = "$TEST_TAG_RADIO_LIST_DIALOG_OPTION:$index"
+
+  /** Suffixed with the index of the option the row renders. */
+  const val TEST_TAG_LIST_DIALOG_OPTION = "dialog-list-option"
+
+  fun testTagListDialogOption(index: Int) = "$TEST_TAG_LIST_DIALOG_OPTION:$index"
+
+  const val TEST_TAG_TIME_PICKER_CONFIRM = "time-picker-confirm"
+  const val TEST_TAG_TIME_PICKER_DIAL = "time-picker-dial"
+
+  object Defaults {
+    val shape: Shape @Composable get() = RoundedCornerShape(28.dp)
+    val containerColor: Color @Composable get() = SignalTheme.colors.colorSurface1
+    val iconContentColor: Color @Composable get() = MaterialTheme.colorScheme.onSurface
+    val titleContentColor: Color @Composable get() = MaterialTheme.colorScheme.onSurface
+    val textContentColor: Color @Composable get() = MaterialTheme.colorScheme.onSurfaceVariant
+
+    val TonalElevation: Dp = AlertDialogDefaults.TonalElevation
+  }
+
+  @Composable
+  fun BaseAlertDialog(
+    onDismissRequest: () -> Unit,
+    confirmButton: @Composable () -> Unit,
+    modifier: Modifier,
+    dismissButton: (@Composable () -> Unit)? = null,
+    icon: (@Composable () -> Unit)? = null,
+    title: (@Composable () -> Unit)? = null,
+    text: (@Composable () -> Unit)? = null,
+    shape: Shape = Defaults.shape,
+    containerColor: Color = Defaults.containerColor,
+    iconContentColor: Color = Defaults.iconContentColor,
+    titleContentColor: Color = Defaults.titleContentColor,
+    textContentColor: Color = Defaults.textContentColor,
+    tonalElevation: Dp = Defaults.TonalElevation,
+    properties: DialogProperties = DialogProperties()
+  ) {
+    AlertDialog(
+      onDismissRequest = onDismissRequest,
+      confirmButton = confirmButton,
+      modifier = modifier,
+      dismissButton = dismissButton,
+      icon = icon,
+      title = title,
+      text = text,
+      shape = shape,
+      containerColor = containerColor,
+      iconContentColor = iconContentColor,
+      titleContentColor = titleContentColor,
+      textContentColor = textContentColor,
+      tonalElevation = tonalElevation,
+      properties = properties
+    )
+  }
+
+  @Composable
+  fun SimpleMessageDialog(
+    message: String,
+    dismiss: String,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    dismissColor: Color = Color.Unspecified,
+    properties: DialogProperties = DialogProperties()
+  ) {
+    BaseAlertDialog(
+      onDismissRequest = onDismiss,
+      title = if (title == null) {
+        null
+      } else {
+        { Text(text = title) }
+      },
+      text = { Text(text = message) },
+      confirmButton = {
+        TextButton(
+          onClick = {
+            onDismiss()
+          },
+          modifier = Modifier.testTag(TEST_TAG_MESSAGE_DIALOG_DISMISS_BUTTON)
+        ) {
+          Text(text = dismiss, color = dismissColor)
+        }
+      },
+      modifier = modifier,
+      properties = properties
+    )
+  }
+
+  @Composable
+  fun SimpleAlertDialog(
+    title: String,
+    body: String,
+    confirm: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit = {},
+    onDismissRequest: () -> Unit = onDismiss,
+    onDeny: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    dismiss: String = NoDismiss,
+    confirmColor: Color = Color.Unspecified,
+    dismissColor: Color = Color.Unspecified,
+    properties: DialogProperties = DialogProperties()
+  ) {
+    SimpleAlertDialog(
+      title = AnnotatedString(title),
+      body = AnnotatedString(body),
+      confirm = AnnotatedString(confirm),
+      onConfirm = onConfirm,
+      onDismiss = onDismiss,
+      onDismissRequest = onDismissRequest,
+      onDeny = onDeny,
+      modifier = modifier,
+      dismiss = AnnotatedString(dismiss),
+      confirmColor = confirmColor,
+      dismissColor = dismissColor,
+      properties = properties
+    )
+  }
+
+  @Composable
+  fun SimpleAlertDialog(
+    title: AnnotatedString,
+    body: AnnotatedString,
+    confirm: AnnotatedString,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit = {},
+    onDismissRequest: () -> Unit = onDismiss,
+    onDeny: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    dismiss: AnnotatedString = AnnotatedString(NoDismiss),
+    confirmColor: Color = Color.Unspecified,
+    dismissColor: Color = Color.Unspecified,
+    properties: DialogProperties = DialogProperties()
+  ) {
+    BaseAlertDialog(
+      onDismissRequest = onDismissRequest,
+      title = if (title.isNotEmpty()) {
+        {
+          Text(text = title)
+        }
+      } else {
+        null
+      },
+      text = { Text(text = body) },
+      confirmButton = {
+        TextButton(
+          onClick = {
+            onDismiss()
+            onConfirm()
+          },
+          modifier = Modifier.testTag(TEST_TAG_ALERT_DIALOG_CONFIRM_BUTTON)
+        ) {
+          Text(text = confirm, color = confirmColor)
+        }
+      },
+      dismissButton = if (dismiss.isNotEmpty()) {
+        {
+          TextButton(
+            onClick =
+            {
+              onDismiss()
+              onDeny()
+            },
+            modifier = Modifier.testTag(TEST_TAG_ALERT_DIALOG_DISMISS_BUTTON)
+          ) {
+            Text(text = dismiss, color = dismissColor)
+          }
+        }
+      } else {
+        null
+      },
+      modifier = modifier,
+      properties = properties
+    )
+  }
+
+  /**
+   * A dialog that *just* shows a spinner. Useful for short actions where you need to
+   * let the user know that some action is completing.
+   */
+  @Composable
+  fun IndeterminateProgressDialog(
+    onDismissRequest: () -> Unit = {}
+  ) {
+    Dialog(
+      onDismissRequest = onDismissRequest,
+      properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+    ) {
+      Surface(
+        modifier = Modifier.size(100.dp),
+        shape = Defaults.shape,
+        color = Defaults.containerColor,
+        tonalElevation = Defaults.TonalElevation
+      ) {
+        CircularProgressIndicator(
+          modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .padding(24.dp)
+            .testTag("dialog-circular-progress-indicator")
+        )
+      }
+    }
+  }
+
+  /**
+   * A dialog that shows a spinner with built-in delay and minimum display time.
+   *
+   * The dialog will not appear until [delayDuration] has elapsed after [visible] becomes true.
+   * If the operation completes before the delay, the dialog is never shown.
+   * Once visible, the dialog will remain for at least [minimumDisplayDuration] to
+   * avoid a jarring flash.
+   *
+   * This composable should always be in the composition (not wrapped in an `if`).
+   * Visibility is controlled by the [visible] parameter.
+   */
+  @Composable
+  fun IndeterminateProgressDialog(
+    visible: Boolean,
+    delayDuration: Duration = Duration.ZERO,
+    minimumDisplayDuration: Duration = Duration.ZERO,
+    onDismissRequest: () -> Unit = {}
+  ) {
+    var isVisible by remember { mutableStateOf(false) }
+    var isVisibleSince by remember { mutableLongStateOf(0L) }
+
+    LaunchedEffect(visible) {
+      if (visible) {
+        delay(delayDuration)
+        isVisible = true
+        isVisibleSince = System.currentTimeMillis()
+      } else {
+        if (isVisible && minimumDisplayDuration > Duration.ZERO) {
+          val elapsed = (System.currentTimeMillis() - isVisibleSince).milliseconds
+          val remaining = minimumDisplayDuration - elapsed
+          if (remaining > Duration.ZERO) {
+            delay(remaining)
+          }
+        }
+        isVisible = false
+      }
+    }
+
+    if (isVisible) {
+      IndeterminateProgressDialog(onDismissRequest = onDismissRequest)
+    }
+  }
+
+  /**
+   * Customizable progress spinner that shows [message] below the spinner to let users know
+   * an action is completing
+   */
+  @Composable
+  fun IndeterminateProgressDialog(message: String) {
+    BaseAlertDialog(
+      onDismissRequest = {},
+      confirmButton = {},
+      dismissButton = {},
+      text = {
+        Column(
+          verticalArrangement = Arrangement.Center,
+          horizontalAlignment = Alignment.CenterHorizontally,
+          modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+        ) {
+          Spacer(modifier = Modifier.size(24.dp))
+          CircularProgressIndicator()
+          Spacer(modifier = Modifier.size(20.dp))
+          Text(text = message, textAlign = TextAlign.Center)
+        }
+      },
+      modifier = Modifier
+        .size(200.dp)
+    )
+  }
+
+  /**
+   * Progress spinner that shows [message] below a determinate circular progress indicator
+   * driven by [progress]. Non-cancellable; use for short actions where the total work is known.
+   */
+  @Composable
+  fun DeterminateProgressDialog(message: String, progress: () -> Float) {
+    BaseAlertDialog(
+      onDismissRequest = {},
+      confirmButton = {},
+      dismissButton = {},
+      text = {
+        Column(
+          verticalArrangement = Arrangement.Center,
+          horizontalAlignment = Alignment.CenterHorizontally,
+          modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+        ) {
+          Spacer(modifier = Modifier.size(24.dp))
+          CircularProgressIndicator(progress = progress)
+          Spacer(modifier = Modifier.size(20.dp))
+          Text(text = message, textAlign = TextAlign.Center)
+        }
+      },
+      modifier = Modifier
+        .size(200.dp)
+    )
+  }
+
+  /**
+   * Customizable progress spinner that can be dismissed while showing [message]
+   * and [caption] below the spinner to let users know an action is completing
+   */
+  @Composable
+  fun IndeterminateProgressDialog(message: String, caption: String = "", dismiss: String, onDismiss: () -> Unit) {
+    BaseAlertDialog(
+      onDismissRequest = {},
+      confirmButton = {},
+      dismissButton = {
+        TextButton(
+          onClick = onDismiss,
+          modifier = Modifier.fillMaxWidth(),
+          content = { Text(text = dismiss) }
+        )
+      },
+      text = {
+        Column(
+          verticalArrangement = Arrangement.Center,
+          horizontalAlignment = Alignment.CenterHorizontally,
+          modifier = Modifier.fillMaxWidth()
+        ) {
+          Spacer(modifier = Modifier.size(32.dp))
+          CircularProgressIndicator()
+          Spacer(modifier = Modifier.size(12.dp))
+          Text(
+            text = message,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface
+          )
+          if (caption.isNotEmpty()) {
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(
+              text = caption,
+              textAlign = TextAlign.Center,
+              style = MaterialTheme.typography.bodySmall,
+              color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+          }
+        }
+      },
+      modifier = Modifier.width(200.dp)
+    )
+  }
+
+  /**
+   * Customizable progress dialog that can be dismissed while showing [message]
+   * and [caption]. When [indeterminate] is true a circular spinner is shown,
+   * otherwise a linear progress bar driven by [progress] is shown.
+   */
+  @Composable
+  fun ProgressDialog(
+    message: String,
+    caption: String = "",
+    dismiss: String,
+    onDismiss: () -> Unit,
+    indeterminate: Boolean,
+    progress: () -> Float
+  ) {
+    BaseAlertDialog(
+      onDismissRequest = {},
+      confirmButton = {},
+      dismissButton = {
+        TextButton(
+          onClick = onDismiss,
+          modifier = Modifier.fillMaxWidth(),
+          content = { Text(text = dismiss) }
+        )
+      },
+      text = {
+        Column(
+          verticalArrangement = Arrangement.Center,
+          horizontalAlignment = Alignment.CenterHorizontally,
+          modifier = Modifier.fillMaxWidth()
+        ) {
+          Spacer(modifier = Modifier.size(32.dp))
+          if (indeterminate) {
+            CircularProgressIndicator()
+          } else {
+            CircularProgressIndicator(progress = progress)
+          }
+          Spacer(modifier = Modifier.size(12.dp))
+          Text(
+            text = message,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface
+          )
+          if (caption.isNotEmpty()) {
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(
+              text = caption,
+              textAlign = TextAlign.Center,
+              style = MaterialTheme.typography.bodySmall,
+              color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+          }
+        }
+      },
+      modifier = Modifier.width(200.dp)
+    )
+  }
+
+  @OptIn(ExperimentalLayoutApi::class)
+  @Composable
+  fun PermissionRationaleDialog(
+    icon: Painter,
+    rationale: String,
+    confirm: String,
+    dismiss: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+  ) {
+    Dialog(
+      onDismissRequest = onDismiss,
+      properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+      Surface(
+        modifier = Modifier
+          .fillMaxWidth(fraction = 0.75f)
+          .background(
+            color = SignalTheme.colors.colorSurface2,
+            shape = AlertDialogDefaults.shape
+          )
+          .clip(AlertDialogDefaults.shape)
+      ) {
+        Column {
+          Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+              .fillMaxWidth()
+              .background(color = MaterialTheme.colorScheme.primary)
+              .padding(48.dp)
+          ) {
+            Icon(
+              painter = icon,
+              contentDescription = null,
+              tint = MaterialTheme.colorScheme.onPrimary,
+              modifier = Modifier.size(32.dp)
+            )
+          }
+          Text(
+            text = rationale,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier
+              .padding(horizontal = 24.dp, vertical = 16.dp)
+          )
+
+          FlowRow(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier
+              .fillMaxWidth()
+              .padding(start = 24.dp, end = 24.dp, bottom = 24.dp)
+          ) {
+            TextButton(onClick = onDismiss) {
+              Text(text = dismiss)
+            }
+
+            TextButton(onClick = onConfirm) {
+              Text(text = confirm)
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * A plain list of [options] with no buttons, where tapping one is the choice. The dialog doesn't close itself, so
+   * [onOptionClick] decides what's shown next.
+   */
+  @Composable
+  fun ListDialog(
+    options: List<String>,
+    onOptionClick: (Int) -> Unit,
+    onDismissRequest: () -> Unit,
+    properties: DialogProperties = DialogProperties()
+  ) {
+    Dialog(
+      onDismissRequest = onDismissRequest,
+      properties = properties
+    ) {
+      Surface(
+        modifier = Modifier
+          .heightIn(min = 0.dp, max = getScreenHeight() - 200.dp)
+          .background(
+            color = SignalTheme.colors.colorSurface2,
+            shape = AlertDialogDefaults.shape
+          )
+          .clip(AlertDialogDefaults.shape)
+      ) {
+        LazyColumn(modifier = Modifier.padding(vertical = 8.dp)) {
+          items(count = options.size) { index ->
+            Text(
+              text = options[index],
+              style = MaterialTheme.typography.bodyLarge,
+              modifier = Modifier
+                .fillMaxWidth()
+                .defaultMinSize(minHeight = 48.dp)
+                .clickable { onOptionClick(index) }
+                .horizontalGutters()
+                .wrapContentHeight(Alignment.CenterVertically)
+                .testTag(testTagListDialogOption(index))
+            )
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Radio list whose choice takes effect as soon as the user taps it.
+   */
+  @Composable
+  fun RadioListDialog(
+    onDismissRequest: () -> Unit,
+    properties: DialogProperties = DialogProperties(),
+    title: String,
+    labels: Array<String>,
+    values: Array<String>,
+    selectedIndex: Int,
+    onSelected: (Int) -> Unit
+  ) {
+    RadioList(
+      onDismissRequest = onDismissRequest,
+      properties = properties,
+      title = title,
+      labels = labels,
+      values = values,
+      selectedIndex = selectedIndex,
+      onOptionClick = { index ->
+        onSelected(index)
+        onDismissRequest()
+      }
+    )
+  }
+
+  /**
+   * Radio list whose choice only takes effect once the user confirms it, for changes worth guarding against a
+   * mistaken tap. Dismissing the dialog leaves the original selection alone.
+   */
+  @Composable
+  fun RadioListConfirmationDialog(
+    onDismissRequest: () -> Unit,
+    title: String,
+    labels: Array<String>,
+    values: Array<String>,
+    selectedIndex: Int,
+    onConfirm: (Int) -> Unit,
+    properties: DialogProperties = DialogProperties(),
+    confirm: String = stringResource(R.string.ok),
+    dismiss: String = stringResource(R.string.cancel)
+  ) {
+    // Deliberately unkeyed: the caller's selection can change underneath an open dialog, and the user's own pick
+    // should survive that. Dismissing takes the dialog out of composition, so the next one starts fresh.
+    var pendingIndex by remember { mutableIntStateOf(selectedIndex) }
+
+    RadioList(
+      onDismissRequest = onDismissRequest,
+      properties = properties,
+      title = title,
+      labels = labels,
+      values = values,
+      selectedIndex = pendingIndex,
+      onOptionClick = { pendingIndex = it },
+      buttons = {
+        TextButton(
+          onClick = onDismissRequest,
+          modifier = Modifier.testTag(TEST_TAG_RADIO_LIST_DIALOG_DISMISS_BUTTON)
+        ) {
+          Text(text = dismiss)
+        }
+
+        TextButton(
+          onClick = {
+            onConfirm(pendingIndex)
+            onDismissRequest()
+          },
+          modifier = Modifier.testTag(TEST_TAG_RADIO_LIST_DIALOG_CONFIRM_BUTTON),
+          enabled = pendingIndex in values.indices
+        ) {
+          Text(text = confirm)
+        }
+      }
+    )
+  }
+
+  /**
+   * The list itself, shared by both radio list dialogs. [buttons] is laid out below the options, for the variants that
+   * have any.
+   */
+  @Composable
+  private fun RadioList(
+    onDismissRequest: () -> Unit,
+    properties: DialogProperties,
+    title: String,
+    labels: Array<String>,
+    values: Array<String>,
+    selectedIndex: Int,
+    onOptionClick: (Int) -> Unit,
+    buttons: (@Composable () -> Unit)? = null
+  ) {
+    Dialog(
+      onDismissRequest = onDismissRequest,
+      properties = properties
+    ) {
+      Surface(
+        modifier = Modifier
+          .heightIn(min = 0.dp, max = getScreenHeight() - 200.dp)
+          .background(
+            color = SignalTheme.colors.colorSurface2,
+            shape = AlertDialogDefaults.shape
+          )
+          .clip(AlertDialogDefaults.shape)
+      ) {
+        Column {
+          Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+              .padding(top = 16.dp)
+              .horizontalGutters()
+          )
+
+          LazyColumn(
+            modifier = Modifier
+              .weight(1f, fill = false)
+              .padding(top = 24.dp, bottom = 16.dp),
+            state = rememberLazyListState(
+              initialFirstVisibleItemIndex = max(selectedIndex, 0)
+            )
+          ) {
+            items(
+              count = values.size,
+              key = { values[it] }
+            ) { index ->
+              Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                  .fillMaxWidth()
+                  .defaultMinSize(minHeight = 48.dp)
+                  .clickable(
+                    enabled = true,
+                    onClick = { onOptionClick(index) }
+                  )
+                  .horizontalGutters()
+                  .testTag(testTagRadioListDialogOption(index))
+              ) {
+                RadioButton(
+                  enabled = true,
+                  selected = index == selectedIndex,
+                  onClick = null,
+                  modifier = Modifier.padding(end = 24.dp)
+                )
+
+                Text(text = labels[index])
+              }
+            }
+          }
+
+          if (buttons != null) {
+            FlowRow(
+              horizontalArrangement = Arrangement.End,
+              modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+            ) {
+              buttons()
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @Composable
+  fun MultiSelectListDialog(
+    onDismissRequest: () -> Unit,
+    properties: DialogProperties = DialogProperties(),
+    title: String,
+    labels: Array<String>,
+    values: Array<String>,
+    selection: Array<String>,
+    onSelectionChanged: (Array<String>) -> Unit
+  ) {
+    var selectedIndicies by remember {
+      mutableStateOf(
+        values.mapIndexedNotNull { index, value ->
+          if (value in selection) {
+            index
+          } else {
+            null
+          }
+        }
+      )
+    }
+
+    Dialog(
+      onDismissRequest = onDismissRequest,
+      properties = properties
+    ) {
+      Surface(
+        modifier = Modifier
+          .heightIn(min = 0.dp, max = getScreenHeight() - 200.dp)
+          .background(
+            color = SignalTheme.colors.colorSurface2,
+            shape = AlertDialogDefaults.shape
+          )
+          .clip(AlertDialogDefaults.shape)
+      ) {
+        Column {
+          Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+              .padding(top = 16.dp)
+              .horizontalGutters()
+          )
+
+          LazyColumn(
+            modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)
+          ) {
+            items(
+              count = values.size,
+              key = { values[it] }
+            ) { index ->
+              Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                  .fillMaxWidth()
+                  .defaultMinSize(minHeight = 48.dp)
+                  .clickable(
+                    enabled = true,
+                    onClick = {
+                      selectedIndicies = if (index in selectedIndicies) {
+                        selectedIndicies - index
+                      } else {
+                        selectedIndicies + index
+                      }
+                    }
+                  )
+                  .horizontalGutters()
+              ) {
+                Checkbox(
+                  enabled = true,
+                  checked = index in selectedIndicies,
+                  onCheckedChange = null,
+                  modifier = Modifier.padding(end = 24.dp)
+                )
+
+                Text(text = labels[index])
+              }
+            }
+          }
+
+          FlowRow(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier
+              .fillMaxWidth()
+              .padding(bottom = 16.dp)
+          ) {
+            TextButton(onClick = onDismissRequest) {
+              Text(text = stringResource(R.string.cancel))
+            }
+
+            TextButton(onClick = {
+              onSelectionChanged(selectedIndicies.sorted().map { values[it] }.toTypedArray())
+              onDismissRequest()
+            }) {
+              Text(text = stringResource(R.string.ok))
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Alert dialog that supports three options.
+   * If you only need two options (confirm/dismiss), use [SimpleAlertDialog] instead.
+   */
+  @Composable
+  fun AdvancedAlertDialog(
+    title: String = "",
+    body: String = "",
+    positive: String,
+    neutral: String,
+    negative: String,
+    onPositive: () -> Unit,
+    onNegative: () -> Unit,
+    onNeutral: () -> Unit,
+    properties: DialogProperties = DialogProperties()
+  ) {
+    AdvancedAlertDialog(
+      title = AnnotatedString(title),
+      body = AnnotatedString(body),
+      positive = AnnotatedString(positive),
+      neutral = AnnotatedString(neutral),
+      negative = AnnotatedString(negative),
+      onPositive = onPositive,
+      onNegative = onNegative,
+      onNeutral = onNeutral,
+      properties = properties
+    )
+  }
+
+  /**
+   * Alert dialog that supports three options.
+   * If you only need two options (confirm/dismiss), use [SimpleAlertDialog] instead.
+   */
+  @Composable
+  fun AdvancedAlertDialog(
+    title: AnnotatedString = AnnotatedString(""),
+    body: AnnotatedString = AnnotatedString(""),
+    positive: AnnotatedString,
+    neutral: AnnotatedString,
+    negative: AnnotatedString,
+    onPositive: () -> Unit,
+    onNegative: () -> Unit,
+    onNeutral: () -> Unit,
+    properties: DialogProperties = DialogProperties()
+  ) {
+    Dialog(
+      onDismissRequest = onNegative,
+      properties = DialogProperties(
+        usePlatformDefaultWidth = false,
+        dismissOnBackPress = properties.dismissOnBackPress,
+        dismissOnClickOutside = properties.dismissOnClickOutside,
+        securePolicy = properties.securePolicy,
+        decorFitsSystemWindows = properties.decorFitsSystemWindows,
+        windowTitle = properties.windowTitle
+      )
+    ) {
+      Surface(
+        modifier = Modifier
+          .fillMaxWidth(fraction = 0.75f)
+          .background(
+            color = SignalTheme.colors.colorSurface2,
+            shape = AlertDialogDefaults.shape
+          )
+          .clip(AlertDialogDefaults.shape)
+      ) {
+        Column(modifier = Modifier.padding(24.dp)) {
+          if (title.isNotEmpty()) {
+            Text(
+              text = title,
+              style = MaterialTheme.typography.titleLarge,
+              modifier = Modifier.padding(bottom = 16.dp)
+            )
+          }
+
+          Text(
+            text = body,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(bottom = 16.dp)
+          )
+
+          Column(
+            horizontalAlignment = Alignment.End,
+            modifier = Modifier.fillMaxWidth()
+          ) {
+            TextButton(onClick = onPositive, modifier = Modifier.testTag(TEST_TAG_ADVANCED_ALERT_DIALOG_POSITIVE_BUTTON)) {
+              Text(text = positive)
+            }
+            TextButton(onClick = onNeutral, modifier = Modifier.testTag(TEST_TAG_ADVANCED_ALERT_DIALOG_NEUTRAL_BUTTON)) {
+              Text(text = neutral)
+            }
+            TextButton(onClick = onNegative, modifier = Modifier.testTag(TEST_TAG_ADVANCED_ALERT_DIALOG_NEGATIVE_BUTTON)) {
+              Text(text = negative)
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @Composable
+  private fun getScreenHeight(): Dp {
+    return with(LocalDensity.current) {
+      LocalWindowInfo.current.containerSize.height.toDp()
+    }
+  }
+
+  /**
+   * A time picker in a dialog, starting at [initialTime]. Uses the device's 12 or 24 hour setting, and lets the user switch
+   * between the clock face and typing the time. [onTimeSelected] is called with the chosen time when it's confirmed.
+   */
+  @OptIn(ExperimentalMaterial3Api::class)
+  @Composable
+  fun TimePickerDialog(
+    title: String,
+    initialTime: LocalTime,
+    onTimeSelected: (LocalTime) -> Unit,
+    onDismissRequest: () -> Unit,
+    confirm: String = stringResource(R.string.ok),
+    dismiss: String = stringResource(R.string.cancel)
+  ) {
+    val state = rememberTimePickerState(initialHour = initialTime.hour, initialMinute = initialTime.minute)
+    var showClock by rememberSaveable { mutableStateOf(true) }
+
+    // SignalTheme has no tertiary colors, which Material uses for the selected AM/PM, so match the selected hour and minute instead.
+    val colors = TimePickerDefaults.colors(
+      periodSelectorSelectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+      periodSelectorSelectedContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+    )
+
+    Material3TimePickerDialog(
+      onDismissRequest = onDismissRequest,
+      containerColor = Defaults.containerColor,
+      title = { Text(text = title, style = MaterialTheme.typography.labelMedium) },
+      confirmButton = {
+        TextButton(
+          onClick = { onTimeSelected(LocalTime.of(state.hour, state.minute)) },
+          modifier = Modifier.testTag(TEST_TAG_TIME_PICKER_CONFIRM)
+        ) {
+          Text(text = confirm)
+        }
+      },
+      dismissButton = {
+        TextButton(onClick = onDismissRequest) {
+          Text(text = dismiss)
+        }
+      },
+      modeToggleButton = {
+        IconButton(onClick = { showClock = !showClock }) {
+          if (showClock) {
+            Icon(imageVector = SignalIcons.Keyboard.imageVector, contentDescription = stringResource(CoreUiR.string.Dialogs__switch_to_text_input))
+          } else {
+            Icon(imageVector = SignalIcons.Recent.imageVector, contentDescription = stringResource(CoreUiR.string.Dialogs__switch_to_clock))
+          }
+        }
+      }
+    ) {
+      if (showClock) {
+        TimePicker(state = state, colors = colors, modifier = Modifier.testTag(TEST_TAG_TIME_PICKER_DIAL))
+      } else {
+        TimeInput(state = state, colors = colors, modifier = Modifier.testTag(TEST_TAG_TIME_PICKER_DIAL))
+      }
+    }
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun PermissionRationaleDialogPreview() {
+  Previews.Preview {
+    PermissionRationaleDialog(
+      icon = painterResource(id = R.drawable.ic_menu_camera),
+      rationale = "This is rationale text about why we need permission.",
+      confirm = "Continue",
+      dismiss = "Not now",
+      onConfirm = {},
+      onDismiss = {}
+    )
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun AlertDialogPreview() {
+  Previews.Preview {
+    SimpleAlertDialog(
+      title = "Title Text",
+      body = "Body text message",
+      confirm = "Confirm Button",
+      dismiss = "Dismiss Button",
+      onConfirm = {},
+      onDismiss = {}
+    )
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun AdvancedAlertDialogPreview() {
+  Previews.Preview {
+    AdvancedAlertDialog(
+      title = "Title text",
+      body = "Body message text.",
+      positive = "Positive",
+      neutral = "Neutral",
+      negative = "Negative",
+      onPositive = {},
+      onNegative = {},
+      onNeutral = {}
+    )
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun MessageDialogPreview() {
+  Previews.Preview {
+    SimpleMessageDialog(
+      message = "Message here",
+      dismiss = "OK",
+      onDismiss = {}
+    )
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun IndeterminateProgressDialogPreview() {
+  Previews.Preview {
+    Dialogs.IndeterminateProgressDialog()
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun IndeterminateProgressDialogMessagePreview() {
+  Previews.Preview {
+    Dialogs.IndeterminateProgressDialog("Completing...")
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun IndeterminateProgressDialogCancellablePreview() {
+  Previews.Preview {
+    Dialogs.IndeterminateProgressDialog("Completing...", "Do not close app", "Cancel") {}
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun ProgressDialogIndeterminatePreview() {
+  Previews.Preview {
+    Dialogs.ProgressDialog("Exporting...", "Do not close app", "Cancel", {}, indeterminate = true, progress = { 0f })
+  }
+}
+
+@DayNightPreviews
+@Composable
+private fun ProgressDialogDeterminatePreview() {
+  Previews.Preview {
+    Dialogs.ProgressDialog("Exporting...", "Do not close app", "Cancel", {}, indeterminate = false, progress = { 0.6f })
+  }
+}
+
+@PreviewWrapper(SignalPreviewWrapper::class)
+@DayNightPreviews
+@Composable
+private fun ListDialogPreview() {
+  Dialogs.ListDialog(
+    options = listOf("Edit", "Delete"),
+    onOptionClick = {},
+    onDismissRequest = {}
+  )
+}
+
+@DayNightPreviews
+@Composable
+private fun RadioListDialogPreview() {
+  Previews.Preview {
+    Dialogs.RadioListDialog(
+      onDismissRequest = {},
+      title = "TestDialog",
+      properties = DialogProperties(),
+      labels = arrayOf(),
+      values = arrayOf(),
+      selectedIndex = -1,
+      onSelected = {}
+    )
+  }
+}
+
+@PreviewWrapper(SignalPreviewWrapper::class)
+@DayNightPreviews
+@Composable
+private fun RadioListConfirmationDialogPreview() {
+  Dialogs.RadioListConfirmationDialog(
+    onDismissRequest = {},
+    title = "TestDialog",
+    labels = arrayOf("Only admins", "All members"),
+    values = arrayOf("only_admins", "all_members"),
+    selectedIndex = 0,
+    onConfirm = {}
+  )
+}
+
+@PreviewWrapper(SignalPreviewWrapper::class)
+@DayNightPreviews
+@Composable
+private fun TimePickerDialogPreview() {
+  Dialogs.TimePickerDialog(
+    title = "Set start time",
+    initialTime = LocalTime.of(21, 0),
+    onTimeSelected = {},
+    onDismissRequest = {}
+  )
+}

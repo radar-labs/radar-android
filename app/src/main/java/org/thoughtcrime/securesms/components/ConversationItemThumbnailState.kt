@@ -11,9 +11,9 @@ import android.view.View
 import android.view.View.OnLongClickListener
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import org.signal.core.ui.view.Stub
 import org.thoughtcrime.securesms.mms.SlideClickListener
 import org.thoughtcrime.securesms.mms.SlidesClickedListener
-import org.thoughtcrime.securesms.util.views.Stub
 
 /**
  * Parcelable state object for [ConversationItemThumbnail]
@@ -28,7 +28,7 @@ data class ConversationItemThumbnailState(
 
   @Parcelize
   data class ThumbnailViewState(
-    private val alpha: Float = 0f,
+    private val alpha: Float = 1f,
     private val focusable: Boolean = true,
     private val clickable: Boolean = true,
     @IgnoredOnParcel

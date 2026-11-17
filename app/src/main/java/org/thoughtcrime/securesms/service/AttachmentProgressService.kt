@@ -5,10 +5,12 @@
 
 package org.thoughtcrime.securesms.service
 
+import android.app.ForegroundServiceStartNotAllowedException
 import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +19,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.signal.core.util.PendingIntentFlags
+import org.signal.core.util.SafeForegroundService
 import org.signal.core.util.logging.Log
 import org.signal.core.util.throttleLatest
 import org.thoughtcrime.securesms.MainActivity
@@ -112,7 +115,19 @@ class AttachmentProgressService : SafeForegroundService() {
   }
 
   val listener = {
-    startForeground(notificationId, getForegroundNotification(Intent()))
+    try {
+      startForeground(notificationId, getForegroundNotification(Intent()))
+    } catch (e: Exception) {
+      if (Build.VERSION.SDK_INT >= 31 && e.message?.contains("Time limit", ignoreCase = true) == true) {
+        Log.w(TAG, "Foreground service timed out, but not in onTimeout call", e)
+        stopDueToTimeout()
+      } else if (Build.VERSION.SDK_INT >= 31 && e is ForegroundServiceStartNotAllowedException) {
+        Log.w(TAG, "Unable to start foreground service", e)
+        stopDueToTimeout()
+      } else {
+        throw e
+      }
+    }
   }
 
   override val tag: String = TAG
@@ -141,7 +156,10 @@ class AttachmentProgressService : SafeForegroundService() {
 
   override fun onTimeout(startId: Int, fgsType: Int) {
     Log.w(TAG, "AttachmentProgressService has timed out. Removing all controllers. startId: $startId, foregroundServiceType: $fgsType")
+    stopDueToTimeout()
+  }
 
+  private fun stopDueToTimeout() {
     controllerLock.withLock {
       controllers.forEach { it.closeFromTimeout() }
       stop(context = this, fromTimeout = true)
@@ -151,7 +169,7 @@ class AttachmentProgressService : SafeForegroundService() {
   }
 
   class Controller(private val context: Context, title: String) : AutoCloseable {
-    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private val progressFlow = MutableSharedFlow<Float>(replay = 0, extraBufferCapacity = 1)
 
     init {

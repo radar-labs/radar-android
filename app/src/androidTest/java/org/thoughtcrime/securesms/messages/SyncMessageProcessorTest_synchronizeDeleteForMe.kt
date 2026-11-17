@@ -13,17 +13,19 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isGreaterThan
 import assertk.assertions.isNotEqualTo
 import assertk.assertions.isNotNull
-import assertk.assertions.isNull
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.signal.core.database.update
+import org.signal.core.database.withinTransaction
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.Base64
+import org.signal.core.util.Util
 import org.signal.core.util.logging.Log
-import org.signal.core.util.update
-import org.signal.core.util.withinTransaction
+import org.signal.network.api.AttachmentUploadResult
 import org.thoughtcrime.securesms.attachments.Attachment
 import org.thoughtcrime.securesms.attachments.DatabaseAttachment
 import org.thoughtcrime.securesms.database.AttachmentTable
@@ -32,12 +34,9 @@ import org.thoughtcrime.securesms.database.MessageTable
 import org.thoughtcrime.securesms.database.SignalDatabase
 import org.thoughtcrime.securesms.database.model.databaseprotos.SessionSwitchoverEvent
 import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.testing.MessageContentFuzzer.DeleteForMeSync
 import org.thoughtcrime.securesms.testing.SignalActivityRule
 import org.thoughtcrime.securesms.util.IdentityUtil
-import org.thoughtcrime.securesms.util.Util
-import org.whispersystems.signalservice.api.attachment.AttachmentUploadResult
 import org.whispersystems.signalservice.api.messages.SignalServiceAttachmentRemoteId
 import java.util.UUID
 
@@ -166,7 +165,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
     assertThat(messageCount).isEqualTo(0)
 
     val threadRecord = SignalDatabase.threads.getThreadRecord(threadId)
-    assertThat(threadRecord).isNull()
+    assertThat(threadRecord?.active).isEqualTo(false)
   }
 
   @Test
@@ -245,7 +244,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
 
     // THEN
     assertThat(SignalDatabase.messages.getMessageCountForThread(threadId)).isEqualTo(0)
-    assertThat(SignalDatabase.threads.getThreadRecord(threadId)).isNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(threadId)?.active).isEqualTo(false)
   }
 
   @Test
@@ -304,7 +303,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
 
     // THEN
     assertThat(SignalDatabase.messages.getMessageCountForThread(threadId)).isEqualTo(0)
-    assertThat(SignalDatabase.threads.getThreadRecord(threadId)).isNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(threadId)?.active).isEqualTo(false)
 
     harness.inMemoryLogger.flush()
     assertThat(harness.inMemoryLogger.entries().filter { it.message?.contains("Using backup non-expiring messages") == true }).hasSize(1)
@@ -344,7 +343,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
 
     // THEN
     assertThat(SignalDatabase.messages.getMessageCountForThread(threadId)).isEqualTo(0)
-    assertThat(SignalDatabase.threads.getThreadRecord(threadId)).isNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(threadId)?.active).isEqualTo(false)
   }
 
   @Test
@@ -376,7 +375,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
 
     // THEN
     assertThat(SignalDatabase.messages.getMessageCountForThread(threadId)).isEqualTo(3)
-    assertThat(SignalDatabase.threads.getThreadRecord(threadId)).isNotNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(threadId)?.active).isEqualTo(true)
   }
 
   @Test
@@ -405,7 +404,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
 
     // THEN
     assertThat(SignalDatabase.messages.getMessageCountForThread(threadId)).isEqualTo(0)
-    assertThat(SignalDatabase.threads.getThreadRecord(threadId)).isNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(threadId)?.active).isEqualTo(false)
   }
 
   @Test
@@ -435,7 +434,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
     // THEN
     threadIds.forEach {
       assertThat(SignalDatabase.messages.getMessageCountForThread(it)).isEqualTo(0)
-      assertThat(SignalDatabase.threads.getThreadRecord(it)).isNull()
+      assertThat(SignalDatabase.threads.getThreadRecord(it)?.active).isEqualTo(false)
     }
   }
 
@@ -463,7 +462,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
 
     // THEN
     assertThat(SignalDatabase.messages.getMessageCountForThread(aliceThreadId)).isEqualTo(0)
-    assertThat(SignalDatabase.threads.getThreadRecord(aliceThreadId)).isNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(aliceThreadId)?.active).isEqualTo(false)
   }
 
   @Ignore("counts are consistent for some reason")
@@ -517,7 +516,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
     SignalDatabase.messages.deleteMessage(messageId = oneToOnePlaceHolderMessage, threadId = aliceThreadId, notify = false, updateThread = false)
     SignalDatabase.messages.deleteMessage(messageId = groupPlaceholderMessage, threadId = aliceThreadId, notify = false, updateThread = false)
 
-    SignalDatabase.rawDatabase.withinTransaction {
+    SignalDatabase.writableDatabase.withinTransaction {
       assertThat(SignalDatabase.messages.getMessageCountForThread(aliceThreadId)).isEqualTo(16)
       assertThat(SignalDatabase.messages.getMessageCountForThread(groupThreadId)).isEqualTo(10)
     }
@@ -527,10 +526,10 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
 
     // THEN
     assertThat(SignalDatabase.messages.getMessageCountForThread(aliceThreadId)).isEqualTo(0)
-    assertThat(SignalDatabase.threads.getThreadRecord(aliceThreadId)).isNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(aliceThreadId)?.active).isEqualTo(false)
 
     assertThat(SignalDatabase.messages.getMessageCountForThread(groupThreadId)).isEqualTo(0)
-    assertThat(SignalDatabase.threads.getThreadRecord(groupThreadId)).isNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(groupThreadId)?.active).isEqualTo(false)
   }
 
   @Test
@@ -551,7 +550,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
 
     // THEN
     assertThat(SignalDatabase.messages.getMessageCountForThread(threadId)).isEqualTo(20)
-    assertThat(SignalDatabase.threads.getThreadRecord(threadId)).isNotNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(threadId)?.active).isEqualTo(true)
 
     harness.inMemoryLogger.flush()
     assertThat(harness.inMemoryLogger.entries().filter { it.message?.contains("Thread is not local only") == true }).hasSize(1)
@@ -665,7 +664,7 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
     updatedAttachments = SignalDatabase.attachments.getAttachmentsForMessage(message1.messageId)
     assertThat(updatedAttachments).isEmpty()
 
-    assertThat(SignalDatabase.threads.getThreadRecord(threadId)).isNull()
+    assertThat(SignalDatabase.threads.getThreadRecord(threadId)?.active).isEqualTo(false)
   }
 
   private fun DatabaseAttachment.copy(
@@ -705,8 +704,10 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
       archiveCdn = this.archiveCdn,
       thumbnailRestoreState = this.thumbnailRestoreState,
       archiveTransferState = this.archiveTransferState,
+      archiveThumbnailTransferState = this.archiveThumbnailTransferState,
       uuid = uuid,
-      quoteTargetContentType = this.quoteTargetContentType
+      quoteTargetContentType = this.quoteTargetContentType,
+      metadata = null
     )
   }
 
@@ -723,7 +724,8 @@ class SyncMessageProcessorTest_synchronizeDeleteForMe {
       incrementalDigestChunkSize = this.incrementalMacChunkSize,
       dataSize = this.size,
       uploadTimestamp = uploadTimestamp,
-      blurHash = this.blurHash?.hash
+      blurHash = this.blurHash?.hash,
+      audioHash = this.audioHash?.hash
     )
   }
 }

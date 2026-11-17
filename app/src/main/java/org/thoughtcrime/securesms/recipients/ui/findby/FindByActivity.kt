@@ -18,10 +18,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -42,12 +44,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
@@ -61,6 +61,7 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.ui.compose.Animations.navHostSlideInTransition
 import org.signal.core.ui.compose.Animations.navHostSlideOutTransition
 import org.signal.core.ui.compose.Buttons
@@ -68,21 +69,21 @@ import org.signal.core.ui.compose.Dialogs
 import org.signal.core.ui.compose.Dividers
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Scaffolds
+import org.signal.core.ui.compose.SignalIcons
 import org.signal.core.ui.compose.TextFields
+import org.signal.core.ui.compose.theme.SignalTheme
+import org.signal.core.ui.viewModel
 import org.signal.core.util.E164Util
 import org.signal.core.util.getParcelableExtraCompat
+import org.signal.core.util.invite.InviteActions
 import org.thoughtcrime.securesms.PassphraseRequiredActivity
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.components.settings.app.usernamelinks.main.UsernameQrScannerActivity
-import org.thoughtcrime.securesms.compose.SignalTheme
-import org.thoughtcrime.securesms.invites.InviteActions
 import org.thoughtcrime.securesms.phonenumbers.PhoneNumberVisualTransformation
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.registration.ui.countrycode.Country
 import org.thoughtcrime.securesms.registration.ui.countrycode.CountryCodeSelectScreen
 import org.thoughtcrime.securesms.registration.ui.countrycode.CountryCodeState
 import org.thoughtcrime.securesms.util.DynamicNoActionBarTheme
-import org.thoughtcrime.securesms.util.viewModel
 import org.signal.core.ui.R as CoreUiR
 
 /**
@@ -134,7 +135,7 @@ class FindByActivity : PassphraseRequiredActivity() {
             Scaffolds.Settings(
               title = stringResource(id = title),
               onNavigationClick = { finishAfterTransition() },
-              navigationIcon = ImageVector.vectorResource(id = R.drawable.symbol_arrow_start_24)
+              navigationIcon = SignalIcons.ArrowStart.imageVector
             ) {
               Content(
                 paddingValues = it,
@@ -312,6 +313,8 @@ private fun Content(
   Column(
     modifier = Modifier
       .padding(paddingValues)
+      .consumeWindowInsets(paddingValues)
+      .imePadding()
       .fillMaxSize()
   ) {
     val onNextAction = remember(state.isLookupInProgress) {
@@ -354,6 +357,9 @@ private fun Content(
       ),
       shape = RoundedCornerShape(32.dp),
       colors = TextFieldDefaults.colors(
+        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+        disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant,
         unfocusedIndicatorColor = Color.Transparent,
         focusedIndicatorColor = Color.Transparent,
         disabledIndicatorColor = Color.Transparent,
@@ -390,7 +396,7 @@ private fun Content(
         contentAlignment = Alignment.Center
       ) {
         Buttons.Small(onClick = onQrCodeScanClicked) {
-          Icon(painter = painterResource(id = R.drawable.symbol_qrcode_24), contentDescription = stringResource(id = R.string.FindByActivity__qr_scan_button))
+          Icon(painter = SignalIcons.QrCode.painter, contentDescription = stringResource(id = R.string.FindByActivity__qr_scan_button))
           Spacer(modifier = Modifier.width(10.dp))
           Text(
             text = stringResource(id = R.string.FindByActivity__qr_scan_button),

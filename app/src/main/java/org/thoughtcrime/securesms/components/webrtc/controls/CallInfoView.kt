@@ -55,12 +55,13 @@ import org.signal.core.ui.compose.Dividers
 import org.signal.core.ui.compose.NightPreview
 import org.signal.core.ui.compose.Previews
 import org.signal.core.ui.compose.Rows
+import org.signal.core.ui.compose.SignalIcons
+import org.signal.core.ui.compose.theme.SignalTheme
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.avatar.fallback.FallbackAvatar
 import org.thoughtcrime.securesms.avatar.fallback.FallbackAvatarImage
 import org.thoughtcrime.securesms.components.AvatarImageView
 import org.thoughtcrime.securesms.components.webrtc.v2.WebRtcCallViewModel
-import org.thoughtcrime.securesms.compose.SignalTheme
 import org.thoughtcrime.securesms.conversation.colors.AvatarColor
 import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.events.CallParticipant
@@ -88,8 +89,9 @@ object CallInfoView {
           ParticipantsState(
             inCallLobby = state.callState == WebRtcViewModel.State.CALL_PRE_JOIN,
             ringGroup = state.ringGroup,
+            isGroupOrAdHocCall = state.groupCallState.isNotIdle,
             includeSelf = state.groupCallState === WebRtcViewModel.GroupCallState.CONNECTED_AND_JOINED || state.groupCallState === WebRtcViewModel.GroupCallState.IDLE,
-            participantCount = if (state.participantCount.isPresent) state.participantCount.asLong.toInt() else 0,
+            participantCount = if (state.participantCount.isPresent) state.participantCount.get().toInt() else 0,
             remoteParticipants = state.allRemoteParticipants.sortedBy { it.callParticipantId.recipientId },
             localParticipant = state.localParticipant,
             groupMembers = state.groupMembers.filterNot { it.member.isSelf },
@@ -113,6 +115,11 @@ object CallInfoView {
       onShareLinkClicked = callbacks::onShareLinkClicked,
       onEditNameClicked = onEditNameClicked,
       onBlock = callbacks::onBlock,
+      onMuteAudio = callbacks::onMuteAudio,
+      onRemoveFromCall = callbacks::onRemoveFromCall,
+      onContactDetails = callbacks::onContactDetails,
+      onViewSafetyNumber = callbacks::onViewSafetyNumber,
+      onGoToChat = callbacks::onGoToChat,
       modifier = modifier
     )
   }
@@ -121,6 +128,11 @@ object CallInfoView {
     fun onShareLinkClicked()
     fun onEditNameClicked(name: String)
     fun onBlock(callParticipant: CallParticipant)
+    fun onMuteAudio(callParticipant: CallParticipant)
+    fun onRemoveFromCall(callParticipant: CallParticipant)
+    fun onContactDetails(callParticipant: CallParticipant)
+    fun onViewSafetyNumber(callParticipant: CallParticipant)
+    fun onGoToChat(callParticipant: CallParticipant)
   }
 }
 
@@ -134,7 +146,12 @@ private fun CallInfoPreview() {
       controlAndInfoState = ControlAndInfoState(),
       onShareLinkClicked = { },
       onEditNameClicked = { },
-      onBlock = { }
+      onBlock = { },
+      onMuteAudio = { },
+      onRemoveFromCall = { },
+      onContactDetails = { },
+      onViewSafetyNumber = { },
+      onGoToChat = { }
     )
   }
 }
@@ -146,8 +163,14 @@ private fun CallInfo(
   onShareLinkClicked: () -> Unit,
   onEditNameClicked: () -> Unit,
   onBlock: (CallParticipant) -> Unit,
+  onMuteAudio: (CallParticipant) -> Unit = {},
+  onRemoveFromCall: (CallParticipant) -> Unit = {},
+  onContactDetails: (CallParticipant) -> Unit = {},
+  onViewSafetyNumber: (CallParticipant) -> Unit = {},
+  onGoToChat: (CallParticipant) -> Unit = {},
   modifier: Modifier = Modifier
 ) {
+  var selectedParticipant by remember { mutableStateOf<CallParticipant?>(null) }
   val listState = rememberLazyListState()
 
   LaunchedEffect(controlAndInfoState.resetScrollState) {
@@ -177,7 +200,7 @@ private fun CallInfo(
       item {
         Rows.TextRow(
           text = stringResource(id = R.string.CallLinkDetailsFragment__share_link),
-          icon = painterResource(id = R.drawable.symbol_link_24),
+          icon = SignalIcons.Link.painter,
           iconModifier = Modifier
             .background(
               color = MaterialTheme.colorScheme.surfaceVariant,
@@ -225,7 +248,7 @@ private fun CallInfo(
       }
     }
 
-    if (!participantsState.inCallLobby || participantsState.isOngoing()) {
+    if (controlAndInfoState.callLink == null || !participantsState.inCallLobby || participantsState.isOngoing()) {
       item {
         Box(
           modifier = Modifier
@@ -251,7 +274,13 @@ private fun CallInfo(
         CallParticipantRow(
           callParticipant = it,
           isSelfAdmin = controlAndInfoState.isSelfAdmin() && !participantsState.inCallLobby,
-          onBlockClicked = onBlock
+          isCallLink = controlAndInfoState.callLink != null,
+          onBlockClicked = onBlock,
+          onParticipantClicked = { participant ->
+            if (!participant.recipient.isSelf) {
+              selectedParticipant = participant
+            }
+          }
         )
       }
 
@@ -290,7 +319,7 @@ private fun CallInfo(
       }
     }
 
-    if (controlAndInfoState.callLink?.credentials?.adminPassBytes != null) {
+    if (controlAndInfoState.callLink?.canModify == true) {
       item {
         if (!participantsState.inCallLobby) {
           Dividers.Default()
@@ -310,6 +339,21 @@ private fun CallInfo(
     item {
       Spacer(modifier = Modifier.size(48.dp))
     }
+  }
+
+  selectedParticipant?.let { participant ->
+    ParticipantActionsSheet(
+      callParticipant = participant,
+      isSelfAdmin = controlAndInfoState.isSelfAdmin(),
+      isCallLink = controlAndInfoState.callLink != null,
+      canRemoteMute = participantsState.isGroupOrAdHocCall,
+      onDismiss = { selectedParticipant = null },
+      onMuteAudio = onMuteAudio,
+      onRemoveFromCall = onRemoveFromCall,
+      onContactDetails = onContactDetails,
+      onViewSafetyNumber = onViewSafetyNumber,
+      onGoToChat = onGoToChat
+    )
   }
 }
 
@@ -335,9 +379,10 @@ private fun CallParticipantRowPreview() {
   Previews.Preview {
     Surface {
       CallParticipantRow(
-        CallParticipant(recipient = Recipient(isResolving = false, systemContactName = "Miles Morales")),
-        isSelfAdmin = true
-      ) {}
+        callParticipant = CallParticipant(recipient = Recipient(isResolving = false, systemContactName = "Miles Morales")),
+        isSelfAdmin = true,
+        onBlockClicked = {}
+      )
     }
   }
 }
@@ -356,7 +401,9 @@ private fun HandRaisedRowPreview() {
 private fun CallParticipantRow(
   callParticipant: CallParticipant,
   isSelfAdmin: Boolean,
-  onBlockClicked: (CallParticipant) -> Unit
+  isCallLink: Boolean = false,
+  onBlockClicked: (CallParticipant) -> Unit,
+  onParticipantClicked: ((CallParticipant) -> Unit)? = null
 ) {
   CallParticipantRow(
     initialRecipient = callParticipant.recipient,
@@ -367,7 +414,13 @@ private fun CallParticipantRow(
     showHandRaised = false,
     canLowerHand = false,
     isSelfAdmin = isSelfAdmin,
-    onBlockClicked = { onBlockClicked(callParticipant) }
+    isCallLink = isCallLink,
+    onBlockClicked = { onBlockClicked(callParticipant) },
+    onRowClicked = if (onParticipantClicked != null && !callParticipant.recipient.isSelf) {
+      { onParticipantClicked(callParticipant) }
+    } else {
+      null
+    }
   )
 }
 
@@ -395,14 +448,23 @@ private fun CallParticipantRow(
   isMicrophoneEnabled: Boolean,
   showHandRaised: Boolean,
   canLowerHand: Boolean,
-  isSelfAdmin: Boolean,
-  onBlockClicked: () -> Unit
+  isSelfAdmin: Boolean = false,
+  isCallLink: Boolean = false,
+  onBlockClicked: () -> Unit = {},
+  onRowClicked: (() -> Unit)? = null
 ) {
-  Row(
-    modifier = Modifier
+  val rowModifier = if (onRowClicked != null) {
+    Modifier
+      .fillMaxWidth()
+      .clickable(onClick = onRowClicked)
+      .padding(Rows.defaultPadding())
+  } else {
+    Modifier
       .fillMaxWidth()
       .padding(Rows.defaultPadding())
-  ) {
+  }
+
+  Row(modifier = rowModifier) {
     val recipient by ((if (LocalInspectionMode.current) Observable.just(Recipient.UNKNOWN) else Recipient.observable(initialRecipient.id)))
       .toFlowable(BackpressureStrategy.LATEST)
       .toLiveData()
@@ -472,13 +534,13 @@ private fun CallParticipantRow(
       )
     }
 
-    if (showIcons && isSelfAdmin && !recipient.isSelf) {
+    if (showIcons && isSelfAdmin && isCallLink && !recipient.isSelf) {
       if (!isMicrophoneEnabled) {
         Spacer(modifier = Modifier.width(16.dp))
       }
 
       Icon(
-        painter = painterResource(id = R.drawable.symbol_minus_circle_24),
+        painter = SignalIcons.MinusCircle.painter,
         contentDescription = null,
         modifier = Modifier
           .clickable(onClick = onBlockClicked)
@@ -511,8 +573,9 @@ private fun GroupMemberRow(
     isMicrophoneEnabled = false,
     showHandRaised = false,
     canLowerHand = false,
-    isSelfAdmin = isSelfAdmin
-  ) {}
+    isSelfAdmin = isSelfAdmin,
+    onBlockClicked = {}
+  )
 }
 
 @Composable
@@ -552,7 +615,7 @@ private fun UnknownMembersRow(
     var displayDialog by remember { mutableStateOf(false) }
 
     Icon(
-      painter = painterResource(id = R.drawable.symbol_info_24),
+      painter = SignalIcons.Info.painter,
       contentDescription = stringResource(id = R.string.CallInfoView__more_information),
       modifier = Modifier.clickable(onClick = {
         displayDialog = true
@@ -641,6 +704,7 @@ private fun UnknownMembersRowPreview() {
 private data class ParticipantsState(
   val inCallLobby: Boolean = false,
   val ringGroup: Boolean = true,
+  val isGroupOrAdHocCall: Boolean = false,
   val includeSelf: Boolean = false,
   val participantCount: Int = 0,
   val remoteParticipants: List<CallParticipant> = emptyList(),

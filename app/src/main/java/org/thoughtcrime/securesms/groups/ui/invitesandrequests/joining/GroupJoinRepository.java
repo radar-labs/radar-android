@@ -7,17 +7,19 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
 import org.signal.core.util.concurrent.SignalExecutors;
+import org.signal.core.util.groups.GroupChangeBusyException;
+import org.signal.core.util.groups.GroupChangeFailedException;
+import org.signal.core.util.groups.MembershipNotSuitableForV2Exception;
 import org.signal.core.util.logging.Log;
 import org.signal.libsignal.zkgroup.VerificationFailedException;
-import org.signal.storageservice.protos.groups.local.DecryptedGroupJoinInfo;
-import org.thoughtcrime.securesms.groups.GroupChangeBusyException;
-import org.thoughtcrime.securesms.groups.GroupChangeFailedException;
+import org.signal.storageservice.storage.protos.groups.local.DecryptedGroupJoinInfo;
 import org.thoughtcrime.securesms.groups.GroupManager;
-import org.thoughtcrime.securesms.groups.MembershipNotSuitableForV2Exception;
 import org.thoughtcrime.securesms.groups.v2.GroupInviteLinkUrl;
 import org.thoughtcrime.securesms.jobs.AvatarGroupsV2DownloadJob;
 import org.thoughtcrime.securesms.util.AsynchronousCallback;
 import org.whispersystems.signalservice.api.groupsv2.GroupLinkNotActiveException;
+import org.whispersystems.signalservice.internal.push.exceptions.GroupPatchNotAcceptedException;
+import org.whispersystems.signalservice.internal.push.exceptions.GroupTerminatedException;
 
 import java.io.IOException;
 
@@ -37,6 +39,8 @@ final class GroupJoinRepository {
     SignalExecutors.UNBOUNDED.execute(() -> {
       try {
         callback.onComplete(getGroupDetails());
+      } catch (GroupTerminatedException e) {
+        callback.onError(FetchGroupDetailsError.GroupTerminated);
       } catch (IOException e) {
         callback.onError(FetchGroupDetailsError.NetworkError);
       } catch (GroupLinkNotActiveException e) {
@@ -59,6 +63,9 @@ final class GroupJoinRepository {
                                                                                   groupDetails.getAvatarBytes());
 
         callback.onComplete(new JoinGroupSuccess(groupActionResult.getGroupRecipient(), groupActionResult.getThreadId()));
+      } catch (GroupTerminatedException e) {
+        Log.w(TAG, "Group is terminated", e);
+        callback.onError(JoinGroupError.GROUP_TERMINATED);
       } catch (IOException e) {
         Log.w(TAG, "Network error", e);
         callback.onError(JoinGroupError.NETWORK_ERROR);
@@ -68,9 +75,19 @@ final class GroupJoinRepository {
       } catch (GroupLinkNotActiveException e) {
         Log.w(TAG, "Inactive group error", e);
         callback.onError(e.getReason() == GroupLinkNotActiveException.Reason.BANNED ? JoinGroupError.BANNED : JoinGroupError.GROUP_LINK_NOT_ACTIVE);
-      } catch (GroupChangeFailedException | MembershipNotSuitableForV2Exception e) {
-        Log.w(TAG, "Change failed", e);
+      } catch (MembershipNotSuitableForV2Exception e) {
+        Log.w(TAG, "Membership not suitable", e);
         callback.onError(JoinGroupError.FAILED);
+      } catch (GroupChangeFailedException e) {
+        Log.w(TAG, "Group change failed", e);
+        JoinGroupError error = JoinGroupError.FAILED;
+        if (e.getCause() instanceof GroupPatchNotAcceptedException) {
+          String message = e.getCause().getMessage();
+          if (message != null && message.contains("group size cannot exceed")) {
+            error = JoinGroupError.LIMIT_REACHED;
+          }
+        }
+        callback.onError(error);
       }
     });
   }

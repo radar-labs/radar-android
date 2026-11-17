@@ -6,7 +6,7 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.thoughtcrime.securesms.attachments.AttachmentId;
+import org.signal.core.models.database.AttachmentId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -131,9 +131,10 @@ public final class SignalLocalMetrics {
     private static final String SPLIT_DB_INSERT        = "db-insert";
     private static final String SPLIT_JOB_ENQUEUE      = "job-enqueue";
     private static final String SPLIT_JOB_PRE_NETWORK  = "job-pre-network";
-    private static final String SPLIT_ENCRYPT          = "encrypt";
-    private static final String SPLIT_NETWORK_MAIN     = "network-main";
-    private static final String SPLIT_NETWORK_SYNC     = "network-sync";
+    private static final String SPLIT_MAIN_ENCRYPT     = "main-encrypt";
+    private static final String SPLIT_MAIN_NETWORK     = "main-network";
+    private static final String SPLIT_SYNC_ENCRYPT     = "sync-encrypt";
+    private static final String SPLIT_SYNC_NETWORK     = "sync-network";
     private static final String SPLIT_JOB_POST_NETWORK = "job-post-network";
     private static final String SPLIT_UI_UPDATE        = "ui-update";
 
@@ -166,15 +167,19 @@ public final class SignalLocalMetrics {
     }
 
     public static void onMessageEncrypted(long messageId) {
-      split(messageId, SPLIT_ENCRYPT);
+      split(messageId, SPLIT_MAIN_ENCRYPT);
     }
 
     public static void onMessageSent(long messageId) {
-      split(messageId, SPLIT_NETWORK_MAIN);
+      split(messageId, SPLIT_MAIN_NETWORK);
+    }
+
+    public static void onSyncMessageEncrypted(long messageId) {
+      split(messageId, SPLIT_SYNC_ENCRYPT);
     }
 
     public static void onSyncMessageSent(long messageId) {
-      split(messageId, SPLIT_NETWORK_SYNC);
+      split(messageId, SPLIT_SYNC_NETWORK);
     }
 
     public static void onJobFinished(long messageId) {
@@ -261,6 +266,20 @@ public final class SignalLocalMetrics {
     }
 
   }
+
+  public static final class ProcessExit {
+    public static final String FORCE_STOP_EVENT = "process-exit-force-stop";
+
+    private static final String SPLIT_EVENT = "event";
+
+    public static void onForceStop() {
+      String id = FORCE_STOP_EVENT + System.currentTimeMillis();
+      LocalMetrics.getInstance().start(id, FORCE_STOP_EVENT);
+      LocalMetrics.getInstance().splitWithDuration(id, SPLIT_EVENT, 1);
+      LocalMetrics.getInstance().end(id);
+    }
+  }
+
   public static final class PushWebsocketFetch {
     public static final String SUCCESS_EVENT = "push-websocket-fetch";
     public static final String TIMEOUT_EVENT = "timed-out-fetch";
@@ -318,9 +337,11 @@ public final class SignalLocalMetrics {
     private static final String SPLIT_SENDER_KEY_SHARED       = "sk-shared";
     private static final String SPLIT_ENCRYPTION              = "encryption";
     private static final String SPLIT_NETWORK_SENDER_KEY      = "network-sk";
+    private static final String SPLIT_SENDER_KEY_SYNC_ENCRYPT = "sk-sync-encrypt";
     private static final String SPLIT_NETWORK_SENDER_KEY_SYNC = "network-sk-sync";
     private static final String SPLIT_MSL_SENDER_KEY          = "msl-sk";
     private static final String SPLIT_NETWORK_LEGACY          = "network-legacy";
+    private static final String SPLIT_LEGACY_SYNC_ENCRYPT     = "legacy-sync-encrypt";
     private static final String SPLIT_NETWORK_LEGACY_SYNC     = "network-legacy-sync";
     private static final String SPLIT_JOB_POST_NETWORK        = "job-post-network";
     private static final String SPLIT_UI_UPDATE               = "ui-update";
@@ -367,6 +388,10 @@ public final class SignalLocalMetrics {
       split(messageId, SPLIT_NETWORK_SENDER_KEY);
     }
 
+    public static void onSenderKeySyncEncrypted(long messageId) {
+      split(messageId, SPLIT_SENDER_KEY_SYNC_ENCRYPT);
+    }
+
     public static void onSenderKeySyncSent(long messageId) {
       split(messageId, SPLIT_NETWORK_SENDER_KEY_SYNC);
     }
@@ -377,6 +402,10 @@ public final class SignalLocalMetrics {
 
     public static void onLegacyMessageSent(long messageId) {
       split(messageId, SPLIT_NETWORK_LEGACY);
+    }
+
+    public static void onLegacySyncEncrypted(long messageId) {
+      split(messageId, SPLIT_LEGACY_SYNC_ENCRYPT);
     }
 
     public static void onLegacySyncFinished(long messageId) {

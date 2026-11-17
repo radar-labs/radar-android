@@ -28,15 +28,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.widget.ImageViewCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import com.google.android.material.button.MaterialButton
+import org.signal.core.ui.util.ViewUtil
 import org.signal.core.util.dp
+import org.signal.core.util.requireDrawable
 import org.signal.libsignal.protocol.fingerprint.Fingerprint
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.qr.QrCodeUtil
-import org.thoughtcrime.securesms.util.ContextUtil
-import org.thoughtcrime.securesms.util.ViewUtil
 import org.thoughtcrime.securesms.util.visible
 import java.nio.charset.Charset
 import java.util.Locale
+import org.signal.core.ui.R as CoreUiR
 
 class SafetyNumberQrView : ConstraintLayout {
 
@@ -65,6 +67,7 @@ class SafetyNumberQrView : ConstraintLayout {
   val qrCodeContainer: View
 
   val shareButton: ImageView
+  val verifyButton: MaterialButton
 
   private val loading: View
   private val qrCode: ImageView
@@ -97,6 +100,7 @@ class SafetyNumberQrView : ConstraintLayout {
     )
 
     shareButton = findViewById(R.id.share)
+    verifyButton = findViewById(R.id.verify_button)
 
     outlineProvider = object : ViewOutlineProvider() {
       override fun getOutline(view: View, outline: Outline) {
@@ -105,7 +109,12 @@ class SafetyNumberQrView : ConstraintLayout {
     }
 
     clipToOutline = true
-    setSafetyNumberType(false)
+
+    ImageViewCompat.setImageTintList(shareButton, ColorStateList.valueOf(ContextCompat.getColor(context, CoreUiR.color.signal_dark_colorOnSurface)))
+    setBackgroundColor(ContextCompat.getColor(context, R.color.safety_number_card_blue))
+    codes.forEach {
+      it.setTextColor(ContextCompat.getColor(context, CoreUiR.color.signal_light_colorOnPrimary))
+    }
   }
 
   fun setFingerprintViews(fingerprint: Fingerprint, animate: Boolean) {
@@ -132,27 +141,11 @@ class SafetyNumberQrView : ConstraintLayout {
     }
   }
 
-  fun setSafetyNumberType(newType: Boolean) {
-    if (newType) {
-      ImageViewCompat.setImageTintList(shareButton, ColorStateList.valueOf(ContextCompat.getColor(context, R.color.signal_dark_colorOnSurface)))
-      setBackgroundColor(ContextCompat.getColor(context, R.color.safety_number_card_blue))
-      codes.forEach {
-        it.setTextColor(ContextCompat.getColor(context, R.color.signal_light_colorOnPrimary))
-      }
-    } else {
-      ImageViewCompat.setImageTintList(shareButton, ColorStateList.valueOf(ContextCompat.getColor(context, R.color.signal_light_colorOnSurface)))
-      setBackgroundColor(ContextCompat.getColor(context, R.color.safety_number_card_grey))
-      codes.forEach {
-        it.setTextColor(ContextCompat.getColor(context, R.color.signal_light_colorOnSurfaceVariant))
-      }
-    }
-  }
-
   fun animateVerifiedSuccess() {
     val qrBitmap = (qrCode.drawable as BitmapDrawable).bitmap
     val qrSuccess: Bitmap = createVerifiedBitmap(qrBitmap.width, qrBitmap.height, R.drawable.symbol_check_white_48)
     qrVerified.setImageBitmap(qrSuccess)
-    qrVerified.background.setColorFilter(resources.getColor(R.color.green_500), PorterDuff.Mode.MULTIPLY)
+    qrVerified.background.setColorFilter(resources.getColor(CoreUiR.color.green_500), PorterDuff.Mode.MULTIPLY)
     tapLabel.setText(context.getString(R.string.verify_display_fragment__successful_match))
     animateVerified()
   }
@@ -161,7 +154,7 @@ class SafetyNumberQrView : ConstraintLayout {
     val qrBitmap = (qrCode.drawable as BitmapDrawable).bitmap
     val qrSuccess: Bitmap = createVerifiedBitmap(qrBitmap.width, qrBitmap.height, R.drawable.symbol_x_white_48)
     qrVerified.setImageBitmap(qrSuccess)
-    qrVerified.background.setColorFilter(resources.getColor(R.color.red_500), PorterDuff.Mode.MULTIPLY)
+    qrVerified.background.setColorFilter(resources.getColor(CoreUiR.color.red_500), PorterDuff.Mode.MULTIPLY)
     tapLabel.setText(context.getString(R.string.verify_display_fragment__failed_to_verify_safety_number))
     animateVerified()
   }
@@ -212,7 +205,7 @@ class SafetyNumberQrView : ConstraintLayout {
   private fun createVerifiedBitmap(width: Int, height: Int, @DrawableRes id: Int): Bitmap {
     val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
-    val check = ContextUtil.requireDrawable(context, id).toBitmap()
+    val check = context.requireDrawable(id).toBitmap()
     val offset = ((width - check.width) / 2).toFloat()
     canvas.drawBitmap(check, offset, offset, null)
     return bitmap

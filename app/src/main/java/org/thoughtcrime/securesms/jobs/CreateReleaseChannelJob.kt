@@ -1,22 +1,22 @@
 package org.thoughtcrime.securesms.jobs
 
 import androidx.core.content.ContextCompat
+import org.signal.core.models.recipients.RecipientId
 import org.signal.core.util.logging.Log
 import org.thoughtcrime.securesms.R
 import org.thoughtcrime.securesms.avatar.Avatar
 import org.thoughtcrime.securesms.avatar.AvatarRenderer
 import org.thoughtcrime.securesms.avatar.Avatars
 import org.thoughtcrime.securesms.database.SignalDatabase
+import org.thoughtcrime.securesms.dependencies.AppDependencies
 import org.thoughtcrime.securesms.jobmanager.Job
 import org.thoughtcrime.securesms.keyvalue.SignalStore
 import org.thoughtcrime.securesms.profiles.AvatarHelper
 import org.thoughtcrime.securesms.profiles.ProfileName
-import org.thoughtcrime.securesms.providers.BlobProvider
-import org.thoughtcrime.securesms.recipients.Recipient
-import org.thoughtcrime.securesms.recipients.RecipientId
 import org.thoughtcrime.securesms.transport.RetryLaterException
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import org.signal.core.ui.R as CoreUiR
 
 /**
  * Creates the Release Channel (Signal) recipient.
@@ -51,24 +51,37 @@ class CreateReleaseChannelJob private constructor(parameters: Parameters) : Base
     }
 
     if (SignalStore.releaseChannel.releaseChannelRecipientId != null) {
-      Log.i(TAG, "Already created Release Channel recipient ${SignalStore.releaseChannel.releaseChannelRecipientId}")
+      val existingId = SignalStore.releaseChannel.releaseChannelRecipientId!!
+      val recipient = SignalDatabase.recipients.getRecord(existingId)
 
-      val recipient = Recipient.resolved(SignalStore.releaseChannel.releaseChannelRecipientId!!)
-      if (recipient.profileAvatar.isNullOrEmpty() || !SignalStore.releaseChannel.hasUpdatedAvatar) {
-        SignalStore.releaseChannel.hasUpdatedAvatar = true
-        setAvatar(recipient.id)
+      val hasServiceId = recipient.serviceId != null
+      val hasE164 = recipient.e164 != null
+      val isGroup = recipient.groupId != null
+      val isDistributionList = recipient.distributionListId != null
+      val isCallLink = recipient.callLinkRoomId != null
+
+      if (hasServiceId || hasE164 || isGroup || isDistributionList || isCallLink) {
+        Log.w(TAG, "Release channel recipient $existingId is not a valid release channel recipient (hasServiceId: $hasServiceId, hasE164: $hasE164, isGroup: $isGroup, isDistributionList: $isDistributionList, isCallLink: $isCallLink). Clearing and recreating.")
+        SignalStore.releaseChannel.clearReleaseChannelRecipientId()
+      } else {
+        Log.i(TAG, "Already created Release Channel recipient $existingId")
+        if (recipient.signalProfileAvatar.isNullOrEmpty() || !SignalStore.releaseChannel.hasUpdatedAvatar) {
+          SignalStore.releaseChannel.hasUpdatedAvatar = true
+          setAvatar(recipient.id)
+        }
+        return
       }
-    } else {
-      val recipients = SignalDatabase.recipients
-
-      val releaseChannelId: RecipientId = recipients.insertReleaseChannelRecipient()
-      SignalStore.releaseChannel.setReleaseChannelRecipientId(releaseChannelId)
-      SignalStore.releaseChannel.hasUpdatedAvatar = true
-
-      recipients.setProfileName(releaseChannelId, ProfileName.asGiven("Radar"))
-      recipients.setMuted(releaseChannelId, Long.MAX_VALUE)
-      setAvatar(releaseChannelId)
     }
+
+    val recipients = SignalDatabase.recipients
+
+    val releaseChannelId: RecipientId = recipients.insertReleaseChannelRecipient()
+    SignalStore.releaseChannel.setReleaseChannelRecipientId(releaseChannelId)
+    SignalStore.releaseChannel.hasUpdatedAvatar = true
+
+    recipients.setProfileName(releaseChannelId, ProfileName.asGiven("Radar"))
+    recipients.setMuted(releaseChannelId, Long.MAX_VALUE)
+    setAvatar(releaseChannelId)
   }
 
   private fun setAvatar(id: RecipientId) {
@@ -77,10 +90,10 @@ class CreateReleaseChannelJob private constructor(parameters: Parameters) : Base
       context,
       Avatar.Resource(
         R.drawable.radar_glyph,
-        Avatars.ColorPair(ContextCompat.getColor(context, R.color.radar_orange), ContextCompat.getColor(context, R.color.core_white), "")
+        Avatars.ColorPair(ContextCompat.getColor(context, R.color.radar_orange), ContextCompat.getColor(context, CoreUiR.color.core_white), "")
       ),
       onAvatarRendered = { media ->
-        AvatarHelper.setAvatar(context, id, BlobProvider.getInstance().getStream(context, media.uri))
+        AvatarHelper.setAvatar(context, id, AppDependencies.blobs.getStream(context, media.uri))
         SignalDatabase.recipients.setProfileAvatar(id, "local")
         latch.countDown()
       },

@@ -136,7 +136,7 @@ class InMemorySignalServiceAccountDataStore : SignalServiceAccountDataStore {
   }
 
   override fun storeKyberPreKey(kyberPreKeyId: Int, record: KyberPreKeyRecord?) {
-    error("Not used")
+    kyberPreKeys[kyberPreKeyId] = record!!
   }
 
   override fun containsKyberPreKey(kyberPreKeyId: Int): Boolean {
@@ -197,6 +197,8 @@ class InMemorySignalServiceAccountDataStore : SignalServiceAccountDataStore {
   override fun clearSenderKeySharedWith(addresses: Collection<SignalProtocolAddress>) {
     // Called, but not needed
   }
+
+  override fun setMultiDevice(isMultiDevice: Boolean) = Unit
 
   override fun isMultiDevice(): Boolean {
     return false

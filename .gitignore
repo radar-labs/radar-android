@@ -34,4 +34,5 @@ maps.key
 kls_database.db
 .kotlin
 lefthook-local.yml
+sample-videos/
 radar-release.jks

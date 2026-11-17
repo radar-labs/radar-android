@@ -1,0 +1,217 @@
+/*
+ * Copyright 2026 Signal Messenger, LLC
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+package org.thoughtcrime.securesms.messages
+
+import org.signal.core.models.recipients.RecipientId
+import org.signal.libsignal.zkgroup.groups.GroupMasterKey
+import org.signal.libsignal.zkgroup.groups.GroupSecretParams
+import org.thoughtcrime.securesms.database.MessageTable
+import org.thoughtcrime.securesms.database.SignalDatabase
+import org.thoughtcrime.securesms.database.model.GroupRecord
+import org.thoughtcrime.securesms.database.model.MessageId
+import org.thoughtcrime.securesms.dependencies.AppDependencies
+import org.thoughtcrime.securesms.groups.GroupId
+import org.thoughtcrime.securesms.jobmanager.Job
+import org.thoughtcrime.securesms.jobs.GroupCallPeekJob
+import org.thoughtcrime.securesms.jobs.PushProcessEarlyMessagesJob
+import org.thoughtcrime.securesms.jobs.SendDeliveryReceiptJob
+import org.thoughtcrime.securesms.jobs.protos.GroupCallPeekJobData
+import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.groupMasterKey
+import org.thoughtcrime.securesms.messages.SignalServiceProtoUtil.hasGroupContext
+import org.whispersystems.signalservice.internal.push.DataMessage
+import java.util.Optional
+
+/**
+ * A caching system for batch processing of incoming messages.
+ *
+ * The primary things that enables the cache to safely store various group state:
+ * 1. [IncomingMessageObserver] holds a group processing lock during a batch process preventing group state from changing.
+ * Helps enable [groupRevisionCache] and [groupRecordCache].
+ *
+ * 2. Some group state doesn't change as it's derived from the [GroupMasterKey]. Enables [groupSecretParamsAndIdCache].
+ */
+abstract class BatchCache {
+  companion object {
+    const val BATCH_SIZE = 30
+  }
+
+  abstract val batchThreadUpdates: Boolean
+
+  val groupQueueEmptyCache = HashSet<String>(BATCH_SIZE)
+  val groupRevisionCache = HashMap<GroupId, Int>(BATCH_SIZE)
+  val groupRecordCache = HashMap<GroupId.V2, Optional<GroupRecord>>(BATCH_SIZE)
+
+  val deliveryReceiptLookupCache = HashMap<Long, MessageTable.ReceiptData>(BATCH_SIZE)
+  val readReceiptLookupCache = HashMap<Long, MessageTable.ReceiptData>(BATCH_SIZE)
+
+  protected val groupSecretParamsAndIdCache = HashMap<GroupMasterKey, Pair<GroupSecretParams, GroupId.V2>>(BATCH_SIZE)
+
+  fun getGroupInfo(message: DataMessage): Pair<GroupSecretParams?, GroupId.V2?> {
+    return if (message.hasGroupContext) {
+      groupSecretParamsAndIdCache.getOrPut(message.groupV2!!.groupMasterKey) {
+        val params = GroupSecretParams.deriveFromMasterKey(message.groupV2!!.groupMasterKey)
+        params to GroupId.v2(params.publicParams.groupIdentifier)
+      }
+    } else {
+      null to null
+    }
+  }
+
+  open fun flushAndClear() {
+    groupQueueEmptyCache.clear()
+    groupRevisionCache.clear()
+    groupRecordCache.clear()
+    groupSecretParamsAndIdCache.clear()
+    deliveryReceiptLookupCache.clear()
+    readReceiptLookupCache.clear()
+  }
+
+  protected fun flushJob(job: Job) {
+    AppDependencies.jobManager.add(job)
+  }
+
+  protected fun flushEarlyMessageProcessing() {
+    PushProcessEarlyMessagesJob.enqueue()
+  }
+
+  protected fun flushIncomingMessageInsertThreadUpdate(threadId: Long) {
+    SignalDatabase.threads.updateForMessageInsert(threadId, unarchive = true)
+  }
+
+  protected fun flushMslDelete(recipientId: RecipientId, device: Int, timestamps: List<Long>) {
+    SignalDatabase.messageLog.deleteEntriesForRecipient(timestamps, recipientId, device)
+  }
+
+  protected fun flushGroupCallPeek(data: GroupCallPeekJobData) {
+    GroupCallPeekJob.enqueue(data)
+  }
+
+  protected fun flushDeliveryReceipt(recipientId: RecipientId, timestamp: Long, messageId: MessageId) {
+    SendDeliveryReceiptJob.create(recipientId, listOf(timestamp), listOf(messageId)).forEach { flushJob(it) }
+  }
+
+  abstract fun addJob(job: Job)
+  abstract fun addIncomingMessageInsertThreadUpdate(threadId: Long)
+  abstract fun addMslDelete(recipientId: RecipientId, device: Int, timestamps: List<Long>)
+  abstract fun addDeliveryReceipt(recipientId: RecipientId, groupId: GroupId.V2?, timestamp: Long, messageId: MessageId)
+  abstract fun addGroupCallPeek(data: GroupCallPeekJobData)
+  abstract fun requiresEarlyMessageProcessing()
+}
+
+/**
+ * This is intended to be used when processing messages outside of [IncomingMessageObserver] where
+ * no batching is possible, mostly when the [org.thoughtcrime.securesms.jobs.PushProcessMessageJob] runs.
+ */
+class OneTimeBatchCache : BatchCache() {
+  override val batchThreadUpdates: Boolean = false
+
+  override fun addJob(job: Job) {
+    flushJob(job)
+  }
+
+  override fun addIncomingMessageInsertThreadUpdate(threadId: Long) {
+    flushIncomingMessageInsertThreadUpdate(threadId)
+  }
+
+  override fun addMslDelete(recipientId: RecipientId, device: Int, timestamps: List<Long>) {
+    flushMslDelete(recipientId, device, timestamps)
+  }
+
+  override fun addDeliveryReceipt(recipientId: RecipientId, groupId: GroupId.V2?, timestamp: Long, messageId: MessageId) {
+    flushDeliveryReceipt(recipientId, timestamp, messageId)
+  }
+
+  override fun addGroupCallPeek(data: GroupCallPeekJobData) {
+    flushGroupCallPeek(data)
+  }
+
+  override fun requiresEarlyMessageProcessing() {
+    flushEarlyMessageProcessing()
+  }
+}
+
+/**
+ * This is intended to be used in [IncomingMessageObserver] to batch jobs (e.g., [org.thoughtcrime.securesms.jobs.SendDeliveryReceiptJob])
+ * and dedupe and batch calls to [SignalDatabase.threads.updateForMessageInsert].
+ *
+ * Why Jobs? There's a lot of locking and database management when adding a job. Delaying that work from the processing loop
+ * and doing it all at once reduces the number of times we need to do either, reducing overall contention.
+ *
+ * Why thread updates? Thread updating has always been the longest thing to do in message processing. Deduping allows
+ * us to only call it once per thread in a batch instead of X times a message for that thread is in the batch.
+ */
+class ReusedBatchCache : BatchCache() {
+  override val batchThreadUpdates: Boolean = true
+
+  private val batchedJobs = ArrayList<Job>(BATCH_SIZE)
+  private val threadUpdates = HashSet<Long>(BATCH_SIZE)
+  private val mslDeletes = HashMap<Pair<RecipientId, Int>, MutableList<Long>>(BATCH_SIZE)
+  private val deliveryReceipts = HashMap<Pair<RecipientId, GroupId.V2?>, DeliveryReceiptAccumulator>(BATCH_SIZE)
+  private val groupCallPeeks = HashMap<Long, GroupCallPeekJobData>(BATCH_SIZE)
+  private var earlyMessageProcessingNeeded = false
+
+  override fun addJob(job: Job) {
+    batchedJobs += job
+  }
+
+  override fun addIncomingMessageInsertThreadUpdate(threadId: Long) {
+    threadUpdates += threadId
+  }
+
+  override fun addMslDelete(recipientId: RecipientId, device: Int, timestamps: List<Long>) {
+    mslDeletes.getOrPut(recipientId to device) { mutableListOf() } += timestamps
+  }
+
+  override fun addDeliveryReceipt(recipientId: RecipientId, groupId: GroupId.V2?, timestamp: Long, messageId: MessageId) {
+    val accumulator = deliveryReceipts.getOrPut(recipientId to groupId) { DeliveryReceiptAccumulator() }
+    accumulator.timestamps += timestamp
+    accumulator.messageIds += messageId
+  }
+
+  override fun addGroupCallPeek(data: GroupCallPeekJobData) {
+    groupCallPeeks[data.groupRecipientId] = data
+  }
+
+  override fun requiresEarlyMessageProcessing() {
+    earlyMessageProcessingNeeded = true
+  }
+
+  override fun flushAndClear() {
+    super.flushAndClear()
+
+    deliveryReceipts.flatMapTo(batchedJobs) { (key, accumulator) ->
+      SendDeliveryReceiptJob.create(key.first, accumulator.timestamps, accumulator.messageIds)
+    }
+    deliveryReceipts.clear()
+
+    if (batchedJobs.isNotEmpty()) {
+      AppDependencies.jobManager.addAll(batchedJobs)
+    }
+    batchedJobs.clear()
+
+    groupCallPeeks.values.forEach { flushGroupCallPeek(it) }
+    groupCallPeeks.clear()
+
+    if (earlyMessageProcessingNeeded) {
+      flushEarlyMessageProcessing()
+    }
+    earlyMessageProcessingNeeded = false
+
+    if (threadUpdates.isNotEmpty() || mslDeletes.isNotEmpty()) {
+      SignalDatabase.runInTransaction {
+        threadUpdates.forEach { flushIncomingMessageInsertThreadUpdate(it) }
+        mslDeletes.forEach { (key, timestamps) -> flushMslDelete(key.first, key.second, timestamps) }
+      }
+    }
+    threadUpdates.clear()
+    mslDeletes.clear()
+  }
+
+  private class DeliveryReceiptAccumulator {
+    val timestamps = ArrayList<Long>(BATCH_SIZE)
+    val messageIds = ArrayList<MessageId>(BATCH_SIZE)
+  }
+}
