@@ -37,7 +37,16 @@ class Payments(private val mobileCoinConfig: MobileCoinConfig) {
       // Pull BTC->fiat rates from the already-connected Breez SDK rather than the heavy
       // MobileCoin `wallet`, which is never initialized on the send flow (leaving the
       // conversions map empty and the fiat equivalent permanently hidden).
-      val currencyConversionsMap = SignalStore.payments.breezSdkWrapperLatest().getConversions()
+      // Breez reports failures (no network, DNS, its servers) as its own SdkException. Callers handle IOException,
+      // the documented failure here; an SdkException escaped their background executor and crashed the app as soon
+      // as the wallet was opened offline.
+      val currencyConversionsMap = try {
+        SignalStore.payments.breezSdkWrapperLatest().getConversions()
+      } catch (e: IOException) {
+        throw e
+      } catch (e: Exception) {
+        throw IOException("Unable to retrieve currency conversions", e)
+      }
       val newCurrencyConversions = BreezCurrencyConversions(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC), currencyConversionsMap)
 
       Log.i(TAG, "Refreshed currency conversions (${currencyConversionsMap.size} rates)")
