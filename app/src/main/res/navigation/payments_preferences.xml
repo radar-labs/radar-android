@@ -146,7 +146,20 @@
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
 
+        <action
+            android:id="@+id/action_paymentsHome_to_moneroWallet"
+            app:destination="@id/moneroWallet"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/moneroWallet"
+        android:name="org.thoughtcrime.securesms.payments.monero.MoneroWalletFragment"
+        tools:layout="@layout/payments_monero_fragment" />
 
     <!--
       Settings-style menu page reached from App Settings → Payments. Mirrors iOS

@@ -165,6 +165,16 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
           else                               -> BigInteger.ZERO
         }
     }
+
+    data class BitcoinAddress(val response: PrepareSendPaymentResponse) : PreparedPayment() {
+      override val feeSats: BigInteger
+        get() {
+          val method = response.paymentMethod as? SendPaymentMethod.BitcoinAddress ?: return BigInteger.ZERO
+          val quote = method.feeQuote.speedMedium
+          return BigInteger.valueOf(quote.userFeeSat.toLong())
+            .add(BigInteger.valueOf(quote.l1BroadcastFeeSat.toLong()))
+        }
+    }
   }
 
   /**
@@ -185,6 +195,14 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       is InputType.LightningAddress -> inputType.v1.payRequest
       is InputType.LnurlPay         -> inputType.v1
       is InputType.Bolt11Invoice    -> return prepareBolt11(sdk, inputType.v1, amount)
+      is InputType.BitcoinAddress   -> return prepareBitcoinAddress(sdk, destination, amount)
+      is InputType.Bip21            -> {
+        val fixedAmount = inputType.v1.amountSat?.let { BigInteger.valueOf(it.toLong()) }
+        if (fixedAmount != null && fixedAmount != amount) {
+          throw IllegalArgumentException("Bitcoin payment URI amount does not match the confirmed amount")
+        }
+        return prepareBitcoinAddress(sdk, destination, amount)
+      }
       else                          -> throw UnsupportedOperationException("Unsupported payment destination")
     }
 
@@ -222,6 +240,18 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     return PreparedPayment.Bolt11(runBlocking { sdk.prepareSendPayment(request) })
   }
 
+  private fun prepareBitcoinAddress(sdk: BreezSdk, destination: String, amount: BigInteger): PreparedPayment.BitcoinAddress {
+    require(amount.signum() > 0) { "A Bitcoin on-chain payment requires an amount" }
+    val request = PrepareSendPaymentRequest(
+      paymentRequest = PaymentRequest.Input(destination),
+      amount = amount,
+      tokenIdentifier = null,
+      conversionOptions = null,
+      feePolicy = null
+    )
+    return PreparedPayment.BitcoinAddress(runBlocking { sdk.prepareSendPayment(request) })
+  }
+
   /**
    * Thrown when a BOLT11 invoice specifies an amount that differs from the one the user entered.
    * Carries both so a caller can tell the user what the invoice actually asks for.
@@ -235,6 +265,15 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
     return runCatching {
       val parsed = runBlocking { sdk.parse(invoice) }
       (parsed as? InputType.Bolt11Invoice)?.v1?.amountMsat?.let { invoiceAmountSats(it) }
+    }.getOrNull()
+  }
+
+  /** Amount embedded in a BIP-21 URI, or null when the sender chooses the amount. */
+  fun bitcoinUriAmountSats(uri: String): BigInteger? {
+    val sdk = this.sdk ?: return null
+    return runCatching {
+      val parsed = runBlocking { sdk.parse(uri) }
+      (parsed as? InputType.Bip21)?.v1?.amountSat?.let { BigInteger.valueOf(it.toLong()) }
     }.getOrNull()
   }
 
@@ -261,7 +300,7 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
   /** Result of sending a payment: the serialized response plus the actual network fee charged. */
   data class SendPaymentResult(val response: ByteArray, val feeSats: BigInteger)
 
-  fun sendPayment(destination: String, amount: BigInteger): SendPaymentResult {
+  fun sendPayment(destination: String, amount: BigInteger, idempotencyKey: String = java.util.UUID.randomUUID().toString()): SendPaymentResult {
     val sdk = this.sdk ?: throw IllegalStateException("Breez SDK is not available")
 
     // Capture the real fee from the prepared payment so it can be persisted on the
@@ -275,6 +314,13 @@ class BreezSdkWrapper(ledger: BreezSdk?) {
       }
       is PreparedPayment.Bolt11 -> {
         val response = runBlocking { sdk.sendPayment(SendPaymentRequest(prepared.response)) }
+        SendPaymentResult(ReceiptCodec.encode(response), prepared.feeSats)
+      }
+      is PreparedPayment.BitcoinAddress -> {
+        val options = SendPaymentOptions.BitcoinAddress(OnchainConfirmationSpeed.MEDIUM)
+        val response = runBlocking {
+          sdk.sendPayment(SendPaymentRequest(prepared.response, options, idempotencyKey))
+        }
         SendPaymentResult(ReceiptCodec.encode(response), prepared.feeSats)
       }
     }

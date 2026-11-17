@@ -182,6 +182,11 @@ public abstract class MessageRecord extends DisplayRecord {
 
   @WorkerThread
   public SpannableString getDisplayBody(@NonNull Context context, @Nullable Consumer<RecipientId> recipientClickHandler) {
+    String moneroDisplayText = org.thoughtcrime.securesms.payments.monero.MoneroAddressExchange.displayText(getBody());
+    if (moneroDisplayText != null) {
+      return new SpannableString(moneroDisplayText);
+    }
+
     UpdateDescription updateDisplayBody = getUpdateDisplayBody(context, recipientClickHandler);
 
     if (updateDisplayBody != null) {

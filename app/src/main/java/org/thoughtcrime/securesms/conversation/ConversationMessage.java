@@ -121,6 +121,11 @@ public class ConversationMessage {
   }
 
   public @NonNull SpannableString getDisplayBody(Context context) {
+    String moneroDisplayText = org.thoughtcrime.securesms.payments.monero.MoneroAddressExchange.displayText(
+        body != null ? body.toString() : messageRecord.getBody());
+    if (moneroDisplayText != null) {
+      return new SpannableString(moneroDisplayText);
+    }
     return (body != null) ? new SpannableString(body) : messageRecord.getDisplayBody(context);
   }
 

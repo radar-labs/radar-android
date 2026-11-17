@@ -172,6 +172,7 @@ android {
 
   packaging {
     jniLibs {
+      pickFirsts += "**/libmonero_wallet.so"
       excludes += setOf(
         "**/*.dylib",
         "**/*.dll"
@@ -655,6 +656,7 @@ dependencies {
   implementation(libs.androidx.credentials.compat)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.breezsdk)
+  implementation("im.molly:monero-wallet-sdk:1.0.0")
 
   implementation(project(":billing"))
 

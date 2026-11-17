@@ -144,8 +144,17 @@ public final class Wallet {
                                                       @NonNull Money amount,
                                                       @NonNull Money totalFee)
   {
+    return sendPayment(to, amount, totalFee, java.util.UUID.randomUUID().toString());
+  }
+
+  @WorkerThread
+  public @NonNull PaymentSubmissionResult sendPayment(@NonNull LightningAddress to,
+                                                      @NonNull Money amount,
+                                                      @NonNull Money totalFee,
+                                                      @NonNull String idempotencyKey)
+  {
     List<TransactionSubmissionResult> transactionSubmissionResults = new LinkedList<>();
-    sendPayment(to, amount, totalFee, false, transactionSubmissionResults);
+    sendPayment(to, amount, totalFee, idempotencyKey, transactionSubmissionResults);
     return new PaymentSubmissionResult(transactionSubmissionResults);
   }
 
@@ -199,13 +208,13 @@ public final class Wallet {
   private void sendPayment(@NonNull LightningAddress to,
                            @NonNull Money amount,
                            @NonNull Money totalFee,
-                           boolean defragmentFirst,
+                           @NonNull String idempotencyKey,
                            @NonNull List<TransactionSubmissionResult> results)
   {
     Log.i(TAG, "Sending payment to " + to + " with amount " + amount + " and fee " + totalFee);
 
     try {
-      BreezSdkWrapper.SendPaymentResult result = breezSdkWrapper.sendPayment(to.getPaymentAddress(), amount.requireBitcoin().toSatoshiBigInteger());
+      BreezSdkWrapper.SendPaymentResult result = breezSdkWrapper.sendPayment(to.getPaymentAddress(), amount.requireBitcoin().toSatoshiBigInteger(), idempotencyKey);
 
       // Persist the actual fee charged by the network (from the prepared payment) so the
       // payment details screen shows the real fee, matching iOS. Falls back to the advised

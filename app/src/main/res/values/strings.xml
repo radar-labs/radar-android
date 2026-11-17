@@ -7,6 +7,81 @@
 
 <!-- smartling.instruction_comments_enabled = on -->
 <resources>
+    <string name="PaymentsMonero__starting_service">Starting secure wallet service…</string>
+    <string name="PaymentsMonero__saving">Saving your wallet securely…</string>
+    <string name="PaymentsMonero__bitcoin">Bitcoin</string>
+    <string name="PaymentsMonero__payments">Payments</string>
+    <string name="PaymentsMonero__choose_payment_method">Choose a payment method</string>
+    <string name="PaymentsMonero__create_wallet_before_chat_send">Create or restore a Monero wallet before sending XMR in a chat.</string>
+    <string name="PaymentsMonero__chat_send_description">Send XMR to %1$s</string>
+    <string name="PaymentsMonero__chat_balance">Available balance: %1$s XMR</string>
+    <string name="PaymentsMonero__chat_balance_unavailable">Available balance is loading. Wait for your wallet balance before sending.</string>
+    <string name="PaymentsMonero__amount_exceeds_balance">Amount exceeds your available balance of %1$s XMR.</string>
+    <string name="PaymentsMonero__amount_plus_fee_exceeds_balance">Amount plus network fee exceeds your available balance of %1$s XMR.</string>
+    <string name="PaymentsMonero__requesting_address">Securely requesting a Monero address…</string>
+    <string name="PaymentsMonero__confirm_chat_payment_title">Confirm Monero payment</string>
+    <string name="PaymentsMonero__confirm_chat_payment">Send %1$s XMR to this chat contact?\n\nEstimated network fee: %2$s XMR</string>
+    <string name="PaymentsMonero__chat_payment_submitted">Hey, I sent you %1$s XMR.</string>
+    <string name="PaymentsMonero__chat_payment_failed">Could not complete the Monero payment.</string>
+    <string name="PaymentsMonero__unknown_balance">— XMR</string>
+    <string name="PaymentsMonero__balance_unavailable">Balance unavailable</string>
+    <string name="PaymentsMonero__amount">%1$s XMR</string>
+    <string name="PaymentsMonero__available_locked">Available: %1$s XMR · Locked: %2$s XMR</string>
+    <string name="PaymentsMonero__receive">Receive</string>
+    <string name="PaymentsMonero__node_details">Node connection</string>
+    <string name="PaymentsMonero__node_not_configured">Monero is temporarily unavailable because a trusted node has not been configured.</string>
+    <string name="PaymentsMonero__local_creation">Create your wallet on this device. Synchronization continues in the background.</string>
+    <string name="PaymentsMonero__creating">Creating your wallet securely on this device…</string>
+    <string name="PaymentsMonero__blocks">Scanned %1$d of %2$d blocks</string>
+    <string name="PaymentsMonero__scanned">Scanned through block %1$d · Connecting to node…</string>
+    <string name="PaymentsMonero__confirmed">Confirmed</string>
+    <string name="PaymentsMonero__pending">Pending</string>
+    <string name="PaymentsMonero__failed">Failed</string>
+    <string name="PaymentsMonero__open_wallet">Monero (XMR)</string>
+    <string name="PaymentsMonero__title">Monero wallet</string>
+    <string name="PaymentsMonero__node">Connected to %1$s · %2$s. The node operator may observe your IP address and wallet synchronization requests; private spend keys stay on this device.</string>
+    <string name="PaymentsMonero__create">Create Monero wallet</string>
+    <string name="PaymentsMonero__restore">Restore with recovery phrase</string>
+    <string name="PaymentsMonero__phrase_title">Your Monero recovery phrase</string>
+    <string name="PaymentsMonero__phrase_warning">Write this phrase down and keep it private. Anyone with it can spend your XMR. It will not be shown again.</string>
+    <string name="PaymentsMonero__phrase_saved">I have saved my recovery phrase</string>
+    <string name="PaymentsMonero__address">Receive address</string>
+    <string name="PaymentsMonero__copy">Copy address</string>
+    <string name="PaymentsMonero__refresh">Sync / refresh</string>
+    <string name="PaymentsMonero__syncing">Syncing your Monero wallet</string>
+    <string name="PaymentsMonero__sync_finalizing">Finishing wallet update</string>
+    <string name="PaymentsMonero__sync_finalizing_detail">Chain is current; updating verified transaction history…</string>
+    <string name="PaymentsMonero__node_reconnecting">Reconnecting to the Monero node</string>
+    <string name="PaymentsMonero__node_reconnecting_detail">Your wallet data remains on this device. Radar will retry automatically.</string>
+    <string name="PaymentsMonero__opening_wallet">Opening your Monero wallet</string>
+    <string name="PaymentsMonero__opening_wallet_detail">Loading encrypted wallet data…</string>
+    <string name="PaymentsMonero__sync_progress">Wallet scanned through block %1$d · %2$s elapsed</string>
+    <string name="PaymentsMonero__ready">Wallet ready</string>
+    <string name="PaymentsMonero__balance">Total: %1$s XMR\nUnlocked: %2$s XMR\nPending/locked: %3$s XMR</string>
+    <string name="PaymentsMonero__send_title">Send XMR</string>
+    <string name="PaymentsMonero__recipient_hint">Monero address</string>
+    <string name="PaymentsMonero__amount_hint">Amount in XMR</string>
+    <string name="PaymentsMonero__scan">Scan</string>
+    <string name="PaymentsMonero__invalid_qr">This QR code does not contain a valid Monero mainnet address.</string>
+    <string name="PaymentsMonero__send">Review and send</string>
+    <string name="PaymentsMonero__confirm_send">Send %1$s XMR to:\n%2$s\n\nEstimated fee: %3$s XMR</string>
+    <string name="PaymentsMonero__sent">Transaction submitted. Refresh the wallet to verify its status.</string>
+    <string name="PaymentsMonero__transactions">Recent transactions</string>
+    <string name="PaymentsMonero__no_transactions">No transactions yet.</string>
+    <string name="PaymentsMonero__received_xmr">Received XMR</string>
+    <string name="PaymentsMonero__sent_xmr">Sent XMR</string>
+    <string name="PaymentsMonero__date_unavailable">Date unavailable</string>
+    <string name="PaymentsMonero__seen_by_wallet">Seen by this wallet: %1$s</string>
+    <string name="PaymentsMonero__transaction_id_short">TXID %1$s</string>
+    <plurals name="PaymentsMonero__transaction_count">
+        <item quantity="one">%d transaction</item>
+        <item quantity="other">%d transactions</item>
+    </plurals>
+    <string name="PaymentsMonero__restore_hint">Enter your Monero recovery words</string>
+    <string name="PaymentsMonero__restore_date_title">When was this wallet first used?</string>
+    <string name="PaymentsMonero__restore_date_message">Choose an approximate date. If you are unsure, choose an earlier date: scanning will take longer, but choosing a date that is too recent can omit older transactions from the displayed balance.</string>
+    <string name="PaymentsMonero__restore_date_confirm">Continue</string>
+    <string name="PaymentsMonero__unsupported">Monero currently requires an arm64 device running Android 8.0 or later.</string>
     <string name="app_name" translatable="false">Radar</string>
 
     <string name="install_url" translatable="false">https://radar.chat/install/</string>
@@ -146,6 +221,8 @@
     <string name="AttachmentManager__request_to_activate_payments">Do you want to send them a request to activate Payments?</string>
     <!-- Alert dialog button to send request -->
     <string name="AttachmentManager__send_request">Send request</string>
+    <string name="AttachmentManager__payment_address_not_ready_title">Payment not ready</string>
+    <string name="AttachmentManager__payment_address_not_ready_message">The recipient’s Lightning address is still being published. Please wait a moment and try again.</string>
     <!-- Alert dialog button to cancel dialog -->
     <string name="AttachmentManager__cancel">Cancel</string>
 
@@ -3542,7 +3619,7 @@
     <string name="conversation_activity__compose_description">Message composition</string>
     <string name="conversation_activity__emoji_toggle_description">Toggle emoji keyboard</string>
     <!-- Accessibility description for the Bitcoin payment button in the chat input field -->
-    <string name="conversation_activity__bitcoin_payment_description">Send a Bitcoin payment</string>
+    <string name="conversation_activity__bitcoin_payment_description">Send a payment</string>
     <!-- Toast shown when tapping the payment button but payments are not available on this account -->
     <string name="ConversationActivity__payments_are_not_available_on_your_account">Payments aren\'t available on your account</string>
     <!-- Toast shown when tapping the payment button in a chat with yourself -->

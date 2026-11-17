@@ -143,7 +143,7 @@ public final class PaymentSendJob extends BaseJob {
     stopwatch.split("Record created");
 
     try {
-      PaymentSubmissionResult paymentSubmissionResult = wallet.sendPayment(publicAddress, amount, totalFee);
+      PaymentSubmissionResult paymentSubmissionResult = wallet.sendPayment(publicAddress, amount, totalFee, uuid.toString());
       stopwatch.split("Payment submitted");
 
       TransactionSubmissionResult.ErrorCode errorCode = paymentSubmissionResult.getErrorCode();

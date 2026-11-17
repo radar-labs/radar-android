@@ -2820,7 +2820,8 @@ open class MessageTable(context: Context?, databaseHelper: SignalDatabase) : Dat
     val silent = (MessageTypes.isGroupUpdate(type) && !retrieved.isGroupAdd) ||
       retrieved.type == MessageType.IDENTITY_DEFAULT ||
       retrieved.type == MessageType.IDENTITY_VERIFIED ||
-      retrieved.type == MessageType.IDENTITY_UPDATE
+      retrieved.type == MessageType.IDENTITY_UPDATE ||
+      org.thoughtcrime.securesms.payments.monero.MoneroAddressExchange.isControlMessage(retrieved.body)
 
     val read = silent || retrieved.type == MessageType.EXPIRATION_UPDATE || MessageTypes.isPinnedMessageUpdate(type)
 

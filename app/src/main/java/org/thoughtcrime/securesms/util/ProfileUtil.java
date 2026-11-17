@@ -208,9 +208,20 @@ public final class ProfileUtil {
                                                 .getVersionedProfile(recipientACI, profileKey, sealedSenderAccess, LIGHTNING_PROFILE_VERSION)
                                                 .successOrNull();
 
+    // iOS publishes the payment address in the profile version derived from its profile key.
+    if (profile == null || profile.getPaymentAddress() == null) {
+      SignalServiceProfile currentProfile = SignalNetwork.profile()
+          .getVersionedProfile(recipientACI, profileKey, sealedSenderAccess)
+          .successOrNull();
+      if (currentProfile != null) profile = currentProfile;
+      else if (profile == null || profile.getPaymentAddress() == null) {
+        throw new IOException("Could not retrieve the recipient's payment profile.");
+      }
+    }
+
     if (profile == null) {
       Log.w(TAG, "No profile found for " + recipient.getId());
-      throw new PaymentsAddressException(PaymentsAddressException.Code.NOT_ENABLED);
+      throw new IOException("Could not retrieve the recipient's payment profile.");
     }
 
     byte[] encryptedPaymentsAddress = profile.getPaymentAddress();

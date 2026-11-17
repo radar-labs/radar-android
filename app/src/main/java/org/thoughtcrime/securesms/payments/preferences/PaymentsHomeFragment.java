@@ -62,6 +62,36 @@ public class PaymentsHomeFragment extends LoggingFragment {
 
   /** Tracks whether the balance is currently visible to the user. */
   private boolean balanceVisible = true;
+  private boolean moneroSelected = false;
+
+  public void showBitcoinWallet() {
+    selectMonero(false);
+  }
+
+  private void selectMonero(boolean selected) {
+    moneroSelected = selected;
+    View root = getView();
+    if (root == null) return;
+    root.findViewById(R.id.payments_home_fragment_header).setVisibility(selected ? View.GONE : View.VISIBLE);
+    root.findViewById(R.id.payments_home_fragment_recycler).setVisibility(selected ? View.GONE : View.VISIBLE);
+    root.findViewById(R.id.payments_monero_content).setVisibility(selected ? View.VISIBLE : View.GONE);
+    androidx.fragment.app.Fragment child = getChildFragmentManager().findFragmentByTag("monero-content");
+    if (selected && child == null) {
+      getChildFragmentManager().beginTransaction()
+          .add(R.id.payments_monero_content, new org.thoughtcrime.securesms.payments.monero.MoneroWalletFragment(), "monero-content")
+          .commitNow();
+    }
+    if (!selected) {
+      com.google.android.material.button.MaterialButtonToggleGroup selector = root.findViewById(R.id.payments_currency_selector);
+      selector.check(R.id.payments_currency_bitcoin);
+    }
+  }
+
+  @Override
+  public void onSaveInstanceState(@NonNull Bundle state) {
+    state.putBoolean("monero-selected", moneroSelected);
+    super.onSaveInstanceState(state);
+  }
 
   /** Holds the most recently received balance so we can redisplay it on toggle. */
   private org.whispersystems.signalservice.api.payments.Money lastBalanceAmount = null;
@@ -82,6 +112,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    if (savedInstanceState != null) moneroSelected = savedInstanceState.getBoolean("monero-selected", false);
     long    paymentLockTimestamp = SignalStore.payments().getPaymentLockTimestamp();
     boolean enablePaymentLock    = PaymentsHomeFragmentArgs.fromBundle(getArguments()).getEnablePaymentLock();
     boolean showPaymentLock      = SignalStore.payments().getPaymentLockSkipCount() < MAX_PAYMENT_LOCK_SKIP_COUNT &&
@@ -148,6 +179,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
     balanceLoadingView.setVisibility(View.VISIBLE);
     View                addMoney            = view.findViewById(R.id.button_start_frame);
     View                sendMoney           = view.findViewById(R.id.button_end_frame);
+    View                moneroWallet        = view.findViewById(R.id.payments_home_monero_button);
     Stub<ComposeView>   bannerView          = ViewUtil.findStubById(view, R.id.banner_compose_view);
 
     // Initialize visibility from the persisted preference (mirrors iOS PaymentsDisplayPreferences)
@@ -197,6 +229,10 @@ public class PaymentsHomeFragment extends LoggingFragment {
       }
     });
 
+    moneroWallet.setVisibility(org.thoughtcrime.securesms.payments.monero.MoneroProcess.isSupportedDevice() &&
+      org.thoughtcrime.securesms.payments.monero.MoneroWalletRepository.INSTANCE.selectedNode() != null ? View.VISIBLE : View.GONE);
+    moneroWallet.setOnClickListener(v -> selectMonero(true));
+
     adapter = new PaymentsHomeAdapter(new HomeCallbacks());
     recycler.setAdapter(adapter);
 
@@ -237,7 +273,7 @@ public class PaymentsHomeFragment extends LoggingFragment {
       } else {
         toolbar.getMenu().clear();
       }
-      header.setVisibility(enabled ? View.VISIBLE : View.GONE);
+      header.setVisibility(enabled && !moneroSelected ? View.VISIBLE : View.GONE);
     });
 
     // Tap the balance to toggle between sats and BTC display.
@@ -352,6 +388,11 @@ public class PaymentsHomeFragment extends LoggingFragment {
   @Override
   public void onResume() {
     super.onResume();
+    selectMonero(moneroSelected);
+    if (getView() != null) {
+      com.google.android.material.button.MaterialButtonToggleGroup selector = getView().findViewById(R.id.payments_currency_selector);
+      if (selector != null) selector.check(R.id.payments_currency_bitcoin);
+    }
     viewModel.checkPaymentActivationState();
 
     // Re-fetch the wallet balance from the Breez SDK every time the screen is shown. The

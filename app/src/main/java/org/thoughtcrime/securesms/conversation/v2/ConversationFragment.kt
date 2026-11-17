@@ -42,6 +42,8 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -88,6 +90,9 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -296,6 +301,10 @@ import org.thoughtcrime.securesms.mms.VideoSlide
 import org.thoughtcrime.securesms.nicknames.NicknameActivity
 import org.thoughtcrime.securesms.notifications.v2.ConversationId
 import org.thoughtcrime.securesms.payments.preferences.PaymentsActivity
+import org.thoughtcrime.securesms.payments.monero.MoneroAmountFormatter
+import org.thoughtcrime.securesms.payments.monero.MoneroAmountParser
+import org.thoughtcrime.securesms.payments.monero.MoneroChatPaymentFlow
+import org.thoughtcrime.securesms.payments.monero.MoneroWalletRepository
 import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.polls.Poll
 import org.thoughtcrime.securesms.polls.PollOption
@@ -378,6 +387,7 @@ import java.util.Optional
 import java.util.concurrent.ExecutionException
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.coroutines.resume
 
 /**
  * A single unified fragment for Conversations.
@@ -553,6 +563,7 @@ class ConversationFragment :
   private lateinit var optionsMenuCallback: ConversationOptionsMenuCallback
 
   private var animationsAllowed = false
+  private var moneroChatPaymentActive = false
   private var pinnedShortcutReceiver: BroadcastReceiver? = null
   private var searchMenuItem: MenuItem? = null
 
@@ -2045,20 +2056,207 @@ class ConversationFragment :
 
   private fun handlePaymentButtonClicked() {
     val recipient = viewModel.recipientSnapshot ?: return
-    val paymentsAvailability = SignalStore.payments.paymentsAvailability
-
     when {
-      !paymentsAvailability.isSendAllowed -> {
-        if (paymentsAvailability.canRegister()) {
-          startActivity(Intent(requireContext(), PaymentsActivity::class.java))
-        } else {
-          toast(R.string.ConversationActivity__payments_are_not_available_on_your_account)
-        }
-      }
       recipient.isSelf -> toast(R.string.ConversationActivity__you_cant_send_a_payment_to_yourself)
       recipient.isGroup -> toast(R.string.ConversationActivity__payments_cant_be_sent_in_group_chats)
       !recipient.isRegistered -> toast(R.string.ConversationActivity__this_contact_isnt_registered_for_payments)
-      else -> AttachmentManager.selectPayment(this, recipient)
+      else -> showPaymentMethodPicker(recipient)
+    }
+  }
+
+  private fun showPaymentMethodPicker(recipient: Recipient, retryLightningAfterActivation: Boolean = false) {
+    if (!org.thoughtcrime.securesms.payments.monero.MoneroProcess.isSupportedDevice() ||
+      MoneroWalletRepository.selectedNode() == null) {
+      val availability = SignalStore.payments.paymentsAvailability
+      if (!availability.isSendAllowed) {
+        if (availability.canRegister()) startActivity(Intent(requireContext(), PaymentsActivity::class.java))
+        else toast(R.string.ConversationActivity__payments_are_not_available_on_your_account)
+      } else {
+        if (retryLightningAfterActivation) AttachmentManager.selectPaymentAfterActivation(this, recipient)
+        else AttachmentManager.selectPayment(this, recipient)
+      }
+      return
+    }
+    MaterialAlertDialogBuilder(requireContext())
+      .setTitle(R.string.PaymentsMonero__choose_payment_method)
+      .setItems(arrayOf(getString(R.string.PaymentsMonero__bitcoin), getString(R.string.PaymentsMonero__open_wallet))) { _, which ->
+        if (which == 0) {
+          val availability = SignalStore.payments.paymentsAvailability
+          if (!availability.isSendAllowed) {
+            if (availability.canRegister()) startActivity(Intent(requireContext(), PaymentsActivity::class.java))
+            else toast(R.string.ConversationActivity__payments_are_not_available_on_your_account)
+          } else {
+            if (retryLightningAfterActivation) AttachmentManager.selectPaymentAfterActivation(this, recipient)
+            else AttachmentManager.selectPayment(this, recipient)
+          }
+        } else {
+          beginMoneroChatPayment(recipient)
+        }
+      }
+      .setNegativeButton(android.R.string.cancel, null)
+      .show()
+  }
+
+  private fun beginMoneroChatPayment(recipient: Recipient) {
+    if (!org.thoughtcrime.securesms.payments.monero.MoneroProcess.isSupportedDevice()) {
+      toast(R.string.PaymentsMonero__unsupported)
+      return
+    }
+    viewLifecycleOwner.lifecycleScope.launch {
+      if (!MoneroWalletRepository.hasWallet(requireContext())) {
+        MaterialAlertDialogBuilder(requireContext())
+          .setMessage(R.string.PaymentsMonero__create_wallet_before_chat_send)
+          .setPositiveButton(R.string.PaymentsMonero__payments) { _, _ -> startActivity(Intent(requireContext(), PaymentsActivity::class.java)) }
+          .setNegativeButton(android.R.string.cancel, null)
+          .show()
+        return@launch
+      }
+      if (MoneroWalletRepository.currentLedger.value == null) {
+        MoneroWalletRepository.refreshInBackground(requireContext())
+      }
+      showMoneroChatAmountDialog(recipient)
+    }
+  }
+
+  private fun showMoneroChatAmountDialog(recipient: Recipient) {
+    val amountInput = EditText(requireContext()).apply {
+      hint = getString(R.string.PaymentsMonero__amount_hint)
+      inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
+      setSingleLine(true)
+    }
+    val balanceLabel = TextView(requireContext()).apply {
+      val ledger = MoneroWalletRepository.currentLedger.value
+      text = ledger?.let {
+        getString(R.string.PaymentsMonero__chat_balance,
+          MoneroAmountFormatter.format(it.getBalance().unlockedAmountAt(it.checkedAt)))
+      } ?: getString(R.string.PaymentsMonero__chat_balance_unavailable)
+    }
+    val container = LinearLayout(requireContext()).apply {
+      orientation = LinearLayout.VERTICAL
+      val padding = (24 * resources.displayMetrics.density).toInt()
+      setPadding(padding, padding / 2, padding, 0)
+      addView(TextView(requireContext()).apply { text = getString(R.string.PaymentsMonero__chat_send_description, recipient.getDisplayName(requireContext())) })
+      addView(balanceLabel)
+      addView(amountInput)
+    }
+    val dialog = MaterialAlertDialogBuilder(requireContext())
+      .setTitle(R.string.PaymentsMonero__send_title)
+      .setView(container)
+      .setNegativeButton(android.R.string.cancel, null)
+      .setPositiveButton(R.string.PaymentsMonero__send, null)
+      .create()
+    dialog.setOnShowListener {
+      val balanceObserver = viewLifecycleOwner.lifecycleScope.launch {
+        MoneroWalletRepository.currentLedger.collectLatest { ledger ->
+          if (ledger != null && dialog.isShowing) {
+            balanceLabel.text = getString(R.string.PaymentsMonero__chat_balance,
+              MoneroAmountFormatter.format(ledger.getBalance().unlockedAmountAt(ledger.checkedAt)))
+          }
+        }
+      }
+      dialog.setOnDismissListener { balanceObserver.cancel() }
+      dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+        val amount = try {
+          MoneroAmountParser.parse(amountInput.text.toString())
+        } catch (_: IllegalArgumentException) {
+          amountInput.error = getString(R.string.PaymentsMonero__amount_hint)
+          return@setOnClickListener
+        }
+        val ledger = MoneroWalletRepository.currentLedger.value
+        if (ledger == null) {
+          amountInput.error = getString(R.string.PaymentsMonero__chat_balance_unavailable)
+          return@setOnClickListener
+        }
+        val available = ledger.getBalance().unlockedAmountAt(ledger.checkedAt)
+        if (amount.atomicUnits > available.atomicUnits) {
+          amountInput.error = getString(R.string.PaymentsMonero__amount_exceeds_balance, MoneroAmountFormatter.format(available))
+          return@setOnClickListener
+        }
+        if (moneroChatPaymentActive) return@setOnClickListener
+        dialog.dismiss()
+        sendMoneroInConversation(recipient, amount)
+      }
+    }
+    dialog.show()
+  }
+
+  private fun sendMoneroInConversation(recipient: Recipient, amount: im.molly.monero.sdk.MoneroAmount) {
+    if (moneroChatPaymentActive) return
+    val ledger = MoneroWalletRepository.currentLedger.value
+    val available = ledger?.let { it.getBalance().unlockedAmountAt(it.checkedAt) }
+    if (available == null || amount.atomicUnits > available.atomicUnits) {
+      MaterialAlertDialogBuilder(requireContext())
+        .setMessage(if (available == null) getString(R.string.PaymentsMonero__chat_balance_unavailable)
+          else getString(R.string.PaymentsMonero__amount_exceeds_balance, MoneroAmountFormatter.format(available)))
+        .setPositiveButton(android.R.string.ok, null)
+        .show()
+      return
+    }
+    moneroChatPaymentActive = true
+    val progress = LinearLayout(requireContext()).apply {
+      orientation = LinearLayout.HORIZONTAL
+      gravity = android.view.Gravity.CENTER_VERTICAL
+      val padding = (24 * resources.displayMetrics.density).toInt()
+      setPadding(padding, padding, padding, padding)
+      addView(android.widget.ProgressBar(requireContext()))
+      addView(TextView(requireContext()).apply {
+        text = getString(R.string.PaymentsMonero__requesting_address)
+        setPadding(padding / 2, 0, 0, 0)
+      })
+    }
+    val waitDialog = MaterialAlertDialogBuilder(requireContext())
+      .setTitle(R.string.PaymentsMonero__send_title)
+      .setView(progress)
+      .setCancelable(false)
+      .create()
+    waitDialog.show()
+
+    viewLifecycleOwner.lifecycleScope.launch {
+      try {
+        val address = MoneroChatPaymentFlow.requestRecipientAddress(requireContext(), recipient, viewModel.threadId)
+        waitDialog.dismiss()
+        MoneroWalletRepository.send(requireContext(), address, amount) { actual, fee ->
+          val latestLedger = MoneroWalletRepository.currentLedger.value
+          val latestAvailable = latestLedger?.let { it.getBalance().unlockedAmountAt(it.checkedAt) }
+          check(latestAvailable != null) { getString(R.string.PaymentsMonero__chat_balance_unavailable) }
+          val amountWithFee = Math.addExact(actual.atomicUnits, fee.atomicUnits)
+          check(amountWithFee <= latestAvailable.atomicUnits) {
+            getString(R.string.PaymentsMonero__amount_plus_fee_exceeds_balance, MoneroAmountFormatter.format(latestAvailable))
+          }
+          suspendCancellableCoroutine { continuation ->
+            val confirmation = MaterialAlertDialogBuilder(requireContext())
+              .setTitle(R.string.PaymentsMonero__confirm_chat_payment_title)
+              .setMessage(getString(R.string.PaymentsMonero__confirm_chat_payment, MoneroAmountFormatter.format(actual), MoneroAmountFormatter.format(fee)))
+              .setNegativeButton(android.R.string.cancel) { _, _ -> if (continuation.isActive) continuation.resume(false) }
+              .setPositiveButton(R.string.PaymentsMonero__send) { _, _ -> if (continuation.isActive) continuation.resume(true) }
+              .setOnCancelListener { if (continuation.isActive) continuation.resume(false) }
+              .show()
+            continuation.invokeOnCancellation { confirmation.dismiss() }
+          }
+        }
+        withContext(Dispatchers.IO) {
+          val sentText = getString(R.string.PaymentsMonero__chat_payment_submitted, MoneroAmountFormatter.format(amount))
+          org.thoughtcrime.securesms.sms.MessageSender.send(
+            requireContext(),
+            org.thoughtcrime.securesms.mms.OutgoingMessage.text(recipient, sentText, recipient.expiresInSeconds * 1000L),
+            viewModel.threadId,
+            org.thoughtcrime.securesms.sms.MessageSender.SendType.SIGNAL,
+            null,
+            null
+          )
+        }
+        toast(R.string.PaymentsMonero__sent)
+      } catch (error: Exception) {
+        if (error !is CancellationException) {
+          MaterialAlertDialogBuilder(requireContext())
+            .setMessage(error.localizedMessage ?: getString(R.string.PaymentsMonero__chat_payment_failed))
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
+        }
+      } finally {
+        waitDialog.dismiss()
+        moneroChatPaymentActive = false
+      }
     }
   }
 
@@ -3495,8 +3693,8 @@ class ConversationFragment :
     }
 
     override fun onSendPaymentClicked(recipientId: RecipientId) {
-      val recipient = viewModel.recipientSnapshot ?: return
-      AttachmentManager.selectPayment(this@ConversationFragment, recipient)
+      val recipient = Recipient.resolved(recipientId)
+      showPaymentMethodPicker(recipient, retryLightningAfterActivation = true)
     }
 
     override fun onScheduledIndicatorClicked(view: View, conversationMessage: ConversationMessage) = Unit

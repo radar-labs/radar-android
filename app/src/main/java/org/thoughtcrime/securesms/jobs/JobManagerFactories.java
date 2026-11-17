@@ -226,6 +226,7 @@ public final class JobManagerFactories {
       put(PaymentLedgerUpdateJob.KEY,                  new PaymentLedgerUpdateJob.Factory());
       put(PaymentNotificationSendJob.KEY,              new PaymentNotificationSendJob.Factory());
       put(PaymentNotificationSendJobV2.KEY,            new PaymentNotificationSendJobV2.Factory());
+      put(MoneroAddressReplyJob.KEY,                   new MoneroAddressReplyJob.Factory());
       put(PaymentSendJob.KEY,                          new PaymentSendJob.Factory());
       put(PaymentTransactionCheckJob.KEY,              new PaymentTransactionCheckJob.Factory());
       put(PollVoteJob.KEY,                             new PollVoteJob.Factory());

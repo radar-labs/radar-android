@@ -304,6 +304,16 @@ public class AttachmentManager {
   }
 
   public static void selectPayment(@NonNull Fragment fragment, @NonNull Recipient recipient) {
+    selectPayment(fragment, recipient, false);
+  }
+
+  /** Retry briefly when the "Payments activated" event arrives before the Lightning address is
+   * visible in the recipient's versioned profile. */
+  public static void selectPaymentAfterActivation(@NonNull Fragment fragment, @NonNull Recipient recipient) {
+    selectPayment(fragment, recipient, true);
+  }
+
+  private static void selectPayment(@NonNull Fragment fragment, @NonNull Recipient recipient, boolean retryProfilePublication) {
     // We need the recipient's profile key to fetch their payment address. It is delivered in their
     // messages once they share their profile with us; without it we cannot reach their payment profile.
     // (We intentionally do not gate on an expiring profile key credential: this fork does not use one
@@ -315,12 +325,20 @@ public class AttachmentManager {
 
     SimpleTask.run(fragment.getViewLifecycleOwner().getLifecycle(),
                    () -> {
-                     try {
-                       return ProfileUtil.getAddressForRecipient(recipient);
-                     } catch (IOException | PaymentsAddressException e) {
-                       Log.w(TAG, "Could not get address for recipient: ", e);
-                       return null;
+                     int[] retryDelaysMs = retryProfilePublication ? new int[] { 0, 2000, 5000 } : new int[] { 0 };
+                     for (int attempt = 0; attempt < retryDelaysMs.length; attempt++) {
+                       if (retryDelaysMs[attempt] > 0) {
+                         android.os.SystemClock.sleep(retryDelaysMs[attempt]);
+                       }
+                       try {
+                         return ProfileUtil.getAddressForRecipient(recipient);
+                       } catch (IOException | PaymentsAddressException e) {
+                         if (attempt == retryDelaysMs.length - 1) {
+                           Log.w(TAG, "Could not get address for recipient after " + (attempt + 1) + " attempt(s): ", e);
+                         }
+                       }
                      }
+                     return null;
                    },
                    (address) -> {
                      if (address != null) {
@@ -328,6 +346,13 @@ public class AttachmentManager {
                        intent.putExtra(PaymentsActivity.EXTRA_PAYMENTS_STARTING_ACTION, R.id.action_directly_to_createPayment);
                        intent.putExtra(PaymentsActivity.EXTRA_STARTING_ARGUMENTS, new CreatePaymentFragmentArgs.Builder(new PayeeParcelable(recipient.getId())).setFinishOnConfirm(true).build().toBundle());
                        fragment.startActivity(intent);
+                     } else if (retryProfilePublication) {
+                       new MaterialAlertDialogBuilder(fragment.requireContext())
+                           .setTitle(R.string.AttachmentManager__payment_address_not_ready_title)
+                           .setMessage(R.string.AttachmentManager__payment_address_not_ready_message)
+                           .setPositiveButton(R.string.DeviceTransferSetup__retry, (dialog, which) -> selectPaymentAfterActivation(fragment, recipient))
+                           .setNegativeButton(android.R.string.cancel, null)
+                           .show();
                      } else {
                        // Always offer to ask. This used to sit behind
                        // RemoteConfig.paymentsRequestActivateFlow, whose key
